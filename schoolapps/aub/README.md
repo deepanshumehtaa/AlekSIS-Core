@@ -10,11 +10,11 @@
 - Ende Datum (DateField)
 - Ende Stunde oder Uhrzeit (Int 1..9 / Time)
 - Beschreibung (TextField)
-- 
+
 
 2. Schulleiter erhält Antrag (Link per Mail) und a. bewilligt oder b. lehnt ab
 
-a. Stellvertreter prüft Antrag und aa. bewilligt oder bb. formuiert Bedenken und lehnt ab
+a. Stellvertreter prüft Antrag und aa. bewilligt oder bb. formuliert Bedenken und lehnt ab
 
 aa. Stellvertreter trägt Absenz in den Vertretungsplan ein. Lehrer erhält positive Rückmeldung.  
 

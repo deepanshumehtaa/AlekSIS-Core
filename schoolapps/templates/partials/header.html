@@ -3,13 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>SchoolApps – [NAME DER SCHULE]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
     <!--script src="main.js"></script-->
 </head>
 <body>
 <header>
-<h1>SchoolApps – [NAME DER SCHULE]</h1>
-<hr>
+    <h1>SchoolApps – [NAME DER SCHULE]</h1>
+    <nav>
+        {% if user.is_authenticated %}
+        <li>User: {{ user.get_username }}</li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+        {% endif %}
+    </nav>
+    <hr>
 </header>
