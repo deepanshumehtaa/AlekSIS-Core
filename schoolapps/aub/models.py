@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import datetime
-from teachers.models import Teacher, get_default_teacher
 
 lessons = (
     (1, 1),
@@ -24,13 +23,10 @@ class Aub(models.Model):
     to_lesson = models.DateField(choices=lessons)
 
     # Information
-    teacher = models.ForeignKey(Teacher,
-                                related_name='aubs',
-                                on_delete=models.SET(get_default_teacher()),
-                                default=get_default_teacher())
     description = models.TextField()
 
     # Meta
+    created_by =
     created_at = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
