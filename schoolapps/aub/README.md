@@ -3,6 +3,7 @@
 ### Workflow
 
 1.  Lehrer füllt Formular aus
+
     - Beginn Datum (DateField)
     - Beginn Stunde oder Uhrzeit (Int 1..9 / Time)
     - Ende Datum (DateField)
@@ -15,9 +16,9 @@
 
     a. Stellvertreter prüft Antrag und i. bewilligt oder ii. formuliert Bedenken und lehnt ab
     
-       i. Stellvertreter trägt Absenz in den Vertretungsplan ein. Lehrer erhält positive Rückmeldung.  
+         i. Stellvertreter trägt Absenz in den Vertretungsplan ein. Lehrer erhält positive Rückmeldung.  
        
-       ii. Antrag geht an den Schulleiter zurück, der endgültig aa. bewilligt oder b. ablehnt.
+         ii. Antrag geht an den Schulleiter zurück, der endgültig aa. bewilligt oder b. ablehnt.
 
     b. Lehrer erhält Ablehnung mit Begründung
 
