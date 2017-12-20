@@ -13,11 +13,11 @@
 
 2.  Schulleiter erhält Antrag (Link per Mail) und a. bewilligt oder b. lehnt ab
 
-    a. Stellvertreter prüft Antrag und aa. bewilligt oder bb. formuliert Bedenken und lehnt ab
-
-       a. Stellvertreter trägt Absenz in den Vertretungsplan ein. Lehrer erhält positive Rückmeldung.  
-
-       b. Antrag geht an den Schulleiter zurück, der endgültig aa. bewilligt oder b. ablehnt.
+    a. Stellvertreter prüft Antrag und i. bewilligt oder ii. formuliert Bedenken und lehnt ab
+    
+       i. Stellvertreter trägt Absenz in den Vertretungsplan ein. Lehrer erhält positive Rückmeldung.  
+       
+       ii. Antrag geht an den Schulleiter zurück, der endgültig aa. bewilligt oder b. ablehnt.
 
     b. Lehrer erhält Ablehnung mit Begründung
 
