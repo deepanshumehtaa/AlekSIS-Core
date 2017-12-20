@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
+from django.contrib.auth.models import User
 
 lessons = (
     (1, 1),
@@ -14,20 +15,26 @@ lessons = (
 )
 
 
+def get_default_user():
+    User.objects.get_or_create(username='nouser')
+
+
 class Aub(models.Model):
     # Time
-    from_date = models.DateField()
-    to_date = models.DateField()
+    from_date = models.DateField(default=timezone.now())
+    to_date = models.DateField(default=timezone.now())
 
-    from_lesson = models.DateField(choices=lessons)
-    to_lesson = models.DateField(choices=lessons)
+    from_lesson = models.IntegerField(choices=lessons, default=1)
+    to_lesson = models.IntegerField(choices=lessons, default=1)
 
     # Information
     description = models.TextField()
 
+
     # Meta
-    created_by =
-    created_at = models.DateTimeField(default=datetime.now())
+    created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
+                                   default=get_default_user())
+    created_at = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
-        return self.title
+        return self.description
