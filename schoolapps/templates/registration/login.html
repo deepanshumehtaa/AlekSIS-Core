@@ -1,35 +1,37 @@
 {% include 'partials/header.html' %}
 
-{% if form.errors %}
-<p class="red">Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-<p class="red">Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-<p class="red">Please login to see this page.</p>
+<main>
+    {% if form.errors %}
+        <p class="red-text">Your username and password didn't match. Please try again.</p>
     {% endif %}
-{% endif %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p class="red-text">Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p class="red-text">Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
 
-    {{ form.username.label_tag }}
-    {{ form.username }}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
 
-    {{ form.password.label_tag }}
-    {{ form.password }}
+        {{ form.username.label_tag }}
+        {{ form.username }}
+
+        {{ form.password.label_tag }}
+        {{ form.password }}
 
 
-    <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
+        <input type="submit" value="login">
+        <input type="hidden" name="next" value="{{ next }}">
 
-</form>
+    </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
+</main>
 
 {% include 'partials/footer.html' %}

@@ -1,16 +1,17 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SchoolApps – [NAME DER SCHULE]</title>
+    <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--------->
     <!-- CSS -->
     <!--------->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'materialize/dist/css/materialize.min.css' %}">
@@ -20,17 +21,41 @@
     <!---------------->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".button-collapse").sideNav();
+        });
+
+    </script>
 </head>
 <body>
 <header>
-    <h1>SchoolApps – Katharineum zu Lübeck</h1>
-    <nav>
-        {% if user.is_authenticated %}
-        <li>User: {{ user.get_username }}</li>
-        <li><a href="{% url 'logout'%}">Logout</a></li>
-        {% else %}
-        <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-        {% endif %}
+    <nav class="primary-color">
+        <a class="brand-logo" href="#">SchoolApps</a>
+
+        <div class="nav-wrapper">
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {% if user.is_authenticated %}
+                    <li>Angemeldet als {{ user.get_username }}</li>
+                    <li><a href="{% url 'logout' %}">Abmelden</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}?next={{ request.path }}">Anmelden</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </nav>
-    <hr>
+
+    <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
+
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li class="logo">
+            <a id="logo-container" href="/" class="brand-logo">
+                <img src="{% static 'common/logo.png' %}">
+            </a>
+        </li>
+
+        <li><a href="#">First Sidebar Link</a></li>
+        <li><a href="#">Second Sidebar Link</a></li>
+    </ul>
 </header>
