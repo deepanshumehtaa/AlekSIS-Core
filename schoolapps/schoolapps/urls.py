@@ -16,15 +16,25 @@ Including another URLconf
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
-    # Auth
+                  ########
+                  # Auth #
+                  ########
     path('accounts/', include('django.contrib.auth.urls')),
-    # AUB
+
+                  #######
+                  # AUB #
+                  #######
     path('', include('aub.urls')),
     path('aub/', include('aub.urls')),
-    # Todos
+
+                  #########
+                  # Todos #
+                  #########
     path('', include('todos.urls')),
     path('todos/', include('todos.urls')),
     path('admin/', admin.site.urls)
-]
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
