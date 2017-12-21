@@ -21,11 +21,14 @@ def get_default_user():
 
 class Aub(models.Model):
     # Time
-    from_date = models.DateField(default=timezone.now())
-    to_date = models.DateField(default=timezone.now())
+    from_date = models.DateField(default=timezone.now)
+    to_date = models.DateField(default=timezone.now)
 
-    from_lesson = models.IntegerField(choices=lessons, default=1)
-    to_lesson = models.IntegerField(choices=lessons, default=1)
+    from_lesson = models.IntegerField(choices=lessons, default=1, blank=True)
+    to_lesson = models.IntegerField(choices=lessons, default=1, blank=True)
+
+    from_time = models.TimeField(default=timezone.now)
+    to_time = models.TimeField(default=timezone.now)
 
     # Information
     description = models.TextField()
@@ -34,7 +37,7 @@ class Aub(models.Model):
     # Meta
     created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
                                    default=get_default_user())
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.description
