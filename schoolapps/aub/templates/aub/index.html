@@ -1,7 +1,8 @@
 {% include 'partials/header.html' %}
 <main>
     <ul>
-        Hallo
+        <h5>Ihre Anträge</h5>
+        <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
         {% for todo in todos %}
           <li><a href='/todos/details/{{todo.id}}'>{{todo.title}}</a>: {{todo.text}}</li>
         {% endfor %}

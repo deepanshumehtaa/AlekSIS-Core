@@ -1,0 +1,17 @@
+{% include 'partials/header.html' %}
+
+<main>
+    <h5>Antrag auf Unterrichtsbefreiung stellen</h5>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <button type="submit" class="waves-effect waves-light btn green">
+            Antrag stellen
+        </button>
+    </form>
+</main>
+
+{% include 'partials/footer.html' %}

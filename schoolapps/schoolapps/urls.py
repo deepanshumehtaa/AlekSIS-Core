@@ -33,6 +33,10 @@ urlpatterns = [
                   #######
                   # AUB #
                   #######
-                  # path('', include('aub.urls')),
                   path('aub/', include('aub.urls')),
+
+                  #########
+                  # Admin #
+                  #########
+                  path('admin/', admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

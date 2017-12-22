@@ -21,14 +21,8 @@ def get_default_user():
 
 class Aub(models.Model):
     # Time
-    from_date = models.DateField(default=timezone.now)
-    to_date = models.DateField(default=timezone.now)
-
-    from_lesson = models.IntegerField(choices=lessons, default=1, blank=True)
-    to_lesson = models.IntegerField(choices=lessons, default=1, blank=True)
-
-    from_time = models.TimeField(default=timezone.now)
-    to_time = models.TimeField(default=timezone.now)
+    from_dt = models.DateTimeField(default=timezone.now)
+    to_dt = models.DateTimeField(default=timezone.now)
 
     # Information
     description = models.TextField()
@@ -40,3 +34,10 @@ class Aub(models.Model):
 
     def __str__(self):
         return self.description
+
+    class Meta:
+        permissions = (
+            ('apply_for_aub', "Apply for a AUB"),
+            ('allow_aub', "Allow a AUB"),
+            ('check_aub', "Check a AUB")
+        )

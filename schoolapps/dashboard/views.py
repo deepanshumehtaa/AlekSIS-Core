@@ -22,4 +22,4 @@ def index(request):
         'notifications': notifications,
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'dashboard/index.html', context)

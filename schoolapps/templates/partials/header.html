@@ -61,6 +61,7 @@
 
         {% if user.is_authenticated %}
             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'aub_index' %}">Antrag auf Unterrichtsbefreiung</a></li>
             <li><a href="{% url 'logout' %}">Abmelden</a></li>
         {% endif %}
     </ul>
