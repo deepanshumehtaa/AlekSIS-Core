@@ -14,10 +14,12 @@ def index(request):
     act.save()
 
     # Load activities
-    activities = Activity.objects.filter(user=request.user).order_by('-created_at')
+    activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
+    notifications = request.user.notifications.all()[:5]
 
     context = {
-        'activities': activities
+        'activities': activities,
+        'notifications': notifications,
     }
 
     return render(request, 'index.html', context)

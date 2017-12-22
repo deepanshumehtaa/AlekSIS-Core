@@ -3,23 +3,54 @@
 <main>
     <p class="flow-text">Willkommen bei SchoolApps!</p>
 
-    <h4>Letzte Aktivitäten</h4>
 
-    {% if activities %}
-        <ul class="collection">
-            {% for activity in activities %}
-                <li class="collection-item">
-                    <span class="badge new">{{ activity.app }}</span>
-                    <span class="title">{{ activity.title }} ({{ activity.created_at }})</span>
-                    <p>
-                        {{ activity.description }}
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Noch keine Aktivitäten vorhanden.</p>
-    {% endif %}
+    <div class="row">
+        <div class="col s12 m6">
+            <h4>Letzte Aktivitäten</h4>
+
+            {% if activities %}
+                <ul class="collection">
+                    {% for activity in activities %}
+                        <li class="collection-item">
+                            <span class="badge new">{{ activity.app }}</span>
+                            <span class="title">{{ activity.title }}</span>
+                            <p>
+                                <i class="material-icons left">access_time</i> {{ activity.created_at }}
+                            </p>
+                            <p>
+                                {{ activity.description }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Noch keine Aktivitäten vorhanden.</p>
+            {% endif %}
+        </div>
+
+        <div class="col s12 m6">
+            <h4>Letzte Benachrichtigungen</h4>
+
+            {% if notifications %}
+                <ul class="collection">
+                    {% for notification in notifications %}
+                        <li class="collection-item">
+                            <span class="badge new">{{ notification.app }}</span>
+                            <span class="title">{{ notification.title }}</span>
+                            <p>
+                                <i class="material-icons left">access_time</i> {{ notification.created_at }}
+                            </p>
+                            <p>
+                                {{ notification.description }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Noch keine Benachrichtigungen vorhanden.</p>
+            {% endif %}
+        </div>
+    </div>
 </main>
 
 {% include 'partials/footer.html' %}

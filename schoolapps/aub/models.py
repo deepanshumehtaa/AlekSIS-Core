@@ -33,7 +33,6 @@ class Aub(models.Model):
     # Information
     description = models.TextField()
 
-
     # Meta
     created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
                                    default=get_default_user())
