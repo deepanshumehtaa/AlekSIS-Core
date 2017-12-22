@@ -2,36 +2,38 @@
 
 <main>
     {% if form.errors %}
-        <p class="red-text">Your username and password didn't match. Please try again.</p>
+        <p class="flow-text red-text">Der Benutzername oder das Passwort ist falsch. Bitte probieren Sie es nochmal.</p>
     {% endif %}
 
     {% if next %}
         {% if user.is_authenticated %}
-            <p class="red-text">Your account doesn't have access to this page. To proceed,
-                please login with an account that has access.</p>
+            <p class="flow-text red-text">Sie haben keine Erlaubnis, diese Seite zu sehen.
+                Bitte probieren Sie es mit einem anderen Benutzer.</p>
         {% else %}
-            <p class="red-text">Please login to see this page.</p>
+            <p class="flow-text red-text">Bitte melden Sie sich an, um diese Seite zu sehen.</p>
         {% endif %}
     {% endif %}
 
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
 
-        {{ form.username.label_tag }}
-        {{ form.username }}
+        <div class="input-field">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
 
-        {{ form.password.label_tag }}
-        {{ form.password }}
+        <div class="input-field">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
 
 
-        <input type="submit" value="login">
+        <button type="submit" class="waves-effect waves-light btn green">
+            Anmelden
+        </button>
         <input type="hidden" name="next" value="{{ next }}">
 
     </form>
-
-    {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
 </main>
 
 {% include 'partials/footer.html' %}

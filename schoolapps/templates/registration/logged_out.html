@@ -1,7 +1,8 @@
 {% include 'partials/header.html' %}
 
-<p>Logged out!</p>
-
-<a href="{% url 'login'%}">Click here to login again.</a>
+<main>
+    <p class="flow-text">Sie sind nun abgemeldet.</p>
+    <a href="{% url 'login' %}">Wieder anmelden?</a>
+</main>
 
 {% include 'partials/footer.html' %}
