@@ -23,18 +23,26 @@
     <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
     <script>
         $(document).ready(function () {
-            $(".button-collapse").sideNav();
+            $(".sidenav").sidenav();
         });
 
     </script>
 </head>
 <body>
 <header>
+    <div class="container">
+        {% comment %}<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">
+            <i class="material-icons">menu</i>
+        </a>{% endcomment %}
+        <a href="#" data-target="slide-out" class="top-nav sidenav-trigger hide-on-large-only">
+            <i class="material-icons">menu</i>
+        </a>
+
+    </div>
     <nav class="primary-color">
         <a class="brand-logo" href="#">SchoolApps</a>
 
         <div class="nav-wrapper">
-
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
                     <li>Angemeldet als {{ user.get_username }}</li>
@@ -46,7 +54,6 @@
         </div>
     </nav>
 
-    <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
 
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li class="logo">

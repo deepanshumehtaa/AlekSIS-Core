@@ -1,20 +1,41 @@
-main {
-    padding: 10px;
+/**********/
+/* COMMON */
+/**********/
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
+
+.primary-color {
+    background-color: #da1f3d;
+}
+
+.primary-color-text {
+    color: #da1f3d;
+}
+
+/**********/
+/* HEADER */
+/**********/
 
 .brand-logo {
     margin-left: 10px;
 }
 
-header, main, footer {
-    margin-left: 300px;
+/********/
+/* MAIN */
+/********/
+
+main {
+    padding: 20px;
+    flex: 1 0 auto;
 }
 
-@media only screen and (max-width: 992px) {
-    header, main, footer {
-        margin-left: 0;
-    }
-}
+/***********/
+/* SIDENAV */
+/***********/
 
 ul.sidenav.sidenav-fixed li.logo {
     margin-top: 32px;
@@ -29,6 +50,28 @@ ul.sidenav.sidenav-fixed li.logo img {
     width: 250px;
 }
 
-.primary-color {
-    background-color: #da1f3d;
+header a.sidenav-trigger {
+    position: absolute;
+    left: 7.5%;
+    top: 0;
+
+    height: 64px;
+    font-size: 38px;
+
+    float: none;
+
+    text-align: center;
+    color: white;
+
+    z-index: 2;
+}
+
+header, main, footer {
+    margin-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+    header, main, footer {
+        margin-left: 0;
+    }
 }
