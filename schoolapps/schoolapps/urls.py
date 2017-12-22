@@ -20,21 +20,26 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+                  #############
+                  # Dashboard #
+                  #############
+                  path('', include('dashboard.urls')),
+
                   ########
                   # Auth #
                   ########
-    path('accounts/', include('django.contrib.auth.urls')),
+                  path('accounts/', include('django.contrib.auth.urls')),
 
                   #######
                   # AUB #
                   #######
-    path('', include('aub.urls')),
-    path('aub/', include('aub.urls')),
+                  # path('', include('aub.urls')),
+                  path('aub/', include('aub.urls')),
 
                   #########
                   # Todos #
                   #########
-    path('', include('todos.urls')),
-    path('todos/', include('todos.urls')),
-    path('admin/', admin.site.urls)
+                  # path('', include('todos.urls')),
+                  path('todos/', include('todos.urls')),
+                  path('admin/', admin.site.urls)
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

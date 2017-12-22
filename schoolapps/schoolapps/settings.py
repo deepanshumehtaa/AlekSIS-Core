@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard.apps.DashboardConfig',
     'aub.apps.AubConfig',
     'todos.apps.TodosConfig',
     'django.contrib.admin',

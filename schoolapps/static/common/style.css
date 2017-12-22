@@ -75,3 +75,11 @@ header, main, footer {
         margin-left: 0;
     }
 }
+
+ul.collection .collection-item .title {
+    font-weight: bold;
+}
+
+span.badge.new::after {
+    content: "" !important;
+}

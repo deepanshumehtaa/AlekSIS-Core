@@ -1,0 +1,25 @@
+{% include 'partials/header.html' %}
+
+<main>
+    <p class="flow-text">Willkommen bei SchoolApps!</p>
+
+    <h4>Letzte Aktivitäten</h4>
+
+    {% if activities %}
+        <ul class="collection">
+            {% for activity in activities %}
+                <li class="collection-item">
+                    <span class="badge new">{{ activity.app }}</span>
+                    <span class="title">{{ activity.title }} ({{ activity.created_at }})</span>
+                    <p>
+                        {{ activity.description }}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Noch keine Aktivitäten vorhanden.</p>
+    {% endif %}
+</main>
+
+{% include 'partials/footer.html' %}
