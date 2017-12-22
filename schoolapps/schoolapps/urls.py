@@ -35,11 +35,4 @@ urlpatterns = [
                   #######
                   # path('', include('aub.urls')),
                   path('aub/', include('aub.urls')),
-
-                  #########
-                  # Todos #
-                  #########
-                  # path('', include('todos.urls')),
-                  path('todos/', include('todos.urls')),
-                  path('admin/', admin.site.urls)
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
