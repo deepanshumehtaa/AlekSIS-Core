@@ -5,6 +5,26 @@
 
     <form action="" method="post">
         {% csrf_token %}
+        <p class="flow-text red-text">
+            {{ form.non_field_errors }}
+        </p>
+
+        <div class="input-field">
+            <p class="red-text">{{ form.from_dt.errors }}</p>
+
+            <input id="{{ form.from_dt.id_for_label }}" type="text" name="{{ form.from_dt.html_name }}"
+                   class="datepicker">
+            <label for="{{ form.from_dt.id_for_label }}">Beginn der Befreiung</label>
+            <span>{{ form.from_dt.help_text }}</span>
+        </div>
+
+        <div class="input-field">
+            <p class="red-text">{{ form.to_dt.errors }}</p>
+
+            <input id="{{ form.to_dt.id_for_label }}" type="text" name="{{ form.to_dt.html_name }}" class="datepicker">
+            <label for="{{ form.to_dt.id_for_label }}">Ende der Befreiung</label>
+            <span>{{ form.to_dt.help_text }}</span>
+        </div>
         <table>
             {{ form }}
         </table>
