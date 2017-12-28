@@ -19,14 +19,14 @@ class ApplyForAUBForm(forms.Form):
 
     def clean_to_dt(self):
         data = self.cleaned_data['to_dt']
-        from_dt = self.cleaned_data['from_dt']
+        # from_dt = self.cleaned_data['from_dt']
 
         if data < timezone.now():
             raise ValidationError("Die Befreiung kann nur zukünftig durchgeführt werden.")
 
-        if from_dt > data:
-            raise ValidationError("Die Befreiung kann nicht an einem Datum enden, " +
-                                  "dass zum Beginn der Befreiung schon in der Vergangenheit liegt.")
+        # if from_dt > data:
+        #     raise ValidationError("Die Befreiung kann nicht an einem Datum enden, " +
+        #                           "dass zum Beginn der Befreiung schon in der Vergangenheit liegt.")
 
         return data
 
@@ -34,6 +34,6 @@ class ApplyForAUBForm(forms.Form):
         data = self.cleaned_data['description']
 
         if len(data) < 10:
-            raise ValidationError("Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit")
+            raise ValidationError("Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit.")
 
         return data

@@ -52,3 +52,13 @@ def apply_for(request):
     }
 
     return render(request, 'aub/apply_for.html', context)
+
+
+@login_required
+@permission_required('aub.apply_for_aub')
+def applied_for(request):
+    context = {
+
+    }
+
+    return render(request, 'aub/applied_for.html', context)

@@ -5,31 +5,52 @@
 
     <form action="" method="post">
         {% csrf_token %}
-        <p class="flow-text red-text">
+        <div class="flow-text red-text">
             {{ form.non_field_errors }}
-        </p>
+        </div>
+        <div class="row">
+            <!-- From date and time -->
+            <div class="col s12 m6">
+                <div class="red-text">{{ form.from_dt.errors }}</div>
 
-        <div class="input-field">
-            <p class="red-text">{{ form.from_dt.errors }}</p>
+                <div class="input-field">
+                    <input id="{{ form.from_dt.id_for_label }}" type="text" required name="{{ form.from_dt.html_name }}"
+                           class="datepicker" value="{{ form.from_dt.value }}">
+                    <label for="{{ form.from_dt.id_for_label }}">Beginn der Befreiung</label>
+                    <span>{{ form.from_dt.help_text }}</span>
+                </div>
+            </div>
 
-            <input id="{{ form.from_dt.id_for_label }}" type="text" name="{{ form.from_dt.html_name }}"
-                   class="datepicker">
-            <label for="{{ form.from_dt.id_for_label }}">Beginn der Befreiung</label>
-            <span>{{ form.from_dt.help_text }}</span>
+            <!-- To date and time -->
+            <div class="col s12 m6">
+                <div class="red-text">{{ form.to_dt.errors }}</div>
+
+                <div class="input-field">
+                    <input id="{{ form.to_dt.id_for_label }}" type="text" required name="{{ form.to_dt.html_name }}"
+                           class="datepicker" value="{{ form.to_dt.value }}">
+                    <label for="{{ form.to_dt.id_for_label }}">Ende der Befreiung</label>
+                    <span>{{ form.to_dt.help_text }}</span>
+                </div>
+            </div>
         </div>
 
-        <div class="input-field">
-            <p class="red-text">{{ form.to_dt.errors }}</p>
+        <div class="row">
 
-            <input id="{{ form.to_dt.id_for_label }}" type="text" name="{{ form.to_dt.html_name }}" class="datepicker">
-            <label for="{{ form.to_dt.id_for_label }}">Ende der Befreiung</label>
-            <span>{{ form.to_dt.help_text }}</span>
+            <!-- Description -->
+            <div class="red-text col s12">{{ form.description.errors }}</div>
+            <div class="input-field col s12">
+
+
+                <textarea id="{{ form.description.id_for_label }}" required
+                          name="{{ form.description.html_name }}"
+                          class="materialize-textarea">{{ form.description.value }}</textarea>
+                <label for="{{ form.description.id_for_label }}">Beschreibung</label>
+                <span>{{ form.description.help_text }}</span>
+            </div>
         </div>
-        <table>
-            {{ form }}
-        </table>
+
         <button type="submit" class="waves-effect waves-light btn green">
-            Antrag stellen
+            <i class="material-icons left">send</i> Antrag stellen
         </button>
     </form>
 </main>
