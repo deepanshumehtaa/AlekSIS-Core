@@ -16,7 +16,21 @@ lessons = (
 
 
 def get_default_user():
-    User.objects.get_or_create(username='nouser')
+    user, created = User.objects.get_or_create(username='nouser')
+    return user.id
+
+
+class Status(models.Model):
+    name = models.CharField(max_length=100)
+    style_classes = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+def get_default_status():
+    status, created = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')
+    return status.id
 
 
 class Aub(models.Model):
@@ -26,7 +40,8 @@ class Aub(models.Model):
 
     # Information
     description = models.TextField()
-
+    status = models.ForeignKey(Status, related_name='aubs', on_delete=models.SET(get_default_status()),
+                               default=get_default_status())
     # Meta
     created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
                                    default=get_default_user())
@@ -37,7 +52,7 @@ class Aub(models.Model):
 
     class Meta:
         permissions = (
-            ('apply_for_aub', "Apply for a AUB"),
-            ('allow_aub', "Allow a AUB"),
-            ('check_aub', "Check a AUB")
+            ('apply_for_aub', 'Apply for a AUB'),
+            ('allow_aub', 'Allow a AUB'),
+            ('check_aub', 'Check a AUB')
         )

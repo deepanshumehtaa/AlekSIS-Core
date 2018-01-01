@@ -4,13 +4,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import ApplyForAUBForm
-from .models import Aub
+from .models import Aub, Status
 
+IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')
+ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')
+NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')
 
 @login_required
 @permission_required('aub.apply_for_aub')
 def index(request):
-    aubs = Aub.objects.all()[:10]
+    aubs = Aub.objects.filter(created_by=request.user).order_by('-created_at')[:10]
 
     context = {
         'aubs': aubs

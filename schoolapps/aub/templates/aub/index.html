@@ -1,11 +1,19 @@
 {% include 'partials/header.html' %}
 <main>
-    <ul>
-        <h5>Ihre Anträge</h5>
-        <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
-        {% for todo in todos %}
-          <li><a href='/todos/details/{{todo.id}}'>{{todo.title}}</a>: {{todo.text}}</li>
+
+    <h5>Ihre Anträge</h5>
+    <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
+    <ul class="collection">
+        {% for aub in aubs %}
+            <li class="collection-item">
+                <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span>
+                <p class="title">
+                    <i class="material-icons left">access_time</i>
+                    {{ aub.from_dt }} bis {{ aub.to_dt }}
+                </p>
+                <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
+            </li>
         {% endfor %}
     </ul>
-</main>        
+</main>
 {% include 'partials/footer.html' %}
