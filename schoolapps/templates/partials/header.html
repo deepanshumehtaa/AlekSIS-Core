@@ -44,7 +44,17 @@
                 },
 
                 // Set monday as first day of week
-                firstDay: 1
+                firstDay: 1,
+                //autoClose: true
+            });
+
+            // Initialize timepicker [MAT]
+            $('.timepicker').timepicker({
+                twelveHour: false,
+                //autoClose: true,
+                cancelText: 'Abbrechen',
+                clearText: 'Löschen',
+                doneText: 'OK'
             });
         });
 

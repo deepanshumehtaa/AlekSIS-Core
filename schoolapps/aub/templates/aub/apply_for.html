@@ -11,26 +11,54 @@
         <div class="row">
             <!-- From date and time -->
             <div class="col s12 m6">
-                <div class="red-text">{{ form.from_dt.errors }}</div>
 
-                <div class="input-field">
-                    <input id="{{ form.from_dt.id_for_label }}" type="text" required name="{{ form.from_dt.html_name }}"
-                           class="datepicker" value="{{ form.from_dt.value }}">
-                    <label for="{{ form.from_dt.id_for_label }}">Beginn der Befreiung</label>
-                    <span>{{ form.from_dt.help_text }}</span>
+                <h6>Beginn der Befreiung:</h6>
+
+                <div class="red-text">{{ form.from_ate.errors }}</div>
+                <div class="red-text">{{ form.from_time.errors }}</div>
+
+                <div class="input-field col s8">
+                    <input id="{{ form.from_date.id_for_label }}" type="text"
+                           required name="{{ form.from_date.html_name }}"
+                           class="datepicker" value="{{ form.from_date.value }}">
+                    <label for="{{ form.from_date.id_for_label }}">Datum</label>
                 </div>
+
+                <div class="input-field col s4">
+                    <input id="{{ form.from_time.id_for_label }}" type="text"
+                           required name="{{ form.from_time.html_name }}"
+                           class="timepicker" value="{{ form.from_time.value }}">
+                    <label for="{{ form.from_time.id_for_label }}">Uhrzeit</label>
+                </div>
+
+                <span>{{ form.from_date.help_text }}</span>
+                <span>{{ form.from_time.help_text }}</span>
             </div>
 
             <!-- To date and time -->
             <div class="col s12 m6">
-                <div class="red-text">{{ form.to_dt.errors }}</div>
 
-                <div class="input-field">
-                    <input id="{{ form.to_dt.id_for_label }}" type="text" required name="{{ form.to_dt.html_name }}"
-                           class="datepicker" value="{{ form.to_dt.value }}">
-                    <label for="{{ form.to_dt.id_for_label }}">Ende der Befreiung</label>
-                    <span>{{ form.to_dt.help_text }}</span>
+                <h6>Ende der Befreiung:</h6>
+
+                <div class="red-text">{{ form.to_date.errors }}</div>
+                <div class="red-text">{{ form.to_time.errors }}</div>
+
+                <div class="input-field col s8">
+                    <input id="{{ form.to_date.id_for_label }}" type="text"
+                           required name="{{ form.to_date.html_name }}"
+                           class="datepicker" value="{{ form.to_date.value }}">
+                    <label for="{{ form.to_date.id_for_label }}">Datum</label>
                 </div>
+
+                <div class="input-field col s4">
+                    <input id="{{ form.to_time.id_for_label }}" type="text"
+                           required name="{{ form.to_time.html_name }}"
+                           class="timepicker" value="{{ form.to_time.value }}">
+                    <label for="{{ form.to_time.id_for_label }}">Uhrzeit</label>
+                </div>
+
+                <span>{{ form.to_date.help_text }}</span>
+                <span>{{ form.to_time.help_text }}</span>
             </div>
         </div>
 

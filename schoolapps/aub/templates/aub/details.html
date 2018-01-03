@@ -1,10 +1,12 @@
 {% include 'partials/header.html' %}
 <main>
-    <h1>{{todo.title}}</h1>
-    <p>{{todo.text}}</p>
-    <hr />
-    <b>
-        created at: {{todo.created_at}}
-    </b>
+    <h5>{{ aub.from_dt }} bis {{ aub.to_dt }}</h5>
+    <p><strong>Status: <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></strong></p>
+    <p>{{ aub.description }}</p>
+    <hr>
+    <strong>
+        Eingereicht am {{ aub.created_at.date }}
+        von {{ aub.created_by.first_name }} {{ aub.created_by.last_name }}
+    </strong>
 </main>
 {% include 'partials/footer.html' %}

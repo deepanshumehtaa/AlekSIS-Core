@@ -4,29 +4,48 @@ from django.utils import timezone
 
 
 class ApplyForAUBForm(forms.Form):
-    from_dt = forms.DateTimeField(help_text="Bitte geben Sie den Anfangszeitpunkt der gewünschten Befreiung an.")
-    to_dt = forms.DateTimeField(help_text="Bitte geben Sie den Endpunkt der gewünschten Befreiung an.")
+    from_date = forms.DateField(help_text='Bitte geben Sie den Anfangszeitpunkt der gewünschten Befreiung an.',
+                                initial='')
+    to_date = forms.DateField(help_text='Bitte geben Sie den Endpunkt der gewünschten Befreiung an.',
+                              initial='')
 
-    description = forms.CharField()
+    from_time = forms.TimeField(initial='')
+    to_time = forms.TimeField(initial='')
 
-    def clean_from_dt(self):
-        data = self.cleaned_data['from_dt']
+    description = forms.CharField(initial='')
 
-        if data < timezone.now():
-            raise ValidationError("Die Befreiung kann nur zukünftig durchgeführt werden.")
+    def clean(self):
+        cleaned_data = super().clean()
+
+    def clean_from_date(self):
+        data = self.cleaned_data['from_date']
+
+        if data < timezone.datetime.date(timezone.now()):
+            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
 
         return data
 
-    def clean_to_dt(self):
-        data = self.cleaned_data['to_dt']
-        # from_dt = self.cleaned_data['from_dt']
+    def clean_to_date(self):
+        data = self.cleaned_data['to_date']
 
-        if data < timezone.now():
-            raise ValidationError("Die Befreiung kann nur zukünftig durchgeführt werden.")
+        # if data < timezone.datetime.date(timezone.now()):
+        #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
 
-        # if from_dt > data:
-        #     raise ValidationError("Die Befreiung kann nicht an einem Datum enden, " +
-        #                           "dass zum Beginn der Befreiung schon in der Vergangenheit liegt.")
+        return data
+
+    def clean_from_time(self):
+        data = self.cleaned_data['from_time']
+
+        if data < timezone.datetime.time(timezone.now()):
+            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
+
+        return data
+
+    def clean_to_time(self):
+        data = self.cleaned_data['to_time']
+
+        # if data < timezone.datetime.time(timezone.now()):
+        #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
 
         return data
 
@@ -34,6 +53,6 @@ class ApplyForAUBForm(forms.Form):
         data = self.cleaned_data['description']
 
         if len(data) < 10:
-            raise ValidationError("Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit.")
+            raise ValidationError('Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit.')
 
         return data
