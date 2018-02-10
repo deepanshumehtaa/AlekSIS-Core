@@ -33,7 +33,7 @@ urlpatterns = [
                   #######
                   # AUB #
                   #######
-                  path('aub/', include('aub.urls')),
+#                  path('aub/', include('aub.urls')),
 
                   #########
                   # Admin #
