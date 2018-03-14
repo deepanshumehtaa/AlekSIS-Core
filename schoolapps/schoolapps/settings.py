@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
-#    'aub.apps.AubConfig',
+    'aub.apps.AubConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,6 +76,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'schoolapps',
+        'USER': 'www-data',
+        'PASSWORD': 'grummelPASS1531',
+        'HOST': '',
+        'PORT': ''
+    },
+    'untis': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'untis',
         'USER': 'www-data',
         'PASSWORD': 'grummelPASS1531',
         'HOST': '',
