@@ -39,7 +39,7 @@ class Absence(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'absence'
+        db_table = 'Absence'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'absence_id'),)
 
 
@@ -64,7 +64,7 @@ class Absencereason(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'absencereason'
+        db_table = 'AbsenceReason'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'absence_reason_id'),)
 
 
@@ -89,7 +89,7 @@ class Adminlesson(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'adminlesson'
+        db_table = 'AdminLesson'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'ls_id'),)
 
 
@@ -111,8 +111,33 @@ class Alias(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'alias'
+        db_table = 'Alias'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'type', 'alias_id', 'term_id'),)
+
+
+class CvReason(models.Model):
+    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
+    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
+    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
+    cv_reason_id = models.IntegerField(db_column='CV_REASON_ID')  # Field name made lowercase.
+    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
+    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
+    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
+    sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
+    statisticcodes = models.CharField(db_column='StatisticCodes', max_length=10, blank=True,
+                                      null=True)  # Field name made lowercase.
+    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
+                                null=True)  # Field name made lowercase.
+    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
+    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    description_id = models.IntegerField(db_column='DESCRIPTION_ID', blank=True,
+                                         null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'CV_Reason'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'cv_reason_id'),)
 
 
 class Calendar(models.Model):
@@ -141,7 +166,7 @@ class Calendar(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'calendar'
+        db_table = 'Calendar'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'date'),)
 
 
@@ -266,7 +291,7 @@ class Class(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'class'
+        db_table = 'Class'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'class_id', 'term_id'),)
 
 
@@ -346,7 +371,7 @@ class Commondata(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'commondata'
+        db_table = 'CommonData'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'id', 'owner', 'number', 'number1'),)
 
 
@@ -403,7 +428,7 @@ class Corridor(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'corridor'
+        db_table = 'Corridor'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'corridor_id'),)
 
 
@@ -441,7 +466,7 @@ class Countvalue(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'countvalue'
+        db_table = 'CountValue'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'count_value_id'),)
 
 
@@ -465,33 +490,8 @@ class Couplcond(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'couplcond'
+        db_table = 'CouplCond'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'coupl_cond_id'),)
-
-
-class CvReason(models.Model):
-    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
-    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
-    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    cv_reason_id = models.IntegerField(db_column='CV_REASON_ID')  # Field name made lowercase.
-    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
-    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
-    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
-    sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    statisticcodes = models.CharField(db_column='StatisticCodes', max_length=10, blank=True,
-                                      null=True)  # Field name made lowercase.
-    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
-                                null=True)  # Field name made lowercase.
-    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
-    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    description_id = models.IntegerField(db_column='DESCRIPTION_ID', blank=True,
-                                         null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'cv_reason'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'cv_reason_id'),)
 
 
 class Department(models.Model):
@@ -510,7 +510,7 @@ class Department(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'department'
+        db_table = 'Department'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'department_id'),)
 
 
@@ -532,7 +532,7 @@ class Description(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'description'
+        db_table = 'Description'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'description_id'),)
 
 
@@ -586,7 +586,7 @@ class Event(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'event'
+        db_table = 'Event'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'event_id'),)
 
 
@@ -639,7 +639,7 @@ class Exam(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'exam'
+        db_table = 'Exam'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'exam_id'),)
 
 
@@ -666,7 +666,7 @@ class Externelement(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'externelement'
+        db_table = 'ExternElement'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'exel_id'),)
 
 
@@ -684,7 +684,7 @@ class Externindex(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'externindex'
+        db_table = 'ExternIndex'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'exel_id', 'number', 'year', 'school_id1'),)
 
 
@@ -710,7 +710,7 @@ class Externtime(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'externtime'
+        db_table = 'ExternTime'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'number', 'exel_id', 'school_id1', 'year'),)
 
 
@@ -729,7 +729,7 @@ class Glaettung(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'glaettung'
+        db_table = 'Glaettung'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teacher_id', 'number'),)
 
 
@@ -753,7 +753,7 @@ class Holiday(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'holiday'
+        db_table = 'Holiday'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'holiday_id'),)
 
 
@@ -816,7 +816,7 @@ class Inputformat(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'inputformat'
+        db_table = 'InputFormat'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'input_format_id', 'owner'),)
 
 
@@ -926,7 +926,7 @@ class Lesson(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'lesson'
+        db_table = 'Lesson'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'lesson_id', 'term_id'),)
 
 
@@ -973,7 +973,7 @@ class Lessongroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'lessongroup'
+        db_table = 'LessonGroup'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'lesson_group_id'),)
 
 
@@ -997,7 +997,7 @@ class Lessonsequence(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'lessonsequence'
+        db_table = 'LessonSequence'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'type', 'lesson_sequence_id', 'term_id'),)
 
 
@@ -1017,7 +1017,7 @@ class Lessonstack(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'lessonstack'
+        db_table = 'LessonStack'
         unique_together = (
         ('school_id', 'schoolyear_id', 'version_id', 'user_id', 'stack_id', 'term_id', 'typestack', 'typeelement'),)
 
@@ -1056,7 +1056,7 @@ class Periodstable(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'periodstable'
+        db_table = 'PeriodsTable'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'periods_table_id'),)
 
 
@@ -1088,7 +1088,7 @@ class Prebooking(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'prebooking'
+        db_table = 'Prebooking'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'prebooking_id'),)
 
 
@@ -1148,7 +1148,7 @@ class Room(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'room'
+        db_table = 'Room'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'room_id', 'term_id'),)
 
 
@@ -1171,7 +1171,7 @@ class Roomgroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'roomgroup'
+        db_table = 'RoomGroup'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'roomgroup_id'),)
 
 
@@ -1202,7 +1202,7 @@ class School(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'school'
+        db_table = 'School'
 
 
 class Schoolyear(models.Model):
@@ -1218,7 +1218,7 @@ class Schoolyear(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'schoolyear'
+        db_table = 'SchoolYear'
         unique_together = (('school_id', 'schoolyear_id'),)
 
 
@@ -1253,7 +1253,7 @@ class Screenset(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'screenset'
+        db_table = 'ScreenSet'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'screenset_id', 'owner'),)
 
 
@@ -1302,7 +1302,7 @@ class Student(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'student'
+        db_table = 'Student'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'student_id'),)
 
 
@@ -1329,7 +1329,7 @@ class Studentchoice(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'studentchoice'
+        db_table = 'StudentChoice'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'student_id', 'term_id', 'number'),)
 
 
@@ -1353,7 +1353,7 @@ class Studentgroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'studentgroup'
+        db_table = 'StudentGroup'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'studentgroup_id'),)
 
 
@@ -1379,7 +1379,7 @@ class Subjectgroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'subjectgroup'
+        db_table = 'SubjectGroup'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'subjectgroup_id'),)
 
 
@@ -1445,7 +1445,7 @@ class Subjects(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'subjects'
+        db_table = 'Subjects'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'subject_id'),)
 
 
@@ -1504,262 +1504,28 @@ class Substitution(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'substitution'
+        db_table = 'Substitution'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'substitution_id'),)
 
 
-class Tableinfo(models.Model):
+class Ttelementfilter(models.Model):
     school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
     schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
     version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    type = models.SmallIntegerField(db_column='Type')  # Field name made lowercase.
-    id = models.IntegerField(db_column='ID')  # Field name made lowercase.
-    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
-    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
-    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
-    date = models.IntegerField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
-    time = models.SmallIntegerField(db_column='Time', blank=True, null=True)  # Field name made lowercase.
-    idmax = models.IntegerField(db_column='IdMax', blank=True, null=True)  # Field name made lowercase.
-    sortidmax = models.IntegerField(db_column='SortIdMax', blank=True, null=True)  # Field name made lowercase.
-    lessonnrmax = models.IntegerField(db_column='LessonNrMax', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'tableinfo'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'type', 'id'),)
-
-
-class Teacher(models.Model):
-    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
-    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
-    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    teacher_id = models.IntegerField(db_column='TEACHER_ID')  # Field name made lowercase.
-    term_id = models.SmallIntegerField(db_column='TERM_ID')  # Field name made lowercase.
+    tt_element_filter_id = models.IntegerField(db_column='TT_ELEMENT_FILTER_ID')  # Field name made lowercase.
+    owner = models.SmallIntegerField(db_column='Owner')  # Field name made lowercase.
     counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
     user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
     deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
     sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    text = models.CharField(db_column='Text', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    statisticcodes = models.CharField(db_column='StatisticCodes', max_length=10, blank=True,
-                                      null=True)  # Field name made lowercase.
-    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
-                                null=True)  # Field name made lowercase.
-    timerequest = models.CharField(db_column='TimeRequest', max_length=400, blank=True,
-                                   null=True)  # Field name made lowercase.
-    timerequestminut = models.CharField(db_column='TimeRequestMinut', max_length=400, blank=True,
-                                        null=True)  # Field name made lowercase.
-    dayrequest = models.CharField(db_column='DayRequest', max_length=400, blank=True,
+    elementids = models.CharField(db_column='ElementIds', max_length=1000, blank=True,
                                   null=True)  # Field name made lowercase.
-    timerequestunspecified = models.CharField(db_column='TimeRequestUnspecified', max_length=400, blank=True,
-                                              null=True)  # Field name made lowercase.
-    address = models.CharField(db_column='Address', max_length=400, blank=True, null=True)  # Field name made lowercase.
-    selmatrix = models.CharField(db_column='SelMatrix', max_length=100, blank=True,
-                                 null=True)  # Field name made lowercase.
-    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
-    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    blankflags = models.CharField(db_column='BlankFlags', max_length=80, blank=True,
-                                  null=True)  # Field name made lowercase.
-    room_id = models.IntegerField(db_column='ROOM_ID', blank=True, null=True)  # Field name made lowercase.
-    description_id = models.IntegerField(db_column='DESCRIPTION_ID', blank=True,
-                                         null=True)  # Field name made lowercase.
-    forecolor = models.IntegerField(db_column='ForeColor', blank=True, null=True)  # Field name made lowercase.
-    backcolor = models.IntegerField(db_column='BackColor', blank=True, null=True)  # Field name made lowercase.
-    factor = models.CharField(db_column='Factor', max_length=9, blank=True, null=True)  # Field name made lowercase.
-    foreigndata = models.CharField(db_column='ForeignData', max_length=255, blank=True,
-                                   null=True)  # Field name made lowercase.
-    foreignkey = models.CharField(db_column='ForeignKey', max_length=50, blank=True,
-                                  null=True)  # Field name made lowercase.
-    miscdata = models.CharField(db_column='MiscData', max_length=255, blank=True,
-                                null=True)  # Field name made lowercase.
-    oldname = models.CharField(db_column='OldName', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    minutbreakmin = models.SmallIntegerField(db_column='MinutBreakMin', blank=True,
-                                             null=True)  # Field name made lowercase.
-    lunchbreakmin = models.SmallIntegerField(db_column='LunchBreakMin', blank=True,
-                                             null=True)  # Field name made lowercase.
-    lunchbreakmax = models.SmallIntegerField(db_column='LunchBreakMax', blank=True,
-                                             null=True)  # Field name made lowercase.
-    lssnperdaymin = models.SmallIntegerField(db_column='LssnPerDayMin', blank=True,
-                                             null=True)  # Field name made lowercase.
-    lssnperdaymax = models.SmallIntegerField(db_column='LssnPerDayMax', blank=True,
-                                             null=True)  # Field name made lowercase.
-    minutminutesperdaymin = models.SmallIntegerField(db_column='MinutMinutesPerDayMin', blank=True,
-                                                     null=True)  # Field name made lowercase.
-    minutminutesperdaymax = models.SmallIntegerField(db_column='MinutMinutesPerDayMax', blank=True,
-                                                     null=True)  # Field name made lowercase.
-    minutlunchbreakperdaymin = models.SmallIntegerField(db_column='MinutLunchBreakPerDayMin', blank=True,
-                                                        null=True)  # Field name made lowercase.
-    minutlunchbreakperdaymax = models.SmallIntegerField(db_column='MinutLunchBreakPerDayMax', blank=True,
-                                                        null=True)  # Field name made lowercase.
-    blocksnodays = models.SmallIntegerField(db_column='BlocksNoDays', blank=True,
-                                            null=True)  # Field name made lowercase.
-    blockslssnfrom = models.SmallIntegerField(db_column='BlocksLssnFrom', blank=True,
-                                              null=True)  # Field name made lowercase.
-    blockslssnto = models.SmallIntegerField(db_column='BlocksLssnTo', blank=True,
-                                            null=True)  # Field name made lowercase.
-    weekquotamin = models.SmallIntegerField(db_column='WeekQuotaMin', blank=True,
-                                            null=True)  # Field name made lowercase.
-    weekquotamax = models.SmallIntegerField(db_column='WeekQuotaMax', blank=True,
-                                            null=True)  # Field name made lowercase.
-    weekquotaideal = models.SmallIntegerField(db_column='WeekQuotaIdeal', blank=True,
-                                              null=True)  # Field name made lowercase.
-    pnumber = models.CharField(db_column='PNumber', max_length=20, blank=True, null=True)  # Field name made lowercase.
-    status = models.CharField(db_column='Status', max_length=10, blank=True, null=True)  # Field name made lowercase.
-    firstname = models.CharField(db_column='FirstName', max_length=150, blank=True,
-                                 null=True)  # Field name made lowercase.
-    title = models.CharField(db_column='Title', max_length=20, blank=True, null=True)  # Field name made lowercase.
-    ownschool = models.CharField(db_column='OwnSchool', max_length=20, blank=True,
-                                 null=True)  # Field name made lowercase.
-    ignorereason = models.CharField(db_column='IgnoreReason', max_length=20, blank=True,
-                                    null=True)  # Field name made lowercase.
-    department_id1 = models.SmallIntegerField(db_column='DEPARTMENT_ID1', blank=True,
-                                              null=True)  # Field name made lowercase.
-    department_id2 = models.SmallIntegerField(db_column='DEPARTMENT_ID2', blank=True,
-                                              null=True)  # Field name made lowercase.
-    department_id3 = models.SmallIntegerField(db_column='DEPARTMENT_ID3', blank=True,
-                                              null=True)  # Field name made lowercase.
-    department_id4 = models.SmallIntegerField(db_column='DEPARTMENT_ID4', blank=True,
-                                              null=True)  # Field name made lowercase.
-    department_id5 = models.SmallIntegerField(db_column='DEPARTMENT_ID5', blank=True,
-                                              null=True)  # Field name made lowercase.
-    email = models.CharField(db_column='Email', max_length=80, blank=True, null=True)  # Field name made lowercase.
-    tel = models.CharField(db_column='Tel', max_length=20, blank=True, null=True)  # Field name made lowercase.
-    handy = models.CharField(db_column='Handy', max_length=20, blank=True, null=True)  # Field name made lowercase.
-    externid = models.CharField(db_column='ExternId', max_length=20, blank=True,
-                                null=True)  # Field name made lowercase.
-    nolessnsucc = models.SmallIntegerField(db_column='NoLessnSucc', blank=True, null=True)  # Field name made lowercase.
-    cavitymin = models.SmallIntegerField(db_column='CavityMin', blank=True, null=True)  # Field name made lowercase.
-    cavitymax = models.SmallIntegerField(db_column='CavityMax', blank=True, null=True)  # Field name made lowercase.
-    availmax = models.SmallIntegerField(db_column='AvailMax', blank=True, null=True)  # Field name made lowercase.
-    daybreak = models.SmallIntegerField(db_column='DayBreak', blank=True, null=True)  # Field name made lowercase.
-    substblock = models.SmallIntegerField(db_column='SubstBlock', blank=True, null=True)  # Field name made lowercase.
-    minutbreaksweekmin = models.SmallIntegerField(db_column='MinutBreaksWeekMin', blank=True,
-                                                  null=True)  # Field name made lowercase.
-    minutbreaksweekmax = models.SmallIntegerField(db_column='MinutBreaksWeekMax', blank=True,
-                                                  null=True)  # Field name made lowercase.
-    minutsucessmax = models.SmallIntegerField(db_column='MinutSucessMax', blank=True,
-                                              null=True)  # Field name made lowercase.
-    pointbreaksupmax = models.SmallIntegerField(db_column='PointBreaksupMax', blank=True,
-                                                null=True)  # Field name made lowercase.
-    birthdate = models.IntegerField(db_column='BirthDate', blank=True, null=True)  # Field name made lowercase.
-    arrivaldate = models.IntegerField(db_column='ArrivalDate', blank=True, null=True)  # Field name made lowercase.
-    departuredate = models.IntegerField(db_column='DepartureDate', blank=True, null=True)  # Field name made lowercase.
-    plannedweek = models.IntegerField(db_column='PlannedWeek', blank=True, null=True)  # Field name made lowercase.
-    plannedweekmax = models.IntegerField(db_column='PlannedWeekMax', blank=True,
-                                         null=True)  # Field name made lowercase.
-    plannedyear = models.IntegerField(db_column='PlannedYear', blank=True, null=True)  # Field name made lowercase.
-    plannedyearmax = models.IntegerField(db_column='PlannedYearMax', blank=True,
-                                         null=True)  # Field name made lowercase.
-    salarypehour = models.IntegerField(db_column='SalaryPeHour', blank=True, null=True)  # Field name made lowercase.
-    optvarteacher = models.CharField(db_column='OptVarTeacher', max_length=1, blank=True,
-                                     null=True)  # Field name made lowercase.
-    externname = models.CharField(db_column='ExternName', max_length=60, blank=True,
-                                  null=True)  # Field name made lowercase.
-    breaksvrequest = models.CharField(db_column='BreakSVRequest', max_length=1000, blank=True,
-                                      null=True)  # Field name made lowercase.
-    teachquali1 = models.CharField(db_column='TeachQuali1', max_length=1000, blank=True,
-                                   null=True)  # Field name made lowercase.
-    teachquali2 = models.CharField(db_column='TeachQuali2', max_length=1000, blank=True,
-                                   null=True)  # Field name made lowercase.
-    teachquali3 = models.CharField(db_column='TeachQuali3', max_length=1000, blank=True,
-                                   null=True)  # Field name made lowercase.
-    teachquali4 = models.CharField(db_column='TeachQuali4', max_length=1000, blank=True,
-                                   null=True)  # Field name made lowercase.
-    text2 = models.CharField(db_column='Text2', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    glaettdate = models.IntegerField(db_column='GlaettDate', blank=True, null=True)  # Field name made lowercase.
-    breaksvdayflags = models.CharField(db_column='BreakSvDayFlags', max_length=100, blank=True,
-                                       null=True)  # Field name made lowercase.
-    lengthstaymax = models.SmallIntegerField(db_column='LengthStayMax', blank=True,
-                                             null=True)  # Field name made lowercase.
-    statusnew = models.CharField(db_column='StatusNew', max_length=10, blank=True,
-                                 null=True)  # Field name made lowercase.
-    statusnewdate = models.IntegerField(db_column='StatusNewDate', blank=True, null=True)  # Field name made lowercase.
-    text3 = models.CharField(db_column='Text3', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    text4 = models.CharField(db_column='Text4', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    plannedweekminut = models.IntegerField(db_column='PlannedWeekMinut', blank=True,
-                                           null=True)  # Field name made lowercase.
-    plannedyearminut = models.IntegerField(db_column='PlannedYearMinut', blank=True,
-                                           null=True)  # Field name made lowercase.
-    plannedweeknew = models.IntegerField(db_column='PlannedWeekNew', blank=True,
-                                         null=True)  # Field name made lowercase.
-    plannedperdept = models.CharField(db_column='PlannedPerDept', max_length=1000, blank=True,
-                                      null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'teacher'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teacher_id', 'term_id'),)
-
-
-class Teachergroup(models.Model):
-    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
-    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
-    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    teachergroup_id = models.IntegerField(db_column='TEACHERGROUP_ID')  # Field name made lowercase.
-    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
-    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
-    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
-    sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
-                                null=True)  # Field name made lowercase.
-    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
-    forecolor = models.IntegerField(db_column='ForeColor', blank=True, null=True)  # Field name made lowercase.
-    backcolor = models.IntegerField(db_column='BackColor', blank=True, null=True)  # Field name made lowercase.
-    teacherids = models.CharField(db_column='TeacherIds', max_length=255, blank=True,
-                                  null=True)  # Field name made lowercase.
-    dataperteacher = models.CharField(db_column='DataPerTeacher', max_length=255, blank=True,
-                                      null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'teachergroup'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teachergroup_id'),)
-
-
-class Terms(models.Model):
-    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
-    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
-    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    term_id = models.IntegerField(db_column='TERM_ID')  # Field name made lowercase.
-    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
-    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
-    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
-                                null=True)  # Field name made lowercase.
-    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    datefrom = models.IntegerField(db_column='DateFrom', blank=True, null=True)  # Field name made lowercase.
-    dateto = models.IntegerField(db_column='DateTo', blank=True, null=True)  # Field name made lowercase.
-    term_id_mother = models.IntegerField(db_column='TERM_ID_Mother', blank=True,
-                                         null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'terms'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'term_id'),)
-
-
-class Transfer(models.Model):
-    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
-    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
-    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    transfer_id = models.IntegerField(db_column='TRANSFER_ID')  # Field name made lowercase.
-    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
-    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
-    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
-    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    teacher_id = models.IntegerField(db_column='TEACHER_ID', blank=True, null=True)  # Field name made lowercase.
-    lesson_id = models.IntegerField(db_column='LESSON_ID', blank=True, null=True)  # Field name made lowercase.
-    datefrom = models.IntegerField(db_column='DateFrom', blank=True, null=True)  # Field name made lowercase.
-    dateto = models.IntegerField(db_column='DateTo', blank=True, null=True)  # Field name made lowercase.
-    lessonfrom = models.SmallIntegerField(db_column='LessonFrom', blank=True, null=True)  # Field name made lowercase.
-    lessonto = models.SmallIntegerField(db_column='LessonTo', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'transfer'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'transfer_id'),)
+        db_table = 'TTElementFilter'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'tt_element_filter_id', 'owner'),)
 
 
 class TtFormat(models.Model):
@@ -1934,28 +1700,262 @@ class TtFormat(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'tt_format'
+        db_table = 'TT_Format'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'tt_format_id', 'owner'),)
 
 
-class Ttelementfilter(models.Model):
+class Tableinfo(models.Model):
     school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
     schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
     version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
-    tt_element_filter_id = models.IntegerField(db_column='TT_ELEMENT_FILTER_ID')  # Field name made lowercase.
-    owner = models.SmallIntegerField(db_column='Owner')  # Field name made lowercase.
+    type = models.SmallIntegerField(db_column='Type')  # Field name made lowercase.
+    id = models.IntegerField(db_column='ID')  # Field name made lowercase.
+    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
+    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
+    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
+    date = models.IntegerField(db_column='Date', blank=True, null=True)  # Field name made lowercase.
+    time = models.SmallIntegerField(db_column='Time', blank=True, null=True)  # Field name made lowercase.
+    idmax = models.IntegerField(db_column='IdMax', blank=True, null=True)  # Field name made lowercase.
+    sortidmax = models.IntegerField(db_column='SortIdMax', blank=True, null=True)  # Field name made lowercase.
+    lessonnrmax = models.IntegerField(db_column='LessonNrMax', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TableInfo'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'type', 'id'),)
+
+
+class Teacher(models.Model):
+    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
+    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
+    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
+    teacher_id = models.IntegerField(db_column='TEACHER_ID')  # Field name made lowercase.
+    term_id = models.SmallIntegerField(db_column='TERM_ID')  # Field name made lowercase.
     counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
     user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
     deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
     sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
-    elementids = models.CharField(db_column='ElementIds', max_length=1000, blank=True,
+    text = models.CharField(db_column='Text', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    statisticcodes = models.CharField(db_column='StatisticCodes', max_length=10, blank=True,
+                                      null=True)  # Field name made lowercase.
+    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
+                                null=True)  # Field name made lowercase.
+    timerequest = models.CharField(db_column='TimeRequest', max_length=400, blank=True,
+                                   null=True)  # Field name made lowercase.
+    timerequestminut = models.CharField(db_column='TimeRequestMinut', max_length=400, blank=True,
+                                        null=True)  # Field name made lowercase.
+    dayrequest = models.CharField(db_column='DayRequest', max_length=400, blank=True,
                                   null=True)  # Field name made lowercase.
+    timerequestunspecified = models.CharField(db_column='TimeRequestUnspecified', max_length=400, blank=True,
+                                              null=True)  # Field name made lowercase.
+    address = models.CharField(db_column='Address', max_length=400, blank=True, null=True)  # Field name made lowercase.
+    selmatrix = models.CharField(db_column='SelMatrix', max_length=100, blank=True,
+                                 null=True)  # Field name made lowercase.
+    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
+    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    blankflags = models.CharField(db_column='BlankFlags', max_length=80, blank=True,
+                                  null=True)  # Field name made lowercase.
+    room_id = models.IntegerField(db_column='ROOM_ID', blank=True, null=True)  # Field name made lowercase.
+    description_id = models.IntegerField(db_column='DESCRIPTION_ID', blank=True,
+                                         null=True)  # Field name made lowercase.
+    forecolor = models.IntegerField(db_column='ForeColor', blank=True, null=True)  # Field name made lowercase.
+    backcolor = models.IntegerField(db_column='BackColor', blank=True, null=True)  # Field name made lowercase.
+    factor = models.CharField(db_column='Factor', max_length=9, blank=True, null=True)  # Field name made lowercase.
+    foreigndata = models.CharField(db_column='ForeignData', max_length=255, blank=True,
+                                   null=True)  # Field name made lowercase.
+    foreignkey = models.CharField(db_column='ForeignKey', max_length=50, blank=True,
+                                  null=True)  # Field name made lowercase.
+    miscdata = models.CharField(db_column='MiscData', max_length=255, blank=True,
+                                null=True)  # Field name made lowercase.
+    oldname = models.CharField(db_column='OldName', max_length=60, blank=True, null=True)  # Field name made lowercase.
+    minutbreakmin = models.SmallIntegerField(db_column='MinutBreakMin', blank=True,
+                                             null=True)  # Field name made lowercase.
+    lunchbreakmin = models.SmallIntegerField(db_column='LunchBreakMin', blank=True,
+                                             null=True)  # Field name made lowercase.
+    lunchbreakmax = models.SmallIntegerField(db_column='LunchBreakMax', blank=True,
+                                             null=True)  # Field name made lowercase.
+    lssnperdaymin = models.SmallIntegerField(db_column='LssnPerDayMin', blank=True,
+                                             null=True)  # Field name made lowercase.
+    lssnperdaymax = models.SmallIntegerField(db_column='LssnPerDayMax', blank=True,
+                                             null=True)  # Field name made lowercase.
+    minutminutesperdaymin = models.SmallIntegerField(db_column='MinutMinutesPerDayMin', blank=True,
+                                                     null=True)  # Field name made lowercase.
+    minutminutesperdaymax = models.SmallIntegerField(db_column='MinutMinutesPerDayMax', blank=True,
+                                                     null=True)  # Field name made lowercase.
+    minutlunchbreakperdaymin = models.SmallIntegerField(db_column='MinutLunchBreakPerDayMin', blank=True,
+                                                        null=True)  # Field name made lowercase.
+    minutlunchbreakperdaymax = models.SmallIntegerField(db_column='MinutLunchBreakPerDayMax', blank=True,
+                                                        null=True)  # Field name made lowercase.
+    blocksnodays = models.SmallIntegerField(db_column='BlocksNoDays', blank=True,
+                                            null=True)  # Field name made lowercase.
+    blockslssnfrom = models.SmallIntegerField(db_column='BlocksLssnFrom', blank=True,
+                                              null=True)  # Field name made lowercase.
+    blockslssnto = models.SmallIntegerField(db_column='BlocksLssnTo', blank=True,
+                                            null=True)  # Field name made lowercase.
+    weekquotamin = models.SmallIntegerField(db_column='WeekQuotaMin', blank=True,
+                                            null=True)  # Field name made lowercase.
+    weekquotamax = models.SmallIntegerField(db_column='WeekQuotaMax', blank=True,
+                                            null=True)  # Field name made lowercase.
+    weekquotaideal = models.SmallIntegerField(db_column='WeekQuotaIdeal', blank=True,
+                                              null=True)  # Field name made lowercase.
+    pnumber = models.CharField(db_column='PNumber', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    status = models.CharField(db_column='Status', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    firstname = models.CharField(db_column='FirstName', max_length=150, blank=True,
+                                 null=True)  # Field name made lowercase.
+    title = models.CharField(db_column='Title', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    ownschool = models.CharField(db_column='OwnSchool', max_length=20, blank=True,
+                                 null=True)  # Field name made lowercase.
+    ignorereason = models.CharField(db_column='IgnoreReason', max_length=20, blank=True,
+                                    null=True)  # Field name made lowercase.
+    department_id1 = models.SmallIntegerField(db_column='DEPARTMENT_ID1', blank=True,
+                                              null=True)  # Field name made lowercase.
+    department_id2 = models.SmallIntegerField(db_column='DEPARTMENT_ID2', blank=True,
+                                              null=True)  # Field name made lowercase.
+    department_id3 = models.SmallIntegerField(db_column='DEPARTMENT_ID3', blank=True,
+                                              null=True)  # Field name made lowercase.
+    department_id4 = models.SmallIntegerField(db_column='DEPARTMENT_ID4', blank=True,
+                                              null=True)  # Field name made lowercase.
+    department_id5 = models.SmallIntegerField(db_column='DEPARTMENT_ID5', blank=True,
+                                              null=True)  # Field name made lowercase.
+    email = models.CharField(db_column='Email', max_length=80, blank=True, null=True)  # Field name made lowercase.
+    tel = models.CharField(db_column='Tel', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    handy = models.CharField(db_column='Handy', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    externid = models.CharField(db_column='ExternId', max_length=20, blank=True,
+                                null=True)  # Field name made lowercase.
+    nolessnsucc = models.SmallIntegerField(db_column='NoLessnSucc', blank=True, null=True)  # Field name made lowercase.
+    cavitymin = models.SmallIntegerField(db_column='CavityMin', blank=True, null=True)  # Field name made lowercase.
+    cavitymax = models.SmallIntegerField(db_column='CavityMax', blank=True, null=True)  # Field name made lowercase.
+    availmax = models.SmallIntegerField(db_column='AvailMax', blank=True, null=True)  # Field name made lowercase.
+    daybreak = models.SmallIntegerField(db_column='DayBreak', blank=True, null=True)  # Field name made lowercase.
+    substblock = models.SmallIntegerField(db_column='SubstBlock', blank=True, null=True)  # Field name made lowercase.
+    minutbreaksweekmin = models.SmallIntegerField(db_column='MinutBreaksWeekMin', blank=True,
+                                                  null=True)  # Field name made lowercase.
+    minutbreaksweekmax = models.SmallIntegerField(db_column='MinutBreaksWeekMax', blank=True,
+                                                  null=True)  # Field name made lowercase.
+    minutsucessmax = models.SmallIntegerField(db_column='MinutSucessMax', blank=True,
+                                              null=True)  # Field name made lowercase.
+    pointbreaksupmax = models.SmallIntegerField(db_column='PointBreaksupMax', blank=True,
+                                                null=True)  # Field name made lowercase.
+    birthdate = models.IntegerField(db_column='BirthDate', blank=True, null=True)  # Field name made lowercase.
+    arrivaldate = models.IntegerField(db_column='ArrivalDate', blank=True, null=True)  # Field name made lowercase.
+    departuredate = models.IntegerField(db_column='DepartureDate', blank=True, null=True)  # Field name made lowercase.
+    plannedweek = models.IntegerField(db_column='PlannedWeek', blank=True, null=True)  # Field name made lowercase.
+    plannedweekmax = models.IntegerField(db_column='PlannedWeekMax', blank=True,
+                                         null=True)  # Field name made lowercase.
+    plannedyear = models.IntegerField(db_column='PlannedYear', blank=True, null=True)  # Field name made lowercase.
+    plannedyearmax = models.IntegerField(db_column='PlannedYearMax', blank=True,
+                                         null=True)  # Field name made lowercase.
+    salarypehour = models.IntegerField(db_column='SalaryPeHour', blank=True, null=True)  # Field name made lowercase.
+    optvarteacher = models.CharField(db_column='OptVarTeacher', max_length=1, blank=True,
+                                     null=True)  # Field name made lowercase.
+    externname = models.CharField(db_column='ExternName', max_length=60, blank=True,
+                                  null=True)  # Field name made lowercase.
+    breaksvrequest = models.CharField(db_column='BreakSVRequest', max_length=1000, blank=True,
+                                      null=True)  # Field name made lowercase.
+    teachquali1 = models.CharField(db_column='TeachQuali1', max_length=1000, blank=True,
+                                   null=True)  # Field name made lowercase.
+    teachquali2 = models.CharField(db_column='TeachQuali2', max_length=1000, blank=True,
+                                   null=True)  # Field name made lowercase.
+    teachquali3 = models.CharField(db_column='TeachQuali3', max_length=1000, blank=True,
+                                   null=True)  # Field name made lowercase.
+    teachquali4 = models.CharField(db_column='TeachQuali4', max_length=1000, blank=True,
+                                   null=True)  # Field name made lowercase.
+    text2 = models.CharField(db_column='Text2', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    glaettdate = models.IntegerField(db_column='GlaettDate', blank=True, null=True)  # Field name made lowercase.
+    breaksvdayflags = models.CharField(db_column='BreakSvDayFlags', max_length=100, blank=True,
+                                       null=True)  # Field name made lowercase.
+    lengthstaymax = models.SmallIntegerField(db_column='LengthStayMax', blank=True,
+                                             null=True)  # Field name made lowercase.
+    statusnew = models.CharField(db_column='StatusNew', max_length=10, blank=True,
+                                 null=True)  # Field name made lowercase.
+    statusnewdate = models.IntegerField(db_column='StatusNewDate', blank=True, null=True)  # Field name made lowercase.
+    text3 = models.CharField(db_column='Text3', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    text4 = models.CharField(db_column='Text4', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    plannedweekminut = models.IntegerField(db_column='PlannedWeekMinut', blank=True,
+                                           null=True)  # Field name made lowercase.
+    plannedyearminut = models.IntegerField(db_column='PlannedYearMinut', blank=True,
+                                           null=True)  # Field name made lowercase.
+    plannedweeknew = models.IntegerField(db_column='PlannedWeekNew', blank=True,
+                                         null=True)  # Field name made lowercase.
+    plannedperdept = models.CharField(db_column='PlannedPerDept', max_length=1000, blank=True,
+                                      null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'ttelementfilter'
-        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'tt_element_filter_id', 'owner'),)
+        db_table = 'Teacher'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teacher_id', 'term_id'),)
+
+
+class Teachergroup(models.Model):
+    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
+    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
+    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
+    teachergroup_id = models.IntegerField(db_column='TEACHERGROUP_ID')  # Field name made lowercase.
+    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
+    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
+    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
+    sortid = models.IntegerField(db_column='SortId', blank=True, null=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
+    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
+                                null=True)  # Field name made lowercase.
+    timestamp = models.IntegerField(db_column='TimeStamp', blank=True, null=True)  # Field name made lowercase.
+    forecolor = models.IntegerField(db_column='ForeColor', blank=True, null=True)  # Field name made lowercase.
+    backcolor = models.IntegerField(db_column='BackColor', blank=True, null=True)  # Field name made lowercase.
+    teacherids = models.CharField(db_column='TeacherIds', max_length=255, blank=True,
+                                  null=True)  # Field name made lowercase.
+    dataperteacher = models.CharField(db_column='DataPerTeacher', max_length=255, blank=True,
+                                      null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TeacherGroup'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teachergroup_id'),)
+
+
+class Terms(models.Model):
+    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
+    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
+    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
+    term_id = models.IntegerField(db_column='TERM_ID')  # Field name made lowercase.
+    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
+    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
+    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=60, blank=True, null=True)  # Field name made lowercase.
+    longname = models.CharField(db_column='Longname', max_length=100, blank=True,
+                                null=True)  # Field name made lowercase.
+    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    datefrom = models.IntegerField(db_column='DateFrom', blank=True, null=True)  # Field name made lowercase.
+    dateto = models.IntegerField(db_column='DateTo', blank=True, null=True)  # Field name made lowercase.
+    term_id_mother = models.IntegerField(db_column='TERM_ID_Mother', blank=True,
+                                         null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Terms'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'term_id'),)
+
+
+class Transfer(models.Model):
+    school_id = models.IntegerField(db_column='SCHOOL_ID', primary_key=True)  # Field name made lowercase.
+    schoolyear_id = models.IntegerField(db_column='SCHOOLYEAR_ID')  # Field name made lowercase.
+    version_id = models.SmallIntegerField(db_column='VERSION_ID')  # Field name made lowercase.
+    transfer_id = models.IntegerField(db_column='TRANSFER_ID')  # Field name made lowercase.
+    counter = models.IntegerField(db_column='Counter', blank=True, null=True)  # Field name made lowercase.
+    user_id = models.SmallIntegerField(db_column='USER_ID', blank=True, null=True)  # Field name made lowercase.
+    deleted = models.IntegerField(db_column='Deleted', blank=True, null=True)  # Field name made lowercase.
+    flags = models.CharField(db_column='Flags', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    teacher_id = models.IntegerField(db_column='TEACHER_ID', blank=True, null=True)  # Field name made lowercase.
+    lesson_id = models.IntegerField(db_column='LESSON_ID', blank=True, null=True)  # Field name made lowercase.
+    datefrom = models.IntegerField(db_column='DateFrom', blank=True, null=True)  # Field name made lowercase.
+    dateto = models.IntegerField(db_column='DateTo', blank=True, null=True)  # Field name made lowercase.
+    lessonfrom = models.SmallIntegerField(db_column='LessonFrom', blank=True, null=True)  # Field name made lowercase.
+    lessonto = models.SmallIntegerField(db_column='LessonTo', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Transfer'
+        unique_together = (('school_id', 'schoolyear_id', 'version_id', 'transfer_id'),)
 
 
 class Untissettings(models.Model):
@@ -1975,7 +1975,7 @@ class Untissettings(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'untissettings'
+        db_table = 'UntisSettings'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'option_id'),)
 
 
@@ -2017,7 +2017,7 @@ class User(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'user'
+        db_table = 'User'
 
 
 class Usergroup(models.Model):
@@ -2064,7 +2064,7 @@ class Usergroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'usergroup'
+        db_table = 'UserGroup'
 
 
 class Usermessage(models.Model):
@@ -2081,7 +2081,7 @@ class Usermessage(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'usermessage'
+        db_table = 'UserMessage'
         unique_together = (('message_id', 'user_id'),)
 
 
@@ -2107,7 +2107,7 @@ class Valuecorrection(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'valuecorrection'
+        db_table = 'ValueCorrection'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'teacher_id', 'number'),)
 
 
@@ -2134,7 +2134,7 @@ class Version(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'version'
+        db_table = 'Version'
         unique_together = (('school_id', 'schoolyear_id', 'version_id'),)
 
 
@@ -2238,5 +2238,5 @@ class Views(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'views'
+        db_table = 'Views'
         unique_together = (('school_id', 'schoolyear_id', 'version_id', 'type', 'views_id', 'owner'),)

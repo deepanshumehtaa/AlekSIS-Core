@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'aub.apps.AubConfig',
+    'untisconnect.apps.UntisconnectConfig',
+    'timetable.apps.TimetableConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,7 +85,7 @@ DATABASES = {
     },
     'untis': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'untis',
+        'NAME': 'untiskath',
         'USER': 'www-data',
         'PASSWORD': 'grummelPASS1531',
         'HOST': '',

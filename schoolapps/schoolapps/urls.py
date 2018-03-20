@@ -35,6 +35,16 @@ urlpatterns = [
                   #######
                   path('aub/', include('aub.urls')),
 
+                  #################
+                  # UNTIS CONNECT #
+                  #################
+                  path('untis/', include('untisconnect.urls')),
+
+                  #############
+                  # TIMETABLE #
+                  #############
+                  path('timetable/', include('timetable.urls')),
+
                   #########
                   # Admin #
                   #########
