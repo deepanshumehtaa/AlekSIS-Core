@@ -1019,7 +1019,7 @@ class Lessonstack(models.Model):
         managed = False
         db_table = 'LessonStack'
         unique_together = (
-        ('school_id', 'schoolyear_id', 'version_id', 'user_id', 'stack_id', 'term_id', 'typestack', 'typeelement'),)
+            ('school_id', 'schoolyear_id', 'version_id', 'user_id', 'stack_id', 'term_id', 'typestack', 'typeelement'),)
 
 
 class Periodstable(models.Model):

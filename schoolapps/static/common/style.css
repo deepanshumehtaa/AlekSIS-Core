@@ -83,3 +83,17 @@ ul.collection .collection-item .title {
 span.badge.new::after {
     content: "";
 }
+
+.lesson-card, .timetable-title-card {
+    margin: 0;
+}
+
+.lesson-card .card-content {
+    padding: 5px;
+    text-align: center;
+}
+
+.timetable-title-card .card-content {
+    padding: 10px;
+    text-align: center;
+}
