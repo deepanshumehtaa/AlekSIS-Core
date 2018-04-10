@@ -20,7 +20,7 @@ def admin_all(request):
         'classes': classes,
         'rooms': rooms
     }
-    return render(request, 'timetable/admin/all.html', context)
+    return render(request, 'timetable/admin/../schoolapps/timetable/templates/timetable/all.html', context)
 
 
 @login_required
