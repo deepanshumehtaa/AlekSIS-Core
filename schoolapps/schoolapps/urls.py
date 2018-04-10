@@ -20,30 +20,30 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-                  #############
-                  # Dashboard #
-                  #############
-                  path('', include('dashboard.urls')),
+                #   #############
+                #   # Dashboard #
+                #   #############
+                #   path('', include('dashboard.urls')),
 
-                  ########
-                  # Auth #
-                  ########
-                  path('accounts/', include('django.contrib.auth.urls')),
+                #   ########
+                #   # Auth #
+                #   ########
+                #   path('accounts/', include('django.contrib.auth.urls')),
 
-                  #######
-                  # AUB #
-                  #######
-                  path('aub/', include('aub.urls')),
+                #   #######
+                #   # AUB #
+                #   #######
+                #   path('aub/', include('aub.urls')),
 
-                  #################
-                  # UNTIS CONNECT #
-                  #################
-                  path('untis/', include('untisconnect.urls')),
+                #   #################
+                #   # UNTIS CONNECT #
+                #   #################
+                #   path('untis/', include('untisconnect.urls')),
 
-                  #############
-                  # TIMETABLE #
-                  #############
-                  path('timetable/', include('timetable.urls')),
+                #   #############
+                #   # TIMETABLE #
+                #   #############
+                #   path('timetable/', include('timetable.urls')),
 
                   #########
                   # Admin #
