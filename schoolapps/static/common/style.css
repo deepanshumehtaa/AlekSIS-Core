@@ -115,3 +115,12 @@ span.badge.new::after {
     padding: 10px;
     text-align: center;
 }
+
+/***************/
+.btn-flat-large {
+    line-height: 60px;
+    height: 60px;
+}
+.btn-flat-large i {
+    font-size: 4rem;
+} 

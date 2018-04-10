@@ -1,8 +1,8 @@
 {% include 'partials/header.html' %}
 
 <main>
-    <h5>Antrag auf Unterrichtsbefreiung stellen</h5>
-
+    <h5>Antrag auf Unterrichtsbefreiung</h5>
+    Hiermit beantrage ich die Freistellung vom Unterricht wie folgt.
     <form action="" method="post">
         {% csrf_token %}
         <div class="flow-text red-text">
@@ -13,11 +13,15 @@
             <div class="col s12 m6">
 
                 <h6>Beginn der Befreiung:</h6>
-
+                
                 <div class="red-text">{{ form.from_date.errors }}</div>
                 <div class="red-text">{{ form.from_time.errors }}</div>
-
-                <div class="input-field col s8">
+                
+                <div class="col s2">
+                    Von:
+                </div>
+                <div class="input-field col s6">
+                        
                     <input id="{{ form.from_date.id_for_label }}" type="text"
                            required name="{{ form.from_date.html_name }}"
                            class="datepicker" value="{{ form.from_date.value }}">
@@ -39,11 +43,13 @@
             <div class="col s12 m6">
 
                 <h6>Ende der Befreiung:</h6>
-
+                
                 <div class="red-text">{{ form.to_date.errors }}</div>
                 <div class="red-text">{{ form.to_time.errors }}</div>
-
-                <div class="input-field col s8">
+                <div class="col s2">
+                        Bis:
+                </div>
+                <div class="input-field col s6">
                     <input id="{{ form.to_date.id_for_label }}" type="text"
                            required name="{{ form.to_date.html_name }}"
                            class="datepicker" value="{{ form.to_date.value }}">
