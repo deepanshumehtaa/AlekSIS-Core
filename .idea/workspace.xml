@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3a000256-1023-4a19-a046-bde25cb853cc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Datenstruktur UNTIS.pdf" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/partials/footer.html" afterPath="$PROJECT_DIR$/schoolapps/templates/partials/footer.html" />
+      <change beforePath="$PROJECT_DIR$/schoolapps/static/common/style.css" afterPath="$PROJECT_DIR$/schoolapps/static/common/style.css" />
+      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,16 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schoolapps/dashboard/templates/dashboard/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="46" column="32" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="46" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/views.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -53,21 +43,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="footer.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/templates/partials/footer.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schoolapps/timetable/models.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="5" column="28" lean-forward="false" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+            <state relative-caret-position="244">
+              <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -77,7 +67,7 @@
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/parse.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="219">
-              <caret line="225" column="52" lean-forward="true" selection-start-line="225" selection-start-column="52" selection-end-line="225" selection-end-column="52" />
+              <caret line="225" column="52" lean-forward="false" selection-start-line="225" selection-start-column="52" selection-end-line="225" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -93,14 +83,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plan.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plan.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="63" column="51" lean-forward="false" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
+            <state relative-caret-position="100">
+              <caret line="78" column="89" lean-forward="false" selection-start-line="78" selection-start-column="89" selection-end-line="78" selection-end-column="89" />
               <folding>
-                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#1;n#div#1;n#main#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/schoolapps/static/common/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="110" column="28" lean-forward="false" selection-start-line="110" selection-start-column="28" selection-end-line="110" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,8 +118,8 @@
       <file leaf-file-name="all.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/admin/all.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="27" column="48" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="6" column="36" lean-forward="true" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -197,20 +197,20 @@
         <option value="$PROJECT_DIR$/schoolapps/timetable/urls.py" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/parser/parse.py" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/admin/all.html" />
-        <option value="$PROJECT_DIR$/schoolapps/static/common/style.css" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/views.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/header.html" />
         <option value="$PROJECT_DIR$/schoolapps/untisconnect/api.py" />
         <option value="$PROJECT_DIR$/schoolapps/dashboard/views.py" />
-        <option value="$PROJECT_DIR$/schoolapps/schoolapps/urls.py" />
         <option value="$PROJECT_DIR$/schoolapps/dashboard/urls.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/impress.html" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/models.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" />
         <option value="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/parse.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/footer.html" />
+        <option value="$PROJECT_DIR$/schoolapps/schoolapps/urls.py" />
+        <option value="$PROJECT_DIR$/schoolapps/static/common/style.css" />
+        <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" />
       </list>
     </option>
   </component>
@@ -260,6 +260,19 @@
               <item name="school-apps" type="462c0819:PsiDirectoryNode" />
               <item name="schoolapps" type="462c0819:PsiDirectoryNode" />
               <item name="schoolapps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="school-apps" type="b2602c69:ProjectViewProjectNode" />
+              <item name="school-apps" type="462c0819:PsiDirectoryNode" />
+              <item name="schoolapps" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="school-apps" type="b2602c69:ProjectViewProjectNode" />
+              <item name="school-apps" type="462c0819:PsiDirectoryNode" />
+              <item name="schoolapps" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="school-apps" type="b2602c69:ProjectViewProjectNode" />
@@ -577,7 +590,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523356282750</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Comment in urls">
+      <created>1523358682678</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1523358682678</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -617,7 +637,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Running login module (without permissions) | Models for Teacher and Aub [ADD UNVERSIONED FILES]" />
     <MESSAGE value="Delete teacher app" />
     <MESSAGE value="Update Aub model" />
     <MESSAGE value="Implement aub model completely" />
@@ -642,7 +661,8 @@
     <MESSAGE value="[UNTIS] All teachers can be got from [new] untisconnect api | Basic timetable app with all teachers in a list | Untisconnector app for models/api from [UNTIS]" />
     <MESSAGE value="A working timetable [NOT FINISHED]" />
     <MESSAGE value="A working timetable" />
-    <option name="LAST_COMMIT_MESSAGE" value="A working timetable" />
+    <MESSAGE value="Comment in urls" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment in urls" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -847,26 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="45" column="64" lean-forward="false" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/untisconnect/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3179">
           <caret line="187" column="37" lean-forward="false" selection-start-line="187" selection-start-column="37" selection-end-line="187" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/static/common/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="86" column="35" lean-forward="false" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -919,29 +923,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/admin/all.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="27" column="48" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="63" column="51" lean-forward="false" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#1;n#div#1;n#main#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -974,7 +960,7 @@
     <entry file="file://$PROJECT_DIR$/schoolapps/timetable/parse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
-          <caret line="225" column="52" lean-forward="true" selection-start-line="225" selection-start-column="52" selection-end-line="225" selection-end-column="52" />
+          <caret line="225" column="52" lean-forward="false" selection-start-line="225" selection-start-column="52" selection-end-line="225" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -982,8 +968,42 @@
     <entry file="file://$PROJECT_DIR$/schoolapps/templates/partials/footer.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/admin/all.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="36" lean-forward="true" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/static/common/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="110" column="28" lean-forward="false" selection-start-line="110" selection-start-column="28" selection-end-line="110" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="78" column="89" lean-forward="false" selection-start-line="78" selection-start-column="89" selection-end-line="78" selection-end-column="89" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
