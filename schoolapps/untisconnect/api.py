@@ -177,12 +177,16 @@ class Subject(object):
         self.id = None
         self.shortcode = None
         self.name = None
+        self.color = None
+        self.hex_color = None
 
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.subject_id
         self.shortcode = db_obj.name
         self.name = db_obj.longname
+        self.color = db_obj.backcolor
+        self.hex_color = "#" + str(hex(db_obj.backcolor)).replace("0x", "")
 
 
 def get_all_subjects():

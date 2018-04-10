@@ -33,3 +33,8 @@ def test_mail(request):
     """ Sends a test mail """
     send_mail_with_template("Test", [request.user.email], 'mail/email.txt', 'mail/email.html', {'user': request.user})
     return redirect(reverse('dashboard'))
+
+
+@login_required
+def impress(request):
+    return render(request, 'partials/impress.html')
