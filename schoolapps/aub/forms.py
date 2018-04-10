@@ -4,10 +4,8 @@ from django.utils import timezone
 
 
 class ApplyForAUBForm(forms.Form):
-    from_date = forms.DateField(help_text='Bitte geben Sie den Anfangszeitpunkt der gewünschten Befreiung an.',
-                                initial='')
-    to_date = forms.DateField(help_text='Bitte geben Sie den Endpunkt der gewünschten Befreiung an.',
-                              initial='')
+    from_date = forms.DateField(initial='')
+    to_date = forms.DateField(initial='')
 
     from_time = forms.TimeField(initial='')
     to_time = forms.TimeField(initial='')
@@ -19,9 +17,9 @@ class ApplyForAUBForm(forms.Form):
 
     def clean_from_date(self):
         data = self.cleaned_data['from_date']
-
+        print(data,timezone.datetime.time(timezone.now()) )
         if data < timezone.datetime.date(timezone.now()):
-            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
+            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden (Datumsfehler).')
 
         return data
 
@@ -35,9 +33,9 @@ class ApplyForAUBForm(forms.Form):
 
     def clean_from_time(self):
         data = self.cleaned_data['from_time']
-
+       
         if data < timezone.datetime.time(timezone.now()):
-            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
+            raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden (Zeitfehler).')
 
         return data
 

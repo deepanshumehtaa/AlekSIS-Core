@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='aub_index'),
     path('details/<int:aub_id>/', views.details, name='aub_details'),
     path('apply_for', views.apply_for, name='aub_apply_for'),
-    path('applied_for', views.applied_for, name='aub_applied_for')
+    path('applied_for', views.applied_for, name='aub_applied_for'),
+    path('check', views.check, name='aub_check'),
 ]
