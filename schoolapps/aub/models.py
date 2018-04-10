@@ -53,6 +53,9 @@ class Aub(models.Model):
     class Meta:
         permissions = (
             ('apply_for_aub', 'Apply for a AUB'),
-            ('allow_aub', 'Allow a AUB'),
-            ('check_aub', 'Check a AUB')
+            ('cancel_aub', 'Cancel a AUB'),
+            ('allow1_aub', 'First permission'),
+            ('allow2_aub', 'Second permission'),
+            ('check1_aub', 'Check a AUB'),
+            ('check2_aub', 'Check a AUB')
         )

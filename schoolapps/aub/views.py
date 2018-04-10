@@ -6,7 +6,10 @@ from django.utils import timezone
 from .forms import ApplyForAUBForm
 from .models import Aub, Status
 
+from itertools import chain
+
 IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')[0]
+SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='yellow')[0]
 ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')[0]
 NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')[0]
 
@@ -68,8 +71,26 @@ def applied_for(request):
     return render(request, 'aub/applied_for.html', context)
 
 @login_required
-@permission_required('aub.check_aub')
-def check(request):
+@permission_required('aub.check1_aub')
+def check1(request):
+    if request.method == 'POST':
+        if 'aub-id' in request.POST: 
+            aub_id = request.POST['aub-id']
+            if 'semi-allow' in request.POST:
+                Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
+            elif 'deny' in request.POST:
+                Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
+
+    aubs =  Aub.objects.filter(status=IN_PROCESSING_STATUS)
+    context = {
+        'aubs': aubs
+    }
+
+    return render(request, 'aub/check1.html', context)
+    
+@login_required
+@permission_required('aub.check2_aub')
+def check2(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST: 
             aub_id = request.POST['aub-id']
@@ -78,8 +99,9 @@ def check(request):
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
-    aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
+    aubs =  Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
     context = {
         'aubs': aubs
     }
-    return render(request, 'aub/check.html', context)
+
+    return render(request, 'aub/check2.html', context)
