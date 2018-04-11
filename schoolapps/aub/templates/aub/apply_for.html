@@ -2,7 +2,7 @@
 
 <main>
     <h5>Antrag auf Unterrichtsbefreiung</h5>
-    Hiermit beantrage ich die Freistellung vom Unterricht wie folgt.
+
     <form action="" method="post">
         {% csrf_token %}
         <div class="flow-text red-text">
@@ -11,14 +11,12 @@
         <div class="row">
             <!-- From date and time -->
             <div class="col s12 m6">
-
-                <h6>Beginn der Befreiung:</h6>
                 
                 <div class="red-text">{{ form.from_date.errors }}</div>
                 <div class="red-text">{{ form.from_time.errors }}</div>
                 
                 <div class="col s2">
-                    Von:
+                    <h5>Von:</h5>
                 </div>
                 <div class="input-field col s6">
                         
@@ -42,12 +40,10 @@
             <!-- To date and time -->
             <div class="col s12 m6">
 
-                <h6>Ende der Befreiung:</h6>
-                
                 <div class="red-text">{{ form.to_date.errors }}</div>
                 <div class="red-text">{{ form.to_time.errors }}</div>
                 <div class="col s2">
-                        Bis:
+                   <h5>Bis:</h5>
                 </div>
                 <div class="input-field col s6">
                     <input id="{{ form.to_date.id_for_label }}" type="text"
@@ -72,9 +68,11 @@
 
             <!-- Description -->
             <div class="red-text col s12">{{ form.description.errors }}</div>
-            <div class="input-field col s12">
 
-
+            <div class="col s1">
+                <h5>Grund:</h5>
+            </div>
+            <div class="input-field col s11">
                 <textarea id="{{ form.description.id_for_label }}" required
                           name="{{ form.description.html_name }}"
                           class="materialize-textarea">{{ form.description.value }}</textarea>
