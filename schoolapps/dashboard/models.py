@@ -24,8 +24,8 @@ class Activity(models.Model):
 
 
 class Notification(models.Model):
-    to = models.ManyToManyField(User, related_name='notifications')
-
+    #to = models.ManyToManyField(User, related_name='notifications')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user())
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
 
@@ -35,3 +35,5 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.title
+
+#def register_notification()
