@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3a000256-1023-4a19-a046-bde25cb853cc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/check1.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/check2.html" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/check.html" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/views.py" afterPath="$PROJECT_DIR$/schoolapps/aub/views.py" />
+      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/views.py" afterPath="$PROJECT_DIR$/schoolapps/dashboard/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +42,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="check.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="check.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/aub/templates/aub/check.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -84,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schoolapps/dashboard/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="11" column="19" lean-forward="true" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
               </folding>
@@ -177,7 +175,6 @@
         <option value="$PROJECT_DIR$/schoolapps/timetable/parser/parse.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/header.html" />
         <option value="$PROJECT_DIR$/schoolapps/untisconnect/api.py" />
-        <option value="$PROJECT_DIR$/schoolapps/dashboard/views.py" />
         <option value="$PROJECT_DIR$/schoolapps/dashboard/urls.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/impress.html" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/models.py" />
@@ -194,6 +191,7 @@
         <option value="$PROJECT_DIR$/schoolapps/aub/forms.py" />
         <option value="$PROJECT_DIR$/schoolapps/dashboard/models.py" />
         <option value="$PROJECT_DIR$/schoolapps/aub/views.py" />
+        <option value="$PROJECT_DIR$/schoolapps/dashboard/views.py" />
       </list>
     </option>
   </component>
@@ -643,7 +641,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523459119047</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="One template for both check sites [AUB]">
+      <created>1523524657420</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1523524657421</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -683,7 +688,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Bug fix in login module" />
     <MESSAGE value="Init static files" />
     <MESSAGE value="Include Materialize" />
     <MESSAGE value="Finish first design" />
@@ -708,7 +712,8 @@
     <MESSAGE value="Refactor CSS for timetable (&gt; flex) | Show classes on teacher and room plans" />
     <MESSAGE value="Some changes in timetable app" />
     <MESSAGE value="Tidy (comment out not used code) | Use timezone.datetime instead of datetime | Register activity in apply for aub" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tidy (comment out not used code) | Use timezone.datetime instead of datetime | Register activity in apply for aub" />
+    <MESSAGE value="One template for both check sites [AUB]" />
+    <option name="LAST_COMMIT_MESSAGE" value="One template for both check sites [AUB]" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -989,16 +994,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/dashboard/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/aub/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1040,6 +1035,16 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/dashboard/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="19" lean-forward="true" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

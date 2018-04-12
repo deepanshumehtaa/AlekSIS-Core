@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Activity
-from .apps import DashboardConfig
+# from .apps import DashboardConfig
 from mailer import send_mail_with_template
 
 
@@ -12,13 +12,13 @@ from mailer import send_mail_with_template
 def index(request):
     """ Index page: Lists activities und notifications """
     # Register visit
-    act = Activity(title="Dashboard aufgerufen", description="Sie haben das Dashboard aufgerufen.",
-                   app=DashboardConfig.verbose_name, user=request.user)
-    act.save()
+    # act = Activity(title="Dashboard aufgerufen", description="Sie haben das Dashboard aufgerufen.",
+    #                app=DashboardConfig.verbose_name, user=request.user)
+    # act.save()
 
     # Load activities
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
-    notifications = request.user.notifications.all()[:5]
+    notifications = request.user.notifications.all()
 
     context = {
         'activities': activities,
