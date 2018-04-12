@@ -1,17 +1,37 @@
 {% include 'partials/header.html' %}
 <main>
 
-    <h5>Ihre Anträge</h5>
+    <h5>Übersicht der Anträge</h5>
     <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
     <ul class="collection">
         {% for aub in aubs %}
             <li class="collection-item">
-                <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span>
-                <p class="title">
-                    <i class="material-icons left">access_time</i>
-                    {{ aub.from_dt }} bis {{ aub.to_dt }}
-                </p>
-                <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
+
+                <div class="row">
+                        <div class="col s12 m8">
+                            <p class="title">
+                                <i class="material-icons left">access_time</i>
+                                {{ aub.from_dt }} bis {{ aub.to_dt }}
+                            </p>
+                            <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
+                        </div>
+                        <div class="col s12 m4">
+                            <p>
+                            <form action="" method="POST" class="right">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ aub.id }}" name="aub-id">
+                                <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium">
+                                    <i class="material-icons center green-text">create</i>
+                                </button>
+                                <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium">
+                                    <i class="material-icons center red-text">cancel</i>
+                                </button>
+                            </form>
+                            </p>
+                            <p><span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></p>
+                        </div>
+                    </div>
+                
             </li>
         {% endfor %}
     </ul>

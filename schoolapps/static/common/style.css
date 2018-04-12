@@ -124,3 +124,10 @@ span.badge.new::after {
 .btn-flat-large i {
     font-size: 4rem;
 } 
+.btn-flat-medium {
+    line-height: 40px;
+    height: 40px;
+}
+.btn-flat-medium i {
+    font-size: 2rem;
+} 
