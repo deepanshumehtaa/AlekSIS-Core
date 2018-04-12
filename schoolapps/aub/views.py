@@ -50,8 +50,9 @@ def apply_for(request):
             aub.save()
 
             a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-                         description="Sie haben einen Antrag auf Unterrichtsbefreiung für den Zeitraum von {} bis {} gestellt.".format(
-                             aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
+                         description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
+                                     "für den Zeitraum von {} bis {} gestellt.".format(
+                                         aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
             a.save()
 
             return redirect(reverse('aub_applied_for'))
@@ -82,7 +83,7 @@ def check1(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
             aub_id = request.POST['aub-id']
-            if 'semi-allow' in request.POST:
+            if 'allow' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
@@ -92,7 +93,7 @@ def check1(request):
         'aubs': aubs
     }
 
-    return render(request, 'aub/check1.html', context)
+    return render(request, 'aub/check.html', context)
 
 
 @login_required
@@ -111,4 +112,4 @@ def check2(request):
         'aubs': aubs
     }
 
-    return render(request, 'aub/check2.html', context)
+    return render(request, 'aub/check.html', context)
