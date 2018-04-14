@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .apps import AubConfig
-from dashboard.models import Activity
+from dashboard.models import Activity, register_notification
 from .forms import ApplyForAUBForm
 from .models import Aub, Status
 
@@ -102,8 +102,15 @@ def check2(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
             aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=ALLOWED_STATUS)
+                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der Schulleitung genehmigt.".format(
+                                          aub.from_dt,
+                                          aub.to_dt),
+                                      app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=reverse('aub_details', args=[aub.id]))
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 

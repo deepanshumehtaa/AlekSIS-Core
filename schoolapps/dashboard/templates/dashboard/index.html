@@ -43,6 +43,11 @@
                             <p>
                                 {{ notification.description }}
                             </p>
+                            {% if notification.link %}
+                                <p>
+                                    <a href="{{ notification.link }}">Mehr Informationen →</a>
+                                </p>
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>

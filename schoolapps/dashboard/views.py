@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Activity
+from .models import Activity, register_notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
 
@@ -18,7 +18,9 @@ def index(request):
 
     # Load activities
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
-    notifications = request.user.notifications.all()
+
+    # Load notifications
+    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')
 
     context = {
         'activities': activities,
@@ -29,9 +31,13 @@ def index(request):
 
 
 @login_required
-def test_mail(request):
+def test_notification(request):
     """ Sends a test mail """
-    send_mail_with_template("Test", [request.user.email], 'mail/email.txt', 'mail/email.html', {'user': request.user})
+    # send_mail_with_template("Test", [request.user.email], 'mail/email.txt', 'mail/email.html', {'user': request.user})
+    register_notification(user=request.user, title="Ihr Antrag wurde genehmigt",
+                          description="Ihr Antrag XY wurde von der Schulleitung genehmigt.", app="AUB",
+                          link=reverse("aub_details", args=[1]))
+    print(reverse("aub_details", args=[1]))
     return redirect(reverse('dashboard'))
 
 
