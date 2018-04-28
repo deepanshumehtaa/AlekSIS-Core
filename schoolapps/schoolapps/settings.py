@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from .secure_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_89lg!56$d^sf$22cz1ja_f)x9z(nc*y-x*@j4!!vzmlgi*53u'
+# SECRET_KEY = '_89lg!56$d^sf$22cz1ja_f)x9z(nc*y-x*@j4!!vzmlgi*53u'
+# Provided by secure_settings
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'schoolapps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', ],
+        'DIRS': ['./templates', '/srv/sites/school-apps/schoolapps/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,25 +75,25 @@ WSGI_APPLICATION = 'schoolapps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'schoolapps',
-        'USER': 'www-data',
-        'PASSWORD': 'grummelPASS1531',
-        'HOST': '',
-        'PORT': ''
-    },
-    'untis': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'untiskath',
-        'USER': 'www-data',
-        'PASSWORD': 'grummelPASS1531',
-        'HOST': '',
-        'PORT': ''
-    }
-}
+# Provided by secure_settings
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'schoolapps',
+#         'USER': 'www-data',
+#         'PASSWORD': 'grummelPASS1531',
+#         'HOST': '',
+#         'PORT': ''
+#     },
+#     'untis': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'untiskath',
+#         'USER': 'www-data',
+#         'PASSWORD': 'grummelPASS1531',
+#         'HOST': '',
+#         'PORT': ''
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -138,10 +140,7 @@ STATICFILES_DIRS = [
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'postoffice.katharineum.de'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'infoplan@katharineum.de'
-EMAIL_HOST_PASSWORD = 'grummelPASS1531'
+# Email settings provided by secure_settings
 EMAIL_USE_TLS = True
 
 # TIMETABLE
