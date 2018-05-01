@@ -24,9 +24,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Provided by secure_settings
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'info.katharineum.de',
+    '178.63.239.184',
+]
 
 # Application definition
 
@@ -58,7 +61,9 @@ ROOT_URLCONF = 'schoolapps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', '/srv/sites/school-apps/schoolapps/templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+	],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
