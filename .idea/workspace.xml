@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a000256-1023-4a19-a046-bde25cb853cc" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/school-apps.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/school-apps.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/static/common/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/static/common/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/partials/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/partials/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,17 +25,17 @@
       <file leaf-file-name="secure_settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+            <state relative-caret-position="391">
+              <caret line="23" column="38" lean-forward="true" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="134" column="24" selection-start-line="134" selection-start-column="24" selection-end-line="134" selection-end-column="24" />
+            <state relative-caret-position="187">
+              <caret line="158" column="8" lean-forward="true" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="8" />
               <folding>
                 <element signature="e#309#318#0" expanded="true" />
               </folding>
@@ -54,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -63,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
-              <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
               </folding>
@@ -71,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quicklaunch.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="quicklaunch.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="43" lean-forward="true" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+            <state>
+              <caret column="36" selection-start-column="36" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -84,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/schoolapps/static/common/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="583">
-              <caret line="137" column="15" lean-forward="true" selection-start-line="137" selection-start-column="15" selection-end-line="137" selection-end-column="15" />
+              <caret line="136" column="15" selection-start-line="136" selection-start-column="15" selection-end-line="136" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -102,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/schoolapps/templates/partials/header.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1399">
-              <caret line="109" column="16" lean-forward="true" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
+              <caret line="109" column="16" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -110,8 +103,8 @@
       <file leaf-file-name="example_secure_settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+            <state relative-caret-position="476">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="31" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -120,8 +113,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="373">
-                <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+              <first_editor relative-caret-position="340">
+                <caret line="20" column="102" selection-start-line="20" selection-start-column="102" selection-end-line="20" selection-end-column="102" />
               </first_editor>
               <second_editor />
             </state>
@@ -204,16 +197,16 @@
         <option value="$PROJECT_DIR$/schoolapps/templates/mail/notification.html" />
         <option value="$PROJECT_DIR$/schoolapps/aub/views.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py" />
-        <option value="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/views.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/header.html" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/urls.py" />
         <option value="$PROJECT_DIR$/schoolapps/static/common/style.css" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" />
+        <option value="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" />
+        <option value="$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py" />
       </list>
     </option>
   </component>
@@ -677,21 +670,27 @@
       <option name="project" value="LOCAL" />
       <updated>1524911299889</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Add a quicklaunch with shortcodes for timetable | Add a page for substitutions (without code)">
+      <created>1526737919793</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1526737919793</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="33" width="1926" height="1041" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053364" side_tool="true" visible="true" weight="0.23710209" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5010672" side_tool="true" visible="true" weight="0.23710209" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.27083334" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.3294509" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4994664" weight="0.23710209" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49893278" visible="true" weight="0.23710209" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2620064" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2620064" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4994664" weight="0.32930845" />
@@ -718,7 +717,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Translate login/logout | Comment header" />
     <MESSAGE value="Add dashboard with last activities (look at README)" />
     <MESSAGE value="Add dashboard with last activities (look at README) [ADD UNVERSIONED FILES, MISTAKE]" />
     <MESSAGE value="Add notifications to dashboard" />
@@ -743,7 +741,8 @@
     <MESSAGE value="First notification with email in AUB" />
     <MESSAGE value="Finish AUB notification" />
     <MESSAGE value="Change infrastructure for server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change infrastructure for server" />
+    <MESSAGE value="Add a quicklaunch with shortcodes for timetable | Add a page for substitutions (without code)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add a quicklaunch with shortcodes for timetable | Add a page for substitutions (without code)" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1004,27 +1003,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="134" column="24" selection-start-line="134" selection-start-column="24" selection-end-line="134" selection-end-column="24" />
-          <folding>
-            <element signature="e#309#318#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/timetable/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
-          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
@@ -1034,7 +1016,7 @@
     <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
@@ -1045,42 +1027,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="373">
-            <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/static/common/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
-          <caret line="137" column="15" lean-forward="true" selection-start-line="137" selection-start-column="15" selection-end-line="137" selection-end-column="15" />
+          <caret line="136" column="15" selection-start-line="136" selection-start-column="15" selection-end-line="136" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/templates/partials/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1399">
-          <caret line="109" column="16" lean-forward="true" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
+          <caret line="109" column="16" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="43" lean-forward="true" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+        <state>
+          <caret column="36" selection-start-column="36" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="340">
+            <caret line="20" column="102" selection-start-line="20" selection-start-column="102" selection-end-line="20" selection-end-column="102" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="31" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="38" lean-forward="true" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="158" column="8" lean-forward="true" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="8" />
+          <folding>
+            <element signature="e#309#318#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
