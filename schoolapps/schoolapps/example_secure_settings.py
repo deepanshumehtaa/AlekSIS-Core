@@ -26,3 +26,7 @@ DATABASES = {
         'PORT': ''
     }
 }
+
+# LDAP
+AUTH_LDAP_BIND_DN = "cn=django-agent,dc=example,dc=com"
+AUTH_LDAP_BIND_PASSWORD = "phlebotinum"
