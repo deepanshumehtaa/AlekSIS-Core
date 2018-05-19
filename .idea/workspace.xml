@@ -34,8 +34,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="158" column="8" lean-forward="true" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="8" />
+            <state relative-caret-position="259">
+              <caret line="145" column="20" lean-forward="true" selection-start-line="145" selection-start-column="20" selection-end-line="145" selection-end-column="20" />
               <folding>
                 <element signature="e#309#318#0" expanded="true" />
               </folding>
@@ -103,8 +103,8 @@
       <file leaf-file-name="example_secure_settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="31" selection-end-column="39" />
+            <state relative-caret-position="255">
+              <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -113,8 +113,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="340">
-                <caret line="20" column="102" selection-start-line="20" selection-start-column="102" selection-end-line="20" selection-end-column="102" />
+              <first_editor relative-caret-position="466">
+                <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
               </first_editor>
               <second_editor />
             </state>
@@ -197,6 +197,7 @@
         <option value="$PROJECT_DIR$/schoolapps/templates/mail/notification.html" />
         <option value="$PROJECT_DIR$/schoolapps/aub/views.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html" />
         <option value="$PROJECT_DIR$/schoolapps/timetable/views.py" />
         <option value="$PROJECT_DIR$/schoolapps/templates/partials/header.html" />
@@ -206,7 +207,6 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" />
         <option value="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" />
-        <option value="$PROJECT_DIR$/schoolapps/schoolapps/secure_settings.py" />
       </list>
     </option>
   </component>
@@ -684,11 +684,11 @@
     <frame x="-3" y="33" width="1926" height="1041" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5010672" side_tool="true" visible="true" weight="0.23710209" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5010672" side_tool="true" visible="true" weight="0.21953897" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.27083334" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.3294509" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49893278" visible="true" weight="0.23710209" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49893278" visible="true" weight="0.21953897" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2620064" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -699,12 +699,27 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39933443" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2620064" />
+      <window_info anchor="right" id="SciView" order="5" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.27083334" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4994664" weight="0.23710209" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4994664" weight="0.32930845" />
       <window_info anchor="right" id="Data View" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053364" side_tool="true" visible="true" weight="0.23710209" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39933443" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.3294509" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -980,9 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="41" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -990,9 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1938">
           <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1051,8 +1060,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="340">
-            <caret line="20" column="102" selection-start-line="20" selection-start-column="102" selection-end-line="20" selection-end-column="102" />
+          <first_editor relative-caret-position="466">
+            <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
           </first_editor>
           <second_editor />
         </state>
@@ -1061,8 +1070,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="31" selection-end-column="39" />
+        <state relative-caret-position="255">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1075,8 +1084,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/schoolapps/schoolapps/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="158" column="8" lean-forward="true" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="8" />
+        <state relative-caret-position="259">
+          <caret line="145" column="20" lean-forward="true" selection-start-line="145" selection-start-column="20" selection-end-line="145" selection-end-column="20" />
           <folding>
             <element signature="e#309#318#0" expanded="true" />
           </folding>
