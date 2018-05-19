@@ -130,4 +130,9 @@ span.badge.new::after {
 }
 .btn-flat-medium i {
     font-size: 2rem;
-} 
+}
+
+.btn-timetable-quicklaunch {
+    margin: 1%;
+    width: 30%;
+}
