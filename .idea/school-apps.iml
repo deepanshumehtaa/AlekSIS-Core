@@ -8,11 +8,14 @@
         <option name="manageScript" value="manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
         <option name="doNotUseTestRunner" value="false" />
+        <option name="trackFilePattern" value="migrations" />
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/schoolapps" isTestSource="false" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.5 (school-apps)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-3.2.1" level="application" />
@@ -20,6 +23,15 @@
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/schoolapps/templates" />
+        <option value="$MODULE_DIR$/schoolapps/timetable/templates" />
+        <option value="$MODULE_DIR$/schoolapps/untisconnect/templates" />
+        <option value="$MODULE_DIR$/schoolapps/aub/templates" />
+        <option value="$MODULE_DIR$/schoolapps/dashboard/templates" />
+      </list>
+    </option>
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
