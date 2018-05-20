@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupType
+import logging
 from .secure_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -155,17 +156,18 @@ TIMETABLE_HEIGHT = 10
 
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1"
-AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
+AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no",
                                    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 # or perhaps:
 # AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=example,dc=com"
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)")
-AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="ou")
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE)
+# "(objectClass=organizationalUnit)")
+AUTH_LDAP_GROUP_TYPE = LDAPGroupType(name_attr="ou")
 
 # Simple group restrictions
-# AUTH_LDAP_REQUIRE_GROUP = "cn=enabled,ou=django,ou=groups,dc=example,dc=com"
+# AUTH_LDAP_REQUIRE_GROUP = "dc=skole,dc=skolelinux,dc=no"
 # AUTH_LDAP_DENY_GROUP = "cn=disabled,ou=django,ou=groups,dc=example,dc=com"
 
 # Populate the Django user from the LDAP directory.
@@ -189,7 +191,7 @@ AUTH_LDAP_FIND_GROUP_PERMS = True
 
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True
-AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
 # Keep ModelBackend around for per-user permissions and maybe a local
 # superuser.
@@ -197,3 +199,7 @@ AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+logger = logging.getLogger('django_auth_ldap')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)

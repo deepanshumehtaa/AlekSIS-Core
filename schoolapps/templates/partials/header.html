@@ -104,7 +104,9 @@
                 <div class="divider"></div>
             </li>
             <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
-            <li><a href="{% url 'aub_index' %}">Unterrichtsbefreiungen</a></li>
+            {% if perms.aub.apply_for_aub %}
+                <li><a href="{% url 'aub_index' %}">Unterrichtsbefreiungen</a></li>
+            {% endif %}
             <li><a href="{% url 'aub_check1' %}">Anträge genehmigen 1</a></li>
             <li><a href="{% url 'aub_check2' %}">Anträge genehmigen 2</a></li>
             <li>
@@ -121,6 +123,12 @@
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
+            </li>
+            <li>
+                {{ user.groups.all }}
+                {% for group in user.groups.all %}
+                    {{ group }}
+                {% endfor %}
             </li>
         {% endif %}
     </ul>
