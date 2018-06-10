@@ -2,122 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a000256-1023-4a19-a046-bde25cb853cc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ae145b31-953d-4d55-ad07-b49b3287f618.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ae145b31-953d-4d55-ad07-b49b3287f618.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ea4cff78-5949-410f-aa64-d6daa5fb293d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ea4cff78-5949-410f-aa64-d6daa5fb293d.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ef6730d6-e849-4772-acac-62469acab4d2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ef6730d6-e849-4772-acac-62469acab4d2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/school-apps.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/school-apps.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webResources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Beispieldaten UNTIS/Lehrer.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Beispieldaten UNTIS/Lehrer.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Beispieldaten UNTIS/Räume.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Beispieldaten UNTIS/Räume.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Beispieldaten UNTIS/Stunden.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Beispieldaten UNTIS/Stunden.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Beispieldaten UNTIS/untis.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Beispieldaten UNTIS/untis.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/0002_aub_status.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/0002_aub_status.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/0003_auto_20180410_2343.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/0003_auto_20180410_2343.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/0004_auto_20180411_0007.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/0004_auto_20180411_0007.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/0005_auto_20180412_1109.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/0005_auto_20180412_1109.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/applied_for.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/applied_for.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/apply_for.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/apply_for.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/check.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/check.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/templates/aub/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/templates/aub/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/aub/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/aub/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0002_remove_notification_to.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0002_remove_notification_to.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0003_notification_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0003_notification_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0004_notification_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0004_notification_link.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0005_auto_20180414_1418.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/0005_auto_20180414_1418.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/templates/dashboard/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/templates/dashboard/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/dashboard/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/mailer.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/mailer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/example_secure_settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/schoolapps/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/schoolapps/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/static/common/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/static/common/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/static/common/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/static/common/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schoolapps/static/materialize" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/static/materialize" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/mail/email.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/mail/email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/mail/email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/mail/email.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/mail/notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/mail/notification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/mail/notification.txt" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/mail/notification.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/partials/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/partials/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/partials/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/partials/impress.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/partials/impress.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/registration/logged_out.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/registration/logged_out.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/templates/registration/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU001.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU001.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU003.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU003.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU004.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU004.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU005.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU005.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU006.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU006.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU009.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU009.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU011.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU011.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU014.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/parser/GPU014.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/all.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/plan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/quicklaunch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/templates/timetable/substitution.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/timetable/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/timetable/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/templates/untisconnect/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/templates/untisconnect/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schoolapps/untisconnect/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/schoolapps/untisconnect/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/templates/timetable/admin/all.html" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/templates/timetable/admin/all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/templates/timetable/plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/templates/timetable/plan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetable-old/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timetable-old/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -222,8 +108,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="115">
-                <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+              <first_editor relative-caret-position="420">
+                <caret line="28" column="32" lean-forward="true" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
               </first_editor>
               <second_editor />
             </state>
@@ -342,7 +228,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -437,6 +322,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -819,7 +705,7 @@
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.3294509" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49893278" weight="0.23710209" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27801493" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28121665" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="5" />
@@ -1196,8 +1082,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="115">
-            <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <first_editor relative-caret-position="420">
+            <caret line="28" column="32" lean-forward="true" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
           </first_editor>
           <second_editor />
         </state>
