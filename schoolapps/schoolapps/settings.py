@@ -19,19 +19,19 @@ from .secure_settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '_89lg!56$d^sf$22cz1ja_f)x9z(nc*y-x*@j4!!vzmlgi*53u'
 # Provided by secure_settings
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
+    'localhost',
+    '127.0.0.1'
 ]
 
 # Application definition
