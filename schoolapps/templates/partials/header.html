@@ -107,8 +107,12 @@
             {% if perms.aub.apply_for_aub %}
                 <li><a href="{% url 'aub_index' %}">Unterrichtsbefreiungen</a></li>
             {% endif %}
-            <li><a href="{% url 'aub_check1' %}">Anträge genehmigen 1</a></li>
-            <li><a href="{% url 'aub_check2' %}">Anträge genehmigen 2</a></li>
+            {% if perms.aub.check1_aub %}
+                <li><a href="{% url 'aub_check1' %}">Anträge genehmigen 1</a></li>
+            {% endif %}
+            {% if perms.aub.check2_aub %}
+                <li><a href="{% url 'aub_check2' %}">Anträge genehmigen 2</a></li>
+            {% endif %}
             <li>
                 <div class="divider"></div>
             </li>
