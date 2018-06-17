@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
+from django.utils import formats
 
 from .apps import AubConfig
 from dashboard.models import Activity, register_notification
@@ -110,8 +111,8 @@ def check2(request):
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
                                       description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der Schulleitung genehmigt.".format(
-                                          aub.from_dt,
-                                          aub.to_dt),
+                                          formats.date_format(aub.from_dt),
+                                          formats.date_format(aub.to_dt)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=reverse('aub_details', args=[aub.id]))
             elif 'deny' in request.POST:
@@ -121,8 +122,8 @@ def check2(request):
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
                                       description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie bitte die Schulleitung.".format(
-                                          aub.from_dt,
-                                          aub.to_dt),
+                                          formats.date_format(aub.from_dt),
+                                          formats.date_format(aub.to_dt)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=reverse('aub_details', args=[aub.id]))
 

@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Provided by secure_settings
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'info.katharineum.de',
@@ -148,8 +148,8 @@ STATICFILES_DIRS = [
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Only for DEBUG
 # Email settings provided by secure_settings
-EMAIL_USE_TLS = True
 
 # TIMETABLE
 TIMETABLE_WIDTH = 5

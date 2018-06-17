@@ -3,6 +3,7 @@ EMAIL_HOST = 'postoffice.katharineum.de'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'infoplan@katharineum.de'
 EMAIL_HOST_PASSWORD = 'grummelPASS1531'
+EMAIL_USE_TLS = True
 
 # SECRET KEY
 SECRET_KEY = '_89lg!56$d^sf$22cz1ja_f)x9z(nc*y-x*@j4!!vzmlgi*53u'
