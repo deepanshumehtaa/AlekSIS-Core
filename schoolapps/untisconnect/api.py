@@ -1,27 +1,6 @@
+from untisconnect.api_helper import get_term_by_id, run_using
 from . import models
-
-# Connection/Query settings
-DB_NAME = 'untis'
-SCHOOL_ID = 705103
-SCHOOLYEAR_ID = 20172018
-VERSION_ID = 1
-TERM_ID = 8
-
-
-#####################
-# BASIC DEFINITIONS #
-#####################
-class Basic(object):
-    def __init__(self):
-        self.filled = False
-        self.id = None
-
-    def create(self, db_obj):
-        self.filled = True
-
-
-def run_using(obj):
-    return obj.using(DB_NAME)
+from timetable import models as models2
 
 
 def run_all(obj, filter_term=True):
@@ -33,6 +12,13 @@ def run_one(obj, filter_term=True):
 
 
 def run_default_filter(obj, filter_term=True):
+    # Get term by settings in db
+    TERM_ID = models2.untis_settings.term
+    TERM = get_term_by_id(TERM_ID)
+    SCHOOL_ID = TERM.school_id  # 705103
+    SCHOOLYEAR_ID = TERM.schoolyear_id  # 20172018
+    VERSION_ID = TERM.version_id  # 1
+
     if filter_term:
         return obj.filter(school_id=SCHOOL_ID, schoolyear_id=SCHOOLYEAR_ID, version_id=VERSION_ID, term_id=TERM_ID)
     else:
@@ -204,29 +190,3 @@ def get_subject_by_id(id):
 ##########
 def get_raw_lessons():
     return run_all(models.Lesson.objects)
-
-
-########
-# TERM #
-########
-class Term(object):
-    def __init__(self):
-        self.filled = False
-        self.id = None
-        self.name = None
-
-    def create(self, db_obj):
-        self.filled = True
-        self.id = db_obj.term_id
-        self.name = db_obj.longname
-
-
-def get_terms():
-    data = run_using(models.Terms.objects).all()
-    terms = []
-    for item in data:
-        term = Term()
-        term.create(item)
-        terms.append(term)
-        print(term.name)
-    return terms
