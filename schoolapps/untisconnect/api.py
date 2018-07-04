@@ -204,3 +204,29 @@ def get_subject_by_id(id):
 ##########
 def get_raw_lessons():
     return run_all(models.Lesson.objects)
+
+
+########
+# TERM #
+########
+class Term(object):
+    def __init__(self):
+        self.filled = False
+        self.id = None
+        self.name = None
+
+    def create(self, db_obj):
+        self.filled = True
+        self.id = db_obj.term_id
+        self.name = db_obj.longname
+
+
+def get_terms():
+    data = run_using(models.Terms.objects).all()
+    terms = []
+    for item in data:
+        term = Term()
+        term.create(item)
+        terms.append(term)
+        print(term.name)
+    return terms
