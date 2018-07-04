@@ -13,12 +13,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupType
+from posixgrouptype import PosixGroupType
 import logging
 from .secure_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '_89lg!56$d^sf$22cz1ja_f)x9z(nc*y-x*@j4!!vzmlgi*53u'
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
+    'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -167,9 +168,12 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no",
 # AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=example,dc=com"
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE)
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no,ou=SchoolManager,ou=group", ldap.SCOPE_SUBTREE,
+                                    "(objectClass=posixGroup)")
+# '(&(objectClass=*)(memberUid=%(user))')
+print(ldap.SCOPE_SUBTREE)
 # "(objectClass=organizationalUnit)")
-AUTH_LDAP_GROUP_TYPE = LDAPGroupType(name_attr="ou")
+AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr="cn")
 
 # Simple group restrictions
 # AUTH_LDAP_REQUIRE_GROUP = "dc=skole,dc=skolelinux,dc=no"
