@@ -41,7 +41,6 @@ def test_notification(request):
     return redirect(reverse('dashboard'))
 
 
-@login_required
 def impress(request):
     return render(request, 'common/impress.html')
 
