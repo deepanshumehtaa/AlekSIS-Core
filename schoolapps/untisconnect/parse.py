@@ -48,12 +48,7 @@ class LessonTime(object):
         self.rooms = rooms
 
 
-from untisconnect.api import *
-
-try:
-    from schoolapps.untisconnect.api import *
-except Exception:
-    pass
+from .api import *
 
 
 def clean_array(a, conv=None):
