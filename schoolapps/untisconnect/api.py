@@ -172,7 +172,9 @@ class Subject(object):
         self.shortcode = db_obj.name
         self.name = db_obj.longname
         self.color = db_obj.backcolor
-        self.hex_color = "#" + str(hex(db_obj.backcolor)).replace("0x", "")
+        hex_bgr = str(hex(db_obj.backcolor)).replace("0x", "")
+        hex_rgb = hex_bgr[4:5] + hex_bgr[2:3] + hex_bgr[0:1]
+        self.hex_color = "#" + hex_rgb
 
 
 def get_all_subjects():
