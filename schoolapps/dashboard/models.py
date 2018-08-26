@@ -41,7 +41,9 @@ class Notification(models.Model):
 
 
 def register_notification(user, title, description, app="SchoolApps", link=""):
+    print(link)
     n = Notification(user=user, title=title, description=description, app=app, link=link)
+
     n.save()
     context = {
         'notification': n
