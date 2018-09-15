@@ -1,27 +1,6 @@
+from untisconnect.api_helper import get_term_by_id, run_using
 from . import models
-
-# Connection/Query settings
-DB_NAME = 'untis'
-SCHOOL_ID = 705103
-SCHOOLYEAR_ID = 20172018
-VERSION_ID = 1
-TERM_ID = 8
-
-
-#####################
-# BASIC DEFINITIONS #
-#####################
-class Basic(object):
-    def __init__(self):
-        self.filled = False
-        self.id = None
-
-    def create(self, db_obj):
-        self.filled = True
-
-
-def run_using(obj):
-    return obj.using(DB_NAME)
+from timetable import models as models2
 
 
 def run_all(obj, filter_term=True):
@@ -33,6 +12,13 @@ def run_one(obj, filter_term=True):
 
 
 def run_default_filter(obj, filter_term=True):
+    # Get term by settings in db
+    TERM_ID = models2.untis_settings.term
+    TERM = get_term_by_id(TERM_ID)
+    SCHOOL_ID = TERM.school_id  # 705103
+    SCHOOLYEAR_ID = TERM.schoolyear_id  # 20172018
+    VERSION_ID = TERM.version_id  # 1
+
     if filter_term:
         return obj.filter(school_id=SCHOOL_ID, schoolyear_id=SCHOOLYEAR_ID, version_id=VERSION_ID, term_id=TERM_ID)
     else:
@@ -186,7 +172,9 @@ class Subject(object):
         self.shortcode = db_obj.name
         self.name = db_obj.longname
         self.color = db_obj.backcolor
-        self.hex_color = "#" + str(hex(db_obj.backcolor)).replace("0x", "")
+        hex_bgr = str(hex(db_obj.backcolor)).replace("0x", "")
+        hex_rgb = hex_bgr[4:5] + hex_bgr[2:3] + hex_bgr[0:1]
+        self.hex_color = "#" + hex_rgb
 
 
 def get_all_subjects():

@@ -35,11 +35,6 @@ urlpatterns = [
                   #######
                   path('aub/', include('aub.urls')),
 
-                  #################
-                  # UNTIS CONNECT #
-                  #################
-                  path('untis/', include('untisconnect.urls')),
-
                   #############
                   # TIMETABLE #
                   #############
@@ -48,5 +43,8 @@ urlpatterns = [
                   #########
                   # Admin #
                   #########
+                  path('settings/', include('dbsettings.urls')),
                   path('admin/', admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'dashboard.views.error_404'

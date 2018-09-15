@@ -1,21 +1,16 @@
-from django.db import models
+from django import forms
+import dbsettings
+
+from untisconnect.api_helper import get_terms
+
+choices = []
+terms = get_terms()
+for term in terms:
+    choices.append((term.id, term.name))
 
 
-# Create your models here.
+class UNTISSettings(dbsettings.Group):
+    term = dbsettings.IntegerValue(widget=forms.Select, choices=choices)
 
-# class Teacher(models.Model):
-#     shortcode = models.CharField(max_length=10)
-#     first_name = models.CharField(max_length=100)
-#     name = models.CharField(max_length=100)
-#
-#
-# class Room(models.Model):
-#     shortcode = models.CharField(max_length=10)
-#     name = models.CharField(max_length=100)
-#
-#
-# class Class(models.Model):
-#     name = models.CharField(max_length=10)
-#     text1 = models.CharField(max_length=200)
-#     text2 = models.CharField(max_length=200)
-#     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+untis_settings = UNTISSettings()
