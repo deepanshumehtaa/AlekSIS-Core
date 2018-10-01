@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import ldap
 from django_auth_ldap.config import LDAPSearch, PosixGroupType, GroupOfNamesType, LDAPGroupType
-#from posixgrouptype import PosixGroupType
 import logging
 from .secure_settings import *
 
@@ -174,9 +173,9 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no",
 
 # Set up the basic group parameters.
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE,
-                                    "(&(objectClass=posixGroup)(memberUid=%(user)s))")
+                                    "(&(objectClass=posixGroup))")  # (memberUid=%(user)s)
 # '(&(objectClass=*)(memberUid=%(user)s)')
-#print(ldap.SCOPE_SUBTREE)
+# print(ldap.SCOPE_SUBTREE)
 # "(objectClass=organizationalUnit)")
 AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
@@ -192,16 +191,17 @@ AUTH_LDAP_USER_ATTR_MAP = {
 }
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#      "is_active": "cn=teachers,ou=group,ou=Teachers,dc=skole,dc=skolelinux,dc=no",
-      "is_staff": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
-      "is_superuser": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+    #      "is_active": "cn=teachers,ou=group,ou=Teachers,dc=skole,dc=skolelinux,dc=no",
+    "is_staff": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+    "is_superuser": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
 }
 
 # This is the default, but I like to be explicit.
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
 
 # Use LDAP group membership to calculate group permissions.
-AUTH_LDAP_FIND_GROUP_PERMS = True
+# AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_MIRROR_GROUPS = True
 
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True
