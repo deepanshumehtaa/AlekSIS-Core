@@ -49,20 +49,7 @@ class LessonTime(object):
 
 
 from .api import *
-
-
-def clean_array(a, conv=None):
-    b = []
-    for el in a:
-        if el != '' and el != "0":
-            if conv is not None:
-                el = conv(el)
-            b.append(el)
-    return b
-
-
-def untis_split(s, conv=None):
-    return clean_array(s.split(";"), conv=conv)
+from .api_helper import untis_split_third
 
 
 def parse():
@@ -113,7 +100,7 @@ def parse():
             for el in rtd2:
                 day = int(el[1])
                 hour = int(el[2])
-                room_ids = untis_split(el[3], conv=int)
+                room_ids = untis_split_third(el[3], conv=int)
 
                 rooms = []
                 for room_id in room_ids:
@@ -135,8 +122,8 @@ def parse():
             for el in rld2:
                 teacher_id = int(el[0])
                 subject_id = int(el[2])
-                room_ids = untis_split(el[4], int)
-                class_ids = untis_split(el[17], conv=int)
+                room_ids = untis_split_third(el[4], int)
+                class_ids = untis_split_third(el[17], conv=int)
                 # print("TEACHER – ", teacher_id, "; SUBJECT – ", subject_id, "; ROOMS – ", room_ids, "; CLASSES – ",
                 #       class_ids)
 

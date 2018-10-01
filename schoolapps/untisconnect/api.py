@@ -25,14 +25,18 @@ def run_default_filter(obj, filter_term=True):
         return obj.filter(school_id=SCHOOL_ID, schoolyear_id=SCHOOLYEAR_ID, version_id=VERSION_ID)
 
 
-def row_by_row(db_ref, obj, filter_term=True):
-    db_rows = run_all(db_ref.objects, filter_term=filter_term)
+def row_by_row_helper(db_rows, obj):
     out_rows = []
     for db_row in db_rows:
         o = obj()
         o.create(db_row)
         out_rows.append(o)
     return out_rows
+
+
+def row_by_row(db_ref, obj, filter_term=True):
+    db_rows = run_all(db_ref.objects, filter_term=filter_term)
+    return row_by_row_helper(db_rows, obj)
 
 
 def one_by_id(db_ref, obj):

@@ -21,7 +21,7 @@ def run_using(obj):
 
 def get_term_by_id(term_id):
     data = run_using(models.Terms.objects).get(term_id=term_id)
-    print(data.schoolyear_id)
+    # print(data.schoolyear_id)
     return data
 
 
@@ -47,5 +47,30 @@ def get_terms():
         term = Term()
         term.create(item)
         terms.append(term)
-        print(term.name)
+        # print(term.name)
     return terms
+
+
+################
+# HELP METHODS #
+################
+def clean_array(a, conv=None):
+    b = []
+    for el in a:
+        if el != '' and el != "0":
+            if conv is not None:
+                el = conv(el)
+            b.append(el)
+    return b
+
+
+def untis_split_first(s, conv=None):
+    return clean_array(s.split(","), conv=conv)
+
+
+def untis_split_second(s, conv=None):
+    return clean_array(s.split("~"), conv=conv)
+
+
+def untis_split_third(s, conv=None):
+    return clean_array(s.split(";"), conv=conv)
