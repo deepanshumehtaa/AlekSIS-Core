@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
+
+sys.path = ["/srv/sites/school-apps/env/lib/python3.5/site-packages/"] + sys.path
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "schoolapps.settings")
@@ -11,5 +13,5 @@ if __name__ == "__main__":
             "Couldn't import Django. Are you sure it's installed and "
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
-        ) from exc
+        )
     execute_from_command_line(sys.argv)
