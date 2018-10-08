@@ -4,7 +4,7 @@ from django.urls import reverse
 from .models import Activity, register_notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
-
+from userinformation import UserInformation
 
 # Create your views here.
 
@@ -15,6 +15,9 @@ def index(request):
     # act = Activity(title="Dashboard aufgerufen", description="Sie haben das Dashboard aufgerufen.",
     #                app=DashboardConfig.verbose_name, user=request.user)
     # act.save()
+    print(request.user)
+    # UserInformation.user_classes(request.user)
+    print(UserInformation.user_courses(request.user))
 
     # Load activities
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
