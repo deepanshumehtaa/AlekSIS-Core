@@ -128,12 +128,6 @@
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
             </li>
-            <li>
-                {{ user.groups.all }}
-                {% for group in user.groups.all %}
-                    {{ group }}
-                {% endfor %}
-            </li>
         {% endif %}
     </ul>
 </header>
