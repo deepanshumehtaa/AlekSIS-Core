@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -26,15 +28,36 @@ def index(request):
     return render(request, 'aub/index.html', context)
 
 
+def check_own_aub_verification(user):
+    return Aub.objects.all().filter(created_by=user)
+
+
+def check_own_aub(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
+    """
+    Decorator for views that checks that the user only gets his own aub, redirecting
+    to the dashboard if necessary.
+    """
+    actual_decorator = user_passes_test(
+        check_own_aub_verification,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+def not_your_own():
+    return "hallo"
 @login_required
 @permission_required('aub.apply_for_aub')
+@check_own_aub(login_url='/index.html?reason=not_your_own')
 def details(request, aub_id):
+#    aub = Aub.objects.all().filter(id=aub_id)
     aub = get_object_or_404(Aub, id=aub_id)
     context = {
         'aub': aub
     }
     return render(request, 'aub/details.html', context)
-
 
 @login_required
 @permission_required('aub.apply_for_aub')
