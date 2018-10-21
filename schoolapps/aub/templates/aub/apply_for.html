@@ -1,86 +1,14 @@
 {% include 'partials/header.html' %}
+{% load material_form %}
+
 
 <main>
     <h5>Antrag auf Unterrichtsbefreiung</h5>
-
-    <form action="" method="post">
+    <form method = "POST" >
         {% csrf_token %}
-        <div class="flow-text red-text">
-            {{ form.non_field_errors }}
-        </div>
-        <div class="row">
-            <!-- From date and time -->
-            <div class="col s12 m6">
-                
-                <div class="red-text">{{ form.from_date.errors }}</div>
-                <div class="red-text">{{ form.from_time.errors }}</div>
-                
-                <div class="col s2">
-                    <h5>Von:</h5>
-                </div>
-                <div class="input-field col s6">
-                        
-                    <input id="{{ form.from_date.id_for_label }}" type="text"
-                           required name="{{ form.from_date.html_name }}"
-                           class="datepicker" value="{{ form.from_date.value }}">
-                    <label for="{{ form.from_date.id_for_label }}">Datum</label>
-                </div>
-
-                <div class="input-field col s4">
-                    <input id="{{ form.from_time.id_for_label }}" type="text"
-                           required name="{{ form.from_time.html_name }}"
-                           class="timepicker" value="{{ form.from_time.value }}">
-                    <label for="{{ form.from_time.id_for_label }}">Uhrzeit</label>
-                </div>
-
-                <span>{{ form.from_date.help_text }}</span>
-                <span>{{ form.from_time.help_text }}</span>
-            </div>
-
-            <!-- To date and time -->
-            <div class="col s12 m6">
-
-                <div class="red-text">{{ form.to_date.errors }}</div>
-                <div class="red-text">{{ form.to_time.errors }}</div>
-                <div class="col s2">
-                   <h5>Bis:</h5>
-                </div>
-                <div class="input-field col s6">
-                    <input id="{{ form.to_date.id_for_label }}" type="text"
-                           required name="{{ form.to_date.html_name }}"
-                           class="datepicker" value="{{ form.to_date.value }}">
-                    <label for="{{ form.to_date.id_for_label }}">Datum</label>
-                </div>
-
-                <div class="input-field col s4">
-                    <input id="{{ form.to_time.id_for_label }}" type="text"
-                           required name="{{ form.to_time.html_name }}"
-                           class="timepicker" value="{{ form.to_time.value }}">
-                    <label for="{{ form.to_time.id_for_label }}">Uhrzeit</label>
-                </div>
-
-                <span>{{ form.to_date.help_text }}</span>
-                <span>{{ form.to_time.help_text }}</span>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <!-- Description -->
-            <div class="red-text col s12">{{ form.description.errors }}</div>
-
-            <div class="col s1">
-                <h5>Grund:</h5>
-            </div>
-            <div class="input-field col s11">
-                <textarea id="{{ form.description.id_for_label }}" required
-                          name="{{ form.description.html_name }}"
-                          class="materialize-textarea">{{ form.description.value }}</textarea>
-                <label for="{{ form.description.id_for_label }}">Beschreibung</label>
-                <span>{{ form.description.help_text }}</span>
-            </div>
-        </div>
-
+        {% form form=form %}
+{#             {% part form.from_lesson prefix %}<div></div>{% endpart %} #}
+        {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">send</i> Antrag stellen
         </button>

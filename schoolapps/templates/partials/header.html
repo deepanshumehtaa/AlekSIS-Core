@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{%  static 'common/favicon.ico' %}" />
 
     <!--------->
     <!-- CSS -->
@@ -15,6 +17,8 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'materialize/dist/css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
+    <!-- django-material -->
+    {% include 'material/includes/material_css.html' %}
 
     <!---------------->
     <!-- JavaScript -->
@@ -60,8 +64,35 @@
             //Initialize tooltip [MAT]
             $('.tooltipped').tooltip();
         });
-
     </script>
+    <script>
+        //set AUB-Form
+        function set_time(lesson_field) {
+            // fill timefield based on lesson value
+            if (lesson_field.id == 'id_from_lesson') {
+                $('[id=id_from_time]').val(lesson_field.value);
+            }
+            else {
+                // calculate lessons end time
+                // string methods easier than date function gewurschtel
+                var h = lesson_field.value.split(':')[0];
+                var m = lesson_field.value.split(':')[1];
+                if (m < 15) {
+                    m = m + 45;
+                }
+                else {
+                    m = m - 15;
+                    h = parseInt(h) + 1;
+                }
+                var newTime = h.toString()+':'+m.toString();
+                $('[id=id_to_time]').val(newTime);
+            }
+        }
+    </script>
+    <!-- django-material -->
+    {% include 'material/includes/material_js.html' %}
+
+
 </head>
 <body>
 <header>

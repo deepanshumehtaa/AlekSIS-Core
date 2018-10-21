@@ -1,17 +1,33 @@
 {% include 'partials/header.html' %}
+{% load material_form %}
+
 <main>
 
-    <h5>Übersicht der Anträge</h5>
     <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
+
+   {% block content %}
+        <form method="GET">
+            {{ filter.form.as_p }}
+            <button type="submit" class="waves-effect waves-light btn blue">
+            <i class="material-icons left"></i> Filter aktualisieren
+            </button>
+        </form>
+
+    <h5>Übersicht der Anträge</h5>
     <ul class="collection">
-        {% for aub in aubs %}
+        {% for aub in filter.qs %}
             <li class="collection-item">
 
                 <div class="row">
                         <div class="col s12 m8">
                             <p class="title">
+                                <span>
                                 <i class="material-icons left">access_time</i>
                                 {{ aub.from_dt }} bis {{ aub.to_dt }}
+                                </span><span style="margin-left: 20px">
+                                <i class="material-icons">person</i>
+                                {{ aub.created_by }}
+                                </span>
                             </p>
                             <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
                         </div>
@@ -35,5 +51,6 @@
             </li>
         {% endfor %}
     </ul>
+    {% endblock %}
 </main>
 {% include 'partials/footer.html' %}
