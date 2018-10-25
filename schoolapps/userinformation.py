@@ -29,6 +29,16 @@ class UserInformation:
             return UserInformation.OTHER
 
     @staticmethod
+    def _user_type_formatted(user_type):
+        return "Lehrer" if user_type == UserInformation.TEACHER else (
+            "Schüler" if user_type == UserInformation.STUDENT else "Sonstiges Mitglied")
+
+    @staticmethod
+    def user_type_formatted(user):
+        user_type = UserInformation.user_type(user)
+        return UserInformation._user_type_formatted(user_type)
+
+    @staticmethod
     def user_classes(user):
         groups = UserInformation.user_groups(user)
         classes = UserInformation.regexr(r"class_(\w{1,3})", groups)
@@ -47,7 +57,7 @@ class UserInformation:
         return classes
 
     @staticmethod
-    def has_wifi(user):
+    def user_has_wifi(user):
         groups = UserInformation.user_groups(user)
         if "teachers" in groups or "students-wifi" in groups:
             return True
