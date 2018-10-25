@@ -6,16 +6,10 @@
     <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
 
    {% block content %}
-        <form method="GET">
-            {{ filter.form.as_p }}
-            <button type="submit" class="waves-effect waves-light btn blue">
-            <i class="material-icons left"></i> Filter aktualisieren
-            </button>
-        </form>
 
     <h5>Übersicht der Anträge</h5>
     <ul class="collection">
-        {% for aub in filter.qs %}
+        {% for aub in aubs %}
             <li class="collection-item">
 
                 <div class="row">

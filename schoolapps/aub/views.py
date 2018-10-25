@@ -20,36 +20,32 @@ NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classe
 @login_required
 @permission_required('aub.apply_for_aub')
 def index(request):
-    aub_list = Aub.objects.all()
-    aub_filter = AUBFilter(request.GET, queryset=aub_list)
-    return render(request, 'aub/index.html', {'filter': aub_filter})
-#     if request.method == 'POST':
-#         form = FilterAUBForm(request.POST)
-#         if form.is_valid():
-#             timerange = form.cleaned_data['timerange']
-#             status = form.cleaned_data['status']
-#             sorting = form.cleaned_data['sorting']
-#
-#             a = Activity(user=request.user, title="Filter angepasst",
-#                          description="Sie haben den Filter angepasst.")
-#             a.save()
-#
-#             return redirect(reverse('aub_index'))
-#     else:
-#         form = FilterAUBForm()
-#         timerange = 'bla'
-#
-#     order_crit = '-created_at'
-#     print(timerange)
-#
-# #    aubs = Aub.objects.filter(created_by=request.user).order_by(order_crit)[:100]
-#     aubs = Aub.objects.filter(created_at__lt=dt.today(),created_at__gt=dt.today()).order_by(order_crit)[:100]
-#
-#     context = {
-#         'form': form,
-#         'aubs': aubs
-#     }
-#     return render(request, 'aub/index.html', context)
+    # if request.method == 'POST':
+    #     form = FilterAUBForm(request.POST)
+    #     if form.is_valid():
+    #         timerange = form.cleaned_data['timerange']
+    #         status = form.cleaned_data['status']
+    #         sorting = form.cleaned_data['sorting']
+    #
+    #         a = Activity(user=request.user, title="Filter angepasst",
+    #                      description="Sie haben den Filter angepasst.")
+    #         a.save()
+    #
+    #         return redirect(reverse('aub_index'))
+    # else:
+    #     form = FilterAUBForm()
+
+    order_crit = '-created_at'
+
+    aubs = Aub.objects.filter(created_by=request.user).order_by(order_crit)[:100]
+#    aubs = Aub.objects.all()
+#    aubs = Aub.objects.filter(created_at__lt=dt.today(),created_at__gt=dt.today()).order_by(order_crit)[:100]
+
+    context = {
+#        'form': form,
+        'aubs': aubs
+    }
+    return render(request, 'aub/index.html', context)
 
 @login_required
 @permission_required('aub.apply_for_aub')
@@ -115,12 +111,15 @@ def check1(request):
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
-    aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
-    context = {
-        'aubs': aubs
-    }
+    aub_list = Aub.objects.all()
+    aubs = AUBFilter(request.GET, queryset=aub_list)
+    return render(request, 'aub/check.html', {'filter': aubs})
+    #aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
+    #context = {
+    #    'aubs': aubs
+    #}
 
-    return render(request, 'aub/check.html', context)
+    #return render(request, 'aub/check.html', context)
 
 
 @login_required
@@ -156,9 +155,11 @@ def check2(request):
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
 
-    aubs = Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
-    context = {
-        'aubs': aubs
-    }
-
-    return render(request, 'aub/check.html', context)
+    aub_list = Aub.objects.all()
+    aubs = AUBFilter(request.GET, queryset=aub_list)
+#    aubs = Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
+#    context = {
+#        'aubs': aubs
+#    }
+    return render(request, 'aub/check.html', {'filter': aubs})
+#    return render(request, 'aub/check.html', context)
