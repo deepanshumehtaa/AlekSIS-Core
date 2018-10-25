@@ -6,6 +6,7 @@ from .models import Activity, register_notification
 from mailer import send_mail_with_template
 from userinformation import UserInformation
 
+
 # Create your views here.
 
 @login_required
@@ -25,9 +26,16 @@ def index(request):
     # Load notifications
     notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')
 
+    # user_type = UserInformation.user_type(request.user)
     context = {
         'activities': activities,
         'notifications': notifications,
+        'user_type': UserInformation.user_type(request.user),
+        'user_type_formatted': UserInformation.user_type_formatted(request.user),
+        'classes': UserInformation.user_classes(request.user),
+        'courses': UserInformation.user_courses(request.user),
+        'subjects': UserInformation.user_subjects(request.user),
+        'has_wifi': UserInformation.user_has_wifi(request.user)
     }
 
     return render(request, 'dashboard/index.html', context)
