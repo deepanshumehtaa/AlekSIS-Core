@@ -11,3 +11,4 @@ class AUBFilter(django_filters.FilterSet):
     class Meta:
         model = Aub
         fields = [ 'created_by', 'status']
+        ordering = 'status'

@@ -93,7 +93,7 @@ def check1(request):
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
-    aub_list = Aub.objects.all()
+    aub_list = Aub.objects.all().order_by('status')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
     #aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
@@ -137,7 +137,7 @@ def check2(request):
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
 
-    aub_list = Aub.objects.all()
+    aub_list = Aub.objects.all().order_by('status')
     aubs = AUBFilter(request.GET, queryset=aub_list)
 #    aubs = Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
 #    context = {
