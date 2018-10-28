@@ -83,7 +83,7 @@ class Substitution(object):
 
 def get_substitutions_by_date():
     subs_raw = run_default_filter(
-        run_using(models.Substitution.objects.filter(date="20180821").order_by("classids", "lesson")),
+        run_using(models.Substitution.objects.filter(date="20180901").order_by("classids", "lesson")),
         filter_term=False)
     # print(subs_raw)
 
