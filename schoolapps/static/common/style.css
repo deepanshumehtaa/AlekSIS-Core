@@ -82,6 +82,7 @@ ul.collection .collection-item .title {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 /* Badges */
 
 span.badge.new::after {
@@ -91,6 +92,21 @@ span.badge.new::after {
 /*+++++++++++*/
 /* Timetable */
 /*+++++++++++*/
+=======
+span.badge {
+    width: 9em;
+    line-height: 4ex;
+    height: 4ex;
+}
+span.badge::after {
+    content: "";
+}
+
+span.item-text {
+    line-height: 4ex;
+    vertical-align: bottom;
+}
+>>>>>>> iss7-django-material
 
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
@@ -108,7 +124,7 @@ span.badge.new::after {
 }
 
 .lesson-card .card-content {
-    padding: 0;
+    padding: 5px;
     text-align: center;
     width: 100%;
     height: 100%;

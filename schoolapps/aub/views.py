@@ -1,58 +1,38 @@
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.utils import formats
+from datetime import datetime as dt
 
 from .apps import AubConfig
 from dashboard.models import Activity, register_notification
-from .forms import ApplyForAUBForm
+from .forms import FilterAUBForm, ApplyForAUBForm
 from .models import Aub, Status
+from .filters import AUBFilter
+from .decorators import check_own_aub
 
-IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')[0]
-SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='yellow')[0]
+IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')[0]
+SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung 2', style_classes='yellow')[0]
 ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')[0]
 NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')[0]
-
 
 @login_required
 @permission_required('aub.apply_for_aub')
 def index(request):
-    aubs = Aub.objects.filter(created_by=request.user).order_by('-created_at')[:10]
+#    order_crit = '-created_at'
+    order_crit = 'from_dt'
+    aubs = Aub.objects.filter(created_by=request.user).order_by(order_crit)[:100]
 
     context = {
         'aubs': aubs
     }
     return render(request, 'aub/index.html', context)
 
-
-def check_own_aub_verification(user):
-    return Aub.objects.all().filter(created_by=user)
-
-
-def check_own_aub(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
-    """
-    Decorator for views that checks that the user only gets his own aub, redirecting
-    to the dashboard if necessary.
-    """
-    actual_decorator = user_passes_test(
-        check_own_aub_verification,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
-
-def not_your_own():
-    return "hallo"
 @login_required
 @permission_required('aub.apply_for_aub')
-@check_own_aub(login_url='/index.html?reason=not_your_own')
+@check_own_aub(login_url='/index.html')
 def details(request, aub_id):
-#    aub = Aub.objects.all().filter(id=aub_id)
     aub = get_object_or_404(Aub, id=aub_id)
     context = {
         'aub': aub
@@ -66,21 +46,20 @@ def apply_for(request):
         form = ApplyForAUBForm(request.POST)
 
         if form.is_valid():
-            from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
-            to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
-            description = form.cleaned_data['description']
+                from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
+                to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
+                description = form.cleaned_data['description']
 
-            aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
-            aub.save()
+                aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
+                aub.save()
 
-            a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-                         description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-                                     "für den Zeitraum von {} bis {} gestellt.".format(
-                                         aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
-            a.save()
+                a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
+                             description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
+                                         "für den Zeitraum von {} bis {} gestellt.".format(
+                                             aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
+                a.save()
 
-            return redirect(reverse('aub_applied_for'))
-
+                return redirect(reverse('aub_applied_for'))
     else:
         form = ApplyForAUBForm()
 
@@ -88,7 +67,9 @@ def apply_for(request):
         'form': form,
     }
 
+
     return render(request, 'aub/apply_for.html', context)
+
 
 
 @login_required
@@ -112,12 +93,15 @@ def check1(request):
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
-    aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
-    context = {
-        'aubs': aubs
-    }
+    aub_list = Aub.objects.all()
+    aubs = AUBFilter(request.GET, queryset=aub_list)
+    return render(request, 'aub/check.html', {'filter': aubs})
+    #aubs = Aub.objects.filter(status=IN_PROCESSING_STATUS)
+    #context = {
+    #    'aubs': aubs
+    #}
 
-    return render(request, 'aub/check.html', context)
+    #return render(request, 'aub/check.html', context)
 
 
 @login_required
@@ -153,9 +137,11 @@ def check2(request):
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
 
-    aubs = Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
-    context = {
-        'aubs': aubs
-    }
-
-    return render(request, 'aub/check.html', context)
+    aub_list = Aub.objects.all()
+    aubs = AUBFilter(request.GET, queryset=aub_list)
+#    aubs = Aub.objects.filter(status=SEMI_ALLOWED_STATUS)
+#    context = {
+#        'aubs': aubs
+#    }
+    return render(request, 'aub/check.html', {'filter': aubs})
+#    return render(request, 'aub/check.html', context)
