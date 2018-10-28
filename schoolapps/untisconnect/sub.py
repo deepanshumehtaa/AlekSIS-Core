@@ -4,6 +4,7 @@ from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, get_teacher_by_id, get_subject_by_id, \
     get_room_by_id, get_class_by_id
 from untisconnect.api_helper import run_using, untis_split_first
+from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher
 
 DATE_FORMAT = "%Y%m%d"
 
@@ -33,6 +34,7 @@ class Substitution(object):
         self.room_new = None
         self.corridor = None
         self.classes = None
+        self.lesson_element = None
 
     def __str__(self):
         if self.filled:
@@ -49,37 +51,46 @@ class Substitution(object):
         self.type = list(db_obj.flags)
         self.text = db_obj.text
 
+        # Lesson
+
         # Teacher
-        if db_obj.teacher_idlessn != 0:
-            self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
+        self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = get_teacher_by_id(db_obj.teacher_idsubst)
 
+        self.lesson_element = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old)
+        print(self.lesson)
+
         # Subject
-        self.subject_old = None
+        self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
             self.subject_new = get_subject_by_id(db_obj.subject_idsubst)
 
         # Room
-        self.room_old = None
+        self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
         if db_obj.room_idsubst != 0:
             self.room_new = get_room_by_id(db_obj.room_idsubst)
         self.corridor = db_obj.corridor_id
 
         # Classes
+
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
-
+        print(class_ids)
         for id in class_ids:
             self.classes.append(get_class_by_id(id))
 
 
 def get_substitutions_by_date():
-    subs_raw = run_default_filter(run_using(models.Substitution.objects.filter(date="20180821")), filter_term=False)
-    print(subs_raw)
+    subs_raw = run_default_filter(
+        run_using(models.Substitution.objects.filter(date="20180821").order_by("classids", "lesson")),
+        filter_term=False)
+    # print(subs_raw)
 
     subs = row_by_row_helper(subs_raw, Substitution)
     print(subs)
     for row in subs:
         print(row.classes)
+        for class_ in row.classes:
+            print(class_.name)
     return subs
