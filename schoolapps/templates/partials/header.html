@@ -16,10 +16,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'materialize/dist/css/materialize.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
+
     <!-- django-material -->
     {% include 'material/includes/material_css.html' %}
 
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
     <!---------------->
     <!-- JavaScript -->
     <!---------------->
@@ -74,17 +75,22 @@
             }
             else {
                 // calculate lessons end time
-                // string methods easier than date function gewurschtel
+                // string methods easier than date function muddle
                 var h = lesson_field.value.split(':')[0];
                 var m = lesson_field.value.split(':')[1];
                 if (m < 15) {
-                    m = m + 45;
+                    m = parseInt(m) + 45;
                 }
                 else {
-                    m = m - 15;
+                    m = parseInt(m) - 15;
                     h = parseInt(h) + 1;
                 }
-                var newTime = h.toString()+':'+m.toString();
+                m = m.toString()
+                h = h.toString()
+                if (m.length == 1) {
+                    m = '0'+m
+                }
+                var newTime = h+':'+m;
                 $('[id=id_to_time]').val(newTime);
             }
         }

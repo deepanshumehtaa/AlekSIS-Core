@@ -16,7 +16,7 @@ class Status(models.Model):
 
 
 def get_default_status():
-    status, created = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')
+    status, created = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')
     return status.id
 
 

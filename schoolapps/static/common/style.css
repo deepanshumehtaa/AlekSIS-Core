@@ -80,8 +80,18 @@ ul.collection .collection-item .title {
     font-weight: bold;
 }
 
-span.badge.new::after {
+span.badge {
+    width: 9em;
+    line-height: 4ex;
+    height: 4ex;
+}
+span.badge::after {
     content: "";
+}
+
+span.item-text {
+    line-height: 4ex;
+    vertical-align: bottom;
 }
 
 .timetable-plan .row, .timetable-plan .col {

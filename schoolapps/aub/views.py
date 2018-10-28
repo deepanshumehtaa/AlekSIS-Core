@@ -12,37 +12,19 @@ from .models import Aub, Status
 from .filters import AUBFilter
 from .decorators import check_own_aub
 
-IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')[0]
-SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung', style_classes='yellow')[0]
+IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')[0]
+SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung 2', style_classes='yellow')[0]
 ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')[0]
 NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')[0]
 
 @login_required
 @permission_required('aub.apply_for_aub')
 def index(request):
-    # if request.method == 'POST':
-    #     form = FilterAUBForm(request.POST)
-    #     if form.is_valid():
-    #         timerange = form.cleaned_data['timerange']
-    #         status = form.cleaned_data['status']
-    #         sorting = form.cleaned_data['sorting']
-    #
-    #         a = Activity(user=request.user, title="Filter angepasst",
-    #                      description="Sie haben den Filter angepasst.")
-    #         a.save()
-    #
-    #         return redirect(reverse('aub_index'))
-    # else:
-    #     form = FilterAUBForm()
-
-    order_crit = '-created_at'
-
+#    order_crit = '-created_at'
+    order_crit = 'from_dt'
     aubs = Aub.objects.filter(created_by=request.user).order_by(order_crit)[:100]
-#    aubs = Aub.objects.all()
-#    aubs = Aub.objects.filter(created_at__lt=dt.today(),created_at__gt=dt.today()).order_by(order_crit)[:100]
 
     context = {
-#        'form': form,
         'aubs': aubs
     }
     return render(request, 'aub/index.html', context)
