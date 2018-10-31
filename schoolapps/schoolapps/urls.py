@@ -47,4 +47,4 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-handler404 = 'dashboard.views.error_404'
+#handler404 = 'dashboard.views.error_404'

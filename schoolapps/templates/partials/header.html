@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}"/>
 
     <!--------->
     <!-- CSS -->
@@ -14,8 +16,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'materialize/dist/css/materialize.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
 
+    <!-- django-material -->
+    {% include 'material/includes/material_css.html' %}
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
     <!---------------->
     <!-- JavaScript -->
     <!---------------->
@@ -60,8 +65,40 @@
             //Initialize tooltip [MAT]
             $('.tooltipped').tooltip();
         });
-
     </script>
+    <script>
+        //set AUB-Form
+        function set_time(lesson_field) {
+            // fill timefield based on lesson value
+            if (lesson_field.id == 'id_from_lesson') {
+                $('[id=id_from_time]').val(lesson_field.value);
+            }
+            else {
+                // calculate lessons end time
+                // string methods easier than date function muddle
+                var h = lesson_field.value.split(':')[0];
+                var m = lesson_field.value.split(':')[1];
+                if (m < 15) {
+                    m = parseInt(m) + 45;
+                }
+                else {
+                    m = parseInt(m) - 15;
+                    h = parseInt(h) + 1;
+                }
+                m = m.toString()
+                h = h.toString()
+                if (m.length == 1) {
+                    m = '0' + m
+                }
+                var newTime = h + ':' + m;
+                $('[id=id_to_time]').val(newTime);
+            }
+        }
+    </script>
+    <!-- django-material -->
+    {% include 'material/includes/material_js.html' %}
+
+
 </head>
 <body>
 <header>
@@ -80,7 +117,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
                     <li>Angemeldet als {{ user.get_username }}</li>
-                    <li><a href="{% url 'logout' %}">Abmelden</a></li>
+                    <li><a href="{% url 'logout' %}">Abmelden <i class="material-icons right">exit_to_app</i></a></li>
                 {% endif %}
             </ul>
         </div>
@@ -100,39 +137,56 @@
                     <i class="material-icons">home</i> Dashboard
                 </a>
             </li>
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
+
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
+            {% endif %}
             {% if perms.aub.apply_for_aub %}
-                <li><a href="{% url 'aub_index' %}">Unterrichtsbefreiungen</a></li>
+                <li><a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i> Unterrichtsbefreiungen</a>
+                </li>
             {% endif %}
             {% if perms.aub.check1_aub %}
-                <li><a href="{% url 'aub_check1' %}">Anträge genehmigen 1</a></li>
+                <li><a href="{% url 'aub_check1' %}"><i class="material-icons">check</i> Anträge genehmigen 1</a></li>
             {% endif %}
             {% if perms.aub.check2_aub %}
-                <li><a href="{% url 'aub_check2' %}">Anträge genehmigen 2</a></li>
+                <li><a href="{% url 'aub_check2' %}"><i class="material-icons">check_box</i> Anträge genehmigen 2</a>
+                </li>
             {% endif %}
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li><a class="subheader grey lighten-3">Stundenplan</a></li>
-            <li><a href="{% url 'timetable_admin_all' %}">Übersicht</a></li>
-            <li><a href="{% url 'timetable_quicklaunch' %}">Schnellzugriff</a></li>
-            <li><a href="{% url 'timetable_substitutions' %}">Vertretungsplan</a></li>
-            <li>
-                <div class="divider"></div>
-            </li>
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
+            {% if perms.timetable.show_plan %}
+                <li>
+                    <a class="subheader grey lighten-3">Stundenplan</a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_admin_all' %}">
+                        <i class="material-icons">grid_on</i> Übersicht
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_quicklaunch' %}">
+                        <i class="material-icons">directions</i> Schnellzugriff
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_substitutions' %}">
+                        <i class="material-icons">person</i> Vertretungsplan
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
-            </li>
-            <li>
-                {{ user.groups.all }}
-                {% for group in user.groups.all %}
-                    {{ group }}
-                {% endfor %}
             </li>
         {% endif %}
     </ul>
