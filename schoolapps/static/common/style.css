@@ -88,19 +88,19 @@ span.badge.new::after {
     content: "";
 }
 
-span.badge {
-    width: 9em;
-    line-height: 4ex;
-    height: 4ex;
-}
-span.badge::after {
-    content: "";
-}
+/*span.badge {*/
+/*width: 9em;*/
+/*line-height: 4ex;*/
+/*height: 4ex;*/
+/*}*/
+/*span.badge::after {*/
+/*content: "";*/
+/*}*/
 
-span.item-text {
-    line-height: 4ex;
-    vertical-align: bottom;
-}
+/*span.item-text {*/
+/*line-height: 4ex;*/
+/*vertical-align: bottom;*/
+/*}*/
 
 /*+++++++++++*/
 /* Timetable */
