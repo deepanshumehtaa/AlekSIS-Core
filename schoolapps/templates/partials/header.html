@@ -8,7 +8,7 @@
     <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="{%  static 'common/favicon.ico' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}"/>
 
     <!--------->
     <!-- CSS -->
@@ -88,9 +88,9 @@
                 m = m.toString()
                 h = h.toString()
                 if (m.length == 1) {
-                    m = '0'+m
+                    m = '0' + m
                 }
-                var newTime = h+':'+m;
+                var newTime = h + ':' + m;
                 $('[id=id_to_time]').val(newTime);
             }
         }
@@ -137,10 +137,13 @@
                     <i class="material-icons">home</i> Dashboard
                 </a>
             </li>
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
+
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
+            {% endif %}
             {% if perms.aub.apply_for_aub %}
                 <li><a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i> Unterrichtsbefreiungen</a>
                 </li>
@@ -152,30 +155,34 @@
                 <li><a href="{% url 'aub_check2' %}"><i class="material-icons">check_box</i> Anträge genehmigen 2</a>
                 </li>
             {% endif %}
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li>
-                <a class="subheader grey lighten-3">Stundenplan</a>
-            </li>
-            <li>
-                <a href="{% url 'timetable_admin_all' %}">
-                    <i class="material-icons">grid_on</i> Übersicht
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'timetable_quicklaunch' %}">
-                    <i class="material-icons">directions</i> Schnellzugriff
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'timetable_substitutions' %}">
-                    <i class="material-icons">person</i> Vertretungsplan
-                </a>
-            </li>
-            <li>
-                <div class="divider"></div>
-            </li>
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
+            {% if perms.timetable.show_plan %}
+                <li>
+                    <a class="subheader grey lighten-3">Stundenplan</a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_admin_all' %}">
+                        <i class="material-icons">grid_on</i> Übersicht
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_quicklaunch' %}">
+                        <i class="material-icons">directions</i> Schnellzugriff
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_substitutions' %}">
+                        <i class="material-icons">person</i> Vertretungsplan
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
