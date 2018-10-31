@@ -54,9 +54,14 @@ class Substitution(object):
         # Lesson
 
         # Teacher
-        self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
+        print(db_obj.teacher_idlessn)
+        if db_obj.teacher_idlessn != 0:
+            self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = get_teacher_by_id(db_obj.teacher_idsubst)
+
+            if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
+                self.teacher_new = None
 
         self.lesson_element = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old)
         print(self.lesson)
@@ -66,10 +71,22 @@ class Substitution(object):
         if db_obj.subject_idsubst != 0:
             self.subject_new = get_subject_by_id(db_obj.subject_idsubst)
 
+            if self.subject_old is not None and self.subject_old.id == self.subject_new.id:
+                self.subject_new = None
+
         # Room
         self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
+        if len(self.rooms_old) >= 1:
+            self.room_old = self.rooms_old[0]
+
         if db_obj.room_idsubst != 0:
             self.room_new = get_room_by_id(db_obj.room_idsubst)
+
+            if self.room_old is not None and self.room_old.id == self.room_new.id:
+                self.room_new = None
+        # if self.rooms_old
+
+        print(self.room_new)
         self.corridor = db_obj.corridor_id
 
         # Classes
@@ -81,9 +98,23 @@ class Substitution(object):
             self.classes.append(get_class_by_id(id))
 
 
-def get_substitutions_by_date():
+def substitutions_sorter(sub):
+    # First, sort by class
+    sort_by = "".join(class_.name for class_ in sub.classes)
+
+    # If the sub hasn't got a class, then put it to the bottom
+    if sort_by == "":
+        sort_by = "Z"
+
+    # Second, sort by lesson number
+    sort_by += str(sub.lesson)
+
+    return sort_by
+
+
+def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
-        run_using(models.Substitution.objects.filter(date="20180901").order_by("classids", "lesson")),
+        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date)).order_by("classids", "lesson")),
         filter_term=False)
     # print(subs_raw)
 
@@ -93,4 +124,5 @@ def get_substitutions_by_date():
         print(row.classes)
         for class_ in row.classes:
             print(class_.name)
+    subs.sort(key=substitutions_sorter)
     return subs
