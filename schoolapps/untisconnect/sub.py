@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, get_teacher_by_id, get_subject_by_id, \
-    get_room_by_id, get_class_by_id
+    get_room_by_id, get_class_by_id, get_corridor_by_id
 from untisconnect.api_helper import run_using, untis_split_first
 from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher
 
@@ -20,7 +20,7 @@ def date_to_untis_date(date):
 TYPE_SUBSTITUTION = 0
 TYPE_CANCELLATION = 1
 TYPE_TEACHER_CANCELLATION = 2
-
+TYPE_CORRIDOR = 3
 
 def parse_type_of_untis_flags(flags):
     type_ = TYPE_SUBSTITUTION
@@ -100,9 +100,12 @@ class Substitution(object):
                 self.room_new = None
         # if self.rooms_old
 
-        print(self.room_new)
-        self.corridor = db_obj.corridor_id
-
+        # print(self.room_new)
+        # print("CORRIDOR")
+        # print(self.corridor)
+        if db_obj.corridor_id != 0:
+            self.corridor = get_corridor_by_id(db_obj.corridor_id)
+            self.type = TYPE_CORRIDOR
         # Classes
 
         self.classes = []

@@ -158,6 +158,38 @@ def get_room_by_id(id):
     return one_by_id(room, Room)
 
 
+########
+# CORRIDOR #
+########
+class Corridor(object):
+    def __init__(self):
+        self.filled = False
+        self.id = None
+        self.name = None
+
+    def __str__(self):
+        if self.filled:
+            return self.name or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def create(self, db_obj):
+        self.filled = True
+        self.id = db_obj.corridor_id
+        self.name = db_obj.name
+
+
+def get_all_corridors():
+    corridors = row_by_row(models.Corridor, Corridor, filter_term=False)
+    return corridors
+
+
+def get_corridor_by_id(id):
+    print(id)
+    corridor = run_one(models.Corridor.objects, filter_term=False).get(corridor_id=id)
+    return one_by_id(corridor, Corridor)
+
+
 ###########
 # SUBJECT #
 ###########
