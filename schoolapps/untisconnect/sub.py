@@ -17,6 +17,20 @@ def date_to_untis_date(date):
     return date.strftime(DATE_FORMAT)
 
 
+TYPE_SUBSTITUTION = 0
+TYPE_CANCELLATION = 1
+TYPE_TEACHER_CANCELLATION = 2
+
+
+def parse_type_of_untis_flags(flags):
+    type_ = TYPE_SUBSTITUTION
+    if "E" in flags:
+        type_ = TYPE_CANCELLATION
+    elif "F" in flags:
+        type_ = TYPE_TEACHER_CANCELLATION
+    return type_
+
+
 class Substitution(object):
     def __init__(self):
         self.filled = False
@@ -48,7 +62,7 @@ class Substitution(object):
         self.lesson_id = db_obj.lesson_idsubst
         self.date = untis_date_to_date(db_obj.date)
         self.lesson = db_obj.lesson
-        self.type = list(db_obj.flags)
+        self.type = parse_type_of_untis_flags(db_obj.flags)
         self.text = db_obj.text
 
         # Lesson
