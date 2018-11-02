@@ -132,10 +132,10 @@ def parse():
 
             # print(rld2)
 
-            for el in rld2:
+            for i, el in enumerate(rld2):
                 teacher_id = int(el[0])
                 subject_id = int(el[2])
-                room_ids = untis_split(el[4], int)
+                # room_ids = untis_split(el[4], int)
                 class_ids = untis_split(el[17], conv=int)
                 # print("TEACHER – ", teacher_id, "; SUBJECT – ", subject_id, "; ROOMS – ", room_ids, "; CLASSES – ",
                 #       class_ids)
@@ -151,9 +151,9 @@ def parse():
                     subject = None
 
                 rooms = []
-                for room_id in room_ids:
-                    r = drive["rooms"][room_id]
-                    rooms.append(r)
+                # for room_id in room_ids:
+                # r = drive["rooms"][room_ids[i]]
+                # rooms.append(r)
 
                 classes = []
                 for class_id in class_ids:
@@ -223,6 +223,7 @@ def get_plan(type, id):
     # Fill plan with lessons
     for lesson in lessons:
         for i, element in enumerate(lesson.elements):
+
             # Check if the lesson element is important for that plan (look by type and id)
             found = False
             if type == TYPE_CLASS:
@@ -236,15 +237,21 @@ def get_plan(type, id):
                         found = True
 
             elif type == TYPE_ROOM:
-                for lroom in element.rooms:
-                    if lroom.id == id:
-                        found = True
+                for time in lesson.times:
+                    for j, lroom in enumerate(time.rooms):
+                        if lroom.id == id:
+                            print(lroom.name)
+                            found = True
 
             # If the lesson element is important then add it to plan array
             if found:
                 for time in lesson.times:  # Go for every time the lesson is thought
                     # print(time.hour, " ", time.day)
                     # print(element.subject.shortcode)
+                    room_index = None
+                    for j, lroom in enumerate(time.rooms):
+                        if lroom.id == id:
+                            room_index = j
 
                     # Add the time object to the matching LessonContainer on the right position in the plan array
                     plan[time.hour - 1][time.day - 1].set_time(time)
@@ -255,11 +262,15 @@ def get_plan(type, id):
                     except IndexError:
                         room = None
 
+                    # print(element)
+                    # print(room.name)
+
                     # Create a LessonElementContainer with room and lesson element
                     element_container = LessonElementContainer(element, room)
 
-                    # Add this container object to the LessonContainer object in the plan array
-                    plan[time.hour - 1][time.day - 1].append(element_container)
+                    if type != TYPE_ROOM or i == room_index:
+                        # Add this container object to the LessonContainer object in the plan array
+                        plan[time.hour - 1][time.day - 1].append(element_container)
 
     # print(plan)
     #
