@@ -22,6 +22,7 @@ TYPE_CANCELLATION = 1
 TYPE_TEACHER_CANCELLATION = 2
 TYPE_CORRIDOR = 3
 
+
 def parse_type_of_untis_flags(flags):
     type_ = TYPE_SUBSTITUTION
     if "E" in flags:
@@ -127,6 +128,88 @@ def substitutions_sorter(sub):
     sort_by += str(sub.lesson)
 
     return sort_by
+
+
+class SubRow(object):
+    def __init__(self):
+        self.color = "black"
+        self.css_class = "black-text"
+        self.lesson = ""
+        self.classes = ""
+        self.teacher = ""
+        self.subject = ""
+        self.room = ""
+        self.text = ""
+        self.extra = ""
+
+
+def generate_sub_table(subs):
+    sub_rows = []
+    for sub in subs:
+        sub_row = SubRow()
+
+        sub_row.color = "black"
+        if sub.type == 1 or sub.type == 2:
+            sub_row.css_class = "green-text"
+            sub_row.color = "green"
+        elif sub.type == 3:
+            sub_row.css_class = "blue-text"
+            sub_row.color = "blue"
+
+        if sub.type == 3:
+            sub_row.lesson = "{}./{}".format(sub.lesson - 1, sub.lesson)
+        else:
+            sub_row.lesson = "{}.".format(sub.lesson)
+
+        for class_ in sub.classes:
+            sub_row.classes = class_.name
+
+        if sub.type == 1:
+            sub_row.teacher = "<s>{}</s>".format(sub.teacher_old.shortcode)
+
+        elif sub.teacher_new and sub.teacher_old:
+            sub_row.teacher = "<s>{}</s> → <strong>{}</strong>".format(sub.teacher_old.shortcode,
+                                                                       sub.teacher_new.shortcode)
+        elif sub.teacher_new and not sub.teacher_old:
+            sub_row.teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode)
+        else:
+            sub_row.teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode)
+
+        if sub.type == 3:
+            sub_row.subject = "Aufsicht"
+        elif sub.type == 1 or sub.type == 2:
+            sub_row.subject = "<s>{}</s>".format(sub.subject_old.shortcode)
+        elif sub.subject_new and sub.subject_old:
+            sub_row.subject = "<s>{}</s> → <strong>{}</strong>".format(sub.subject_old.shortcode,
+                                                                       sub.subject_new.shortcode)
+        elif sub.subject_new and not sub.subject_old:
+            sub_row.subject = "<strong>{}</strong>".format(sub.subject_new.shortcode)
+        else:
+            sub_row.subject = "<strong>{}</strong>".format(sub.subject_old.shortcode)
+
+        if sub.type == 3:
+            sub_row.room = sub.corridor.name
+        elif sub.type == 1 or sub.type == 2:
+            pass
+        elif sub.room_new and sub.room_old:
+            sub_row.room = "<s>{}</s> → <strong>{}</strong>".format(sub.room_old.shortcode, sub.room_new.shortcode)
+        elif sub.room_new and not sub.room_old:
+            sub_row.room = sub.room_new.shortcode
+        else:
+            sub_row.room = sub.room_old.shortcode
+
+        sub_row.text = sub.text
+
+        sub_row.badge = None
+        if sub.type == 1:
+            sub_row.badge = "Schüler frei"
+        elif sub.type == 2:
+            sub_row.badge = "Lehrer frei"
+
+        sub_row.extra = "{} {}".format(sub.id, sub.lesson_id)
+
+        sub_rows.append(sub_row)
+    return sub_rows
 
 
 def get_substitutions_by_date(date):
