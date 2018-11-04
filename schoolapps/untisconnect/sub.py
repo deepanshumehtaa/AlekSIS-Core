@@ -69,7 +69,7 @@ class Substitution(object):
         # Lesson
 
         # Teacher
-        print(db_obj.teacher_idlessn)
+        # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
         if db_obj.teacher_idsubst != 0:
@@ -79,7 +79,7 @@ class Substitution(object):
                 self.teacher_new = None
 
         self.lesson_element = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old)
-        print(self.lesson)
+        # print(self.lesson)
 
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
@@ -111,7 +111,7 @@ class Substitution(object):
 
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
-        print(class_ids)
+        # print(class_ids)
         for id in class_ids:
             self.classes.append(get_class_by_id(id))
 
@@ -195,6 +195,8 @@ def generate_sub_table(subs):
             sub_row.room = "<s>{}</s> → <strong>{}</strong>".format(sub.room_old.shortcode, sub.room_new.shortcode)
         elif sub.room_new and not sub.room_old:
             sub_row.room = sub.room_new.shortcode
+        elif not sub.room_new and not sub.room_old:
+            pass
         else:
             sub_row.room = sub.room_old.shortcode
 
@@ -219,10 +221,10 @@ def get_substitutions_by_date(date):
     # print(subs_raw)
 
     subs = row_by_row_helper(subs_raw, Substitution)
-    print(subs)
-    for row in subs:
-        print(row.classes)
-        for class_ in row.classes:
-            print(class_.name)
+    # print(subs)
+    # for row in subs:
+    #     print(row.classes)
+    #     for class_ in row.classes:
+    #         print(class_.name)
     subs.sort(key=substitutions_sorter)
     return subs
