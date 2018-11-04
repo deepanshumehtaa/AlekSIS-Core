@@ -3,3 +3,7 @@ env/
 *.pyc
 secure*
 .idea/workspace.xml
+*.aux
+*.log
+class.pdf
+class.tex
