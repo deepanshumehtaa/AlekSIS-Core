@@ -140,10 +140,65 @@ class SubRow(object):
         self.lesson = ""
         self.classes = ""
         self.teacher = ""
+        self.teacher_full = ""
         self.subject = ""
+        self.subject_full = ""
         self.room = ""
+        self.room_full = ""
         self.text = ""
         self.extra = ""
+
+
+def generate_teacher_row(sub, full=False):
+    if sub.type == 1:
+        teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
+
+    elif sub.teacher_new and sub.teacher_old:
+        teacher = "<s>{}</s> → <strong>{}</strong>".format(
+            sub.teacher_old.shortcode if not full else sub.teacher_old.name,
+            sub.teacher_new.shortcode if not full else sub.teacher_new.name)
+    elif sub.teacher_new and not sub.teacher_old:
+        teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode if not full else sub.teacher_new.name)
+    else:
+        teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
+
+    return teacher
+
+
+def generate_subject_row(sub, full=False):
+    if sub.type == 3:
+        subject = "Aufsicht"
+    elif sub.type == 1 or sub.type == 2:
+        subject = "<s>{}</s>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
+    elif sub.subject_new and sub.subject_old:
+        subject = "<s>{}</s> → <strong>{}</strong>".format(
+            sub.subject_old.shortcode if not full else sub.subject_old.name,
+            sub.subject_new.shortcode if not full else sub.subject_new.name)
+    elif sub.subject_new and not sub.subject_old:
+        subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
+    else:
+        subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
+
+    return subject
+
+
+def generate_room_row(sub, full=False):
+    room = ""
+    if sub.type == 3:
+        room = sub.corridor.name
+    elif sub.type == 1 or sub.type == 2:
+        pass
+    elif sub.room_new and sub.room_old:
+        room = "<s>{}</s> → <strong>{}</strong>".format(sub.room_old.shortcode if not full else sub.room_old.name,
+                                                        sub.room_new.shortcode if not full else sub.room_new.name)
+    elif sub.room_new and not sub.room_old:
+        room = sub.room_new.shortcode if not full else sub.room_new.name
+    elif not sub.room_new and not sub.room_old:
+        pass
+    else:
+        room = sub.room_old.shortcode if not full else sub.room_old.name
+
+    return room
 
 
 def generate_sub_table(subs):
@@ -167,41 +222,12 @@ def generate_sub_table(subs):
         for class_ in sub.classes:
             sub_row.classes = class_.name
 
-        if sub.type == 1:
-            sub_row.teacher = "<s>{}</s>".format(sub.teacher_old.shortcode)
-
-        elif sub.teacher_new and sub.teacher_old:
-            sub_row.teacher = "<s>{}</s> → <strong>{}</strong>".format(sub.teacher_old.shortcode,
-                                                                       sub.teacher_new.shortcode)
-        elif sub.teacher_new and not sub.teacher_old:
-            sub_row.teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode)
-        else:
-            sub_row.teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode)
-
-        if sub.type == 3:
-            sub_row.subject = "Aufsicht"
-        elif sub.type == 1 or sub.type == 2:
-            sub_row.subject = "<s>{}</s>".format(sub.subject_old.shortcode)
-        elif sub.subject_new and sub.subject_old:
-            sub_row.subject = "<s>{}</s> → <strong>{}</strong>".format(sub.subject_old.shortcode,
-                                                                       sub.subject_new.shortcode)
-        elif sub.subject_new and not sub.subject_old:
-            sub_row.subject = "<strong>{}</strong>".format(sub.subject_new.shortcode)
-        else:
-            sub_row.subject = "<strong>{}</strong>".format(sub.subject_old.shortcode)
-
-        if sub.type == 3:
-            sub_row.room = sub.corridor.name
-        elif sub.type == 1 or sub.type == 2:
-            pass
-        elif sub.room_new and sub.room_old:
-            sub_row.room = "<s>{}</s> → <strong>{}</strong>".format(sub.room_old.shortcode, sub.room_new.shortcode)
-        elif sub.room_new and not sub.room_old:
-            sub_row.room = sub.room_new.shortcode
-        elif not sub.room_new and not sub.room_old:
-            pass
-        else:
-            sub_row.room = sub.room_old.shortcode
+        sub_row.teacher = generate_teacher_row(sub)
+        sub_row.teacher_full = generate_teacher_row(sub, full=True)
+        sub_row.subject = generate_subject_row(sub)
+        sub_row.subject_full = generate_subject_row(sub, full=True)
+        sub_row.room = generate_room_row(sub)
+        sub_row.room_full = generate_room_row(sub, full=True)
 
         sub_row.text = sub.text
 
