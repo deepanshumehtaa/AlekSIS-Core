@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
 from material import Layout, Row, Fieldset
+from schoolapps import settings
+
 
 class FilterAUBForm(forms.Form):
     timerangechoices = [('today','Heute'),('thisWeek','Diese Woche'), ('thisMonth','Dieser Monat')]
@@ -20,13 +22,11 @@ class FilterAUBForm(forms.Form):
         cleaned_data = super().clean()
 
 class ApplyForAUBForm(forms.Form):
-    lessons = [('', ''), ('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
-               ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
     from_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    from_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    from_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
     from_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial='8:00', )
     to_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    to_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    to_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
     to_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial='15:35')
 
     description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.')
@@ -61,34 +61,6 @@ class ApplyForAUBForm(forms.Form):
         elif from_datetime > to_datetime:
             raise ValidationError('Das Von-Datum liegt hinter dem Bis-Datum.')
         return True
-
-    # def clean_from_date(self):
-    #     data = self.cleaned_data['from_date']
-    #     # if data < timezone.datetime.date(timezone.now()):
-    #     #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden (Datumsfehler).')
-    #     return data
-    #
-    # def clean_to_date(self):
-    #     data = self.cleaned_data['to_date']
-    #     # if data < timezone.datetime.date(timezone.now()):
-    #     #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
-    #     return data
-    #
-    # def clean_from_time(self):
-    #     data = self.cleaned_data['from_time']
-    #     # print('Data:', type(data), 'Now:', type(timezone.datetime.time(timezone.now())))
-    #
-    #     # if data < timezone.datetime.time(timezone.now()):
-    #     #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden (Zeitfehler).')
-    #
-    #     return data
-    #
-    # def clean_to_time(self):
-    #     data = self.cleaned_data['to_time']
-    #
-    #     # if data < timezone.datetime.time(timezone.now()):
-    #     #     raise ValidationError('Die Befreiung kann nur zukünftig durchgeführt werden.')
-    #     return data
 
     def clean_description(self):
         data = self.cleaned_data['description']
