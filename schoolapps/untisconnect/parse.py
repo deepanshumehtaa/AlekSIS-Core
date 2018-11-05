@@ -123,16 +123,18 @@ def build_drive():
         "teachers": get_all_teachers(),
         "rooms": get_all_rooms(),
         "classes": get_all_classes(),
-        "subjects": get_all_subjects()
+        "subjects": get_all_subjects(),
+        "corridors": get_all_corridors(),
     }
 
     drive = {
-        "teachers": {},
-        "rooms": {},
-        "classes": {},
-        "subjects": {}
+        # "teachers": {},
+        # "rooms": {},
+        # "classes": {},
+        # "subjects": {}
     }
     for key, value in odrive.items():
+        drive[key] = {}
         for el in value:
             id = el.id
             drive[key][id] = el

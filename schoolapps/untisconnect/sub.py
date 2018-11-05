@@ -4,7 +4,7 @@ from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, get_teacher_by_id, get_subject_by_id, \
     get_room_by_id, get_class_by_id, get_corridor_by_id
 from untisconnect.api_helper import run_using, untis_split_first
-from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher
+from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher, build_drive
 
 DATE_FORMAT = "%Y%m%d"
 
@@ -30,6 +30,9 @@ def parse_type_of_untis_flags(flags):
     elif "F" in flags:
         type_ = TYPE_TEACHER_CANCELLATION
     return type_
+
+
+drive = build_drive()
 
 
 class Substitution(object):
@@ -71,9 +74,9 @@ class Substitution(object):
         # Teacher
         # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
-            self.teacher_old = get_teacher_by_id(db_obj.teacher_idlessn)
+            self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
         if db_obj.teacher_idsubst != 0:
-            self.teacher_new = get_teacher_by_id(db_obj.teacher_idsubst)
+            self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
                 self.teacher_new = None
@@ -84,7 +87,7 @@ class Substitution(object):
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
-            self.subject_new = get_subject_by_id(db_obj.subject_idsubst)
+            self.subject_new = drive["subjects"][db_obj.subject_idsubst]
 
             if self.subject_old is not None and self.subject_old.id == self.subject_new.id:
                 self.subject_new = None
@@ -95,7 +98,7 @@ class Substitution(object):
             self.room_old = self.rooms_old[0]
 
         if db_obj.room_idsubst != 0:
-            self.room_new = get_room_by_id(db_obj.room_idsubst)
+            self.room_new = drive["rooms"][db_obj.room_idsubst]
 
             if self.room_old is not None and self.room_old.id == self.room_new.id:
                 self.room_new = None
@@ -105,7 +108,7 @@ class Substitution(object):
         # print("CORRIDOR")
         # print(self.corridor)
         if db_obj.corridor_id != 0:
-            self.corridor = get_corridor_by_id(db_obj.corridor_id)
+            self.corridor = drive["corridors"][db_obj.corridor_id]
             self.type = TYPE_CORRIDOR
         # Classes
 
@@ -113,7 +116,7 @@ class Substitution(object):
         class_ids = untis_split_first(db_obj.classids, conv=int)
         # print(class_ids)
         for id in class_ids:
-            self.classes.append(get_class_by_id(id))
+            self.classes.append(drive["classes"][id])
 
 
 def substitutions_sorter(sub):
