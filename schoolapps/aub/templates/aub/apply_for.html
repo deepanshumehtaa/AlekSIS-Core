@@ -7,7 +7,6 @@
     <form method = "POST" >
         {% csrf_token %}
         {% form form=form %}
-{#             {% part form.from_lesson prefix %}<div></div>{% endpart %} #}
         {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">send</i> Antrag stellen

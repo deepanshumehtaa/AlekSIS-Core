@@ -26,7 +26,7 @@ def index(request):
         if 'edit' in request.POST:
             aub = Aub.objects.filter(id=aub_id)
             print('Edit wurde gewählt')
-            return render(request, 'aub/apply_for.html', {'filter': aub})
+            return render(request, 'aub/update', {'filter': aub})
 
         # Cancel button pressed?
         elif 'cancel' in request.POST:
@@ -86,10 +86,13 @@ def apply_for(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def apply_for_update(request, id=None):
+def apply_for_update(request):
     if request.method == 'POST':
-
-        form = ApplyForAUBForm(request.POST)
+        if 'aub-id' in request.POST:
+            aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
+            print(aub)
+        form = ApplyForAUBForm(request.POST, initial=[aub.from_dt,aub.to_dt,aub.description])
 
         if form.is_valid():
                 from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
