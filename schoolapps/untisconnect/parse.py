@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.utils import timezone
+
+from schoolapps.settings import LESSONS
 
 
 class Lesson(object):
@@ -205,20 +208,38 @@ class LessonElementContainer(object):
         self.room = room
 
 
+def parse_lesson_times():
+    times = []
+    for i, t in enumerate(LESSONS):
+        start_split = t[0].split(":")
+        start_time = timezone.datetime(year=2000, day=1, month=1, hour=int(start_split[0]), minute=int(start_split[1]))
+        end_time = start_time + timezone.timedelta(minutes=45)
+        print(start_time)
+        print(end_time)
+        times.append({
+            "number": i + 1,
+            "number_format": t[1],
+            "start": start_time,
+            "end": end_time,
+        })
+    return times
+
+
 def get_plan(type, id):
     """ Generates a plan for type (TYPE_TEACHE, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
 
     # Get parsed lessons
     lessons = parse()
+    times_parsed = parse_lesson_times()
 
     # Init plan array
     plan = []
 
     # Fill plan array with LessonContainers (show upside), WIDTH and HEIGHT are defined by Django settings
     for hour_idx in range(settings.TIMETABLE_HEIGHT):
-        plan.append([])
+        plan.append(([], times_parsed[hour_idx] if len(times_parsed) > hour_idx else None))
         for day_idx in range(settings.TIMETABLE_WIDTH):
-            plan[hour_idx].append(LessonContainer())
+            plan[hour_idx][0].append(LessonContainer())
 
     # Fill plan with lessons
     for lesson in lessons:
@@ -254,7 +275,7 @@ def get_plan(type, id):
                             room_index = j
 
                     # Add the time object to the matching LessonContainer on the right position in the plan array
-                    plan[time.hour - 1][time.day - 1].set_time(time)
+                    plan[time.hour - 1][0][time.day - 1].set_time(time)
 
                     # Check if there is an room for this time and lesson
                     try:
@@ -270,7 +291,7 @@ def get_plan(type, id):
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
-                        plan[time.hour - 1][time.day - 1].append(element_container)
+                        plan[time.hour - 1][0][time.day - 1].append(element_container)
 
     # print(plan)
     #

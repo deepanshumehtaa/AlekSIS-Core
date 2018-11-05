@@ -141,7 +141,12 @@ span.badge.new::after {
 .timetable-title-card .card-content {
     padding: 10px;
     text-align: center;
+    width: 100%;
 }
+
+/*.timetable-time {*/
+/*margin-right: 20px;*/
+/*}*/
 
 /*+++++++++*/
 /* Buttons */
