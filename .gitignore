@@ -3,4 +3,8 @@ env/
 venv/
 *.pyc
 secure*
+*.aux
+*.log
+class.pdf
+class.tex
 .idea/
