@@ -23,10 +23,12 @@ class FilterAUBForm(forms.Form):
 
 class ApplyForAUBForm(forms.Form):
     from_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    from_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    from_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False,
+                                    widget=forms.Select(attrs={'onchange': 'setTime(this)'}))
     from_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial='8:00', )
     to_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    to_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    to_lesson = forms.ChoiceField(label='Stunde', choices=settings.LESSONS, required=False,
+                                  widget=forms.Select(attrs={'onchange': 'setTime(this)'}))
     to_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial='15:35')
 
     description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.')

@@ -25,6 +25,33 @@ function getNowFormatted() {
 }
 
 
+function setTime(lesson_field) {
+    // fill timefield based on lesson value
+    if (lesson_field.id === 'id_from_lesson') {
+        $('[id=id_from_time]').val(lesson_field.value);
+    }
+    else {
+        // calculate lessons end time
+        // string methods easier than date function muddle
+        var h = lesson_field.value.split(':')[0];
+        var m = lesson_field.value.split(':')[1];
+        if (m < 15) {
+            m = parseInt(m) + 45;
+        }
+        else {
+            m = parseInt(m) - 15;
+            h = parseInt(h) + 1;
+        }
+        m = m.toString()
+        h = h.toString()
+        if (m.length === 1) {
+            m = '0' + m
+        }
+        var newTime = h + ':' + m;
+        $('[id=id_to_time]').val(newTime);
+    }
+}
+
 $(document).ready(function () {
     // Initialize sidenav [MAT]
     $(".sidenav").sidenav();
@@ -60,6 +87,11 @@ $(document).ready(function () {
         doneText: 'OK'
     });
 
-    //Initialize tooltip [MAT]
+    // Initialize tooltip [MAT]
     $('.tooltipped').tooltip();
+
+    // Initalize print button
+    $("#print").click(function () {
+        window.print();
+    });
 });

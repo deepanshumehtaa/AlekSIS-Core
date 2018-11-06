@@ -20,82 +20,13 @@
     <!-- django-material -->
     {% include 'material/includes/material_css.html' %}
 
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <!---------------->
     <!-- JavaScript -->
     <!---------------->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
     <script src="{% static 'common/helper.js' %}"></script>
-    <!--<script>
-        $(document).ready(function () {
-            // Initialize sidenav [MAT]
-            $(".sidenav").sidenav();
-
-            // Initialize datepicker [MAT]
-            $('.datepicker').datepicker({
-                format: 'dd.mm.yyyy',
-                // Translate to German
-                i18n: {
-                    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                    monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-                    weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                    weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                    weekdaysAbbrev: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
-
-                    // Buttons
-                    today: 'Heute',
-                    clear: 'Löschen',
-                    done: 'OK',
-                },
-
-                // Set monday as first day of week
-                firstDay: 1,
-                //autoClose: true
-            });
-
-            // Initialize timepicker [MAT]
-            $('.timepicker').timepicker({
-                twelveHour: false,
-                //autoClose: true,
-                cancelText: 'Abbrechen',
-                clearText: 'Löschen',
-                doneText: 'OK'
-            });
-
-            //Initialize tooltip [MAT]
-            $('.tooltipped').tooltip();
-        });
-    </script>-->
-    <script>
-        //set AUB-Form
-        function set_time(lesson_field) {
-            // fill timefield based on lesson value
-            if (lesson_field.id == 'id_from_lesson') {
-                $('[id=id_from_time]').val(lesson_field.value);
-            }
-            else {
-                // calculate lessons end time
-                // string methods easier than date function muddle
-                var h = lesson_field.value.split(':')[0];
-                var m = lesson_field.value.split(':')[1];
-                if (m < 15) {
-                    m = parseInt(m) + 45;
-                }
-                else {
-                    m = parseInt(m) - 15;
-                    h = parseInt(h) + 1;
-                }
-                m = m.toString()
-                h = h.toString()
-                if (m.length == 1) {
-                    m = '0' + m
-                }
-                var newTime = h + ':' + m;
-                $('[id=id_to_time]').val(newTime);
-            }
-        }
-    </script>
     <!-- django-material -->
     {% include 'material/includes/material_js.html' %}
 
@@ -122,6 +53,14 @@
             </ul>
         </div>
     </nav>
+
+    <div id="print-header" class="row">
+        <div class="col s6 logo"><img src="{% static 'common/logo.png' %}"></div>
+        <div class="col s6 right-align">
+            <strong>SchoolApps</strong><br>
+            Katharineum zu Lübeck
+        </div>
+    </div>
 
     <!-- Main nav (sidenav) -->
     <ul id="slide-out" class="sidenav sidenav-fixed">
