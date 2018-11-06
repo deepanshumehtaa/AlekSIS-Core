@@ -26,7 +26,8 @@
     <!---------------->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
-    <script>
+    <script src="{% static 'common/helper.js' %}"></script>
+    <!--<script>
         $(document).ready(function () {
             // Initialize sidenav [MAT]
             $(".sidenav").sidenav();
@@ -65,7 +66,7 @@
             //Initialize tooltip [MAT]
             $('.tooltipped').tooltip();
         });
-    </script>
+    </script>-->
     <script>
         //set AUB-Form
         function set_time(lesson_field) {
@@ -97,7 +98,6 @@
     </script>
     <!-- django-material -->
     {% include 'material/includes/material_js.html' %}
-
 
 </head>
 <body>

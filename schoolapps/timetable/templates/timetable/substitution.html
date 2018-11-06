@@ -1,12 +1,139 @@
 {% include 'partials/header.html' %}
 
+<script type="text/javascript">
+    function updateDatepicker() {
+        $("#date").val(formatDate(activeDate));
+    }
+
+    function update() {
+        console.log("Render new.");
+
+        updateDatepicker();
+    }
+
+    function loadNew() {
+        window.location.href = "/timetable/substitutions/" + formatDateForDjango(activeDate);
+    }
+
+    function onDateBeforeClick() {
+        activeDate.setDate(activeDate.getDate() - 1);
+        update();
+        loadNew();
+    }
+
+    function onDateNextClick() {
+        activeDate.setDate(activeDate.getDate() + 1);
+        update();
+        loadNew();
+    }
+
+    function onDateChanged() {
+        var str = $("#date").val();
+        var split = str.split(".")
+        activeDate = new Date(split[2], split[1] - 1, split[0]);
+        update();
+        loadNew();
+    }
+
+    var activeDate = new Date({{ date_js }});
+
+    $(document).ready(function () {
+        $("#date-before").click(onDateBeforeClick);
+        $("#date-next").click(onDateNextClick);
+        $("#date").change(onDateChanged);
+
+        // Print the site
+        $("#print").click(function () {
+            window.print();
+        });
+
+        update();
+    })
+</script>
+
 <main>
     <h3>Vertretungen</h3>
 
-    <p class="flow-text">
-        Leider ist der Vertretungsplan noch nicht in Betrieb. Nutzen Sie solange die <a
-            href="https://info.katharineum.de/aktuell.pdf">alte Version</a>. Vielen Dank!
-    </p>
+    <div class="row">
+        <div class="col s12 m6 l4 xl3">
+            <div class="col s2">
+                <a class="waves-effect waves-teal btn-flat btn-flat-medium right" id="date-before">
+                    <i class="material-icons center">navigate_before</i>
+                </a>
+
+            </div>
+            <div class="col s8">
+                <input type="text" class="datepicker center-align" id="date">
+            </div>
+            <div class="col s2">
+                <a class="waves-effect waves-teal btn-flat btn-flat-medium left" id="date-next">
+                    <i class="material-icons center">navigate_next</i>
+                </a>
+            </div>
+        </div>
+        <div class="col l4 xl6">
+        </div>
+        <div class="col s12 m6 l4 xl3 right align-right">
+            <a class="waves-effect waves-teal btn-flat btn-flat-medium right" id="print">
+                <i class="material-icons center">print</i>
+            </a>
+        </div>
+    </div>
+
+    <h5>{{ date|date:"l, j. F Y" }}</h5>
+
+    <table class="substitutions striped">
+        <thead>
+        <tr>
+            <th><i class="material-icons">access_time</i></th>
+            <th>Klassen</th>
+            <th>Lehrer</th>
+            <th>Fach</th>
+            <th>Raum</th>
+            <th>Hinweis</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sub in sub_table %}
+            <tr class="{{ sub.css_class }}">
+                <td>
+                    <strong>
+                        {{ sub.lesson }}
+                    </strong>
+                </td>
+                <td>
+                    {{ sub.classes }}
+                </td>
+                <td>
+                    <span class="tooltipped" data-position="bottom"
+                          data-tooltip="{{ sub.teacher_full|safe }}">{{ sub.teacher|safe }}</span>
+                </td>
+                <td>
+                    {{ sub.subject|safe }}
+                </td>
+                <td>
+                    <span class="tooltipped" data-position="bottom"
+                          data-tooltip="{{ sub.room_full|safe }}">{{ sub.room|safe }}</span>
+                </td>
+                <td>
+                    {% if sub.badge %}
+                        <span class="badge new green hide-on-med-and-up">{{ sub.badge }}</span>
+                    {% endif %}
+                    <em>{{ sub.text|default:"" }}</em>
+                </td>
+                <td class="hide-on-small-and-down">
+
+                    {% if sub.badge %}
+                        <span class="badge new green">{{ sub.badge }}</span>
+                    {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 </main>
 
 {% include 'partials/footer.html' %}
