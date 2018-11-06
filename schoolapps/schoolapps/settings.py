@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupType
-from posixgrouptype import PosixGroupType
+from django_auth_ldap.config import LDAPSearch, PosixGroupType, GroupOfNamesType, LDAPGroupType
 import logging
 from .secure_settings import *
 
@@ -27,6 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# PDB debugger option
+POST_MORTEM = True
+
 ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
@@ -37,6 +39,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_pdb',
     'dashboard.apps.DashboardConfig',
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'material',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_pdb.middleware.PdbMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
@@ -155,6 +160,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # TIMETABLE
 TIMETABLE_WIDTH = 5
 TIMETABLE_HEIGHT = 10
+LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
+           ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
 
 ########
 # LDAP #
@@ -163,17 +170,17 @@ TIMETABLE_HEIGHT = 10
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1"
 AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no",
-                                   ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+                                   ldap.SCOPE_SUBTREE, "(&(objectClass=posixAccount)(uid=%(user)s))")
 # or perhaps:
 # AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=example,dc=com"
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no,ou=SchoolManager,ou=group", ldap.SCOPE_SUBTREE,
-                                    "(objectClass=posixGroup)")
-# '(&(objectClass=*)(memberUid=%(user))')
-print(ldap.SCOPE_SUBTREE)
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE,
+                                    "(&(objectClass=posixGroup))")  # (memberUid=%(user)s)
+# '(&(objectClass=*)(memberUid=%(user)s)')
+# print(ldap.SCOPE_SUBTREE)
 # "(objectClass=organizationalUnit)")
-AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr="cn")
+AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
 # Simple group restrictions
 # AUTH_LDAP_REQUIRE_GROUP = "dc=skole,dc=skolelinux,dc=no"
@@ -186,17 +193,18 @@ AUTH_LDAP_USER_ATTR_MAP = {
     "email": "mail"
 }
 
-# AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#     "is_active": "cn=active,ou=django,ou=groups,dc=example,dc=com",
-#     "is_staff": "cn=staff,ou=django,ou=groups,dc=example,dc=com",
-#     "is_superuser": "cn=superuser,ou=django,ou=groups,dc=example,dc=com"
-# }
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    #      "is_active": "cn=teachers,ou=group,ou=Teachers,dc=skole,dc=skolelinux,dc=no",
+    "is_staff": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+    "is_superuser": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+}
 
 # This is the default, but I like to be explicit.
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
 
 # Use LDAP group membership to calculate group permissions.
-AUTH_LDAP_FIND_GROUP_PERMS = True
+# AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_MIRROR_GROUPS = True
 
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True

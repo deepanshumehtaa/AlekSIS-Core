@@ -1,9 +1,10 @@
 __pycache__
 env/
+venv/
 *.pyc
 secure*
-.idea/workspace.xml
 *.aux
 *.log
 class.pdf
 class.tex
+.idea/

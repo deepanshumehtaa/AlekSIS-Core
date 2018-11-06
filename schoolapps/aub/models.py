@@ -2,19 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-lessons = (
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9)
-)
-
-
 def get_default_user():
     user, created = User.objects.get_or_create(username='nouser')
     return user.id
@@ -29,7 +16,7 @@ class Status(models.Model):
 
 
 def get_default_status():
-    status, created = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')
+    status, created = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')
     return status.id
 
 
