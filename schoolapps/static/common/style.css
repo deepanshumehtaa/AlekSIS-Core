@@ -9,11 +9,11 @@ body {
 }
 
 .primary-color {
-    background-color: #da1f3d !important;
+    background-color: #da1f3d;
 }
 
 .primary-color-text {
-    color: #da1f3d !important;
+    color: #da1f3d;
 }
 
 /**********/
@@ -46,7 +46,7 @@ ul.sidenav.sidenav-fixed .brand-logo {
     margin: 0;
 }
 
-ul.sidenav.sidenav-fixed li.logo img {
+.logo img {
     width: 250px;
 }
 
@@ -141,7 +141,16 @@ span.badge.new::after {
 .timetable-title-card .card-content {
     padding: 10px;
     text-align: center;
+    width: 100%;
 }
+
+table.substitutions td, table.substitutions th {
+    padding: 10px 5px;
+}
+
+/*.timetable-time {*/
+/*margin-right: 20px;*/
+/*}*/
 
 /*+++++++++*/
 /* Buttons */
@@ -169,3 +178,70 @@ span.badge.new::after {
     margin: 1%;
     width: 30%;
 }
+
+table.striped > tbody > tr:nth-child(odd) {
+    background-color: rgba(208, 208, 208, 0.5);
+}
+
+/*+++++++*/
+/* Print */
+/*+++++++*/
+#print-header {
+    display: none;
+}
+
+@media print {
+    body {
+        font-size: 15px;
+    }
+
+    header, main, footer {
+        margin-left: 0;
+    }
+
+    ul.sidenav {
+        display: none !important;
+        transform: translateX(-105%) !important;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .sidenav-trigger {
+        display: none;
+    }
+
+    #print-header {
+        display: block;
+        border-bottom: 1px solid;
+        margin-bottom: 0;
+    }
+
+    #print-header .col.right-align {
+        padding: 15px;
+    }
+
+    main, header {
+        padding: 0;
+    }
+
+    footer, footer .footer-copyright, footer .container {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    footer a {
+        display: none;
+    }
+
+    .footer-copyright, .footer-copyright .container {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .no-print {
+        display: none;
+    }
+}
+

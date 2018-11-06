@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.utils import timezone
+
+from schoolapps.settings import LESSONS
 
 
 class Lesson(object):
@@ -18,8 +21,74 @@ class Lesson(object):
         el.create(day, hour, rooms)
         self.times.append(el)
 
-    def create(self, db_obj):
+    def create(self, raw_lesson, drive):
         self.filled = True
+
+        # Split data (,)
+        lesson_id = raw_lesson.lesson_id
+        raw_lesson_data = raw_lesson.lessonelement1.split(",")
+        raw_time_data = raw_lesson.lesson_tt.split(",")
+
+        rtd2 = []
+        for el in raw_time_data:
+            rtd2.append(el.split("~"))
+
+        # print(rtd2)
+
+        for el in rtd2:
+            day = int(el[1])
+            hour = int(el[2])
+            room_ids = untis_split_third(el[3], conv=int)
+
+            rooms = []
+            for room_id in room_ids:
+                r = drive["rooms"][room_id]
+                rooms.append(r)
+
+            self.add_time(day, hour, rooms)
+
+        # print(raw_lesson_data)
+        # print(raw_time_data)
+
+        # Split data more (~)
+        rld2 = []
+        for el in raw_lesson_data:
+            rld2.append(el.split("~"))
+
+        # print(rld2)
+
+        for el in rld2:
+            teacher_id = int(el[0])
+            subject_id = int(el[2])
+            room_ids = untis_split_third(el[4], int)
+            class_ids = untis_split_third(el[17], conv=int)
+            # print("TEACHER – ", teacher_id, "; SUBJECT – ", subject_id, "; ROOMS – ", room_ids, "; CLASSES – ",
+            #       class_ids)
+
+            if teacher_id != 0:
+                teacher = drive["teachers"][teacher_id]
+            else:
+                teacher = None
+
+            if subject_id != 0:
+                subject = drive["subjects"][subject_id]
+            else:
+                subject = None
+
+            rooms = []
+            for room_id in room_ids:
+                r = drive["rooms"][room_id]
+                rooms.append(r)
+
+            classes = []
+            for class_id in class_ids:
+                c = drive["classes"][class_id]
+                classes.append(c)
+
+            # print("TEACHER – ", teacher, "; SUBJECT – ", subject, "; ROOMS – ", rooms,
+            #       "; CLASSES – ", classes)
+
+            self.add_element(teacher, subject, rooms, classes)
 
 
 class LessonElement(object):
@@ -49,43 +118,39 @@ class LessonTime(object):
 
 
 from .api import *
+from .api_helper import untis_split_third
 
 
-def clean_array(a, conv=None):
-    b = []
-    for el in a:
-        if el != '' and el != "0":
-            if conv is not None:
-                el = conv(el)
-            b.append(el)
-    return b
-
-
-def untis_split(s, conv=None):
-    return clean_array(s.split(";"), conv=conv)
-
-
-def parse():
+def build_drive():
     odrive = {
         "teachers": get_all_teachers(),
         "rooms": get_all_rooms(),
         "classes": get_all_classes(),
-        "subjects": get_all_subjects()
+        "subjects": get_all_subjects(),
+        "corridors": get_all_corridors(),
     }
 
     drive = {
-        "teachers": {},
-        "rooms": {},
-        "classes": {},
-        "subjects": {}
+        # "teachers": {},
+        # "rooms": {},
+        # "classes": {},
+        # "subjects": {}
     }
     for key, value in odrive.items():
+        drive[key] = {}
         for el in value:
             id = el.id
             drive[key][id] = el
 
     print(drive)
+    return drive
 
+
+drive = build_drive()
+
+
+def parse():
+    global drive
     lessons = []
     raw_lessons = get_raw_lessons()
 
@@ -98,74 +163,7 @@ def parse():
         if raw_lesson.lesson_tt and raw_lesson.lessonelement1:
             # Create object
             lesson_obj = Lesson()
-
-            # Split data (,)
-            lesson_id = raw_lesson.lesson_id
-            raw_lesson_data = raw_lesson.lessonelement1.split(",")
-            raw_time_data = raw_lesson.lesson_tt.split(",")
-
-            rtd2 = []
-            for el in raw_time_data:
-                rtd2.append(el.split("~"))
-
-            # print(rtd2)
-
-            for el in rtd2:
-                day = int(el[1])
-                hour = int(el[2])
-                room_ids = untis_split(el[3], conv=int)
-
-                rooms = []
-                for room_id in room_ids:
-                    r = drive["rooms"][room_id]
-                    rooms.append(r)
-
-                lesson_obj.add_time(day, hour, rooms)
-
-            # print(raw_lesson_data)
-            # print(raw_time_data)
-
-            # Split data more (~)
-            rld2 = []
-            for el in raw_lesson_data:
-                rld2.append(el.split("~"))
-
-            # print(rld2)
-
-            for el in rld2:
-                teacher_id = int(el[0])
-                subject_id = int(el[2])
-                room_ids = untis_split(el[4], int)
-                class_ids = untis_split(el[17], conv=int)
-                # print("TEACHER – ", teacher_id, "; SUBJECT – ", subject_id, "; ROOMS – ", room_ids, "; CLASSES – ",
-                #       class_ids)
-
-                if teacher_id != 0:
-                    teacher = drive["teachers"][teacher_id]
-                else:
-                    teacher = None
-
-                if subject_id != 0:
-                    subject = drive["subjects"][subject_id]
-                else:
-                    subject = None
-
-                rooms = []
-                for room_id in room_ids:
-                    r = drive["rooms"][room_id]
-                    rooms.append(r)
-
-                classes = []
-                for class_id in class_ids:
-                    c = drive["classes"][class_id]
-                    classes.append(c)
-
-                # print("TEACHER – ", teacher, "; SUBJECT – ", subject, "; ROOMS – ", rooms,
-                #       "; CLASSES – ", classes)
-
-                lesson_obj.add_element(teacher, subject, rooms, classes)
-
-                # print("DAY – ", day, "; HOUR – ", hour, "; ROOMS – ", room_ids)
+            lesson_obj.create(raw_lesson, drive)
 
             lessons.append(lesson_obj)
 
@@ -205,24 +203,63 @@ class LessonElementContainer(object):
         self.room = room
 
 
+def get_lesson_by_id(id):
+    global drive
+    lesson = Lesson()
+    raw_lesson = run_one(models.Lesson.objects, filter_term=True).get(lesson_id=id)
+    lesson.create(raw_lesson, drive)
+    return lesson
+
+
+def get_lesson_element_by_id_and_teacher(lesson_id, teacher):
+    print(lesson_id)
+    try:
+        lesson = get_lesson_by_id(lesson_id)
+    except Exception:
+        return None
+    for element in lesson.elements:
+        print(element.teacher.shortcode)
+        if element.teacher.id == teacher.id:
+            return element
+    return None
+
+def parse_lesson_times():
+    times = []
+    for i, t in enumerate(LESSONS):
+        start_split = t[0].split(":")
+        start_time = timezone.datetime(year=2000, day=1, month=1, hour=int(start_split[0]), minute=int(start_split[1]))
+        end_time = start_time + timezone.timedelta(minutes=45)
+        print(start_time)
+        print(end_time)
+        times.append({
+            "number": i + 1,
+            "number_format": t[1],
+            "start": start_time,
+            "end": end_time,
+        })
+    return times
+
+
 def get_plan(type, id):
     """ Generates a plan for type (TYPE_TEACHE, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
 
     # Get parsed lessons
     lessons = parse()
+    times_parsed = parse_lesson_times()
 
     # Init plan array
     plan = []
 
     # Fill plan array with LessonContainers (show upside), WIDTH and HEIGHT are defined by Django settings
     for hour_idx in range(settings.TIMETABLE_HEIGHT):
-        plan.append([])
+        plan.append(([], times_parsed[hour_idx] if len(times_parsed) > hour_idx else None))
         for day_idx in range(settings.TIMETABLE_WIDTH):
-            plan[hour_idx].append(LessonContainer())
+            plan[hour_idx][0].append(LessonContainer())
 
     # Fill plan with lessons
     for lesson in lessons:
         for i, element in enumerate(lesson.elements):
+
             # Check if the lesson element is important for that plan (look by type and id)
             found = False
             if type == TYPE_CLASS:
@@ -236,18 +273,24 @@ def get_plan(type, id):
                         found = True
 
             elif type == TYPE_ROOM:
-                for lroom in element.rooms:
-                    if lroom.id == id:
-                        found = True
+                for time in lesson.times:
+                    for j, lroom in enumerate(time.rooms):
+                        if lroom.id == id:
+                            print(lroom.name)
+                            found = True
 
             # If the lesson element is important then add it to plan array
             if found:
                 for time in lesson.times:  # Go for every time the lesson is thought
                     # print(time.hour, " ", time.day)
                     # print(element.subject.shortcode)
+                    room_index = None
+                    for j, lroom in enumerate(time.rooms):
+                        if lroom.id == id:
+                            room_index = j
 
                     # Add the time object to the matching LessonContainer on the right position in the plan array
-                    plan[time.hour - 1][time.day - 1].set_time(time)
+                    plan[time.hour - 1][0][time.day - 1].set_time(time)
 
                     # Check if there is an room for this time and lesson
                     try:
@@ -255,11 +298,15 @@ def get_plan(type, id):
                     except IndexError:
                         room = None
 
+                    # print(element)
+                    # print(room.name)
+
                     # Create a LessonElementContainer with room and lesson element
                     element_container = LessonElementContainer(element, room)
 
-                    # Add this container object to the LessonContainer object in the plan array
-                    plan[time.hour - 1][time.day - 1].append(element_container)
+                    if type != TYPE_ROOM or i == room_index:
+                        # Add this container object to the LessonContainer object in the plan array
+                        plan[time.hour - 1][0][time.day - 1].append(element_container)
 
     # print(plan)
     #
