@@ -250,7 +250,8 @@ def generate_sub_table(subs):
 
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
-        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date)).order_by("classids", "lesson")),
+        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
+                                                                                                        "lesson")),
         filter_term=False)
     # print(subs_raw)
 
