@@ -114,10 +114,11 @@ class Substitution(object):
 
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
-        # print(class_ids)
+
+        print(class_ids)
         for id in class_ids:
             self.classes.append(drive["classes"][id])
-
+        print(self.classes)
 
 def substitutions_sorter(sub):
     # First, sort by class
@@ -220,7 +221,7 @@ def generate_sub_table(subs):
             sub_row.lesson = "{}.".format(sub.lesson)
 
         for class_ in sub.classes:
-            sub_row.classes = class_.name
+            sub_row.classes += class_.name
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
