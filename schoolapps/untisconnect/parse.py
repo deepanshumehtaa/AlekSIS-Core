@@ -57,7 +57,7 @@ class Lesson(object):
 
         # print(rld2)
 
-        for el in rld2:
+        for i, el in enumerate(rld2):
             teacher_id = int(el[0])
             subject_id = int(el[2])
             room_ids = untis_split_third(el[4], int)
@@ -75,10 +75,14 @@ class Lesson(object):
             else:
                 subject = None
 
+            # rooms = self.times[i].rooms[i]
+            # for room_id in room_ids:
+            #     r = drive["rooms"][room_id]
+            #     rooms.append(r)
             rooms = []
-            for room_id in room_ids:
-                r = drive["rooms"][room_id]
-                rooms.append(r)
+            for room in rooms:
+                print(room)
+            print("--")
 
             classes = []
             for class_id in class_ids:
@@ -211,17 +215,38 @@ def get_lesson_by_id(id):
     return lesson
 
 
-def get_lesson_element_by_id_and_teacher(lesson_id, teacher):
+def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=None):
     print(lesson_id)
+    print(hour, "LEWE", weekday)
     try:
         lesson = get_lesson_by_id(lesson_id)
     except Exception:
         return None
-    for element in lesson.elements:
+    el = None
+    i = 0
+    print(lesson.elements)
+    for i, element in enumerate(lesson.elements):
         print(element.teacher.shortcode)
         if element.teacher.id == teacher.id:
-            return element
-    return None
+            el = element
+            break
+    t = None
+    print(lesson.times)
+    print(weekday)
+    print(hour)
+    for time in lesson.times:
+        print("DAY", time.day, time.hour)
+        if time.day == weekday and time.hour == hour:
+            t = time
+    print(t)
+    room = None
+    if t is not None:
+        room = t.rooms[i]
+
+    if el is not None:
+        return el, room
+    return None, None
+
 
 def parse_lesson_times():
     times = []

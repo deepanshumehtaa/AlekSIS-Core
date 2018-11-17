@@ -53,6 +53,7 @@ class Substitution(object):
         self.corridor = None
         self.classes = None
         self.lesson_element = None
+        self.lesson_time = None
 
     def __str__(self):
         if self.filled:
@@ -81,9 +82,11 @@ class Substitution(object):
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
                 self.teacher_new = None
 
-        self.lesson_element = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old)
+        self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
+                                                                                  self.lesson,
+                                                                                  self.date.weekday() + 1)
         # print(self.lesson)
-
+        print(self.room_old)
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
@@ -93,9 +96,9 @@ class Substitution(object):
                 self.subject_new = None
 
         # Room
-        self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
-        if len(self.rooms_old) >= 1:
-            self.room_old = self.rooms_old[0]
+        # self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
+        # if len(self.rooms_old) >= 1:
+        #     self.room_old = self.rooms_old[0]
 
         if db_obj.room_idsubst != 0:
             self.room_new = drive["rooms"][db_obj.room_idsubst]
@@ -119,6 +122,7 @@ class Substitution(object):
         for id in class_ids:
             self.classes.append(drive["classes"][id])
         print(self.classes)
+
 
 def substitutions_sorter(sub):
     # First, sort by class
