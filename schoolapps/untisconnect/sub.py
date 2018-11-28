@@ -53,6 +53,7 @@ class Substitution(object):
         self.corridor = None
         self.classes = None
         self.lesson_element = None
+        self.lesson_time = None
 
     def __str__(self):
         if self.filled:
@@ -81,9 +82,11 @@ class Substitution(object):
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
                 self.teacher_new = None
 
-        self.lesson_element = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old)
+        self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
+                                                                                  self.lesson,
+                                                                                  self.date.weekday() + 1)
         # print(self.lesson)
-
+        print(self.room_old)
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
@@ -93,9 +96,9 @@ class Substitution(object):
                 self.subject_new = None
 
         # Room
-        self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
-        if len(self.rooms_old) >= 1:
-            self.room_old = self.rooms_old[0]
+        # self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
+        # if len(self.rooms_old) >= 1:
+        #     self.room_old = self.rooms_old[0]
 
         if db_obj.room_idsubst != 0:
             self.room_new = drive["rooms"][db_obj.room_idsubst]
@@ -114,9 +117,11 @@ class Substitution(object):
 
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
-        # print(class_ids)
+
+        print(class_ids)
         for id in class_ids:
             self.classes.append(drive["classes"][id])
+        print(self.classes)
 
 
 def substitutions_sorter(sub):
@@ -222,7 +227,7 @@ def generate_sub_table(subs):
             sub_row.lesson = "{}.".format(sub.lesson)
 
         for class_ in sub.classes:
-            sub_row.classes = class_.name
+            sub_row.classes += class_.name
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
@@ -247,7 +252,8 @@ def generate_sub_table(subs):
 
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
-        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date)).order_by("classids", "lesson")),
+        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
+                                                                                                        "lesson")),
         filter_term=False)
     # print(subs_raw)
 
