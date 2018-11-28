@@ -181,6 +181,8 @@ def generate_subject_row(sub, full=False):
             sub.subject_new.shortcode if not full else sub.subject_new.name)
     elif sub.subject_new and not sub.subject_old:
         subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
+    elif not sub.subject_new and not sub.subject_old:
+        subject = ""
     else:
         subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
 
