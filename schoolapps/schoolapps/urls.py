@@ -40,10 +40,10 @@ urlpatterns = [
     #############
     path('timetable/', include('timetable.urls')),
 
-    #############
-    # MEAL PLAN #
-    #############
-    path('mealplan/', include('mealplan.urls')),
+    ########
+    # MENU #
+    ########
+    path('menu/', include('mealplan.urls')),
 
     #########
     # Admin #
