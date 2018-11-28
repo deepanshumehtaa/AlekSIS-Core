@@ -83,8 +83,7 @@ class Substitution(object):
                 self.teacher_new = None
 
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
-                                                                                  self.lesson,
-                                                                                  self.date.weekday() + 1)
+                                                                                  self.lesson, self.date.weekday() + 1)
         # print(self.lesson)
         print(self.room_old)
         # Subject

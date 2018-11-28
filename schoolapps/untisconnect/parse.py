@@ -221,7 +221,7 @@ def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=
     try:
         lesson = get_lesson_by_id(lesson_id)
     except Exception:
-        return None
+        return None, None
     el = None
     i = 0
     print(lesson.elements)
