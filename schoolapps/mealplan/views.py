@@ -9,7 +9,7 @@ def upload(request):
         if form.is_valid():
             form.save()
 
-            return redirect('menu_index')
+            return redirect('menu_index_msg', msg="success")
     else:
         form = MenuUploadForm()
     return render(request, 'menu/upload.html', {
@@ -17,5 +17,5 @@ def upload(request):
     })
 
 
-def index(request):
-    return render(request, 'menu/index.html')
+def index(request, msg=None):
+    return render(request, 'menu/index.html', {"msg": msg})

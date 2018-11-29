@@ -1,6 +1,18 @@
 {% include 'partials/header.html' %}
 
 <main>
+    {% if msg == "success" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich hochgeladen." "green" %}
+    {% endif %}
+    <script type="text/javascript">
+
+        $('#alert_close').click(function () {
+            $("#alert_box").fadeOut("slow", function () {
+            });
+        });
+    </script>
+    <a class="waves-effect waves-light btn green" href="{% url "menu_upload" %}"><i class="material-icons left">add</i>
+        Neuen Speiseplan hochladen</a>
     <h5>Übersicht der hochgeladenen Speisepläne</h5>
 
 </main>
