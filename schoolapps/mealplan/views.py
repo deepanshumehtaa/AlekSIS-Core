@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from mealplan.models import MealPlan
 from .forms import MenuUploadForm
 
 
@@ -18,4 +20,5 @@ def upload(request):
 
 
 def index(request, msg=None):
-    return render(request, 'menu/index.html', {"msg": msg})
+    menus = MealPlan.objects.all().order_by("calendar_week", "year")
+    return render(request, 'menu/index.html', {"msg": msg, "menus": menus})
