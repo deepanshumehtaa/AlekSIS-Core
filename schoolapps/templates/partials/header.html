@@ -122,6 +122,19 @@
                     <div class="divider"></div>
                 </li>
             {% endif %}
+            {% if perms.mealplan.can_add_mealplan %}
+                <li>
+                    <a class="subheader grey lighten-3">Speiseplan</a>
+                </li>
+                <li>
+                    <a href="{% url 'menu_index' %}">
+                        <i class="material-icons">restaurant_menu</i> Speiseplan hochladen
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
