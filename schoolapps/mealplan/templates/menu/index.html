@@ -3,6 +3,8 @@
 <main>
     {% if msg == "success" %}
         {% msg_box "Der Speiseplan wurde erfolgreich hochgeladen." "green" %}
+    {% elif msg == "delete_success" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich gelöscht." "green" %}
     {% endif %}
     <script type="text/javascript">
 
@@ -22,12 +24,21 @@
                 <span class="title">{{ menu }}</span>
                 <p>
                     <a class="btn-flat" href="/media/{{ menu.pdf }}" target="_blank">
-                        <i class="material-icons left">picture_as_pdf</i> PDF anzeigen
+                        <i class="material-icons left">picture_as_pdf</i> Anzeigen
+                    </a>
+                    <a class="btn-flat delete-menu" href="{% url "menu_delete"  menu.id %}">
+                        <i class="material-icons left">delete</i> Löschen
                     </a>
                 </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
             </li>
         {% endfor %}
     </ul>
+    <script type="text/javascript">
+        $(".delete-menu").click(function (e) {
+            if (!confirm("Wirklich löschen?")) {
+                e.preventDefault();
+            }
+        })
+    </script>
 </main>
 {% include 'partials/footer.html' %}

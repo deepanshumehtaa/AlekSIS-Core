@@ -5,10 +5,10 @@
 
         {% csrf_token %}
 
-        <p class="red-text">{{ form.non_field_errors }}</p>
+        {% msg_box form.non_field_errors "red" "" %}
         <div class="row">
             <div class="input-field col s5">
-                <div class="red-text">{{ form.calendar_week.errors }}</div>
+                {% msg_box form.calendar_week.errors "red" "" %}
                 {#                <label for="{{ form.calendar_week.id_for_label }}">Kalenderwoche</label>#}
                 <small>Kalenderwoche</small>
                 {{ form.calendar_week }}
@@ -18,7 +18,7 @@
                 <h4>/</h4>
             </div>
             <div class="input-field col s5">
-                <div class="red-text">{{ form.year.errors }}</div>
+                {% msg_box form.year.errors "red" "" %}
                 {#                <label for="{{ form.year.id_for_label }}">Jahr</label>#}
                 <small>Jahr</small>
                 {{ form.year }}
@@ -26,7 +26,7 @@
         </div>
         <div class="file-field input-field">
             <div class="red-text">
-                {{ form.pdf.errors }}
+                {% msg_box form.pdf.errors "red" "" %}
             </div>
             <div class="btn">
                 <span><i class="material-icons center">cloud_upload</i> </span>

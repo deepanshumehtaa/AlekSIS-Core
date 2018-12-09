@@ -9,7 +9,6 @@ from mealplan.models import MealPlan
 from .forms import MenuUploadForm
 
 
-# Create your views here.
 def upload(request):
     if request.method == 'POST':
         form = MenuUploadForm(request.POST, request.FILES)
@@ -22,6 +21,13 @@ def upload(request):
     return render(request, 'menu/upload.html', {
         'form': form
     })
+
+
+def delete(request, id):
+    print(id)
+    MealPlan.objects.get(id=id).delete()
+
+    return redirect("menu_index_msg", msg="delete_success")
 
 
 def index(request, msg=None):

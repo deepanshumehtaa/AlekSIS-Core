@@ -18,5 +18,5 @@ def path_and_rename(instance, filename):
 
 
 @register.inclusion_tag("components/msgbox.html")
-def msg_box(msg, color="red"):
-    return {"msg": msg, "color": color}
+def msg_box(msg, color="red", icon="info"):
+    return {"msg": msg, "color": color, "icon": icon}
