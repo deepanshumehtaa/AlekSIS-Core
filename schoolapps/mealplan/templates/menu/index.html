@@ -13,6 +13,8 @@
     </script>
     <a class="waves-effect waves-light btn green" href="{% url "menu_upload" %}"><i class="material-icons left">add</i>
         Neuen Speiseplan hochladen</a>
+    <a class="waves-effect waves-light btn" href="{% url "menu_show_current" %}"><i class="material-icons left">picture_as_pdf</i>
+        Aktuellen Speiseplan anzeigen</a>
     <h5>Übersicht der hochgeladenen Speisepläne</h5>
     <ul class="collection">
         {% for menu in menus %}

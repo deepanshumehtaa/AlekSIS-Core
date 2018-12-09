@@ -6,7 +6,7 @@ from django.template.loader_tags import register
 
 def path_and_rename(instance, filename):
     upload_to = 'menus'
-    ext = filename.split('.')[-1]
+    ext = filename.split('.')[-1].lower()
     # get filename
     if instance.pk:
         filename = '{}.{}'.format(instance.pk, ext)
