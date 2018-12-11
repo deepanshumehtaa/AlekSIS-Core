@@ -1,6 +1,7 @@
 import datetime
 import os
 
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -9,6 +10,8 @@ from menu.models import Menu
 from .forms import MenuUploadForm
 
 
+@login_required
+@permission_required("can_add_menu")
 def upload(request):
     if request.method == 'POST':
         form = MenuUploadForm(request.POST, request.FILES)
