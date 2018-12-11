@@ -11,7 +11,7 @@ from .forms import MenuUploadForm
 
 
 @login_required
-@permission_required("can_add_menu")
+@permission_required("menu.add_menu")
 def upload(request):
     if request.method == 'POST':
         form = MenuUploadForm(request.POST, request.FILES)
@@ -26,6 +26,8 @@ def upload(request):
     })
 
 
+@login_required
+@permission_required("menu.add_menu")
 def delete(request, id):
     print(id)
     Menu.objects.get(id=id).delete()
@@ -33,6 +35,8 @@ def delete(request, id):
     return redirect("menu_index_msg", msg="delete_success")
 
 
+@login_required
+@permission_required("menu.add_menu")
 def index(request, msg=None):
     menus = Menu.objects.all().order_by("calendar_week", "year")
     return render(request, 'menu/index.html', {"msg": msg, "menus": menus})
