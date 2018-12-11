@@ -5,7 +5,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('mealplan', '0003_auto_20181129_1747'),
+        ('menu', '0003_auto_20181129_1747'),
     ]
 
     operations = [

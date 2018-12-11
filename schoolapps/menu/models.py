@@ -4,7 +4,7 @@ from django.db import models
 from helper import path_and_rename
 
 
-class MealPlan(models.Model):
+class Menu(models.Model):
     calendar_week = models.IntegerField(verbose_name="KW")
     year = models.IntegerField(verbose_name="Jahr")
     pdf = models.FileField(upload_to=path_and_rename, verbose_name="PDF")

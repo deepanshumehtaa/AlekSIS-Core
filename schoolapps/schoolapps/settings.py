@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
-    'mealplan.apps.MealplanConfig',
+    'menu.apps.MenuConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',

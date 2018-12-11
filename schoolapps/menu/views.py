@@ -5,7 +5,7 @@ from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from mealplan.models import MealPlan
+from menu.models import Menu
 from .forms import MenuUploadForm
 
 
@@ -25,13 +25,13 @@ def upload(request):
 
 def delete(request, id):
     print(id)
-    MealPlan.objects.get(id=id).delete()
+    Menu.objects.get(id=id).delete()
 
     return redirect("menu_index_msg", msg="delete_success")
 
 
 def index(request, msg=None):
-    menus = MealPlan.objects.all().order_by("calendar_week", "year")
+    menus = Menu.objects.all().order_by("calendar_week", "year")
     return render(request, 'menu/index.html', {"msg": msg, "menus": menus})
 
 
@@ -45,7 +45,7 @@ def return_pdf(filename):
 def return_default_pdf():
     """Response the default PDF"""
 
-    return return_pdf(os.path.join("mealplan", "default.pdf"))
+    return return_pdf(os.path.join("menu", "default.pdf"))
 
 
 def show_current(request):
@@ -68,9 +68,9 @@ def show_current(request):
 
     # Look for matching PDF in DB
     try:
-        obj = MealPlan.objects.get(year=year, calendar_week=calendar_week)
+        obj = Menu.objects.get(year=year, calendar_week=calendar_week)
         return return_pdf(os.path.join("media", str(obj.pdf)))
 
     # Or show the default PDF
-    except MealPlan.DoesNotExist:
+    except Menu.DoesNotExist:
         return return_default_pdf()

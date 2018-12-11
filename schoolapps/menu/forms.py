@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import FileExtensionValidator
 from django.utils import timezone
 
-from mealplan.models import MealPlan
+from menu.models import Menu
 
 current_year = timezone.datetime.now().year
 options_for_year = [(current_year, current_year),
@@ -17,5 +17,5 @@ class MenuUploadForm(forms.ModelForm):
     pdf = forms.FileField(label="PDF-Datei", validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
 
     class Meta:
-        model = MealPlan
+        model = Menu
         fields = ("calendar_week", "year", "pdf")

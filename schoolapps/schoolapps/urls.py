@@ -43,7 +43,7 @@ urlpatterns = [
     ########
     # MENU #
     ########
-    path('menu/', include('mealplan.urls')),
+    path('menu/', include('menu.urls')),
 
     #########
     # Admin #
