@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
+    'menu.apps.MenuConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -220,3 +221,7 @@ AUTHENTICATION_BACKENDS = (
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
+
+# Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
