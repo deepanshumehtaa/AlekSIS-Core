@@ -202,9 +202,10 @@ class LessonElementContainer(object):
     Saves the lesson element object and the room (from time object)
     """
 
-    def __init__(self, element, room):
+    def __init__(self, element, room, substitution=None):
         self.element = element
         self.room = room
+        self.substitution = substitution
 
 
 def get_lesson_by_id(id):
