@@ -20,31 +20,39 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-                  #############
-                  # Dashboard #
-                  #############
-                  path('', include('dashboard.urls')),
+    #############
+    # Dashboard #
+    #############
+    path('', include('dashboard.urls')),
 
-                  ########
-                  # Auth #
-                  ########
-                  path('accounts/', include('django.contrib.auth.urls')),
+    ########
+    # Auth #
+    ########
+    path('accounts/', include('django.contrib.auth.urls')),
 
-                  #######
-                  # AUB #
-                  #######
-                  path('aub/', include('aub.urls')),
+    #######
+    # AUB #
+    #######
+    path('aub/', include('aub.urls')),
 
-                  #############
-                  # TIMETABLE #
-                  #############
-                  path('timetable/', include('timetable.urls')),
+    #############
+    # TIMETABLE #
+    #############
+    path('timetable/', include('timetable.urls')),
 
-                  #########
-                  # Admin #
-                  #########
-                  path('settings/', include('dbsettings.urls')),
-                  path('admin/', admin.site.urls),
-              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    ########
+    # MENU #
+    ########
+    path('menu/', include('menu.urls')),
 
-#handler404 = 'dashboard.views.error_404'
+    #########
+    # Admin #
+    #########
+    path('settings/', include('dbsettings.urls')),
+    path('admin/', admin.site.urls),
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# handler404 = 'dashboard.views.error_404'
