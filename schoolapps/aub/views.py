@@ -25,8 +25,9 @@ def index(request):
         # Edit button pressed?
         if 'edit' in request.POST:
             aub = Aub.objects.filter(id=aub_id)
-            print('Edit wurde gewählt')
-            return render(request, 'aub/update', {'filter': aub})
+            print('...Edit wurde gewählt')
+            # return render(request, 'aub/apply_for.html', {'filter': aub})
+            apply_for(request)
 
         # Cancel button pressed?
         elif 'cancel' in request.POST:
@@ -54,67 +55,89 @@ def details(request, aub_id):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def apply_for(request):
-    if request.method == 'POST':
-
-        form = ApplyForAUBForm(request.POST)
-
-        if form.is_valid():
-                from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
-                to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
-                description = form.cleaned_data['description']
-
-                aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
-                aub.save()
-
-                a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-                             description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-                                         "für den Zeitraum von {} bis {} gestellt.".format(
-                                             aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
-                a.save()
-
-                return redirect(reverse('aub_applied_for'))
+def apply_for(request, id):
+    instance = get_object_or_404(Aub, id=id)
+    form = ApplyForAUBForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('aub_applied_for')
     else:
-        form = ApplyForAUBForm()
+        ApplyForAUBForm(instance=instance)
+    return render(request,'aub/apply_for.html', {'form': form})
 
-    context = {
-        'form': form,
-    }
+    # if request.method == 'POST':
+    #
+    #     if 'aub-id' in request.POST:
+    #         aub_id = request.POST['aub-id']
+    #         aub = Aub.objects.get(id=aub_id)
+    #         print('AUB:', aub_id, '|', aub.from_dt, '|', aub.to_dt, '|', aub.description)
+    #         form = ApplyForAUBForm(request.POST, instance=aub)
+    #     else:
+    #         form = ApplyForAUBForm(request.POST)
+    #     # form = ApplyForAUBForm(request.POST, initial=[aub.from_dt, aub.to_dt, aub.description])
+    #     if form.is_valid():
+    #             from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
+    #             to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
+    #             description = form.cleaned_data['description']
+    #
+    #             aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
+    #             aub.save()
+    #
+    #             a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
+    #                          description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
+    #                                      "für den Zeitraum von {} bis {} gestellt.".format(
+    #                                          aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
+    #             a.save()
+    #
+    #             return redirect(reverse('aub_applied_for'))
+    #
+    # else:
+    #     form = ApplyForAUBForm()
+    #
+    # context = {
+    #     'Aub': aub,
+    #     'form': form,
+    # }
+    # return render(request, 'aub/apply_for.html', context)
 
 
-    return render(request, 'aub/apply_for.html', context)
-
-@login_required
-@permission_required('aub.apply_for_aub')
-def apply_for_update(request):
-    if request.method == 'POST':
-        if 'aub-id' in request.POST:
-            aub_id = request.POST['aub-id']
-            aub = Aub.objects.get(id=aub_id)
-            print(aub)
-        form = ApplyForAUBForm(request.POST, initial=[aub.from_dt,aub.to_dt,aub.description])
-
-        if form.is_valid():
-                from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
-                to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
-                description = form.cleaned_data['description']
-
-                aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
-                aub.save()
-
-                a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-                             description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-                                         "für den Zeitraum von {} bis {} gestellt.".format(
-                                             aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
-                a.save()
-                return redirect(reverse('aub_applied_for'))
-    else:
-        form = ApplyForAUBForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'aub/apply_for.html', context)
-
+# @login_required
+# @permission_required('aub.apply_for_aub')
+# def apply_for(request):
+#     if request.method == 'POST':
+#
+#         if 'aub-id' in request.POST:
+#             aub_id = request.POST['aub-id']
+#             aub = Aub.objects.get(id=aub_id)
+#             print('AUB:', aub_id, '|', aub.from_dt, '|', aub.to_dt, '|', aub.description)
+#             form = ApplyForAUBForm(request.POST, instance=aub)
+#         else:
+#             form = ApplyForAUBForm(request.POST)
+#         # form = ApplyForAUBForm(request.POST, initial=[aub.from_dt, aub.to_dt, aub.description])
+#         if form.is_valid():
+#                 from_dt = timezone.datetime.combine(form.cleaned_data['from_date'], form.cleaned_data['from_time'])
+#                 to_dt = timezone.datetime.combine(form.cleaned_data['to_date'], form.cleaned_data['to_time'])
+#                 description = form.cleaned_data['description']
+#
+#                 aub = Aub(from_dt=from_dt, to_dt=to_dt, description=description, created_by=request.user)
+#                 aub.save()
+#
+#                 a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
+#                              description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
+#                                          "für den Zeitraum von {} bis {} gestellt.".format(
+#                                              aub.from_dt, aub.to_dt), app=AubConfig.verbose_name)
+#                 a.save()
+#
+#                 return redirect(reverse('aub_applied_for'))
+#
+#     else:
+#         form = ApplyForAUBForm()
+#
+#     context = {
+#         'Aub': aub,
+#         'form': form,
+#     }
+#     return render(request, 'aub/apply_for.html', context)
 
 
 @login_required
