@@ -9,11 +9,11 @@ body {
 }
 
 .primary-color {
-    background-color: #da1f3d;
+    background-color: #da1f3d !important;
 }
 
 .primary-color-text {
-    color: #da1f3d;
+    color: #da1f3d !important;
 }
 
 /**********/
