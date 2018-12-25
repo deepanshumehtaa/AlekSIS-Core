@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from datetime import date
 
 def get_default_user():
     user, created = User.objects.get_or_create(username='nouser')
@@ -22,8 +23,12 @@ def get_default_status():
 
 class Aub(models.Model):
     # Time
-    from_dt = models.DateTimeField(default=timezone.now)
-    to_dt = models.DateTimeField(default=timezone.now)
+#    from_dt = models.DateTimeField(default=timezone.now)
+#    to_dt = models.DateTimeField(default=timezone.now)
+    from_date = models.DateField(default=date.today)
+    from_time = models.TimeField(default=timezone.now)
+    to_date = models.DateField(default=date.today)
+    to_time = models.TimeField(default=timezone.now)
 
     # Information
     description = models.TextField()
