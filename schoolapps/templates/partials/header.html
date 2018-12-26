@@ -88,10 +88,10 @@
                 </li>
             {% endif %}
             {% if perms.aub.check1_aub %}
-                <li><a href="{% url 'aub_check1' %}"><i class="material-icons">check</i> Anträge genehmigen 1</a></li>
+                <li><a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge genehmigen 1</a></li>
             {% endif %}
             {% if perms.aub.check2_aub %}
-                <li><a href="{% url 'aub_check2' %}"><i class="material-icons">check_box</i> Anträge genehmigen 2</a>
+                <li><a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge genehmigen 2</a>
                 </li>
             {% endif %}
             {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
