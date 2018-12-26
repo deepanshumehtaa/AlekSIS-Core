@@ -7,8 +7,8 @@
             <i class="material-icons left"></i> Filter aktualisieren
             </button>
         </form>
+
         <h5>Ausstehende Anträge</h5>
-        
         
         <ul class="collection">
 {#            {% for aub in aubs %}#}
@@ -20,7 +20,8 @@
                             <p class="title">
                                <span class="item-text">
                                 <i class="material-icons">access_time</i>
-                                {{ aub.from_dt }} bis {{ aub.to_dt }}
+{#                                {{ aub.from_dt }} bis {{ aub.to_dt }}#}
+                                {{ aub.from_date }} bis {{ aub.to_date }}
                                 </span>
                             </p>
                             <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
