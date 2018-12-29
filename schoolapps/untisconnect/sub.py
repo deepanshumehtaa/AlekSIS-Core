@@ -1,10 +1,9 @@
 from django.utils import timezone
 
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper, get_teacher_by_id, get_subject_by_id, \
-    get_room_by_id, get_class_by_id, get_corridor_by_id
+from untisconnect.api import run_default_filter, row_by_row_helper
 from untisconnect.api_helper import run_using, untis_split_first
-from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher, build_drive
+from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
 
 DATE_FORMAT = "%Y%m%d"
 
@@ -85,7 +84,7 @@ class Substitution(object):
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
                                                                                   self.lesson, self.date.weekday() + 1)
         # print(self.lesson)
-        print(self.room_old)
+        # print(self.room_old)
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
@@ -117,10 +116,10 @@ class Substitution(object):
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
 
-        print(class_ids)
+        # print(class_ids)
         for id in class_ids:
             self.classes.append(drive["classes"][id])
-        print(self.classes)
+        # print(self.classes)
 
 
 def substitutions_sorter(sub):
@@ -263,4 +262,20 @@ def get_substitutions_by_date(date):
     #     for class_ in row.classes:
     #         print(class_.name)
     subs.sort(key=substitutions_sorter)
+    return subs
+
+
+def get_substitutions_by_date_as_dict(date):
+    subs_raw = get_substitutions_by_date(date)
+    sub_table = generate_sub_table(subs_raw)
+    print("SUB RAW LEN", len(sub_table))
+    subs = {}
+    for i, sub_raw in enumerate(subs_raw):
+        print(i)
+        if sub_raw.lesson_id not in subs.keys():
+            subs[sub_raw.lesson_id] = []
+        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
+        # print(sub_raw.teacher_old)
+        # print(sub_table[i].teacher)
+    print(len(subs))
     return subs

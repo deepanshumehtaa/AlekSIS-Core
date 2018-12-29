@@ -131,6 +131,7 @@ span.badge.new::after {
 }
 
 .lesson-card .card-content div {
+    padding: 5px;
     height: 100%;
     width: 100%;
     display: flex;
@@ -146,6 +147,15 @@ span.badge.new::after {
 
 table.substitutions td, table.substitutions th {
     padding: 10px 5px;
+}
+
+.lesson-with-sub {
+    border: 3px solid red;
+    border-radius: 3px;
+}
+
+.lesson-with-sub .badge {
+    margin: 0;
 }
 
 /*.timetable-time {*/

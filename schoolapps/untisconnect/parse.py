@@ -1,9 +1,3 @@
-from django.conf import settings
-from django.utils import timezone
-
-from schoolapps.settings import LESSONS
-
-
 class Lesson(object):
     def __init__(self):
         self.filled = False
@@ -26,6 +20,7 @@ class Lesson(object):
 
         # Split data (,)
         lesson_id = raw_lesson.lesson_id
+        self.id = lesson_id
         raw_lesson_data = raw_lesson.lessonelement1.split(",")
         raw_time_data = raw_lesson.lesson_tt.split(",")
 
@@ -80,9 +75,9 @@ class Lesson(object):
             #     r = drive["rooms"][room_id]
             #     rooms.append(r)
             rooms = []
-            for room in rooms:
-                print(room)
-            print("--")
+            # for room in rooms:
+            #     print(room)
+            # print("--")
 
             classes = []
             for class_id in class_ids:
@@ -146,7 +141,7 @@ def build_drive():
             id = el.id
             drive[key][id] = el
 
-    print(drive)
+    # print(drive)
     return drive
 
 
@@ -174,40 +169,6 @@ def parse():
     return lessons
 
 
-TYPE_TEACHER = 0
-TYPE_ROOM = 1
-TYPE_CLASS = 2
-
-
-class LessonContainer(object):
-    """
-    Needed for Django template because template language does not support dictionaries
-    Saves the time object and the lesson elements
-    """
-
-    def __init__(self, ):
-        self.time = None
-        self.elements = []
-
-    def set_time(self, time):
-        self.time = time
-
-    def append(self, element):
-        self.elements.append(element)
-
-
-class LessonElementContainer(object):
-    """
-    Needed for Django template because template language does not support dictionaries
-    Saves the lesson element object and the room (from time object)
-    """
-
-    def __init__(self, element, room, substitution=None):
-        self.element = element
-        self.room = room
-        self.substitution = substitution
-
-
 def get_lesson_by_id(id):
     global drive
     lesson = Lesson()
@@ -217,29 +178,29 @@ def get_lesson_by_id(id):
 
 
 def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=None):
-    print(lesson_id)
-    print(hour, "LEWE", weekday)
+    # print(lesson_id)
+    #print(hour, "LEWE", weekday)
     try:
         lesson = get_lesson_by_id(lesson_id)
     except Exception:
         return None, None
     el = None
     i = 0
-    print(lesson.elements)
+    #print(lesson.elements)
     for i, element in enumerate(lesson.elements):
-        print(element.teacher.shortcode)
+        #print(element.teacher.shortcode)
         if element.teacher.id == teacher.id:
             el = element
             break
     t = None
-    print(lesson.times)
-    print(weekday)
-    print(hour)
+    # print(lesson.times)
+    # print(weekday)
+    #print(hour)
     for time in lesson.times:
-        print("DAY", time.day, time.hour)
+        #print("DAY", time.day, time.hour)
         if time.day == weekday and time.hour == hour:
             t = time
-    print(t)
+    #print(t)
     room = None
     if t is not None:
         room = t.rooms[i]
@@ -247,100 +208,3 @@ def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=
     if el is not None:
         return el, room
     return None, None
-
-
-def parse_lesson_times():
-    times = []
-    for i, t in enumerate(LESSONS):
-        start_split = t[0].split(":")
-        start_time = timezone.datetime(year=2000, day=1, month=1, hour=int(start_split[0]), minute=int(start_split[1]))
-        end_time = start_time + timezone.timedelta(minutes=45)
-        print(start_time)
-        print(end_time)
-        times.append({
-            "number": i + 1,
-            "number_format": t[1],
-            "start": start_time,
-            "end": end_time,
-        })
-    return times
-
-
-def get_plan(type, id):
-    """ Generates a plan for type (TYPE_TEACHE, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
-
-    # Get parsed lessons
-    lessons = parse()
-    times_parsed = parse_lesson_times()
-
-    # Init plan array
-    plan = []
-
-    # Fill plan array with LessonContainers (show upside), WIDTH and HEIGHT are defined by Django settings
-    for hour_idx in range(settings.TIMETABLE_HEIGHT):
-        plan.append(([], times_parsed[hour_idx] if len(times_parsed) > hour_idx else None))
-        for day_idx in range(settings.TIMETABLE_WIDTH):
-            plan[hour_idx][0].append(LessonContainer())
-
-    # Fill plan with lessons
-    for lesson in lessons:
-        for i, element in enumerate(lesson.elements):
-
-            # Check if the lesson element is important for that plan (look by type and id)
-            found = False
-            if type == TYPE_CLASS:
-                for lclass in element.classes:
-                    if lclass.id == id:
-                        found = True
-
-            elif type == TYPE_TEACHER:
-                if element.teacher:
-                    if element.teacher.id == id:
-                        found = True
-
-            elif type == TYPE_ROOM:
-                for time in lesson.times:
-                    for j, lroom in enumerate(time.rooms):
-                        if lroom.id == id:
-                            print(lroom.name)
-                            found = True
-
-            # If the lesson element is important then add it to plan array
-            if found:
-                for time in lesson.times:  # Go for every time the lesson is thought
-                    # print(time.hour, " ", time.day)
-                    # print(element.subject.shortcode)
-                    room_index = None
-                    for j, lroom in enumerate(time.rooms):
-                        if lroom.id == id:
-                            room_index = j
-
-                    # Add the time object to the matching LessonContainer on the right position in the plan array
-                    plan[time.hour - 1][0][time.day - 1].set_time(time)
-
-                    # Check if there is an room for this time and lesson
-                    try:
-                        room = time.rooms[i]
-                    except IndexError:
-                        room = None
-
-                    # print(element)
-                    # print(room.name)
-
-                    # Create a LessonElementContainer with room and lesson element
-                    element_container = LessonElementContainer(element, room)
-
-                    if type != TYPE_ROOM or i == room_index:
-                        # Add this container object to the LessonContainer object in the plan array
-                        plan[time.hour - 1][0][time.day - 1].append(element_container)
-
-    # print(plan)
-    #
-    # for hour in plan:
-    #     for day in hour:
-    #         print(day.elements)
-    #         for c in day.elements:
-    #             # print(c.element)
-    #             pass
-
-    return plan
