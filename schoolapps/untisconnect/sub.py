@@ -1,5 +1,6 @@
 from django.utils import timezone
 
+from schoolapps.settings import DEBUG
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper
 from untisconnect.api_helper import run_using, untis_split_first
@@ -234,7 +235,15 @@ def generate_sub_table(subs):
         sub_row.room = generate_room_row(sub)
         sub_row.room_full = generate_room_row(sub, full=True)
 
-        sub_row.text = sub.text
+        if DEBUG:
+            # Add id only if debug mode is on
+            if sub.text:
+                sub_row.text = sub.text + " " + str(sub.id)
+            else:
+                sub_row.text = str(sub.id)
+        else:
+            sub_row.text = sub.text
+
 
         sub_row.badge = None
         if sub.type == 1:

@@ -113,8 +113,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
             # If the lesson element is important then add it to plan array
             if found:
                 for time in lesson.times:  # Go for every time the lesson is thought
-                    # print(time.hour, " ", time.day)
-                    # print(element.subject.shortcode)
+                    # Find matching rooms
                     room_index = None
                     for j, lroom in enumerate(time.rooms):
                         if lroom.id == id:
@@ -129,65 +128,53 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     except IndexError:
                         room = None
 
-                    # print(element)
-                    # print(room.name)
+                    # Smart Plan: Check if there substitutions for this lesson
                     matching_sub = None
 
                     if smart:
-                        current_weekday = week_days[time.day - 1]
-                        current_lesson = time.hour
-                        print(current_weekday, current_lesson)
-                        print(lesson.id)
+                        # If a sub with matching lesson id and day exists
                         if subs_for_weekday[time.day - 1].get(lesson.id, None) is not None:
                             for sub in subs_for_weekday[time.day - 1][lesson.id]:
-                                # sub = subs_for_weekday[time.day - 1][lesson.id]
-                                if sub["sub"].teacher_old.id == element.teacher.id:
+                                # ... check whether the sub has the right old teacher and the right lesson number
+                                if sub["sub"].teacher_old.id == element.teacher.id and sub["sub"].lesson == time.hour:
                                     matching_sub = sub
-                            # print(sub.keys())
-                            # print(sub["sub"].type)
 
-                            print("SUB")
-
-                    if matching_sub:
-                        already_added_subs_as_ids.append(matching_sub["sub"].id)
+                        # If the lesson matches, add it to the list of already added subs
+                        if matching_sub:
+                            already_added_subs_as_ids.append(matching_sub["sub"].id)
 
                     # Create a LessonElementContainer with room and lesson element
                     element_container = LessonElementContainer(element, room, substitution=matching_sub)
+
+                    # Important for rooms: Check if the current room is the old room
                     if smart and matching_sub is not None:
-                        print(matching_sub["sub"].teacher_old.name)
-                        print(matching_sub["sub"].room_old)
-                        print(matching_sub["sub"].room_new)
                         if matching_sub["sub"].room_new is not None:
                             if matching_sub["sub"].room_old is not None:
                                 if matching_sub["sub"].room_old != matching_sub["sub"].room_new:
                                     element_container.is_old = True
                             else:
                                 element_container.is_old = True
+
+                                # The rooms is empty, too, if the lesson is canceled
                         if matching_sub["sub"].type == TYPE_CANCELLATION:
                             element_container.is_old = True
-                        print(element_container.is_old)
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
                         plan[time.hour - 1][0][time.day - 1].append(element_container)
 
+    # Now check subs which were not in this plan before
     if smart:
         for i, week_day in enumerate(week_days):
-            print(i, week_day)
             subs_for_this_weekday = subs_for_weekday[i]
             for lesson_id, subs in subs_for_this_weekday.items():
                 for sub in subs:
-                    print(sub["sub"].id)
-                    # print(sub)
-                    # print(sub["sub"].room_new)
                     found = False
                     room = sub["sub"].room_old
                     if type == TYPE_CLASS:
                         if sub["sub"].classes:
                             for _class in sub["sub"].classes:
-                                # print(_class)
                                 if _class.id == id:
-                                    # print("Hi")
                                     found = True
                     elif type == TYPE_TEACHER:
                         if sub["sub"].teacher_new:
@@ -201,20 +188,6 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     if found:
                         element_container = LessonElementContainer(sub["sub"].lesson_element, room, substitution=sub)
                         if sub["sub"].id not in already_added_subs_as_ids:
-                            # if len(plan[sub["sub"].lesson - 1][0][i]) > 0:
-                            #     for elc in plan[sub["sub"].lesson - 1][0][i]:
-                            #         if elc.substitution is not None:
-                            #             if elc.substitution.id == elc.substitutio
                             plan[sub["sub"].lesson - 1][0][i].append(element_container)
-                    # print(plan[sub["sub"].lesson - 1][0][i].elements)
-                    # print(len(plan[sub["sub"].lesson - 1][0][i].elements))
-    # print(plan)
-    #
-    # for hour in plan:
-    #     for day in hour:
-    #         print(day.elements)
-    #         for c in day.elements:
-    #             # print(c.element)
-    #             pass
 
     return plan
