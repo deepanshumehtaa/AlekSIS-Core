@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
+    'support.apps.SupportConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
