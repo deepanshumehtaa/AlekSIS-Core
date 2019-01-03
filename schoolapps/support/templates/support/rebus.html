@@ -3,9 +3,15 @@
 
 <main>
 
-<p class="flow-text">Falls Sie Hilfe brauchen, da die Technik nicht funktioniert,
+<p class="flow-text">
+    <strong>REBUS - REport-A-Bug-System</strong>
+</p>
+
+<p class="flow-text">
+    Falls Sie Hilfe brauchen, da die Technik nicht funktioniert,
 	nennen Sie uns einfach Ihren Raum, und geben Sie bitte auch Ihr Kürzel an.
-	Danach tragen Sie unten bitte ein, was der Fehler ist.</p>
+	Danach tragen Sie unten bitte ein, was der Fehler ist.
+</p>
 
 <form action="/rebus_submitted/" method="post">
     {% csrf_token %}
