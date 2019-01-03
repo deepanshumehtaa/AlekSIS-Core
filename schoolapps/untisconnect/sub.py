@@ -235,15 +235,14 @@ def generate_sub_table(subs):
         sub_row.room = generate_room_row(sub)
         sub_row.room_full = generate_room_row(sub, full=True)
 
-        if DEBUG:
-            # Add id only if debug mode is on
-            if sub.text:
-                sub_row.text = sub.text + " " + str(sub.id)
-            else:
-                sub_row.text = str(sub.id)
-        else:
-            sub_row.text = sub.text
-
+        # if DEBUG:
+        #     # Add id only if debug mode is on
+        #     if sub.text:
+        #         sub_row.text = sub.text + " " + str(sub.id)
+        #     else:
+        #         sub_row.text = str(sub.id)
+        # else:
+        sub_row.text = sub.text
 
         sub_row.badge = None
         if sub.type == 1:

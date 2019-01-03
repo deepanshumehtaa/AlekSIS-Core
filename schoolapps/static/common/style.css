@@ -189,6 +189,12 @@ table.substitutions td, table.substitutions th {
     width: 30%;
 }
 
+.no-margin {
+    margin: 0;
+}
+
+/* Table*/
+
 table.striped > tbody > tr:nth-child(odd) {
     background-color: rgba(208, 208, 208, 0.5);
 }
