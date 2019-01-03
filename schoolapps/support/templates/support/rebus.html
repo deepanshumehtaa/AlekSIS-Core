@@ -1,0 +1,26 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+
+<p class="flow-text">Falls Sie Hilfe brauchen, da die Technik nicht funktioniert,
+	nennen Sie uns einfach Ihren Raum, und geben Sie bitte auch Ihr Kürzel an.
+	Danach tragen Sie unten bitte ein, was der Fehler ist.</p>
+
+<form action="/rebus_submitted/" method="post">
+    {% csrf_token %}
+    {% form form=form %}
+    {% endform %}
+    <button type="submit" name="go" class="btn waves-effect waves-light green">
+				Problem-/Fehlermeldung einreichen
+				<i class="material-icons right">send</i>
+	</button>
+</form>
+
+<p>
+	<strong>Wichtig: </strong>
+	Bitte beachten Sie, dass ein Widerruf nach dem Absenden nicht mehr möglich ist.
+</p>
+
+</main>
+{% include 'partials/footer.html' %}
