@@ -5,20 +5,26 @@ from datetime import datetime
 from material import Layout, Row, Fieldset
 from aub.models import Aub
 
+
 class FilterAUBForm(forms.Form):
-    timerangechoices = [('today','Heute'),('thisWeek','Diese Woche'), ('thisMonth','Dieser Monat')]
-    timerange = forms.ChoiceField(label='Zeitumfang', choices=timerangechoices, initial='thisWeek', widget=forms.RadioSelect)
-    statuschoices = [('all','Alle'), ('processing','In Bearbeitung'), ('decided','Entschieden')]
+    timerangechoices = [('today', 'Heute'), ('thisWeek', 'Diese Woche'), ('thisMonth', 'Dieser Monat')]
+    timerange = forms.ChoiceField(label='Zeitumfang', choices=timerangechoices, initial='thisWeek',
+                                  widget=forms.RadioSelect)
+    statuschoices = [('all', 'Alle'), ('processing', 'In Bearbeitung'), ('decided', 'Entschieden')]
     status = forms.ChoiceField(label='Status', choices=statuschoices, initial='processing', widget=forms.RadioSelect)
-    sortingchoices = [('created_at_asc','Nach Datum (neue oben)'),('created_at_desc','Nach Datum (alte oben)'), ('created_by','Nach Antragsteller')]
-    sorting = forms.ChoiceField(label='Sortierung', choices=sortingchoices, initial='created_at_asc', widget=forms.RadioSelect)
+    sortingchoices = [('created_at_asc', 'Nach Datum (neue oben)'), ('created_at_desc', 'Nach Datum (alte oben)'),
+                      ('created_by', 'Nach Antragsteller')]
+    sorting = forms.ChoiceField(label='Sortierung', choices=sortingchoices, initial='created_at_asc',
+                                widget=forms.RadioSelect)
 
     layout = Layout(Fieldset('Filter',
                              Row('timerange', 'status', 'sorting'),
                              )
                     )
+
     def clean(self):
         cleaned_data = super().clean()
+
 
 class ApplyForAUBForm(forms.ModelForm):
     lessons = [('', ''), ('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
@@ -26,10 +32,12 @@ class ApplyForAUBForm(forms.ModelForm):
     initial_from_time = '8:00'
     initial_to_time = '15:35'
     from_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    from_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    from_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False,
+                                    widget=forms.Select(attrs={'onchange': 'set_time(this)'}))
     from_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial=initial_from_time, )
     to_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
-    to_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs = {'onchange' : 'set_time(this)'}))
+    to_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False,
+                                  widget=forms.Select(attrs={'onchange': 'set_time(this)'}))
     to_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial=initial_to_time)
     description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.')
 
@@ -75,7 +83,6 @@ class ApplyForAUBForm(forms.ModelForm):
             raise ValidationError('Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit.')
 
         return data
-
 
 # class ApplyForAUBForm(forms.Form):
 #     lessons = [('', ''), ('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),

@@ -6,3 +6,4 @@ urlpatterns = [
     path("rebus/", views.rebus, name="rebus"),
     path("feedback/", views.feedback, name="feedback"),
 ]
+

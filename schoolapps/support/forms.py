@@ -3,21 +3,18 @@ from material import Layout, Row, Fieldset
 
 
 class REBUSForm(forms.Form):
-    categories = [('n1', 'Kein WLAN'), ('h1a', 'Beamer funktioniert nicht'), ('h1b', 'Fernseher funktioniert nicht'),
-                  ('h2a', 'PC funktioniert nicht'), ('h2b', 'Laptop funktioniert nicht'), ('s', 'Sonstiges')]
+    categories = [('Kein WLAN', 'Kein WLAN'), ('Beamer funktioniert nicht', 'Beamer funktioniert nicht'), ('Fernseher funktioniert nicht', 'Fernseher funktioniert nicht'),
+                  ('PC funktioniert nicht', 'PC funktioniert nicht'), ('Laptop funktioniert nicht', 'Laptop funktioniert nicht'), ('Sonstiges', 'Sonstiges')]
 
-    room = forms.CharField(label='Ihr Raum', max_length=10, required=True)
+    room = forms.CharField(label='Ihr Raum', max_length=15, required=True)
+    contraction = forms.CharField(label='Ihr Kürzel', max_length=10, required=True)
     category = forms.ChoiceField(label='Kategorie', choices=categories, required=True)
     short_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler in einem Satz', required=True)
     long_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler genauer', required=False)
 
-    layout = Layout(Fieldset('',
-                             Row('room', 'category'),
-                             ),
-                    Fieldset('',
-                             'short_description'),
-                    Fieldset('',
-                             'long_description'),
+    layout = Layout(Row('room', 'contraction', 'category'),
+                    Row('short_description'),
+                    Row('long_description'),
                     )
 
 
@@ -37,12 +34,8 @@ class FeedbackForm(forms.Form):
     rating = forms.ChoiceField(label='Bitte bewerten Sie die SchoolApps auf einer Skala von 1 bis 10',
                                choices=ratings, required=True)
 
-    layout = Layout(Fieldset('',
-                             'category'),
-                    Fieldset('',
-                             'short_description'),
-                    Fieldset('',
-                             'long_description'),
-                    Fieldset('',
-                             'rating'),
+    layout = Layout(Row('category'),
+                    Row('short_description'),
+                    Row('long_description'),
+                    Row('rating'),
                     )
