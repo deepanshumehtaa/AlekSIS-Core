@@ -19,23 +19,37 @@ class REBUSForm(forms.Form):
 
 
 class FeedbackForm(forms.Form):
-    categories = [('1', 'Design/Benutzererlebnis'), ('2', 'Funktionen'),
-                  ('3', 'Performance/Geschwindigkeit'), ('4', 'Kompatibilität'),
-                  ('5', 'Verständlichkeit'), ('s', 'Sonstiges')]
 
     ratings = [('1', '1'), ('2', '2'), ('3', '3'),
                ('4', '4'), ('5', '5'), ('6', '6'),
                ('7', '7'), ('8', '8'), ('9', '9'),
                ('10', '10')]
 
-    category = forms.MultipleChoiceField(label='Kategorie', choices=categories, required=True)
-    short_description = forms.CharField(label='Bitte geben Sie ein Feedback in einem Satz ein', required=True)
-    long_description = forms.CharField(label='Bitte geben Sie ein ausführliches Feedback ein', required=False)
-    rating = forms.ChoiceField(label='Bitte bewerten Sie die SchoolApps auf einer Skala von 1 bis 10',
+    design_rating = forms.ChoiceField(label='Bitte bewerten Sie das Design der SchoolApps auf einer Skala von 1 bis 10',
                                choices=ratings, required=True)
+    functions_rating = forms.ChoiceField(label='Bitte bewerten Sie die Funktionen der SchoolApps auf einer Skala von '
+                                               '1 bis 10',
+                               choices=ratings, required=True)
+    performance_rating = forms.ChoiceField(label='Bitte bewerten Sie die Geschwindigkeit der SchoolApps auf einer '
+                                                 'Skala von 1 bis 10',
+                               choices=ratings, required=True)
+    compatibility_rating = forms.ChoiceField(label='Bitte bewerten Sie die Kompatibilität der SchoolApps auf einer '
+                                                   'Skala von 1 bis 10',
+                               choices=ratings, required=True)
+    usability_rating = forms.ChoiceField(label='Bitte bewerten Sie die Benutzerfreundlichkeit der SchoolApps auf '
+                                               'einer Skala von 1 bis 10',
+                               choices=ratings, required=True)
+    overall_rating = forms.ChoiceField(label='Bitte bewerten Sie die SchoolApps insgesamt auf einer Skala von 1 bis 10',
+                               choices=ratings, required=True)
+    short_description = forms.CharField(label='Bitte geben Sie ein kurzes Feedback in einem Satz ein', required=True)
+    long_description = forms.CharField(label='Bitte geben Sie ein ausführliches Feedback ein', required=False)
 
-    layout = Layout(Row('category'),
+    layout = Layout(Row('design_rating'),
+                    Row('functions_rating'),
+                    Row('performance_rating'),
+                    Row('compatibility_rating'),
+                    Row('usability_rating'),
+                    Row('overall_rating'),
                     Row('short_description'),
                     Row('long_description'),
-                    Row('rating'),
                     )

@@ -15,13 +15,12 @@ def rebus(request):
             contraction = form.cleaned_data['contraction']
             category = form.cleaned_data['category']
             short_description = form.cleaned_data['short_description']
-            ld = form.cleaned_data['long_description']
-            long_description = "Kategorie: " + category + "\nRaum: " + room + "\nÜbermittelt von: " + contraction + "\nLange Beschreibung: " + ld
+            long_description = form.cleaned_data['long_description']
+            description = "Die Fehlermeldung '" + long_description + "' wurde von" + contraction + "in der Kategorie '" + category + "' für den Raum" + room + "erstellt."
 
             #kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'yuha', 'token')
-            #kb.create_task(project_id=4, title=short_description, description=long_description)
+            #kb.create_task(project_id=4, title=short_description, description=description)
 
-            # process data
             return render(request, 'support/rebus_submitted.html')
     else:
         form = REBUSForm()
@@ -33,7 +32,17 @@ def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            # process data
+            design_rating = form.cleaned_data['design_rating']
+            functions_rating = form.cleaned_data['functions_rating']
+            performance_rating = form.cleaned_data['performance_rating']
+            compatibility_rating = form.cleaned_data['compatibility_rating']
+            usability_rating = form.cleaned_data['usability_rating']
+            overall_rating = form.cleaned_data['overall_rating']
+            short_description = form.cleaned_data['short_description']
+            long_description = form.cleaned_data['long_description']
+            # kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'yuha', 'token')
+            # kb.create_task(project_id=4, title=short_description, description=description)
+
             return render(request, 'support/feedback_submitted.html')
     else:
         form = FeedbackForm()
