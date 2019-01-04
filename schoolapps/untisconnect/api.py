@@ -41,7 +41,7 @@ def row_by_row(db_ref, obj, filter_term=True):
 
 def one_by_id(db_ref, obj):
     # print(db_ref)
-    if db_ref != None:
+    if db_ref is not None:
         o = obj()
         o.create(db_ref)
         return o
@@ -85,6 +85,11 @@ def get_teacher_by_id(id):
     return one_by_id(teacher, Teacher)
 
 
+def get_teacher_by_shortcode(shortcode):
+    teacher = run_one(models.Teacher.objects).get(name__icontains=shortcode)
+    return one_by_id(teacher, Teacher)
+
+
 #########
 # CLASS #
 #########
@@ -122,6 +127,11 @@ def get_all_classes():
 
 def get_class_by_id(id):
     _class = run_one(models.Class.objects).get(class_id=id)
+    return one_by_id(_class, Class)
+
+
+def get_class_by_name(name):
+    _class = run_one(models.Class.objects).get(name__icontains=name)
     return one_by_id(_class, Class)
 
 
