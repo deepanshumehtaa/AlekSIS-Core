@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from datetime import date
 
+
 def get_default_user():
     user, created = User.objects.get_or_create(username='nouser')
     return user.id

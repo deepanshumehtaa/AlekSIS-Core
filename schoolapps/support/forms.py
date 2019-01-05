@@ -7,12 +7,11 @@ class REBUSForm(forms.Form):
                   ('PC funktioniert nicht', 'PC funktioniert nicht'), ('Laptop funktioniert nicht', 'Laptop funktioniert nicht'), ('Sonstiges', 'Sonstiges')]
 
     room = forms.CharField(label='Ihr Raum', max_length=15, required=True)
-    contraction = forms.CharField(label='Ihr Kürzel', max_length=10, required=True)
     category = forms.ChoiceField(label='Kategorie', choices=categories, required=True)
     short_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler in einem Satz', required=True)
     long_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler genauer', required=False)
 
-    layout = Layout(Row('room', 'contraction', 'category'),
+    layout = Layout(Row('room', 'category'),
                     Row('short_description'),
                     Row('long_description'),
                     )
