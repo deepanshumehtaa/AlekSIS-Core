@@ -16,7 +16,7 @@ def rebus(request):
             category = form.cleaned_data['category']
             short_description = form.cleaned_data['short_description']
             long_description = form.cleaned_data['long_description']
-            description = "Die Fehlermeldung '" + long_description + "' wurde von " + contraction + " in der Kategorie '" + category + "' für den Raum " + room + " erstellt."
+            description = "**Kategorie: **" + category + "\n\n" + "**Raum: **" + room + "\n\n" + "**Übermittelt von: **" + contraction + "\n\n" + "**Nachricht: **" + long_description + "\n\n"
 
             kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc', 'f984754c9e87ab43e98ed2f94d2080b6f8e5c499aca95e1fb98c4fc3c7ea')
             kb.create_task(project_id=4, title=short_description, description=description)
