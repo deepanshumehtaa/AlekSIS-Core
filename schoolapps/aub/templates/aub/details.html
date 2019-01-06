@@ -1,7 +1,6 @@
 {% include 'partials/header.html' %}
 <main>
-{#    <h5>{{ aub.from_dt }} bis {{ aub.to_dt }}</h5>#}
-    <h5>{{ aub.from_date }} bis {{ aub.to_date }}</h5>
+    <h4>{{ aub.from_date }} bis {{ aub.to_date }}</h4>
     <p><strong>Status: <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></strong></p>
     <p>{{ aub.description }}</p>
     <hr>
