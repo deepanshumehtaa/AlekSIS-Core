@@ -1,0 +1,44 @@
+{% include 'partials/header.html' %}
+
+<main>
+    {% if msg == "success" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich hochgeladen." "green" %}
+    {% elif msg == "delete_success" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich gelöscht." "green" %}
+    {% endif %}
+    <script type="text/javascript">
+
+        $('#alert_close').click(function () {
+            $("#alert_box").fadeOut("slow", function () {
+            });
+        });
+    </script>
+    <a class="waves-effect waves-light btn green" href="{% url "menu_upload" %}"><i class="material-icons left">add</i>
+        Neuen Speiseplan hochladen</a>
+    <a class="waves-effect waves-light btn" href="{% url "menu_show_current" %}"><i class="material-icons left">picture_as_pdf</i>
+        Aktuellen Speiseplan anzeigen</a>
+    <h5>Übersicht der hochgeladenen Speisepläne</h5>
+    <ul class="collection">
+        {% for menu in menus %}
+            <li class="collection-item ">
+                <span class="title">{{ menu }}</span>
+                <p>
+                    <a class="btn-flat" href="/media/{{ menu.pdf }}" target="_blank">
+                        <i class="material-icons left">picture_as_pdf</i> Anzeigen
+                    </a>
+                    <a class="btn-flat delete-menu" href="{% url "menu_delete"  menu.id %}">
+                        <i class="material-icons left">delete</i> Löschen
+                    </a>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+    <script type="text/javascript">
+        $(".delete-menu").click(function (e) {
+            if (!confirm("Wirklich löschen?")) {
+                e.preventDefault();
+            }
+        })
+    </script>
+</main>
+{% include 'partials/footer.html' %}
