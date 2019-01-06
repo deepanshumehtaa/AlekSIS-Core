@@ -3,16 +3,19 @@
 
 <main>
 
-    <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
 
-   {% block content %}
+    {% block content %}
 
-    <h5>Übersicht der Anträge</h5>
-    <ul class="collection">
-        {% for aub in aubs %}
-            <li class="collection-item">
+        <h4>Übersicht der Anträge</h4>
 
-                <div class="row">
+        <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
+
+
+        <ul class="collection">
+            {% for aub in aubs %}
+                <li class="collection-item">
+
+                    <div class="row">
                         <div class="col s12 m4">
                             <p class="title">
                                 <span class="item-text">
@@ -33,21 +36,26 @@
                         </div>
                         <div class="col s12 m4">
                             <p>
-                            {% if aub.status_id == 1 %}
-                                <form action="{% url 'aub_edit' aub.id %}" class="right">
-                                    {% csrf_token %}
-    {#                                <input type="hidden" value="{{ aub.id }}" name="aub-id">#}
-                                    <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
-                                        <i class="material-icons center green-text">create</i>
-                                    </button>
-                                </form>
-                            {% endif %}
+                                {% if aub.status_id == 1 %}
+                                    <form action="{% url 'aub_edit' aub.id %}" class="right">
+                                        {% csrf_token %}
+                                        {#                                <input type="hidden" value="{{ aub.id }}" name="aub-id">#}
+                                        <button type="submit" name="edit"
+                                                class="waves-effect waves-light btn-flat btn-flat-medium"
+                                                title="Bearbeiten">
+                                            <i class="material-icons center green-text">create</i>
+                                        </button>
+                                    </form>
+                                {% endif %}
                             {% if aub.status_id == 1 or aub.status_id == 2 %}
                                 <form action="" method="POST" class="right">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{ aub.id }}" name="aub-id">
 
-                                    <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
+                                    <button type="submit"
+                                            onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')"
+                                            name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
+                                            title="Löschen">
                                         <i class="material-icons center red-text">cancel</i>
                                     </button>
                                 </form>
@@ -59,10 +67,10 @@
                             <p><span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></p>
                         </div>
                     </div>
-                
-            </li>
-        {% endfor %}
-    </ul>
+
+                </li>
+            {% endfor %}
+        </ul>
     {% endblock %}
 </main>
 {% include 'partials/footer.html' %}

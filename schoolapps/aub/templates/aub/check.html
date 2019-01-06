@@ -1,66 +1,68 @@
 {% include 'partials/header.html' %}
 
 <main>
-        <form method="GET">
-            {{ filter.form.as_p }}
-            <button type="submit" class="waves-effect waves-light btn blue">
-            <i class="material-icons left"></i> Filter aktualisieren
-            </button>
-        </form>
+    <h4>Ausstehende Anträge</h4>
 
-        <h5>Ausstehende Anträge</h5>
-        
-        <ul class="collection">
-{#            {% for aub in aubs %}#}
-            {% for aub in filter.qs %}
-{#            {% for aub in aubs %}#}
-                <li class="collection-item">
-                    <div class="row">
-                        <div class="col s12 m4">
-                            <p class="title">
+    <form method="GET">
+        {{ filter.form.as_p }}
+        <button type="submit" class="waves-effect waves-light btn">
+            <i class="material-icons left">refresh</i> Filter aktualisieren
+        </button>
+    </form>
+
+    <ul class="collection">
+        {#            {% for aub in aubs %}#}
+        {% for aub in filter.qs %}
+            {#            {% for aub in aubs %}#}
+            <li class="collection-item">
+                <div class="row">
+                    <div class="col s12 m4">
+                        <p class="title">
                                <span class="item-text">
                                 <i class="material-icons">access_time</i>
 {#                                {{ aub.from_dt }} bis {{ aub.to_dt }}#}
                                 {{ aub.from_date }} bis {{ aub.to_date }}
                                 </span>
-                            </p>
-                            <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
-                        </div>
-                        <div class="col s12 m2">
-                            <p>
+                        </p>
+                        <p><a href="{% url 'aub_details' aub.id %}">{{ aub.description }}</a></p>
+                    </div>
+                    <div class="col s12 m2">
+                        <p>
                                <span class="item-text">
                                 <i class="material-icons">person</i>
                                 {{ aub.created_by }}
                                 </span>
-                            </p>
-                        </div>
-                        <div class="col s12 m4">
-                            <p>
-                                <form action="" method="POST" class="right">
-                                    {% csrf_token %}
-                                    <input type="hidden" value="{{ aub.id }}" name="aub-id">
-                                    {% if aub.status_id != 3 %}
-                                    <button type="submit" name="allow" class="waves-effect waves-light btn-flat btn-flat-large" title="Annehmen">
-                                        <i class="material-icons center green-text">check_circle</i>
-                                    </button>
-                                    {% endif %}
-                                    {% if aub.status_id != 4 %}
-                                    <button type="submit" name="deny" class="waves-effect waves-light btn-flat btn-flat-large" title="Ablehnen">
-                                        <i class="material-icons center red-text">not_interested</i>
-                                    </button>
-                                    {% endif %}
-                                </form>
-                            </p>
-                        </div>
-                        <div class="col s12 m2">
-                            <p>
-                                <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span>
-                            </p>
-                        </div>
+                        </p>
                     </div>
-                </li>
-            {% endfor %}
-        </ul>
+                    <div class="col s12 m4">
+                        <p>
+                        <form action="" method="POST" class="right">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ aub.id }}" name="aub-id">
+                            {% if aub.status_id != 3 %}
+                                <button type="submit" name="allow"
+                                        class="waves-effect waves-light btn-flat btn-flat-large" title="Annehmen">
+                                    <i class="material-icons center green-text">check_circle</i>
+                                </button>
+                            {% endif %}
+                            {% if aub.status_id != 4 %}
+                                <button type="submit" name="deny"
+                                        class="waves-effect waves-light btn-flat btn-flat-large" title="Ablehnen">
+                                    <i class="material-icons center red-text">not_interested</i>
+                                </button>
+                            {% endif %}
+                        </form>
+                        </p>
+                    </div>
+                    <div class="col s12 m2">
+                        <p>
+                            <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span>
+                        </p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 </main>
 
 {% include 'partials/footer.html' %}

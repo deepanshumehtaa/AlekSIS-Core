@@ -82,6 +82,15 @@ ul.collection .collection-item .title {
     font-weight: bold;
 }
 
+.section {
+    padding: 0;
+}
+
+form .row {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 /* Badges */
 
 span.badge.new::after {
