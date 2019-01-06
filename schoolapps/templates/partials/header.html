@@ -139,6 +139,24 @@
                     <div class="divider"></div>
                 </li>
             {% endif %}
+            {% if user.is_superuser %}
+                <li>
+                    <a class="subheader grey lighten-3">Administration</a>
+                </li>
+                <li>
+                    <a href="/admin/">
+                        <i class="material-icons">dashboard</i> Django-Administration
+                    </a>
+                </li>
+                <li>
+                    <a href="/settings/">
+                        <i class="material-icons">settings</i> Einstellungen
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
