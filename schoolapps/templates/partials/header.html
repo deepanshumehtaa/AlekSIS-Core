@@ -14,11 +14,10 @@
     <!-- CSS -->
     <!--------->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="{% static 'materialize/dist/css/materialize.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'materialize/dist/css/materialize.min.css' %}">
 
     <!-- django-material -->
-    {% include 'material/includes/material_css.html' %}
+    {#    {% include 'material/includes/material_css.html' %}#}
 
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <!---------------->
@@ -28,7 +27,7 @@
     <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
     <script src="{% static 'common/helper.js' %}"></script>
     <!-- django-material -->
-    {% include 'material/includes/material_js.html' %}
+    {#    {% include 'material/includes/material_js.html' %}#}
 
 </head>
 <body>
@@ -104,8 +103,13 @@
                     <a class="subheader grey lighten-3">Stundenplan</a>
                 </li>
                 <li>
+                    <a href="{% url 'timetable_my_plan' %}">
+                        <i class="material-icons">person</i> Mein Plan
+                    </a>
+                </li>
+                <li>
                     <a href="{% url 'timetable_admin_all' %}">
-                        <i class="material-icons">grid_on</i> Übersicht
+                        <i class="material-icons">grid_on</i> Alle Pläne
                     </a>
                 </li>
                 <li>

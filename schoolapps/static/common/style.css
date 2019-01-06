@@ -9,11 +9,11 @@ body {
 }
 
 .primary-color {
-    background-color: #da1f3d;
+    background-color: #da1f3d !important;
 }
 
 .primary-color-text {
-    color: #da1f3d;
+    color: #da1f3d !important;
 }
 
 /**********/
@@ -131,6 +131,7 @@ span.badge.new::after {
 }
 
 .lesson-card .card-content div {
+    padding: 5px;
     height: 100%;
     width: 100%;
     display: flex;
@@ -146,6 +147,15 @@ span.badge.new::after {
 
 table.substitutions td, table.substitutions th {
     padding: 10px 5px;
+}
+
+.lesson-with-sub {
+    border: 3px solid red;
+    border-radius: 3px;
+}
+
+.lesson-with-sub .badge {
+    margin: 0;
 }
 
 /*.timetable-time {*/
@@ -178,6 +188,12 @@ table.substitutions td, table.substitutions th {
     margin: 1%;
     width: 30%;
 }
+
+.no-margin {
+    margin: 0;
+}
+
+/* Table*/
 
 table.striped > tbody > tr:nth-child(odd) {
     background-color: rgba(208, 208, 208, 0.5);

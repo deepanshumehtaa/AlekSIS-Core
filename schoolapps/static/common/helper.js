@@ -90,6 +90,9 @@ $(document).ready(function () {
     // Initialize tooltip [MAT]
     $('.tooltipped').tooltip();
 
+    // Initialize select [MAT]
+    $('select').formSelect();
+
     // Initalize print button
     $("#print").click(function () {
         window.print();
