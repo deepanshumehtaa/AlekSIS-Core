@@ -40,9 +40,16 @@ def feedback(request):
             overall_rating = form.cleaned_data['overall_rating']
             short_description = form.cleaned_data['short_description']
             long_description = form.cleaned_data['long_description']
+            ideas = form.cleaned_data['ideas']
+            description = "**Bewertung fürs Design: **" + design_rating + "\n\n" + "**Bewertung für die Funktionen: **" + functions_rating + "\n\n" + "**Bewertung für die Performance: **" + performance_rating + "\n\n" + "**Bewertung für die Kompatibilität: **" + compatibility_rating + "\n\n" + "**Bewertung für die Benutzerfreundlichkeit: **" + usability_rating + "\n\n" + "**GESAMTBEWERTUNG: **" + overall_rating + "\n\n" + "**Nachricht: **" + long_description + "\n\n" + "**IDEEN: **" + ideas + "\n\n"
 
-            #kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc', 'f984754c9e87ab43e98ed2f94d2080b6f8e5c499aca95e1fb98c4fc3c7ea')
-            #kb.create_task(project_id=18, title=short_description, description=description)
+            kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc', 'f984754c9e87ab43e98ed2f94d2080b6f8e5c499aca95e1fb98c4fc3c7ea')
+            if int(overall_rating) <= 3:
+                kb.create_task(project_id=18, title=short_description, description=description, color_id='red')
+            elif 3 < int(overall_rating) <= 7:
+                kb.create_task(project_id=18, title=short_description, description=description, color_id='yellow')
+            else:
+                kb.create_task(project_id=18, title=short_description, description=description, color_id='green')
 
             return render(request, 'support/feedback_submitted.html')
     else:
