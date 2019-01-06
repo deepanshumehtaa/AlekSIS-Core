@@ -86,6 +86,7 @@ def get_teacher_by_id(id):
 
 
 def get_teacher_by_shortcode(shortcode):
+    shortcode = shortcode.upper()
     teacher = run_one(models.Teacher.objects).get(name__icontains=shortcode)
     return one_by_id(teacher, Teacher)
 
@@ -131,7 +132,8 @@ def get_class_by_id(id):
 
 
 def get_class_by_name(name):
-    _class = run_one(models.Class.objects).get(name__icontains=name)
+    name = name[0].upper() + name[1:]
+    _class = run_one(models.Class.objects).filter(name__icontains=name).all()[0]
     return one_by_id(_class, Class)
 
 
@@ -195,7 +197,7 @@ def get_all_corridors():
 
 
 def get_corridor_by_id(id):
-    print(id)
+    # print(id)
     corridor = run_one(models.Corridor.objects, filter_term=False).get(corridor_id=id)
     return one_by_id(corridor, Corridor)
 

@@ -67,16 +67,16 @@ def get_plan(type, id, smart=False, monday_of_week=None):
     times_parsed = parse_lesson_times()
 
     if smart:
-        print("Get substitutions for smart plan")
+        # print("Get substitutions for smart plan")
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
-        print(week_days)
+        # print(week_days)
         subs_for_weekday = []
         for week_day in week_days:
-            print(week_day)
+            # print(week_day)
             subs = get_substitutions_by_date_as_dict(week_day)
             subs_for_weekday.append(subs)
-            print(subs)
-            print(len(subs))
+            # print(subs)
+            # print(len(subs))
     # Init plan array
     plan = []
     already_added_subs_as_ids = []
@@ -107,7 +107,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                 for time in lesson.times:
                     for j, lroom in enumerate(time.rooms):
                         if lroom.id == id:
-                            print(lroom.name)
+                            # print(lroom.name)
                             found = True
 
             # If the lesson element is important then add it to plan array
