@@ -97,6 +97,13 @@ span.badge.new::after {
     content: "";
 }
 
+span.badge.new {
+    font-size: 1rem;
+    line-height: 26px;
+    height: 26px;
+}
+
+
 /*span.badge {*/
 /*width: 9em;*/
 /*line-height: 4ex;*/
