@@ -7,12 +7,11 @@
 
     <form method = "POST" >
         {% csrf_token %}
-{#        Von#}
-{#        <input type="text" label="Von" input_formats=['%d.%m.%Y'] value="{{ from_dt }}" name="from_date" >#}
+{#        <input type="hidden" value="{{ id }}" name="id" />#}
         {% form form=form %}
         {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
-            <i class="material-icons left">send</i> Antrag stellen
+            <i class="material-icons left">send</i> Antrag ändern
         </button>
     </form>
 </main>

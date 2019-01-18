@@ -3,19 +3,16 @@ import os
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404, FileResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
+from schoolapps.settings import WEEK_DAYS
 from timetable.pdf import generate_class_tex, generate_pdf
-from schoolapps.settings import LESSONS
 
-from untisconnect.parse import *
-from untisconnect.sub import get_substitutions_by_date, date_to_untis_date, untis_date_to_date, generate_sub_table
-
-try:
-    from schoolapps.untisconnect.api import *
-except Exception:
-    pass
+from untisconnect.plan import get_plan, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM, parse_lesson_times
+from untisconnect.sub import get_substitutions_by_date, generate_sub_table
+from untisconnect.api import *
+from userinformation import UserInformation
 
 
 def get_all_context():
@@ -46,9 +43,50 @@ def quicklaunch(request):
     return render(request, 'timetable/quicklaunch.html', context)
 
 
+def get_calendar_weeks(year=timezone.datetime.now().year):
+    weeks = []
+
+    # Get first day of year > first calendar week
+    first_day_of_year = timezone.datetime(year=year, month=1, day=1)
+    if first_day_of_year.isoweekday() != 1:
+        days_to_next_monday = 1 - first_day_of_year.isoweekday()
+        first_day_of_year += datetime.timedelta(days=days_to_next_monday)
+
+    # Go for all weeks in year and create week dict
+    first_day_of_week = first_day_of_year
+    for i in range(52):
+        calendar_week = i + 1
+        last_day_of_week = first_day_of_week + datetime.timedelta(days=4)
+        weeks.append({
+            "calendar_week": calendar_week,
+            "first_day": first_day_of_week,
+            "last_day": last_day_of_week
+        })
+        first_day_of_week += datetime.timedelta(weeks=1)
+
+    return weeks
+
+
+def get_calendar_week(calendar_week, year=timezone.datetime.now().year):
+    weeks = get_calendar_weeks(year=year)
+    for week in weeks:
+        if week["calendar_week"] == calendar_week:
+            return week
+    return None
+
+
 @login_required
 @permission_required("timetable.show_plan")
-def plan(request, plan_type, plan_id):
+def plan(request, plan_type, plan_id, smart="", year=timezone.datetime.now().year,
+         calendar_week=timezone.datetime.now().isocalendar()[1]):
+    if smart == "smart":
+        smart = True
+    else:
+        smart = False
+
+    monday_of_week = get_calendar_week(calendar_week, year)["first_day"]
+    # print(monday_of_week)
+
     if plan_type == 'teacher':
         _type = TYPE_TEACHER
         el = get_teacher_by_id(plan_id)
@@ -59,19 +97,73 @@ def plan(request, plan_type, plan_id):
         _type = TYPE_ROOM
         el = get_room_by_id(plan_id)
     else:
-        raise Http404('Page not found.')
+        raise Http404('Plan not found.')
 
-    plan = get_plan(_type, plan_id)
-    print(parse_lesson_times())
+    plan = get_plan(_type, plan_id, smart=smart, monday_of_week=monday_of_week)
+    # print(parse_lesson_times())
 
     context = {
+        "smart": smart,
         "type": _type,
+        "raw_type": plan_type,
+        "id": plan_id,
         "plan": plan,
         "el": el,
-        "times": parse_lesson_times()
+        "times": parse_lesson_times(),
+        "weeks": get_calendar_weeks(year=year),
+        "selected_week": calendar_week,
+        "selected_year": year,
+        "week_days": WEEK_DAYS
     }
 
     return render(request, 'timetable/plan.html', context)
+
+
+@login_required
+@permission_required("timetable.show_plan")
+def my_plan(request, year=None, day=None, month=None):
+    date = timezone.datetime.now()
+    if year is not None and day is not None and month is not None:
+        date = timezone.datetime(year=year, month=month, day=day)
+
+    calendar_week = date.isocalendar()[1]
+    monday_of_week = get_calendar_week(calendar_week, date.year)["first_day"]
+
+    _type = UserInformation.user_type(request.user)
+
+    if _type == UserInformation.TEACHER:
+        _type = TYPE_TEACHER
+        shortcode = request.user.username
+        el = get_teacher_by_shortcode(shortcode)
+        plan_id = el.id
+        # print(el)
+    elif _type == UserInformation.STUDENT:
+        _type = TYPE_CLASS
+        _name = UserInformation.user_classes(request.user)[0]
+        # print(_name)
+        el = get_class_by_name(_name)
+        plan_id = el.id
+    else:
+        redirect("timetable_admin_all")
+    # print(monday_of_week)
+
+    plan = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
+    # print(parse_lesson_times())
+
+    context = {
+        "type": _type,
+        "id": plan_id,
+        "plan": plan,
+        "el": el,
+        "times": parse_lesson_times(),
+        "week_day": date.isoweekday() - 1,
+        "week_days": WEEK_DAYS,
+        "date": date,
+        "date_js": int(date.timestamp()) * 1000
+    }
+    # print(context["week_day"])
+
+    return render(request, 'timetable/myplan.html', context)
 
 
 def get_next_weekday(date):
