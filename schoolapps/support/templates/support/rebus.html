@@ -2,25 +2,65 @@
 {% load material_form %}
 
 <main>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    {% load react %}
 
-<p class="flow-text">
-    <strong>Fehler melden – REBUS – REport-A-Bug-System</strong>
-</p>
+    <p class="flow-text">
+        <strong>Fehler melden – REBUS – REport-A-Bug-System</strong>
+    </p>
 
-<form method="post">
-    {% csrf_token %}
-    {% form form=form %}
-    {% endform %}
-    <button type="submit" name="go" class="btn waves-effect waves-light green">
-				Problem-/Fehlermeldung einreichen
-				<i class="material-icons right">send</i>
-	</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <p class="red-text">{{ form.non_field_errors }}</p>
+        {% react_render component="DynSelect" props=my_data %}
+        <div class="row">
+            <div class="col s12">
+                <p class="red-text">{{ form.category.errors }}</p>
+                <div class="input-field col s12 m4">
+                    <i class="material-icons prefix">priority_high</i>
+                    <select id="category" name="category" class="validate" required>
+                        <option value="" selected disabled>Bitte auswählen ...</option>
+                        <option value="Sonstiges">Sonstiges</option>
+                    </select>
+                    <label for="category">Kategorie</label>
+                </div>
+            </div>
+        </div>
 
-<p>
-	<strong>Wichtig: </strong>
-	Bitte beachten Sie, dass ein Widerruf nach dem Absenden nicht mehr möglich ist.
-</p>
+        <div class="row">
+            <p class="red-text">{{ form.short_description.errors }}</p>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">help</i>
+                {{ form.short_description }}
+                <label for="{{ form.short_description.id_for_label }}">Bitte beschreiben Sie Ihren Fehler <strong>in
+                    einem Satz</strong></label>
+            </div>
+        </div>
+
+        <div class="row">
+            <p class="red-text">{{ form.long_description.errors }}</p>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea id="{{ form.long_description.id_for_label }}" name="{{ form.long_description.html_name }}"
+                          class="materialize-textarea"></textarea>
+
+                <label for="{{ form.long_description.id_for_label }}">Bitte beschreiben Sie Ihren Fehler
+                    <strong>genauer</strong></label>
+            </div>
+        </div>
+
+        <button type="submit" name="go" class="btn waves-effect waves-light green">
+            Problem-/Fehlermeldung einreichen
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+
+    <p>
+        <strong>Wichtig: </strong>
+        Bitte beachten Sie, dass ein Widerruf nach dem Absenden nicht mehr möglich ist.
+    </p>
+    {% react_print %}
 
 </main>
 {% include 'partials/footer.html' %}

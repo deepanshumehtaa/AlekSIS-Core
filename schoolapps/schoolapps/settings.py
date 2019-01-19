@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'material',
+    'django_react_templatetags',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_react_templatetags.context_processors.react_context_processor',
             ],
         },
     },

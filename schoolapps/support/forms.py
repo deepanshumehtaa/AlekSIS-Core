@@ -8,15 +8,11 @@ class REBUSForm(forms.Form):
                   ('PC funktioniert nicht', 'PC funktioniert nicht'),
                   ('Laptop funktioniert nicht', 'Laptop funktioniert nicht'), ('Sonstiges', 'Sonstiges')]
 
-    room = forms.CharField(label='Ihr Raum', max_length=15, required=True)
+    # room = forms.CharField(label='Ihr Raum', max_length=15, required=True)
     category = forms.ChoiceField(label='Kategorie', choices=categories, required=True)
     short_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler in einem Satz', required=True)
-    long_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler genauer', required=False)
-
-    layout = Layout(Row('room', 'category'),
-                    Row('short_description'),
-                    Row('long_description'),
-                    )
+    long_description = forms.CharField(widget=forms.Textarea, label='Bitte beschreiben Sie Ihren Fehler genauer',
+                                       required=False)
 
 
 class FeedbackForm(forms.Form):
@@ -43,7 +39,8 @@ class FeedbackForm(forms.Form):
                                        choices=ratings, required=True)
     short_description = forms.CharField(label='Bitte geben Sie ein kurzes Feedback in einem Satz ein', required=True)
     long_description = forms.CharField(label='Bitte geben Sie ein ausführliches Feedback ein', required=False)
-    ideas = forms.CharField(label='Haben Sie Ideen, die wir in die SchoolApps einbauen können? Geben Sie sie hier ein!', required=False)
+    ideas = forms.CharField(label='Haben Sie Ideen, die wir in die SchoolApps einbauen können? Geben Sie sie hier ein!',
+                            required=False)
 
     layout = Layout(Row('design_rating'),
                     Row('functions_rating'),
