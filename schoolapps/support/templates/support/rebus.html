@@ -7,36 +7,21 @@
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     {% load react %}
 
-    <p class="flow-text">
-        <strong>Fehler melden – REBUS – REport-A-Bug-System</strong>
-    </p>
+    <h5>Fehler melden – REBUS – REport-A-Bug-System</h5>
 
     <form method="post">
         {% csrf_token %}
 
-        <script src="{% static "support/bundle.js" %}"></script>
+
         <p class="red-text">{{ form.non_field_errors }}</p>
-        {% react_render component="App" %}
-        <div class="row">
-            <div class="col s12">
-                <p class="red-text">{{ form.category.errors }}</p>
-                <div class="input-field col s12 m4">
-                    <i class="material-icons prefix">priority_high</i>
-                    <select id="category" name="category" class="validate" required>
-                        <option value="" selected disabled>Bitte auswählen ...</option>
-                        <option value="Sonstiges">Sonstiges</option>
-                    </select>
-                    <label for="category">Kategorie</label>
-                </div>
-            </div>
-        </div>
+        <div id="react-mount"></div>
 
         <div class="row">
             <p class="red-text">{{ form.short_description.errors }}</p>
             <div class="input-field col s12">
                 <i class="material-icons prefix">help</i>
                 {{ form.short_description }}
-                <label for="{{ form.short_description.id_for_label }}">Bitte beschreiben Sie Ihren Fehler <strong>in
+                <label for="{{ form.short_description.id_for_label }}">Bitte beschreibe dein Problem<strong> in
                     einem Satz</strong></label>
             </div>
         </div>
@@ -48,7 +33,7 @@
                 <textarea id="{{ form.long_description.id_for_label }}" name="{{ form.long_description.html_name }}"
                           class="materialize-textarea"></textarea>
 
-                <label for="{{ form.long_description.id_for_label }}">Bitte beschreiben Sie Ihren Fehler
+                <label for="{{ form.long_description.id_for_label }}">Bitte beschreibe dein Problem
                     <strong>genauer</strong></label>
             </div>
         </div>
@@ -59,11 +44,13 @@
         </button>
     </form>
 
-    <p>
-        <strong>Wichtig: </strong>
-        Bitte beachten Sie, dass ein Widerruf nach dem Absenden nicht mehr möglich ist.
-    </p>
-    {% react_print %}
+    {{ props|json_script:"props" }}
+    <script>
+        var props = JSON.parse(document.getElementById('props').textContent);
+        window.props = props;
+        window.react_mount = document.getElementById('react-mount');
+    </script>
+    <script src="{% static "support/bundle.js" %}"></script>
 
 </main>
 {% include 'partials/footer.html' %}

@@ -3,13 +3,16 @@ from material import Layout, Row, Fieldset
 
 
 class REBUSForm(forms.Form):
-    categories = [('Kein WLAN', 'Kein WLAN'), ('Beamer funktioniert nicht', 'Beamer funktioniert nicht'),
-                  ('Fernseher funktioniert nicht', 'Fernseher funktioniert nicht'),
-                  ('PC funktioniert nicht', 'PC funktioniert nicht'),
-                  ('Laptop funktioniert nicht', 'Laptop funktioniert nicht'), ('Sonstiges', 'Sonstiges')]
+    # categories = [('Kein WLAN', 'Kein WLAN'), ('Beamer funktioniert nicht', 'Beamer funktioniert nicht'),
+    #               ('Fernseher funktioniert nicht', 'Fernseher funktioniert nicht'),
+    #               ('PC funktioniert nicht', 'PC funktioniert nicht'),
+    #               ('Laptop funktioniert nicht', 'Laptop funktioniert nicht'), ('Sonstiges', 'Sonstiges')]
 
     # room = forms.CharField(label='Ihr Raum', max_length=15, required=True)
-    category = forms.ChoiceField(label='Kategorie', choices=categories, required=True)
+    # category = forms.ChoiceField(label='Kategorie', choices=categories, required=True)
+    a = forms.CharField(label="Kategorie A", required=True)
+    b = forms.CharField(label="Kategorie B", required=False)
+    c = forms.CharField(label="Kategorie C", required=False)
     short_description = forms.CharField(label='Bitte beschreiben Sie Ihren Fehler in einem Satz', required=True)
     long_description = forms.CharField(widget=forms.Textarea, label='Bitte beschreiben Sie Ihren Fehler genauer',
                                        required=False)

@@ -1,9 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 
+from mailer import send_mail_with_template
+from support.models import kanboard_settings
 from .forms import REBUSForm
 from .forms import FeedbackForm
 from kanboard import Kanboard
+from dashboard.models import Activity
+
+print("HI")
+api_token = kanboard_settings.api_token
+p_id_rebus = kanboard_settings.kb_project_id_rebus
+p_id_feedback = kanboard_settings.kb_project_id_feedback
+kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc',
+              api_token)
 
 
 # Create your views here.
@@ -13,13 +22,34 @@ def rebus(request):
         if form.is_valid():
             # room = form.cleaned_data['room']
             contraction = request.user.username
-            category = form.cleaned_data['category']
+            a = form.cleaned_data['a']
+            b = form.cleaned_data["b"]
+            c = form.cleaned_data["c"]
             short_description = form.cleaned_data['short_description']
             long_description = form.cleaned_data['long_description']
-            description = "**Kategorie: **" + category + "\n\n" + "**Raum: **\n\n**Übermittelt von: **" + contraction + "\n\n" + "**Nachricht: **" + long_description + "\n\n"
+            description = "**Kategorie:** {} > {} > {} \n\n **Übermittelt von:** {} \n\n **Nachricht:** {}".format(a, b,
+                                                                                                                   c,
+                                                                                                                   contraction,
+                                                                                                                   long_description)
+            # description = "**Kategorie: **" + a + "\n\n" + "**Raum: **\n\n**Übermittelt von: **" + contraction + "\n\n" + "**Nachricht: **" + long_description + "\n\n"
+            # Add kanboard task
+            kb.create_task(project_id=p_id_rebus, title=short_description, description=description)
 
-            kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc', 'f984754c9e87ab43e98ed2f94d2080b6f8e5c499aca95e1fb98c4fc3c7ea')
-            kb.create_task(project_id=4, title=short_description, description=description)
+            # Register activity
+            desc_act = "{} > {} > {} | {} | {}".format(a, b, c, short_description, long_description)
+            act = Activity(title="Du hast uns ein Problem gemeldet.", description=desc_act, app="REBUS",
+                           user=request.user)
+            act.save()
+            context = {
+                "a": a,
+                "b": b,
+                "c": c,
+                "short_desc": short_description,
+                "long_desc": long_description,
+                "user": request.user.username
+            }
+            send_mail_with_template("Neue REBUS-Meldung", ["support@katharineum.de"], "support/mail/email.txt",
+                                    "support/mail/email.html", context)
 
             return render(request, 'support/rebus_submitted.html')
     else:
@@ -43,17 +73,18 @@ def feedback(request):
             ideas = form.cleaned_data['ideas']
             description = "**Bewertung fürs Design: **" + design_rating + "\n\n" + "**Bewertung für die Funktionen: **" + functions_rating + "\n\n" + "**Bewertung für die Performance: **" + performance_rating + "\n\n" + "**Bewertung für die Kompatibilität: **" + compatibility_rating + "\n\n" + "**Bewertung für die Benutzerfreundlichkeit: **" + usability_rating + "\n\n" + "**GESAMTBEWERTUNG: **" + overall_rating + "\n\n" + "**Nachricht: **" + long_description + "\n\n" + "**IDEEN: **" + ideas + "\n\n"
 
-            kb = Kanboard('https://kanboard.katharineum.de/jsonrpc.php', 'jsonrpc', 'f984754c9e87ab43e98ed2f94d2080b6f8e5c499aca95e1fb98c4fc3c7ea')
             if int(overall_rating) <= 3:
-                kb.create_task(project_id=18, title=short_description, description=description, color_id='red')
+                kb.create_task(project_id=p_id_feedback, title=short_description, description=description,
+                               color_id='red')
             elif 3 < int(overall_rating) <= 7:
-                kb.create_task(project_id=18, title=short_description, description=description, color_id='yellow')
+                kb.create_task(project_id=p_id_feedback, title=short_description, description=description,
+                               color_id='yellow')
             else:
-                kb.create_task(project_id=18, title=short_description, description=description, color_id='green')
+                kb.create_task(project_id=p_id_feedback, title=short_description, description=description,
+                               color_id='green')
 
             return render(request, 'support/feedback_submitted.html')
     else:
         form = FeedbackForm()
 
     return render(request, 'support/feedback.html', {'form': form})
-
