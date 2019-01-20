@@ -47,7 +47,7 @@ module.exports = function (webpackEnv) {
     const isEnvProduction = webpackEnv === 'production';
 
     // Webpack uses `publicPath` to determine where the app is being served from.
-    // It requires a trailing slash, or the file assets will get an incorrect path.
+    // It requires a trailing slash, or the file dist will get an incorrect path.
     // In development, we always serve from the root. This makes config easier.
     const publicPath = isEnvProduction
         ? paths.servedPath
@@ -313,7 +313,7 @@ module.exports = function (webpackEnv) {
                     // match the requirements. When no loader matches it will fall
                     // back to the "file" loader at the end of the loader list.
                     oneOf: [
-                        // "url" loader works like "file" loader except that it embeds assets
+                        // "url" loader works like "file" loader except that it embeds dist
                         // smaller than specified limit in bytes as data URLs to avoid requests.
                         // A missing `test` is equivalent to a match.
                         {
@@ -383,7 +383,7 @@ module.exports = function (webpackEnv) {
                             },
                         },
                         // "postcss" loader applies autoprefixer to our CSS.
-                        // "css" loader resolves paths in CSS and adds assets as dependencies.
+                        // "css" loader resolves paths in CSS and adds dist as dependencies.
                         // "style" loader turns CSS into JS modules that inject <style> tags.
                         // In production, we use MiniCSSExtractPlugin to extract that CSS
                         // to a file, but in development "style" loader enables hot editing
@@ -446,7 +446,7 @@ module.exports = function (webpackEnv) {
                                 'sass-loader'
                             ),
                         },
-                        // "file" loader makes sure those assets get served by WebpackDevServer.
+                        // "file" loader makes sure those dist get served by WebpackDevServer.
                         // When you `import` an asset, you get its (virtual) filename.
                         // In production, they would get copied to the `build` folder.
                         // This loader doesn't use a "test" so it will catch all modules
@@ -549,7 +549,7 @@ module.exports = function (webpackEnv) {
             // You can remove this if you don't use Moment.js:
             new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
             // Generate a service worker script that will precache, and keep up to date,
-            // the HTML & assets that are part of the Webpack build.
+            // the HTML & dist that are part of the Webpack build.
             isEnvProduction &&
             new WorkboxWebpackPlugin.GenerateSW({
                 clientsClaim: true,

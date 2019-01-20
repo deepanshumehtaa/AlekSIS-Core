@@ -1,9 +1,10 @@
 {% include 'partials/header.html' %}
 {% load material_form %}
+{% load static %}
 
 <main>
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     {% load react %}
 
     <p class="flow-text">
@@ -12,8 +13,10 @@
 
     <form method="post">
         {% csrf_token %}
+
+        <script src="{% static "support/bundle.js" %}"></script>
         <p class="red-text">{{ form.non_field_errors }}</p>
-        {% react_render component="DynSelect" props=my_data %}
+        {% react_render component="App" %}
         <div class="row">
             <div class="col s12">
                 <p class="red-text">{{ form.category.errors }}</p>
