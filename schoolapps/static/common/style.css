@@ -103,7 +103,6 @@ span.badge.new {
     height: 26px;
 }
 
-
 /*span.badge {*/
 /*width: 9em;*/
 /*line-height: 4ex;*/
@@ -277,3 +276,14 @@ table.striped > tbody > tr:nth-child(odd) {
     }
 }
 
+.alert-success {
+
+}
+
+.alert-success p {
+    /*font-size: 16px;*/
+    margin: 10px;
+    padding: 10px;
+    background-color: #c5e1a5;
+    border-left: 5px solid #4caf50;
+}
