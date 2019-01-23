@@ -1,11 +1,9 @@
 {% extends "bootstrap3/bootstrap3.html" %}
-{% load staticfiles i18n leaflet_tags %}
+{% load staticfiles i18n %}
 
 {% block bootstrap3_title %}BiscuIT School Information System{% endblock %}
 
 {% block bootstrap3_extra_head %}
- {% leaflet_js %}
- {% leaflet_css %}
  <link rel="stylesheet" href="{% static 'style.css' %}" />
  <link rel="shortcut icon" href="#" />
 {% endblock %}
