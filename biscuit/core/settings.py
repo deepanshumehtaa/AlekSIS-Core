@@ -111,3 +111,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'core.Person'
+
+MENU_HIDE_EMPTY = True
+MENU_SELECT_PARENTS = True
