@@ -1,0 +1,4 @@
+include LICENSE
+recursive-include biscuit/core/static *
+recursive-include biscuit/core/templates *
+recursive-include biscuit/core/migrations *
