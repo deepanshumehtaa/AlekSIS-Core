@@ -1,5 +1,7 @@
 import os
 
+from .util import get_app_packages
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,6 +27,8 @@ INSTALLED_APPS = [
     'menu',
     'biscuit.core'
 ]
+
+INSTALLED_APPS += get_app_packages()
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
