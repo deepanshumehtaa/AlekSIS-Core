@@ -24,7 +24,9 @@
 
    <div class="collapse navbar-collapse" id="navbar-main">
     {% generate_menu %}
-    {% with menu=menus.exnomo %}{% include "core/menu.html" %}{% endwith %}
+    <ul class="nav navbar-nav navbar-right">
+     {% with menu=menus.main %}{% include "bootstrap-navbar.html" %}{% endwith %}
+    </ul>
    </div>
   </div>
  </nav>
