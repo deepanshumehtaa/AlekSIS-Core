@@ -1,0 +1,43 @@
+{% extends "bootstrap3/bootstrap3.html" %}
+{% load staticfiles i18n leaflet_tags %}
+
+{% block bootstrap3_title %}BiscuIT School Information System{% endblock %}
+
+{% block bootstrap3_extra_head %}
+ {% leaflet_js %}
+ {% leaflet_css %}
+ <link rel="stylesheet" href="{% static 'style.css' %}" />
+ <link rel="shortcut icon" href="#" />
+{% endblock %}
+
+{% block bootstrap3_content %}
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+   <div class="navbar-header page-scroll">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+     <span class="sr-only">Toggle navigation</span>
+     <span class="glyphicon glyphicon-th-list"></span>
+    </button>
+    <a class="navbar-brand" href="{% url "index" %}"><img
+    src="#" alt="Logo" id="logo" /></a>
+   </div>
+
+   <div class="collapse navbar-collapse" id="navbar-main">
+    <ul class="nav navbar-nav navbar-right">
+     {% if user.is_authenticated %}
+      <li>
+       <a href="{% url "index" %}">Startseite</a>
+      </li>
+     {% endif %}
+    </ul>
+   </div>
+  </div>
+ </nav>
+
+ <div class="container">
+  <h1>{% block page_title %}{% endblock %}</h1>
+  <div class="row">
+   {% block inner_content %}{% endblock %}
+  </div>
+ </div>
+{% endblock %}

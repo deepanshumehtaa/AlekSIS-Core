@@ -1,0 +1,24 @@
+{% extends "biscuit/base.html" %}
+{% load bootstrap3 i18n %}
+
+{% block page_title %}{% blocktrans %}BiscuIT School Information System (SIS) - Next Generation Platform{% endblocktrans %}{% endblock %}
+
+{% block inner_content %}
+ <div class="jumbotron">
+  <p>
+   {% blocktrans %}
+    BiscuIT ist ein Schulinformationssystem
+   {% endblocktrans %}
+  </p>
+  <p>
+   {% blocktrans %}
+    BiscuIT ist ein webbasiertes Schulinformationssystem (SIS), das verwendet werden kann, um organisatorische Themen von Bildungseinrichtungen zu verwalten und / oder zu veröffentlichen.
+   {% endblocktrans %}
+  </p>
+  <p>
+   {% blocktrans %}
+    Es wurde ursprünglich zusammen mit dem Städt. Leibniz-Gymnasium Remscheid als proprietäres Produkt entwickelt. Fünf Jahre nachdem die Schule die originale Codebasis gestohlen hat, beginnt BiscuIT-ng als vollständige Neuimplementierung als gut konzipierte, kostenlose und Open Source-Software.
+   {% endblocktrans %}
+  </p>
+ </div>
+{% endblock %}

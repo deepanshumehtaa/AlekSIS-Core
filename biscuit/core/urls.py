@@ -6,6 +6,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$', views.index, name='index'),
 ]
 
 # Automatically mount URLs from all installed BiscuIT apps
