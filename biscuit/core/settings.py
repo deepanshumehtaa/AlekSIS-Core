@@ -21,7 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'menu'
+    'menu',
+    'biscuit.core'
 ]
 
 MIDDLEWARE = [
@@ -104,4 +105,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'biscuit.core.models.Person'
+AUTH_USER_MODEL = 'core.Person'
