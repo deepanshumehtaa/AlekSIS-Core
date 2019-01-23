@@ -3,15 +3,16 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    path('', views.index, name='index'),
 ]
 
 # Automatically mount URLs from all installed BiscuIT apps
-for app_config in apps.app_configs:
-    if not app.startswith('biscuit.apps.'):
+for app_config in apps.app_configs.values():
+    if not app_config.name.startswith('biscuit.apps.'):
         continue
 
-    urlpatterns += path('%s/' % app_config.label, include('%s.urls' % app_config.name))
+    urlpatterns.append(path('%s/' % app_config.label, include('%s.urls' % app_config.name)))
