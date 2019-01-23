@@ -3,4 +3,5 @@ from django.db import models
 
 
 class Person(AbstractUser):
-    pass
+    is_student = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
