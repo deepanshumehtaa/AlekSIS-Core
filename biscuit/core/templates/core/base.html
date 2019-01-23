@@ -1,5 +1,6 @@
 {% extends "bootstrap3/bootstrap3.html" %}
-{% load staticfiles i18n %}
+{% load menu staticfiles i18n %}
+{% load menu %}
 
 {% block bootstrap3_title %}BiscuIT School Information System{% endblock %}
 
@@ -22,13 +23,8 @@
    </div>
 
    <div class="collapse navbar-collapse" id="navbar-main">
-    <ul class="nav navbar-nav navbar-right">
-     {% if user.is_authenticated %}
-      <li>
-       <a href="{% url "index" %}">Startseite</a>
-      </li>
-     {% endif %}
-    </ul>
+    {% generate_menu %}
+    {% with menu=menus.exnomo %}{% include "core/menu.html" %}{% endwith %}
    </div>
   </div>
  </nav>

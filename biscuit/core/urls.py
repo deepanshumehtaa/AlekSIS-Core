@@ -15,4 +15,4 @@ for app_config in apps.app_configs.values():
     if not app_config.name.startswith('biscuit.apps.'):
         continue
 
-    urlpatterns.append(path('%s/' % app_config.label, include('%s.urls' % app_config.name)))
+    urlpatterns.append(path('app/%s/' % app_config.label, include('%s.urls' % app_config.name)))

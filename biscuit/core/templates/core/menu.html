@@ -1,0 +1,6 @@
+<ul class="nav navbar-nav navbar-right">
+ {% for item in menu %}
+  {% if item.separator %}<li role="separator" class="divider"></li>{% endif %}
+  <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+ {% endfor %}
+</ul>
