@@ -3,4 +3,4 @@ from django.shortcuts import render
 
 def index(request):
     context = {}
-    return render(request, 'biscuit/index.html', context)
+    return render(request, 'core/index.html', context)
