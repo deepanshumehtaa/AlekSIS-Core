@@ -113,3 +113,6 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'core.Person'
 
 MENU_SELECT_PARENTS = True
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
