@@ -13,7 +13,6 @@ setup(
              ],
     namespace_packages=[
                         'biscuit',
-                        'biscuit.apps',
                        ],
     include_package_data=True,
     install_requires=[
