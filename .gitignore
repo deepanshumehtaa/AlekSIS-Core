@@ -49,6 +49,3 @@ DEADJOE
 
 # Database
 db.sqlite3
-
-# Compiled CSS files
-*.css
