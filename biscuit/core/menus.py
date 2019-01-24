@@ -9,3 +9,7 @@ Menu.add_item('main', MenuItem('Login',
 Menu.add_item('main', MenuItem('Logout',
                                reverse('logout'),
                                check=lambda request: request.user.is_authenticated))
+
+Menu.add_item('main', MenuItem('Admin',
+                               reverse('admin:index'),
+                               check=lambda request: request.user.is_authenticated and request.user.is_superuser))
