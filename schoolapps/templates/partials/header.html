@@ -127,19 +127,26 @@
                     <div class="divider"></div>
                 </li>
             {% endif %}
+
+            <li>
+                <a class="subheader grey lighten-3">Speiseplan</a>
+            </li>
+            <li>
+                <a href="{% url 'menu_show_current' %}" target="_blank">
+                    <i class="material-icons">picture_as_pdf</i> Aktueller Speiseplan
+                </a>
+            </li>
             {% if perms.menu.add_menu %}
-                <li>
-                    <a class="subheader grey lighten-3">Speiseplan</a>
-                </li>
                 <li>
                     <a href="{% url 'menu_index' %}">
                         <i class="material-icons">restaurant_menu</i> Speiseplan hochladen
                     </a>
                 </li>
-                <li>
-                    <div class="divider"></div>
-                </li>
             {% endif %}
+            <li>
+                <div class="divider"></div>
+            </li>
+
             {% if user.is_superuser %}
                 <li>
                     <a class="subheader grey lighten-3">Administration</a>
