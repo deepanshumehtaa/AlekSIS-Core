@@ -32,6 +32,8 @@
  </nav>
 
  <div class="container">
+  {% bootstrap_messages %}
+
   <h1>{% block page_title %}{% endblock %}</h1>
   <div class="row">
    {% block content %}{% endblock %}
