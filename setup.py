@@ -13,17 +13,14 @@ setup(
              ],
     namespace_packages=[
                         'biscuit',
+                        'biscuit.apps',
                        ],
     include_package_data=True,
     install_requires=[
                       'Django >= 2.0',
                       'django-bootstrap3',
                       'django-simple-menu',
-                      'django-tables2',
                      ],
-    extras_requires={
-                     'ldap': ['django-ldapdb >= 1.2.1'],
-                    },
     classifiers=[
                  "Development Status :: 3 - Alpha",
                  "Environment :: Web Environment",
