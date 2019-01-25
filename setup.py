@@ -18,6 +18,7 @@ setup(
     install_requires=[
                       'Django >= 2.0',
                       'django-bootstrap3',
+                      'django-easy-audit',
                       'django-simple-menu',
                      ],
     classifiers=[
