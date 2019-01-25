@@ -5,7 +5,7 @@ from local_settings import load_and_check_settings, LocalSetting, SecretSetting
 from .util import get_app_packages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = LocalSetting(default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = SecretSetting()
