@@ -8,7 +8,7 @@ from .util import get_app_packages
 BASE_DIR = LocalSetting(default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SecretSetting(default='wvo@&^9@yi4(eahof$i2v3j#$=%lkw=%8=h2_eo6n5w!y9a*%u')
+SECRET_KEY = SecretSetting()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = LocalSetting(default=False)
