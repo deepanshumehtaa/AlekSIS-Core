@@ -19,6 +19,7 @@ setup(
                       'Django >= 2.0',
                       'django-bootstrap3',
                       'django-easy-audit',
+                      'django-local-settings',
                       'django-simple-menu',
                      ],
     classifiers=[
