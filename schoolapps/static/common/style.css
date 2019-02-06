@@ -146,8 +146,8 @@ span.badge.new {
 }
 
 .lesson-card .card-content div {
-    padding: 5px;
-    height: 100%;
+    padding: 2px;
+    flex: auto;
     width: 100%;
     display: flex;
     align-items: center;
