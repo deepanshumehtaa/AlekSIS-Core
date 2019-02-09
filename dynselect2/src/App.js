@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from "react-dom";
 // import "materialize-css/dist/css/materialize.css";
 
 import M from "materialize-css/dist/js/materialize";
@@ -169,11 +168,15 @@ const ROOMS_WITH_PRESENTATION_DEVICE = [
 ];
 
 const OTHER_LOCATIONS = [
-    "Notebookwagen 1",
-    "NotebookqAFWN 1",
+    "Notebookwagen 1. Stock/R 2.06",
+    "Notebookwagen 2. Stock/R 2.10",
+    "Notebookwagen 3. Stock/Physik",
+    "Internetcafe",
+    "Infopoint/Sekretariatsvorraum",
+    "Lehrerzimmer (Vorraum)",
+    "Lehrerzimmer (Hauptraum)"
 ];
 
-const LOCATIONS = ROOMS_WITH_PRESENTATION_DEVICE.concat(OTHER_LOCATIONS);
 
 function getCategoryOfOption(option) {
     for (const category of BASIC_OPTIONS) {
@@ -207,7 +210,8 @@ class Select extends Component {
         select
         onChange = {this.props.onChange
     }
-        defaultValue = {"no"} >
+        defaultValue = {"no"}
+        required = {true} >
             < option
         value = {"no"}
         disabled = {true} > Nichts
@@ -278,20 +282,6 @@ Input.defaultProps = {
 };
 
 class App extends Component {
-    _onCategoryChanges = (e) =
-    const
-    opt = e.target.value;
-> {
-    const
-    category = getCategoryOfOption(opt);
-    const
-    option = getOption(opt);
-    // Get matching helper text
-    let
-    helpText = option.helpText || this.state.helpText;
-    "deviceIssues"
-    helpText = "Wähle bitte das Gerät mit dem Problem aus! Bitte vergiss nicht, uns das Problem unten genauer zu beschreiben!"
-
     constructor() {
         super();
         this.state = {
@@ -304,14 +294,27 @@ class App extends Component {
         }
     }
 
-===
-
     componentDidMount() {
         // Init materialize selects
         const elems = document.querySelectorAll('select');
         M.FormSelect.init(elems, {});
     }
 
+    _onCategoryChanges = (e) =
+> {
+    const
+    opt = e.target.value;
+    const
+    category = getCategoryOfOption(opt);
+    const
+    option = getOption(opt);
+
+    // Get matching helper text
+    let
+    helpText = option.helpText || this.state.helpText;
+    "deviceIssues"
+===
+    helpText = "Wähle bitte das Gerät mit dem Problem aus! Bitte vergiss nicht, uns das Problem unten genauer zu beschreiben!"
 ) {
 
     if(category
@@ -358,6 +361,9 @@ _onSetC = (e) =
 
 render()
 {
+    let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
+    LOCATIONS.sort();
+
     console.log(this.state);
     const that = this;
     const sC = this.state.selectedCategory;
@@ -574,6 +580,7 @@ render()
     id = {"valc"}
     onChange = {this._onSetC
 }
+    required = {true}
     />
     < label
     htmlFor = "valc" > Um
@@ -634,6 +641,11 @@ render()
 }
 }
 
+App.propTypes = {
+    rooms: PropTypes.array.isRequired
+};
+
+export default App;
 ReactDOM.render(
     React.createElement(App, window.props),    // gets the props that are passed in the template
     window.react_mount                                // a reference to the #react div that we render to

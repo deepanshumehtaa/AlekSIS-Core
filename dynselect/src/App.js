@@ -168,11 +168,15 @@ const ROOMS_WITH_PRESENTATION_DEVICE = [
 ];
 
 const OTHER_LOCATIONS = [
-    "Notebookwagen 1",
-    "NotebookqAFWN 1",
+    "Notebookwagen 1. Stock/R 2.06",
+    "Notebookwagen 2. Stock/R 2.10",
+    "Notebookwagen 3. Stock/Physik",
+    "Internetcafe",
+    "Infopoint/Sekretariatsvorraum",
+    "Lehrerzimmer (Vorraum)",
+    "Lehrerzimmer (Hauptraum)"
 ];
 
-const LOCATIONS = ROOMS_WITH_PRESENTATION_DEVICE.concat(OTHER_LOCATIONS);
 
 function getCategoryOfOption(option) {
     for (const category of BASIC_OPTIONS) {
@@ -306,6 +310,9 @@ class App extends Component {
     };
 
     render() {
+    let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
+    LOCATIONS.sort();
+
         console.log(this.state);
         const that = this;
         const sC = this.state.selectedCategory;
@@ -418,5 +425,9 @@ class App extends Component {
         );
     }
 }
+
+App.propTypes = {
+    rooms: PropTypes.array.isRequired
+};
 
 export default App;

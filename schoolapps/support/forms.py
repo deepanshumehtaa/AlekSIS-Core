@@ -28,7 +28,7 @@ class FeedbackForm(forms.Form):
     overall_rating = forms.ChoiceField(label='Bitte bewerte SchoolApps insgesamt auf einer Skala von 1 bis 10',
                                        choices=ratings, required=True)
 
-    apps = forms.CharField(label="Bitte gebe uns Feedback zu den einzelnen Funktion von SchoolApps", required=False,
+    apps = forms.CharField(label="Bitte gebe uns Feedback zu den einzelnen Funktionen von SchoolApps", required=False,
                            widget=forms.Textarea)
     more = forms.CharField(label="Möchtest du uns sonst noch etwas mitteilen?", required=False, widget=forms.Textarea)
     ideas = forms.CharField(label='Hast du Ideen, was wir noch in SchoolApps einbauen könnten/sollten?',

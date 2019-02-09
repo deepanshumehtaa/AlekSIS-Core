@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from mailer import send_mail_with_template
 from support.models import kanboard_settings
+from untisconnect.api import get_all_rooms
 from .forms import REBUSForm
 from .forms import FeedbackForm
 from kanboard import Kanboard
@@ -58,7 +59,9 @@ def rebus(request):
     else:
         form = REBUSForm()
 
-    return render(request, 'support/rebus.html', {'form': form})
+    rooms = [room.name for room in get_all_rooms()]
+
+    return render(request, 'support/rebus.html', {'form': form, "props": {"rooms": rooms}})
 
 
 def feedback(request):
