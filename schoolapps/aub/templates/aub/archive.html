@@ -11,16 +11,13 @@
     </form>
 
     <ul class="collection">
-        {#            {% for aub in aubs %}#}
         {% for aub in filter.qs %}
-            {#            {% for aub in aubs %}#}
             <li class="collection-item">
                 <div class="row">
                     <div class="col s12 m4">
                         <p class="title">
                                <span class="item-text">
                                 <i class="material-icons">access_time</i>
-{#                                {{ aub.from_dt }} bis {{ aub.to_dt }}#}
                                 {{ aub.from_date }} bis {{ aub.to_date }}
                                 </span>
                         </p>

@@ -206,8 +206,8 @@ def check2(request):
     return render(request, 'aub/check.html', {'filter': aubs})
 
 @login_required
-@permission_required('aub.view_archiv')
-def archiv(request):
+@permission_required('aub.view_archive')
+def archive(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
             id = request.POST['aub-id']
@@ -241,4 +241,4 @@ def archiv(request):
     aub_list = Aub.objects.filter(Q(status__gt=2))
     aubs = AUBFilter(request.GET, queryset=aub_list)
 
-    return render(request, 'aub/archiv.html', {'filter': aubs})
+    return render(request, 'aub/archive.html', {'filter': aubs})
