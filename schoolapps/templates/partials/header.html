@@ -94,7 +94,11 @@
                 <li><a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge genehmigen 2</a>
                 </li>
             {% endif %}
-            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+            {% if perms.aub.archiv %}
+                <li><a href="{% url 'aub_archiv' %}"><i class="material-icons">archive</i> Archiv</a>
+                </li>
+            {% endif %}
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub or perms.aub.archiv %}
                 <li>
                     <div class="divider"></div>
                 </li>

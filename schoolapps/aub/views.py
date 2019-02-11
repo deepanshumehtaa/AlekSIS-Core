@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.db.models import Q
 from django.utils import timezone
 from django.utils import formats
 from datetime import date
@@ -161,7 +162,7 @@ def check1(request):
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=id).update(status=NOT_ALLOWED_STATUS)
 
-    aub_list = Aub.objects.all().order_by('status')
+    aub_list = Aub.objects.filter(status=1).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 
@@ -199,7 +200,45 @@ def check2(request):
                 app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
 
-    aub_list = Aub.objects.all().order_by('status')
+    aub_list = Aub.objects.filter(status=2).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
 
     return render(request, 'aub/check.html', {'filter': aubs})
+
+@login_required
+@permission_required('aub.view_archiv')
+def archiv(request):
+    if request.method == 'POST':
+        if 'aub-id' in request.POST:
+            id = request.POST['aub-id']
+            aub = Aub.objects.get(id=id)
+            if 'allow' in request.POST:
+                # Update status
+                Aub.objects.filter(id=id).update(status=ALLOWED_STATUS)
+
+                # Notify user
+                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                                  "Schulleitung genehmigt.".format(
+                                            formats.date_format(aub.from_date),
+                                            formats.date_format(aub.to_date)),
+                                      app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
+            elif 'deny' in request.POST:
+                # Update status
+                Aub.objects.filter(id=id).update(status=NOT_ALLOWED_STATUS)
+
+                # Notify user
+                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                                  "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
+                                                  "bitte die Schulleitung.".format(
+                                          formats.date_format(aub.from_date),
+                                          formats.date_format(aub.to_date)),
+                app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
+
+    aub_list = Aub.objects.filter(Q(status__gt=2))
+    aubs = AUBFilter(request.GET, queryset=aub_list)
+
+    return render(request, 'aub/archiv.html', {'filter': aubs})
