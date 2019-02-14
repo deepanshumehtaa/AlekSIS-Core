@@ -146,7 +146,7 @@ span.badge.new {
 }
 
 .lesson-card .card-content div {
-    padding: 2px;
+    padding: 3px;
     flex: auto;
     width: 100%;
     display: flex;
