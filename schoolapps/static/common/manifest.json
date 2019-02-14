@@ -1,9 +1,9 @@
 {
   "dir": "ltr",
   "lang": "de",
-  "name": "SchoolApps – Katharineum zu Lübeck",
+  "name": "SchoolApps",
   "scope": "",
-  "display": "browser",
+  "display": "standalone",
   "start_url": "https://info.katharineum.de/",
   "short_name": "SchoolApps",
   "theme_color": "#da1f3d",
