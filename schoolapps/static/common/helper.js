@@ -54,6 +54,7 @@ function setTime(lesson_field) {
 
 $(document).ready(function () {
     $("dmc-datetime input").addClass("datepicker");
+    $("[data-form-control='date']").addClass("datepicker");
     $("[data-form-control='time']").addClass("timepicker");
 
     // Initialize sidenav [MAT]
