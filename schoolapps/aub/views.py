@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
@@ -20,54 +21,50 @@ SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung 2', styl
 ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')[0]
 NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')[0]
 
+
 @login_required
 @permission_required('aub.apply_for_aub')
 def index(request):
+    aub_user = request.user
     if 'aub-id' in request.POST:
-        id = request.POST['aub-id']
-        # # Edit button pressed?
-        # if 'edit' in request.POST:
-        #     print('...Edit wurde gewählt')
-        #     # aub = Aub.objects.filter(id=id)
-        #     # return render(request, 'aub/apply_for.html', {'filter': instance})
-        #     edit(request, id=id)
-
-        # Cancel button pressed?
+        aub_id = request.POST['aub-id']
         if 'cancel' in request.POST:
-            aub = Aub.objects.get(id=id)
+            aub = Aub.objects.get(id=aub_id)
             aub.delete()
-            a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gelöscht",
+            a = Activity(user=aub_user, title="Antrag auf Unterrichtsbefreiung gelöscht",
                          description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
                                      "für den Zeitraum von {} bis {} gelöscht.".format(
                                          aub.from_date, aub.to_date), app=AubConfig.verbose_name)
             a.save()
             print('Eintrag gelöscht')
-#    order_crit = '-created_at'
-    order_crit = 'from_date'
-    aubs = Aub.objects.filter(created_by=request.user).order_by(order_crit)[:100]
+    order_crit = '-from_date'
+    aubs = Aub.objects.filter(created_by=aub_user).order_by(order_crit)[:100]
 
     context = {
-        'aubs': aubs
+        'aubs': aubs,
+        'user': aub_user,
     }
     return render(request, 'aub/index.html', context)
+
 
 @login_required
 @permission_required('aub.apply_for_aub')
 @check_own_aub(login_url='/index.html')
-def details(request, id):
-    aub = get_object_or_404(Aub, id=id)
+def details(request, aub_id):
+    aub = get_object_or_404(Aub, id=aub_id)
     context = {
         'aub': aub
     }
     return render(request, 'aub/details.html', context)
+
 
 @login_required
 @permission_required('aub.apply_for_aub')
 def apply_for(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
-            id = request.POST['aub-id']
-            aub = Aub.objects.get(id=id)
+            aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
             form = ApplyForAUBForm(instance=aub)
             print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
         else:
@@ -75,14 +72,14 @@ def apply_for(request):
     else:
         form = ApplyForAUBForm()
     if form.is_valid():
-        print('Edit-Form valid #############')
         from_date = form.cleaned_data['from_date']
         from_time = form.cleaned_data['from_time']
         to_date = form.cleaned_data['to_date']
         to_time = form.cleaned_data['to_time']
         description = form.cleaned_data['description']
 
-        aub = Aub(from_date=from_date, from_time=from_time, to_date=to_date, to_time=to_time, description=description, created_by=request.user)
+        aub = Aub(from_date=from_date, from_time=from_time, to_date=to_date,
+                  to_time=to_time, description=description, created_by=request.user)
         aub.save()
 
         a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
@@ -93,37 +90,11 @@ def apply_for(request):
         return redirect('aub_applied_for')
     return render(request, 'aub/apply_for.html', {'form': form})
 
-#     # Form is filled
-#     if request.method == 'POST':
-#         # get form via edit-button
-#         if 'aub-id' in request.POST:
-#             id = request.POST['aub-id']
-# #            instance = get_object_or_404(Aub, id=id)
-#             instance = Aub.objects.get(id=id)
-#             print('AUB:', id, '|', instance.from_date, '|', instance.to_date, '|', instance.description)
-#             #instance.description = 'Mal was ganz anderes'
-#             form = ApplyForAUBForm(request.POST, instance=instance)
-#             #print('Form ist valid? IF:', instance.created_by, instance.to_date, instance.id)
-#             return render(request, 'aub/apply_for.html', {'form': form})
-#         # get a new item
-#         else:
-#             form = ApplyForAUBForm(request.POST or None)
-#             print('Form ist valid? ELSE:', form.errors)
-#             if form.is_valid():
-#                 print('Form ist valid!', form.errors)
-#                 aub = form.save()
-#                 print('aub-id:', aub.id)
-#                 aub.created_by = request.user
-#                 aub.save()
-#                 return redirect('aub_applied_for')
-#     form = ApplyForAUBForm()
-# #    return render(request, 'aub/apply_for.html', {'form': form, 'from_dt': instance.from_dt})
-#     return render(request, 'aub/apply_for.html', {'form': form})
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def edit(request, id):
-    aub = get_object_or_404(Aub, id=id)
+def edit(request, aub_id):
+    aub = get_object_or_404(Aub, id=aub_id)
     form = ApplyForAUBForm(instance=aub)
     template = 'aub/edit.html'
     if request.method == 'POST':
@@ -141,6 +112,7 @@ def edit(request, id):
     }
     return render(request, template, context)
 
+
 @login_required
 @permission_required('aub.apply_for_aub')
 def applied_for(request):
@@ -156,11 +128,11 @@ def applied_for(request):
 def check1(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
-            id = request.POST['aub-id']
+            aub_id = request.POST['aub-id']
             if 'allow' in request.POST:
-                Aub.objects.filter(id=id).update(status=SEMI_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
             elif 'deny' in request.POST:
-                Aub.objects.filter(id=id).update(status=NOT_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
     aub_list = Aub.objects.filter(status=1).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
@@ -172,73 +144,50 @@ def check1(request):
 def check2(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
-            id = request.POST['aub-id']
-            aub = Aub.objects.get(id=id)
+            aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
                 # Update status
-                Aub.objects.filter(id=id).update(status=ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=ALLOWED_STATUS)
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
                                       description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
-                                                  "Schulleitung genehmigt.".format(
-                                            formats.date_format(aub.from_date),
-                                            formats.date_format(aub.to_date)),
+                                                  "Schulleitung genehmigt."
+                                                  .format(formats.date_format(aub.from_date),
+                                                          formats.date_format(aub.to_date)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
-                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
+                                      )
             elif 'deny' in request.POST:
                 # Update status
-                Aub.objects.filter(id=id).update(status=NOT_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
                                       description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
                                                   "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
-                                                  "bitte die Schulleitung.".format(
-                                          formats.date_format(aub.from_date),
-                                          formats.date_format(aub.to_date)),
-                app=AubConfig.verbose_name, user=aub.created_by,
-                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
+                                                  "bitte die Schulleitung."
+                                                  .format(formats.date_format(aub.from_date),
+                                                          formats.date_format(aub.to_date)),
+                                      app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
+                                      )
 
     aub_list = Aub.objects.filter(status=2).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
 
     return render(request, 'aub/check.html', {'filter': aubs})
 
+
 @login_required
 @permission_required('aub.view_archive')
 def archive(request):
-    if request.method == 'POST':
-        if 'aub-id' in request.POST:
-            id = request.POST['aub-id']
-            aub = Aub.objects.get(id=id)
-            if 'allow' in request.POST:
-                # Update status
-                Aub.objects.filter(id=id).update(status=ALLOWED_STATUS)
-
-                # Notify user
-                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
-                                                  "Schulleitung genehmigt.".format(
-                                            formats.date_format(aub.from_date),
-                                            formats.date_format(aub.to_date)),
-                                      app=AubConfig.verbose_name, user=aub.created_by,
-                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
-            elif 'deny' in request.POST:
-                # Update status
-                Aub.objects.filter(id=id).update(status=NOT_ALLOWED_STATUS)
-
-                # Notify user
-                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
-                                                  "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
-                                                  "bitte die Schulleitung.".format(
-                                          formats.date_format(aub.from_date),
-                                          formats.date_format(aub.to_date)),
-                app=AubConfig.verbose_name, user=aub.created_by,
-                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id])))
-
-    aub_list = Aub.objects.filter(Q(status__gt=2))
-    aubs = AUBFilter(request.GET, queryset=aub_list)
-
-    return render(request, 'aub/archive.html', {'filter': aubs})
+    order_crit = '-from_date'
+    if 'created_by' in request.GET:
+        item = int(request.GET['created_by'])
+        aub_list = Aub.objects.filter(Q(status__gt=2) & Q(created_by=item)).order_by(order_crit)
+    else:
+        aub_list = Aub.objects.filter(Q(status__gt=2)).order_by(order_crit)
+    aub_filter = AUBFilter(request.GET, queryset=aub_list)
+    return render(request, 'aub/archive.html', {'filter': aub_filter})
