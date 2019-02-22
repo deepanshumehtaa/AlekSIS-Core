@@ -23,8 +23,6 @@ def get_default_status():
 
 class Aub(models.Model):
     # Time
-#    from_dt = models.DateTimeField(default=timezone.now)
-#    to_dt = models.DateTimeField(default=timezone.now)
     from_date = models.DateField(default=date.today)
     from_time = models.TimeField(default=timezone.now)
     to_date = models.DateField(default=date.today)
