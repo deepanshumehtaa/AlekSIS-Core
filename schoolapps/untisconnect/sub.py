@@ -207,6 +207,31 @@ def generate_room_row(sub, full=False):
     return room
 
 
+def format_classes(classes):
+    """
+    Formats a list of Class objects to a combined string
+
+    example return: "9abcd" for classes 9a, 9b, 9c and 9d
+
+    :param classes: Class list
+    :return: combined string
+    """
+    classes_as_dict = {}
+
+    for _class in classes:
+        step = _class.name[:-1]
+        part = _class.name[-1:]
+        if step not in classes_as_dict.keys():
+            classes_as_dict[step] = [part]
+        else:
+            classes_as_dict[step].append(part)
+
+    out = ""
+    for key, value in classes_as_dict.items():
+        out += key + "".join(value)
+    return out
+
+
 def generate_sub_table(subs):
     sub_rows = []
     for sub in subs:
@@ -225,8 +250,9 @@ def generate_sub_table(subs):
         else:
             sub_row.lesson = "{}.".format(sub.lesson)
 
-        for class_ in sub.classes:
-            sub_row.classes += class_.name
+        # for class_ in sub.classes:
+        #     sub_row.classes += class_.name
+        sub_row.classes = format_classes(sub.classes)
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
