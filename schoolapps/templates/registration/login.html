@@ -2,16 +2,16 @@
 
 <main>
     {% if form.errors %}
-        <p class="flow-text red-text">Der Benutzername und/oder das Passwort ist falsch. Bitte probieren Sie es
+        <p class="flow-text red-text">Der Benutzername und/oder das Passwort ist falsch. Bitte probiere es
             nochmal.</p>
     {% endif %}
 
     {% if next %}
         {% if user.is_authenticated %}
-            <p class="flow-text red-text">Sie haben keine Erlaubnis, diese Seite zu sehen.
-                Bitte probieren Sie es mit einem anderen Benutzer.</p>
+            <p class="flow-text red-text">Du darfst diese Seite leider nicht sehen.
+                Bitte probiere es mit einem anderen Benutzer.</p>
         {% else %}
-            <p class="flow-text red-text">Bitte melden Sie sich an, um diese Seite zu sehen.</p>
+            <p class="flow-text red-text">Bitte melde dich an, um diese Seite zu sehen.</p>
         {% endif %}
     {% endif %}
 
