@@ -1,19 +1,33 @@
 {% include 'partials/header.html' %}
 
 <main>
+
     {% if form.errors %}
-        <p class="flow-text red-text">Der Benutzername und/oder das Passwort ist falsch. Bitte probiere es
-            nochmal.</p>
+        <div class="alert error">
+            <p>
+                <i class="material-icons left">warning</i>
+                Der Benutzername und/oder das Passwort ist falsch. Bitte probiere es
+                nochmal.</p>
+        </div>
     {% endif %}
 
     {% if next %}
         {% if user.is_authenticated %}
-            <p class="flow-text red-text">Du darfst diese Seite leider nicht sehen.
-                Bitte probiere es mit einem anderen Benutzer.</p>
+            <div class="alert error">
+                <p>
+                    <i class="material-icons left">warning</i>
+                    Du darfst diese Seite leider nicht sehen.
+                    Bitte probiere es mit einem anderen Benutzer.</p>
+            </div>
         {% else %}
-            <p class="flow-text red-text">Bitte melde dich an, um diese Seite zu sehen.</p>
+            <div class="alert error">
+                <p>
+                    <i class="material-icons left">warning</i>
+                    Bitte melde dich an, um diese Seite zu sehen. </p>
+            </div>
         {% endif %}
     {% endif %}
+    <br>
 
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
