@@ -8,7 +8,8 @@
     <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}">
+    <link rel="manifest" href="{% static "common/manifest.json" %}">
 
     <!--------->
     <!-- CSS -->
@@ -23,6 +24,9 @@
     <!---------------->
     <!-- JavaScript -->
     <!---------------->
+    <script src="{% static 'common/manup.min.js' %}"></script>
+    {#    <script src="{% static "common/pwabuilder-sw.js"%}"></script>#}
+    <script src="{% static "common/pwabuilder-sw-register.js" %}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!--<script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
