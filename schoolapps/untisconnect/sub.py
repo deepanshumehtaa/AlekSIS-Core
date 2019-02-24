@@ -76,10 +76,15 @@ class Substitution(object):
         # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
+
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
+                self.teacher_new = None
+
+            if self.teacher_old is None and self.teacher_new is not None:
+                self.teacher_old = self.teacher_new
                 self.teacher_new = None
 
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
