@@ -159,6 +159,8 @@ class SubRow(object):
 
 
 def generate_teacher_row(sub, full=False):
+    print(sub.id)
+    teacher = ""
     if sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
@@ -168,7 +170,7 @@ def generate_teacher_row(sub, full=False):
             sub.teacher_new.shortcode if not full else sub.teacher_new.name)
     elif sub.teacher_new and not sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode if not full else sub.teacher_new.name)
-    else:
+    elif sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
     return teacher
