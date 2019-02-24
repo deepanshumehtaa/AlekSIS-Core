@@ -257,6 +257,43 @@ def generate_sub_table(subs):
     return sub_rows
 
 
+class HeaderInformation:
+    def __init__(self):
+        self.missing_teachers = []
+        self.missing_classes = []
+        self.affected_teachers = []
+        self.affected_classes = []
+        self.rows = []
+
+    def is_box_needed(self):
+        return len(self.missing_teachers) > 0 or len(self.missing_classes) > 0 or len(
+            self.affected_teachers) > 0 or len(self.affected_classes) > 0
+
+
+def get_header_information(subs):
+    info = HeaderInformation()
+    for sub in subs:
+        if sub.teacher_old and sub.teacher_old not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_old)
+        if sub.teacher_new and sub.teacher_new not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_new)
+        print(sub.teacher_old)
+
+        for _class in sub.classes:
+            if _class not in info.affected_classes:
+                info.affected_classes.append(_class)
+
+    if info.affected_teachers:
+        joined = ", ".join(sorted([x.shortcode for x in info.affected_teachers]))
+        print(joined)
+        info.rows.append(("Betroffene Lehrkräfte", joined))
+
+    if info.affected_classes:
+        joined = ", ".join(sorted([x.name for x in info.affected_classes]))
+        info.rows.append(("Betroffene Klassen", joined))
+    return info
+
+
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
