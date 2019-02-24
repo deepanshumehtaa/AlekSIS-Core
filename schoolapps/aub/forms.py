@@ -10,7 +10,7 @@ class ApplyForAUBForm(forms.ModelForm):
                ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
     initial_from_time = '8:00'
     initial_to_time = '15:35'
-    from_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'], initial=initial_from_time)
+    from_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
     from_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs={'onchange': 'setTime(this)'}))
     from_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial=initial_from_time, )
     to_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
