@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from schoolapps.settings import DEBUG
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper
+from untisconnect.api import run_default_filter, row_by_row_helper, format_classes
 from untisconnect.api_helper import run_using, untis_split_first
 from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
 
@@ -232,8 +232,9 @@ def generate_sub_table(subs):
         else:
             sub_row.lesson = "{}.".format(sub.lesson)
 
-        for class_ in sub.classes:
-            sub_row.classes += class_.name
+        # for class_ in sub.classes:
+        #     sub_row.classes += class_.name
+        sub_row.classes = format_classes(sub.classes)
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
@@ -261,6 +262,43 @@ def generate_sub_table(subs):
 
         sub_rows.append(sub_row)
     return sub_rows
+
+
+class HeaderInformation:
+    def __init__(self):
+        self.missing_teachers = []
+        self.missing_classes = []
+        self.affected_teachers = []
+        self.affected_classes = []
+        self.rows = []
+
+    def is_box_needed(self):
+        return len(self.missing_teachers) > 0 or len(self.missing_classes) > 0 or len(
+            self.affected_teachers) > 0 or len(self.affected_classes) > 0
+
+
+def get_header_information(subs):
+    info = HeaderInformation()
+    for sub in subs:
+        if sub.teacher_old and sub.teacher_old not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_old)
+        if sub.teacher_new and sub.teacher_new not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_new)
+        print(sub.teacher_old)
+
+        for _class in sub.classes:
+            if _class not in info.affected_classes:
+                info.affected_classes.append(_class)
+
+    if info.affected_teachers:
+        joined = ", ".join(sorted([x.shortcode for x in info.affected_teachers]))
+        print(joined)
+        info.rows.append(("Betroffene Lehrkräfte", joined))
+
+    if info.affected_classes:
+        joined = ", ".join(sorted([x.name for x in info.affected_classes]))
+        info.rows.append(("Betroffene Klassen", joined))
+    return info
 
 
 def get_substitutions_by_date(date):
