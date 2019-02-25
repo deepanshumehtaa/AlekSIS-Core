@@ -137,6 +137,31 @@ def get_class_by_name(name):
     return one_by_id(_class, Class)
 
 
+def format_classes(classes):
+    """
+    Formats a list of Class objects to a combined string
+
+    example return: "9abcd" for classes 9a, 9b, 9c and 9d
+
+    :param classes: Class list
+    :return: combined string
+    """
+    classes_as_dict = {}
+
+    for _class in classes:
+        step = _class.name[:-1]
+        part = _class.name[-1:]
+        if step not in classes_as_dict.keys():
+            classes_as_dict[step] = [part]
+        else:
+            classes_as_dict[step].append(part)
+
+    out = ""
+    for key, value in classes_as_dict.items():
+        out += key + "".join(value)
+    return out
+
+
 ########
 # ROOM #
 ########
