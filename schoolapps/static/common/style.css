@@ -173,6 +173,10 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
+.lesson-card a {
+    color: black;
+}
+
 /*.timetable-time {*/
 /*margin-right: 20px;*/
 /*}*/
