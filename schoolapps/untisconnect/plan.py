@@ -41,7 +41,8 @@ class LessonElementContainer(object):
         self.room = room
         self.substitution = substitution
         self.is_old = False
-        self.classes_formatted = format_classes(self.element.classes)
+        if self.element is not None:
+            self.classes_formatted = format_classes(self.element.classes)
 
 
 def parse_lesson_times():
