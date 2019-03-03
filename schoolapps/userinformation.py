@@ -15,7 +15,7 @@ class UserInformation:
     def user_groups(user):
         raw_groups = user.groups.all()
         groups = [group.name for group in raw_groups]
-        print(groups)
+        # print(groups)
         return groups
 
     @staticmethod

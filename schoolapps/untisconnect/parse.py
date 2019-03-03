@@ -189,8 +189,8 @@ def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=
     # print(t)
     room = None
     if t is not None and len(t.rooms) > i:
-        print(t.rooms)
-        print(len(t.rooms))
+        # print(t.rooms)
+        # print(len(t.rooms))
         room = t.rooms[i]
 
     if el is not None:
