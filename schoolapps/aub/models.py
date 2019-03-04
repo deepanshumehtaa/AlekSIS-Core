@@ -47,5 +47,6 @@ class Aub(models.Model):
             ('allow1_aub', 'First permission'),
             ('allow2_aub', 'Second permission'),
             ('check1_aub', 'Check a AUB'),
-            ('check2_aub', 'Check a AUB')
+            ('check2_aub', 'Check a AUB'),
+            ('view_archive', 'View AUB archive'),
         )
