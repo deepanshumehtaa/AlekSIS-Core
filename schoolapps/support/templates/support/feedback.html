@@ -11,23 +11,6 @@
 <form method="post">
     {% csrf_token %}
 
-
-        <!--<ul>
-            <div>Design <span class="red-text">*</span>
-                <div class="rating float_right">
-                {% for choice in form.design_rating.field.choices %}
-                    <li>
-                        <input type="radio" name="design_rating" value="{{choice.0}}" required
-                            {% ifequal form.design_rating.data choice.0 %}
-                                checked="checked"
-                            {% endifequal %}/>
-                        <lable for="">{{choice.1}}</lable>
-                    </li>
-                {%  endfor %}
-                </div>
-            </div>
-        </ul>-->
-
         <ul class="collection">
           <li class="collection-item">
             <div>{{ form.design_rating.label }} <span class="red-text">*</span>

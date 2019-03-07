@@ -48,10 +48,3 @@ class FeedbackForm(forms.Form):
         label='Hast du Ideen, was wir noch in SchoolApps einbauen könnten/sollten?',
         required=False,
         widget=forms.Textarea)
-
-    #layout = Layout(#Row('design_rating', 'performance_rating', 'usability_rating'),
-                    #Row('overall_rating'),
-                    #Row("apps"),
-                    #Row('ideas'),
-                    #Row('more'),
-    #                )
