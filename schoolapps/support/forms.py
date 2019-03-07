@@ -16,19 +16,21 @@ class FeedbackForm(forms.Form):
 
     design_rating = forms.ChoiceField(label="Design",
                                       choices=ratings,
-                                      widget=forms.RadioSelect)
+                                      widget=forms.RadioSelect(attrs={"checked": "checked"}),
+                                      required=True,
+)
 
     performance_rating = forms.ChoiceField(label='Geschwindigkeit',
                                            choices=ratings,
-                                           widget=forms.RadioSelect(attrs={}),
-                                           required=False)
+                                           widget=forms.RadioSelect(attrs={"checked": "checked"}),
+                                           required=True)
 
     usability_rating = forms.ChoiceField(label='Benutzerfreundlichkeit',
                                          choices=ratings,
                                          widget=forms.RadioSelect(attrs={"checked": "checked"}),
                                          required=True)
 
-    overall_rating = forms.ChoiceField(label='Bitte bewerte SchoolApps insgesamt auf einer Skala von 1 bis 10',
+    overall_rating = forms.ChoiceField(label='SchoolApps allgemein',
                                        choices=ratings,
                                        widget=forms.RadioSelect(attrs={"checked": "checked"}),
                                        required=True)
