@@ -23,6 +23,7 @@
     <orderEntry type="module" module-name="bwinf-36-2" />
     <orderEntry type="library" name="react.production" level="application" />
     <orderEntry type="library" name="react-dom.production" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
