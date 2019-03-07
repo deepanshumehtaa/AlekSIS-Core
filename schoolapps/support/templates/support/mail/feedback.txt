@@ -3,9 +3,9 @@ Hallo,
 es gibt neues Feedback:
 
 
-Bewertungen: {{ design }}/10 (Design), {{ performance }}/10 (Geschwindigkeit), {{ usability }}/10 (Benutzerfreundlichkeit)
+Bewertungen: {{ design }}/5 (Design), {{ performance }}/5 (Geschwindigkeit), {{ usability }}/5 (Benutzerfreundlichkeit)
 
-Bewertung (insgesamt): {{ overall }}/10
+Bewertung (insgesamt): {{ overall }}/5
 
 Feedback zu einzelnen Apps: {{ apps }}
 
