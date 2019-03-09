@@ -1,0 +1,15 @@
+Hallo,
+
+es gibt eine neue REBUS-Meldung:
+
+
+{{ a }} → {{ b }} → {{ c }}
+
+{{ short_desc }}
+
+{{ long_desc }}
+
+Übermittelt von {{ user }}
+
+
+Dein SchoolApps-Team

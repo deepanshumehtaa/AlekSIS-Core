@@ -50,8 +50,8 @@ def index(request):
 @login_required
 @permission_required('aub.apply_for_aub')
 @check_own_aub(login_url='/index.html')
-def details(request, aub_id):
-    aub = get_object_or_404(Aub, id=aub_id)
+def details(request, id):
+    aub = get_object_or_404(Aub, id=id)
     context = {
         'aub': aub
     }
