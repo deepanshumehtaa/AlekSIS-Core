@@ -1,10 +1,10 @@
 from django.utils import timezone
 
+from schoolapps.settings import DEBUG
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper, get_teacher_by_id, get_subject_by_id, \
-    get_room_by_id, get_class_by_id, get_corridor_by_id
+from untisconnect.api import run_default_filter, row_by_row_helper, format_classes
 from untisconnect.api_helper import run_using, untis_split_first
-from untisconnect.parse import get_lesson_by_id, get_lesson_element_by_id_and_teacher, build_drive
+from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
 
 DATE_FORMAT = "%Y%m%d"
 
@@ -76,16 +76,21 @@ class Substitution(object):
         # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
+
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
                 self.teacher_new = None
 
+            if self.teacher_old is None and self.teacher_new is not None:
+                self.teacher_old = self.teacher_new
+                self.teacher_new = None
+
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
                                                                                   self.lesson, self.date.weekday() + 1)
         # print(self.lesson)
-        print(self.room_old)
+        # print(self.room_old)
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
@@ -117,10 +122,10 @@ class Substitution(object):
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
 
-        print(class_ids)
+        # print(class_ids)
         for id in class_ids:
             self.classes.append(drive["classes"][id])
-        print(self.classes)
+        # print(self.classes)
 
 
 def substitutions_sorter(sub):
@@ -154,6 +159,8 @@ class SubRow(object):
 
 
 def generate_teacher_row(sub, full=False):
+    # print(sub.id)
+    teacher = ""
     if sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
@@ -163,7 +170,7 @@ def generate_teacher_row(sub, full=False):
             sub.teacher_new.shortcode if not full else sub.teacher_new.name)
     elif sub.teacher_new and not sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode if not full else sub.teacher_new.name)
-    else:
+    elif sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
     return teacher
@@ -172,6 +179,8 @@ def generate_teacher_row(sub, full=False):
 def generate_subject_row(sub, full=False):
     if sub.type == 3:
         subject = "Aufsicht"
+    elif not sub.subject_new and not sub.subject_old:
+        subject = ""
     elif sub.type == 1 or sub.type == 2:
         subject = "<s>{}</s>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
     elif sub.subject_new and sub.subject_old:
@@ -180,8 +189,6 @@ def generate_subject_row(sub, full=False):
             sub.subject_new.shortcode if not full else sub.subject_new.name)
     elif sub.subject_new and not sub.subject_old:
         subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
-    elif not sub.subject_new and not sub.subject_old:
-        subject = ""
     else:
         subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
 
@@ -225,8 +232,9 @@ def generate_sub_table(subs):
         else:
             sub_row.lesson = "{}.".format(sub.lesson)
 
-        for class_ in sub.classes:
-            sub_row.classes += class_.name
+        # for class_ in sub.classes:
+        #     sub_row.classes += class_.name
+        sub_row.classes = format_classes(sub.classes)
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
@@ -235,6 +243,13 @@ def generate_sub_table(subs):
         sub_row.room = generate_room_row(sub)
         sub_row.room_full = generate_room_row(sub, full=True)
 
+        # if DEBUG:
+        #     # Add id only if debug mode is on
+        #     if sub.text:
+        #         sub_row.text = sub.text + " " + str(sub.id)
+        #     else:
+        #         sub_row.text = str(sub.id)
+        # else:
         sub_row.text = sub.text
 
         sub_row.badge = None
@@ -247,6 +262,43 @@ def generate_sub_table(subs):
 
         sub_rows.append(sub_row)
     return sub_rows
+
+
+class HeaderInformation:
+    def __init__(self):
+        self.missing_teachers = []
+        self.missing_classes = []
+        self.affected_teachers = []
+        self.affected_classes = []
+        self.rows = []
+
+    def is_box_needed(self):
+        return len(self.missing_teachers) > 0 or len(self.missing_classes) > 0 or len(
+            self.affected_teachers) > 0 or len(self.affected_classes) > 0
+
+
+def get_header_information(subs):
+    info = HeaderInformation()
+    for sub in subs:
+        if sub.teacher_old and sub.teacher_old not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_old)
+        if sub.teacher_new and sub.teacher_new not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_new)
+        # print(sub.teacher_old)
+
+        for _class in sub.classes:
+            if _class not in info.affected_classes:
+                info.affected_classes.append(_class)
+
+    if info.affected_teachers:
+        joined = ", ".join(sorted([x.shortcode for x in info.affected_teachers]))
+        # print(joined)
+        info.rows.append(("Betroffene Lehrkräfte", joined))
+
+    if info.affected_classes:
+        joined = ", ".join(sorted([x.name for x in info.affected_classes]))
+        info.rows.append(("Betroffene Klassen", joined))
+    return info
 
 
 def get_substitutions_by_date(date):
@@ -263,4 +315,20 @@ def get_substitutions_by_date(date):
     #     for class_ in row.classes:
     #         print(class_.name)
     subs.sort(key=substitutions_sorter)
+    return subs
+
+
+def get_substitutions_by_date_as_dict(date):
+    subs_raw = get_substitutions_by_date(date)
+    sub_table = generate_sub_table(subs_raw)
+    # print("SUB RAW LEN", len(sub_table))
+    subs = {}
+    for i, sub_raw in enumerate(subs_raw):
+        # print(i)
+        if sub_raw.lesson_id not in subs.keys():
+            subs[sub_raw.lesson_id] = []
+        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
+        # print(sub_raw.teacher_old)
+        # print(sub_table[i].teacher)
+    # print(len(subs))
     return subs

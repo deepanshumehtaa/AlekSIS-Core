@@ -53,6 +53,10 @@ function setTime(lesson_field) {
 }
 
 $(document).ready(function () {
+    $("dmc-datetime input").addClass("datepicker");
+    $("[data-form-control='date']").addClass("datepicker");
+    $("[data-form-control='time']").addClass("timepicker");
+
     // Initialize sidenav [MAT]
     $(".sidenav").sidenav();
 
@@ -89,6 +93,9 @@ $(document).ready(function () {
 
     // Initialize tooltip [MAT]
     $('.tooltipped').tooltip();
+
+    // Initialize select [MAT]
+    $('select').formSelect();
 
     // Initalize print button
     $("#print").click(function () {
