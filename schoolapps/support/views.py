@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from mailer import send_mail_with_template
-from support.models import kanboard_settings
+from support.models import kanboard_settings, mail_settings
 from untisconnect.api import get_all_rooms
 from .forms import REBUSForm
 from .forms import FeedbackForm
@@ -52,7 +52,7 @@ def rebus(request):
                 "long_desc": long_description,
                 "user": request.user.username
             }
-            send_mail_with_template("Neue REBUS-Meldung", ["support@katharineum.de"], "support/mail/rebus.txt",
+            send_mail_with_template("Neue REBUS-Meldung", [mail_settings.mail_rebus], "support/mail/rebus.txt",
                                     "support/mail/rebus.html", context)
 
             return render(request, 'support/rebus_submitted.html')
@@ -122,7 +122,8 @@ def feedback(request):
                 "ideas": ideas,
                 "user": request.user.username
             }
-            send_mail_with_template("Neues Feedback von {}".format(request.user.username), ["support@katharineum.de"],
+            send_mail_with_template("Neues Feedback von {}".format(request.user.username),
+                                    [mail_settings.mail_feedback],
                                     "support/mail/feedback.txt",
                                     "support/mail/feedback.html", context)
             print(context)
