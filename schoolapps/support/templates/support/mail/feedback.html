@@ -1,7 +1,7 @@
 {% include "mail/header.html" %}
 
 <main>
-    <p>Hallo,</p>
+    <p>Hallo SchoolApps-Team,</p>
     <p>es gibt neues Feedback:</p>
     <blockquote>
         Bewertungen: {{ design }}/5 (Design), {{ performance }}/5 (Geschwindigkeit), {{ usability }}/5
@@ -9,13 +9,13 @@
 
         Bewertung (insgesamt): {{ overall }}/10
 
-        Feedback zu einzelnen Apps: {{ apps }}
+        Pro/Contra: {{ apps }}
 
         Ideen/Wünsche: {{ ideas }}
 
         Sonstiges: {{ more }}
+
         <p>Übermittelt von {{ user }}</p>
     </blockquote>
 
-    <i>Dein SchoolApps-Team</i>
 </main>

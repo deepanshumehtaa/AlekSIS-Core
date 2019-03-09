@@ -4,73 +4,88 @@
 
 <main>
 
-<p class="flow-text">
-    Bitte gebe uns ein ausführliches und ehrliches Feedback, damit wir SchoolApps noch besser machen können!
-</p>
+    <p class="flow-text">
+        Bitte gebe uns ein ausführliches und ehrliches Feedback, damit wir SchoolApps noch besser machen können!
+    </p>
 
-<form method="post">
-    {% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
 
         <ul class="collection">
-          <li class="collection-item">
-            <div>{{ form.design_rating.label }} <span class="red-text">*</span>
-              <div class="rating float_right">
-                {% for radio in form.design_rating %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}"></label>
-                {% endfor %}
-              </div>
-            </div>
-          </li>
-          <li class="collection-item">
-            <div>{{ form.performance_rating.label }} <span class="red-text">*</span>
-              <div class="rating float_right">
-                {% for radio in form.performance_rating %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}"></label>
-                {% endfor %}
-              </div>
-            </div>
-          </li>
-          <li class="collection-item">
-            <div>{{ form.usability_rating.label }} <span class="red-text">*</span>
-              <div class="rating float_right">
-                {% for radio in form.usability_rating %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}"></label>
-                {% endfor %}
-              </div>
-            </div>
-          </li>
-          <li class="collection-item">
-            <div>{{ form.overall_rating.label }} <span class="red-text">*</span>
-              <div class="rating float_right">
-                {% for radio in form.overall_rating %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}"></label>
-                {% endfor %}
-              </div>
-            </div>
-          </li>
+            <li class="collection-item">
+                <div>{{ form.design_rating.label }} <span class="red-text">*</span>
+                    <div class="rating float_right">
+                        {% for radio in form.design_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div>{{ form.performance_rating.label }} <span class="red-text">*</span>
+                    <div class="rating float_right">
+                        {% for radio in form.performance_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div>{{ form.usability_rating.label }} <span class="red-text">*</span>
+                    <div class="rating float_right">
+                        {% for radio in form.usability_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div>{{ form.overall_rating.label }} <span class="red-text">*</span>
+                    <div class="rating float_right">
+                        {% for radio in form.overall_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
 
 
-          <li class="collection-item">
-            <div>{{ form.ideas.label }}
-              <div class="input-field inline float_right feedback-input">
-                <input name="{{ form.ideas.html_name }}" type="text" {{ form.ideas.required}}>
-              </div>
-            </div>
-            &nbsp;
-          </li>
+            <li class="collection-item">
+                <div class="row">
+                    <div class="col s6">
+                        {{ form.ideas.label }}
+                    </div>
+                    <div class="col s6">
+                        <div class="input-field inline float_right feedback-input">
+                            <input name="{{ form.ideas.html_name }}" type="text" {{ form.ideas.required }}>
+                        </div>
+                    </div>
+                </div>
+            </li>
 
-          <li class="collection-item">
-            <div>
-              <div class="input-field col s12">
-                <textarea id="{{ form.more.id_for_label }}" name="{{ form.more.html_name }}" class="materialize-textarea"></textarea>
-                <label for="{{ form.more.id_for_label }}">{{ form.more.label }}</label>
-              </div>
-            </div>
-          </li>
+            <li class="collection-item">
+                <div>
+                    <div class="input-field">
+                        <textarea id="{{ form.apps.id_for_label }}" name="{{ form.apps.html_name }}"
+                                  class="materialize-textarea"></textarea>
+                        <label for="{{ form.apps.id_for_label }}">{{ form.apps.label }}</label>
+                    </div>
+                </div>
+            </li>
+
+            <li class="collection-item">
+                <div>
+                    <div class="input-field">
+                        <textarea id="{{ form.more.id_for_label }}" name="{{ form.more.html_name }}"
+                                  class="materialize-textarea"></textarea>
+                        <label for="{{ form.more.id_for_label }}">{{ form.more.label }}</label>
+                    </div>
+                </div>
+            </li>
 
         </ul>
 
@@ -80,9 +95,9 @@
 
         <button type="submit" name="go" class="btn waves-effect waves-light green">
             Feedback senden
-				<i class="material-icons right">send</i>
-	    </button>
-</form>
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
 
 
 </main>
