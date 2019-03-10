@@ -5,6 +5,7 @@ from datetime import datetime
 from material import Layout, Row, Fieldset
 from aub.models import Aub
 
+
 class ApplyForAUBForm(forms.ModelForm):
     lessons = [('', ''), ('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
                ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
@@ -61,4 +62,4 @@ class ApplyForAUBForm(forms.ModelForm):
 
         return data
 
-
+ 

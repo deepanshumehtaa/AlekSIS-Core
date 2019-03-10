@@ -1,0 +1,17 @@
+Hallo SchoolApps-Team,
+
+es gibt neues Feedback:
+
+
+Bewertungen: {{ design }}/5 (Design), {{ performance }}/5 (Geschwindigkeit), {{ usability }}/5 (Benutzerfreundlichkeit)
+
+Bewertung (insgesamt): {{ overall }}/5
+
+Pro/Contra: {{ apps }}
+
+Ideen/Wünsche: {{ ideas }}
+
+Sonstiges: {{ more }}
+
+Übermittelt von {{ user }}
+
