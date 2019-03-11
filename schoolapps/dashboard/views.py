@@ -57,4 +57,13 @@ def error_404(request, exception):
 
 def faq(request):
     """ Shows the FAQ site, also if not logged in"""
-    return render(request, 'dashboard/faq.html')
+    context = {
+        'questions':
+            [
+                {'question': "Wie geht's euch?", 'answer': "Gut!", 'icon':"print"},
+                {'question': "Was wollt ihr?", 'answer': "Gut!"},
+                {'question': "Wie geht's euch jetzt?", 'answer': "Gut!"},
+                {'question': "Ab wann kann ich Schoolapps nutzen?", 'answer': "<span>Gut!</span>"},
+            ]
+    }
+    return render(request, 'dashboard/faq.html', context)
