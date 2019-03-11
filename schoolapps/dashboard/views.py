@@ -6,6 +6,8 @@ from .models import Activity, register_notification
 from mailer import send_mail_with_template
 from userinformation import UserInformation
 
+def create_info(text):
+    return '<div class="alert success"> <p> <i class="material-icons left">info</i>' + text + '</p> </div>'
 
 # Create your views here.
 
