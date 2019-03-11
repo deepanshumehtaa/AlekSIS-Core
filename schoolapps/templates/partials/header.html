@@ -165,12 +165,14 @@
             <li>
                 <a class="subheader grey lighten-3">Support</a>
             </li>
-
+        {% endif %}
             <li>
                 <a href="{% url 'faq' %}">
                     <i class="material-icons">question_answer</i> FAQ
                 </a>
             </li>
+
+        {% if user.is_authenticated %}
 
             <li>
                 <div class="divider"></div>
