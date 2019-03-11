@@ -54,3 +54,7 @@ def test_notification(request):
 
 def error_404(request, exception):
     return render(request, 'common/404.html')
+
+def faq(request):
+    """ Shows the FAQ site, also if not logged in"""
+    return render(request, 'dashboard/faq.html')

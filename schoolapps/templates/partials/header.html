@@ -156,6 +156,21 @@
                 <div class="divider"></div>
             </li>
 
+
+            <li>
+                <a class="subheader grey lighten-3">Support</a>
+            </li>
+
+            <li>
+                <a href="{% url 'faq' %}">
+                    <i class="material-icons">question_answer</i> FAQ
+                </a>
+            </li>
+
+            <li>
+                <div class="divider"></div>
+            </li>
+
             {% if user.is_superuser %}
                 <li>
                     <a class="subheader grey lighten-3">Administration</a>
