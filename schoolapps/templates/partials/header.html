@@ -79,6 +79,14 @@
             </a>
         </li>
 
+        {% if not user.is_authenticated %}
+            <li>
+                <a href="{% url "login" %}">
+                    <i class="material-icons">lock_open</i>Login
+                </a>
+            </li>
+        {% endif %}
+
         {% if user.is_authenticated %}
             <li>
                 <a href="{% url 'dashboard' %}">
