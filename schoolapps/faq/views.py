@@ -25,7 +25,17 @@ def faq(request):
                                                                         "   <li>Kontaktiere den Support über <a href='mailto:support@katharineum.de'>support@katharineum.de</a>"
                                                                         "</ol>",'icon': "screen_lock_portrait"},
 
-                {'question': "Test-Frage?", 'answer': '<span class="red-text">Gut!</span>'},
+                {'question': "Gibt es eine Smartphone-APP für SchoolApps?", 'answer': 'Ein Smartphone-APP haben wir zwar nicht, jedoch etwas einliches, eine sogenannte <abbr title="Progressive'
+                                                                                      ' Web App">PWA</abbr>. <br />Um diese auf deinem Smartphone zu aktivieren, musst du SchoolApps lediglich in'
+                                                                                      'einem Webbrowser öffnen, dort dann oben rechts auf das Kontextmenü (die drei Punkte) gehen, und auf '
+                                                                                      '<q>Zu Startbildschirm hinzufügen</q> drücken. Solltest du Hilfe benötigen, folgen hier die Anleitungen'
+                                                                                      'für die drei verbreitetesten Browser.'
+                                                                                      '<div class="row">'
+                                                                                      '<a class="btn-large col s4 orange">Firefox</a>'
+                                                                                      '<a class="btn-large col s4 red">Chrome</a>'
+                                                                                      '<a class="btn-large col s4 blue">Safari</a>'
+                                                                                      '</div>',
+                                                                            'icon': "phonelink"},
             ]
     }
     return render(request, 'faq/faq.html', context)
