@@ -152,10 +152,12 @@ def check2(request):
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
                                                   "Schulleitung genehmigt."
                                                   .format(formats.date_format(aub.from_date),
-                                                          formats.date_format(aub.to_date)),
+                                                          formats.time_format(aub.from_time),
+                                                          formats.date_format(aub.to_date),
+                                                          formats.time_format(aub.to_time)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
@@ -165,11 +167,13 @@ def check2(request):
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
                                                   "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
                                                   "bitte die Schulleitung."
                                                   .format(formats.date_format(aub.from_date),
-                                                          formats.date_format(aub.to_date)),
+                                                          formats.time_format(aub.from_time),
+                                                          formats.date_format(aub.to_date),
+                                                          formats.time_format(aub.to_time)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
