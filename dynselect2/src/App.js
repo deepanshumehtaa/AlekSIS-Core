@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import "materialize-css/dist/css/materialize.css";
 
 import M from "materialize-css/dist/js/materialize";
 import PropTypes from "prop-types";
@@ -251,7 +250,7 @@ class Input extends Component {
         return
     <
         div
-        className = {(this.props.show ? "" : "hide ") + "input-field col s4"
+        className = {(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
     }>
     <
         i
@@ -376,7 +375,7 @@ render()
         < div
     className = {"row"} >
         < div
-    className = "input-field col s4" >
+    className = "input-field col s12 m12 l4" >
         < i
     className = {"material-icons prefix"} > list < /i>
         < select
@@ -570,7 +569,7 @@ render()
     }
 <
     div
-    className = {(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s4"
+    className = {(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
 }>
 <
     i
