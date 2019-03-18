@@ -30,7 +30,7 @@ def upload(request):
 @login_required
 @permission_required("menu.add_menu")
 def delete(request, id):
-    print(id)
+    # print(id)
     Menu.objects.get(id=id).delete()
 
     return redirect("menu_index_msg", msg="delete_success")

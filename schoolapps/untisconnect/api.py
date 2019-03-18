@@ -137,6 +137,31 @@ def get_class_by_name(name):
     return one_by_id(_class, Class)
 
 
+def format_classes(classes):
+    """
+    Formats a list of Class objects to a combined string
+
+    example return: "9abcd" for classes 9a, 9b, 9c and 9d
+
+    :param classes: Class list
+    :return: combined string
+    """
+    classes_as_dict = {}
+
+    for _class in classes:
+        step = _class.name[:-1]
+        part = _class.name[-1:]
+        if step not in classes_as_dict.keys():
+            classes_as_dict[step] = [part]
+        else:
+            classes_as_dict[step].append(part)
+
+    out = ""
+    for key, value in classes_as_dict.items():
+        out += key + "".join(value)
+    return out
+
+
 ########
 # ROOM #
 ########
@@ -220,8 +245,18 @@ class Subject(object):
         self.shortcode = db_obj.name
         self.name = db_obj.longname
         self.color = db_obj.backcolor
+
+        # Convert UNTIS number to HEX
         hex_bgr = str(hex(db_obj.backcolor)).replace("0x", "")
-        hex_rgb = hex_bgr[4:5] + hex_bgr[2:3] + hex_bgr[0:1]
+
+        # Add beginning zeros if len < 6
+        if len(hex_bgr) < 6:
+            hex_bgr = "0" * (6 - len(hex_bgr)) + hex_bgr
+
+        # Change BGR to RGB
+        hex_rgb = hex_bgr[4:6] + hex_bgr[2:4] + hex_bgr[0:2]
+
+        # Add html #
         self.hex_color = "#" + hex_rgb
 
 

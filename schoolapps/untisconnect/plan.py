@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from schoolapps import settings
 from schoolapps.settings import LESSONS
+from untisconnect.api import format_classes
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION
 
@@ -40,6 +41,8 @@ class LessonElementContainer(object):
         self.room = room
         self.substitution = substitution
         self.is_old = False
+        if self.element is not None:
+            self.classes_formatted = format_classes(self.element.classes)
 
 
 def parse_lesson_times():

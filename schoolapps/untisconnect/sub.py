@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from schoolapps.settings import DEBUG
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper
+from untisconnect.api import run_default_filter, row_by_row_helper, format_classes
 from untisconnect.api_helper import run_using, untis_split_first
 from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
 
@@ -159,7 +159,7 @@ class SubRow(object):
 
 
 def generate_teacher_row(sub, full=False):
-    print(sub.id)
+    # print(sub.id)
     teacher = ""
     if sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
@@ -179,6 +179,8 @@ def generate_teacher_row(sub, full=False):
 def generate_subject_row(sub, full=False):
     if sub.type == 3:
         subject = "Aufsicht"
+    elif not sub.subject_new and not sub.subject_old:
+        subject = ""
     elif sub.type == 1 or sub.type == 2:
         subject = "<s>{}</s>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
     elif sub.subject_new and sub.subject_old:
@@ -187,8 +189,6 @@ def generate_subject_row(sub, full=False):
             sub.subject_new.shortcode if not full else sub.subject_new.name)
     elif sub.subject_new and not sub.subject_old:
         subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
-    elif not sub.subject_new and not sub.subject_old:
-        subject = ""
     else:
         subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
 
@@ -232,8 +232,9 @@ def generate_sub_table(subs):
         else:
             sub_row.lesson = "{}.".format(sub.lesson)
 
-        for class_ in sub.classes:
-            sub_row.classes += class_.name
+        # for class_ in sub.classes:
+        #     sub_row.classes += class_.name
+        sub_row.classes = format_classes(sub.classes)
 
         sub_row.teacher = generate_teacher_row(sub)
         sub_row.teacher_full = generate_teacher_row(sub, full=True)
@@ -263,6 +264,43 @@ def generate_sub_table(subs):
     return sub_rows
 
 
+class HeaderInformation:
+    def __init__(self):
+        self.missing_teachers = []
+        self.missing_classes = []
+        self.affected_teachers = []
+        self.affected_classes = []
+        self.rows = []
+
+    def is_box_needed(self):
+        return len(self.missing_teachers) > 0 or len(self.missing_classes) > 0 or len(
+            self.affected_teachers) > 0 or len(self.affected_classes) > 0
+
+
+def get_header_information(subs):
+    info = HeaderInformation()
+    for sub in subs:
+        if sub.teacher_old and sub.teacher_old not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_old)
+        if sub.teacher_new and sub.teacher_new not in info.affected_teachers:
+            info.affected_teachers.append(sub.teacher_new)
+        # print(sub.teacher_old)
+
+        for _class in sub.classes:
+            if _class not in info.affected_classes:
+                info.affected_classes.append(_class)
+
+    if info.affected_teachers:
+        joined = ", ".join(sorted([x.shortcode for x in info.affected_teachers]))
+        # print(joined)
+        info.rows.append(("Betroffene Lehrkräfte", joined))
+
+    if info.affected_classes:
+        joined = ", ".join(sorted([x.name for x in info.affected_classes]))
+        info.rows.append(("Betroffene Klassen", joined))
+    return info
+
+
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
@@ -283,14 +321,14 @@ def get_substitutions_by_date(date):
 def get_substitutions_by_date_as_dict(date):
     subs_raw = get_substitutions_by_date(date)
     sub_table = generate_sub_table(subs_raw)
-    print("SUB RAW LEN", len(sub_table))
+    # print("SUB RAW LEN", len(sub_table))
     subs = {}
     for i, sub_raw in enumerate(subs_raw):
-        print(i)
+        # print(i)
         if sub_raw.lesson_id not in subs.keys():
             subs[sub_raw.lesson_id] = []
         subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
         # print(sub_raw.teacher_old)
         # print(sub_table[i].teacher)
-    print(len(subs))
+    # print(len(subs))
     return subs

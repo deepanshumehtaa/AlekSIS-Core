@@ -29,7 +29,7 @@ body {
 /********/
 
 main {
-    padding: 20px;
+    padding: 10px 20px;
     flex: 1 0 auto;
 }
 
@@ -173,6 +173,10 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
+.lesson-card a {
+    color: black;
+}
+
 /*.timetable-time {*/
 /*margin-right: 20px;*/
 /*}*/
@@ -276,14 +280,80 @@ table.striped > tbody > tr:nth-child(odd) {
     }
 }
 
-.alert-success {
-
-}
-
-.alert-success p {
-    /*font-size: 16px;*/
+.alert p {
     margin: 10px;
     padding: 10px;
-    background-color: #c5e1a5;
-    border-left: 5px solid #4caf50;
+    border-left: 5px solid;
 }
+
+.alert.success p {
+    background-color: #c5e1a5;
+    border-color: #4caf50;
+}
+
+.alert.error p {
+    background-color: #ef9a9a;
+    border-color: #b71c1c;
+}
+
+main .alert p {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+/*++++++++++++++++
+FEEDBACK
+++++++++++++++++*/
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 450px;
+  min-height: 40px;
+}
+
+.rating label {
+  display: flex;
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+.rating label:after {
+  font-family: 'Material Icons';
+  -webkit-font-feature-settings: 'liga';
+  position: absolute;
+  color: #777;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 40px;
+  content: 'star_border';
+}
+.rating input {
+  display: none!important;
+}
+.rating > input:checked + label:after,
+.rating > input:checked ~ label:after {
+  content: "star";
+  color: #FFD700;
+}
+.rating > input:hover + label:after,
+.rating > input:hover ~ label:after {
+  content: "star";
+  color: #FFD700;
+}
+.float_right{
+  float: right;
+}
+.feedback-input{
+  width: 450px!important;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.span-info{
+  width: 24px;
+  vertical-align: middle;
+}
+
