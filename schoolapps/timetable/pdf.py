@@ -106,14 +106,16 @@ TEX_HEADER_BOX_ROW_B = """
 
 def generate_pdf(tex, filename):
     """Generate a PDF by LaTeX code"""
-    print(tex)
+
     # Read LaTeX file
-    tex_file = open(os.path.join(BASE_DIR, "latex", filename + ".tex"), "w")
+    tex_file = open(os.path.join(BASE_DIR, "latex", filename + ".tex"), "w", encoding="utf8")
+
     tex_file.write(tex)
     tex_file.close()
 
     # Execute pdflatex to generate the PDF
-    bash_command = "pdflatex -output-directory latex {}.tex".format(filename)
+    bash_command = "pdflatex -output-directory {} {}.tex".format(os.path.join(BASE_DIR, "latex"),
+                                                                 os.path.join(BASE_DIR, "latex", filename))
     process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
 
