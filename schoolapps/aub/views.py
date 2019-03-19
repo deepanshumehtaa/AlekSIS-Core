@@ -93,8 +93,8 @@ def apply_for(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def edit(request, aub_id):
-    aub = get_object_or_404(Aub, id=aub_id)
+def edit(request, id):
+    aub = get_object_or_404(Aub, id=id)
     form = ApplyForAUBForm(instance=aub)
     template = 'aub/edit.html'
     if request.method == 'POST':
