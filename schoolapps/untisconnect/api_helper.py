@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from . import models
 
 DB_NAME = 'untis'
@@ -74,3 +76,14 @@ def untis_split_second(s, conv=None):
 
 def untis_split_third(s, conv=None):
     return clean_array(s.split(";"), conv=conv)
+
+
+DATE_FORMAT = "%Y%m%d"
+
+
+def untis_date_to_date(untis):
+    return timezone.datetime.strptime(str(untis), DATE_FORMAT)
+
+
+def date_to_untis_date(date):
+    return date.strftime(DATE_FORMAT)

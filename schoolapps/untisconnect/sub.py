@@ -1,21 +1,9 @@
 from django.utils import timezone
 
-from schoolapps.settings import DEBUG
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper, format_classes
-from untisconnect.api_helper import run_using, untis_split_first
+from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date
+from untisconnect.api_helper import run_using, untis_split_first, untis_date_to_date, date_to_untis_date
 from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
-
-DATE_FORMAT = "%Y%m%d"
-
-
-def untis_date_to_date(untis):
-    return timezone.datetime.strptime(str(untis), DATE_FORMAT)
-
-
-def date_to_untis_date(date):
-    return date.strftime(DATE_FORMAT)
-
 
 TYPE_SUBSTITUTION = 0
 TYPE_CANCELLATION = 1
@@ -266,38 +254,65 @@ def generate_sub_table(subs):
 
 class HeaderInformation:
     def __init__(self):
-        self.missing_teachers = []
+        self.absences = []
         self.missing_classes = []
         self.affected_teachers = []
         self.affected_classes = []
         self.rows = []
 
     def is_box_needed(self):
-        return len(self.missing_teachers) > 0 or len(self.missing_classes) > 0 or len(
+        return len(self.absences) > 0 or len(self.missing_classes) > 0 or len(
             self.affected_teachers) > 0 or len(self.affected_classes) > 0
 
 
-def get_header_information(subs):
+def get_header_information(subs, date):
+    """
+    Get header information like affected teachers/classes and missing teachers/classes for a given date
+    :param date: The date as datetime object
+    :param subs: All subs for the given date
+    :return: HeaderInformation object with all kind of information
+    """
+
     info = HeaderInformation()
+
+    # Get all affected teachers and classes
     for sub in subs:
         if sub.teacher_old and sub.teacher_old not in info.affected_teachers:
             info.affected_teachers.append(sub.teacher_old)
         if sub.teacher_new and sub.teacher_new not in info.affected_teachers:
             info.affected_teachers.append(sub.teacher_new)
-        # print(sub.teacher_old)
 
         for _class in sub.classes:
             if _class not in info.affected_classes:
                 info.affected_classes.append(_class)
 
+    # Get all absences that are relevant for this day
+    info.absences = get_all_absences_by_date(date)
+
+    # Format list of affected teachers
     if info.affected_teachers:
         joined = ", ".join(sorted([x.shortcode for x in info.affected_teachers]))
-        # print(joined)
         info.rows.append(("Betroffene Lehrkräfte", joined))
 
+    # Format list of affected classes
     if info.affected_classes:
         joined = ", ".join(sorted([x.name for x in info.affected_classes]))
         info.rows.append(("Betroffene Klassen", joined))
+
+    # Format list of missing teachers (absences)
+    if info.absences:
+        elements = []
+        for absence in info.absences:
+            if absence.is_whole_day:
+                # Teacher is missing the whole day
+                elements.append("{}".format(absence.teacher.shortcode))
+            else:
+                # Teacher is only missing a part of day
+                elements.append("{} ({}-{})".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
+        joined = ", ".join(elements)
+
+        info.rows.append(("Abwesende Lehrkräfte", joined))
+
     return info
 
 
@@ -306,14 +321,8 @@ def get_substitutions_by_date(date):
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
                                                                                                         "lesson")),
         filter_term=False)
-    # print(subs_raw)
 
     subs = row_by_row_helper(subs_raw, Substitution)
-    # print(subs)
-    # for row in subs:
-    #     print(row.classes)
-    #     for class_ in row.classes:
-    #         print(class_.name)
     subs.sort(key=substitutions_sorter)
     return subs
 
@@ -321,14 +330,10 @@ def get_substitutions_by_date(date):
 def get_substitutions_by_date_as_dict(date):
     subs_raw = get_substitutions_by_date(date)
     sub_table = generate_sub_table(subs_raw)
-    # print("SUB RAW LEN", len(sub_table))
     subs = {}
     for i, sub_raw in enumerate(subs_raw):
-        # print(i)
         if sub_raw.lesson_id not in subs.keys():
             subs[sub_raw.lesson_id] = []
         subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
-        # print(sub_raw.teacher_old)
-        # print(sub_table[i].teacher)
-    # print(len(subs))
+
     return subs
