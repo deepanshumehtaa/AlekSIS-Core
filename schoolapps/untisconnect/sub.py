@@ -318,8 +318,8 @@ def get_header_information(subs, date):
 
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
-        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).order_by("classids",
-                                                                                                        "lesson")),
+        run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).exclude(
+            flags__contains="N").order_by("classids", "lesson")),
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)
