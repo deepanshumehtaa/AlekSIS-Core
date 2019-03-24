@@ -16451,7 +16451,7 @@ object-assign
                     key: "render",
                     value: function render() {
                         return _react.default.createElement("div", {
-                            className: (this.props.show ? "" : "hide ") + "input-field col s4"
+                            className: (this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
                         }, _react.default.createElement("i", {
                             className: "material-icons prefix"
                         }, this.props.icon), this.props.children, _react.default.createElement("label", null, this.props.label));
@@ -16561,7 +16561,7 @@ object-assign
                         }, _react.default.createElement("div", {
                             className: "row"
                         }, _react.default.createElement("div", {
-                            className: "input-field col s4"
+                            className: "input-field col s12 m12 l4"
                         }, _react.default.createElement("i", {
                             className: "material-icons prefix"
                         }, "list"), _react.default.createElement("select", {
@@ -16644,7 +16644,7 @@ object-assign
                             values: ["kath-schueler", "kath-lehrer", "kath-edu", "kath-gaeste"],
                             defaultValue: "-"
                         })), _react.default.createElement("div", {
-                            className: (sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s4"
+                            className: (sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
                         }, _react.default.createElement("i", {
                             className: "material-icons prefix"
                         }, "device_unknown"), _react.default.createElement("input", {

@@ -1,5 +1,4 @@
 import dbsettings
-from django import forms
 from django.db import models
 
 
@@ -10,6 +9,10 @@ class KanboardSettings(dbsettings.Group):
     kb_project_id_feedback = dbsettings.PositiveIntegerValue("Project ID for feedback tasks")
 
 
+class MailSettings(dbsettings.Group):
+    mail_rebus = dbsettings.EmailValue("Email address for REBUS")
+    mail_feedback = dbsettings.EmailValue("Email address for Feedback")
+
 class Support(models.Model):
     class Meta:
         permissions = (
@@ -19,3 +22,4 @@ class Support(models.Model):
 
 
 kanboard_settings = KanboardSettings("Kanboard")
+mail_settings = MailSettings("Mail adresses")

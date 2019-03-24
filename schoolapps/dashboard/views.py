@@ -52,9 +52,5 @@ def test_notification(request):
     return redirect(reverse('dashboard'))
 
 
-def impress(request):
-    return render(request, 'common/impress.html')
-
-
 def error_404(request, exception):
     return render(request, 'common/404.html')

@@ -1,78 +1,131 @@
 {% include 'partials/header.html' %}
+<script type="text/javascript">
+    {% if smart %}
+        var week = {{ selected_week }};
+        function goToCalendarWeek(cw) {
+            window.location.href = "{% url "timetable_smart_plan" raw_type id %}/{{ selected_year }}/" + cw;
+        }
+        function onCalendarWeekChanged() {
+            goToCalendarWeek($("#calendar-week").val(), {{ selected_year }});
+        }
 
+        function weekBefore() {
+            if (week > 1) {
+                goToCalendarWeek(week - 1)
+            }
+        }
+
+        function weekNext() {
+            if (week < 52) {
+                goToCalendarWeek(week + 1);
+            }
+        }
+
+        $(document).ready(function () {
+            $("#calendar-week").change(onCalendarWeekChanged);
+            $("#week-before").click(weekBefore);
+            $("#week-next").click(weekNext);
+        });
+    {% endif %}
+</script>
 <main>
-    <div class="row">
+    <div class="row no-margin">
         <div class="col s12 m6 l8 xl9">
             <h3>
                 Stundenplan <i>{{ el }}</i>
             </h3>
+
+
         </div>
-        <div class="col s12 m6 l4 xl3 right align-right">
+        <div class=" col s12 m6 l4 xl3 right align-right no-print">
             <a class="waves-effect waves-teal btn-flat btn-flat-medium right" id="print">
                 <i class="material-icons center">print</i>
             </a>
         </div>
     </div>
+    <div class="row">
+        {% if smart %}
+            {# Show if smart #}
+
+            {# Toggle button to regular and smart plan badge #}
+            <div class="col s12 m6">
+                <p class="left" style="margin: 0;"><span
+                        class="badge new primary-color left-align">SMART PLAN</span>
+                </p>&nbsp;
+
+                <a class="waves-effect waves-light btn-flat no-print"
+                   href="{% url "timetable_regular_plan" raw_type id "regular" %}">
+                    <i class="material-icons left">slideshow</i>
+                    Regelplan anzeigen
+                </a>
+            </div>
+
+
+            {# Week select #}
+            <div class="col s12 m6 right ">
+                <div class="col s3 no-print">
+                    <a class="waves-effect waves-teal btn-flat btn-flat-medium right" id="week-before">
+                        <i class="material-icons center">navigate_before</i>
+                    </a>
+                </div>
+                <div class="input-field  col s6 no-margin">
+                    <select id="calendar-week">
+                        {% for week in weeks %}
+                            <option value="{{ week.calendar_week }}" {% if week.calendar_week == selected_week %}
+                                    selected {% endif %}> KW {{ week.calendar_week }} ({{ week.first_day|date:"j.n.Y" }}–{{ week.last_day|date:"j.n.Y" }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col s3 no-print">
+                    <a class="waves-effect waves-teal btn-flat btn-flat-medium left" id="week-next">
+                        <i class="material-icons center">navigate_next</i>
+                    </a>
+                </div>
+            </div>
+
+        {% else %}
+            {# Show if regular #}
+            <a class="waves-effect waves-light btn-flat no-print"
+               href="{% url "timetable_smart_plan" raw_type id %}">
+                <i class="material-icons left">slideshow</i>
+                SMART PLAN ANZEIGEN
+            </a>
+        {% endif %}
+    </div>
     <div class="timetable-plan">
+
+        {#  Week days #}
         <div class="row">
             <div class="col s2">
 
             </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
+            {% for week_day in week_days %}
+                <div class="col s2">
+                    <div class="card timetable-title-card">
+                        <div class="card-content">
                     <span class="card-title">
-                        Montag
+                        {{ week_day }}
                     </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Dienstag
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Mittwoch
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Donnerstag
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Freitag
-                    </span>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
+
+        {#  Lessons #}
         {% for row, time in plan %}
             <div class="row">
                 <div class="col s2">
                     <div class="card timetable-title-card">
                         <div class="card-content">
-                    <span class="card-title left">
-                        {{ time.number_format }}
-                    </span>
+
+                            {# Lesson number #}
+                            <span class="card-title left">
+                                {{ time.number_format }}
+                             </span>
+
+                            {# Time dimension of lesson #}
                             <div class="right timetable-time grey-text text-darken-2">
                                 <span>{{ time.start|date:"H:i" }}</span><br>
                                 <span>{{ time.end|date:"H:i" }}</span>
@@ -82,32 +135,9 @@
 
                 </div>
                 {% for col in row %}
+                    {# A lesson #}
                     <div class="col s2">
-                        <div class="card lesson-card">
-                            <div class="card-content">
-                                {% for element_container in col.elements %}
-                                    <div style="background-color: {{ element_container.element.subject.hex_color }};">
-                                        <p>
-                                            {% if type == 0 or type == 1 %}
-                                                {% for class in element_container.element.classes %}
-                                                    {{ class.name }}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if type == 2 or type == 1 %}
-                                                <span data-position="bottom" class="tooltipped"
-                                                      data-tooltip="{{ element_container.element.teacher }}">{{ element_container.element.teacher.shortcode }}</span>
-                                            {% endif %}
-                                            <strong>{{ element_container.element.subject.shortcode }}</strong>
-                                            {% if type == 0 or type == 2 %}
-                                                <span class="tooltipped" data-position="bottom"
-                                                      data-tooltip="{{ element_container.room.name }}">{{ element_container.room.shortcode }}</span>
-                                            {% endif %}
-                                        </p>
-                                    </div>
-
-                                {% endfor %}
-                            </div>
-                        </div>
+                        {% include "timetable/lesson.html" %}
                     </div>
                 {% endfor %}
             </div>

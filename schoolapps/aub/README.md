@@ -11,7 +11,6 @@
     - Beschreibung (TextField)
     - Antragsteller (Lehrerkürzel) wird automatisch aus angemeldetem Benutzer generiert
 
-
 2.  Schulleiter erhält Antrag (Link per Mail) und a. bewilligt oder b. lehnt ab
 
     a. Stellvertreter prüft Antrag und i. bewilligt oder ii. formuliert Bedenken und lehnt ab

@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from menu.models import Menu
+from schoolapps.settings import BASE_DIR
 from .forms import MenuUploadForm
 
 
@@ -29,7 +30,7 @@ def upload(request):
 @login_required
 @permission_required("menu.add_menu")
 def delete(request, id):
-    print(id)
+    # print(id)
     Menu.objects.get(id=id).delete()
 
     return redirect("menu_index_msg", msg="delete_success")
@@ -52,7 +53,7 @@ def return_pdf(filename):
 def return_default_pdf():
     """Response the default PDF"""
 
-    return return_pdf(os.path.join("menu", "default.pdf"))
+    return return_pdf(os.path.join(BASE_DIR, "menu", "default.pdf"))
 
 
 def show_current(request):
@@ -76,7 +77,7 @@ def show_current(request):
     # Look for matching PDF in DB
     try:
         obj = Menu.objects.get(year=year, calendar_week=calendar_week)
-        return return_pdf(os.path.join("media", str(obj.pdf)))
+        return return_pdf(os.path.join(BASE_DIR, "media", str(obj.pdf)))
 
     # Or show the default PDF
     except Menu.DoesNotExist:

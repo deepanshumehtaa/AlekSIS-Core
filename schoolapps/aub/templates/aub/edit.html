@@ -3,7 +3,7 @@
 
 
 <main>
-    <h5>Antrag auf Unterrichtsbefreiung</h5>
+    <h4>Antrag auf Unterrichtsbefreiung</h4>
 
     <form method = "POST" >
         {% csrf_token %}
@@ -11,7 +11,7 @@
         {% form form=form %}
         {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
-            <i class="material-icons left">send</i> Antrag stellen
+            <i class="material-icons left">send</i> Antrag ändern
         </button>
     </form>
 </main>

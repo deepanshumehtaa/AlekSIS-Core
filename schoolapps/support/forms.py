@@ -18,7 +18,7 @@ class FeedbackForm(forms.Form):
                                       choices=ratings,
                                       widget=forms.RadioSelect(attrs={"checked": "checked"}),
                                       required=True,
-)
+                                      )
 
     performance_rating = forms.ChoiceField(label='Geschwindigkeit',
                                            choices=ratings,
@@ -35,9 +35,10 @@ class FeedbackForm(forms.Form):
                                        widget=forms.RadioSelect(attrs={"checked": "checked"}),
                                        required=True)
 
-    apps = forms.CharField(label="Bitte gebe uns Feedback zu den einzelnen Funktionen von SchoolApps",
-                           required=False,
-                           widget=forms.Textarea)
+    apps = forms.CharField(
+        label="Bitte sage uns, was dir an SchoolApps gefällt und was dich stört bzw. was du ändern würdest.",
+        required=False,
+        widget=forms.Textarea)
 
     more = forms.CharField(label="Möchtest du uns sonst noch etwas mitteilen?",
                            required=False,

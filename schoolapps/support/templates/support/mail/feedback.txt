@@ -1,4 +1,4 @@
-Hallo,
+Hallo SchoolApps-Team,
 
 es gibt neues Feedback:
 
@@ -7,7 +7,7 @@ Bewertungen: {{ design }}/5 (Design), {{ performance }}/5 (Geschwindigkeit), {{ 
 
 Bewertung (insgesamt): {{ overall }}/5
 
-Feedback zu einzelnen Apps: {{ apps }}
+Pro/Contra: {{ apps }}
 
 Ideen/Wünsche: {{ ideas }}
 
@@ -15,5 +15,3 @@ Sonstiges: {{ more }}
 
 Übermittelt von {{ user }}
 
-
-Dein SchoolApps-Team

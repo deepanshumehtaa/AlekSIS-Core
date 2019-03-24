@@ -49,6 +49,7 @@ pip install django-material
 pip install django-filter
 pip install django_react_templatetags
 pip install kanboard
+pip install PyPDF2
 ```
 - `example_secure_settings.py` zu `secure_settings.py` kopieren und anpassen
 
@@ -66,6 +67,14 @@ Für die Migration folgende Befehle im aktivierten VirtualEnv ausführen:
 python3 schoolapps/manage.py makemigrations
 python3 schoolapps/manage.py migrate
 ```
+
+### Kanboard-Verbindung einrichten
+1. Zu den [Einstellungen](localhost:8000/settings) navigieren (/settings)
+2. Den Kanboard-API-Key von [Kanboard](https://kanboard.katharineum.de/?controller=ConfigController&action) eintragen
+3. Die Project-IDs von ``Rebus`` (#4) und ``Feedback`` (#18) eintragen.
+4. Die richtigen E-Mailadressen eintragen.
+
+### Testlauf
 
 ## LDAP (info.katharineum.de)
 
@@ -91,13 +100,6 @@ dc=skole,dc=skolelinux,dc=no
 3. Verbindung in AD mit oben genannten Daten herstellen
 
 
-### Submodules updaten
-```
-git submodule init
-git submodule update
-```
 
-## Kanboard-Verbindung einrichten
-1. Zu den [Einstellungen](localhost:800/settings) navigieren (/settings)
-2. Den Kanboard-API-Key von [Kanboard](https://kanboard.katharineum.de/?controller=ConfigController&action) eintragen
-3. Die Project-IDs von ``Rebus`` (#4) und ``Feedback`` (#18) eintragen.
+
+

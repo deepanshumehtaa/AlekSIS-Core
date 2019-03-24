@@ -230,7 +230,8 @@ Select.defaultProps = {
 class Input extends Component {
     render() {
         return <div
-            className={(this.props.show ? "" : "hide ") + "input-field col s4"}>
+        className = {(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
+    }>
             <i className={"material-icons prefix"}>{this.props.icon}</i>
             {this.props.children}
             <label>{this.props.label}</label>
@@ -322,7 +323,8 @@ class App extends Component {
         return (
             <div className="App">
                 <div className={"row"}>
-                    <div className="input-field col s4">
+        < div
+    className = "input-field col s12 m12 l4" >
                         <i className={"material-icons prefix"}>list</i>
                         <select onChange={this._onCategoryChanges} defaultValue={"noCategory"}>
                             <option value={"noCategory"} disabled={true}>Keine Kategorie ausgewählt</option>
@@ -396,7 +398,8 @@ class App extends Component {
 
                     {/* Section C – Device Issue */}
                     <div
-                        className={(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s4"}>
+    className = {(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
+}>
                         <i className={"material-icons prefix"}>device_unknown</i>
                         <input type={"text"} id={"valc"} onChange={this._onSetC} required={true}/>
                         <label htmlFor="valc">Um welches Gerät handelt es sich?</label>
