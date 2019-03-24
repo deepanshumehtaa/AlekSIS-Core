@@ -50,8 +50,8 @@ def index(request):
 @login_required
 @permission_required('aub.apply_for_aub')
 @check_own_aub(login_url='/index.html')
-def details(request, aub_id):
-    aub = get_object_or_404(Aub, id=aub_id)
+def details(request, id):
+    aub = get_object_or_404(Aub, id=id)
     context = {
         'aub': aub
     }
@@ -93,8 +93,8 @@ def apply_for(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def edit(request, aub_id):
-    aub = get_object_or_404(Aub, id=aub_id)
+def edit(request, id):
+    aub = get_object_or_404(Aub, id=id)
     form = ApplyForAUBForm(instance=aub)
     template = 'aub/edit.html'
     if request.method == 'POST':
@@ -129,12 +129,25 @@ def check1(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
             aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
+                # Notify user
+                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
+                                                  "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
+                                                  "bitte die Schulleitung."
+                                      .format(formats.date_format(aub.from_date),
+                                              formats.time_format(aub.from_time),
+                                              formats.date_format(aub.to_date),
+                                              formats.time_format(aub.to_time)),
+                                      app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
+                                      )
 
-    aub_list = Aub.objects.filter(status=1).order_by('created_at')
+    aub_list = Aub.objects.filter(status=IN_PROCESSING_STATUS).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 
@@ -152,10 +165,12 @@ def check2(request):
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
                                                   "Schulleitung genehmigt."
                                                   .format(formats.date_format(aub.from_date),
-                                                          formats.date_format(aub.to_date)),
+                                                          formats.time_format(aub.from_time),
+                                                          formats.date_format(aub.to_date),
+                                                          formats.time_format(aub.to_time)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
@@ -165,18 +180,19 @@ def check2(request):
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
-                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {} bis {} wurde von der "
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
                                                   "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
                                                   "bitte die Schulleitung."
                                                   .format(formats.date_format(aub.from_date),
-                                                          formats.date_format(aub.to_date)),
+                                                          formats.time_format(aub.from_time),
+                                                          formats.date_format(aub.to_date),
+                                                          formats.time_format(aub.to_time)),
                                       app=AubConfig.verbose_name, user=aub.created_by,
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
 
-    aub_list = Aub.objects.filter(status=2).order_by('created_at')
+    aub_list = Aub.objects.filter(status=SEMI_ALLOWED_STATUS).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
-
     return render(request, 'aub/check.html', {'filter': aubs})
 
 
@@ -186,8 +202,8 @@ def archive(request):
     order_crit = '-from_date'
     if 'created_by' in request.GET:
         item = int(request.GET['created_by'])
-        aub_list = Aub.objects.filter(Q(status__gt=2) & Q(created_by=item)).order_by(order_crit)
+        aub_list = Aub.objects.filter((Q(status__exact=ALLOWED_STATUS) | Q(status__exact=NOT_ALLOWED_STATUS)) & Q(created_by=item)).order_by(order_crit)
     else:
-        aub_list = Aub.objects.filter(Q(status__gt=2)).order_by(order_crit)
+        aub_list = Aub.objects.filter(Q(status__exact=ALLOWED_STATUS) | Q(status__exact=NOT_ALLOWED_STATUS)).order_by(order_crit)
     aub_filter = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/archive.html', {'filter': aub_filter})

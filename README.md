@@ -33,6 +33,7 @@ CREATE DATABASE Untis;
 ```
 git clone git@github.com:Katharineum/school-apps.git
 ```
+- Anmelden
 
 ### Django
 - Zum Installationsordner wechseln
@@ -46,6 +47,9 @@ pip install django-dbsettings
 pip install django_pdb
 pip install django-material
 pip install django-filter
+pip install django_react_templatetags
+pip install kanboard
+pip install PyPDF2
 ```
 - `example_secure_settings.py` zu `secure_settings.py` kopieren und anpassen
 
@@ -63,6 +67,12 @@ Für die Migration folgende Befehle im aktivierten VirtualEnv ausführen:
 python3 schoolapps/manage.py makemigrations
 python3 schoolapps/manage.py migrate
 ```
+
+### Kanboard-Verbindung einrichten
+1. Zu den [Einstellungen](localhost:8000/settings) navigieren (/settings)
+2. Den Kanboard-API-Key von [Kanboard](https://kanboard.katharineum.de/?controller=ConfigController&action) eintragen
+3. Die Project-IDs von ``Rebus`` (#4) und ``Feedback`` (#18) eintragen.
+4. Die richtigen E-Mailadressen eintragen.
 
 ### Testlauf
 
@@ -88,5 +98,8 @@ dc=skole,dc=skolelinux,dc=no
 1. Tunnel erstellen (siehe Befehl)
 2. Apache Active Directory (AD) zum Testen öffnen (Download unter http://directory.apache.org/studio/)
 3. Verbindung in AD mit oben genannten Daten herstellen
+
+
+
 
 

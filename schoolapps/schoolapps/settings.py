@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
+    'support.apps.SupportConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'material',
+    'django_react_templatetags',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_react_templatetags.context_processors.react_context_processor',
             ],
         },
     },

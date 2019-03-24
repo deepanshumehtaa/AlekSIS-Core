@@ -44,7 +44,6 @@
                                 <form action="" method="POST" class="right">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{ aub.id }}" name="aub-id">
-
                                     <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
                                         <i class="material-icons center red-text">cancel</i>
                                     </button>

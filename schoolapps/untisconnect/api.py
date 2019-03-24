@@ -247,8 +247,18 @@ class Subject(object):
         self.shortcode = db_obj.name
         self.name = db_obj.longname
         self.color = db_obj.backcolor
+
+        # Convert UNTIS number to HEX
         hex_bgr = str(hex(db_obj.backcolor)).replace("0x", "")
-        hex_rgb = hex_bgr[4:5] + hex_bgr[2:3] + hex_bgr[0:1]
+
+        # Add beginning zeros if len < 6
+        if len(hex_bgr) < 6:
+            hex_bgr = "0" * (6 - len(hex_bgr)) + hex_bgr
+
+        # Change BGR to RGB
+        hex_rgb = hex_bgr[4:6] + hex_bgr[2:4] + hex_bgr[0:2]
+
+        # Add html #
         self.hex_color = "#" + hex_rgb
 
 

@@ -64,10 +64,15 @@ class Substitution(object):
         # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
+
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
             if self.teacher_old is not None and self.teacher_new.id == self.teacher_old.id:
+                self.teacher_new = None
+
+            if self.teacher_old is None and self.teacher_new is not None:
+                self.teacher_old = self.teacher_new
                 self.teacher_new = None
 
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
@@ -142,6 +147,8 @@ class SubRow(object):
 
 
 def generate_teacher_row(sub, full=False):
+    # print(sub.id)
+    teacher = ""
     if sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
@@ -151,7 +158,7 @@ def generate_teacher_row(sub, full=False):
             sub.teacher_new.shortcode if not full else sub.teacher_new.name)
     elif sub.teacher_new and not sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode if not full else sub.teacher_new.name)
-    else:
+    elif sub.teacher_old:
         teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
     return teacher
@@ -160,6 +167,8 @@ def generate_teacher_row(sub, full=False):
 def generate_subject_row(sub, full=False):
     if sub.type == 3:
         subject = "Aufsicht"
+    elif not sub.subject_new and not sub.subject_old:
+        subject = ""
     elif sub.type == 1 or sub.type == 2:
         subject = "<s>{}</s>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
     elif sub.subject_new and sub.subject_old:
@@ -168,8 +177,6 @@ def generate_subject_row(sub, full=False):
             sub.subject_new.shortcode if not full else sub.subject_new.name)
     elif sub.subject_new and not sub.subject_old:
         subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
-    elif not sub.subject_new and not sub.subject_old:
-        subject = ""
     else:
         subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
 
