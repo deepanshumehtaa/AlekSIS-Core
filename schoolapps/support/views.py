@@ -8,7 +8,6 @@ from .forms import FeedbackForm
 from kanboard import Kanboard
 from dashboard.models import Activity
 
-print("HI")
 api_token = kanboard_settings.api_token
 p_id_rebus = kanboard_settings.kb_project_id_rebus
 p_id_feedback = kanboard_settings.kb_project_id_feedback

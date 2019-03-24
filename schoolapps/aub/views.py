@@ -93,8 +93,8 @@ def apply_for(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-def edit(request, aub_id):
-    aub = get_object_or_404(Aub, id=aub_id)
+def edit(request, id):
+    aub = get_object_or_404(Aub, id=id)
     form = ApplyForAUBForm(instance=aub)
     template = 'aub/edit.html'
     if request.method == 'POST':
@@ -129,10 +129,23 @@ def check1(request):
     if request.method == 'POST':
         if 'aub-id' in request.POST:
             aub_id = request.POST['aub-id']
+            aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
             elif 'deny' in request.POST:
                 Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
+                # Notify user
+                register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
+                                      description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
+                                                  "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
+                                                  "bitte die Schulleitung."
+                                      .format(formats.date_format(aub.from_date),
+                                              formats.time_format(aub.from_time),
+                                              formats.date_format(aub.to_date),
+                                              formats.time_format(aub.to_time)),
+                                      app=AubConfig.verbose_name, user=aub.created_by,
+                                      link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
+                                      )
 
     aub_list = Aub.objects.filter(status=IN_PROCESSING_STATUS).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
@@ -180,7 +193,6 @@ def check2(request):
 
     aub_list = Aub.objects.filter(status=SEMI_ALLOWED_STATUS).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
-
     return render(request, 'aub/check.html', {'filter': aubs})
 
 
