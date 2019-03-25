@@ -17,10 +17,12 @@
       <sourceFolder url="file://$MODULE_DIR$/schoolapps" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (SchoolApps)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (school-apps)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-3.2.1" level="application" />
-    <orderEntry type="module" module-name="bwinf-36-2" />
+    <orderEntry type="library" name="react.production" level="application" />
+    <orderEntry type="library" name="react-dom.production" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

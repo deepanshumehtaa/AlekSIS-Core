@@ -14,25 +14,19 @@
     <!--------->
     <!-- CSS -->
     <!--------->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'materialize/dist/css/materialize.min.css' %}">
-
-    <!-- django-material -->
-    {#    {% include 'material/includes/material_css.html' %}#}
-
+    <link href="{% static 'materialdesignicons-webfont/material-icons.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="{% static 'materialize/dist/css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
+  
     <!---------------->
-    <!-- JavaScript -->
+    <!-- JavaScript (jquery v. 3.3.1.slim)-->
     <!---------------->
     <script src="{% static 'common/manup.min.js' %}"></script>
-    {#    <script src="{% static "common/pwabuilder-sw.js"%}"></script>#}
     <script src="{% static "common/pwabuilder-sw-register.js" %}"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <!--<script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'jquery/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
     <script src="{% static 'common/helper.js' %}"></script>
-    <!-- django-material -->
-    {#    {% include 'material/includes/material_js.html' %}#}
 
 </head>
 <body>

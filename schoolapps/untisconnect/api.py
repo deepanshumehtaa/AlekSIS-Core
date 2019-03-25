@@ -1,4 +1,6 @@
-from untisconnect.api_helper import get_term_by_id, run_using
+from django.conf import settings
+
+from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_date, date_to_untis_date
 from . import models
 from timetable import models as models2
 
@@ -268,6 +270,33 @@ def get_all_subjects():
 def get_subject_by_id(id):
     subject = run_one(models.Subjects.objects, filter_term=False).get(subject_id=id)
     return one_by_id(subject, Subject)
+
+
+class Absence(object):
+    def __init__(self):
+        self.filled = None
+        self.teacher = None
+        self.from_date = None
+        self.to_date = None
+        self.from_lesson = None
+        self.to_lesson = None
+        self.is_whole_day = None
+
+    def create(self, db_obj):
+        self.filled = True
+        print(db_obj.ida)
+        self.teacher = get_teacher_by_id(db_obj.ida)
+        self.from_date = untis_date_to_date(db_obj.datefrom)
+        self.to_date = untis_date_to_date(db_obj.dateto)
+        self.from_lesson = db_obj.lessonfrom
+        self.to_lesson = db_obj.lessonto
+        self.is_whole_day = self.from_lesson == 1 and self.to_lesson >= settings.TIMETABLE_HEIGHT
+
+
+def get_all_absences_by_date(date):
+    d_i = int(date_to_untis_date(date))
+    db_rows = run_all(models.Absence.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
+    return row_by_row_helper(db_rows, Absence)
 
 
 ##########
