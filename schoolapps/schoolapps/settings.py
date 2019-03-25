@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
-    'django_user_agents',
+    #'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_pdb.middleware.PdbMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
+    #'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
