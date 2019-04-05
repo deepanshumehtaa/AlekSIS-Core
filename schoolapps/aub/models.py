@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from datetime import date
+from tinymce.models import HTMLField
 
 
 def get_default_user():
@@ -30,7 +31,7 @@ class Aub(models.Model):
     to_time = models.TimeField(default=timezone.now)
 
     # Information
-    description = models.TextField()
+    description = HTMLField()
     status = models.ForeignKey(Status, related_name='aubs', on_delete=models.SET(get_default_status()),
                                default=get_default_status())
     # Meta

@@ -24,6 +24,12 @@ from django.conf import settings
 
 from schoolapps.settings import BASE_DIR
 
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': "simple", # default value
+    'relative_urls': False, # default value
+    'width': '100%',
+    'height': 300
+}
 
 def manifest(request):
     return serve(request, "manifest.json")
@@ -69,7 +75,12 @@ urlpatterns = [
     # SUPPORT #
     ###########
     path('support/', include('support.urls')),
-    path("pwabuilder-sw.js", serviceworker)
+    path("pwabuilder-sw.js", serviceworker),
+
+    ###########
+    # TinyMCE #
+    ###########
+#    path('tinymce/', include('tinymce.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

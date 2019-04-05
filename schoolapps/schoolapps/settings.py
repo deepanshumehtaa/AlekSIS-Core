@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
