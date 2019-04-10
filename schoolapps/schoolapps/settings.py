@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
-    #'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +66,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_pdb.middleware.PdbMiddleware',
-    #'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
@@ -169,7 +167,7 @@ TIMETABLE_HEIGHT = 10
 LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
            ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
 SHORT_WEEK_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"]
-LONG_WEEK_DAYS = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+LONG_WEEK_DAYS = [("Montag", 0), ("Dienstag", 1), ("Mittwoch", 2), ("Donnerstag", 3), ("Freitag", 4)]
 
 ########
 # LDAP #
