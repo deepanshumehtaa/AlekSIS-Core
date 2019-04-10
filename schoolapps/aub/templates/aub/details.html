@@ -6,9 +6,12 @@
     </strong>
     <h5>{{ aub.from_date }}, {{ aub.from_time }} Uhr bis <br />
         {{ aub.to_date }}, {{ aub.to_time }} Uhr </h5>
-    <p><strong>Status: <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></strong></p>
+    <p><strong>Status: <span class="badge new no-float {{ aub.getStatus.style_class }}">{{ aub.getStatus.name }}</span></strong></p>
     <p><strong>Beschreibung:</strong> {{ aub.description }}</p>
-    <hr>
+
+        <a href="{% url 'aub_index' %}" class="waves-effect waves-light btn green">
+        <i class="material-icons left">home</i>
+        Zurück zur Übersicht</a>
 
 </main>
 {% include 'partials/footer.html' %}

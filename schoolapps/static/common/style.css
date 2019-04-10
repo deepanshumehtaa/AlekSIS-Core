@@ -103,6 +103,9 @@ span.badge.new {
     height: 26px;
 }
 
+span.badge.no-float {
+    float: none;
+}
 /*span.badge {*/
 /*width: 9em;*/
 /*line-height: 4ex;*/
