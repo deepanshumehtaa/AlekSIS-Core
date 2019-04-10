@@ -160,6 +160,26 @@ span.badge.new {
     width: 100%;
 }
 
+.timetable-mobile-title-card{
+    margin-top: 50px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card:first-child{
+    margin-top: -10px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card .card-content{
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.timetable-mobile-title-card .card-content .card-title{
+    font-weight: bold;
+}
+
 table.substitutions td, table.substitutions th {
     padding: 10px 5px;
 }
