@@ -21,6 +21,19 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
+    <script src="{% static 'js/jquery/jquery-3.3.1.min.js' %}"></script>
+
+    {% if martor %}
+        <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        {#        <link href="{% static "semantic/icon.min.css" %}" type="text/css" rel="stylesheet">#}
+        {#        <link href="{% static "semantic/button.min.css" %}" type="text/css" rel="stylesheet">#}
+        {#        <link href="{% static "semantic/menu.min.css" %}" type="text/css" rel="stylesheet">#}
+        {#        <link href="{% static "semantic/dropdown.min.css" %}" type="text/css" rel="stylesheet">#}
+        {#        <link href="{% static "semantic/tab.min.css" %}" type="text/css" rel="stylesheet">#}
+
+        <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+    {% endif %}
 </head>
 <body>
 <header>
@@ -119,9 +132,18 @@
                         <i class="material-icons">update</i> Vertretungsplan
                     </a>
                 </li>
+                {% if perms.timetable.view_hint %}
+                    <li>
+                        <a href="{% url 'timetable_hints' %}">
+                            <i class="material-icons">notes</i> Hinweismanagement
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <div class="divider"></div>
                 </li>
+
+
             {% endif %}
 
             <li>

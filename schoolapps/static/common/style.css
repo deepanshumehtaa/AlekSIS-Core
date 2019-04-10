@@ -12,7 +12,7 @@ body {
     background-color: #da1f3d !important;
 }
 
-.primary-color-text {
+.primary-color-text, .primary-color-text a {
     color: #da1f3d !important;
 }
 
