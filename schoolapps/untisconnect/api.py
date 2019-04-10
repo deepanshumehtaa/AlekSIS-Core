@@ -2,7 +2,7 @@ from django.conf import settings
 
 from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_date, date_to_untis_date
 from . import models
-from timetable import models as models2
+from timetable.settings import untis_settings
 
 
 def run_all(obj, filter_term=True):
@@ -15,7 +15,7 @@ def run_one(obj, filter_term=True):
 
 def run_default_filter(obj, filter_term=True):
     # Get term by settings in db
-    TERM_ID = models2.untis_settings.term
+    TERM_ID = untis_settings.term
     TERM = get_term_by_id(TERM_ID)
     SCHOOL_ID = TERM.school_id  # 705103
     SCHOOLYEAR_ID = TERM.schoolyear_id  # 20172018
