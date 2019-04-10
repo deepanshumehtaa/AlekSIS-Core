@@ -18,7 +18,7 @@
 
         <div class="row">
             <p class="red-text">{{ form.short_description.errors }}</p>
-            <div class="input-field col s12">
+            <div class="input-field col s12 support-input-mobile">
                 <i class="material-icons prefix">help</i>
                 {{ form.short_description }}
                 <label for="{{ form.short_description.id_for_label }}">Bitte beschreibe dein Problem<strong> in
@@ -28,7 +28,7 @@
 
         <div class="row">
             <p class="red-text">{{ form.long_description.errors }}</p>
-            <div class="input-field col s12">
+            <div class="input-field col s12 support-input-mobile">
                 <i class="material-icons prefix">mode_edit</i>
                 <textarea id="{{ form.long_description.id_for_label }}" name="{{ form.long_description.html_name }}"
                           class="materialize-textarea"></textarea>

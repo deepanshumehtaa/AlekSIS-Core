@@ -14,7 +14,7 @@ class REBUSForm(forms.Form):
 class FeedbackForm(forms.Form):
     ratings = [(5, 5), (4, 4), (3, 3), (2, 2), (1, 1)]
 
-    design_rating = forms.ChoiceField(label="Design",
+    design_rating = forms.ChoiceField(label="Design der Oberfläche",
                                       choices=ratings,
                                       widget=forms.RadioSelect(attrs={"checked": "checked"}),
                                       required=True,
@@ -36,16 +36,16 @@ class FeedbackForm(forms.Form):
                                        required=True)
 
     apps = forms.CharField(
-        label="Bitte sage uns, was dir an SchoolApps gefällt und was dich stört bzw. was du ändern würdest.",
+        label="Was gefällt Dir an SchoolApps? Was würdest du ändern?",
         required=False,
         widget=forms.Textarea)
 
-    more = forms.CharField(label="Möchtest du uns sonst noch etwas mitteilen?",
-                           required=False,
-                           widget=forms.Textarea(
-                               attrs={"class": "materialize-textarea"}
-                           ))
+    more = forms.CharField(
+        label="Möchtest Du uns sonst noch etwas mitteilen?",
+        required=False,
+        widget=forms.Textarea)
+
     ideas = forms.CharField(
-        label='Hast du Ideen, was wir noch in SchoolApps einbauen könnten/sollten?',
+        label='Hast Du Ideen, was wir noch in SchoolApps einbauen sollten?',
         required=False,
         widget=forms.Textarea)
