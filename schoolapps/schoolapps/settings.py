@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'material',
     'django_react_templatetags',
     'martor',
+    'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [
