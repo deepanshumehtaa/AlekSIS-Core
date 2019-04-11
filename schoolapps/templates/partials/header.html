@@ -1,12 +1,15 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SchoolApps – Katharineum zu Lübeck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#da1f3d">
+    <meta name="description" content="Selbst programmierte Anwendungen für den Schullaltag am Katharineum zu Lübeck">
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}">
     <link rel="manifest" href="{% static "common/manifest.json" %}">
@@ -14,23 +17,11 @@
     <!--------->
     <!-- CSS -->
     <!--------->
-    <link href="{% static 'materialdesignicons-webfont/material-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/materialdesignicons-webfont/material-icons.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen"
-          href="{% static 'materialize/dist/css/materialize.min.css' %}">
+          href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
-  
-    <!---------------->
-    <!-- JavaScript (jquery v. 3.3.1.slim)-->
-    <!---------------->
-    <script src="{% static 'common/manup.min.js' %}"></script>
-    <script src="{% static "common/pwabuilder-sw-register.js" %}"></script>
-    <script src="{% static 'jquery/jquery-3.3.1.slim.min.js' %}"></script>
- <!--   <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
--->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-<script src="{% static 'common/helper.js' %}"></script>
-
+    <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
 </head>
 <body>
 <header>
@@ -67,7 +58,7 @@
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li class="logo">
             <a id="logo-container" href="/" class="brand-logo">
-                <img src="{% static 'common/logo.png' %}">
+                <img src="{% static 'common/logo.png' %}" alt="Logo des Katharineums">
             </a>
         </li>
 
@@ -200,8 +191,10 @@
 <header class="alert success">
     <p>
         <i class="material-icons left">info</i>
-        Du befindest dich in der Testversion von SchoolApps. Daher kann es immer mal wieder zu unvorhergesehenen
+        Du befindest dich in der Testversion von SchoolApps. Daher kann es immer mal wieder zu unvorhersehbaren
         Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über
-        <a href="mailto:support@katharineum.de">support@katharineum.de</a> schreibst.
+        <a href="mailto:support@katharineum.de">support@katharineum.de</a> schreibst oder die in SchoolApps integrierten
+        <a href="https://info.katharineum.de/support/rebus/">Fehlermelde-</a> und
+        <a href="https://info.katharineum.de/support/feedback/">Feedbackfunktionen</a> nutzt.
     </p>
 </header>

@@ -20,7 +20,7 @@ DATABASES = {
     },
     'untis': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'untiskath',
+        'NAME': 'Untis',
         'USER': 'www-data',
         'PASSWORD': 'grummelPASS1531',
         'HOST': '',
