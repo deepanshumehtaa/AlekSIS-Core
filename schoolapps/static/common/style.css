@@ -123,6 +123,9 @@ span.badge.no-float {
 /*+++++++++++*/
 /* Timetable */
 /*+++++++++++*/
+.smart-plan-badge {
+    margin: 5px 20px 5px 0;
+}
 
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
