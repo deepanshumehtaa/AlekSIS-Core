@@ -17,42 +17,32 @@ class Status():
     def __str__(self):
         return self.name
 
+
 status_list = [
     Status(name='In Bearbeitung 1', style_class='orange'),
     Status(name='In Bearbeitung 2', style_class='yellow'),
     Status(name='Genehmigt', style_class='green'),
     Status(name='Abgelehnt', style_class='red'),
-    ]
+]
 print("status_list[0].name  :", status_list[0].name)
+status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
-
-
-# def get_default_status():
-#     status, created = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')
-#     return status.id
-#
 
 class Aub(models.Model):
     # Time
-    from_date = models.DateField(default=date.today)
-    from_time = models.TimeField(default=timezone.now)
-    to_date = models.DateField(default=date.today)
-    to_time = models.TimeField(default=timezone.now)
+    from_date = models.DateField(default=date.today, verbose_name="Startdatum")
+    from_time = models.TimeField(default=timezone.now, verbose_name="Startzeit")
+    to_date = models.DateField(default=date.today, verbose_name="Enddatum")
+    to_time = models.TimeField(default=timezone.now, verbose_name="Endzeit")
 
     # Information
     description = models.TextField()
-#    status = models.ForeignKey(Status, related_name='aubs', on_delete=models.SET(get_default_status()),
-#                               default=get_default_status())
-#     status_choices = [(IN_PROCESSING_STATUS.id, IN_PROCESSING_STATUS.name),
-#                       (SEMI_ALLOWED_STATUS.id, SEMI_ALLOWED_STATUS.name),
-#                       (ALLOWED_STATUS.id, ALLOWED_STATUS.name),
-#                       (NOT_ALLOWED_STATUS.id, NOT_ALLOWED_STATUS.name)]
-    status = models.IntegerField(default=0)
+    status = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
 
     # Meta
     created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
-                                   default=get_default_user())
-    created_at = models.DateTimeField(default=timezone.now)
+                                   default=get_default_user(), verbose_name="Erstellt von")
+    created_at = models.DateTimeField(default=timezone.now, verbose_name="Erstellungszeitpunkt")
 
     def getStatus(self):
         return status_list[self.status]
@@ -70,3 +60,6 @@ class Aub(models.Model):
             ('check2_aub', 'Check a AUB'),
             ('view_archive', 'View AUB archive'),
         )
+
+        verbose_name = "AUB"
+        verbose_name_plural = "AUBs"
