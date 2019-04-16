@@ -196,7 +196,10 @@ def check2(request):
 def archive(request):
     order_crit = '-from_date'
     if 'created_by' in request.GET:
-        item = int(request.GET['created_by'])
+        try:
+            item = int(request.GET['created_by'])
+        except ValueError:
+            item = ''
         aub_list = Aub.objects.filter((Q(status__exact=2) | Q(status__exact=3)) & Q(created_by=item)).order_by(order_crit)
     else:
         aub_list = Aub.objects.filter(Q(status__exact=2) | Q(status__exact=3)).order_by(order_crit)
