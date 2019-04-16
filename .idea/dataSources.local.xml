@@ -2,15 +2,15 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="Django default" uuid="ef6730d6-e849-4772-acac-62469acab4d2">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <introspection-schemas>*:schoolapps</introspection-schemas>
     </data-source>
     <data-source name="Django default2" uuid="ea4cff78-5949-410f-aa64-d6daa5fb293d">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <introspection-schemas>*:schoolapps</introspection-schemas>
     </data-source>
     <data-source name="Django untis" uuid="ae145b31-953d-4d55-ad07-b49b3287f618">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <introspection-schemas>*:untis</introspection-schemas>
     </data-source>
   </component>

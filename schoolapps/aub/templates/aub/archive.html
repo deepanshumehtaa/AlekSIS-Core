@@ -5,7 +5,7 @@
 
     <form method="GET">
         {{ filter.form.as_p }}
-        <button type="submit" class="waves-effect waves-light btn">
+        <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">refresh</i> Filter aktualisieren
         </button>
     </form>
@@ -36,13 +36,13 @@
                         <form action="" method="POST" class="right">
                             {% csrf_token %}
                             <input type="hidden" value="{{ aub.id }}" name="aub-id">
-                            {% if aub.status_id != 3 %}
+                            {% if aub.status != 2 %}
                                 <button type="submit" name="allow"
                                         class="waves-effect waves-light btn-flat btn-flat-large" title="Annehmen">
                                     <i class="material-icons center green-text">check_circle</i>
                                 </button>
                             {% endif %}
-                            {% if aub.status_id != 4 %}
+                            {% if aub.status != 3 %}
                                 <button type="submit" name="deny"
                                         class="waves-effect waves-light btn-flat btn-flat-large" title="Ablehnen">
                                     <i class="material-icons center red-text">not_interested</i>
@@ -53,7 +53,7 @@
                     </div-->
                     <div class="col s12 m2">
                         <p>
-                            <span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span>
+                            <span class="badge new {{ aub.getStatus.style_class }}">{{ aub.getStatus.name }}</span>
                         </p>
                     </div>
                 </div>

@@ -7,6 +7,6 @@ secure*
 *.log
 class.pdf
 class.tex
-.idea/
-media/
+.idea
+media
 node_modules
