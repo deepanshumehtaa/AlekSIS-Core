@@ -32,7 +32,7 @@
                         </div>
                         <div class="col s12 m4">
                             <p>
-                            {% if aub.status_id == 1 %}
+                            {% if aub.status == 0 %}
                                 <form action="{% url 'aub_edit' aub.id %}" class="right">
                                     {% csrf_token %}
                                     <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
@@ -40,11 +40,10 @@
                                     </button>
                                 </form>
                             {% endif %}
-                            {% if aub.status_id == 1 or aub.status_id == 2 %}
+                            {% if aub.status == 0 or aub.status == 1 %}
                                 <form action="" method="POST" class="right">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{ aub.id }}" name="aub-id">
-
                                     <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
                                         <i class="material-icons center red-text">cancel</i>
                                     </button>
@@ -54,7 +53,7 @@
 
                         </div>
                         <div class="col s12 m2">
-                            <p><span class="badge new {{ aub.status.style_classes }}">{{ aub.status.name }}</span></p>
+                            <p><span class="badge new {{ aub.getStatus.style_class }}">{{ aub.getStatus.name }}</span></p>
                         </div>
                     </div>
                 

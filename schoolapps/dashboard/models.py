@@ -13,7 +13,7 @@ def get_default_user():
 # Create your models here.
 
 class Activity(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, default=get_default_user())
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, default=get_default_user())
 
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
@@ -28,7 +28,7 @@ class Activity(models.Model):
 
 class Notification(models.Model):
     # to = models.ManyToManyField(User, related_name='notifications')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user(), related_name="notifications")
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, default=get_default_user(), related_name="notifications")
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     link = models.URLField(blank=True)

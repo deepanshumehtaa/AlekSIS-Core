@@ -1,0 +1,100 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+
+<main>
+
+    <p class="flow-text">
+        Bitte gebe uns ein ausführliches und ehrliches Feedback, damit wir SchoolApps noch besser machen können!
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <ul class="collection">
+            <li class="collection-item">
+                <div><div>{{ form.design_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating">
+                        {% for radio in form.design_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div><div>{{ form.performance_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating">
+                        {% for radio in form.performance_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div><div>{{ form.usability_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating">
+                        {% for radio in form.usability_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div><div>{{ form.overall_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating">
+                        {% for radio in form.overall_rating %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}"></label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+
+            <li class="collection-item">
+                <div>
+                    <div class="input-field support-input-mobile">
+                        <textarea id="{{ form.ideas.id_for_label }}" name="{{ form.ideas.html_name }}"
+                                  class="materialize-textarea"></textarea>
+                        <label for="{{ form.ideas.id_for_label }}">{{ form.ideas.label }}</label>
+                    </div>
+                </div>
+            </li>
+
+            <li class="collection-item">
+                <div>
+                    <div class="input-field support-input-mobile">
+                        <textarea id="{{ form.apps.id_for_label }}" name="{{ form.apps.html_name }}"
+                                  class="materialize-textarea"></textarea>
+                        <label for="{{ form.apps.id_for_label }}">{{ form.apps.label }}</label>
+                    </div>
+                </div>
+            </li>
+
+            <li class="collection-item">
+                <div>
+                    <div class="input-field support-input-mobile">
+                        <textarea id="{{ form.more.id_for_label }}" name="{{ form.more.html_name }}"
+                                  class="materialize-textarea"></textarea>
+                        <label for="{{ form.more.id_for_label }}">{{ form.more.label }}</label>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+        <!-- (add two "%"s to make it work again :)
+        { form form=form %}
+        { endform %} -->
+
+        <button type="submit" name="go" class="btn waves-effect waves-light green">
+            Feedback senden
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+
+
+</main>
+{% include 'partials/footer.html' %}
