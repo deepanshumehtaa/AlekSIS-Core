@@ -101,4 +101,8 @@ $(document).ready(function () {
     $("#print").click(function () {
         window.print();
     });
+
+    // Initialize collapsible [MAT]
+    $('.collapsible').collapsible();
+
 });
