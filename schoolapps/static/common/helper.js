@@ -105,4 +105,10 @@ $(document).ready(function () {
     // Initialize collapsible [MAT]
     $('.collapsible').collapsible();
 
+    // Initialize delete button
+    $(".delete-button").click(function (e) {
+        if (!confirm("Wirklich löschen?")) {
+            e.preventDefault();
+        }
+    })
 });
