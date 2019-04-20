@@ -55,6 +55,11 @@ urlpatterns = [
     #######
     path('aub/', include('aub.urls')),
 
+    ########
+    # FIBU #
+    ########
+    path('fibu/', include('fibu.urls')),
+
     #############
     # TIMETABLE #
     #############
