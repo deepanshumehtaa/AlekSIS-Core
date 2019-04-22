@@ -199,7 +199,7 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
-.lesson-card a {
+.lesson-card a, .substitutions a {
     color: black;
 }
 
