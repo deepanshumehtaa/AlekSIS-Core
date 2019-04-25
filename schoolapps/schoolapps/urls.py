@@ -59,6 +59,11 @@ urlpatterns = [
     ########
     path('menu/', include('menu.urls')),
 
+    #######
+    # FAQ #
+    #######
+    path('faq/', include('faq.urls')),
+
     #########
     # Admin #
     #########
