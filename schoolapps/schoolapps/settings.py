@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
     'support.apps.SupportConfig',
-    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
