@@ -1,12 +1,13 @@
 import datetime
 import os
 
+from PyPDF2 import PdfFileMerger
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404, FileResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from schoolapps.settings import WEEK_DAYS
+from schoolapps.settings import SHORT_WEEK_DAYS, LONG_WEEK_DAYS
 from timetable.pdf import generate_class_tex, generate_pdf
 
 from untisconnect.plan import get_plan, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM, parse_lesson_times
@@ -115,7 +116,8 @@ def plan(request, plan_type, plan_id, regular="", year=timezone.datetime.now().y
         "weeks": get_calendar_weeks(year=year),
         "selected_week": calendar_week,
         "selected_year": year,
-        "week_days": WEEK_DAYS
+        "short_week_days": SHORT_WEEK_DAYS,
+        "long_week_days": LONG_WEEK_DAYS,
     }
 
     return render(request, 'timetable/plan.html', context)
@@ -143,6 +145,7 @@ def my_plan(request, year=None, day=None, month=None):
         shortcode = request.user.username
         el = get_teacher_by_shortcode(shortcode)
         plan_id = el.id
+        raw_type = "teacher"
         # print(el)
     elif _type == UserInformation.STUDENT:
         _type = TYPE_CLASS
@@ -150,8 +153,9 @@ def my_plan(request, year=None, day=None, month=None):
         # print(_name)
         el = get_class_by_name(_name)
         plan_id = el.id
+        raw_type = "class"
     else:
-        redirect("timetable_admin_all")
+        return redirect("timetable_admin_all")
     # print(monday_of_week)
 
     plan = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
@@ -159,12 +163,12 @@ def my_plan(request, year=None, day=None, month=None):
 
     context = {
         "type": _type,
+        "raw_type": raw_type,
         "id": plan_id,
         "plan": plan,
         "el": el,
         "times": parse_lesson_times(),
         "week_day": date.isoweekday() - 1,
-        "week_days": WEEK_DAYS,
         "date": date,
         "date_js": int(date.timestamp()) * 1000,
         "display_date_only": True
@@ -191,19 +195,34 @@ def sub_pdf(request):
 
     # Get the next weekday
     today = timezone.datetime.now()
+
     first_day = get_next_weekday(today)
+    second_day = get_next_weekday(today + datetime.timedelta(days=1))
 
     # Get subs and generate table
-    subs = get_substitutions_by_date(first_day)
-    sub_table = generate_sub_table(subs)
-    header_info = get_header_information(subs)
-    # print(header_info.affected_teachers)
+    for i, date in enumerate([first_day, second_day]):
+        # Get subs and generate table
+        subs = get_substitutions_by_date(date)
+        sub_table = generate_sub_table(subs)
+        header_info = get_header_information(subs, date)
+        
+        # Generate LaTeX
+        tex = generate_class_tex(sub_table, date, header_info)
 
-    # Generate LaTeX
-    tex = generate_class_tex(sub_table, first_day, header_info)
+        # Generate PDF
+        generate_pdf(tex, "class{}".format(i))
 
-    # Generate PDF
-    generate_pdf(tex, "class")
+    # Merge PDFs
+    merger = PdfFileMerger()
+    class0 = open(os.path.join(BASE_DIR, "latex", "class0.pdf"), "rb")
+    class1 = open(os.path.join(BASE_DIR, "latex", "class1.pdf"), "rb")
+    merger.append(fileobj=class0)
+    merger.append(fileobj=class1)
+
+    # Write merged PDF to class.pdf
+    output = open(os.path.join(BASE_DIR, "latex", "class.pdf"), "wb")
+    merger.write(output)
+    output.close()
 
     # Read and response PDF
     file = open(os.path.join(BASE_DIR, "latex", "class.pdf"), "rb")

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
-    'faq.apps.FaqConfig',
+    'support.apps.SupportConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'material',
+    'django_react_templatetags',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_react_templatetags.context_processors.react_context_processor',
             ],
         },
     },
@@ -164,7 +166,8 @@ TIMETABLE_WIDTH = 5
 TIMETABLE_HEIGHT = 10
 LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
            ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
-WEEK_DAYS = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+SHORT_WEEK_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"]
+LONG_WEEK_DAYS = [("Montag", 0), ("Dienstag", 1), ("Mittwoch", 2), ("Donnerstag", 3), ("Freitag", 4)]
 
 ########
 # LDAP #

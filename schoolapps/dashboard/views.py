@@ -6,6 +6,7 @@ from .models import Activity, register_notification
 from mailer import send_mail_with_template
 from userinformation import UserInformation
 
+
 # Create your views here.
 
 @login_required

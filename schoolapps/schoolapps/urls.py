@@ -59,18 +59,16 @@ urlpatterns = [
     ########
     path('menu/', include('menu.urls')),
 
-    #######
-    # FAQ #
-    #######
-    path('faq/', include('faq.urls')),
-
     #########
     # Admin #
     #########
     path('settings/', include('dbsettings.urls')),
     path('admin/', admin.site.urls),
 
-    # path("manifest.json", manifest),
+    ###########
+    # SUPPORT #
+    ###########
+    path('support/', include('support.urls')),
     path("pwabuilder-sw.js", serviceworker)
 ]
 
