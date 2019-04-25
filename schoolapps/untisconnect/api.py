@@ -4,6 +4,7 @@ from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_dat
 from . import models
 from timetable import models as models2
 
+from datetime import date
 
 def run_all(obj, filter_term=True):
     return run_default_filter(run_using(obj).all(), filter_term=filter_term)
@@ -304,3 +305,32 @@ def get_all_absences_by_date(date):
 ##########
 def get_raw_lessons():
     return run_all(models.Lesson.objects)
+
+###########
+# HOLIDAY #
+###########
+class Holiday(object):
+    def __init__(self):
+        self.filled = False
+        self.name = None
+        self.datefrom = None
+        self.dateto = None
+
+    def __str__(self):
+        if self.filled:
+            return self.name or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def create(self, db_obj):
+        self.filled = True
+        self.name = db_obj.name
+        self.datefrom = db_obj.datefrom
+        self.dateto = db_obj.dateto
+
+
+def get_today_holidays(date):
+    #db_holidays = row_by_row(models.Holiday, Holiday)
+    d_i = int(date_to_untis_date(date))
+    db_rows = run_all(models.Holiday.objects.filter(dateto__gte=d_i, datefrom__lte=d_i), filter_term=False)
+    return row_by_row_helper(db_rows, Holiday)

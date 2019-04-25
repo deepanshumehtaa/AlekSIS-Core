@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from schoolapps import settings
 from schoolapps.settings import LESSONS
-from untisconnect.api import format_classes
+from untisconnect.api import format_classes, get_today_holidays
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION
 
@@ -74,12 +74,17 @@ def get_plan(type, id, smart=False, monday_of_week=None):
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
         # print(week_days)
         subs_for_weekday = []
+        hols_for_weekday = []
         for week_day in week_days:
             # print(week_day)
             subs = get_substitutions_by_date_as_dict(week_day)
             subs_for_weekday.append(subs)
+
+            hols = get_today_holidays(week_day)
+            hols_for_weekday.append(hols)
             # print(subs)
             # print(len(subs))
+        #print(hols_for_weekday)
     # Init plan array
     plan = []
     already_added_subs_as_ids = []
@@ -161,6 +166,12 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                                 # The rooms is empty, too, if the lesson is canceled
                         if matching_sub["sub"].type == TYPE_CANCELLATION:
                             element_container.is_old = True
+
+                    # Check for holidays
+                    if smart and hols_for_weekday[time.day - 1]:
+                        element_container.is_hol = True
+                        element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
+
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
