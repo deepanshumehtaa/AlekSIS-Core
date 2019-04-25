@@ -5,7 +5,7 @@
 <main>
 
     <p class="flow-text">
-        Bitte gebe uns ein ausführliches und ehrliches Feedback, damit wir SchoolApps noch besser machen können!
+        Bitte gib uns ein ausführliches und ehrliches Feedback, damit wir SchoolApps noch besser machen können!
     </p>
 
     <form method="post">
@@ -13,44 +13,48 @@
 
         <ul class="collection">
             <li class="collection-item">
-                <div><div>{{ form.design_rating.label }} <span class="red-text">*</span></div>
-                    <div class="rating">
+                <div class="row"><div class="col s12 l6">{{ form.design_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating col s12 l6">
                         {% for radio in form.design_rating %}
                             {{ radio.tag }}
                             <label for="{{ radio.id_for_label }}"></label>
                         {% endfor %}
                     </div>
                 </div>
+            <div class="hide-on-large-only">&nbsp;</div>
             </li>
             <li class="collection-item">
-                <div><div>{{ form.performance_rating.label }} <span class="red-text">*</span></div>
-                    <div class="rating">
+                <div class="row"><div class="col s12 l6">{{ form.performance_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating col s12 l6">
                         {% for radio in form.performance_rating %}
                             {{ radio.tag }}
                             <label for="{{ radio.id_for_label }}"></label>
                         {% endfor %}
                     </div>
                 </div>
+            <div class="hide-on-large-only">&nbsp;</div>
             </li>
             <li class="collection-item">
-                <div><div>{{ form.usability_rating.label }} <span class="red-text">*</span></div>
-                    <div class="rating">
+                <div class="row"><div class="col s12 l6">{{ form.usability_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating col s12 l6">
                         {% for radio in form.usability_rating %}
                             {{ radio.tag }}
                             <label for="{{ radio.id_for_label }}"></label>
                         {% endfor %}
                     </div>
                 </div>
+            <div class="hide-on-large-only">&nbsp;</div>
             </li>
             <li class="collection-item">
-                <div><div>{{ form.overall_rating.label }} <span class="red-text">*</span></div>
-                    <div class="rating">
+                <div class="row"><div class="col s12 l6">{{ form.overall_rating.label }} <span class="red-text">*</span></div>
+                    <div class="rating col s12 l6">
                         {% for radio in form.overall_rating %}
                             {{ radio.tag }}
                             <label for="{{ radio.id_for_label }}"></label>
                         {% endfor %}
                     </div>
                 </div>
+            <div class="hide-on-large-only">&nbsp;</div>
             </li>
 
             <li class="collection-item">
