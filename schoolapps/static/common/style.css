@@ -404,7 +404,11 @@ FEEDBACK
 
 .holiday-badge{
     float: left !important;
-    margin-left: 50% !important;
+    position: relative;
+    margin-left: 0% !important;
+    left: 50%;
     transform: translate(-50%);
     width: auto;
+    height: auto !important;
+    min-height: 26px;
 }
