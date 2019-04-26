@@ -398,3 +398,13 @@ FEEDBACK
   vertical-align: middle;
 }
 
+/*++++++++
++HOLIDAYS+
+++++++++++ */
+
+.holiday-badge{
+    float: left !important;
+    margin-left: 50% !important;
+    transform: translate(-50%);
+    width: auto;
+}
