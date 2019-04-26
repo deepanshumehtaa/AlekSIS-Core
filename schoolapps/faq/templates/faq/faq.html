@@ -5,7 +5,7 @@
      <ul class="collapsible">
          {% for question in questions %}
         <li>
-            <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %} {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question }}</div>
+            <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %} {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}</div>
             <div class="collapsible-body"><span class="flow-text">{{ question.answer|safe }}</span></div>
         </li>
          {% endfor %}
