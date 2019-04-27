@@ -12,5 +12,6 @@ class0.tex
 class1.pdf
 class1.tex
 .idea
-media
+media/
 node_modules
+staticcollect

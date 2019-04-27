@@ -12,7 +12,7 @@ body {
     background-color: #da1f3d !important;
 }
 
-.primary-color-text {
+.primary-color-text, .primary-color-text a {
     color: #da1f3d !important;
 }
 
@@ -103,22 +103,14 @@ span.badge.new {
     height: 26px;
 }
 
-span.badge.no-float {
+span.badge.new.no-float {
     float: none;
+    padding: 3px 6px;
 }
-/*span.badge {*/
-/*width: 9em;*/
-/*line-height: 4ex;*/
-/*height: 4ex;*/
-/*}*/
-/*span.badge::after {*/
-/*content: "";*/
-/*}*/
 
-/*span.item-text {*/
-/*line-height: 4ex;*/
-/*vertical-align: bottom;*/
-/*}*/
+span.badge .material-icons {
+    font-size: 0.9rem;
+}
 
 /*+++++++++++*/
 /* Timetable */
@@ -235,7 +227,11 @@ table.substitutions td, table.substitutions th {
 }
 
 .no-margin {
-    margin: 0;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* Table*/
@@ -306,23 +302,32 @@ table.striped > tbody > tr:nth-child(odd) {
     }
 }
 
-.alert p {
+.alert ul, .alert p {
+    margin: 0;
+}
+
+.alert p:first-child, .alert div:first-child {
     margin: 10px;
     padding: 10px;
     border-left: 5px solid;
 }
 
-.alert.success p {
+.alert.success p, .alert.success div {
     background-color: #c5e1a5;
     border-color: #4caf50;
 }
 
-.alert.error p {
+.alert.error p, .alert.error div {
     background-color: #ef9a9a;
     border-color: #b71c1c;
 }
 
-main .alert p {
+.alert.primary p, .alert.primary div {
+    background-color: #eca4af;
+    border-color: #da1f3d;
+}
+
+main .alert p:first-child, main .alert div:first-child {
     margin-left: -10px;
     margin-right: -10px;
 }
@@ -354,39 +359,44 @@ FEEDBACK
         min-height: 40px;
         justify-content: space-around;
     }
+´
 }
 
 .rating label {
-  display: flex;
-  flex: 1;
-  position: relative;
-  cursor: pointer;
+    display: flex;
+    flex: 1;
+    position: relative;
+    cursor: pointer;
 }
+
 .rating label:after {
-  font-family: 'Material Icons';
-  -webkit-font-feature-settings: 'liga';
-  position: absolute;
-  color: #777;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 40px;
-  content: 'star_border';
+    font-family: 'Material Icons';
+    -webkit-font-feature-settings: 'liga';
+    position: absolute;
+    color: #777;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 40px;
+    content: 'star_border';
 }
+
 .rating input {
-  display: none!important;
+    display: none !important;
 }
+
 .rating > input:checked + label:after,
 .rating > input:checked ~ label:after {
-  content: "star";
-  color: #FFD700;
+    content: "star";
+    color: #FFD700;
 }
+
 .rating > input:hover + label:after,
 .rating > input:hover ~ label:after {
-  content: "star";
-  color: #FFD700;
+    content: "star";
+    color: #FFD700;
 }
 
 .support-input-mobile label {

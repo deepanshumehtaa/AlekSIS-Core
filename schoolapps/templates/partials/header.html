@@ -22,7 +22,12 @@
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
-
+    {% if martor %}
+        <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+    {% endif %}
+  
     <!-- Matomo -->
     <script type="text/javascript">
         var _paq = _paq || [];
@@ -41,7 +46,7 @@
             s.parentNode.insertBefore(g, s);
         })();
     </script>
-    <!-- End Matomo Code -->
+    <!-- End Matomo Code -->    
 </head>
 <body>
 <header>
@@ -140,9 +145,18 @@
                         <i class="material-icons">update</i> Vertretungsplan
                     </a>
                 </li>
+                {% if perms.timetable.view_hint %}
+                    <li>
+                        <a href="{% url 'timetable_hints' %}">
+                            <i class="material-icons">announcement</i> Hinweismanagement
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <div class="divider"></div>
                 </li>
+
+
             {% endif %}
 
             <li>
