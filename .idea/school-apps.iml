@@ -22,6 +22,14 @@
     <orderEntry type="library" name="jquery" level="application" />
   </component>
   <component name="TemplatesService">
+    <option name="templateFileTypes">
+      <list>
+        <option value="HTML" />
+        <option value="XHTML" />
+        <option value="XML" />
+        <option value="LaTeX source file" />
+      </list>
+    </option>
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>

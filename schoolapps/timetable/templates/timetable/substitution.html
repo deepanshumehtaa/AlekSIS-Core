@@ -26,8 +26,8 @@
     <table class="substitutions striped">
         <thead>
         <tr>
+            <th><i class="material-icons">people</i></th>
             <th><i class="material-icons">access_time</i></th>
-            <th>Klassen</th>
             <th>Lehrer</th>
             <th>Fach</th>
             <th>Raum</th>
@@ -37,7 +37,7 @@
         </thead>
         <tbody>
         {% for sub in sub_table %}
-            <tr class="{{ sub.css_class }}">
+            <tr class="{{ sub.color }}-text">
                 <td>
                     {{ sub.classes }}
                 </td>
@@ -47,15 +47,13 @@
                     </strong>
                 </td>
                 <td>
-                    <span class="tooltipped" data-position="bottom"
-                          data-tooltip="{{ sub.teacher_full|safe }}">{{ sub.teacher|safe }}</span>
+                    {% include "timetable/subs/teacher.html" %}
                 </td>
                 <td>
-                    {{ sub.subject|safe }}
+                    {% include "timetable/subs/subject.html" %}
                 </td>
                 <td>
-                    <span class="tooltipped" data-position="bottom"
-                          data-tooltip="{{ sub.room_full|safe }}">{{ sub.room|safe }}</span>
+                    {% include "timetable/subs/room.html" %}
                 </td>
                 <td>
                     {% if sub.badge %}

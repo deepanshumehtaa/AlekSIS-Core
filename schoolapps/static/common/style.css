@@ -115,6 +115,9 @@ span.badge .material-icons {
 /*+++++++++++*/
 /* Timetable */
 /*+++++++++++*/
+.smart-plan-badge {
+    margin: 5px 20px 5px 0;
+}
 
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
@@ -155,6 +158,26 @@ span.badge .material-icons {
     width: 100%;
 }
 
+.timetable-mobile-title-card{
+    margin-top: 50px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card:first-child{
+    margin-top: -10px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card .card-content{
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.timetable-mobile-title-card .card-content .card-title{
+    font-weight: bold;
+}
+
 table.substitutions td, table.substitutions th {
     padding: 10px 5px;
 }
@@ -168,7 +191,7 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
-.lesson-card a {
+.lesson-card a, .substitutions a {
     color: black;
 }
 
@@ -308,6 +331,13 @@ main .alert p:first-child, main .alert div:first-child {
     margin-left: -10px;
     margin-right: -10px;
 }
+.btn, .btn-large, .btn-small {
+    background-color: #282E3F;
+}
+
+.btn:hover, .btn-large:hover, .btn-small {
+    background-color: #DA1F3D;
+}
 
 /*++++++++++++++++
 FEEDBACK
@@ -316,8 +346,20 @@ FEEDBACK
 .rating {
     display: flex;
     flex-direction: row-reverse;
-    width: 450px;
-    min-height: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    min-width: 150px;
+    max-width: 600px;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 992px) {
+    .rating{
+        margin-top: 12px;
+        min-height: 40px;
+        justify-content: space-around;
+    }
+´
 }
 
 .rating label {
@@ -357,18 +399,12 @@ FEEDBACK
     color: #FFD700;
 }
 
-.float_right {
-    float: right;
+.support-input-mobile label {
+  line-height: 1rem;
 }
 
-.feedback-input {
-    width: 450px !important;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.span-info {
-    width: 24px;
-    vertical-align: middle;
+.span-info{
+  width: 24px;
+  vertical-align: middle;
 }
 

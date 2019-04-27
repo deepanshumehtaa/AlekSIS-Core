@@ -12,14 +12,9 @@ from django.core.exceptions import ValidationError
 from .apps import AubConfig
 from dashboard.models import Activity, register_notification
 from .forms import ApplyForAUBForm
-from .models import Aub, Status
+from .models import Aub, status_list
 from .filters import AUBFilter
 from .decorators import check_own_aub
-
-IN_PROCESSING_STATUS = Status.objects.get_or_create(name='In Bearbeitung 1', style_classes='orange')[0]
-SEMI_ALLOWED_STATUS = Status.objects.get_or_create(name='In Bearbeitung 2', style_classes='yellow')[0]
-ALLOWED_STATUS = Status.objects.get_or_create(name='Genehmigt', style_classes='green')[0]
-NOT_ALLOWED_STATUS = Status.objects.get_or_create(name='Abgelehnt', style_classes='red')[0]
 
 
 @login_required
@@ -131,9 +126,9 @@ def check1(request):
             aub_id = request.POST['aub-id']
             aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
-                Aub.objects.filter(id=aub_id).update(status=SEMI_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=1)
             elif 'deny' in request.POST:
-                Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=3)
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
                                       description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
@@ -147,7 +142,7 @@ def check1(request):
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
 
-    aub_list = Aub.objects.filter(status=IN_PROCESSING_STATUS).order_by('created_at')
+    aub_list = Aub.objects.filter(status=0).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 
@@ -161,7 +156,7 @@ def check2(request):
             aub = Aub.objects.get(id=aub_id)
             if 'allow' in request.POST:
                 # Update status
-                Aub.objects.filter(id=aub_id).update(status=ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=2)
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt",
@@ -176,7 +171,7 @@ def check2(request):
                                       )
             elif 'deny' in request.POST:
                 # Update status
-                Aub.objects.filter(id=aub_id).update(status=NOT_ALLOWED_STATUS)
+                Aub.objects.filter(id=aub_id).update(status=4)
 
                 # Notify user
                 register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
@@ -191,7 +186,7 @@ def check2(request):
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
 
-    aub_list = Aub.objects.filter(status=SEMI_ALLOWED_STATUS).order_by('created_at')
+    aub_list = Aub.objects.filter(status=1).order_by('created_at')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 
@@ -202,8 +197,8 @@ def archive(request):
     order_crit = '-from_date'
     if 'created_by' in request.GET:
         item = int(request.GET['created_by'])
-        aub_list = Aub.objects.filter((Q(status__exact=ALLOWED_STATUS) | Q(status__exact=NOT_ALLOWED_STATUS)) & Q(created_by=item)).order_by(order_crit)
+        aub_list = Aub.objects.filter((Q(status__exact=2) | Q(status__exact=3)) & Q(created_by=item)).order_by(order_crit)
     else:
-        aub_list = Aub.objects.filter(Q(status__exact=ALLOWED_STATUS) | Q(status__exact=NOT_ALLOWED_STATUS)).order_by(order_crit)
+        aub_list = Aub.objects.filter(Q(status__exact=2) | Q(status__exact=3)).order_by(order_crit)
     aub_filter = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/archive.html', {'filter': aub_filter})

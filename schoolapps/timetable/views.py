@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from material import Fieldset, Row
 
-from schoolapps.settings import WEEK_DAYS
+from schoolapps.settings import SHORT_WEEK_DAYS, LONG_WEEK_DAYS, WEEK_DAYS
 from timetable.filters import HintFilter
 from timetable.forms import HintForm
 from timetable.hints import get_all_hints_by_date, get_all_hints_by_time_period, get_all_hints_by_class_and_time_period
@@ -131,7 +131,8 @@ def plan(request, plan_type, plan_id, regular="", year=timezone.datetime.now().y
         "weeks": get_calendar_weeks(year=year),
         "selected_week": calendar_week,
         "selected_year": year,
-        "week_days": WEEK_DAYS,
+        "short_week_days": SHORT_WEEK_DAYS,
+        "long_week_days": LONG_WEEK_DAYS,
         "hints": hints
     }
 
@@ -189,7 +190,6 @@ def my_plan(request, year=None, day=None, month=None):
         "el": el,
         "times": parse_lesson_times(),
         "week_day": date.isoweekday() - 1,
-        "week_days": WEEK_DAYS,
         "date": date,
         "date_js": int(date.timestamp()) * 1000,
         "display_date_only": True,
@@ -219,7 +219,7 @@ def sub_pdf(request):
     today = timezone.datetime.now()
 
     first_day = get_next_weekday(today)
-    second_day = get_next_weekday(today + datetime.timedelta(days=1))
+    second_day = get_next_weekday(first_day + datetime.timedelta(days=1))
 
     # Get subs and generate table
     for i, date in enumerate([first_day, second_day]):
