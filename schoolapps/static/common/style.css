@@ -158,23 +158,23 @@ span.badge .material-icons {
     width: 100%;
 }
 
-.timetable-mobile-title-card{
+.timetable-mobile-title-card {
     margin-top: 50px;
     margin-bottom: .60rem;
 }
 
-.timetable-mobile-title-card:first-child{
+.timetable-mobile-title-card:first-child {
     margin-top: -10px;
     margin-bottom: .60rem;
 }
 
-.timetable-mobile-title-card .card-content{
+.timetable-mobile-title-card .card-content {
     padding: 10px;
     text-align: center;
     width: 100%;
 }
 
-.timetable-mobile-title-card .card-content .card-title{
+.timetable-mobile-title-card .card-content .card-title {
     font-weight: bold;
 }
 
@@ -331,6 +331,7 @@ main .alert p:first-child, main .alert div:first-child {
     margin-left: -10px;
     margin-right: -10px;
 }
+
 .btn, .btn-large, .btn-small {
     background-color: #282E3F;
 }
@@ -354,12 +355,13 @@ FEEDBACK
 }
 
 @media only screen and (max-width: 992px) {
-    .rating{
+    .rating {
         margin-top: 12px;
         min-height: 40px;
         justify-content: space-around;
     }
-´
+
+    ´
 }
 
 .rating label {
@@ -400,11 +402,27 @@ FEEDBACK
 }
 
 .support-input-mobile label {
-  line-height: 1rem;
+    line-height: 1rem;
 }
 
-.span-info{
-  width: 24px;
-  vertical-align: middle;
+.span-info {
+    width: 24px;
+    vertical-align: middle;
 }
 
+i.collapsible-trigger {
+    margin-right: -10px;
+
+}
+
+.collapsible .collapsible-trigger::before {
+    content: 'arrow_downward';
+}
+
+.collapsible .collapsible-trigger.v2::before {
+    content: 'more_vert';
+}
+
+.collapsible .active .collapsible-trigger::before {
+    content: 'arrow_upward';
+}
