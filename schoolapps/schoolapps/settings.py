@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_pdb',
     'dashboard.apps.DashboardConfig',
     'aub.apps.AubConfig',
+    'fibu.apps.FibuConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
