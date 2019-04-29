@@ -1,16 +1,21 @@
+{% load widget_tweaks %}
 {% include 'partials/header.html' %}
 <main>
     <h3 class="h-with-subtitle">Frage stellen</h3>
-    <span class="grey-text subtitle">FAQ (frequently asked questions)</span>
+    <div class="grey-text subtitle">FAQ (frequently asked questions)</div>
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="{{ form.question.id_for_label }}" class="materialize-textarea required"
+                          name="{{ form.question.html_name }}" required></textarea>
+                <label for="{{ form.question.id_for_label }}">{{ form.question.label }}</label>
+            </div>
+        </div>
 
-     <ul class="collapsible">
-         {% for question in questions %}
-        <li>
-            <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %} {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}</div>
-            <div class="collapsible-body"><span class="flow-text">{{ question.answer|safe }}</span></div>
-        </li>
-         {% endfor %}
-  </ul>
+        <button class="btn waves-effect waves-light green" type="submit" name="action">Frage stellen
+            <i class="material-icons right">send</i>
+        </button>
 
+    </form>
 </main>
 {% include 'partials/footer.html' %}

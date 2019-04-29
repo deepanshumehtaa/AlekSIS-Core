@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from faq.models import FAQQuestion
+from faq.forms import FAQForm
 
 # Create your views here.
 
@@ -45,4 +46,6 @@ def faq(request):
     return render(request, 'faq/faq.html', context)
 
 def ask(request):
-    return render(request, "faq/ask.html")
+    form = FAQForm()
+
+    return render(request, "faq/ask.html", {"form": form})
