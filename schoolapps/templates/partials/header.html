@@ -212,6 +212,13 @@
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
             </li>
+        {% else %}
+
+            <li>
+                <a href="{% url 'login' %}">
+                    <i class="material-icons">lock_open</i> Anmelden
+                </a>
+            </li>
         {% endif %}
     </ul>
 </header>
