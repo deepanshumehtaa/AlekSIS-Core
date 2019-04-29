@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from faq.models import Question, Answer
+from faq.models import FAQQuestion
 
 # Create your views here.
 
@@ -40,6 +40,6 @@ def faq(request):
     #         ]
     # }
     context = {
-        "questions": Question.objects.filter(answered=True),
+        "questions": FAQQuestion.objects.filter(answered=True),
     }
     return render(request, 'faq/faq.html', context)
