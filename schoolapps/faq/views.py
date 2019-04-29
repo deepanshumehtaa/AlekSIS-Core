@@ -29,7 +29,7 @@ def ask(request):
 
             new_question.save()
 
-            return render(request, 'support/feedback_submitted.html')
+            return render(request, 'faq/question_submitted.html')
     else:
         form = FAQForm()
 
