@@ -43,3 +43,6 @@ def faq(request):
         "questions": FAQQuestion.objects.filter(answered=True),
     }
     return render(request, 'faq/faq.html', context)
+
+def ask(request):
+    return render(request, "faq/ask.html")
