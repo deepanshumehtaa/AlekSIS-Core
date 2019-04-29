@@ -3,7 +3,8 @@
 <main>
     <h3 class="h-with-subtitle">Frage stellen</h3>
     <div class="grey-text subtitle">FAQ (frequently asked questions)</div>
-    <form class="col s12">
+    <form class="col s12" method="post">
+        {% csrf_token %}
         <div class="row">
             <div class="input-field col s12">
                 <textarea id="{{ form.question.id_for_label }}" class="materialize-textarea required"
