@@ -4,6 +4,8 @@ from faq.forms import FAQForm
 
 from datetime import datetime
 
+from dashboard.models import Activity
+
 # Create your views here.
 
 def create_info(text):
@@ -28,6 +30,10 @@ def ask(request):
             new_question = Question(question_text=question, pub_date=datetime.now(), user=userid)
 
             new_question.save()
+
+            act = Activity(title="Du hast uns eine Frage gestellt.", description=question, app="FAQ",
+                           user=userid)
+            act.save()
 
             return render(request, 'faq/question_submitted.html')
     else:
