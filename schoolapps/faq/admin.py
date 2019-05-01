@@ -9,6 +9,6 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Question, QuestionAdmin)
 
 class FAQQuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "icon", "answered")
+    list_display = ("question_text", "icon", "show")
 
 admin.site.register(FAQQuestion, FAQQuestionAdmin)

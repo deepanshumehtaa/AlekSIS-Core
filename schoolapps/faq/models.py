@@ -6,7 +6,7 @@ class FAQQuestion(models.Model):
     question_text = models.TextField()
     icon = models.CharField(max_length=20, blank=True, default="question_answer")
 
-    answered = models.BooleanField(verbose_name="Beantwortet", default=False)
+    show = models.BooleanField(verbose_name="Veröffentlicht", default=False)
     answer_text = models.TextField(blank=True)
 
     def __str__(self):

@@ -15,7 +15,7 @@ def create_info(text):
 def faq(request):
     """ Shows the FAQ site, also if not logged in"""
     context = {
-        "questions": FAQQuestion.objects.filter(answered=True),
+        "questions": FAQQuestion.objects.filter(show=True),
     }
     return render(request, 'faq/faq.html', context)
 
