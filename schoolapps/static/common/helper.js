@@ -101,4 +101,10 @@ $(document).ready(function () {
     $("#print").click(function () {
         window.print();
     });
+
+    //Initialize Collapsible [MAT]
+    $('.collapsible').collapsible();
+
+    //Initialize FABs [MAT]
+    $('.fixed-action-btn').floatingActionButton();
 });
