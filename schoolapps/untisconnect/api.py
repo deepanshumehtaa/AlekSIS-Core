@@ -158,10 +158,10 @@ def format_classes(classes):
         else:
             classes_as_dict[step].append(part)
 
-    out = ""
+    out = []
     for key, value in classes_as_dict.items():
-        out += key + "".join(value)
-    return out
+        out.append(key + "".join(value))
+    return ", ".join(out)
 
 
 ########

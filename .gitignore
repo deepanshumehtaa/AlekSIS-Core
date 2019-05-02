@@ -5,12 +5,7 @@ venv/
 secure*
 *.aux
 *.log
-class.pdf
-class.tex
-class0.pdf
-class0.tex
-class1.pdf
-class1.tex
+latex/
 .idea
 media/
 node_modules
