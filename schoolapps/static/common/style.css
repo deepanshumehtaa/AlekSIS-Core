@@ -419,3 +419,9 @@ FEEDBACK
    of the button to still show through. */
     background-color: #da1f3d;
   }
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active a > i, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active a > i{
+    color: #fff;
+}
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+    background-color: #da1f3d;
+}
