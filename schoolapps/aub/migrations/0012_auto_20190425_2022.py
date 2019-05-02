@@ -8,7 +8,7 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('aub', '0011_merge_20190318_2004'),
+        #('aub', '0011_merge_20190318_2004'),
     ]
 
     operations = [
