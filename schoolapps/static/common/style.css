@@ -235,8 +235,13 @@ table.substitutions td, table.substitutions th {
 .btn-timetable-quicklaunch {
     margin: 1%;
     width: 30%;
+    background-color: rgba(0,0,0,0.05) !important;
+    color: black;
 }
-
+.btn-timetable-quicklaunch:hover{
+    background-color: #da1f3d !important;
+    color: whitesmoke;
+}
 .no-margin {
     margin: 0;
 }
@@ -330,7 +335,7 @@ main .alert p {
     margin-right: -10px;
 }
 .btn, .btn-large, .btn-small {
-    background-color: #36383f;
+    background-color: #0f9d58;
 }
 
 .btn:hover, .btn-large:hover, .btn-small {
