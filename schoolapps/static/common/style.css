@@ -401,10 +401,6 @@ FEEDBACK
   vertical-align: middle;
 }
 
-.footer-icon{
-    font-size: 22px !important;
-    vertical-align: middle;
-}
 
 .no-margin{
     margin: 0 !important;
@@ -412,6 +408,10 @@ FEEDBACK
 
 .no-pad-left{
     padding-left: 0 !important;
+}
+
+.no-pad-right{
+    padding-right: 0 !important;
 }
 
 .sidenav a:not(.collapsible-header){
