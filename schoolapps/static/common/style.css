@@ -126,7 +126,7 @@ span.badge.no-float {
 .smart-plan-badge {
     margin: 5px 20px 5px 0;
 }
-li.active a .sidenav-badge{
+li.active > a > .sidenav-badge{
     background-color: #bbb !important;
 }
 .timetable-plan .row, .timetable-plan .col {
