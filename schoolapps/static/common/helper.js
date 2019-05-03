@@ -58,9 +58,12 @@ function selectActiveLink() {
     //console.log(url_name);
 
     $("#"+url_name).addClass("active");
+    $("#"+url_name).parent().parent().parent().addClass("active");
 }
 
 $(document).ready(function () {
+    selectActiveLink();
+
     $("dmc-datetime input").addClass("datepicker");
     $("[data-form-control='date']").addClass("datepicker");
     $("[data-form-control='time']").addClass("timepicker");
@@ -115,6 +118,4 @@ $(document).ready(function () {
 
     //Initialize FABs [MAT]
     $('.fixed-action-btn').floatingActionButton();
-
-    selectActiveLink();
 });
