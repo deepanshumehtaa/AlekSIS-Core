@@ -126,7 +126,10 @@ span.badge.no-float {
 .smart-plan-badge {
     margin: 5px 20px 5px 0;
 }
-
+li.active > a > .sidenav-badge{
+    background-color: whitesmoke !important;
+    color: #DA3D56 !important;
+}
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
     padding: 0 .25rem;
@@ -232,8 +235,13 @@ table.substitutions td, table.substitutions th {
 .btn-timetable-quicklaunch {
     margin: 1%;
     width: 30%;
+    background-color: rgba(0,0,0,0.05) !important;
+    color: black;
 }
-
+.btn-timetable-quicklaunch:hover{
+    background-color: #da1f3d !important;
+    color: whitesmoke;
+}
 .no-margin {
     margin: 0;
 }
@@ -327,7 +335,7 @@ main .alert p {
     margin-right: -10px;
 }
 .btn, .btn-large, .btn-small {
-    background-color: #282E3F;
+    background-color: #0f9d58;
 }
 
 .btn:hover, .btn-large:hover, .btn-small {
@@ -398,3 +406,30 @@ FEEDBACK
   vertical-align: middle;
 }
 
+
+.no-margin{
+    margin: 0 !important;
+}
+
+.no-pad-left{
+    padding-left: 0 !important;
+}
+
+.no-pad-right{
+    padding-right: 0 !important;
+}
+
+.sidenav a:not(.collapsible-header){
+    padding: 0 16px;
+}
+  .waves-effect.waves-primary .waves-ripple {
+   /* The alpha value allows the text and background color
+   of the button to still show through. */
+    background-color: #da1f3d;
+  }
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active a > i, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active a > i{
+    color: #fff;
+}
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+    background-color: #DA3D56;
+}

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
     'support.apps.SupportConfig',
+    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
+    'widget_tweaks',
+    'templatetags.apps.TemplatetagsConfig',
 ]
 
 MIDDLEWARE = [
