@@ -1,4 +1,5 @@
 {% load static %}
+{% load url_name %}
 
 <!DOCTYPE html>
 <html lang="de">
@@ -42,6 +43,8 @@
         })();
     </script>
     <!-- End Matomo Code -->
+    <!-- location (for "active" in sidenav -->
+    <meta name="active-loaction" content="{{ request|url_name }}">
 </head>
 <body>
 <header>
@@ -83,7 +86,7 @@
         </li>
 
         {% if user.is_authenticated %}
-            <li>
+            <li id="dashboard">
                 <a href="{% url 'dashboard' %}">
                     <i class="material-icons">home</i> Dashboard
                 </a>
@@ -178,7 +181,7 @@
             <li>
                 <div class="divider"></div>
             </li>
-            <li class="bold">
+            <li class="bold active">
             <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">help</i> Support</a>
             <div class="collapsible-body">
             <ul>
@@ -193,7 +196,7 @@
                 </a>
             </li>
         {% endif %}
-        <li>
+        <li class="active">
             <a href="{% url 'faq' %}">
                 <i class="material-icons">question_answer</i>FAQ
             </a>

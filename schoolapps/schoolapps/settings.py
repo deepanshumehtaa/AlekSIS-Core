@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'material',
     'django_react_templatetags',
     'widget_tweaks',
+    'templatetags.apps.TemplatetagsConfig',
 ]
 
 MIDDLEWARE = [

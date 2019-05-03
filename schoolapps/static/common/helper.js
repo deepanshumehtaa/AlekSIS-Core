@@ -52,6 +52,14 @@ function setTime(lesson_field) {
     }
 }
 
+function selectActiveLink() {
+    let currlocation = $('meta[name="active-loaction"]');
+    let url_name = currlocation.attr("content");
+    //console.log(url_name);
+
+    $("#"+url_name).addClass("active");
+}
+
 $(document).ready(function () {
     $("dmc-datetime input").addClass("datepicker");
     $("[data-form-control='date']").addClass("datepicker");
@@ -107,4 +115,6 @@ $(document).ready(function () {
 
     //Initialize FABs [MAT]
     $('.fixed-action-btn').floatingActionButton();
+
+    selectActiveLink();
 });
