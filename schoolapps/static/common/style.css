@@ -127,7 +127,8 @@ span.badge.no-float {
     margin: 5px 20px 5px 0;
 }
 li.active > a > .sidenav-badge{
-    background-color: #bbb !important;
+    background-color: whitesmoke !important;
+    color: #DA3D56 !important;
 }
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
@@ -425,5 +426,5 @@ FEEDBACK
     color: #fff;
 }
 .sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
-    background-color: #da1f3d;
+    background-color: #DA3D56;
 }
