@@ -24,7 +24,7 @@ status_list = [
     Status(name='Genehmigt', style_class='green'),
     Status(name='Abgelehnt', style_class='red'),
 ]
-print("status_list[0].name  :", status_list[0].name)
+#print("status_list[0].name  :", status_list[0].name)
 status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
 
