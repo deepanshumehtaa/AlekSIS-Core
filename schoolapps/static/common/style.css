@@ -426,3 +426,9 @@ i.collapsible-trigger {
 .collapsible .active .collapsible-trigger::before {
     content: 'arrow_upward';
 }
+
+
+.scroll-fix {
+    max-height: 300px;
+    overflow: scroll;
+}
