@@ -432,3 +432,7 @@ i.collapsible-trigger {
     max-height: 300px;
     overflow: scroll;
 }
+
+.waves-effect.waves-katharineum .waves-ripple {
+    background-color: rgba(218, 31, 61, 0.65);
+}

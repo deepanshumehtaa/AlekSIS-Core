@@ -1,0 +1,44 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+{% load martortags %}
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<main>
+    <a class="btn-flat waves-effect waves-teal right btn-flat-medium" href="{% url "debug_logs" %}"><i
+            class="material-icons refresh center">refresh</i></a>
+    <h4>Debuggingtool</h4>
+    {% for group in groups %}
+        <a href="#{{ group.id }}" class="btn-flat waves-effect waves-katharineum"><i class="material-icons left">arrow_forward</i> {{ group.name }}
+        </a>
+    {% endfor %}
+
+    {% for group in groups %}
+        <div class="card" id="{{ group.id }}">
+            <div class="card-content">
+                <i class="material-icons right {{ group.is_successful|yesno:"green,red" }}-text medium">{{ group.is_successful|yesno:"check_circle,error" }}</i>
+                <span class="card-title">{{ group.name }}</span>
+                <pre>{{ group.desc_as_pre|default:" " }}</pre>
+                {% for log in group.logs.all %}
+                    <div>
+                        <i class="material-icons right {{ log.is_successful|yesno:"green,red" }}-text small">{{ log.is_successful|yesno:"check_circle,error" }}</i>
+
+                        <h5>{{ log.name }} </h5>
+                        <p><i class="material-icons left">access_time</i> {{ log.updated_at }}</p>
+                        <pre><code class="plaintext scroll-fix">RETURN CODE: {{ log.return_code }}
+
+{{ log.get_file_content }}
+                    </code></pre>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+</main>
+
+{% include 'partials/footer.html' %}

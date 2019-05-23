@@ -130,11 +130,6 @@
                         <span class="badge new primary-color ">SMART PLAN</span>
                     </a>
                 </li>
-                {#                <li>#}
-                {#                    <a href="{% url 'timetable_admin_all' %}">#}
-                {#                        <i class="material-icons">grid_on</i> Alle Pläne#}
-                {#                    </a>#}
-                {#                </li>#}
                 <li>
                     <a href="{% url 'timetable_quicklaunch' %}">
                         <i class="material-icons">grid_on</i> Alle Pläne
@@ -153,7 +148,7 @@
                     </li>
                 {% endif %}
                 <li>
-                    <a href="{% url 'timetable_debugging_tool' %}">
+                    <a href="{% url 'debug_logs' %}">
                         <i class="material-icons">error</i> Debuggingtool
                     </a>
                 </li>

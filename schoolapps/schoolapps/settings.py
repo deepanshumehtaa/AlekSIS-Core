@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'django_pdb',
     'dashboard.apps.DashboardConfig',
+    "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',

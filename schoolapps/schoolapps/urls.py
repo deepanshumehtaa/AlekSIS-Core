@@ -62,6 +62,7 @@ urlpatterns = [
     #########
     # Admin #
     #########
+    path("debug/", include("debug.urls")),
     path('settings/', include('dbsettings.urls')),
     path('admin/', admin.site.urls),
 
