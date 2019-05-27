@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
@@ -10,6 +11,10 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.index, name='index'),
 ]
+
+# Serve javascript-common if in development
+if settings.DEBUG:
+    urlpatterns += static('/javascript/', document_root='/usr/share/javascript-common/')
 
 # Automatically mount URLs from all installed BiscuIT apps
 for app_config in apps.app_configs.values():
