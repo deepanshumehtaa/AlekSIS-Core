@@ -70,10 +70,15 @@ urlpatterns = [
     # SUPPORT #
     ###########
     path('support/', include('support.urls')),
+
+    #######
+    # FAQ #
+    #######
+    path('faq/', include('faq.urls')),
+
     path("pwabuilder-sw.js", serviceworker),
 
     path('martor/', include('martor.urls')),
-
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

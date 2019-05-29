@@ -20,9 +20,11 @@
                 Der Hinweis wurde erfolgreich erstellt und veröffentlicht. Weiteren Hinweis anlegen oder zur Übersicht
                 zurück?<br>
                 <a class="btn waves-effect waves-light" href="{% url "timetable_hints" %}"><i
-                        class="material-icons left">arrow_back</i> Zurück zur Übersicht</a>
+                        class="material-icons left">arrow_back</i> Zurück zur Übersicht
+                </a>
                 <a class="btn waves-effect waves-light green" href="#add-hint"><i class="material-icons left">add</i>
-                    Weiteren Hinweis hinzufügen</a>
+                    Weiteren Hinweis hinzufügen
+                </a>
             </p>
         </div>
     {% endif %}
@@ -37,7 +39,9 @@
                 </div>
             </div>
         {% endif %}
-        <h5>Über welchen Zeitraum soll der Hinweis angezeigt werden? <span class="red-text">*</span></h5>
+        <h5>Über welchen Zeitraum soll der Hinweis angezeigt werden?
+            <span class="red-text">*</span>
+        </h5>
 
         <div class="row">
             <div class="col s12 m6">
@@ -65,7 +69,9 @@
                 {{ form.to_date|add_class:"datepicker required" }}
             </div>
         </div>
-        <h5>Für wen soll der Hinweis angezeigt werden? <span class="red-text">*</span></h5>
+        <h5>Für wen soll der Hinweis angezeigt werden?
+            <span class="red-text">*</span>
+        </h5>
 
         {% if form.classes.errors %}
             <div class="alert error">
@@ -104,7 +110,9 @@
             </label>
         </p>
 
-        <h5>Hinweistext <span class="red-text">*</span></h5>
+        <h5>Hinweistext
+            <span class="red-text">*</span>
+        </h5>
         {% if form.text.errors %}
             <div class="alert error">
                 <div>

@@ -3,11 +3,12 @@
     {#  <i class="close icon"></i>#}
 
     <div class="modal-content">
-        <a href="#" class="modal-close btn-flat right"><i class="material-icons">close</i> </a>
+        <a href="#" class="modal-close btn-flat right"><i class="material-icons">close</i></a>
 
         <h4><i class="help circle icon"></i> {% trans "Markdown Guide" %}</h4>
         <p>{% blocktrans with doc_url='http://commonmark.org/help/' %}This site is powered by Markdown. For full
-            documentation, <a href="{{ doc_url }}" target="_blank">click here</a>{% endblocktrans %}</p>
+            documentation,
+            <a href="{{ doc_url }}" target="_blank">click here</a>{% endblocktrans %}</p>
         <table class="ui celled table markdown-reference">
             <thead>
             <tr>
@@ -87,7 +88,9 @@
                 <td>[Link][1]<br> &#8285;<br> [1]: http://b.org</td>
                 <td>Ctrl+L</td>
                 <td>Command+L</td>
-                <td><a href="http://commonmark.org/">Link</a></td>
+                <td>
+                    <a href="http://commonmark.org/">Link</a>
+                </td>
             </tr>
             {#            <tr>#}
             {#                <td>![Image](http://url/a.png)</td>#}

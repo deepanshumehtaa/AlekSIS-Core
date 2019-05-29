@@ -17,7 +17,4 @@ class HintAdmin(admin.ModelAdmin):
     actions = [refresh_cache]
 
 
-
-
-
 admin.site.register(Hint, HintAdmin)
