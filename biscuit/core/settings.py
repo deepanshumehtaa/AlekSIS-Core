@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'easyaudit',
     'bootstrap4',
     'fa',
+    'django_any_js',
     'menu',
     'biscuit.core'
 ]
@@ -134,9 +135,11 @@ BOOTSTRAP4 = {
     "include_jquery": True
 }
 
-DATATABLES = {
-    "css_url": LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
-    "js_url": LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js"),
+ANY_JS = {
+          'DataTables': {
+                         'css_url': LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
+                         'js_url': LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js")
+                        }
 }
 
 

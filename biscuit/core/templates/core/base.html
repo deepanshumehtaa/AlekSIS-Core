@@ -1,16 +1,16 @@
 {% extends "bootstrap4/bootstrap4.html" %}
-{% load bootstrap4 menu staticfiles font_awesome %}
+{% load bootstrap4 menu staticfiles font_awesome any_js %}
 
 {% block bootstrap4_title %}BiscuIT School Information System{% endblock %}
 
 {% block bootstrap4_extra_head %}
+ {% include_css "DataTables" %}
  <link rel="stylesheet" href="{% static 'style.css' %}" />
- <link rel="stylesheet" type="text/css" href="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"/>
  <link rel="shortcut icon" href="#" />
 {% endblock %}
 
 {% block bootstrap4_extra_script %}
- <script type="text/javascript" src="/javascript/jquery-datatables/dataTables.bootstrap4.min.js"></script>
+ {% include_js "DataTables" %}
  <script type="text/javascript" src="{% static 'js/main.js' %}" /></script>
 {% endblock %}
 

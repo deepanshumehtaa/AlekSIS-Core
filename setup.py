@@ -17,6 +17,7 @@ setup(
     include_package_data=True,
     install_requires=[
                       'Django >= 2.0',
+                      'django-any-js',
                       'django-bootstrap4',
                       'django-fa',
                       'django-easy-audit',
