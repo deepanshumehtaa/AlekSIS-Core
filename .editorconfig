@@ -11,6 +11,6 @@ indent_style = space
 indent_size = 4
 
 [*.html]
-file_type_emacs = jinja2
+file_type_emacs = web
 indent_style = space
 indent_size = 2
