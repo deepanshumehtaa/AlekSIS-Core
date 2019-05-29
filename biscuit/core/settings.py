@@ -125,7 +125,8 @@ LOGOUT_REDIRECT_URL = 'index'
 STATIC_ROOT = LocalSetting()
 MEDIA_ROOT = LocalSetting()
 
-FONT_AWESOME = {'url': LocalSetting(default="/javascript/font-awesome/css/font-awesome.min.css")}
+FONT_AWESOME = {'url': LocalSetting(
+    default="/javascript/font-awesome/css/font-awesome.min.css")}
 
 BOOTSTRAP4 = {
     "css_url": LocalSetting(default="/javascript/bootstrap4/css/bootstrap.min.css"),
@@ -136,10 +137,10 @@ BOOTSTRAP4 = {
 }
 
 ANY_JS = {
-          'DataTables': {
-                         'css_url': LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
-                         'js_url': LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js")
-                        }
+    'DataTables': {
+        'css_url': LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
+        'js_url': LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js")
+    }
 }
 
 
