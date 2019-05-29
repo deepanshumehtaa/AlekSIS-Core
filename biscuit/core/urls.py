@@ -14,7 +14,7 @@ urlpatterns = [
 
 # Serve javascript-common if in development
 if settings.DEBUG:
-    urlpatterns += static('/javascript/', document_root='/usr/share/javascript-common/')
+    urlpatterns += static('/javascript/', document_root='/usr/share/javascript/')
 
 # Automatically mount URLs from all installed BiscuIT apps
 for app_config in apps.app_configs.values():
