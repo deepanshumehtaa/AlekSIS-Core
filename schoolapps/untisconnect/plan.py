@@ -184,6 +184,10 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                             if sub["sub"].teacher_new.id == id:
                                 found = True
 
+                        if sub["sub"].teacher_old:
+                            if sub["sub"].teacher_old.id == id:
+                                found = True
+
                     elif type == TYPE_ROOM:
                         if sub["sub"].room_new:
                             if sub["sub"].room_new.id == id:
