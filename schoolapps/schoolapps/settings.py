@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
     'support.apps.SupportConfig',
+    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +59,6 @@ INSTALLED_APPS = [
     'django_react_templatetags',
     'martor',
     'widget_tweaks',
-
 ]
 
 MIDDLEWARE = [

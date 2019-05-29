@@ -102,8 +102,11 @@ $(document).ready(function () {
         window.print();
     });
 
-    // Initialize collapsible [MAT]
+    //Initialize Collapsible [MAT]
     $('.collapsible').collapsible();
+
+    //Initialize FABs [MAT]
+    $('.fixed-action-btn').floatingActionButton();
 
     // Initialize delete button
     $(".delete-button").click(function (e) {

@@ -70,6 +70,12 @@ urlpatterns = [
     # SUPPORT #
     ###########
     path('support/', include('support.urls')),
+
+    #######
+    # FAQ #
+    #######
+    path('faq/', include('faq.urls')),
+
     path("pwabuilder-sw.js", serviceworker),
 
     path('martor/', include('martor.urls')),
