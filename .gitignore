@@ -5,8 +5,8 @@ venv/
 secure*
 *.aux
 *.log
-class.pdf
-class.tex
+latex/
 .idea
-media
+media/
 node_modules
+staticcollect
