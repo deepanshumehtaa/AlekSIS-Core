@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'easyaudit',
-    'bootstrap3',
+    'bootstrap4',
+    'fa',
     'menu',
     'biscuit.core'
 ]
@@ -108,10 +109,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-BOOTSTRAP3 = {
-    'include_jquery': True
-}
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -126,6 +123,22 @@ LOGOUT_REDIRECT_URL = 'index'
 
 STATIC_ROOT = LocalSetting()
 MEDIA_ROOT = LocalSetting()
+
+FONT_AWESOME = {'url': LocalSetting(default="/javascript/font-awesome/css/font-awesome.min.css")}
+
+BOOTSTRAP4 = {
+    "css_url": LocalSetting(default="/javascript/bootstrap4/css/bootstrap.min.css"),
+    "javascript_url": LocalSetting(default="/javascript/bootstrap4/js/bootstrap.min.js"),
+    "jquery_url": LocalSetting(default="/javascript/jquery/jquery.min.js"),
+    "popper_url": LocalSetting(default="/javascript/popper.js/popper.min.js"),
+    "include_jquery": True
+}
+
+DATATABLES = {
+    "css_url": LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
+    "js_url": LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js"),
+}
+
 
 _settings = load_and_check_settings(globals())
 globals().update(_settings)
