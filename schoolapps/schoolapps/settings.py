@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Provided by secure_settings
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # PDB debugger option
 POST_MORTEM = True
@@ -32,6 +32,7 @@ POST_MORTEM = True
 ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
+    '159.69.181.50',
     'localhost',
     '127.0.0.1'
 ]
@@ -157,6 +158,7 @@ LOGIN_REDIRECT_URL = '/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollect')
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -227,7 +229,8 @@ AUTHENTICATION_BACKENDS = (
 
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+if DEBUG:
+    logger.setLevel(logging.DEBUG)
 
 # Media
 MEDIA_URL = '/media/'
