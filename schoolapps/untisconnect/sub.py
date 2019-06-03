@@ -3,7 +3,8 @@ from django.utils import timezone
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date
 from untisconnect.api_helper import run_using, untis_split_first, untis_date_to_date, date_to_untis_date
-from untisconnect.parse import get_lesson_element_by_id_and_teacher, build_drive
+from untisconnect.parse import get_lesson_element_by_id_and_teacher
+from untisconnect.drive import build_drive
 
 TYPE_SUBSTITUTION = 0
 TYPE_CANCELLATION = 1

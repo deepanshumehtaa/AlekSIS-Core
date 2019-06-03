@@ -111,7 +111,8 @@ class LessonTime(object):
 from .api import *
 from .api_helper import untis_split_third
 
-
+from .drive import drive
+drive = drive
 
 def parse():
     global drive
