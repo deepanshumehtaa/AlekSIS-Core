@@ -59,6 +59,11 @@
                 
             </li>
         {% endfor %}
+        {% if not aubs %}
+            <li class="collection-item">
+                Keine Anträge vorhanden
+            </li>
+        {% endif %}
     </ul>
     {% endblock %}
 </main>
