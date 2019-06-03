@@ -62,6 +62,7 @@ urlpatterns = [
     #########
     # Admin #
     #########
+    path("debug/", include("debug.urls")),
     path('settings/', include('dbsettings.urls')),
     path('admin/', admin.site.urls),
 
@@ -75,7 +76,9 @@ urlpatterns = [
     #######
     path('faq/', include('faq.urls')),
 
-    path("pwabuilder-sw.js", serviceworker)
+    path("pwabuilder-sw.js", serviceworker),
+
+    path('martor/', include('martor.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

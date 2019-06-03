@@ -12,6 +12,12 @@ TYPE_CORRIDOR = 3
 
 
 def parse_type_of_untis_flags(flags):
+    """
+    Get type of substitution by parsing UNTIS flags
+    :param flags: UNTIS flags (string)
+    :return: type (int, constants are provided)
+    """
+
     type_ = TYPE_SUBSTITUTION
     if "E" in flags:
         type_ = TYPE_CANCELLATION
@@ -20,6 +26,7 @@ def parse_type_of_untis_flags(flags):
     return type_
 
 
+# Build cache
 drive = build_drive()
 
 
@@ -51,6 +58,8 @@ class Substitution(object):
 
     def create(self, db_obj):
         self.filled = True
+
+        # Metadata
         self.id = db_obj.substitution_id
         self.lesson_id = db_obj.lesson_idsubst
         self.date = untis_date_to_date(db_obj.date)
@@ -58,13 +67,11 @@ class Substitution(object):
         self.type = parse_type_of_untis_flags(db_obj.flags)
         self.text = db_obj.text
 
-        # Lesson
-
         # Teacher
-        # print(db_obj.teacher_idlessn)
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
 
+        # print(self.teacher_new, self.teacher_old, self.lesson_id, self.id)
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
@@ -75,10 +82,11 @@ class Substitution(object):
                 self.teacher_old = self.teacher_new
                 self.teacher_new = None
 
+        print(self.teacher_old, self.teacher_new)
+
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
                                                                                   self.lesson, self.date.weekday() + 1)
-        # print(self.lesson)
-        # print(self.room_old)
+
         # Subject
         self.subject_old = self.lesson_element.subject if self.lesson_element is not None else None
         if db_obj.subject_idsubst != 0:
@@ -88,35 +96,32 @@ class Substitution(object):
                 self.subject_new = None
 
         # Room
-        # self.rooms_old = self.lesson_element.rooms if self.lesson_element is not None else []
-        # if len(self.rooms_old) >= 1:
-        #     self.room_old = self.rooms_old[0]
-
         if db_obj.room_idsubst != 0:
             self.room_new = drive["rooms"][db_obj.room_idsubst]
 
             if self.room_old is not None and self.room_old.id == self.room_new.id:
                 self.room_new = None
-        # if self.rooms_old
 
-        # print(self.room_new)
-        # print("CORRIDOR")
-        # print(self.corridor)
+        # Supervisement
         if db_obj.corridor_id != 0:
             self.corridor = drive["corridors"][db_obj.corridor_id]
             self.type = TYPE_CORRIDOR
-        # Classes
 
+        # Classes
         self.classes = []
         class_ids = untis_split_first(db_obj.classids, conv=int)
 
-        # print(class_ids)
         for id in class_ids:
             self.classes.append(drive["classes"][id])
-        # print(self.classes)
 
 
 def substitutions_sorter(sub):
+    """
+    Sorting helper (sort function) for substitutions
+    :param sub: Substitution to sort
+    :return: A string for sorting by
+    """
+
     # First, sort by class
     sort_by = "".join(class_.name for class_ in sub.classes)
 
@@ -132,6 +137,7 @@ def substitutions_sorter(sub):
 
 class SubRow(object):
     def __init__(self):
+        self.sub = None
         self.color = "black"
         self.css_class = "black-text"
         self.lesson = ""
@@ -147,9 +153,10 @@ class SubRow(object):
 
 
 def generate_teacher_row(sub, full=False):
-    # print(sub.id)
     teacher = ""
-    if sub.type == 1:
+    if not sub.teacher_old and not sub.teacher_new:
+        teacher = ""
+    elif sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
     elif sub.teacher_new and sub.teacher_old:
@@ -203,10 +210,18 @@ def generate_room_row(sub, full=False):
 
 
 def generate_sub_table(subs):
+    """
+    Parse substitutions and prepare than for displaying in plan
+    :param subs: Substitutions to parse
+    :return: A list of SubRow objects
+    """
+
     sub_rows = []
     for sub in subs:
         sub_row = SubRow()
+        sub_row.sub = sub
 
+        # Color
         sub_row.color = "black"
         if sub.type == 1 or sub.type == 2:
             sub_row.css_class = "green-text"
@@ -215,13 +230,13 @@ def generate_sub_table(subs):
             sub_row.css_class = "blue-text"
             sub_row.color = "blue"
 
+        #  Format lesson
         if sub.type == 3:
-            sub_row.lesson = "{}./{}".format(sub.lesson - 1, sub.lesson)
+            sub_row.lesson = "{}./{}.".format(sub.lesson - 1, sub.lesson)
         else:
             sub_row.lesson = "{}.".format(sub.lesson)
 
-        # for class_ in sub.classes:
-        #     sub_row.classes += class_.name
+        # Classes
         sub_row.classes = format_classes(sub.classes)
 
         sub_row.teacher = generate_teacher_row(sub)
@@ -231,21 +246,17 @@ def generate_sub_table(subs):
         sub_row.room = generate_room_row(sub)
         sub_row.room_full = generate_room_row(sub, full=True)
 
-        # if DEBUG:
-        #     # Add id only if debug mode is on
-        #     if sub.text:
-        #         sub_row.text = sub.text + " " + str(sub.id)
-        #     else:
-        #         sub_row.text = str(sub.id)
-        # else:
+        # Hint text
         sub_row.text = sub.text
 
+        # Badge
         sub_row.badge = None
         if sub.type == 1:
             sub_row.badge = "Schüler frei"
         elif sub.type == 2:
             sub_row.badge = "Lehrer frei"
 
+        # Debugging information
         sub_row.extra = "{} {}".format(sub.id, sub.lesson_id)
 
         sub_rows.append(sub_row)

@@ -10,3 +10,5 @@ class.tex
 .idea/
 media/
 node_modules/
+latex/
+staticcollect/
