@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from datetime import date
 
 
-def get_default_user():
-    user, created = User.objects.get_or_create(username='nouser')
-    return user.id
+# def get_default_user():
+#     user, created = User.objects.get_or_create(username='nouser')
+#     return user.id
 
 
-class Status():
+class Status:
     def __init__(self, name, style_class):
         self.name = name
         self.style_class = style_class
@@ -24,7 +24,7 @@ status_list = [
     Status(name='Genehmigt', style_class='green'),
     Status(name='Abgelehnt', style_class='red'),
 ]
-#print("status_list[0].name  :", status_list[0].name)
+
 status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
 
@@ -40,8 +40,8 @@ class Aub(models.Model):
     status = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
 
     # Meta
-    created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
-                                   default=get_default_user(), verbose_name="Erstellt von")
+    created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET_NULL
+                                   , verbose_name="Erstellt von", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, verbose_name="Erstellungszeitpunkt")
 
     def getStatus(self):
