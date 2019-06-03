@@ -1,4 +1,7 @@
 from .drive import drive
+from .api_helper import untis_date_to_date, date_to_untis_date
+from .api import row_by_row_helper, run_all
+from . import models
 
 #########
 # EVENT #
@@ -35,7 +38,7 @@ class Event(object):
             if element[2] != "0" and element[2] != "":
                 teacher_id = int(element[0])
                 obj = drive["teachers"][teacher_id]
-                self.teachers.append(element[2])
+                self.teachers.append(obj)
 
             if element[3] != "0" and element[3] != "":
                 self.rooms.append(element[3])
