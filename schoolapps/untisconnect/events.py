@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from .drive import drive
 from .api_helper import untis_date_to_date, date_to_untis_date
 from .api import row_by_row_helper, run_all
@@ -36,15 +38,18 @@ class Event(object):
                 self.classes.append(obj)
 
             if element[2] != "0" and element[2] != "":
-                teacher_id = int(element[0])
+                teacher_id = int(element[2])
                 obj = drive["teachers"][teacher_id]
                 self.teachers.append(obj)
 
             if element[3] != "0" and element[3] != "":
-                self.rooms.append(element[3])
+                room_id = int(element[3])
+                obj = drive["rooms"][room_id]
+                self.rooms.append(obj)
 
             if element[4] != "0" and element[4] != "":
-                self.absences.append(element[4])
+                absence = models.Absence.objects.using("untis").get(absence_id=int(element[4]))
+                self.absences.append(absence)
 
         self.text = db_obj.text
         self.from_date = untis_date_to_date(db_obj.datefrom)

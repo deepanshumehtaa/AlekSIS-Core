@@ -145,12 +145,16 @@ class SubRow(object):
         self.classes = ""
         self.teacher = ""
         self.teacher_full = ""
+        self.teachers = []  # Only for events
+        self.rooms    = []  # Only for events
+        self.absences = []  # Only for events
         self.subject = ""
         self.subject_full = ""
         self.room = ""
         self.room_full = ""
         self.text = ""
         self.extra = ""
+        self.is_event = False
 
 
 def generate_teacher_row(sub, full=False):
@@ -210,7 +214,7 @@ def generate_room_row(sub, full=False):
     return room
 
 
-def generate_sub_table(subs):
+def generate_sub_table(subs, events=[]):
     """
     Parse substitutions and prepare than for displaying in plan
     :param subs: Substitutions to parse
@@ -261,6 +265,28 @@ def generate_sub_table(subs):
         sub_row.extra = "{} {}".format(sub.id, sub.lesson_id)
 
         sub_rows.append(sub_row)
+
+    for event in events:
+        sub_row = SubRow()
+        sub_row.is_event = True
+
+        sub_row.classes  = format_classes(event.classes)
+        sub_row.teachers = event.teachers
+        sub_row.rooms    = event.rooms
+        sub_row.absences = event.absences
+
+        sub_row.color = "purple"
+        sub_row.text = event.text
+
+        sub_rows.append(sub_row)
+
+    def returnClasses(sub_row):
+        # print(sub_row.classes, end=" | ")
+        return sub_row.classes
+
+    sub_rows.sort(key=returnClasses)
+
+
     return sub_rows
 
 
