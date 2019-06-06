@@ -4,7 +4,9 @@
   "name": "SchoolApps",
   "scope": "",
   "display": "standalone",
-  "start_url": "https://info.katharineum.de/",
+  "start_url_old": "https://info.katharineum.de/",
+  "start_url": "http://127.0.0.1:8000/",
+
   "short_name": "SchoolApps",
   "theme_color": "#da1f3d",
   "description": "",
@@ -13,98 +15,43 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/static/images/86844799-71f8-10c1-e7d7-796910f44e77.webPlatform.png",
-      "sizes": "44x44",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/532d1325-f176-0008-3964-343a1bcd5935.webPlatform.png",
-      "sizes": "48x48",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/04f528db-0b01-8c14-7762-7a69810d1265.webPlatform.png",
-      "sizes": "1240x600",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/e677beba-e9e4-3000-bca6-c8539dbf74e4.webPlatform.png",
-      "sizes": "300x300",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/aa11bd3d-260b-c276-1c09-b767ac224f2e.webPlatform.png",
-      "sizes": "150x150",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/8dde8463-278d-5c78-b2f6-f342b026e965.webPlatform.png",
-      "sizes": "88x88",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/5d6e255c-1240-2653-ec44-0ea01bff39e6.webPlatform.png",
-      "sizes": "24x24",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/9bba1bae-17fb-2975-9edf-a0a90f3a54eb.webPlatform.png",
-      "sizes": "50x50",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/d61086e1-4929-90e8-088a-129e4d16b0fa.webPlatform.png",
-      "sizes": "620x300",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/6f985a9c-e48a-0035-52b5-4c4b28b8c16d.webPlatform.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/eaf673aa-e19a-74b4-33c0-d38154cd1b18.webPlatform.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/ffdd263d-816e-c2ef-5978-2377f85c42b9.webPlatform.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/images/5e034d01-f259-28a7-7cad-cda2b2758636.webPlatform.png",
+      "src": "/static/images/icons/icon-72x72.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "/static/images/33f6c523-376b-7ee2-4847-cb0e750c3642.webPlatform.png",
-      "sizes": "36x36",
+      "src": "/static/images/icons/icon-96x96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "/static/images/09ec9d1a-7f1a-25e5-97b3-96b90712cc60.webPlatform.png",
-      "sizes": "1024x1024",
+      "src": "/static/images/icons/icon-128x128.png",
+      "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "/static/images/061e9652-06e6-8446-46e3-819674db9979.webPlatform.png",
-      "sizes": "180x180",
+      "src": "/static/images/icons/icon-144x144.png",
+      "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "/static/images/982059a6-7527-5086-5334-b0252e562f97.webPlatform.png",
+      "src": "/static/images/icons/icon-152x152.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "/static/images/2d819cff-1e82-fcfb-e85a-6090d6b472eb.webPlatform.png",
-      "sizes": "120x120",
+      "src": "/static/images/icons/icon-192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/static/images/8fc2ae6f-6af5-d172-da72-af62f93bc5c0.webPlatform.png",
-      "sizes": "76x76",
+      "src": "/static/images/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/icons/icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
