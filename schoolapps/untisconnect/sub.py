@@ -124,7 +124,7 @@ def substitutions_sorter(sub):
     """
 
     # First, sort by class
-    sort_by = "".join(class_.name for class_ in sub.classes)
+    sort_by = sub.classes
 
     # If the sub hasn't got a class, then put it to the bottom
     if sort_by == "":
@@ -146,7 +146,7 @@ class SubRow(object):
         self.teacher = ""
         self.teacher_full = ""
         self.teachers = []  # Only for events
-        self.rooms    = []  # Only for events
+        self.rooms = []  # Only for events
         self.absences = []  # Only for events
         self.subject = ""
         self.subject_full = ""
@@ -155,63 +155,6 @@ class SubRow(object):
         self.text = ""
         self.extra = ""
         self.is_event = False
-
-
-def generate_teacher_row(sub, full=False):
-    teacher = ""
-    if not sub.teacher_old and not sub.teacher_new:
-        teacher = ""
-    elif sub.type == 1:
-        teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
-
-    elif sub.teacher_new and sub.teacher_old:
-        teacher = "<s>{}</s> → <strong>{}</strong>".format(
-            sub.teacher_old.shortcode if not full else sub.teacher_old.name,
-            sub.teacher_new.shortcode if not full else sub.teacher_new.name)
-    elif sub.teacher_new and not sub.teacher_old:
-        teacher = "<strong>{}</strong>".format(sub.teacher_new.shortcode if not full else sub.teacher_new.name)
-    elif sub.teacher_old:
-        teacher = "<strong>{}</strong>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
-
-    return teacher
-
-
-def generate_subject_row(sub, full=False):
-    if sub.type == 3:
-        subject = "Aufsicht"
-    elif not sub.subject_new and not sub.subject_old:
-        subject = ""
-    elif sub.type == 1 or sub.type == 2:
-        subject = "<s>{}</s>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
-    elif sub.subject_new and sub.subject_old:
-        subject = "<s>{}</s> → <strong>{}</strong>".format(
-            sub.subject_old.shortcode if not full else sub.subject_old.name,
-            sub.subject_new.shortcode if not full else sub.subject_new.name)
-    elif sub.subject_new and not sub.subject_old:
-        subject = "<strong>{}</strong>".format(sub.subject_new.shortcode if not full else sub.subject_new.name)
-    else:
-        subject = "<strong>{}</strong>".format(sub.subject_old.shortcode if not full else sub.subject_old.name)
-
-    return subject
-
-
-def generate_room_row(sub, full=False):
-    room = ""
-    if sub.type == 3:
-        room = sub.corridor.name
-    elif sub.type == 1 or sub.type == 2:
-        pass
-    elif sub.room_new and sub.room_old:
-        room = "<s>{}</s> → <strong>{}</strong>".format(sub.room_old.shortcode if not full else sub.room_old.name,
-                                                        sub.room_new.shortcode if not full else sub.room_new.name)
-    elif sub.room_new and not sub.room_old:
-        room = sub.room_new.shortcode if not full else sub.room_new.name
-    elif not sub.room_new and not sub.room_old:
-        pass
-    else:
-        room = sub.room_old.shortcode if not full else sub.room_old.name
-
-    return room
 
 
 def generate_sub_table(subs, events=[]):
@@ -244,13 +187,6 @@ def generate_sub_table(subs, events=[]):
         # Classes
         sub_row.classes = format_classes(sub.classes)
 
-        sub_row.teacher = generate_teacher_row(sub)
-        sub_row.teacher_full = generate_teacher_row(sub, full=True)
-        sub_row.subject = generate_subject_row(sub)
-        sub_row.subject_full = generate_subject_row(sub, full=True)
-        sub_row.room = generate_room_row(sub)
-        sub_row.room_full = generate_room_row(sub, full=True)
-
         # Hint text
         sub_row.text = sub.text
 
@@ -270,9 +206,12 @@ def generate_sub_table(subs, events=[]):
         sub_row = SubRow()
         sub_row.is_event = True
 
-        sub_row.classes  = format_classes(event.classes)
+        if event.from_lesson != event.to_lesson:
+            sub_row.lesson = "{}.-{}.".format(event.from_lesson, event.to_lesson)
+
+        sub_row.classes = format_classes(event.classes)
         sub_row.teachers = event.teachers
-        sub_row.rooms    = event.rooms
+        sub_row.rooms = event.rooms
         sub_row.absences = event.absences
 
         sub_row.color = "purple"
@@ -280,12 +219,7 @@ def generate_sub_table(subs, events=[]):
 
         sub_rows.append(sub_row)
 
-    def returnClasses(sub_row):
-        # print(sub_row.classes, end=" | ")
-        return sub_row.classes
-
-    sub_rows.sort(key=returnClasses)
-
+    sub_rows.sort(key=substitutions_sorter)
 
     return sub_rows
 
@@ -361,7 +295,7 @@ def get_substitutions_by_date(date):
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)
-    subs.sort(key=substitutions_sorter)
+    # subs.sort(key=substitutions_sorter)
     return subs
 
 
