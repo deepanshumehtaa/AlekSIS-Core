@@ -5,13 +5,14 @@
 {% block bootstrap4_title %}BiscuIT School Information System{% endblock %}
 
 {% block bootstrap4_extra_head %}
- {% include_css "DataTables" %}
+ {% include_css "DataTables-Bootstrap4" %}
  <link rel="stylesheet" href="{% static 'style.css' %}" />
  <link rel="shortcut icon" href="#" />
 {% endblock %}
 
 {% block bootstrap4_extra_script %}
  {% include_js "DataTables" %}
+ {% include_js "DataTables-Bootstrap4" %}
  <script type="text/javascript" src="{% static 'js/main.js' %}" /></script>
 {% endblock %}
 

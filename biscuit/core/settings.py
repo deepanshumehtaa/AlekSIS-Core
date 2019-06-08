@@ -138,6 +138,9 @@ BOOTSTRAP4 = {
 
 ANY_JS = {
     'DataTables': {
+        'js_url': LocalSetting(default='/javascript/jquery-datatables/jquery.dataTables.min.js')
+    },
+    'DataTables-Bootstrap4': {
         'css_url': LocalSetting(default="/javascript/jquery-datatables/css/dataTables.bootstrap4.min.css"),
         'js_url': LocalSetting("/javascript/jquery-datatables/dataTables.bootstrap4.min.js")
     }
