@@ -21,13 +21,32 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
-    <script src="{% static 'js/jquery/jquery-3.3.1.min.js' %}"></script>
-
+    <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
     {% if martor %}
         <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
         <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
         <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
     {% endif %}
+  
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//info.katharineum.de:9001/";
+            _paq.push(['setTrackerUrl', u + 'piwik.php']);
+            _paq.push(['setSiteId', '1']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'piwik.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <!-- End Matomo Code -->    
 </head>
 <body>
 <header>
@@ -111,11 +130,6 @@
                         <span class="badge new primary-color ">SMART PLAN</span>
                     </a>
                 </li>
-                {#                <li>#}
-                {#                    <a href="{% url 'timetable_admin_all' %}">#}
-                {#                        <i class="material-icons">grid_on</i> Alle Pläne#}
-                {#                    </a>#}
-                {#                </li>#}
                 <li>
                     <a href="{% url 'timetable_quicklaunch' %}">
                         <i class="material-icons">grid_on</i> Alle Pläne
@@ -129,10 +143,15 @@
                 {% if perms.timetable.view_hint %}
                     <li>
                         <a href="{% url 'timetable_hints' %}">
-                            <i class="material-icons">notes</i> Hinweismanagement
+                            <i class="material-icons">announcement</i> Hinweismanagement
                         </a>
                     </li>
                 {% endif %}
+                <li>
+                    <a href="{% url 'debug_logs' %}">
+                        <i class="material-icons">error</i> Debuggingtool
+                    </a>
+                </li>
                 <li>
                     <div class="divider"></div>
                 </li>
@@ -172,6 +191,13 @@
                     <i class="material-icons">feedback</i> Feedback
                 </a>
             </li>
+        {% endif %}
+            <li>
+                <a href="{% url 'faq' %}">
+                    <i class="material-icons">question_answer</i>FAQ
+                </a>
+            </li>
+        {% if user.is_authenticated %}
             <li>
                 <div class="divider"></div>
             </li>
@@ -200,14 +226,37 @@
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
             </li>
+        {% else %}
+
+            <li>
+                <a href="{% url 'login' %}">
+                    <i class="material-icons">lock_open</i> Anmelden
+                </a>
+            </li>
         {% endif %}
     </ul>
 </header>
 <header class="alert success">
     <p>
         <i class="material-icons left">info</i>
-        Du befindest dich in der Testversion von SchoolApps. Daher kann es immer mal wieder zu unvorhergesehenen
+        Du befindest dich in der Testversion von SchoolApps. Daher kann es immer mal wieder zu unvorhersehbaren
         Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über
-        <a href="mailto:support@katharineum.de">support@katharineum.de</a> schreibst.
+        <a href="mailto:support@katharineum.de">support@katharineum.de</a> schreibst oder die in SchoolApps integrierten
+        <a href="{% url 'rebus' %}">Fehlermelde-</a> und
+        <a href="{% url 'feedback' %}">Feedbackfunktionen</a> nutzt.
     </p>
 </header>
+{% if user.is_authenticated %}
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large green">
+    <i class="large material-icons">help</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating tooltipped red" data-position="left" data-tooltip="Fehler melden" href="{% url 'rebus' %}"><i class="material-icons">bug_report</i></a></li>
+    <li><a class="btn-floating tooltipped yellow darken-1" data-position="left" data-tooltip="FAQ" href="{% url 'faq' %}"><i class="material-icons">question_answer</i></a></li>
+    <li><a class="btn-floating tooltipped blue" data-position="left" data-tooltip="Frage stellen" href="{% url 'ask-faq' %}"><i class="material-icons">chat</i></a></li>
+  </ul>
+</div>
+
+{% endif %}

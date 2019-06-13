@@ -39,13 +39,14 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django_pdb',
     'dashboard.apps.DashboardConfig',
+    "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
     'support.apps.SupportConfig',
+    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +58,6 @@ INSTALLED_APPS = [
     'django_react_templatetags',
     'martor',
     'widget_tweaks',
-
 ]
 
 MIDDLEWARE = [
@@ -68,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_pdb.middleware.PdbMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
@@ -170,7 +169,8 @@ TIMETABLE_WIDTH = 5
 TIMETABLE_HEIGHT = 10
 LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
            ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
-WEEK_DAYS = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+SHORT_WEEK_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"]
+LONG_WEEK_DAYS = [("Montag", 0), ("Dienstag", 1), ("Mittwoch", 2), ("Donnerstag", 3), ("Freitag", 4)]
 
 ########
 # LDAP #

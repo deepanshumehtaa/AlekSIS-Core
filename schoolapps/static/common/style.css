@@ -115,6 +115,9 @@ span.badge .material-icons {
 /*+++++++++++*/
 /* Timetable */
 /*+++++++++++*/
+.smart-plan-badge {
+    margin: 5px 20px 5px 0;
+}
 
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
@@ -155,6 +158,26 @@ span.badge .material-icons {
     width: 100%;
 }
 
+.timetable-mobile-title-card {
+    margin-top: 50px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card:first-child {
+    margin-top: -10px;
+    margin-bottom: .60rem;
+}
+
+.timetable-mobile-title-card .card-content {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.timetable-mobile-title-card .card-content .card-title {
+    font-weight: bold;
+}
+
 table.substitutions td, table.substitutions th {
     padding: 10px 5px;
 }
@@ -168,7 +191,7 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
-.lesson-card a {
+.lesson-card a, .substitutions a {
     color: black;
 }
 
@@ -279,7 +302,11 @@ table.striped > tbody > tr:nth-child(odd) {
     }
 }
 
-.alert p, .alert div {
+.alert ul, .alert p {
+    margin: 0;
+}
+
+.alert p:first-child, .alert div:first-child {
     margin: 10px;
     padding: 10px;
     border-left: 5px solid;
@@ -295,13 +322,22 @@ table.striped > tbody > tr:nth-child(odd) {
     border-color: #b71c1c;
 }
 
-main .alert p, main .alert div {
+.alert.primary p, .alert.primary div {
+    background-color: #eca4af;
+    border-color: #da1f3d;
+}
+
+main .alert p:first-child, main .alert div:first-child {
     margin-left: -10px;
     margin-right: -10px;
 }
 
-.alert ul {
-    margin: 0;
+.btn, .btn-large, .btn-small {
+    background-color: #282E3F;
+}
+
+.btn:hover, .btn-large:hover, .btn-small {
+    background-color: #DA1F3D;
 }
 
 /*++++++++++++++++
@@ -311,8 +347,21 @@ FEEDBACK
 .rating {
     display: flex;
     flex-direction: row-reverse;
-    width: 450px;
-    min-height: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    min-width: 150px;
+    max-width: 600px;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 992px) {
+    .rating {
+        margin-top: 12px;
+        min-height: 40px;
+        justify-content: space-around;
+    }
+
+    ´
 }
 
 .rating label {
@@ -352,14 +401,8 @@ FEEDBACK
     color: #FFD700;
 }
 
-.float_right {
-    float: right;
-}
-
-.feedback-input {
-    width: 450px !important;
-    margin-top: 0;
-    margin-bottom: 0;
+.support-input-mobile label {
+    line-height: 1rem;
 }
 
 .span-info {
@@ -367,3 +410,37 @@ FEEDBACK
     vertical-align: middle;
 }
 
+i.collapsible-trigger {
+    margin-right: -10px;
+
+}
+
+.collapsible .collapsible-trigger::before {
+    content: 'arrow_downward';
+}
+
+.collapsible .collapsible-trigger.v2::before {
+    content: 'more_vert';
+}
+
+.collapsible .active .collapsible-trigger::before {
+    content: 'arrow_upward';
+}
+
+
+.scroll-fix {
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.waves-effect.waves-katharineum .waves-ripple {
+    background-color: rgba(218, 31, 61, 0.65);
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    color: #da1f3d;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+    color: #ea4661;
+}

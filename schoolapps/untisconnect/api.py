@@ -4,6 +4,10 @@ from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_dat
 from . import models
 from timetable.settings import untis_settings
 
+TYPE_TEACHER = 0
+TYPE_ROOM = 1
+TYPE_CLASS = 2
+
 
 def run_all(obj, filter_term=True):
     return run_default_filter(run_using(obj).all(), filter_term=filter_term)
@@ -158,10 +162,10 @@ def format_classes(classes):
         else:
             classes_as_dict[step].append(part)
 
-    out = ""
+    out = []
     for key, value in classes_as_dict.items():
-        out += key + "".join(value)
-    return out
+        out.append(key + "".join(value))
+    return ", ".join(out)
 
 
 ########
@@ -276,6 +280,8 @@ class Absence(object):
     def __init__(self):
         self.filled = None
         self.teacher = None
+        self.room = None
+        self.type = TYPE_TEACHER
         self.from_date = None
         self.to_date = None
         self.from_lesson = None
@@ -284,8 +290,14 @@ class Absence(object):
 
     def create(self, db_obj):
         self.filled = True
-        print(db_obj.ida)
-        self.teacher = get_teacher_by_id(db_obj.ida)
+        # print(db_obj.ida)
+        print(db_obj.typea)
+        self.type = TYPE_TEACHER if db_obj.typea != 102 else TYPE_ROOM
+        if self.type == TYPE_TEACHER:
+            self.teacher = get_teacher_by_id(db_obj.ida)
+
+        else:
+            self.room = get_room_by_id(db_obj.ida)
         self.from_date = untis_date_to_date(db_obj.datefrom)
         self.to_date = untis_date_to_date(db_obj.dateto)
         self.from_lesson = db_obj.lessonfrom

@@ -9,5 +9,7 @@ class.pdf
 class.tex
 .idea/
 media/
-node_modules
-staticcollect
+node_modules/
+latex/
+staticcollect/
+.idea
