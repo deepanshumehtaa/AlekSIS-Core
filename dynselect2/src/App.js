@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+// import "materialize-css/dist/css/materialize.css";
 
 import M from "materialize-css/dist/js/materialize";
 import PropTypes from "prop-types";
@@ -11,58 +12,6 @@ const OPTIONS_ONLINE_COMMON = [
 ];
 
 const BASIC_OPTIONS = [
-    {
-        id: "deviceIssues",
-        name: "Probleme am Computer/Notebook",
-        options: [
-            {
-                id: "loginIssue",
-                name: "Anmeldeproblem/Passwort vergessen"
-            },
-            {
-                id: "internetIssue",
-                name: "Internetproblem"
-            },
-            {
-                id: "noReaction",
-                name: "Programm-/Computerabsturz (keine Reaktion)"
-            },
-            {
-                id: "powerOffNoBoot",
-                name: "Computer/Notebook ist ausgegangen/startet nicht"
-            },
-            {
-                id: "speedIssue",
-                name: "Computer/Notebook zu langsam"
-            },
-            {
-                id: "noUSB",
-                name: "USB-Stick wird nicht erkannt"
-            },
-            {
-                id: "noOpenTray",
-                name: "CD/DVD-Laufwerk öffnet sich nicht"
-            },
-            {
-                id: "noCDDVD",
-                name: "CD/DVD wird nicht erkannt/abgespielt"
-            },
-            {
-                id: "keyboardMouse",
-                name: "Tastatur/Maus funktioniert nicht"
-            },
-            {
-                id: "missingHardware",
-                name: "Tastatur/Maus/Lautsprecher/etc. fehlt"
-            },
-            {
-                id: "missingKeys",
-                name: "Fehlende Tasten auf der Tastatur"
-            }
-
-
-        ]
-    },
     {
         id: "infrastructureIssues",
         name: "Infrastrukturprobleme",
@@ -147,6 +96,59 @@ const BASIC_OPTIONS = [
         ]
     },
     {
+        id: "deviceIssues",
+        name: "Probleme am Computer/Notebook",
+        options: [
+            {
+                id: "loginIssue",
+                name: "Anmeldeproblem/Passwort vergessen"
+            },
+            {
+                id: "internetIssue",
+                name: "Internetproblem"
+            },
+            {
+                id: "noReaction",
+                name: "Programm-/Computerabsturz (keine Reaktion)"
+            },
+            {
+                id: "powerOffNoBoot",
+                name: "Computer/Notebook ist ausgegangen/startet nicht"
+            },
+            {
+                id: "speedIssue",
+                name: "Computer/Notebook zu langsam"
+            },
+            {
+                id: "noUSB",
+                name: "USB-Stick wird nicht erkannt"
+            },
+            {
+                id: "noOpenTray",
+                name: "CD/DVD-Laufwerk öffnet sich nicht"
+            },
+            {
+                id: "noCDDVD",
+                name: "CD/DVD wird nicht erkannt/abgespielt"
+            },
+            {
+                id: "keyboardMouse",
+                name: "Tastatur/Maus funktioniert nicht"
+            },
+            {
+                id: "missingHardware",
+                name: "Tastatur/Maus/Lautsprecher/etc. fehlt"
+            },
+            {
+                id: "missingKeys",
+                name: "Fehlende Tasten auf der Tastatur"
+            }
+
+
+        ]
+    },
+
+    {
         id: "otherIssues",
         name: "Andere Probleme",
         options: [
@@ -158,13 +160,6 @@ const BASIC_OPTIONS = [
     },
 ];
 
-
-const ROOMS_WITH_PRESENTATION_DEVICE = [
-    "R 0.04",
-    "R 0.05",
-    "R 0.07",
-    "R 0.08"
-];
 
 const OTHER_LOCATIONS = [
     "Notebookwagen 1. Stock/R 2.06",
@@ -204,32 +199,13 @@ function getOption(option) {
 
 class Select extends Component {
     render() {
-        return
-    <
-        select
-        onChange = {this.props.onChange
-    }
-        defaultValue = {"no"}
-        required = {true} >
-            < option
-        value = {"no"}
-        disabled = {true} > Nichts
-        ausgewählt < /option>
-        {
-            this.props.values.map(function (val, i) {
-                return
-            <
-                option
-                value = {val}
-                key = {i} > {val} < /option>;
-            })
-        }
-    <
-        option
-        value = {"extra"} > {this.props.defaultValue
-    }<
-        /option>
-        < /select>
+        return <select onChange={this.props.onChange} defaultValue={"no"} required={this.props.show}>
+            <option value={"no"} disabled={true}>Nichts ausgewählt</option>
+            {this.props.values.map(function (val, i) {
+                return <option value={val} key={i}>{val}</option>;
+            })}
+            <option value={"extra"}>{this.props.defaultValue}</option>
+        </select>
     }
 }
 
@@ -237,7 +213,7 @@ Select.propTypes = {
     onChange: PropTypes.func.isRequired,
     values: PropTypes.array.isRequired,
     defaultValue: PropTypes.string,
-
+    show: PropTypes.bool.isRequired
 
 };
 
@@ -247,24 +223,13 @@ Select.defaultProps = {
 
 class Input extends Component {
     render() {
-        return
-    <
-        div
-        className = {(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
-    }>
-    <
-        i
-        className = {"material-icons prefix"} > {this.props.icon
-    }<
-        /i>
-        {
-            this.props.children
-        }
-    <
-        label > {this.props.label
-    }<
-        /label>
-        < /div>;
+        return <div
+            className={(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
+            }>
+            <i className={"material-icons prefix"}>{this.props.icon}</i>
+            {this.props.children}
+            <label>{this.props.label}</label>
+        </div>;
     }
 }
 
@@ -299,345 +264,168 @@ class App extends Component {
         M.FormSelect.init(elems, {});
     }
 
-    _onCategoryChanges = (e) =
-> {
-    const
-    opt = e.target.value;
-    const
-    category = getCategoryOfOption(opt);
-    const
-    option = getOption(opt);
+    _onCategoryChanges = (e) => {
+        const opt = e.target.value;
+        const category = getCategoryOfOption(opt);
+        const option = getOption(opt);
 
-    // Get matching helper text
-    let
-    helpText = option.helpText || this.state.helpText;
-    "deviceIssues"
-===
-    helpText = "Wähle bitte das Gerät mit dem Problem aus! Bitte vergiss nicht, uns das Problem unten genauer zu beschreiben!"
-) {
-
-    if(category
-}
-
-else
-if (category === "onlineIssues") {
-    helpText = "Bitte konkretisiere das Problem durch eine Auswahl und gib bitte unten genauere Informationen an."
-} else if (category === "otherIssues") {
-    helpText = "Da es sich scheinbar um ein seltenes oder noch nicht erfasstes Problem handelt, gib uns bitte besonders viele Informationen."
-}
-
-// Update state
-this.setState({
-    selectedCategory: category,
-    selectedOption: option,
-    step: 1,
-    helpText: helpText
-})
-}
-;
-
-_onSetB = (e) =
->
-{
-    const val = e.target.value;
-    this.setState({
-        valueB: val,
-        step: 2
-    })
-}
-;
-
-_onSetC = (e) =
->
-{
-    const val = e.target.value;
-    this.setState({
-        valueC: val,
-        step: 2
-    })
-}
-;
-
-render()
-{
-    let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
-    LOCATIONS.sort();
-
-    console.log(this.state);
-    const that = this;
-    const sC = this.state.selectedCategory;
-    const sO = this.state.selectedOption ? this.state.selectedOption.id : null;
-    const step = this.state.step;
-    console.log(BASIC_OPTIONS[2].options);
-    return (
-        < div
-    className = "App" >
-        < div
-    className = {"row"} >
-        < div
-    className = "input-field col s12 m12 l4" >
-        < i
-    className = {"material-icons prefix"} > list < /i>
-        < select
-    onChange = {this._onCategoryChanges
-}
-    defaultValue = {"noCategory"} >
-        < option
-    value = {"noCategory"}
-    disabled = {true} > Keine
-    Kategorie
-    ausgewählt < /option>
-    {
-        BASIC_OPTIONS.map(function (category) {
-            return
-        <
-            optgroup
-            label = {category.name
+        // Get matching helper text
+        let helpText = option.helpText || this.state.helpText;
+        if (category === "deviceIssues") {
+            helpText = "Wähle bitte das Gerät mit dem Problem aus! Bitte vergiss nicht, uns das Problem unten genauer zu beschreiben!"
+        } else if (category === "onlineIssues") {
+            helpText = "Bitte konkretisiere das Problem durch eine Auswahl und gib bitte unten genauere Informationen an."
+        } else if (category === "otherIssues") {
+            helpText = "Da es sich scheinbar um ein seltenes oder noch nicht erfasstes Problem handelt, gib uns bitte besonders viele Informationen."
         }
-            key = {category.id
-        }>
-            {
-                category.options.map(function (option) {
-                    return
-                <
-                    option
-                    value = {option.id
-                }
-                    key = {option.id
-                }>
-                    {
-                        option.name
-                    }
-                <
-                    /option>;
-                })
-            }
-        <
-            /optgroup>;
+
+        // Update state
+        this.setState({
+            selectedCategory: category,
+            selectedOption: option,
+            step: 1,
+            helpText: helpText
         })
-    }
-    {/*<option value={"extra"}>Sonstiges</option>*/
-    }
-<
-    /select>
-    < label > Kategorie < /label>
-    < /div>
+    };
 
-    {/* Section B – Device Issues*/
-    }
-<
-    Input
-    label = {"Ort des Computer/Notebook"}
-    icon = {"location_on"}
-    show = {sC === "deviceIssues"
-}>
-<
-    Select
-    onChange = {this._onSetB
-}
-    values = {LOCATIONS}
-    defaultValue = {"Anderer Ort"}
-    />
-    < /Input>
-
-    {/* Section B – Presentation Device Issues */
-    }
-<
-    Input
-    label = {"Ort des Beamer/Fernseher"}
-    icon = {"location_on"}
-    show = {sO === "presentationDeviceIssue"
-}>
-<
-    Select
-    onChange = {this._onSetB
-}
-    values = {ROOMS_WITH_PRESENTATION_DEVICE}
-    defaultValue = {"Anderer Raum"}
-    />
-    < /Input>
-
-    {/* Section B – Substitution Monitor Issue */
-    }
-<
-    Input
-    label = {"Art des Problems"}
-    icon = {"bug_report"}
-    show = {sO === "subMonitorIssue"
-}>
-<
-    Select
-    onChange = {this._onSetB
-}
-    values = {["Schwarzer Bildschirm", "Tage wechseln nicht (Eingefroren)"
-]
-}
-    defaultValue = {"Anderer Raum"}
-    />
-    < /Input>
-
-    {/* Section B – WLAN Issue */
-    }
-<
-    Input
-    label = {"Art des Problems"}
-    icon = {"bug_report"}
-    show = {sO === "wlanIssue"
-}>
-<
-    Select
-    onChange = {this._onSetB
-}
-    values = {["Kein Empfang", "Zugangsdaten funktionieren nicht", "Geschwindigkeit zu langsam"
-]
-}
-    defaultValue = {"Anderes Problem"}
-    />
-    < /Input>
-
-    {/* Section B – Online Issue*/
-    }
-    {
-        BASIC_OPTIONS[2].options.map(function (opt) {
-            if (opt.options) {
-                return
-            <
-                Input
-                label = {"Art des Problems"}
-                icon = {"bug_report"}
-                show = {sC === "onlineIssues" && sO === opt.id
-            }
-                key = {opt.id
-            }>
-            <
-                Select
-                onChange = {that._onSetB
-            }
-                values = {opt.options
-            }
-                defaultValue = {"Anderes Problem"}
-                />
-                < /Input>;
-            } else {
-                return
-            <
-                p / >;
-            }
+    _onSetB = (e) => {
+        const val = e.target.value;
+        this.setState({
+            valueB: val,
+            step: 2
         })
+    };
+
+    _onSetC = (e) => {
+        const val = e.target.value;
+        this.setState({
+            valueC: val,
+            step: 2
+        })
+    };
+
+    render() {
+        let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
+        let LOCATIONS_WITH_POSSIBLE_PRESENTATION_DEVICE = this.props.rooms;
+        LOCATIONS.sort();
+
+        // console.log(this.state);
+        const that = this;
+        const sC = this.state.selectedCategory;
+        const sO = this.state.selectedOption ? this.state.selectedOption.id : null;
+        const step = this.state.step;
+        // console.log(BASIC_OPTIONS[2].options);
+        return (
+            <div className="App">
+                <div className={"row"}>
+                    < div
+                        className="input-field col s12 m12 l4">
+                        <i className={"material-icons prefix"}>list</i>
+                        <select onChange={this._onCategoryChanges} defaultValue={"noCategory"} className={"validate"}
+                                required={true}>
+                            <option value={"noCategory"} disabled={true}>Keine Kategorie ausgewählt</option>
+                            {BASIC_OPTIONS.map(function (category) {
+                                return <optgroup label={category.name} key={category.id}>
+                                    {category.options.map(function (option) {
+                                        return <option value={option.id} key={option.id}>{option.name}</option>;
+                                    })}
+                                </optgroup>;
+                            })}
+                            {/*<option value={"extra"}>Sonstiges</option>*/}
+                        </select>
+                        <label>Kategorie</label>
+                    </div>
+
+                    {/* Section B – Device Issues*/}
+                    <Input label={"Ort des Computer/Notebook"} icon={"location_on"} show={sC === "deviceIssues"}>
+                        <Select onChange={this._onSetB} values={LOCATIONS} defaultValue={"Anderer Ort"}
+                                show={sC === "deviceIssues"}/>
+                    </Input>
+
+                    {/* Section B – Presentation Device Issues */}
+                    <Input label={"Ort des Beamer/Fernseher"} icon={"location_on"}
+                           show={sO === "presentationDeviceIssue"}>
+                        <Select onChange={this._onSetB} values={LOCATIONS_WITH_POSSIBLE_PRESENTATION_DEVICE}
+                                defaultValue={"Anderer Raum"} show={sO === "presentationDeviceIssue"}/>
+                    </Input>
+
+                    {/* Section B – Substitution Monitor Issue */}
+                    <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "subMonitorIssue"}>
+                        <Select onChange={this._onSetB}
+                                values={["Schwarzer Bildschirm", "Tage wechseln nicht (Eingefroren)"]}
+                                defaultValue={"Anderer Raum"} show={sO === "subMonitorIssue"}/>
+                    </Input>
+
+                    {/* Section B – WLAN Issue */}
+                    <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "wlanIssue"}>
+                        <Select onChange={this._onSetB}
+                                values={["Kein Empfang", "Zugangsdaten funktionieren nicht", "Geschwindigkeit zu langsam"]}
+                                defaultValue={"Anderes Problem"} show={sO === "wlanIssue"}/>
+                    </Input>
+
+                    {/* Section B – Online Issue*/}
+                    {BASIC_OPTIONS[1].options.map(function (opt) {
+                        if (opt.options) {
+                            return <Input label={"Art des Problems"} icon={"bug_report"}
+                                          show={sC === "onlineIssues" && sO === opt.id} key={opt.id}>
+                                <Select onChange={that._onSetB}
+                                        values={opt.options}
+                                        defaultValue={"Anderes Problem"} show={sC === "onlineIssues" && sO === opt.id}
+                                        key={opt.id}/>
+                            </Input>;
+                        } else {
+                            return <p/>;
+                        }
+                    })}
+
+
+                    {/* Section C – Presentation Device Issues */}
+                    <Input label={"Handelt es sich um einen Beamer oder einen Fernseher?"} icon={"tv"}
+                           show={sO === "presentationDeviceIssue" && step === 2}>
+                        <Select onChange={this._onSetC} values={["Beamer", "Fernseher/Bildschirm"]}
+                                defaultValue={"Sonstiges"} show={sO === "presentationDeviceIssue" && step === 2}/>
+                    </Input>
+
+                    {/* Section C – WLAN Issue */}
+                    <Input label={"Um welches WLAN-Netzwerk handelt es sich?"} icon={"wifi"}
+                           show={sO === "wlanIssue" && step === 2}>
+                        <Select onChange={this._onSetC}
+                                values={["kath-schueler", "kath-lehrer", "kath-edu", "kath-gaeste"]}
+                                defaultValue={"-"} show={sO === "wlanIssue" && step === 2}/>
+                    </Input>
+
+                    {/* Section C – Device Issue */}
+                    <div
+                        className={(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
+                        }>
+                        <i className={"material-icons prefix"}>device_unknown</i>
+                        <input type={"text"} id={"valc"} onChange={this._onSetC}
+                               required={sC === "deviceIssues" && step === 2} className={"validate"}/>
+                        <label htmlFor="valc">Um welches Gerät handelt es sich?</label>
+                    </div>
+
+                    {/* Helper Text */}
+                    <div className={"col s12"}>
+                        <p>
+                            <i className={"material-icons left"}>info</i>
+                            {this.state.helpText}
+                        </p>
+                    </div>
+
+
+                </div>
+
+                {/* Prepare values for Django */}
+                <div>
+                    <input type={"hidden"} name={"a"}
+                           value={this.state.selectedOption ? this.state.selectedOption.name : ""}/>
+                    <input type={"hidden"} name={"b"} value={this.state.valueB}/>
+                    <input type={"hidden"} name={"c"} value={this.state.valueC}/>
+                </div>
+
+            </div>
+        );
     }
-
-
-    {/* Section C – Presentation Device Issues */
-    }
-<
-    Input
-    label = {"Handelt es sich um einen Beamer oder einen Fernseher?"}
-    icon = {"tv"}
-    show = {sO === "presentationDeviceIssue" && step === 2
-}>
-<
-    Select
-    onChange = {this._onSetC
-}
-    values = {["Beamer", "Fernseher/Bildschirm"
-]
-}
-    defaultValue = {"Sonstiges"}
-    />
-    < /Input>
-
-    {/* Section C – WLAN Issue */
-    }
-<
-    Input
-    label = {"Um welches WLAN-Netzwerk handelt es sich?"}
-    icon = {"wifi"}
-    show = {sO === "wlanIssue" && step === 2
-}>
-<
-    Select
-    onChange = {this._onSetC
-}
-    values = {["kath-schueler", "kath-lehrer", "kath-edu", "kath-gaeste"
-]
-}
-    defaultValue = {"-"}
-    />
-    < /Input>
-
-    {/* Section C – Device Issue */
-    }
-<
-    div
-    className = {(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
-}>
-<
-    i
-    className = {"material-icons prefix"} > device_unknown < /i>
-        < input
-    type = {"text"}
-    id = {"valc"}
-    onChange = {this._onSetC
-}
-    required = {true}
-    />
-    < label
-    htmlFor = "valc" > Um
-    welches
-    Gerät
-    handelt
-    es
-    sich ?
-<
-    /label>
-    < /div>
-
-    {/* Helper Text */
-    }
-<
-    div
-    className = {"col s12"} >
-        < p >
-        < i
-    className = {"material-icons left"} > info < /i>
-    {
-        this.state.helpText
-    }
-<
-    /p>
-    < /div>
-
-
-    < /div>
-
-    {/* Prepare values for Django */
-    }
-<
-    div >
-    < input
-    type = {"hidden"}
-    name = {"a"}
-    value = {this.state.selectedOption ? this.state.selectedOption.name : ""
-}
-    />
-    < input
-    type = {"hidden"}
-    name = {"b"}
-    value = {this.state.valueB
-}
-    />
-    < input
-    type = {"hidden"}
-    name = {"c"}
-    value = {this.state.valueC
-}
-    />
-    < /div>
-
-    < /div>
-)
-    ;
-}
 }
 
 App.propTypes = {

@@ -13,58 +13,6 @@ const OPTIONS_ONLINE_COMMON = [
 
 const BASIC_OPTIONS = [
     {
-        id: "deviceIssues",
-        name: "Probleme am Computer/Notebook",
-        options: [
-            {
-                id: "loginIssue",
-                name: "Anmeldeproblem/Passwort vergessen"
-            },
-            {
-                id: "internetIssue",
-                name: "Internetproblem"
-            },
-            {
-                id: "noReaction",
-                name: "Programm-/Computerabsturz (keine Reaktion)"
-            },
-            {
-                id: "powerOffNoBoot",
-                name: "Computer/Notebook ist ausgegangen/startet nicht"
-            },
-            {
-                id: "speedIssue",
-                name: "Computer/Notebook zu langsam"
-            },
-            {
-                id: "noUSB",
-                name: "USB-Stick wird nicht erkannt"
-            },
-            {
-                id: "noOpenTray",
-                name: "CD/DVD-Laufwerk öffnet sich nicht"
-            },
-            {
-                id: "noCDDVD",
-                name: "CD/DVD wird nicht erkannt/abgespielt"
-            },
-            {
-                id: "keyboardMouse",
-                name: "Tastatur/Maus funktioniert nicht"
-            },
-            {
-                id: "missingHardware",
-                name: "Tastatur/Maus/Lautsprecher/etc. fehlt"
-            },
-            {
-                id: "missingKeys",
-                name: "Fehlende Tasten auf der Tastatur"
-            }
-
-
-        ]
-    },
-    {
         id: "infrastructureIssues",
         name: "Infrastrukturprobleme",
         options: [
@@ -148,6 +96,59 @@ const BASIC_OPTIONS = [
         ]
     },
     {
+        id: "deviceIssues",
+        name: "Probleme am Computer/Notebook",
+        options: [
+            {
+                id: "loginIssue",
+                name: "Anmeldeproblem/Passwort vergessen"
+            },
+            {
+                id: "internetIssue",
+                name: "Internetproblem"
+            },
+            {
+                id: "noReaction",
+                name: "Programm-/Computerabsturz (keine Reaktion)"
+            },
+            {
+                id: "powerOffNoBoot",
+                name: "Computer/Notebook ist ausgegangen/startet nicht"
+            },
+            {
+                id: "speedIssue",
+                name: "Computer/Notebook zu langsam"
+            },
+            {
+                id: "noUSB",
+                name: "USB-Stick wird nicht erkannt"
+            },
+            {
+                id: "noOpenTray",
+                name: "CD/DVD-Laufwerk öffnet sich nicht"
+            },
+            {
+                id: "noCDDVD",
+                name: "CD/DVD wird nicht erkannt/abgespielt"
+            },
+            {
+                id: "keyboardMouse",
+                name: "Tastatur/Maus funktioniert nicht"
+            },
+            {
+                id: "missingHardware",
+                name: "Tastatur/Maus/Lautsprecher/etc. fehlt"
+            },
+            {
+                id: "missingKeys",
+                name: "Fehlende Tasten auf der Tastatur"
+            }
+
+
+        ]
+    },
+
+    {
         id: "otherIssues",
         name: "Andere Probleme",
         options: [
@@ -159,13 +160,6 @@ const BASIC_OPTIONS = [
     },
 ];
 
-
-const ROOMS_WITH_PRESENTATION_DEVICE = [
-    "R 0.04",
-    "R 0.05",
-    "R 0.07",
-    "R 0.08"
-];
 
 const OTHER_LOCATIONS = [
     "Notebookwagen 1. Stock/R 2.06",
@@ -205,7 +199,7 @@ function getOption(option) {
 
 class Select extends Component {
     render() {
-        return <select onChange={this.props.onChange} defaultValue={"no"} required={true}>
+        return <select onChange={this.props.onChange} defaultValue={"no"} required={this.props.show}>
             <option value={"no"} disabled={true}>Nichts ausgewählt</option>
             {this.props.values.map(function (val, i) {
                 return <option value={val} key={i}>{val}</option>;
@@ -219,7 +213,7 @@ Select.propTypes = {
     onChange: PropTypes.func.isRequired,
     values: PropTypes.array.isRequired,
     defaultValue: PropTypes.string,
-
+    show: PropTypes.bool.isRequired
 
 };
 
@@ -230,8 +224,8 @@ Select.defaultProps = {
 class Input extends Component {
     render() {
         return <div
-        className = {(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
-    }>
+            className={(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
+            }>
             <i className={"material-icons prefix"}>{this.props.icon}</i>
             {this.props.children}
             <label>{this.props.label}</label>
@@ -311,22 +305,24 @@ class App extends Component {
     };
 
     render() {
-    let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
-    LOCATIONS.sort();
+        let LOCATIONS = this.props.rooms.concat(OTHER_LOCATIONS);
+        let LOCATIONS_WITH_POSSIBLE_PRESENTATION_DEVICE = this.props.rooms;
+        LOCATIONS.sort();
 
-        console.log(this.state);
+        // console.log(this.state);
         const that = this;
         const sC = this.state.selectedCategory;
         const sO = this.state.selectedOption ? this.state.selectedOption.id : null;
         const step = this.state.step;
-        console.log(BASIC_OPTIONS[2].options);
+        // console.log(BASIC_OPTIONS[2].options);
         return (
             <div className="App">
                 <div className={"row"}>
-        < div
-    className = "input-field col s12 m12 l4" >
+                    < div
+                        className="input-field col s12 m12 l4">
                         <i className={"material-icons prefix"}>list</i>
-                        <select onChange={this._onCategoryChanges} defaultValue={"noCategory"}>
+                        <select onChange={this._onCategoryChanges} defaultValue={"noCategory"} className={"validate"}
+                                required={true}>
                             <option value={"noCategory"} disabled={true}>Keine Kategorie ausgewählt</option>
                             {BASIC_OPTIONS.map(function (category) {
                                 return <optgroup label={category.name} key={category.id}>
@@ -342,38 +338,40 @@ class App extends Component {
 
                     {/* Section B – Device Issues*/}
                     <Input label={"Ort des Computer/Notebook"} icon={"location_on"} show={sC === "deviceIssues"}>
-                        <Select onChange={this._onSetB} values={LOCATIONS} defaultValue={"Anderer Ort"}/>
+                        <Select onChange={this._onSetB} values={LOCATIONS} defaultValue={"Anderer Ort"}
+                                show={sC === "deviceIssues"}/>
                     </Input>
 
                     {/* Section B – Presentation Device Issues */}
                     <Input label={"Ort des Beamer/Fernseher"} icon={"location_on"}
                            show={sO === "presentationDeviceIssue"}>
-                        <Select onChange={this._onSetB} values={ROOMS_WITH_PRESENTATION_DEVICE}
-                                defaultValue={"Anderer Raum"}/>
+                        <Select onChange={this._onSetB} values={LOCATIONS_WITH_POSSIBLE_PRESENTATION_DEVICE}
+                                defaultValue={"Anderer Raum"} show={sO === "presentationDeviceIssue"}/>
                     </Input>
 
                     {/* Section B – Substitution Monitor Issue */}
                     <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "subMonitorIssue"}>
                         <Select onChange={this._onSetB}
                                 values={["Schwarzer Bildschirm", "Tage wechseln nicht (Eingefroren)"]}
-                                defaultValue={"Anderer Raum"}/>
+                                defaultValue={"Anderer Raum"} show={sO === "subMonitorIssue"}/>
                     </Input>
 
                     {/* Section B – WLAN Issue */}
                     <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "wlanIssue"}>
                         <Select onChange={this._onSetB}
                                 values={["Kein Empfang", "Zugangsdaten funktionieren nicht", "Geschwindigkeit zu langsam"]}
-                                defaultValue={"Anderes Problem"}/>
+                                defaultValue={"Anderes Problem"} show={sO === "wlanIssue"}/>
                     </Input>
 
                     {/* Section B – Online Issue*/}
-                    {BASIC_OPTIONS[2].options.map(function (opt) {
+                    {BASIC_OPTIONS[1].options.map(function (opt) {
                         if (opt.options) {
                             return <Input label={"Art des Problems"} icon={"bug_report"}
                                           show={sC === "onlineIssues" && sO === opt.id} key={opt.id}>
                                 <Select onChange={that._onSetB}
                                         values={opt.options}
-                                        defaultValue={"Anderes Problem"}/>
+                                        defaultValue={"Anderes Problem"} show={sC === "onlineIssues" && sO === opt.id}
+                                        key={opt.id}/>
                             </Input>;
                         } else {
                             return <p/>;
@@ -385,7 +383,7 @@ class App extends Component {
                     <Input label={"Handelt es sich um einen Beamer oder einen Fernseher?"} icon={"tv"}
                            show={sO === "presentationDeviceIssue" && step === 2}>
                         <Select onChange={this._onSetC} values={["Beamer", "Fernseher/Bildschirm"]}
-                                defaultValue={"Sonstiges"}/>
+                                defaultValue={"Sonstiges"} show={sO === "presentationDeviceIssue" && step === 2}/>
                     </Input>
 
                     {/* Section C – WLAN Issue */}
@@ -393,15 +391,16 @@ class App extends Component {
                            show={sO === "wlanIssue" && step === 2}>
                         <Select onChange={this._onSetC}
                                 values={["kath-schueler", "kath-lehrer", "kath-edu", "kath-gaeste"]}
-                                defaultValue={"-"}/>
+                                defaultValue={"-"} show={sO === "wlanIssue" && step === 2}/>
                     </Input>
 
                     {/* Section C – Device Issue */}
                     <div
-    className = {(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
-}>
+                        className={(sC === "deviceIssues" && step === 2 ? "" : "hide ") + "input-field col s12 m12 l4"
+                        }>
                         <i className={"material-icons prefix"}>device_unknown</i>
-                        <input type={"text"} id={"valc"} onChange={this._onSetC} required={true}/>
+                        <input type={"text"} id={"valc"} onChange={this._onSetC}
+                               required={sC === "deviceIssues" && step === 2} className={"validate"}/>
                         <label htmlFor="valc">Um welches Gerät handelt es sich?</label>
                     </div>
 
