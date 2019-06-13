@@ -4,13 +4,9 @@ from django.utils import timezone
 
 from schoolapps import settings
 from schoolapps.settings import LESSONS
-from untisconnect.api import format_classes
+from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION
-
-TYPE_TEACHER = 0
-TYPE_ROOM = 1
-TYPE_CLASS = 2
 
 
 class LessonContainer(object):

@@ -1,7 +1,8 @@
 from django.utils import timezone
 
 from untisconnect import models
-from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date
+from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date, \
+    TYPE_TEACHER
 from untisconnect.api_helper import run_using, untis_split_first, untis_date_to_date, date_to_untis_date
 from untisconnect.parse import get_lesson_element_by_id_and_teacher
 from untisconnect.drive import build_drive
@@ -83,7 +84,7 @@ class Substitution(object):
                 self.teacher_old = self.teacher_new
                 self.teacher_new = None
 
-        print(self.teacher_old, self.teacher_new)
+        # print(self.teacher_old, self.teacher_new)
 
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
                                                                                   self.lesson, self.date.weekday() + 1)
@@ -275,6 +276,8 @@ def get_header_information(subs, date):
     if info.absences:
         elements = []
         for absence in info.absences:
+            if absence.type != TYPE_TEACHER:
+                continue
             if absence.is_whole_day:
                 # Teacher is missing the whole day
                 elements.append("{}".format(absence.teacher.shortcode))
