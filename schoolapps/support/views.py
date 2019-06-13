@@ -34,7 +34,7 @@ def rebus(request):
                                                                                                                    contraction,
                                                                                                                    long_description)
             # Add kanboard task
-            kb.create_task(project_id=p_id_rebus, title=short_description, description=description)
+            #kb.create_task(project_id=p_id_rebus, title=short_description, description=description)
 
             # Register activity
             desc_act = "{} → {} → {} | {}".format(a, b, c, short_description)
@@ -98,10 +98,10 @@ def feedback(request):
                 color = "green"
 
             # Add kanboard task
-            kb.create_task(project_id=p_id_feedback,
-                           title="Feedback von {}".format(request.user.username),
-                           description=description,
-                           color_id=color)
+#            kb.create_task(project_id=p_id_feedback,
+ #                          title="Feedback von {}".format(request.user.username),
+  #                         description=description,
+   #                        color_id=color)
 
             # Register activity
             act = Activity(title="Du hast uns Feedback gegeben.",
