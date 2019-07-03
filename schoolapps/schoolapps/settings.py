@@ -33,7 +33,11 @@ ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 # Application definition
