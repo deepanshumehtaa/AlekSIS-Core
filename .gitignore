@@ -7,6 +7,9 @@ secure*
 *.log
 class.pdf
 class.tex
-.idea
-media
-node_modules
+.idea/
+media/
+node_modules/
+dynselect2/src/*
+dynselect2/bundle.js
+package-lock.json

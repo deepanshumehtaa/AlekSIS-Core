@@ -65,6 +65,7 @@ class Substitution(object):
         if db_obj.teacher_idlessn != 0:
             self.teacher_old = drive["teachers"][db_obj.teacher_idlessn]
 
+        # print(self.teacher_new, self.teacher_old, self.lesson_id, self.id)
         if db_obj.teacher_idsubst != 0:
             self.teacher_new = drive["teachers"][db_obj.teacher_idsubst]
 
@@ -74,6 +75,8 @@ class Substitution(object):
             if self.teacher_old is None and self.teacher_new is not None:
                 self.teacher_old = self.teacher_new
                 self.teacher_new = None
+
+        print(self.teacher_old, self.teacher_new)
 
         self.lesson_element, self.room_old = get_lesson_element_by_id_and_teacher(self.lesson_id, self.teacher_old,
                                                                                   self.lesson, self.date.weekday() + 1)
@@ -149,7 +152,9 @@ class SubRow(object):
 def generate_teacher_row(sub, full=False):
     # print(sub.id)
     teacher = ""
-    if sub.type == 1:
+    if not sub.teacher_old and not sub.teacher_new:
+        teacher = ""
+    elif sub.type == 1:
         teacher = "<s>{}</s>".format(sub.teacher_old.shortcode if not full else sub.teacher_old.name)
 
     elif sub.teacher_new and sub.teacher_old:

@@ -172,25 +172,25 @@ def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=
         return None, None
     el = None
     i = 0
-    # print(lesson.elements)
-    for i, element in enumerate(lesson.elements):
-        # print(element.teacher.shortcode)
-        if element.teacher.id == teacher.id:
-            el = element
-            break
+
+    if teacher is not None:
+        for i, element in enumerate(lesson.elements):
+            if element.teacher is not None:
+                if element.teacher.id == teacher.id:
+                    el = element
+                    break
+    elif len(lesson.elements) > 0:
+        el = lesson.elements[0]
+    else:
+        el = None
+
     t = None
-    # print(lesson.times)
-    # print(weekday)
-    # print(hour)
     for time in lesson.times:
-        # print("DAY", time.day, time.hour)
         if time.day == weekday and time.hour == hour:
             t = time
-    # print(t)
+
     room = None
     if t is not None and len(t.rooms) > i:
-        # print(t.rooms)
-        # print(len(t.rooms))
         room = t.rooms[i]
 
     if el is not None:

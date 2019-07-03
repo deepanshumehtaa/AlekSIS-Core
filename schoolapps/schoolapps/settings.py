@@ -32,6 +32,7 @@ POST_MORTEM = True
 ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
+    '159.69.181.50',
     'localhost',
     '127.0.0.1'
 ]
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',
     'support.apps.SupportConfig',
+    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -155,6 +158,7 @@ LOGIN_REDIRECT_URL = '/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollect')
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -225,7 +229,8 @@ AUTHENTICATION_BACKENDS = (
 
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+if DEBUG:
+    logger.setLevel(logging.DEBUG)
 
 # Media
 MEDIA_URL = '/media/'
