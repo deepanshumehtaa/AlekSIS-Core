@@ -2,12 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class FAQSection(models.Model):
+    name = models.CharField(max_length=200)
+
+    icon = models.CharField(max_length=20, blank=True, default="question_answer")
+
 class FAQQuestion(models.Model):
     question_text = models.TextField()
     icon = models.CharField(max_length=20, blank=True, default="question_answer")
 
     show = models.BooleanField(verbose_name="Veröffentlicht", default=False)
     answer_text = models.TextField(blank=True)
+
+    # section = mo
 
     def __str__(self):
         return self.question_text
