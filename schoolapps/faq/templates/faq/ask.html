@@ -2,7 +2,7 @@
 {% include 'partials/header.html' %}
 <main>
     <h3 class="h-with-subtitle">Frage stellen</h3>
-    <div class="grey-text subtitle">FAQ (frequently asked questions)</div>
+    <div class="grey-text subtitle"><a class="grey-text text-darken-2" href="{% url "faq" %}">FAQ</a> (frequently asked questions)</div>
     <form class="col s12" method="post">
         {% csrf_token %}
         <div class="row">
