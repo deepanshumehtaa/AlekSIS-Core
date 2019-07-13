@@ -290,12 +290,11 @@ class Absence(object):
 
     def create(self, db_obj):
         self.filled = True
-        # print(db_obj.ida)
+        print(db_obj.ida)
         print(db_obj.typea)
         self.type = TYPE_TEACHER if db_obj.typea != 102 else TYPE_ROOM
         if self.type == TYPE_TEACHER:
             self.teacher = get_teacher_by_id(db_obj.ida)
-
         else:
             self.room = get_room_by_id(db_obj.ida)
         self.from_date = untis_date_to_date(db_obj.datefrom)
