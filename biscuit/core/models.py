@@ -27,11 +27,11 @@ class Person(AbstractUser):
         'Mobile phone'), max_length=30, blank=True)
 
     date_of_birth = models.DateField(
-        verbose_name=_('Date of birth'), blank=True)
+        verbose_name=_('Date of birth'), blank=True, null=True)
     sex = models.CharField(verbose_name=_(
         'Sex'), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageField(verbose_name=_('Photo'), blank=True)
+    photo = models.ImageField(verbose_name=_('Photo'), blank=True, null=True)
 
     import_ref = models.CharField(verbose_name=_(
         'Reference ID of import source'), max_length=64, blank=True, editable=False)
