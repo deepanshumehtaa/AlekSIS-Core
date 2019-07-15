@@ -36,8 +36,8 @@ class Person(AbstractUser):
     import_ref = models.CharField(verbose_name=_(
         'Reference ID of import source'), max_length=64, blank=True, editable=False)
 
-    guardians = models.ManyToManyField(verbose_name=_('Guardians / Parents'),
-                                       'self', symmetrical=False, related_name='children')
+    guardians = models.ManyToManyField('self', verbose_name=_('Guardians / Parents'),
+                                       symmetrical=False, related_name='children')
 
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)
