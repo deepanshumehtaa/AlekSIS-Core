@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'fa',
     'django_any_js',
+    'django_tables2',
     'menu',
     'phonenumber_field',
     'biscuit.core'
