@@ -23,6 +23,7 @@ setup(
         'django-easy-audit',
         'django-local-settings',
         'django-simple-menu',
+        'Pillow'
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
