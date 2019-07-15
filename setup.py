@@ -24,6 +24,7 @@ setup(
         'django-local-settings',
         'django-phonenumber-field[phonenumbers]',
         'django-simple-menu',
+        'django-tables2',
         'Pillow'
     ],
     classifiers=[
