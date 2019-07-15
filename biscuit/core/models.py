@@ -24,7 +24,7 @@ class Person(AbstractUser):
 
     photo = models.ImageField(blank=True)
 
-    import_ref = models.CharField(max_length=64, blank=True)
+    import_ref = models.CharField(max_length=64, blank=True, editable=False)
 
     guardians = models.ManyToManyField(
         'self', symmetrical=False, related_name='children')
