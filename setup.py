@@ -22,6 +22,7 @@ setup(
         'django-fa',
         'django-easy-audit',
         'django-local-settings',
+        'django-phonenumber-field[phonenumbers]',
         'django-simple-menu',
         'Pillow'
     ],

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'fa',
     'django_any_js',
     'menu',
+    'phonenumner_field',
     'biscuit.core'
 ]
 

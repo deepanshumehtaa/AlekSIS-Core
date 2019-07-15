@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 class Person(AbstractUser):
     SEX_CHOICES = [
@@ -21,10 +23,9 @@ class Person(AbstractUser):
     place = models.CharField(verbose_name=_(
         'Place'), max_length=30, blank=True)
 
-    phone_number = models.CharField(verbose_name=_(
-        'Home phone'), max_length=30, blank=True)
-    mobile_number = models.CharField(verbose_name=_(
-        'Mobile phone'), max_length=30, blank=True)
+    phone_number = PhoneNumberField(verbose_name=_('Home phone'), blank=True)
+    mobile_number = PhoneNumberField(
+        verbose_name=_('Mobile phone'), blank=True)
 
     date_of_birth = models.DateField(
         verbose_name=_('Date of birth'), blank=True, null=True)
