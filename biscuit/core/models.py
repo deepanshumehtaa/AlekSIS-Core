@@ -26,5 +26,8 @@ class Person(AbstractUser):
 
     import_ref = models.CharField(max_length=64)
 
+    guardians = models.ManyToManyField(
+        'self', symmetrical=False, related_name='children')
+
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)
