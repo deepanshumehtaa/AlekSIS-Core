@@ -5,12 +5,17 @@ from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-class Person(AbstractUser):
+class Person(models.Model):
     SEX_CHOICES = [
         ('f', _('female')),
         ('m', _('male'))
     ]
 
+    is_active = models.BooleanField(
+        verbose_name=_('Is person active?'), default=False)
+
+    first_name = models.CharField(verbose_name=_('First name'), max_length=30)
+    last_name = models.CharField(verbose_name=_('Last name'), max_length=30)
     additional_name = models.CharField(verbose_name=_(
         'Additional name(s)'), max_length=30, blank=True)
 
@@ -26,6 +31,8 @@ class Person(AbstractUser):
     phone_number = PhoneNumberField(verbose_name=_('Home phone'), blank=True)
     mobile_number = PhoneNumberField(
         verbose_name=_('Mobile phone'), blank=True)
+
+    email = models.EmailField(verbose_name=_('E-mail address'), blank=True)
 
     date_of_birth = models.DateField(
         verbose_name=_('Date of birth'), blank=True, null=True)
