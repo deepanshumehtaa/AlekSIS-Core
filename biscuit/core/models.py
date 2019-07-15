@@ -9,22 +9,22 @@ SEX_CHOICES = [
 
 
 class Person(AbstractUser):
-    additional_name = models.CharField(max_length=30)
+    additional_name = models.CharField(max_length=30, blank=True)
 
-    street = models.CharField(max_length=30)
-    housenumber = models.CharField(max_length=10)
-    postal_code = models.CharField(max_length=5)
-    place = models.CharField(max_length=30)
+    street = models.CharField(max_length=30, blank=True)
+    housenumber = models.CharField(max_length=10, blank=True)
+    postal_code = models.CharField(max_length=5, blank=True)
+    place = models.CharField(max_length=30, blank=True)
 
-    phone_number = models.CharField(max_length=30)
-    mobile_number = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=30, blank=True)
+    mobile_number = models.CharField(max_length=30, blank=True)
 
-    date_of_birth = models.DateField()
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    date_of_birth = models.DateField(blank=True)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageField()
+    photo = models.ImageField(blank=True)
 
-    import_ref = models.CharField(max_length=64)
+    import_ref = models.CharField(max_length=64, blank=True)
 
     guardians = models.ManyToManyField(
         'self', symmetrical=False, related_name='children')
