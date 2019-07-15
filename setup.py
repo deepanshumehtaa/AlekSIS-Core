@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='BiscuIT-ng',
-    version='0.1',
+    version='1.0dev0',
     url='https://edugit.org/Teckids/BiscuIT/BiscuIT-ng',
     author="Teckids e.V.",
     author_email="verein@teckids.org",
