@@ -57,8 +57,8 @@ class Group(models.Model):
     short_name = models.CharField(verbose_name=_(
         'Short name of group'), max_length=8)
 
-    members = models.ManyToManyField('Person')
-    owners = models.ManyToManyField('Person')
+    members = models.ManyToManyField('Person', related_name='member_of')
+    owners = models.ManyToManyField('Person', related_name='owner_of')
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.short_name)
