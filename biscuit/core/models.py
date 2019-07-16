@@ -19,6 +19,9 @@ class Person(models.Model):
     additional_name = models.CharField(verbose_name=_(
         'Additional name(s)'), max_length=30, blank=True)
 
+    short_name = models.CharField(verbose_name=_(
+        'Short name'), max_length=5, blank=True)
+
     street = models.CharField(verbose_name=_(
         'Street'), max_length=30, blank=True)
     housenumber = models.CharField(verbose_name=_(
