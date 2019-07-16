@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django_tables2 import RequestConfig
+from django.http import Http404
 from .models import Person
 from .tables import PersonsTable
 
@@ -21,3 +22,22 @@ def persons(request):
     context['persons_table'] = persons_table
 
     return render(request, 'core/persons.html', context)
+
+@login_required
+def person_card(request, id=None):
+    context = {}
+
+    # Raise Http404 if now id is given
+    if id is None:
+        raise Http404
+
+    # Get person and check access
+    try:
+        person = Person.objects.get(id=id)
+    except ObjectDoesNotExist as e:
+        # Turn not-found object into a 404 error
+        raise Http404 from e
+
+    context['person'] = person
+
+    return render(request, 'core/person_card.html', context)
