@@ -1,0 +1,83 @@
+{% extends "core/base.html" %}
+{% load bootstrap4 font_awesome i18n staticfiles %}
+
+{% block content %}
+<div class="col-sm-12 col-md-12">
+ {% if person %}
+  <h2>{{ person.first_name }} {{ person.last_name }}</h2>
+  <p>
+   <a href="{{ '#' }}">
+    {% blocktrans %}Edit person{% endblocktrans %}
+   </a>
+  </p>
+  <h3>{% blocktrans %}Contact details{% endblocktrans %}</h3>
+  <table class="table table-responsive-xl table-border table-striped">
+   <tr>
+    <td rowspan="6">
+     {% if person.photo %}
+      <img class="person-img" src="{{ person.photo.url }}" alt="{{ person.first_name }} {{ person.last_name }}" />
+     {% else %}
+      <img class="person-img" src="{% static 'img/fallback.png' %}" alt="{{ person.first_name }} {{ person.last_name }}" />
+     {% endif %}
+    </td>
+    <td>{% fa 'user' %}</td>
+    <td>{{ person.first_name }}</td>
+    <td>{{ person.additional_name }}</td>
+    <td>{{ person.last_name }}</td>
+   </tr>
+   <tr>
+    <td>{% fa 'venus-mars' %}</td>
+    <td colspan="3">{{ person.get_sex_display }}</td>
+   </tr>
+   <tr>
+    <td>{% fa 'fa-home' %}</td>
+    <td colspan="2">{{ person.street }} {{ person.housenumber }}</td>
+    <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
+   </tr>
+   <tr>
+    <td>{% fa 'phone-square' %}</td>
+    <td>{{ person.phone_number }}</td>
+    <td>{{ person.mobile_number }}</td>
+   </tr>
+   <tr>
+    <td>{% fa 'envelope' %}</td>
+    <td colspan="3">{{ person.email }}</td>
+   </tr>
+   <tr>
+    <td>{% fa 'gift' %}</td>
+    <td colspan="3">{{ person.date_of_birth|date }}</td>
+   </tr>
+   {% comment %}
+   <tr>
+    <td>{% fa 'graduation-cap' %}</td>
+    <td>Class</td>
+    <td>Teacher</td>
+   </tr>
+   {% endcomment %}
+  </table>
+
+  {# Will be implemted soon #}
+  <table class="table table-responsive-xl table-border table-striped">
+   <tr>
+    <td>Member</td>
+     <td>
+      <h4>Groups</h4>
+      <ul>
+       <li><a href="#">Foo</a></li>
+       <li><a href="#">Foo</a></li>
+       <li><a href="#">Foo</a></li>
+       <li><a href="#">Foo</a></li>
+     </td>
+   </tr> 
+  </table>
+ {% else %}
+  <h2>{% blocktrans %}Person not found{% endblocktrans %}</h2>
+
+  <p>
+   {% blocktrans %}
+    There is no person with this id.
+   {% endblocktrans %}
+  </p>
+ {% endif %}
+</div>
+{% endblock %}
