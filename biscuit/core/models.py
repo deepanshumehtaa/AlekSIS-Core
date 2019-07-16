@@ -49,3 +49,16 @@ class Person(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)
+
+
+class Group(models.Model):
+    name = models.CharField(verbose_name=_(
+        'Long name of group'), max_length=30)
+    short_name = models.CharField(verbose_name=_(
+        'Short name of group'), max_length=8)
+
+    members = models.ManyToManyField('Person')
+    owners = models.ManyToManyField('Person')
+
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.short_name)
