@@ -2,7 +2,7 @@ import os
 
 from local_settings import load_and_check_settings, LocalSetting, SecretSetting
 
-from .util import get_app_packages
+from .util.core_helpers import get_app_packages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
