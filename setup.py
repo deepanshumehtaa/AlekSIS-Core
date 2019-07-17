@@ -9,7 +9,8 @@ setup(
     author="Teckids e.V.",
     author_email="verein@teckids.org",
     packages=[
-        'biscuit.core'
+        'biscuit.core',
+        'biscuit.core.util'
     ],
     namespace_packages=[
         'biscuit',
