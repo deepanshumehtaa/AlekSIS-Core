@@ -43,6 +43,8 @@ def person_card(request, id_):
         # Turn not-found object into a 404 error
         raise Http404 from e
 
+    context['person'] = person
+
     return render(request, 'core/person_card.html', context)
 
 
