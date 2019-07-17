@@ -15,7 +15,7 @@ def index(request):
 def persons(request):
     context = {}
 
-    # Get all upcoming persons
+    # Get all persons
     persons = Person.objects.all()
 
     # Build table
