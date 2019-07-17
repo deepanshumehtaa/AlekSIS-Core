@@ -7,9 +7,11 @@ from django.urls import reverse
 from .models import Person
 from .tables import PersonsTable
 
+
 def index(request):
     context = {}
     return render(request, 'core/index.html', context)
+
 
 @login_required
 def persons(request):
@@ -25,7 +27,27 @@ def persons(request):
 
     return render(request, 'core/persons.html', context)
 
+
 @login_required
+def person_card(request, id_):
+    context = {}
+
+    # Raise Http404 if now id is given
+    if id is None:
+        raise Http404
+
+    # Get person and check access
+    try:
+        person = Person.objects.get(pk=id_)
+    except Person.DoesNotExist as e:
+        # Turn not-found object into a 404 error
+        raise Http404 from e
+
+    context['person'] = person
+
+    return render(request, 'core/person_card.html', context)
+
+
 def person(request, id_):
     context = {}
 
