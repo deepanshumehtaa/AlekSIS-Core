@@ -29,7 +29,7 @@ def persons(request):
 
 
 @login_required
-def person_card(request, id=None):
+def person_card(request, id_):
     context = {}
 
     # Raise Http404 if now id is given
@@ -38,7 +38,7 @@ def person_card(request, id=None):
 
     # Get person and check access
     try:
-        person = Person.objects.get(id=id)
+        person = Person.objects.get(pk=id_)
     except Person.DoesNotExist as e:
         # Turn not-found object into a 404 error
         raise Http404 from e
