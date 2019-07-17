@@ -1,13 +1,17 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django_tables2 import RequestConfig
+from django.utils.translation import gettext as _
 from django.http import Http404
+from django.shortcuts import redirect, render
+from django_tables2 import RequestConfig
+from django.urls import reverse
 from .models import Person
 from .tables import PersonsTable
+
 
 def index(request):
     context = {}
     return render(request, 'core/index.html', context)
+
 
 @login_required
 def persons(request):
@@ -23,6 +27,7 @@ def persons(request):
 
     return render(request, 'core/persons.html', context)
 
+
 @login_required
 def person_card(request, id=None):
     context = {}
@@ -34,10 +39,23 @@ def person_card(request, id=None):
     # Get person and check access
     try:
         person = Person.objects.get(id=id)
-    except ObjectDoesNotExist as e:
+    except Person.DoesNotExist as e:
+        # Turn not-found object into a 404 error
+        raise Http404 from e
+
+    return render(request, 'core/person_card.html', context)
+
+
+def person(request, id_):
+    context = {}
+
+    # Get person and check access
+    try:
+        person = Person.objects.get(pk=id_)
+    except Person.DoesNotExist as e:
         # Turn not-found object into a 404 error
         raise Http404 from e
 
     context['person'] = person
 
-    return render(request, 'core/person_card.html', context)
+    return render(request, 'core/person.html', context)
