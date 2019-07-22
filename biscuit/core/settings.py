@@ -132,8 +132,9 @@ BOOTSTRAP4 = {
     "css_url": LocalSetting(default="/javascript/bootstrap4/css/bootstrap.min.css"),
     "javascript_url": LocalSetting(default="/javascript/bootstrap4/js/bootstrap.min.js"),
     "jquery_url": LocalSetting(default="/javascript/jquery/jquery.min.js"),
-    "popper_url": LocalSetting(default="/javascript/popper.js/popper.min.js"),
-    "include_jquery": True
+    "popper_url": LocalSetting(default="/javascript/popper.js/umd/popper.min.js"),
+    "include_jquery": True,
+    "include_popper": True
 }
 
 ANY_JS = {
