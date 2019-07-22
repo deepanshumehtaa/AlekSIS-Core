@@ -1,5 +1,5 @@
 from django.contrib import admin
-from faq.models import Question, FAQQuestion
+from faq.models import Question, FAQQuestion, FAQSection
 
 # Register your models here.
 def show(modeladmin, request, queryset):
@@ -16,8 +16,12 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 
+class FAQSectionAdmin(admin.ModelAdmin):
+    list_display = ("name", "icon")
+
 class FAQQuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "icon", "show")
+    list_display = ("question_text", "section", "icon", "show")
     actions = [show, hide]
 
 admin.site.register(FAQQuestion, FAQQuestionAdmin)
+admin.site.register(FAQSection, FAQSectionAdmin)
