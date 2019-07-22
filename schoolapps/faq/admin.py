@@ -1,5 +1,6 @@
 from django.contrib import admin
 from faq.models import Question, FAQQuestion, FAQSection
+from django.utils.html import format_html
 
 # Register your models here.
 def show(modeladmin, request, queryset):
@@ -17,7 +18,15 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Question, QuestionAdmin)
 
 class FAQSectionAdmin(admin.ModelAdmin):
-    list_display = ("name", "icon")
+    list_display = ("name", "_icon")
+
+    class Media:
+        css = {
+            'all': ('/static/css/materialdesignicons-webfont/material-icons.css',)
+        }
+
+    def _icon(self, obj):
+        return format_html(u'<i style="color: {};" class="material-icons">{}<i/>', obj.icon_color, obj.icon)
 
 class FAQQuestionAdmin(admin.ModelAdmin):
     list_display = ("question_text", "section", "icon", "show")
