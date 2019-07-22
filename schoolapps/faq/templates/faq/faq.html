@@ -1,15 +1,23 @@
 {% include 'partials/header.html' %}
 <main>
     <h3>FAQ (frequently asked questions)</h3>
+    {% for section in sections %}
+        <h4><i class="material-icons {{ section.icon_color }}-text">{{ section.icon }}</i> {{ section.name }}</h4>
 
-     <ul class="collapsible">
-         {% for question in questions %}
-        <li>
-            <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %} {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}</div>
-            <div class="collapsible-body"><span class="flow-text">{{ question.answer_text|safe }}</span></div>
-        </li>
-         {% endfor %}
-  </ul>
+        <ul class="collapsible">
+            {% for question in questions %}
+                {% if question.section == section %}
+                    <li>
+                        <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %}
+                            {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}
+                        </div>
+                        <div class="collapsible-body"><span class="flow-text">{{ question.answer_text|safe }}</span>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endfor %}
 
 </main>
 {% include 'partials/footer.html' %}

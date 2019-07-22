@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from faq.models import FAQQuestion, Question
+from faq.models import FAQSection, FAQQuestion, Question
 from faq.forms import FAQForm
 
 from datetime import datetime
@@ -16,6 +16,7 @@ def faq(request):
     """ Shows the FAQ site, also if not logged in"""
     context = {
         "questions": FAQQuestion.objects.filter(show=True),
+        "sections":  FAQSection.objects.all(),
     }
     return render(request, 'faq/faq.html', context)
 

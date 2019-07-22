@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .model_helper import COLORS, ICONS
 
 # Create your models here.
 class FAQSection(models.Model):
     name = models.CharField(max_length=200)
 
     icon = models.CharField(max_length=20, blank=True, default="question_answer")
+    icon_color = models.CharField(max_length=10, default="black", choices=COLORS)
 
     def __str__(self):
         return self.name
