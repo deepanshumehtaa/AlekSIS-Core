@@ -398,3 +398,6 @@ FEEDBACK
   vertical-align: middle;
 }
 
+section:not(:last-of-type) {
+    border-bottom: solid #bdbdbd 2px;
+}
