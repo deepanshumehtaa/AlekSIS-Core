@@ -10,6 +10,7 @@ setup(
     author_email="verein@teckids.org",
     packages=[
         'biscuit.core',
+        'biscuit.core.templatetags',
         'biscuit.core.util'
     ],
     namespace_packages=[
