@@ -1,17 +1,16 @@
 {% load staticfiles %}
 <div class="card shadow">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      {% if person.photo %}
-        <img class="person-img" src="{{ person.photo.url }}" alt="{{ person.first_name }} {{ person.last_name }}" />
-      {% else %}
-        <img class="person-img" src="{% static 'img/fallback.png' %}" alt="{{ person.first_name }} {{ person.last_name }}" />
-      {% endif %}
-    </div>
-    <div class="col-md-8">
-      <h3 class="card-header">{{ person.first_name }} {{ person.last_name }}</h3>
-      <div class="card-body">
-        <h5 class="card-text">!Group</h5>
+  <div class="card-header">{{ person.first_name }} {{ person.last_name }}</div>
+  <div class="card-body">
+    <div class="row no-gutters">
+      <div class="col-sm">
+        {% if person.photo %}
+          <img class="person-img" src="{{ person.photo.url }}" alt="{{ person.first_name }} {{ person.last_name }}" />
+        {% else %}
+          <img class="person-img" src="{% static 'img/fallback.png' %}" alt="{{ person.first_name }} {{ person.last_name }}" />
+        {% endif %}
+      </div>
+      <div class="col-sm">
         <p class="card-text">{{ person.date_of_birth|date }}</p>
       </div>
     </div>

@@ -9,6 +9,7 @@ $(document).ready( function () {
         html: true,
 	animation: true,
 	placement: 'auto',
+	contianer: 'body',
 	trigger: 'hover'
     }).on("inserted.bs.popover", function() {
         var trigger_el = $(this);
