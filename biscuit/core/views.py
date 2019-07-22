@@ -29,26 +29,7 @@ def persons(request):
 
 
 @login_required
-def person_card(request, id_):
-    context = {}
-
-    # Raise Http404 if now id is given
-    if id is None:
-        raise Http404
-
-    # Get person and check access
-    try:
-        person = Person.objects.get(pk=id_)
-    except Person.DoesNotExist as e:
-        # Turn not-found object into a 404 error
-        raise Http404 from e
-
-    context['person'] = person
-
-    return render(request, 'core/person_card.html', context)
-
-
-def person(request, id_):
+def person(request, id_, template):
     context = {}
 
     # Get person and check access
@@ -60,4 +41,4 @@ def person(request, id_):
 
     context['person'] = person
 
-    return render(request, 'core/person.html', context)
+    return render(request, 'core/person_%s.html' % template, context)
