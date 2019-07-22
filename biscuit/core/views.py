@@ -1,9 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.utils.translation import gettext as _
 from django.http import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django_tables2 import RequestConfig
-from django.urls import reverse
 from .models import Person
 from .tables import PersonsTable
 
