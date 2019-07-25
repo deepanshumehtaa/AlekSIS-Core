@@ -1,3 +1,4 @@
+from importlib import import_module
 import pkgutil
 from typing import Sequence
 
@@ -11,7 +12,11 @@ def get_app_packages() -> Sequence:
     except ImportError:
         return []
 
-    pkgs = ['biscuit.apps.%s' % i[1]
-            for i in pkgutil.iter_modules(biscuit.apps.__path__)]
+    pkgs = []
+    for pkg in pkgutil.iter_modules(biscuit.apps.__path__):
+        mod = import_module('biscuit.apps.%s' % pkg[1])
+
+        pkgs += getattr(mod, 'INSTALLED_APPS', [])
+        pkgs += ['biscuit.apps.%s' % pkg[1]]
 
     return pkgs
