@@ -5,7 +5,7 @@ $(document).ready( function () {
         });
     });
 
-    $('a[data-poload], *[data-poload] > a*').popover({
+    $('*[data-poload]').popover({
         html: true,
 	animation: true,
 	placement: 'auto',
