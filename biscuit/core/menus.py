@@ -11,10 +11,6 @@ Menu.add_item('main', MenuItem('Logout',
                                reverse('logout'),
                                check=lambda request: request.user.is_authenticated))
 
-Menu.add_item('main', MenuItem(_('Interfaces'),
-                               '#',
-                               check=lambda request: request.user.is_authenticated))
-
 Menu.add_item('main', MenuItem(_('Persons'),
                                reverse('persons'),
                                check=lambda request: request.user.is_authenticated))
