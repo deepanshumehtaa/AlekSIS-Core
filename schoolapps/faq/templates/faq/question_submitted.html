@@ -3,12 +3,15 @@
 <main>
 
     <p class="flow-text">
-        Wir haben deine Frage erhalten. Gucke demnächst in dein E-Mail-Postfach, wo du unsere Antwort finden wirst!
+        <i class="material-icons">done_all</i> Wir haben deine Frage erhalten! Demnächst werden wir dir per E-Mail antworten.
     </p>
 
     <a href="{% url 'dashboard' %}" class="waves-effect waves-light btn green">
         <i class="material-icons left">home</i>
         Zurück zur Startseite</a>
+    <a href="{% url 'faq' %}" class="waves-effect waves-light btn orange">
+        <i class="material-icons left">question_answer</i>
+        Zurück zum FAQ</a>
 
 </main>
 
