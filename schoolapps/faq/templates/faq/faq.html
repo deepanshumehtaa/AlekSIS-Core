@@ -12,7 +12,7 @@
                         <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %}
                             {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}
                         </div>
-                        <div class="collapsible-body"><span class="flow-text">{{ question.answer_text|safe }}</span>
+                        <div class="collapsible-body">{{ question.answer_text|safe }}
                         </div>
                     </li>
                 {% endif %}
