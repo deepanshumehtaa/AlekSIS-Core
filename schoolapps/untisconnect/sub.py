@@ -281,9 +281,12 @@ def get_header_information(subs, date):
             if absence.is_whole_day:
                 # Teacher is missing the whole day
                 elements.append("{}".format(absence.teacher.shortcode))
+            elif absence.from_lesson == absence.to_lesson:
+                elements.append("{} ({}.)".format(absence.teacher.shortcode, absence.from_lesson))
             else:
                 # Teacher is only missing a part of day
-                elements.append("{} ({}-{})".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
+                elements.append(
+                    "{} ({}.-{}.)".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
         joined = ", ".join(elements)
 
         info.rows.append(("Abwesende Lehrkräfte", joined))
