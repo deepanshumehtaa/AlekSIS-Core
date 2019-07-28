@@ -1,25 +1,42 @@
 {% include 'partials/header.html' %}
 <main>
-    <h3>FAQ (frequently asked questions)</h3>
+    <h3>FAQ (Frequently Asked Questions)</h3>
     {% for section in sections %}
         <section>
-        <h4><i class="material-icons {{ section.icon_color }}-text">{{ section.icon }}</i> {{ section.name }}</h4>
+            <h4>
+                <i class="material-icons {{ section.icon_color }}-text">{{ section.icon }}</i> {{ section.name }}
+            </h4>
 
-        <ul class="collapsible">
-            {% for question in questions %}
-                {% if question.section == section %}
+            <ul class="collapsible">
+                {% for question in section.questions.all %}
                     <li>
-                        <div class="collapsible-header flow-text"><i class="material-icons">{% if question.icon %}
-                            {{ question.icon }} {% else %} question_answer {% endif %}</i>{{ question.question_text }}
+                        <div class="collapsible-header flow-text">
+                            <i class="material-icons">
+                                {% if question.icon %}
+                                    {{ question.icon }}
+                                {% else %}
+                                    question_answer
+                                {% endif %}
+                            </i>
+                            {{ question.question_text }}
                         </div>
-                        <div class="collapsible-body">{{ question.answer_text|safe }}
+                        <div class="collapsible-body">
+                            {{ question.answer_text|safe }}
                         </div>
                     </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
         </section>
     {% endfor %}
 
+    <p class="flow-text">
+        Deine Frage war nicht dabei?
+    </p>
+    <p>
+        <a class="btn  blue waves-effect waves-green" href="{% url "ask-faq" %}">
+            <i class="material-icons left">chat</i>
+            Deine Frage stellen
+        </a>
+    </p>
 </main>
 {% include 'partials/footer.html' %}

@@ -1,13 +1,18 @@
 {% load widget_tweaks %}
 {% include 'partials/header.html' %}
 <main>
-    <h3 class="h-with-subtitle">Frage stellen</h3>
-    <div class="grey-text subtitle"><a class="grey-text text-darken-2" href="{% url "faq" %}">FAQ</a> (frequently asked questions)</div>
+    <h3 class="h-with-subtitle">Du hast eine Frage?</h3>
+    <p class="flow-text">
+        Du hast eine Frage über SchoolApps oder andere Internetdienste des Katharineums und hast die Antwort auf deine
+        Frage nicht in den
+        <a href="{% url "faq" %}">FAQ</a>
+        gefunden? Dann kannst du uns hier deine Frage stellen:
+    </p>
     <form class="col s12" method="post">
         {% csrf_token %}
         <div class="row">
             <div class="input-field col s12">
-                <textarea id="{{ form.question.id_for_label }}" class="materialize-textarea required"
+                <textarea id="{{ form.question.id_for_label }}" class="materialize-textarea validate"
                           name="{{ form.question.html_name }}" required></textarea>
                 <label for="{{ form.question.id_for_label }}">{{ form.question.label }}</label>
             </div>
