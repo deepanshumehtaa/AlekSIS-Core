@@ -1,9 +1,11 @@
 from django.conf import settings
 
+from schoolapps.settings import TIMETABLE_HEIGHT
 from .drive import drive
 from .api_helper import untis_date_to_date, date_to_untis_date
 from .api import row_by_row_helper, run_all
 from . import models
+
 
 #########
 # EVENT #
@@ -12,10 +14,11 @@ from . import models
 class Event(object):
     def __init__(self):
         self.filled = None
+        self.id = None
         self.text = None
         self.teachers = []
-        self.classes  = []
-        self.rooms    = []
+        self.classes = []
+        self.rooms = []
         self.absences = []
         self.from_date = None
         self.to_date = None
@@ -26,6 +29,8 @@ class Event(object):
     def create(self, db_obj):
         """0~0~19~0~1859~0,0~0~65~0~1860~0,0~0~21~0~1861~0,0~0~3~0~1862~0"""
         self.filled = True
+        self.id = db_obj.event_id
+
         event_parsed = db_obj.eventelement1.split(",")
         elements = []
         for element in event_parsed:
@@ -62,4 +67,17 @@ class Event(object):
 def get_all_events_by_date(date):
     d_i = int(date_to_untis_date(date))
     db_rows = run_all(models.Event.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
-    return row_by_row_helper(db_rows, Event)
+    rows = row_by_row_helper(db_rows, Event)
+
+    # Remap the lesson numbers matching for the given date
+    for i, event in enumerate(rows):
+        if event.from_date != event.to_date:
+            if event.from_date == date:
+                event.to_lesson = TIMETABLE_HEIGHT
+            elif event.to_date == date:
+                event.from_lesson = 1
+            else:
+                event.from_lesson = 1
+                event.to_lesson = TIMETABLE_HEIGHT
+
+    return rows

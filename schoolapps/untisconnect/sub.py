@@ -156,6 +156,30 @@ class SubRow(object):
         self.text = ""
         self.extra = ""
         self.is_event = False
+        self.event = None
+
+
+def generate_event_table(events):
+    sub_rows = []
+    for event in events:
+        sub_row = SubRow()
+        sub_row.is_event = True
+        sub_row.event = event
+
+        if event.from_lesson != event.to_lesson:
+            sub_row.lesson = "{}.-{}.".format(event.from_lesson, event.to_lesson)
+
+        sub_row.classes = format_classes(event.classes)
+        sub_row.teachers = event.teachers
+        sub_row.rooms = event.rooms
+        sub_row.absences = event.absences
+
+        sub_row.color = "purple"
+        sub_row.text = event.text
+
+        sub_rows.append(sub_row)
+
+    return sub_rows
 
 
 def generate_sub_table(subs, events=[]):
@@ -203,23 +227,7 @@ def generate_sub_table(subs, events=[]):
 
         sub_rows.append(sub_row)
 
-    for event in events:
-        sub_row = SubRow()
-        sub_row.is_event = True
-
-        if event.from_lesson != event.to_lesson:
-            sub_row.lesson = "{}.-{}.".format(event.from_lesson, event.to_lesson)
-
-        sub_row.classes = format_classes(event.classes)
-        sub_row.teachers = event.teachers
-        sub_row.rooms = event.rooms
-        sub_row.absences = event.absences
-
-        sub_row.color = "purple"
-        sub_row.text = event.text
-
-        sub_rows.append(sub_row)
-
+    sub_rows += generate_event_table(events)
     sub_rows.sort(key=substitutions_sorter)
 
     return sub_rows
