@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
+from .mixins import SchoolRelated
+
 
 class School(models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=30)
@@ -10,7 +12,10 @@ class School(models.Model):
         'Official name of the school, e.g. as given by supervisory authority'))
 
 
-class Person(models.Model):
+class Person(SchoolRelated):
+    class Meta:
+        unique_together = [['school', 'short_name'], ['school', 'import_ref']]
+
     SEX_CHOICES = [
         ('f', _('female')),
         ('m', _('male'))
@@ -25,7 +30,7 @@ class Person(models.Model):
         'Additional name(s)'), max_length=30, blank=True)
 
     short_name = models.CharField(verbose_name=_(
-        'Short name'), max_length=5, blank=True, unique=True)
+        'Short name'), max_length=5, blank=True)
 
     street = models.CharField(verbose_name=_(
         'Street'), max_length=30, blank=True)
@@ -50,7 +55,7 @@ class Person(models.Model):
     photo = models.ImageField(verbose_name=_('Photo'), blank=True, null=True)
 
     import_ref = models.CharField(verbose_name=_(
-        'Reference ID of import source'), max_length=64, blank=True, unique=True, editable=False)
+        'Reference ID of import source'), max_length=64, blank=True, editable=False)
 
     guardians = models.ManyToManyField('self', verbose_name=_('Guardians / Parents'),
                                        symmetrical=False, related_name='children')
@@ -59,7 +64,10 @@ class Person(models.Model):
         return '%s, %s' % (self.last_name, self.first_name)
 
 
-class Group(models.Model):
+class Group(SchoolRelated):
+    class Meta:
+        unique_together = [['school', 'name'], ['school', 'short_name']]
+
     name = models.CharField(verbose_name=_(
         'Long name of group'), max_length=30, unique=True)
     short_name = models.CharField(verbose_name=_(
