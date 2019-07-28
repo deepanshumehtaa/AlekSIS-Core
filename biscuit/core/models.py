@@ -4,6 +4,12 @@ from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class School(models.Model):
+    name = models.CharField(verbose_name=_('Name'), max_length=30)
+    name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
+        'Official name of the school, e.g. as given by supervisory authority'))
+
+
 class Person(models.Model):
     SEX_CHOICES = [
         ('f', _('female')),
