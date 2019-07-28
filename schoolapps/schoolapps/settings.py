@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
     '159.69.181.50',
     'localhost',
     '127.0.0.1',
-    "192.168.178.25"
+    "yoga"
 ]
 
 # Application definition
