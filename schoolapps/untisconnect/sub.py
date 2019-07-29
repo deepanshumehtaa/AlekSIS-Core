@@ -246,7 +246,7 @@ class HeaderInformation:
             self.affected_teachers) > 0 or len(self.affected_classes) > 0
 
 
-def get_header_information(subs, date):
+def get_header_information(subs, date, events=[]):
     """
     Get header information like affected teachers/classes and missing teachers/classes for a given date
     :param date: The date as datetime object
@@ -265,6 +265,15 @@ def get_header_information(subs, date):
 
         for _class in sub.classes:
             if _class not in info.affected_classes:
+                info.affected_classes.append(_class)
+
+    for event in events:
+        for teacher in event.teachers:
+            if teacher.id not in [x.id for x in info.affected_teachers]:
+                info.affected_teachers.append(teacher)
+
+        for _class in event.classes:
+            if _class.id not in [x.id for x in info.affected_classes]:
                 info.affected_classes.append(_class)
 
     # Get all absences that are relevant for this day
