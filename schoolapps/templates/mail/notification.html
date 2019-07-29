@@ -2,7 +2,7 @@
 
 <main>
     <p>Hallo {{ notification.user.get_full_name }}, <br>
-        wir haben eine neue Nachricht für Sie:</p>
+        wir haben eine neue Nachricht für dich:</p>
     <blockquote>
         <p>{{ notification.description }}</p>
         {% if notification.link %}
@@ -11,5 +11,5 @@
     </blockquote>
     <p>Von {{ notification.app }} am {{ notification.created_at }}</p>
 
-    <i>Ihr SchoolApps-Team</i>
+    <i>Dein SchoolApps-Team</i>
 </main>
