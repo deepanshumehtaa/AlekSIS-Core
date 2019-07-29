@@ -24,6 +24,7 @@ setup(
         'django-fa',
         'django-easy-audit',
         'django-local-settings',
+        'django-middleware-global-request',
         'django-phonenumber-field[phonenumbers]',
         'django-simple-menu',
         'django-tables2',

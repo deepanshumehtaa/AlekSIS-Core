@@ -2,6 +2,8 @@ from importlib import import_module
 import pkgutil
 from typing import Sequence
 
+from django_global_request.middleware import get_request
+
 
 def get_app_packages() -> Sequence:
     """ Find all packages within the biscuit.apps namespace. """
@@ -25,3 +27,15 @@ def get_app_packages() -> Sequence:
         pkgs.append('biscuit.apps.%s' % pkg[1])
 
     return pkgs
+
+
+def get_current_school():
+    request = get_request()
+
+    if request:
+        if request.user.person:
+            return request.user.person.school
+        else:
+            return None
+    else:
+        return None
