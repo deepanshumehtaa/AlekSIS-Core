@@ -13,12 +13,6 @@ class SchoolRelatedManager(models.Manager):
         else:
             return qs.none()
 
-    def create(self, *args, **kwargs):
-        if 'school' not in kwargs:
-            kwargs['school'] = get_current_school()
-
-        return super().create(*args, **kwargs)
-
 
 class SchoolRelated(models.Model):
     class Meta:
@@ -26,4 +20,5 @@ class SchoolRelated(models.Model):
 
     objects = SchoolRelatedManager()
 
-    school = models.ForeignKey('core.School', on_delete=models.CASCADE)
+    school = models.ForeignKey(
+        'core.School', on_delete=models.CASCADE, default=get_current_school)
