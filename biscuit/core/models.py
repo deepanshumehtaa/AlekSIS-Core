@@ -22,7 +22,7 @@ class Person(SchoolRelated):
         ('m', _('male'))
     ]
 
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         get_user_model(), on_delete=models.SET_NULL, blank=True, null=True,
         related_name='person')
     is_active = models.BooleanField(
