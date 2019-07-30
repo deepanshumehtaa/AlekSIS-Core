@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -21,6 +22,9 @@ class Person(SchoolRelated):
         ('m', _('male'))
     ]
 
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True,
+        related_name='person')
     is_active = models.BooleanField(
         verbose_name=_('Is person active?'), default=False)
 
