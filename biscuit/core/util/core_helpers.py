@@ -33,7 +33,12 @@ def get_current_school():
     request = get_request()
 
     if request:
-        if getattr(request.user, 'person', None):
+        if not hasattr(request, 'user'):
+            return None
+        if not hasattr(request.user, 'person'):
+            return None
+
+        if request.user.person:
             return request.user.person.school
         else:
             return None
