@@ -13,3 +13,4 @@ node_modules/
 dynselect2/src/*
 dynselect2/bundle.js
 package-lock.json
+schoolapps/latex/
