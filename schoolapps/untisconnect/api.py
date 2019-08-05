@@ -292,7 +292,13 @@ class Absence(object):
         self.filled = True
         print(db_obj.ida)
         print(db_obj.typea)
-        self.type = TYPE_TEACHER if db_obj.typea != 102 and db_obj.typea != 100 else TYPE_ROOM
+        if db_obj.typea == 101:
+            self.type = TYPE_TEACHER
+        elif db_obj.typea == 100:
+            self.type = TYPE_CLASS
+        elif db_obj.typea == 102:
+            self.type = TYPE_ROOM
+
         if self.type == TYPE_TEACHER:
             print("IDA", db_obj.ida)
             self.teacher = get_teacher_by_id(db_obj.ida)
@@ -310,6 +316,7 @@ def get_all_absences_by_date(date):
     db_rows = run_all(models.Absence.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
     return row_by_row_helper(db_rows, Absence)
 
+
 #########
 # EVENT #
 #########
@@ -319,8 +326,8 @@ class Event(object):
         self.filled = None
         self.text = None
         self.teachers = []
-        self.classes  = []
-        self.rooms    = []
+        self.classes = []
+        self.rooms = []
         self.absences = []
         self.from_date = None
         self.to_date = None
@@ -361,6 +368,7 @@ def get_all_events_by_date(date):
     d_i = int(date_to_untis_date(date))
     db_rows = run_all(models.Event.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
     return row_by_row_helper(db_rows, Event)
+
 
 ##########
 # LESSON #

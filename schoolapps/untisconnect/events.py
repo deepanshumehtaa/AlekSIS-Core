@@ -53,9 +53,12 @@ class Event(object):
                 self.rooms.append(obj)
 
             if element[4] != "0" and element[4] != "":
-                absence = models.Absence.objects.using("untis").get(absence_id=int(element[4]))
-                self.absences.append(absence)
-
+                print(element[4])
+                try:
+                    absence = models.Absence.objects.using("untis").get(absence_id=int(element[4]))
+                    self.absences.append(absence)
+                except models.Absence.DoesNotExist:
+                    pass
         self.text = db_obj.text
         self.from_date = untis_date_to_date(db_obj.datefrom)
         self.to_date = untis_date_to_date(db_obj.dateto)
