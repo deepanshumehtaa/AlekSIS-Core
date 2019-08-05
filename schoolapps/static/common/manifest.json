@@ -4,9 +4,7 @@
   "name": "SchoolApps",
   "scope": "",
   "display": "standalone",
-  "start_url_old": "https://info.katharineum.de/",
-  "start_url": "http://127.0.0.1:8000/",
-
+  "start_url": "https://info.katharineum.de/",
   "short_name": "SchoolApps",
   "theme_color": "#da1f3d",
   "description": "",
