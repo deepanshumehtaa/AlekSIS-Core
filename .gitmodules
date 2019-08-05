@@ -1,6 +1,0 @@
-[submodule "schoolapps/static/materialize"]
-	path = schoolapps/static/materialize
-	url = git@github.com:Dogfalo/materialize.git
-[submodule "schoolapps/static/jquery"]
-	path = schoolapps/static/jquery
-	url = git@github.com:jquery/jquery.git

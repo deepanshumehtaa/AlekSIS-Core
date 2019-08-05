@@ -1,3 +1,4 @@
+import dbsettings
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -5,14 +6,14 @@ from django.utils import timezone
 from mailer import send_mail_with_template
 
 
-def get_default_user():
-    User.objects.get_or_create(username='nouser')
+# def get_default_user():
+#     User.objects.get_or_create(username='nouser')
 
 
 # Create your models here.
 
 class Activity(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, default=get_default_user())
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
@@ -27,7 +28,7 @@ class Activity(models.Model):
 
 class Notification(models.Model):
     # to = models.ManyToManyField(User, related_name='notifications')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user(), related_name="notifications")
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     link = models.URLField(blank=True)
@@ -41,7 +42,9 @@ class Notification(models.Model):
 
 
 def register_notification(user, title, description, app="SchoolApps", link=""):
+    print(link)
     n = Notification(user=user, title=title, description=description, app=app, link=link)
+
     n.save()
     context = {
         'notification': n

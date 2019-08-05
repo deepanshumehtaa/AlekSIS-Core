@@ -1,0 +1,19 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+
+<main>
+    <h4>Antrag auf Unterrichtsbefreiung</h4>
+
+    <form method = "POST" >
+        {% csrf_token %}
+{#        <input type="hidden" value="{{ id }}" name="id" />#}
+        {% form form=form %}
+        {% endform %}
+        <button type="submit" class="waves-effect waves-light btn green">
+            <i class="material-icons left">send</i> Antrag ändern
+        </button>
+    </form>
+</main>
+
+{% include 'partials/footer.html' %}

@@ -1,67 +1,86 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Selbst programmierte Anwendungen für den Schullaltag am Katharineum zu Lübeck">
     <title>SchoolApps – Katharineum zu Lübeck</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Android  -->
+    <meta name="theme-color" content="#da1f3d">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-title" content="SchoolApps">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Windows  -->
+    <meta name="msapplication-navbutton-color" content="#da1f3d">
+    <meta name="msapplication-TileColor" content="#da1f3d">
+    <meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Pinned Sites  -->
+    <meta name="application-name" content="SchoolApps">
+    <meta name="msapplication-tooltip" content="SchoolApps">
+    <meta name="msapplication-starturl" content="/">
+
+    <!-- Tap highlighting  -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- UC Mobile Browser  -->
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+
+
+    <!-- Main Link Tags  -->
+    <link href="{% static "icons/favicon_16.png" %}" rel="icon" type="image/png" sizes="16x16">
+    <link href="{% static "icons/favicon_32.png" %}" rel="icon" type="image/png" sizes="32x32">
+    <link href="{% static "icons/favicon_48.png" %}g" rel="icon" type="image/png" sizes="48x48">
+
+    <!-- iOS  -->
+    <!-- non-retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="{% static "icons/apple_76.png" %}" sizes="76x76">
+    <!-- retina iPhone vor iOS 7 -->
+    <link rel="apple-touch-icon" href="{% static "icons/apple_114.png" %}" sizes="114x114">
+    <!-- retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="{% static "icons/apple_152.png" %}" sizes="152x152">
+    <!-- retina iPad iOS 7 für iPhone 6 Plus -->
+    <link rel="apple-touch-icon" href="{% static "icons/apple_180.png" %}" sizes="180x180">
+
+
+    <!-- Pinned Tab  -->
+    {#    <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red">#}
+
+    <!-- Android  -->
+    <link href="{% static "icons/android_192.png" %}" rel="icon" sizes="192x192">
+
+    <!-- Others -->
+    {#    <link href="favicon.icon" rel="shortcut icon" type="image/x-icon">#}
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'common/favicon.ico' %}">
+    <link rel="manifest" href="{% static "common/manifest.json" %}">
 
     <!--------->
     <!-- CSS -->
     <!--------->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materialdesignicons-webfont/material-icons.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen"
-          href="{% static 'materialize/dist/css/materialize.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'common/style.css' %}">
+          href="{% static 'css/materialize.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
+    <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
 
-    <!---------------->
-    <!-- JavaScript -->
-    <!---------------->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="{% static 'materialize/dist/js/materialize.min.js' %}"></script>
-    <script>
-        $(document).ready(function () {
-            // Initialize sidenav [MAT]
-            $(".sidenav").sidenav();
-
-            // Initialize datepicker [MAT]
-            $('.datepicker').datepicker({
-                format: 'dd.mm.yyyy',
-                // Translate to German
-                i18n: {
-                    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                    monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-                    weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                    weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                    weekdaysAbbrev: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
-
-                    // Buttons
-                    today: 'Heute',
-                    clear: 'Löschen',
-                    done: 'OK',
-                },
-
-                // Set monday as first day of week
-                firstDay: 1,
-                //autoClose: true
-            });
-
-            // Initialize timepicker [MAT]
-            $('.timepicker').timepicker({
-                twelveHour: false,
-                //autoClose: true,
-                cancelText: 'Abbrechen',
-                clearText: 'Löschen',
-                doneText: 'OK'
-            });
-
-            //Initialize tooltip [MAT]
-            $('.tooltipped').tooltip();
-        });
-
-    </script>
+    {% if martor %}
+        <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+    {% endif %}
 </head>
 <body>
 <header>
@@ -80,17 +99,29 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
                     <li>Angemeldet als {{ user.get_username }}</li>
-                    <li><a href="{% url 'logout' %}">Abmelden</a></li>
+                    <li>
+                        <a href="{% url 'logout' %}">Abmelden <i class="material-icons right">exit_to_app</i></a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
+    <div id="print-header" class="row">
+        <div class="col s6 logo">
+            <img src="{% static 'common/logo.png' %}">
+        </div>
+        <div class="col s6 right-align">
+            <strong>SchoolApps</strong><br>
+            Katharineum zu Lübeck
+        </div>
+    </div>
+
     <!-- Main nav (sidenav) -->
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li class="logo">
             <a id="logo-container" href="/" class="brand-logo">
-                <img src="{% static 'common/logo.png' %}">
+                <img src="{% static 'common/logo.png' %}" alt="Logo des Katharineums">
             </a>
         </li>
 
@@ -100,40 +131,191 @@
                     <i class="material-icons">home</i> Dashboard
                 </a>
             </li>
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li><a class="subheader grey lighten-3">Lehrerfunktionen</a></li>
+
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li>
+                    <a class="subheader grey lighten-3">Lehrerfunktionen</a>
+                </li>
+            {% endif %}
             {% if perms.aub.apply_for_aub %}
-                <li><a href="{% url 'aub_index' %}">Unterrichtsbefreiungen</a></li>
+                <li>
+                    <a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i> Unterrichtsbefreiungen
+                    </a>
+                </li>
             {% endif %}
             {% if perms.aub.check1_aub %}
-                <li><a href="{% url 'aub_check1' %}">Anträge genehmigen 1</a></li>
+                <li>
+                    <a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge genehmigen 1</a>
+                </li>
             {% endif %}
             {% if perms.aub.check2_aub %}
-                <li><a href="{% url 'aub_check2' %}">Anträge genehmigen 2</a></li>
+                <li>
+                    <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge genehmigen 2</a>
+                </li>
+            {% endif %}
+            {% if perms.aub.view_archive %}
+                <li>
+                    <a href="{% url 'aub_archive' %}"><i class="material-icons">archive</i> Archiv</a>
+                </li>
+            {% endif %}
+            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub or perms.aub.archiv %}
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
+            {% if perms.timetable.show_plan %}
+                <li>
+                    <a class="subheader grey lighten-3">Stundenplan</a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_my_plan' %}" style="padding-right: 10px;">
+                        <i class="material-icons">person</i> Mein Plan
+                        <span class="badge new primary-color ">SMART PLAN</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_quicklaunch' %}">
+                        <i class="material-icons">grid_on</i> Alle Pläne
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'timetable_substitutions' %}">
+                        <i class="material-icons">update</i> Vertretungsplan
+                    </a>
+                </li>
+                {% if perms.timetable.view_hint %}
+                    <li>
+                        <a href="{% url 'timetable_hints' %}">
+                            <i class="material-icons">announcement</i> Hinweismanagement
+                        </a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a href="{% url 'debug_logs' %}">
+                        <i class="material-icons">error</i> Debuggingtool
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+
+
+            {% endif %}
+
+            <li>
+                <a class="subheader grey lighten-3">Speiseplan</a>
+            </li>
+            <li>
+                <a href="{% url 'menu_show_current' %}" target="_blank">
+                    <i class="material-icons">picture_as_pdf</i> Aktueller Speiseplan
+                </a>
+            </li>
+            {% if perms.menu.add_menu %}
+                <li>
+                    <a href="{% url 'menu_index' %}">
+                        <i class="material-icons">restaurant_menu</i> Speiseplan hochladen
+                    </a>
+                </li>
             {% endif %}
             <li>
                 <div class="divider"></div>
             </li>
-            <li><a class="subheader grey lighten-3">Stundenplan</a></li>
-            <li><a href="{% url 'timetable_admin_all' %}">Übersicht</a></li>
-            <li><a href="{% url 'timetable_quicklaunch' %}">Schnellzugriff</a></li>
-            <li><a href="{% url 'timetable_substitutions' %}">Vertretungsplan</a></li>
+
+            <li>
+                <a class="subheader grey lighten-3">Support</a>
+            </li>
+            <li>
+                <a href="{% url 'rebus' %}">
+                    <i class="material-icons">bug_report</i> Fehler melden
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'feedback' %}">
+                    <i class="material-icons">feedback</i> Feedback
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'faq' %}">
+                <i class="material-icons">question_answer</i>FAQ
+            </a>
+        </li>
+        {% if user.is_authenticated %}
             <li>
                 <div class="divider"></div>
             </li>
+
+            {% if user.is_superuser %}
+                <li>
+                    <a class="subheader grey lighten-3">Administration</a>
+                </li>
+                <li>
+                    <a href="/admin/">
+                        <i class="material-icons">dashboard</i> Django-Administration
+                    </a>
+                </li>
+                <li>
+                    <a href="/settings/">
+                        <i class="material-icons">settings</i> Einstellungen
+                    </a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
+
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
             </li>
+        {% else %}
+
             <li>
-                {{ user.groups.all }}
-                {% for group in user.groups.all %}
-                    {{ group }}
-                {% endfor %}
+                <a href="{% url 'login' %}">
+                    <i class="material-icons">lock_open</i> Anmelden
+                </a>
             </li>
         {% endif %}
     </ul>
 </header>
+<header class="alert success">
+    <p>
+        <i class="material-icons left">info</i>
+        Du befindest dich in der ersten veröffentlichten Version von SchoolApps. Daher kann es immer mal wieder noch zu
+        bislang unvorhergesehenen
+        Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über
+        <a href="mailto:support@katharineum.de">support@katharineum.de</a>
+        schreibst oder die in SchoolApps integrierten
+        <a href="{% url 'rebus' %}">Fehlermelde-</a>
+        und
+        <a href="{% url 'feedback' %}">Feedbackfunktionen</a>
+        nutzt.
+    </p>
+</header>
+{% if user.is_authenticated %}
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large green">
+            <i class="large material-icons">help</i>
+        </a>
+        <ul>
+            <li>
+                <a class="btn-floating tooltipped red" data-position="left" data-tooltip="Fehler melden"
+                   href="{% url 'rebus' %}"><i class="material-icons">bug_report</i></a>
+            </li>
+            <li>
+                <a class="btn-floating tooltipped yellow darken-1" data-position="left" data-tooltip="FAQ"
+                   href="{% url 'faq' %}"><i class="material-icons">question_answer</i></a>
+            </li>
+            <li>
+                <a class="btn-floating tooltipped blue" data-position="left" data-tooltip="Frage stellen"
+                   href="{% url 'ask-faq' %}"><i class="material-icons">chat</i></a>
+            </li>
+        </ul>
+    </div>
+
+{% endif %}

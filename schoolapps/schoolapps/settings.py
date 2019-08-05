@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupType
-from posixgrouptype import PosixGroupType
+from django_auth_ldap.config import LDAPSearch, PosixGroupType, GroupOfNamesType, LDAPGroupType
 import logging
 from .secure_settings import *
 
@@ -27,20 +26,32 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# PDB debugger option
+POST_MORTEM = True
+
 ALLOWED_HOSTS = [
     'info.katharineum.de',
     '178.63.239.184',
+    '159.69.181.50',
     'localhost',
     '127.0.0.1'
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
+    "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
+    'menu.apps.MenuConfig',
+    'support.apps.SupportConfig',
+    'faq.apps.FaqConfig',
     'dbsettings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +59,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'material',
+    'django_react_templatetags',
+    'martor',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_react_templatetags.context_processors.react_context_processor',
             ],
         },
     },
@@ -139,6 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticcollect")
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
@@ -146,6 +163,7 @@ LOGIN_REDIRECT_URL = '/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollect')
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -155,6 +173,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # TIMETABLE
 TIMETABLE_WIDTH = 5
 TIMETABLE_HEIGHT = 10
+LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
+           ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
+SHORT_WEEK_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"]
+LONG_WEEK_DAYS = [("Montag", 0), ("Dienstag", 1), ("Mittwoch", 2), ("Donnerstag", 3), ("Freitag", 4)]
 
 ########
 # LDAP #
@@ -163,17 +185,17 @@ TIMETABLE_HEIGHT = 10
 # Baseline configuration.
 AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1"
 AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no",
-                                   ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+                                   ldap.SCOPE_SUBTREE, "(&(objectClass=posixAccount)(uid=%(user)s))")
 # or perhaps:
 # AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=example,dc=com"
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no,ou=SchoolManager,ou=group", ldap.SCOPE_SUBTREE,
-                                    "(objectClass=posixGroup)")
-# '(&(objectClass=*)(memberUid=%(user))')
-print(ldap.SCOPE_SUBTREE)
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("dc=skole,dc=skolelinux,dc=no", ldap.SCOPE_SUBTREE,
+                                    "(&(objectClass=posixGroup))")  # (memberUid=%(user)s)
+# '(&(objectClass=*)(memberUid=%(user)s)')
+# print(ldap.SCOPE_SUBTREE)
 # "(objectClass=organizationalUnit)")
-AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr="cn")
+AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
 # Simple group restrictions
 # AUTH_LDAP_REQUIRE_GROUP = "dc=skole,dc=skolelinux,dc=no"
@@ -186,17 +208,18 @@ AUTH_LDAP_USER_ATTR_MAP = {
     "email": "mail"
 }
 
-# AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#     "is_active": "cn=active,ou=django,ou=groups,dc=example,dc=com",
-#     "is_staff": "cn=staff,ou=django,ou=groups,dc=example,dc=com",
-#     "is_superuser": "cn=superuser,ou=django,ou=groups,dc=example,dc=com"
-# }
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    #      "is_active": "cn=teachers,ou=group,ou=Teachers,dc=skole,dc=skolelinux,dc=no",
+    "is_staff": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+    "is_superuser": "cn=schoolapps-admins,ou=group,dc=skole,dc=skolelinux,dc=no",
+}
 
 # This is the default, but I like to be explicit.
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
 
 # Use LDAP group membership to calculate group permissions.
-AUTH_LDAP_FIND_GROUP_PERMS = True
+# AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_MIRROR_GROUPS = True
 
 # Cache group memberships for an hour to minimize LDAP traffic
 AUTH_LDAP_CACHE_GROUPS = True
@@ -211,4 +234,11 @@ AUTHENTICATION_BACKENDS = (
 
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+if DEBUG:
+    logger.setLevel(logging.DEBUG)
+
+# Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DBSETTINGS_USE_CACHE = False

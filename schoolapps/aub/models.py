@@ -1,51 +1,51 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
-lessons = (
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9)
-)
+from datetime import date
 
 
-def get_default_user():
-    user, created = User.objects.get_or_create(username='nouser')
-    return user.id
+# def get_default_user():
+#     user, created = User.objects.get_or_create(username='nouser')
+#     return user.id
 
 
-class Status(models.Model):
-    name = models.CharField(max_length=100)
-    style_classes = models.CharField(max_length=200)
+class Status:
+    def __init__(self, name, style_class):
+        self.name = name
+        self.style_class = style_class
 
     def __str__(self):
         return self.name
 
 
-def get_default_status():
-    status, created = Status.objects.get_or_create(name='In Bearbeitung', style_classes='orange')
-    return status.id
+status_list = [
+    Status(name='In Bearbeitung 1', style_class='orange'),
+    Status(name='In Bearbeitung 2', style_class='yellow'),
+    Status(name='Genehmigt', style_class='green'),
+    Status(name='Abgelehnt', style_class='red'),
+]
+
+status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
 
 class Aub(models.Model):
     # Time
-    from_dt = models.DateTimeField(default=timezone.now)
-    to_dt = models.DateTimeField(default=timezone.now)
+    from_date = models.DateField(default=date.today, verbose_name="Startdatum")
+    from_time = models.TimeField(default=timezone.now, verbose_name="Startzeit")
+    to_date = models.DateField(default=date.today, verbose_name="Enddatum")
+    to_time = models.TimeField(default=timezone.now, verbose_name="Endzeit")
 
     # Information
     description = models.TextField()
-    status = models.ForeignKey(Status, related_name='aubs', on_delete=models.SET(get_default_status()),
-                               default=get_default_status())
+    status = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
+
     # Meta
-    created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET(get_default_user()),
-                                   default=get_default_user())
-    created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(User, related_name='aubs', on_delete=models.SET_NULL
+                                   , verbose_name="Erstellt von", blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now, verbose_name="Erstellungszeitpunkt")
+
+    def getStatus(self):
+        return status_list[self.status]
 
     def __str__(self):
         return self.description
@@ -57,5 +57,9 @@ class Aub(models.Model):
             ('allow1_aub', 'First permission'),
             ('allow2_aub', 'Second permission'),
             ('check1_aub', 'Check a AUB'),
-            ('check2_aub', 'Check a AUB')
+            ('check2_aub', 'Check a AUB'),
+            ('view_archive', 'View AUB archive'),
         )
+
+        verbose_name = "AUB"
+        verbose_name_plural = "AUBs"

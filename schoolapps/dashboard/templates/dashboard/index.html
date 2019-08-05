@@ -3,10 +3,31 @@
 <main>
     <p class="flow-text">Willkommen bei SchoolApps!</p>
 
+    <div class="row">
+        <div class="col s12">
+            <h5>Dein Status</h5>
+        </div>
+        <div class="col"><i class="material-icons left green-text">check_circle</i>{{ user_type_formatted }}</div>
+        {% if user_type == 1 or user_type == 2 %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
+                Klassen: {{ classes|join:", " }}</div>
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
+                Kurse: {{ courses|join:", " }}</div>
+        {% endif %}
+        {% if user_type == 1 %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
+                Fächer: {{ subjects|join:", " }}</div>
+        {% endif %}
+        {% if user_type == 1 or has_wifi == True %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>WLAN</div>
+        {% else %}
+            <div class="col"><i class="material-icons left red-text">close</i>Kein WLAN</div>
+        {% endif %}
+    </div>
 
     <div class="row">
         <div class="col s12 m6">
-            <h4>Letzte Aktivitäten</h4>
+            <h5>Letzte Aktivitäten</h5>
 
             {% if activities %}
                 <ul class="collection">
@@ -29,7 +50,7 @@
         </div>
 
         <div class="col s12 m6">
-            <h4>Letzte Benachrichtigungen</h4>
+            <h5>Letzte Benachrichtigungen</h5>
 
             {% if notifications %}
                 <ul class="collection">

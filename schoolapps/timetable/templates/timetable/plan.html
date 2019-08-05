@@ -1,103 +1,231 @@
 {% include 'partials/header.html' %}
+<script type="text/javascript">
+    {% if smart %}
+        var week = {{ selected_week }};
+        function goToCalendarWeek(cw) {
+            window.location.href = "{% url "timetable_smart_plan" raw_type id %}/{{ selected_year }}/" + cw;
+        }
+        function onCalendarWeekChanged(where) {
+            goToCalendarWeek($(where).val());
+        }
 
+        function weekBefore() {
+            if (week > 1) {
+                goToCalendarWeek(week - 1)
+            }
+        }
+
+        function weekNext() {
+            if (week < 52) {
+                goToCalendarWeek(week + 1);
+            }
+        }
+
+        $(document).ready(function () {
+            $("#calendar-week-1").change(function () {
+                onCalendarWeekChanged("#calendar-week-1");
+            });
+            $("#calendar-week-2").change(function () {
+                onCalendarWeekChanged("#calendar-week-2");
+            });
+            $("#calendar-week-3").change(function () {
+                onCalendarWeekChanged("#calendar-week-3");
+            });
+            $("#week-before").click(weekBefore);
+            $("#week-next").click(weekNext);
+        });
+    {% endif %}
+</script>
 <main>
-    <h3>
-        Stundenplan <i>{{ el }}</i>
-    </h3>
-    <div class="timetable-plan">
+    <div class="row no-margin">
+        <div class="col s8 m6 l8 xl9">
+            <h3>
+                Stundenplan <i>{{ el }}</i>
+            </h3>
+        </div>
+        {# Show print button only if not on mobile #}
+        <div class="col s4 m6 l4 xl3 right align-right no-print">
+            <a class="waves-effect waves-teal btn-flat btn-flat-medium right hide-on-small-and-down" id="print">
+                <i class="material-icons center">print</i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% if smart %}
+            {# Show if smart #}
+            {# Toggle button to regular and smart plan badge #}
+            <div class="row s12 m6 left">
+                <span class="badge new primary-color left smart-plan-badge">SMART PLAN</span>
+
+                <a class="waves-effect waves-light btn-flat no-print" style="padding-left: 3px; padding-right: 3px;"
+                   href="{% url "timetable_regular_plan" raw_type id "regular" %}">
+                    <i class="material-icons left">slideshow</i>
+                    REGELPLAN ANZEIGEN
+                </a>
+            </div>
+
+            {# Week select #}
+            <div class="col s12 m6 right">
+                <div class="col s2 no-print">
+                    <a class="waves-effect waves-teal btn-flat btn-flat-medium right" id="week-before">
+                        <i class="material-icons center">navigate_before</i>
+                    </a>
+                </div>
+                <div class="input-field col s8 no-margin hide-on-med-and-up">
+                    <select id="calendar-week-1">
+                        {% for week in weeks %}
+                            <option value="{{ week.calendar_week }}" {% if week.calendar_week == selected_week %}
+                                    selected {% endif %}> KW {{ week.calendar_week }}
+                                ({{ week.first_day|date:"j.n" }}–{{ week.last_day|date:"j.n" }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-field col s8 no-margin hide-on-med-and-down">
+                    <select id="calendar-week-2">
+                        {% for week in weeks %}
+                            <option value="{{ week.calendar_week }}" {% if week.calendar_week == selected_week %}
+                                    selected {% endif %}> KW {{ week.calendar_week }} ({{ week.first_day|date:"j.n.Y" }}–{{ week.last_day|date:"j.n.Y" }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-field col s8 no-margin hide-on-small-and-down hide-on-large-only">
+                    <select id="calendar-week-3">
+                        {% for week in weeks %}
+                            <option value="{{ week.calendar_week }}" {% if week.calendar_week == selected_week %}
+                                    selected {% endif %}> KW {{ week.calendar_week }}
+                                ({{ week.first_day|date:"j.n" }}–{{ week.last_day|date:"j.n.Y" }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col s2 no-print">
+                    <a class="waves-effect waves-teal btn-flat btn-flat-medium left" id="week-next">
+                        <i class="material-icons center">navigate_next</i>
+                    </a>
+                </div>
+            </div>
+
+        {% else %}
+            {# Show if regular #}
+            <a class="waves-effect waves-light btn-flat no-print"
+               href="{% url "timetable_smart_plan" raw_type id %}">
+                <i class="material-icons left">slideshow</i>
+                SMART PLAN ANZEIGEN
+            </a>
+        {% endif %}
+    </div>
+
+    {% include "timetable/hintsinplan.html" %}
+    
+    {# show full timetable on tablets, laptops and pcs #}
+    <div class="timetable-plan hide-on-small-and-down">
+
+        {#  Week days #}
         <div class="row">
             <div class="col s2">
 
             </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Montag
-                    </span>
+            {# Show short weekdays on tablets #}
+            {% for short_week_day in short_week_days %}
+                <div class="col s2 hide-on-large-only">
+                    <div class="card timetable-title-card">
+                        <div class="card-content">
+                            <span class="card-title">
+                                {{ short_week_day }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Dienstag
-                    </span>
+            {% endfor %}
+            {# Show long weekdays elsewere #}
+            {% for long_week_day in long_week_days %}
+                <div class="col s2 hide-on-med-only">
+                    <div class="card timetable-title-card">
+                        <div class="card-content">
+                            <span class="card-title">
+                                {{ long_week_day.0 }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Mittwoch
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Donnerstag
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s2">
-                <div class="card timetable-title-card">
-                    <div class="card-content">
-                    <span class="card-title">
-                        Freitag
-                    </span>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
-        {% for row in plan %}
+
+        {#  Lessons #}
+        {% for row, time in plan %}
             <div class="row">
                 <div class="col s2">
                     <div class="card timetable-title-card">
                         <div class="card-content">
-                    <span class="card-title">
-                        {{ forloop.counter0|add:"+1" }}.
-                    </span>
+
+                            {# Lesson number #}
+                            <span class="card-title left">
+                                {{ time.number_format }}
+                            </span>
+
+                            {# Time dimension of lesson #}
+                            <div class="right timetable-time grey-text text-darken-2">
+                                <span>{{ time.start|date:"H:i" }}</span>
+                                <br>
+                                <span>{{ time.end|date:"H:i" }}</span>
+                            </div>
                         </div>
                     </div>
 
                 </div>
                 {% for col in row %}
+                    {# A lesson #}
                     <div class="col s2">
-                        <div class="card lesson-card">
-                            <div class="card-content">
-                                {% for element_container in col.elements %}
-                                    <div style="background-color: {{ element_container.element.subject.hex_color }};">
-                                        <p>
-                                            {% if type == 0 or type == 1 %}
-                                                {% for class in element_container.element.classes %}
-                                                    {{ class.name }}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if type == 2 or type == 1 %}
-                                                <span data-position="bottom" class="tooltipped"
-                                                      data-tooltip="{{ element_container.element.teacher }}">{{ element_container.element.teacher.shortcode }}</span>
-                                            {% endif %}
-                                            <strong>{{ element_container.element.subject.shortcode }}</strong>
-                                            {% if type == 0 or type == 2 %}
-                                                <span class="tooltipped" data-position="bottom"
-                                                      data-tooltip="{{ element_container.room.name }}">{{ element_container.room.shortcode }}</span>
-                                            {% endif %}
-                                        </p>
-                                    </div>
-
-                                {% endfor %}
-                            </div>
-                        </div>
+                        {% include "timetable/lesson.html" %}
                     </div>
                 {% endfor %}
             </div>
+        {% endfor %}
+    </div>
+
+    {# show 5 seperate ones on mobiles #}
+    <div class="timetable-plan hide-on-med-and-up">
+        {% for long_week_day in long_week_days %}
+            <div class="card timetable-mobile-title-card">
+                <div class="card-content">
+                    <span class="card-title">
+                        {{ long_week_day.0 }}
+                    </span>
+                </div>
+            </div>
+            {% for row, time in plan %}
+                <div class="row">
+                    <div class="col s4">
+                        <div class="card timetable-title-card">
+                            <div class="card-content">
+
+                                {# Lesson number #}
+                                <span class="card-title left">
+                                    {{ time.number_format }}
+                                </span>
+
+                                {# Time dimension of lesson #}
+                                <div class="right timetable-time grey-text text-darken-2">
+                                    <span>{{ time.start|date:"H:i" }}</span>
+                                    <br>
+                                    <span>{{ time.end|date:"H:i" }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% for col in row %}
+                        {% if forloop.counter0 == long_week_day.1 %}
+                            <div class="col s8">
+                                {# A lesson #}
+                                {% include "timetable/lesson.html" %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
         {% endfor %}
     </div>
 </main>
