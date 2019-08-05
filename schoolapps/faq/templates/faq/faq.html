@@ -9,6 +9,7 @@
 
             <ul class="collapsible">
                 {% for question in section.questions.all %}
+                    {% if question in questions %}
                     <li>
                         <div class="collapsible-header flow-text">
                             <i class="material-icons">
@@ -24,6 +25,7 @@
                             {{ question.answer_text|safe }}
                         </div>
                     </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </section>
