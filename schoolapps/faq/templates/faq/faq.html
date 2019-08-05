@@ -9,7 +9,7 @@
 
             <ul class="collapsible">
                 {% for question in section.questions.all %}
-                    {% if question in questions %}
+                    {% if question.show %}
                     <li>
                         <div class="collapsible-header flow-text">
                             <i class="material-icons">
