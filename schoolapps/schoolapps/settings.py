@@ -23,11 +23,15 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
-    'django_pdb',
     'dashboard.apps.DashboardConfig',
+    "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
+    'martor',
     'widget_tweaks',
     'templatetags.apps.TemplatetagsConfig',
 ]
@@ -55,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_pdb.middleware.PdbMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
@@ -112,10 +116,6 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollect')
 
-# Media
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
@@ -165,3 +165,9 @@ logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
 if DEBUG:
     logger.setLevel(logging.DEBUG)
+
+# Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#DBSETTINGS_USE_CACHE = False

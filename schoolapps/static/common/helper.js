@@ -113,9 +113,16 @@ $(document).ready(function () {
         window.print();
     });
 
-    //Initialize Collapsible [MAT]
+    // Initialize Collapsible [MAT]
     $('.collapsible').collapsible();
 
-    //Initialize FABs [MAT]
+    // Initialize FABs [MAT]
     $('.fixed-action-btn').floatingActionButton();
+
+    // Initialize delete button
+    $(".delete-button").click(function (e) {
+        if (!confirm("Wirklich löschen?")) {
+            e.preventDefault();
+        }
+    })
 });

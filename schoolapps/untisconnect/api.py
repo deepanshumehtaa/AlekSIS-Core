@@ -2,7 +2,11 @@ from django.conf import settings
 
 from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_date, date_to_untis_date
 from . import models
-from timetable import models as models2
+from timetable.settings import untis_settings
+
+TYPE_TEACHER = 0
+TYPE_ROOM = 1
+TYPE_CLASS = 2
 
 
 def run_all(obj, filter_term=True):
@@ -15,7 +19,7 @@ def run_one(obj, filter_term=True):
 
 def run_default_filter(obj, filter_term=True):
     # Get term by settings in db
-    TERM_ID = models2.untis_settings.term
+    TERM_ID = untis_settings.term
     TERM = get_term_by_id(TERM_ID)
     SCHOOL_ID = TERM.school_id  # 705103
     SCHOOLYEAR_ID = TERM.schoolyear_id  # 20172018
@@ -158,10 +162,10 @@ def format_classes(classes):
         else:
             classes_as_dict[step].append(part)
 
-    out = ""
+    out = []
     for key, value in classes_as_dict.items():
-        out += key + "".join(value)
-    return out
+        out.append(key + "".join(value))
+    return ", ".join(out)
 
 
 ########
@@ -276,6 +280,8 @@ class Absence(object):
     def __init__(self):
         self.filled = None
         self.teacher = None
+        self.room = None
+        self.type = TYPE_TEACHER
         self.from_date = None
         self.to_date = None
         self.from_lesson = None
@@ -285,7 +291,19 @@ class Absence(object):
     def create(self, db_obj):
         self.filled = True
         print(db_obj.ida)
-        self.teacher = get_teacher_by_id(db_obj.ida)
+        print(db_obj.typea)
+        if db_obj.typea == 101:
+            self.type = TYPE_TEACHER
+        elif db_obj.typea == 100:
+            self.type = TYPE_CLASS
+        elif db_obj.typea == 102:
+            self.type = TYPE_ROOM
+
+        if self.type == TYPE_TEACHER:
+            print("IDA", db_obj.ida)
+            self.teacher = get_teacher_by_id(db_obj.ida)
+        else:
+            self.room = get_room_by_id(db_obj.ida)
         self.from_date = untis_date_to_date(db_obj.datefrom)
         self.to_date = untis_date_to_date(db_obj.dateto)
         self.from_lesson = db_obj.lessonfrom
@@ -297,6 +315,59 @@ def get_all_absences_by_date(date):
     d_i = int(date_to_untis_date(date))
     db_rows = run_all(models.Absence.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
     return row_by_row_helper(db_rows, Absence)
+
+
+#########
+# EVENT #
+#########
+
+class Event(object):
+    def __init__(self):
+        self.filled = None
+        self.text = None
+        self.teachers = []
+        self.classes = []
+        self.rooms = []
+        self.absences = []
+        self.from_date = None
+        self.to_date = None
+        self.from_lesson = None
+        self.to_lesson = None
+        self.is_whole_day = None
+
+    def create(self, db_obj):
+        """0~0~19~0~1859~0,0~0~65~0~1860~0,0~0~21~0~1861~0,0~0~3~0~1862~0"""
+        self.filled = True
+        event_parsed = db_obj.eventelement1.split(",")
+        elements = []
+        for element in event_parsed:
+            elements.append(element.split("~"))
+
+        for element in elements:
+            if element[0] != "0" and element[0] != "":
+                self.classes.append(element[0])
+
+            if element[2] != "0" and element[2] != "":
+                self.teachers.append(element[2])
+
+            if element[3] != "0" and element[3] != "":
+                self.rooms.append(element[3])
+
+            if element[4] != "0" and element[4] != "":
+                self.absences.append(element[4])
+
+        self.text = db_obj.text
+        self.from_date = untis_date_to_date(db_obj.datefrom)
+        self.to_date = untis_date_to_date(db_obj.dateto)
+        self.from_lesson = db_obj.lessonfrom
+        self.to_lesson = db_obj.lessonto
+        self.is_whole_day = self.from_lesson == 1 and self.to_lesson >= settings.TIMETABLE_HEIGHT
+
+
+def get_all_events_by_date(date):
+    d_i = int(date_to_untis_date(date))
+    db_rows = run_all(models.Event.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
+    return row_by_row_helper(db_rows, Event)
 
 
 ##########

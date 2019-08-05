@@ -23,8 +23,11 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018–{% now "Y" %} Computer-AG, Katharineum zu Lübeck
-
+            <span class="left">
+                SchoolApps · Version 1.0.1-dev "Aebli" <br>
+            © 2018–{% now "Y" %} Computer-AG, Katharineum zu Lübeck ·
+            Licensed under <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GNU GPL 3.0</a>
+                </span>
             <span class="right">
 
                 <a class="blue-text text-lighten-4" href="https://katharineum-zu-luebeck.de/impressum/">Impressum</a>
@@ -40,7 +43,6 @@
 <!---------------->
 <script src="{% static 'common/manup.min.js' %}"></script>
 <script src="{% static "common/pwabuilder-sw-register.js" %}"></script>
-<script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
 <script src="{% static 'js/materialize.min.js' %}"></script>
 <script src="{% static 'common/helper.js' %}"></script>
 </body>
