@@ -34,14 +34,18 @@ ALLOWED_HOSTS = [
     '178.63.239.184',
     '159.69.181.50',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django_pdb',
     'dashboard.apps.DashboardConfig',
+    "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
@@ -57,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'material',
     'django_react_templatetags',
+    'martor',
     'widget_tweaks',
 ]
 
@@ -68,7 +73,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_pdb.middleware.PdbMiddleware',
 ]
 
 ROOT_URLCONF = 'schoolapps.urls'
@@ -151,6 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticcollect")
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
@@ -235,3 +240,5 @@ if DEBUG:
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DBSETTINGS_USE_CACHE = False
