@@ -21,7 +21,7 @@ class FeedbackForm(forms.Form):
 
     performance_rating = forms.ChoiceField(label='Geschwindigkeit',
                                            choices=ratings,
-                                           widget=forms.RadioSelect(attrs={"checked": "checked"}),
+                                           widget=forms.RadioSelect(attrs={"checked": "checked", "class": "required"}),
                                            required=True)
 
     usability_rating = forms.ChoiceField(label='Benutzerfreundlichkeit',

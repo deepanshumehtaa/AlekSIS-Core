@@ -75,6 +75,12 @@
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+
+    {% if martor %}
+        <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+        <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
+    {% endif %}
 </head>
 <body>
 <header>
@@ -170,11 +176,6 @@
                         <span class="badge new primary-color ">SMART PLAN</span>
                     </a>
                 </li>
-                {#                <li>#}
-                {#                    <a href="{% url 'timetable_admin_all' %}">#}
-                {#                        <i class="material-icons">grid_on</i> Alle Pläne#}
-                {#                    </a>#}
-                {#                </li>#}
                 <li>
                     <a href="{% url 'timetable_quicklaunch' %}">
                         <i class="material-icons">grid_on</i> Alle Pläne
@@ -185,9 +186,23 @@
                         <i class="material-icons">update</i> Vertretungsplan
                     </a>
                 </li>
+                {% if perms.timetable.view_hint %}
+                    <li>
+                        <a href="{% url 'timetable_hints' %}">
+                            <i class="material-icons">announcement</i> Hinweismanagement
+                        </a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a href="{% url 'debug_logs' %}">
+                        <i class="material-icons">error</i> Debuggingtool
+                    </a>
+                </li>
                 <li>
                     <div class="divider"></div>
                 </li>
+
+
             {% endif %}
 
             <li>
@@ -270,7 +285,8 @@
 <header class="alert success">
     <p>
         <i class="material-icons left">info</i>
-        Du befindest dich in der Testversion von SchoolApps. Daher kann es immer mal wieder zu unvorhersehbaren
+        Du befindest dich in der ersten veröffentlichten Version von SchoolApps. Daher kann es immer mal wieder noch zu
+        bislang unvorhergesehenen
         Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über
         <a href="mailto:support@katharineum.de">support@katharineum.de</a>
         schreibst oder die in SchoolApps integrierten
