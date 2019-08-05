@@ -444,3 +444,7 @@ i.collapsible-trigger {
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
     color: #ea4661;
 }
+
+/*section:not(:last-of-type) {*/
+/*    border-bottom: solid #bdbdbd 2px;*/
+/*}*/
