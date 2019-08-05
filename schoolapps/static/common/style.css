@@ -191,6 +191,11 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
+.lesson-with-event {
+    border: 3px solid #9c27b0;
+    border-radius: 3px;
+}
+
 .lesson-card a, .substitutions a {
     color: black;
 }
