@@ -12,7 +12,7 @@ body {
     background-color: #da1f3d !important;
 }
 
-.primary-color-text {
+.primary-color-text, .primary-color-text a {
     color: #da1f3d !important;
 }
 
@@ -103,22 +103,14 @@ span.badge.new {
     height: 26px;
 }
 
-span.badge.no-float {
+span.badge.new.no-float {
     float: none;
+    padding: 3px 6px;
 }
-/*span.badge {*/
-/*width: 9em;*/
-/*line-height: 4ex;*/
-/*height: 4ex;*/
-/*}*/
-/*span.badge::after {*/
-/*content: "";*/
-/*}*/
 
-/*span.item-text {*/
-/*line-height: 4ex;*/
-/*vertical-align: bottom;*/
-/*}*/
+span.badge .material-icons {
+    font-size: 0.9rem;
+}
 
 /*+++++++++++*/
 /* Timetable */
@@ -166,23 +158,23 @@ span.badge.no-float {
     width: 100%;
 }
 
-.timetable-mobile-title-card{
+.timetable-mobile-title-card {
     margin-top: 50px;
     margin-bottom: .60rem;
 }
 
-.timetable-mobile-title-card:first-child{
+.timetable-mobile-title-card:first-child {
     margin-top: -10px;
     margin-bottom: .60rem;
 }
 
-.timetable-mobile-title-card .card-content{
+.timetable-mobile-title-card .card-content {
     padding: 10px;
     text-align: center;
     width: 100%;
 }
 
-.timetable-mobile-title-card .card-content .card-title{
+.timetable-mobile-title-card .card-content .card-title {
     font-weight: bold;
 }
 
@@ -199,7 +191,7 @@ table.substitutions td, table.substitutions th {
     margin: 0;
 }
 
-.lesson-card a {
+.lesson-card a, .substitutions a {
     color: black;
 }
 
@@ -235,7 +227,11 @@ table.substitutions td, table.substitutions th {
 }
 
 .no-margin {
-    margin: 0;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* Table*/
@@ -306,26 +302,36 @@ table.striped > tbody > tr:nth-child(odd) {
     }
 }
 
-.alert p {
+.alert ul, .alert p {
+    margin: 0;
+}
+
+.alert p:first-child, .alert div:first-child {
     margin: 10px;
     padding: 10px;
     border-left: 5px solid;
 }
 
-.alert.success p {
+.alert.success p, .alert.success div {
     background-color: #c5e1a5;
     border-color: #4caf50;
 }
 
-.alert.error p {
+.alert.error p, .alert.error div {
     background-color: #ef9a9a;
     border-color: #b71c1c;
 }
 
-main .alert p {
+.alert.primary p, .alert.primary div {
+    background-color: #eca4af;
+    border-color: #da1f3d;
+}
+
+main .alert p:first-child, main .alert div:first-child {
     margin-left: -10px;
     margin-right: -10px;
 }
+
 .btn, .btn-large, .btn-small {
     background-color: #282E3F;
 }
@@ -349,52 +355,96 @@ FEEDBACK
 }
 
 @media only screen and (max-width: 992px) {
-    .rating{
+    .rating {
         margin-top: 12px;
         min-height: 40px;
         justify-content: space-around;
     }
+
+    ´
 }
 
 .rating label {
-  display: flex;
-  flex: 1;
-  position: relative;
-  cursor: pointer;
+    display: flex;
+    flex: 1;
+    position: relative;
+    cursor: pointer;
 }
+
 .rating label:after {
-  font-family: 'Material Icons';
-  -webkit-font-feature-settings: 'liga';
-  position: absolute;
-  color: #777;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 40px;
-  content: 'star_border';
+    font-family: 'Material Icons';
+    -webkit-font-feature-settings: 'liga';
+    position: absolute;
+    color: #777;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 40px;
+    content: 'star_border';
 }
+
 .rating input {
-  display: none!important;
+    display: none !important;
 }
+
 .rating > input:checked + label:after,
 .rating > input:checked ~ label:after {
-  content: "star";
-  color: #FFD700;
+    content: "star";
+    color: #FFD700;
 }
+
 .rating > input:hover + label:after,
 .rating > input:hover ~ label:after {
-  content: "star";
-  color: #FFD700;
+    content: "star";
+    color: #FFD700;
 }
 
 .support-input-mobile label {
-  line-height: 1rem;
+    line-height: 1rem;
 }
 
-.span-info{
-  width: 24px;
-  vertical-align: middle;
+.span-info {
+    width: 24px;
+    vertical-align: middle;
 }
 
+i.collapsible-trigger {
+    margin-right: -10px;
+
+}
+
+.collapsible .collapsible-trigger::before {
+    content: 'arrow_downward';
+}
+
+.collapsible .collapsible-trigger.v2::before {
+    content: 'more_vert';
+}
+
+.collapsible .active .collapsible-trigger::before {
+    content: 'arrow_upward';
+}
+
+
+.scroll-fix {
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.waves-effect.waves-katharineum .waves-ripple {
+    background-color: rgba(218, 31, 61, 0.65);
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    color: #da1f3d;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+    color: #ea4661;
+}
+
+/*section:not(:last-of-type) {*/
+/*    border-bottom: solid #bdbdbd 2px;*/
+/*}*/

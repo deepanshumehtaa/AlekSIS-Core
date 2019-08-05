@@ -9,3 +9,4 @@ django_react_templatetags
 kanboard
 PyPDF2
 martor
+django_widget_tweaks
