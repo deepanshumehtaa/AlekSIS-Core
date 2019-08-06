@@ -44,7 +44,7 @@ def index(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-@check_own_aub(login_url='/')
+@check_own_aub(login_url='/accounts/login/')
 def details(request, id):
     aub = get_object_or_404(Aub, id=id)
     context = {
