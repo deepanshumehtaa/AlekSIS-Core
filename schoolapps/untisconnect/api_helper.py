@@ -21,8 +21,8 @@ def run_using(obj):
     return obj.using(DB_NAME)
 
 
-def get_term_by_id(term_id):
-    data = run_using(models.Terms.objects).get(term_id=term_id)
+def get_term_by_ids(term_id, school_year_id):
+    data = run_using(models.Terms.objects).get(term_id=term_id, schoolyear_id=school_year_id)
     # print(data.schoolyear_id)
     return data
 
@@ -35,11 +35,13 @@ class Term(object):
         self.filled = False
         self.id = None
         self.name = None
+        self.school_year_id = None
 
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.term_id
         self.name = db_obj.longname
+        self.school_year_id = db_obj.schoolyear_id
 
 
 def get_terms():
@@ -51,6 +53,32 @@ def get_terms():
         terms.append(term)
         # print(term.name)
     return terms
+
+
+##############
+# SCHOOLYEAR #
+##############
+class SchoolYear(object):
+    def __init__(self):
+        self.filled = False
+        self.id = None
+        self.name = None
+
+    def create(self, db_obj):
+        self.filled = True
+        self.id = db_obj.schoolyear_id
+        self.name = db_obj.schoolyearzoned
+
+
+def get_school_years():
+    data = run_using(models.Schoolyear.objects).all()
+    years = []
+    for item in data:
+        year = SchoolYear()
+        year.create(item)
+        years.append(year)
+        # print(term.name)
+    return years
 
 
 ################
