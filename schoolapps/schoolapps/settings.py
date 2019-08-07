@@ -34,7 +34,8 @@ ALLOWED_HOSTS = [
     '178.63.239.184',
     '159.69.181.50',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    'ce64cd13.ngrok.io'
 ]
 
 INTERNAL_IPS = [
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     'django_react_templatetags',
     'martor',
     'widget_tweaks',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -240,5 +242,33 @@ if DEBUG:
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# PWA
+
+PWA_APP_NAME = 'SchoolApps'
+PWA_APP_DESCRIPTION = "Eine Sammlung an nützlichen Apps für den Schulalltag am Katharineum zu Lübeck"
+PWA_APP_THEME_COLOR = '#da1f3d'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        "src": "/static/icons/android_192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/icons/android_512.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'de-DE'
+
+# DB
 
 DBSETTINGS_USE_CACHE = False

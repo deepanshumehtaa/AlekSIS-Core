@@ -28,11 +28,6 @@ from schoolapps.settings import BASE_DIR
 def manifest(request):
     return serve(request, "manifest.json")
 
-
-def serviceworker(request):
-    return serve(request, "common/pwabuilder-sw.js")
-
-
 urlpatterns = [
     #############
     # Dashboard #
@@ -76,7 +71,7 @@ urlpatterns = [
     #######
     path('faq/', include('faq.urls')),
 
-    path("pwabuilder-sw.js", serviceworker),
+    path('', include('pwa.urls')),
 
     path('martor/', include('martor.urls')),
 ]
