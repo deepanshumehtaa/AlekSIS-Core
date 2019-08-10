@@ -317,6 +317,11 @@ def get_all_absences_by_date(date):
     return row_by_row_helper(db_rows, Absence)
 
 
+def get_absence_by_id(id):
+    absence = run_one(models.Absence.objects, filter_term=False).get(absence_id=id)
+    return one_by_id(absence, Absence)
+
+
 #########
 # EVENT #
 #########
