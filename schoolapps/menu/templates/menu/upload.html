@@ -5,11 +5,10 @@
 
         {% csrf_token %}
 
-        {% msg_box form.non_field_errors "red" "" %}
+        {% msg_box form.non_field_errors "error" "error" %}
         <div class="row">
             <div class="input-field col s5">
-                {% msg_box form.calendar_week.errors "red" "" %}
-                {#                <label for="{{ form.calendar_week.id_for_label }}">Kalenderwoche</label>#}
+                {% msg_box form.calendar_week.errors "error" "error" %}
                 <small>Kalenderwoche</small>
                 {{ form.calendar_week }}
             </div>
@@ -18,18 +17,15 @@
                 <h4>/</h4>
             </div>
             <div class="input-field col s5">
-                {% msg_box form.year.errors "red" "" %}
-                {#                <label for="{{ form.year.id_for_label }}">Jahr</label>#}
+                {% msg_box form.year.errors "error" "error" %}
                 <small>Jahr</small>
                 {{ form.year }}
             </div>
         </div>
         <div class="file-field input-field">
-            <div class="red-text">
-                {% msg_box form.pdf.errors "red" "" %}
-            </div>
+            {% msg_box form.pdf.errors "error" "error" %}
             <div class="btn">
-                <span><i class="material-icons center">cloud_upload</i> </span>
+                <span><i class="material-icons center">cloud_upload</i></span>
                 <input type="file" name="{{ form.pdf.html_name }}">
             </div>
             <div class="file-path-wrapper">
@@ -42,6 +38,8 @@
         </button>
     </form>
 
-    <p><a href="{% url 'menu_index' %}" class="waves-effect waves-teal btn-flat">Zurück zur Übersicht</a></p>
+    <p>
+        <a href="{% url 'menu_index' %}" class="waves-effect waves-teal btn-flat">Zurück zur Übersicht</a>
+    </p>
 </main>
 {% include 'partials/footer.html' %}

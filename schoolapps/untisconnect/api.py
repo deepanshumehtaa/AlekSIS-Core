@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from untisconnect.api_helper import get_term_by_id, run_using, untis_date_to_date, date_to_untis_date
+from untisconnect.api_helper import get_term_by_ids, run_using, untis_date_to_date, date_to_untis_date
 from . import models
 from timetable.settings import untis_settings
 
@@ -20,9 +20,9 @@ def run_one(obj, filter_term=True):
 def run_default_filter(obj, filter_term=True):
     # Get term by settings in db
     TERM_ID = untis_settings.term
-    TERM = get_term_by_id(TERM_ID)
+    SCHOOLYEAR_ID = untis_settings.school_year  # 20172018
+    TERM = get_term_by_ids(TERM_ID, SCHOOLYEAR_ID)
     SCHOOL_ID = TERM.school_id  # 705103
-    SCHOOLYEAR_ID = TERM.schoolyear_id  # 20172018
     VERSION_ID = TERM.version_id  # 1
 
     if filter_term:
@@ -315,6 +315,11 @@ def get_all_absences_by_date(date):
     d_i = int(date_to_untis_date(date))
     db_rows = run_all(models.Absence.objects.filter(dateto__gte=d_i, datefrom__lte=d_i, deleted=0), filter_term=False)
     return row_by_row_helper(db_rows, Absence)
+
+
+def get_absence_by_id(id):
+    absence = run_one(models.Absence.objects, filter_term=False).get(absence_id=id)
+    return one_by_id(absence, Absence)
 
 
 #########

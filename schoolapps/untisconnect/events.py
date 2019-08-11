@@ -3,7 +3,7 @@ from django.conf import settings
 from schoolapps.settings import TIMETABLE_HEIGHT
 from .drive import drive
 from .api_helper import untis_date_to_date, date_to_untis_date
-from .api import row_by_row_helper, run_all
+from .api import row_by_row_helper, run_all, get_absence_by_id
 from . import models
 
 
@@ -55,7 +55,8 @@ class Event(object):
             if element[4] != "0" and element[4] != "":
                 print(element[4])
                 try:
-                    absence = models.Absence.objects.using("untis").get(absence_id=int(element[4]))
+                    absence_id = int(element[4])
+                    absence = get_absence_by_id(absence_id)
                     self.absences.append(absence)
                 except models.Absence.DoesNotExist:
                     pass

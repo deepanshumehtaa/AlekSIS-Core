@@ -168,6 +168,8 @@ def generate_event_table(events):
 
         if event.from_lesson != event.to_lesson:
             sub_row.lesson = "{}.-{}.".format(event.from_lesson, event.to_lesson)
+        else:
+            sub_row.lesson = "{}.".format(event.from_lesson)
 
         sub_row.classes = format_classes(event.classes)
         sub_row.teachers = event.teachers
