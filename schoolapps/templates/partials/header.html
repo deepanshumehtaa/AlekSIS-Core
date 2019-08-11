@@ -1,4 +1,5 @@
 {% load static %}
+{% load url_name %}
 
 <!DOCTYPE html>
 <html lang="de">
@@ -76,6 +77,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
     <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
 
+
+    <!-- location (for "active" in sidenav -->
+    <meta name="active-loaction" content="{{ request|url_name }}">
+  
     {% if martor %}
         <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
         <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet"/>
@@ -126,97 +131,111 @@
         </li>
 
         {% if user.is_authenticated %}
-            <li>
+            <li id="dashboard">
                 <a href="{% url 'dashboard' %}">
                     <i class="material-icons">home</i> Dashboard
                 </a>
             </li>
+            <li>
+                <div class="divider"></div>
+            </li>
+
+            <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
 
             {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
-                <li>
-                    <div class="divider"></div>
+                <li class="bold"><a class="collapsible-header waves-effect waves-primary"><i class="material-icons">assignment</i>
+                    Lehrerfunktionen</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            {% if perms.aub.apply_for_aub %}
+                                <li id="aub_index">
+                                    <a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i>
+                                        Unterrichtsbefreiungen</a>
+                                </li>
+                            {% endif %}
+                            {% if perms.aub.check1_aub %}
+                                <li id="aub_check1">
+                                    <a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge
+                                        genehmigen 1</a></li>
+                            {% endif %}
+                            {% if perms.aub.check2_aub %}
+                                <li id="aub_check2">
+                                    <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge
+                                        genehmigen 2</a>
+                                </li>
+                            {% endif %}
+                            {% if perms.aub.view_archive %}
+                                <li id="aub_archive">
+                                    <a href="{% url 'aub_archive' %}"><i class="material-icons">archive</i>
+                                        Archiv</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </li>
-                <li>
-                    <a class="subheader grey lighten-3">Lehrerfunktionen</a>
-                </li>
-            {% endif %}
-            {% if perms.aub.apply_for_aub %}
-                <li>
-                    <a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i> Unterrichtsbefreiungen
-                    </a>
-                </li>
-            {% endif %}
-            {% if perms.aub.check1_aub %}
-                <li>
-                    <a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge genehmigen 1</a>
-                </li>
-            {% endif %}
-            {% if perms.aub.check2_aub %}
-                <li>
-                    <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge genehmigen 2</a>
-                </li>
-            {% endif %}
-            {% if perms.aub.view_archive %}
-                <li>
-                    <a href="{% url 'aub_archive' %}"><i class="material-icons">archive</i> Archiv</a>
-                </li>
-            {% endif %}
-            {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub or perms.aub.archiv %}
+
                 <li>
                     <div class="divider"></div>
                 </li>
             {% endif %}
             {% if perms.timetable.show_plan %}
-                <li>
-                    <a class="subheader grey lighten-3">Stundenplan</a>
-                </li>
-                <li>
-                    <a href="{% url 'timetable_my_plan' %}" style="padding-right: 10px;">
-                        <i class="material-icons">person</i> Mein Plan
-                        <span class="badge new primary-color ">SMART PLAN</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'timetable_quicklaunch' %}">
-                        <i class="material-icons">grid_on</i> Alle Pläne
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'timetable_substitutions' %}">
-                        <i class="material-icons">update</i> Vertretungsplan
-                    </a>
-                </li>
-                {% if perms.timetable.view_hint %}
+                <li class="bold"><a class="collapsible-header waves-effect waves-primary"><i class="material-icons">school</i>
+                    Stundenplan</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li id="timetable_my_plan">
+                                <a href="{% url 'timetable_my_plan' %}" style="padding-right: 10px;">
+                                    <i class="material-icons">person</i> Mein Plan
+                                    <span class="badge new primary-color sidenav-badge">SMART PLAN</span>
+                                </a>
+                            </li>
+                            {#                <li>#}
+                            {#                    <a href="{% url 'timetable_admin_all' %}">#}
+                            {#                        <i class="material-icons">grid_on</i> Alle Pläne#}
+                            {#                    </a>#}
+                            {#                </li>#}
+                            <li id="timetable_quicklaunch">
+                                <a href="{% url 'timetable_quicklaunch' %}">
+                                    <i class="material-icons">grid_on</i> Alle Pläne
+                                </a>
+                            </li>
+                            <li id="timetable_substitutions">
+                                <a href="{% url 'timetable_substitutions' %}">
+                                    <i class="material-icons">update</i> Vertretungsplan
+                                </a>
+                            </li>
+                            {% if perms.timetable.view_hint %}
                     <li>
                         <a href="{% url 'timetable_hints' %}">
                             <i class="material-icons">announcement</i> Hinweismanagement
                         </a>
                     </li>
                 {% endif %}
-                {% if perms.debug.can_view_debug_log %}
-                    <li>
-                        <a href="{% url 'debug_logs' %}">
-                            <i class="material-icons">error</i> Debuggingtool
-                        </a>
-                    </li>
-                {% endif %}
+                                {% if perms.debug.can_view_debug_log %}
+
                 <li>
-                    <div class="divider"></div>
+                    <a href="{% url 'debug_logs' %}">
+                        <i class="material-icons">error</i> Debuggingtool
+                    </a>
                 </li>
+                                      {% endif %}
+
+                        </ul>
+                    </div>
+
+                </li>
+                
 
 
             {% endif %}
-
-            <li>
-                <a class="subheader grey lighten-3">Speiseplan</a>
-            </li>
             <li>
                 <a href="{% url 'menu_show_current' %}" target="_blank">
                     <i class="material-icons">picture_as_pdf</i> Aktueller Speiseplan
                 </a>
             </li>
             {% if perms.menu.add_menu %}
-                <li>
+                <li id="menu_index">
                     <a href="{% url 'menu_index' %}">
                         <i class="material-icons">restaurant_menu</i> Speiseplan hochladen
                     </a>
@@ -225,58 +244,68 @@
             <li>
                 <div class="divider"></div>
             </li>
-
-            <li>
-                <a class="subheader grey lighten-3">Support</a>
-            </li>
-            <li>
+            <li class="bold">
+            <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">help</i> Support</a>
+            <div class="collapsible-body">
+            <ul>
+            <li id="rebus">
                 <a href="{% url 'rebus' %}">
                     <i class="material-icons">bug_report</i> Fehler melden
                 </a>
             </li>
-            <li>
+            <li id="feedback">
                 <a href="{% url 'feedback' %}">
                     <i class="material-icons">feedback</i> Feedback
                 </a>
             </li>
         {% endif %}
-        <li>
+        <li id="faq">
             <a href="{% url 'faq' %}">
                 <i class="material-icons">question_answer</i>FAQ
             </a>
         </li>
         {% if user.is_authenticated %}
-            <li>
-                <div class="divider"></div>
+            </ul>
+            </div>
             </li>
-
             {% if user.is_superuser %}
-                <li>
-                    <a class="subheader grey lighten-3">Administration</a>
-                </li>
-                <li>
-                    <a href="/admin/">
-                        <i class="material-icons">dashboard</i> Django-Administration
-                    </a>
-                </li>
-                <li>
-                    <a href="/settings/">
-                        <i class="material-icons">settings</i> Einstellungen
-                    </a>
-                </li>
                 <li>
                     <div class="divider"></div>
                 </li>
-            {% endif %}
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">security</i>Administration</a>
+                    <div class="collapsible-body">
+                        <ul>
 
+                            <li>
+                                <a href="/admin/">
+                                    <i class="material-icons">dashboard</i> Django-Administration
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/settings/">
+                                    <i class="material-icons">settings</i> Einstellungen
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+            <li>
+                <div class="divider"></div>
+            </li>
             <li>
                 <a href="{% url 'logout' %}">
                     <i class="material-icons">exit_to_app</i> Abmelden
                 </a>
             </li>
+            </ul>
+            </li>
         {% else %}
 
-            <li>
+            <li id="login">
                 <a href="{% url 'login' %}">
                     <i class="material-icons">lock_open</i> Anmelden
                 </a>

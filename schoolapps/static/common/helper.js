@@ -52,7 +52,18 @@ function setTime(lesson_field) {
     }
 }
 
+function selectActiveLink() {
+    let currlocation = $('meta[name="active-loaction"]');
+    let url_name = currlocation.attr("content");
+    //console.log(url_name);
+
+    $("#"+url_name).addClass("active");
+    $("#"+url_name).parent().parent().parent().addClass("active");
+}
+
 $(document).ready(function () {
+    selectActiveLink();
+
     $("dmc-datetime input").addClass("datepicker");
     $("[data-form-control='date']").addClass("datepicker");
     $("[data-form-control='time']").addClass("timepicker");

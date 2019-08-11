@@ -1,5 +1,5 @@
 Hallo {{ notification.user.name }},
-wir haben eine neue Nachricht für Sie
+wir haben eine neue Nachricht für dich:
 
 
 {{ notification.description }}
@@ -10,4 +10,4 @@ wir haben eine neue Nachricht für Sie
 
 Von {{ notification.app }} am {{ notification.created_at }}
 
-Ihr SchoolApps-Team
+Dein SchoolApps-Team
