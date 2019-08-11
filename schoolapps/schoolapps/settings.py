@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
     '159.69.181.50',
     'localhost',
     '127.0.0.1',
-    'ce64cd13.ngrok.io'
+    '27c46adf.ngrok.io'
 ]
 
 INTERNAL_IPS = [
@@ -243,8 +243,11 @@ if DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# PWA
+# Templates
+TEMPLATES_URL = '/templates/'
+TEMPLATES_ROOT = os.path.join(BASE_DIR, 'templates')
 
+# PWA
 PWA_APP_NAME = 'SchoolApps'
 PWA_APP_DESCRIPTION = "Eine Sammlung an nützlichen Apps für den Schulalltag am Katharineum zu Lübeck"
 PWA_APP_THEME_COLOR = '#da1f3d'
@@ -267,8 +270,8 @@ PWA_APP_SPLASH_SCREEN = [
     }
 ]
 PWA_APP_DIR = 'ltr'
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/common', 'serviceworker.js')
 PWA_APP_LANG = 'de-DE'
 
 # DB
-
 DBSETTINGS_USE_CACHE = False
