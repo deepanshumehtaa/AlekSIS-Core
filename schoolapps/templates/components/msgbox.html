@@ -1,8 +1,10 @@
-<div class="alert {{ status }}">
-            <p>
-                {% if icon != "" %}
-                    <i class="material-icons left">{{ icon }}</i>
-                {% endif %}
-                {{ msg }}
-            </p>
-</div>
+{% if msg %}
+    <div class="alert {{ status }}">
+        <div>
+            {% if icon != "" %}
+                <i class="material-icons left">{{ icon }}</i>
+            {% endif %}
+            {{ msg }}
+        </div>
+    </div>
+{% endif %}
