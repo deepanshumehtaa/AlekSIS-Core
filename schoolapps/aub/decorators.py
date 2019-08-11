@@ -3,9 +3,11 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 
 from .models import Aub, Status
 
+
 # prevent to show aub details from foreign users
 def check_own_aub_verification(user):
     return Aub.objects.all().filter(created_by=user)
+
 
 def check_own_aub(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
     """

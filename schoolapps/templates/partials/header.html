@@ -212,11 +212,15 @@
                         </a>
                     </li>
                 {% endif %}
+                                {% if perms.debug.can_view_debug_log %}
+
                 <li>
                     <a href="{% url 'debug_logs' %}">
                         <i class="material-icons">error</i> Debuggingtool
                     </a>
                 </li>
+                                      {% endif %}
+
                         </ul>
                     </div>
 
