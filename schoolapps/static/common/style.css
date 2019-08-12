@@ -66,6 +66,10 @@ header a.sidenav-trigger {
     z-index: 2;
 }
 
+header div.nav-wrapper{
+    z-index: -5;
+}
+
 header, main, footer {
     margin-left: 300px;
 }
