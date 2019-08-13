@@ -331,6 +331,10 @@ def get_substitutions_by_date_as_dict(date):
     for i, sub_raw in enumerate(subs_raw):
         if sub_raw.lesson_id not in subs.keys():
             subs[sub_raw.lesson_id] = []
-        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
+        sub_row = None
+        for sub_item in sub_table:
+            if sub_item.sub.id == sub_raw.id:
+                sub_row = sub_item
+        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_row})
 
     return subs
