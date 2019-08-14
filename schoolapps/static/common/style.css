@@ -66,8 +66,49 @@ header a.sidenav-trigger {
     z-index: 2;
 }
 
+header div.nav-wrapper{
+    z-index: -5;
+}
+
 header, main, footer {
     margin-left: 300px;
+}
+
+
+.footer-icon {
+    font-size: 22px !important;
+    vertical-align: middle;
+}
+
+
+
+@media only screen and (min-width: 1384px) {
+    .footer-row-large {
+        display: flex;
+        align-items: center;
+    }
+    .footer-row-small {
+        display: none;
+    }
+}
+@media only screen and (max-width: 1383px) {
+    .footer-row-large {
+    display: none;
+}
+    .footer-row-small {
+        display: block;
+    }
+}
+
+ul.footer-ul {
+    display: inline-block;
+    text-align: right;
+    float: right;
+}
+
+.make-it-higher {
+    vertical-align: middle;
+    line-height: 36px;
 }
 
 @media only screen and (max-width: 992px) {
@@ -118,10 +159,12 @@ span.badge .material-icons {
 .smart-plan-badge {
     margin: 5px 20px 5px 0;
 }
-li.active > a > .sidenav-badge{
+
+li.active > a > .sidenav-badge {
     background-color: whitesmoke !important;
     color: #DA3D56 !important;
 }
+
 .timetable-plan .row, .timetable-plan .col {
     display: flex;
     padding: 0 .25rem;
@@ -232,19 +275,33 @@ table.substitutions td, table.substitutions th {
 .btn-timetable-quicklaunch {
     margin: 1%;
     width: 30%;
-    background-color: rgba(0,0,0,0.05) !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
     color: black;
 }
-.btn-timetable-quicklaunch:hover{
+
+.btn-timetable-quicklaunch:hover {
     background-color: #da1f3d !important;
     color: whitesmoke;
 }
+
 .no-margin {
     margin: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+}
+
+.valign-middle {
+    vertical-align: middle;
+}
+
+.valign-top {
+    vertical-align: top;
+}
+
+.valign-bot {
+    vertical-align: bottom;
+}
+
+.height-inherit {
+    height: 100%;
 }
 
 /* Table*/
@@ -258,6 +315,10 @@ table.striped > tbody > tr:nth-child(odd) {
 /*+++++++*/
 #print-header {
     display: none;
+}
+
+.print-icon {
+    margin-top: 1.52rem;
 }
 
 @media print {
@@ -450,29 +511,32 @@ i.collapsible-trigger {
     background-color: rgba(218, 31, 61, 0.65);
 }
 
-.no-margin{
+.no-margin {
     margin: 0 !important;
 }
 
-.no-pad-left{
+.no-pad-left {
     padding-left: 0 !important;
 }
 
-.no-pad-right{
+.no-pad-right {
     padding-right: 0 !important;
 }
 
-.sidenav a:not(.collapsible-header){
+.sidenav a:not(.collapsible-header) {
     padding: 0 16px;
 }
-  .waves-effect.waves-primary .waves-ripple {
-   /* The alpha value allows the text and background color
-   of the button to still show through. */
+
+.waves-effect.waves-primary .waves-ripple {
+    /* The alpha value allows the text and background color
+    of the button to still show through. */
     background-color: #da1f3d;
-  }
-.sidenav .collapsible-body > ul:not(.collapsible) > li.active a > i, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active a > i{
+}
+
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active a > i, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active a > i {
     color: #fff;
 }
+
 .sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
     background-color: #DA3D56;
 }
