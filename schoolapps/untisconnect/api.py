@@ -290,8 +290,8 @@ class Absence(object):
 
     def create(self, db_obj):
         self.filled = True
-        print(db_obj.ida)
-        print(db_obj.typea)
+        # print(db_obj.ida)
+        # print(db_obj.typea)
         if db_obj.typea == 101:
             self.type = TYPE_TEACHER
         elif db_obj.typea == 100:
@@ -300,7 +300,7 @@ class Absence(object):
             self.type = TYPE_ROOM
 
         if self.type == TYPE_TEACHER:
-            print("IDA", db_obj.ida)
+            # print("IDA", db_obj.ida)
             self.teacher = get_teacher_by_id(db_obj.ida)
         else:
             self.room = get_room_by_id(db_obj.ida)
