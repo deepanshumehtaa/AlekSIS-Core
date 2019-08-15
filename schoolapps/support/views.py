@@ -32,10 +32,12 @@ def rebus(request):
                 "c": c,
                 "short_desc": short_description,
                 "long_desc": long_description,
-                "user": request.user.username
+                "user": request.user
             }
-            send_mail_with_template("Neue REBUS-Meldung", [mail_settings.mail_rebus], "support/mail/rebus.txt",
-                                    "support/mail/rebus.html", context)
+            send_mail_with_template("[REBUS] {}".format(short_description), [mail_settings.mail_rebus],
+                                    "support/mail/rebus.txt",
+                                    "support/mail/rebus.html", context,
+                                    "{} <{}>".format(request.user.get_full_name(), request.user.email))
 
             return render(request, 'support/rebus_submitted.html')
     else:
@@ -75,12 +77,13 @@ def feedback(request):
                 "more": more,
                 "apps": apps,
                 "ideas": ideas,
-                "user": request.user.username
+                "user": request.user
             }
-            send_mail_with_template("Neues Feedback von {}".format(request.user.username),
+            send_mail_with_template("Feedback von {}".format(request.user.username),
                                     [mail_settings.mail_feedback],
                                     "support/mail/feedback.txt",
-                                    "support/mail/feedback.html", context)
+                                    "support/mail/feedback.html", context,
+                                    "{} <{}>".format(request.user.get_full_name(), request.user.email))
 
             return render(request, 'support/feedback_submitted.html')
     else:

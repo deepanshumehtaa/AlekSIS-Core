@@ -1,8 +1,6 @@
 {% include "mail/header.html" %}
 
 <main>
-    <p>Hallo SchoolApps-Team,</p>
-    <p>es gibt neues Feedback:</p>
     <blockquote>
         Bewertungen: {{ design }}/5 (Design), {{ performance }}/5 (Geschwindigkeit), {{ usability }}/5
         (Benutzerfreundlichkeit)
@@ -15,7 +13,8 @@
 
         Sonstiges: {{ more }}
 
-        <p>Übermittelt von {{ user }}</p>
+        <p>Übermittelt von {{ user.get_full_name }} ({{ user.username }})</p>
     </blockquote>
 
+    <em>Dieses Feedback wurde über SchoolApps übermittelt.</em>
 </main>
