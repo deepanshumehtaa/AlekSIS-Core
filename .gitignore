@@ -50,3 +50,6 @@ DEADJOE
 
 # Database
 db.sqlite3
+
+# Sphinx
+docs/_build/
