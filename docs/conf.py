@@ -12,11 +12,13 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import django
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'biscuit.core.settings'
-os.environ['LOCAL_SETTINGS_FILE'] =  os.path.abspath(os.path.join('..', 'local.cfg'))
+os.environ['LOCAL_SETTINGS_FILE'] = os.path.abspath(
+    os.path.join('..', 'local.cfg'))
 django.setup()
 
 # -- Project information -----------------------------------------------------
@@ -41,7 +43,6 @@ release = '1.0dev0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'recommonmark',
     'sphinx.ext.autodoc',
     'sphinxcontrib_django',
     'sphinx_autodoc_typehints',
@@ -56,7 +57,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ['.rst', '.md']
+source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
