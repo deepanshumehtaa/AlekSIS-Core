@@ -1,6 +1,11 @@
 [tool.poetry]
 name = "BiscuIT-ng"
 version = "1.0dev0"
+packages = [
+    { include = "biscuit" }
+]
+readme = "README.md"
+
 description = "BiscuIT School Information System (SIS) - Next Generation Platform"
 authors = ["BiscuIT Team <biscuit-dev@lists.teckids.org>"]
 license = "MIT"
@@ -12,12 +17,6 @@ classifiers = [
     "Environment :: Web Environment",
     "Intended Audience :: Education",
     "Topic :: Education"
-]
-include = [
-    "LICENSE",
-    "biscuit/core/static/"
-    "biscuit/core/templates/",
-    "biscuit/core/migrations/"
 ]
 
 [tool.poetry.dependencies]
