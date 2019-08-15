@@ -9,7 +9,6 @@ readme = "README.md"
 description = "BiscuIT School Information System (SIS) - Next Generation Platform"
 authors = ["BiscuIT Team <biscuit-dev@lists.teckids.org>"]
 license = "MIT"
-readme = "README.md"
 homepage = "https://biscuit.edugit.org/"
 repository = "https://edugit.org/Teckids/BiscuIT/BiscuIT-ng"
 documentation = "https://biscuit.edugit.org/docs/"
