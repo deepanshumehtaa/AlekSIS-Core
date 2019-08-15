@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-02 23:34+0200\n"
+"POT-Creation-Date: 2019-08-10 14:44+0200\n"
 "PO-Revision-Date: 2019-08-03 22:11+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
@@ -32,7 +32,8 @@ msgstr "Name"
 
 #: biscuit/core/models.py:13
 msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
+msgstr ""
+"Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
 #: biscuit/core/models.py:21
 msgid "female"
