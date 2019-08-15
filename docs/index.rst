@@ -10,6 +10,7 @@ Welcome to BiscuIT's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   dev/setup
 
 
 Indices and tables
