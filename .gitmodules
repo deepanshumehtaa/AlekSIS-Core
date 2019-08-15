@@ -1,0 +1,3 @@
+[submodule "apps/official/BiscuIT-App-Exlibris"]
+	path = apps/official/BiscuIT-App-Exlibris
+	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-Exlibris
