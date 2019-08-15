@@ -8,6 +8,12 @@ from .mixins import SchoolRelated
 
 
 class School(models.Model):
+    """A school that will have many other objects linked to it.
+    BiscuIT has multi-tenant support by linking all objects to a school,
+    and limiting all features to objects related to the same school as the
+    currently logged-in user.
+    """
+
     name = models.CharField(verbose_name=_('Name'), max_length=30)
     name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
         'Official name of the school, e.g. as given by supervisory authority'))
@@ -73,6 +79,10 @@ class Person(SchoolRelated):
 
 
 class Group(SchoolRelated):
+    """Any kind of group of persons in a school, including, but not limited
+    classes, clubs, and the like.
+    """
+
     class Meta:
         unique_together = [['school', 'name'], ['school', 'short_name']]
 
