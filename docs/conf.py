@@ -41,6 +41,7 @@ release = '1.0dev0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'recommonmark',
     'sphinx.ext.autodoc',
     'sphinxcontrib_django',
     'sphinx_autodoc_typehints',
