@@ -5,3 +5,4 @@ API and models reference
    :glob:
 
    core/*
+   ../../apps/official/BiscuIT-App-Exlibris/docs/ref/*
