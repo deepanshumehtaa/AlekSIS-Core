@@ -4,6 +4,21 @@ version = "1.0dev0"
 description = "BiscuIT School Information System (SIS) - Next Generation Platform"
 authors = ["BiscuIT Team <biscuit-dev@lists.teckids.org>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://biscuit.edugit.org/"
+repository = "https://edugit.org/Teckids/BiscuIT/BiscuIT-ng"
+documentation = "https://biscuit.edugit.org/docs/"
+classifiers = [
+    "Environment :: Web Environment",
+    "Intended Audience :: Education",
+    "Topic :: Education"
+]
+include = [
+    "LICENSE",
+    "biscuit/core/static/"
+    "biscuit/core/templates/",
+    "biscuit/core/migrations/"
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
