@@ -11,7 +11,7 @@ authors = ["BiscuIT Team <biscuit-dev@lists.teckids.org>"]
 license = "MIT"
 homepage = "https://biscuit.edugit.org/"
 repository = "https://edugit.org/Teckids/BiscuIT/BiscuIT-ng"
-documentation = "https://biscuit.edugit.org/docs/"
+documentation = "https://biscuit.edugit.org/docs/html/"
 classifiers = [
     "Environment :: Web Environment",
     "Intended Audience :: Education",
