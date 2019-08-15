@@ -11,6 +11,7 @@ Welcome to BiscuIT's documentation!
    :caption: Contents:
 
    dev/00_index
+   ref/00_index
 
 
 Indices and tables

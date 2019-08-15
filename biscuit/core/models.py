@@ -14,6 +14,10 @@ class School(models.Model):
 
 
 class Person(SchoolRelated):
+    """ A model describing any person related to a school, including, but not
+    limited to, students, teachers and guardians (parents).
+    """
+
     class Meta:
         unique_together = [['school', 'short_name'], ['school', 'import_ref']]
 
