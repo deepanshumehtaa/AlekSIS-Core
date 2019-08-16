@@ -84,4 +84,4 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# handler404 = 'dashboard.views.error_404'
+handler404 = 'dashboard.views.error_404'
