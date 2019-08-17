@@ -82,7 +82,7 @@ $(document).ready(function () {
 
             // Buttons
             today: 'Heute',
-            clear: 'Löschen',
+            cancel: 'Abbrechen',
             done: 'OK',
         },
 
@@ -95,9 +95,11 @@ $(document).ready(function () {
     $('.timepicker').timepicker({
         twelveHour: false,
         autoClose: true,
-        cancelText: 'Abbrechen',
-        clearText: 'Löschen',
-        doneText: 'OK'
+        i18n: {
+            cancel: 'Abbrechen',
+            clear: 'Löschen',
+            done: 'OK'
+        },
     });
 
     // Initialize tooltip [MAT]
