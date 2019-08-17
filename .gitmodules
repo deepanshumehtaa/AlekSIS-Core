@@ -2,3 +2,15 @@
 	path = apps/official/BiscuIT-App-Exlibris
 	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-Exlibris
 	ignore = untracked
+[submodule "apps/official/BiscuIT-App-Chronos"]
+	path = apps/official/BiscuIT-App-Chronos
+	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-Chronos
+	ignore = untracked
+[submodule "apps/official/BiscuIT-App-Untis"]
+	path = apps/official/BiscuIT-App-Untis
+	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-Untis
+	ignore = untracked
+[submodule "apps/official/BiscuIT-App-SchILD-NRW"]
+	path = apps/official/BiscuIT-App-SchILD-NRW
+	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-SchILD-NRW
+	ignore = untracked
