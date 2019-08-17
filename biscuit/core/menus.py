@@ -1,16 +1,19 @@
-from django.urls import reverse
-from django.utils.translation import gettext as _
-
-from menu import Menu, MenuItem
-
-Menu.add_item('main', MenuItem('Login',
-                               reverse('login'),
-                               check=lambda request: request.user.is_anonymous))
-
-Menu.add_item('main', MenuItem('Logout',
-                               reverse('logout'),
-                               check=lambda request: request.user.is_authenticated))
-
-Menu.add_item('main', MenuItem(_('Persons'),
-                               reverse('persons'),
-                               check=lambda request: request.user.is_authenticated))
+MENUS = {
+    'NAV_MENU_CORE': [
+        {
+            'name': 'Login',
+            'url': 'login',
+            'validators': ['menu_generator.validators.is_anonymous']
+        },
+        {
+            'name': 'Logout',
+            'url': 'logout',
+            'validators': ['menu_generator.validators.is_authenticated']
+        },
+        {
+            'name': 'Persons',
+            'url': 'persons',
+            'validators': ['menu_generator.validators.is_authenticated']
+        }
+    ]
+}

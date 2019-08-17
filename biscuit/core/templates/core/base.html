@@ -1,6 +1,6 @@
 {# -*- engine:django -*- #}
 {% extends "bootstrap4/bootstrap4.html" %}
-{% load bootstrap4 menu staticfiles font_awesome any_js %}
+{% load bootstrap4 menu_generator staticfiles font_awesome any_js %}
 
 {% block bootstrap4_title %}BiscuIT School Information System{% endblock %}
 
@@ -28,9 +28,22 @@
    </div>
 
    <div class="collapse navbar-collapse" id="navbar-main">
-    {% generate_menu %}
+    {% get_menu "NAV_MENU_CORE" as core_menu %}
     <ul class="nav navbar-nav ml-auto">
-     {% with menu=menus.main %}{% include "bootstrap4-navbar.html" %}{% endwith %}
+     {% for item in core_menu %}
+      <li class="{% if item.selected %} active {% endif %} nav-item">
+       <a href="{{ item.url }}" class="nav-link"> <i class="{{ item.icon_class }}"></i> {{ item.name }}</a>
+      </li>
+      {% if item.submenu %}
+      <div class="dropdown-menu dropdown-menu-righy" aria-labelledby="navbarDropdown">>
+       {% for menu in item.submenu %}
+       <a class="dropdown-item" href="{{ menu.url }}">
+        {{ menu.name }}
+       </a>
+       {% endfor %}
+      </div>
+      {% endif %}
+     {% endfor %}
     </ul>
    </div>
   </div>
