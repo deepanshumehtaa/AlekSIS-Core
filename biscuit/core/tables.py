@@ -9,3 +9,10 @@ class PersonsTable(tables.Table):
 
     first_name = tables.LinkColumn('person_by_id', args=[A('id')])
     last_name = tables.LinkColumn('person_by_id', args=[A('id')])
+
+class GroupsTable(tables.Table):
+    class Meta:
+        attrs = {'class': 'table table-striped table-bordered table-hover table-responsive-xl'}
+
+    name = tables.LinkColumn('group_by_id', args=[A('id')])
+    short_name = tables.LinkColumn('group_by_id', args=[A('id')])

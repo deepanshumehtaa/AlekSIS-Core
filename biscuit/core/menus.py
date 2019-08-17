@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 MENUS = {
     'NAV_MENU_CORE': [
         {
@@ -13,6 +14,11 @@ MENUS = {
         {
             'name': 'Persons',
             'url': 'persons',
+            'validators': ['menu_generator.validators.is_authenticated']
+        },
+        {
+            'name': 'Groups',
+            'url': 'groups',
             'validators': ['menu_generator.validators.is_authenticated']
         }
     ]

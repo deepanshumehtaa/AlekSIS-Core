@@ -1,3 +1,8 @@
 img.person-img {
         max-height: 300px;
 }
+
+.dropdown:hover>.dropdown-menu {
+        display: block;
+        margin-top:0px;
+}
