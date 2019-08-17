@@ -30,7 +30,7 @@ documentation. Right now, we encourage using pip to install Poetry
 once system-wide (this will change once distributions pick up
 Poetry). On Debian, for example, this would be done with::
 
-  sudo apt install python3-pip
+  sudo apt install python3-pip python3-venv
   sudo pip3 install poetry
 
 You can use any other of the `Poetry installation methods`_.
