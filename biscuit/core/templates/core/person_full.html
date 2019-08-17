@@ -56,20 +56,9 @@
    {% endcomment %}
   </table>
 
-  {# Will be implemted soon #}
-  <table class="table table-responsive-xl table-border table-striped">
-   <tr>
-    <td>Member</td>
-     <td>
-      <h4>Groups</h4>
-      <ul>
-       <li><a href="#">Foo</a></li>
-       <li><a href="#">Foo</a></li>
-       <li><a href="#">Foo</a></li>
-       <li><a href="#">Foo</a></li>
-     </td>
-   </tr> 
-  </table>
+  <h3>Groups</h3>
+  {% render_table groups_table %}
+
  {% else %}
   <h2>{% blocktrans %}Person not found{% endblocktrans %}</h2>
 

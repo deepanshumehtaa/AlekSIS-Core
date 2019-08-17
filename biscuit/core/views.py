@@ -39,4 +39,12 @@ def person(request, id_, template):
 
     context['person'] = person
 
+    # Get groups where person is member of
+    groups = Group.objects.filter(members=id_)
+
+    # Build table
+    groups_table = GroupsTable(groups)
+    RequestConfig(request).configure(groups_table)
+    context['groups_table'] = groups_table
+
     return render(request, 'core/person_%s.html' % template, context)
