@@ -5,6 +5,11 @@ $(document).ready( function () {
         });
     });
 
+    $('*:not(a, span)[data-poload]').each(function() {
+        $(this).find('a, span').attr('data-poload', $(this).attr('data-poload'));
+        $(this).removeAttr('data-poload');
+    });
+
     $('*[data-poload]').popover({
         html: true,
 	animation: true,
