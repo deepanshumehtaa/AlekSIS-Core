@@ -44,7 +44,7 @@ class Person(SchoolRelated):
         'Additional name(s)'), max_length=30, blank=True)
 
     short_name = models.CharField(verbose_name=_(
-        'Short name'), max_length=5, blank=True)
+        'Short name'), max_length=5, blank=True, null=True)
 
     street = models.CharField(verbose_name=_(
         'Street'), max_length=30, blank=True)
@@ -69,7 +69,7 @@ class Person(SchoolRelated):
     photo = models.ImageField(verbose_name=_('Photo'), blank=True, null=True)
 
     import_ref = models.CharField(verbose_name=_(
-        'Reference ID of import source'), max_length=64, blank=True, editable=False)
+        'Reference ID of import source'), max_length=64, blank=True, null=True, editable=False)
 
     guardians = models.ManyToManyField('self', verbose_name=_('Guardians / Parents'),
                                        symmetrical=False, related_name='children')
