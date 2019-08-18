@@ -9,15 +9,17 @@
        </li>
       {% endif %}
       {% if item.submenu %}
-       <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-expanded="false" role="button" aria-haspopup="true" href="#">
-        {{ item.name }}
-       </a>
-       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        {% for menu in item.submenu %}
-        <a class="dropdown-item" href="{{ menu.url }}">
-         {{ menu.name }}
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-expanded="false" role="button" aria-haspopup="true" href="#">
+         {{ item.name }}
         </a>
-        {% endfor %}
-       </div>
+        {% for menu in item.submenu %}
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+         <a class="dropdown-item" href="{{ menu.url }}">
+          {{ menu.name }}
+         </a>
+        </div>
+       {% endfor %}
+       </li>
       {% endif %}
      {% endfor %}
