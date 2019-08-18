@@ -1,23 +1,23 @@
 {# -*- engine:django -*- #}
-{% for item in menu %}
-    {% if item.visible %}
-        {% if item.separator %}
-            <li class="divider-vertical"></li>
-        {% endif %}
-
-        <li class="nav-item {% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}" id="top-menu-{{ item.slug }}">
-            <a href="{{ item.url }}" {% if not item.children %}class=nav-link {% endif%} {% if item.children %} class="nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"{% endif %}>
-                {% if item.icon %}
-                    <i class="icon-{{ item.icon }} icon-white"></i>&nbsp;
-                {% endif %}
-                <span>{{ item.title }}</span>
-                {% if item.children %}
-                    &nbsp;<b class="caret"></b>
-                {% endif %}
-            </a>
-            {% if item.children %}
-                {% include 'bootstrap4-navbar-submenu.html' with items=item.children %}
-            {% endif %}
-        </li>
-    {% endif %}
-{% endfor %}
+{% load menu_generator %}
+    {% get_menu "NAV_MENU_CORE" as core_menu %}
+    <ul class="nav navbar-nav ml-auto">
+     {% for item in core_menu %}
+      {% if not item.submenu %}
+       <li class="{% if item.selected %} active {% endif %} nav-item">
+        <a href="{{ item.url }}" class="nav-link"> <i class="{{ item.icon_class }}"></i> {{ item.name }}</a>
+       </li>
+      {% endif %}
+      {% if item.submenu %}
+       <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" aria-expanded="false" role="button" aria-haspopup="true" href="#">
+        {{ item.name }}
+       </a>
+       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        {% for menu in item.submenu %}
+        <a class="dropdown-item" href="{{ menu.url }}">
+         {{ menu.name }}
+        </a>
+        {% endfor %}
+       </div>
+      {% endif %}
+     {% endfor %}

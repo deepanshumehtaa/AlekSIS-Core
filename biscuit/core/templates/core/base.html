@@ -25,28 +25,12 @@
     <a class="navbar-brand" href="{% url "index" %}">
      <span class="glyphicon glyphicon-briefcase"></span> BiscuIT School Information System
     </a>
-   </div>
 
    <div class="collapse navbar-collapse" id="navbar-main">
-    {% get_menu "NAV_MENU_CORE" as core_menu %}
     <ul class="nav navbar-nav ml-auto">
-     {% for item in core_menu %}
-      <li class="{% if item.selected %} active {% endif %} nav-item">
-       <a href="{{ item.url }}" class="nav-link"> <i class="{{ item.icon_class }}"></i> {{ item.name }}</a>
-      </li>
-      {% if item.submenu %}
-      <div class="dropdown-menu dropdown-menu-righy" aria-labelledby="navbarDropdown">>
-       {% for menu in item.submenu %}
-       <a class="dropdown-item" href="{{ menu.url }}">
-        {{ menu.name }}
-       </a>
-       {% endfor %}
-      </div>
-      {% endif %}
-     {% endfor %}
+     {% with menu=NAV_MENU_CORE %}{% include "bootstrap4-navbar.html" %}{% endwith %}
     </ul>
    </div>
-  </div>
  </nav>
 
  <div class="container">
