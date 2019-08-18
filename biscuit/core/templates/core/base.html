@@ -1,6 +1,6 @@
 {# -*- engine:django -*- #}
 {% extends "bootstrap4/bootstrap4.html" %}
-{% load bootstrap4 menu staticfiles font_awesome any_js %}
+{% load bootstrap4 menu_generator staticfiles font_awesome any_js %}
 
 {% block bootstrap4_title %}BiscuIT School Information System{% endblock %}
 
@@ -25,15 +25,12 @@
     <a class="navbar-brand" href="{% url "index" %}">
      <span class="glyphicon glyphicon-briefcase"></span> BiscuIT School Information System
     </a>
-   </div>
 
    <div class="collapse navbar-collapse" id="navbar-main">
-    {% generate_menu %}
     <ul class="nav navbar-nav ml-auto">
-     {% with menu=menus.main %}{% include "bootstrap4-navbar.html" %}{% endwith %}
+     {% with menu=NAV_MENU_CORE %}{% include "bootstrap4-navbar.html" %}{% endwith %}
     </ul>
    </div>
-  </div>
  </nav>
 
  <div class="container">
