@@ -120,11 +120,16 @@
     <h3>Leider existiert diese Seite nicht. (Fehler 404)</h3>
 
     <p class="flow-text">
-        Beim Aufrufen dieser Seite ist ein Fehler aufgetreten. Vermutlich existiert sie nicht. Wenn Sie der Meinung
-        sind, dass diese Seiten eigentlich existieren müsste, wenden Sie sich bitte an den <a
-            href="mailto:support@katharineum.de">Support</a>.
+        Beim Aufrufen dieser Seite ist ein Fehler aufgetreten. Wahrscheinlich existiert die gewünschte Seite unter dem Pfad "<code id="url"></code>" nicht.
+
+        Solltest du der Meinung sein, dass diese Seite eigentlich existieren müsste, wende dich bitte an den
+        <a href="mailto:support@katharineum.de">Support</a>.
     </p>
 
 </main>
+
+<script>
+    document.getElementById("url").innerHTML = window.location.pathname;
+</script>
 
 {% include 'partials/footer.html' %}
