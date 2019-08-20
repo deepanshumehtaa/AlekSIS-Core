@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+{% load bootstrap4 i18n staticfiles %}
+
+{% block content %}
+ <h1>{% blocktrans %}Oops!{% endblocktrans %} [{{ error }}]</h1>
+ <div class="jumbotron">
+  <p>
+   {{ message }} <a href="mailto:{{ admins[1] }}">{{ admins[0] }}</a>.
+  </p>
+ </div>
+{% endblock %}

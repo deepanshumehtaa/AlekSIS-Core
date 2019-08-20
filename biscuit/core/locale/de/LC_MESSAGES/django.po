@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 00:10+0200\n"
-"PO-Revision-Date: 2019-08-19 00:11+0200\n"
+"POT-Creation-Date: 2019-08-21 01:06+0200\n"
+"PO-Revision-Date: 2019-08-21 01:06+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,116 +18,116 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.3\n"
 
-#: biscuit/core/migrations/0007_school.py:11
+#: migrations/0007_school.py:11
 msgid "Default school"
 msgstr "Standardschule"
 
-#: biscuit/core/models.py:17
+#: models.py:17
 msgid "Name"
 msgstr "Name"
 
-#: biscuit/core/models.py:19
+#: models.py:19
 msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
+msgstr ""
+"Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: biscuit/core/models.py:31
+#: models.py:31
 msgid "female"
 msgstr "weiblich"
 
-#: biscuit/core/models.py:32
+#: models.py:32
 msgid "male"
 msgstr "männlich"
 
-#: biscuit/core/models.py:39
+#: models.py:39
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: biscuit/core/models.py:41
+#: models.py:41
 msgid "First name"
 msgstr "Vorname"
 
-#: biscuit/core/models.py:42
+#: models.py:42
 msgid "Last name"
 msgstr "Nachname"
 
-#: biscuit/core/models.py:44
+#: models.py:44
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: biscuit/core/models.py:47
+#: models.py:47
 msgid "Short name"
 msgstr "Kurzname"
 
-#: biscuit/core/models.py:50
+#: models.py:50
 msgid "Street"
 msgstr "Straße"
 
-#: biscuit/core/models.py:52
+#: models.py:52
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: biscuit/core/models.py:54
+#: models.py:54
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: biscuit/core/models.py:56
+#: models.py:56
 msgid "Place"
 msgstr "Ort"
 
-#: biscuit/core/models.py:58
+#: models.py:58
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: biscuit/core/models.py:60
+#: models.py:60
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: biscuit/core/models.py:62
+#: models.py:62
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: biscuit/core/models.py:65
+#: models.py:65
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: biscuit/core/models.py:67
+#: models.py:67
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: biscuit/core/models.py:69
+#: models.py:69
 msgid "Photo"
 msgstr "Foto"
 
-#: biscuit/core/models.py:72
+#: models.py:72
 msgid "Reference ID of import source"
 msgstr "Referenz-ID der Import-Quelle"
 
-#: biscuit/core/models.py:74
+#: models.py:74
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: biscuit/core/models.py:90
+#: models.py:90
 msgid "Long name of group"
 msgstr "Langer Name der Gruppe"
 
-#: biscuit/core/models.py:92
+#: models.py:92
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
-#: biscuit/core/templates/core/group_full.html:10
+#: templates/core/group_full.html:10
 msgid "Edit group"
 msgstr "Gruppe editiern"
 
-#: biscuit/core/templates/core/group_full.html:13
+#: templates/core/group_full.html:13
 msgid "Details"
 msgstr "Details"
 
-#: biscuit/core/templates/core/group_full.html:26
-#: biscuit/core/templates/core/person_full.html:64
+#: templates/core/group_full.html:26 templates/core/person_full.html:64
 msgid "Person not found"
 msgstr "Person nicht gefunden"
 
-#: biscuit/core/templates/core/group_full.html:29
+#: templates/core/group_full.html:29
 msgid ""
 "\n"
 "    There is no group with this id.\n"
@@ -137,23 +137,23 @@ msgstr ""
 "    Es existiert keine Gruppe mit dieser ID.\n"
 "   "
 
-#: biscuit/core/templates/core/groups.html:5
+#: templates/core/groups.html:5
 msgid "Groups"
 msgstr "Gruppen"
 
-#: biscuit/core/templates/core/groups.html:9
+#: templates/core/groups.html:9
 msgid "List of all groups"
 msgstr "Liste aller Gruppen"
 
-#: biscuit/core/templates/core/person_full.html:10
+#: templates/core/person_full.html:10
 msgid "Edit person"
 msgstr "Person editiern"
 
-#: biscuit/core/templates/core/person_full.html:13
+#: templates/core/person_full.html:13
 msgid "Contact details"
 msgstr "Kontaktdetails"
 
-#: biscuit/core/templates/core/person_full.html:67
+#: templates/core/person_full.html:67
 msgid ""
 "\n"
 "    There is no person with this id.\n"
@@ -163,13 +163,50 @@ msgstr ""
 "    Es existiert keine Person mit dieser ID.\n"
 "   "
 
-#: biscuit/core/templates/core/persons.html:5
+#: templates/core/persons.html:5
 msgid "Persons"
 msgstr "Personen"
 
-#: biscuit/core/templates/core/persons.html:9
+#: templates/core/persons.html:9
 msgid "List of all persons"
 msgstr "Liste aller Personen"
+
+#: templates/error.html:5
+msgid "Oops!"
+msgstr "Ups!"
+
+#: views.py:23
+msgid ""
+"This page does not exist. If you were redirected by a link on an external "
+"page, it would be possible that the link was wrong. But it you were "
+"redirected to this page by a link on this site, please contact"
+msgstr ""
+"Diese Seite existiert leider nicht. Sollten Sie durch einen Link von einer "
+"externen Seite hierher gelangt sein, kann es sein, dass dieser falsch ist. "
+"Sollten Sie jedoch durch einen Link auf dieser Seite hierher gelangt sein, "
+"kontaktieren Sie bitte umgehend"
+
+#: views.py:38
+msgid ""
+"An unexpected error has occurred. This is probably due a bug in BiscuIT. "
+"Please contact"
+msgstr ""
+"Ein unerwarteter Fehler ist aufgetreten. Das liegt vermutlich an einem Bug "
+"in BiscuIT. Bitte kontaktieren Sie"
+
+#~ msgid ""
+#~ "\n"
+#~ "   Something went wrong. Please contact <a href=\"mailto:"
+#~ "schulsupport@teckids.org\">schulsupport@teckids.org</a>.\n"
+#~ "   "
+#~ msgstr ""
+#~ "\n"
+#~ "   Etwas ist schiefgelaufen. Bitte kontaktieren Sie <a href=\"mailto:"
+#~ "schulsupport@teckids.org\">schulsupport@teckids.org</a>.\n"
+#~ "   "
+
+#~ msgid "Oops! [%(error)s]"
+#~ msgstr "Ups! [%(error)s]"
 
 #~ msgid "Interfaces"
 #~ msgstr "Schnittstellen"
