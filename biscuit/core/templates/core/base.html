@@ -19,7 +19,8 @@
 {% endblock %}
 
 {% block bootstrap4_content %}
- <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+ <header>
+ <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-main">
      {% fa 'fa-align-justify' %}
     </button>
@@ -33,12 +34,28 @@
     </ul>
    </div>
  </nav>
+ </header>
 
- <div class="container">
+ <main role="main" class="container">
   {% bootstrap_messages %}
 
   <h1>{% block page_title %}{% endblock %}</h1>
 
   {% block content %}{% endblock %}
- </div>
+ </main>
+
+ <footer class="footer text-dark bg-light">
+  <div class="container">
+   <p class="text-muted text-center">
+    <a href="https://biscuit.edugit.org/">
+     BiscuIT - The Free School Information System
+    </a>
+    &middot;
+    &copy; The BiscuIT Team @
+    <a href="https://www.teckids.org/">
+     Teckids e.V.
+    </a>
+   </p>
+  </div>
+ </footer>
 {% endblock %}
