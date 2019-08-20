@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_global_request',
+    'sass_processor',
     'easyaudit',
     'bootstrap4',
     'fa',
@@ -37,6 +38,20 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += get_app_packages()
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder'
+]
+
+SASS_PROCESSOR_AUTO_INCLUDE = False 
+SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
+    'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
+}
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    LocalSetting(default='/usr/share/sass/bootstrap')
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,6 +165,14 @@ ANY_JS = {
     }
 }
 
+COLOUR_PRIMARY = LocalSetting(default='#007bff')
+COLOUR_SECONDARY = LocalSetting(default='#6c757d')
+COLOUR_SUCCESS = LocalSetting(default='#28a745')
+COLOUR_INFO = LocalSetting(default='#17a2b8')
+COLOUR_WARNING = LocalSetting(default='#ffc107')
+COLOUR_DANGER = LocalSetting(default='#dc3545')
+COLOUR_LIGHT = LocalSetting(default='#f8f9fa')
+COLOUR_DARK = LocalSetting(default='#343a40')
 
 _settings = load_and_check_settings(globals())
 globals().update(_settings)

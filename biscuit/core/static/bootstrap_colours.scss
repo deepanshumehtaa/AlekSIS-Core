@@ -1,0 +1,12 @@
+$theme-colors: (
+    "primary":    get-colour(get-setting(COLOUR_PRIMARY)),
+    "secondary":  get-colour(get-setting(COLOUR_SECONDARY)),
+    "success":    get-colour(get-setting(COLOUR_SUCCESS)),
+    "info":       get-colour(get-setting(COLOUR_INFO)),
+    "warning":    get-colour(get-setting(COLOUR_WARNING)),
+    "danger":     get-colour(get-setting(COLOUR_DANGER)),
+    "light":      get-colour(get-setting(COLOUR_LIGHT)),
+    "dark":       get-colour(get-setting(COLOUR_DARK)),
+);
+
+@import "bootstrap";
