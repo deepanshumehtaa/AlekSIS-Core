@@ -29,7 +29,7 @@ SECRET_KEY = _settings.get('secret_key', 'DoNotUseInProduction')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = _settings.get('debug', False)
 
-ALLOWED_HOSTS = _settings.get('http_hosts', [])
+ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
 
 # Application definition
 INSTALLED_APPS = [
