@@ -34,11 +34,11 @@
    </div>
  </nav>
 
- <div class="container">
+ <main role="main" class="container">
   {% bootstrap_messages %}
 
   <h1>{% block page_title %}{% endblock %}</h1>
 
   {% block content %}{% endblock %}
- </div>
+ </main>
 {% endblock %}
