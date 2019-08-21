@@ -4,7 +4,7 @@ from .util.core_helpers import get_current_school
 
 
 class SchoolRelatedManager(models.Manager):
-    def get_queryset(self):
+    def get_queryset(self) -> models.query.QuerySet:
         qs = super().get_queryset()
         school = get_current_school()
 

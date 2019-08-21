@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
@@ -8,12 +8,13 @@ from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/index.html', context)
 
-def error_handler(status):
-    def real_handler(request, *args, **kwargs):
+
+def error_handler(status: int) -> Callable[..., HttpResponse]:
+    def real_handler(request: HttpRequest, *args, **kwargs) -> HttpResponse:
         context = {}
 
         context['status'] = status
@@ -29,8 +30,9 @@ def error_handler(status):
 
     return real_handler
 
+
 @login_required
-def persons(request):
+def persons(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all persons
@@ -45,7 +47,7 @@ def persons(request):
 
 
 @login_required
-def person(request, id_, template):
+def person(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     context = {}
 
     # Get person and check access
@@ -67,8 +69,9 @@ def person(request, id_, template):
 
     return render(request, 'core/person_%s.html' % template, context)
 
+
 @login_required
-def group(request, id_, template):
+def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     context = {}
 
     # Get group and check if it exist
@@ -93,8 +96,9 @@ def group(request, id_, template):
 
     return render(request, 'core/group_%s.html' % template, context)
 
+
 @login_required
-def groups(request):
+def groups(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all groups
