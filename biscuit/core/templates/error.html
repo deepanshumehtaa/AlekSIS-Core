@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% load bootstrap4 i18n staticfiles %}
+
+{% block content %}
+ <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+   <h1>{{ status }} - {{ caption }}</h1>
+   <p class="lead">
+    {{ message }}
+   </p>
+   <hr />
+   <p>
+    {% blocktrans %}
+     If you think this is an error in BiscuIT, please contact one of your
+     site administrators:
+    {% endblocktrans %}
+   </p>
+   <ul>
+    {% for admin in admins %}
+     <li>
+      {{ admin.0 }}
+      &lt;
+      <a href="mailto:{{ admin.1 }}">
+       {{ admin.1 }}
+      </a>
+      &gt;
+     </li>
+    {% endfor %}
+   </ul>
+  </div>
+ </div>
+{% endblock %}

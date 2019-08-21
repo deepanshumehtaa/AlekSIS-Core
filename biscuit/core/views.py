@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.http import Http404
 from django.shortcuts import render
 from django_tables2 import RequestConfig
+from django.utils.translation import ugettext_lazy as _
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 
@@ -10,6 +12,22 @@ def index(request):
     context = {}
     return render(request, 'core/index.html', context)
 
+def error_handler(status):
+    def real_handler(request, *args, **kwargs):
+        context = {}
+
+        context['status'] = status
+        context['caption'] = _('Page not found')
+        context['admins'] = settings.ADMINS
+
+        if status == 404:
+            context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
+        elif status == 500:
+            context['message'] = _('An unexpected error has occurred.')
+
+        return render(request, 'error.html', context, status=status)
+
+    return real_handler
 
 @login_required
 def persons(request):

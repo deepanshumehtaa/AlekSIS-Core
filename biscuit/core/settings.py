@@ -192,4 +192,6 @@ COLOUR_DANGER = _settings.get('theme.colours.danger', '#dc3545')
 COLOUR_LIGHT = _settings.get('theme.colours.light', '#f8f9fa')
 COLOUR_DARK = _settings.get('theme.colours.dark', '#343a40')
 
+ADMINS = _settings.get('admins', [('John Doe', 'mail@example.com')])
+
 _settings.populate_obj(sys.modules[__name__])

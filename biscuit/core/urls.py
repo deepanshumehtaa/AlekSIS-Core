@@ -21,6 +21,10 @@ urlpatterns = [
     path('', views.index, name='index'),
 ]
 
+# Custom error pages
+handler404 = views.error_handler(404)
+handler500 = views.error_handler(500)
+
 # Serve javascript-common if in development
 if settings.DEBUG:
     urlpatterns += static('/javascript/',
