@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 19:55+0200\n"
-"PO-Revision-Date: 2019-08-21 19:56+0200\n"
+"POT-Creation-Date: 2019-08-21 22:42+0200\n"
+"PO-Revision-Date: 2019-08-21 22:44+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -183,28 +183,32 @@ msgstr "Personen"
 msgid "List of all persons"
 msgstr "Liste aller Personen"
 
-#: templates/error.html:5
-msgid "Oops!"
-msgstr "Ups!"
+#: templates/error.html:13
+msgid ""
+"\n"
+"     If you think this is an error in BiscuIT, please contact one of your\n"
+"     site administrators:\n"
+"    "
+msgstr ""
+"\n"
+"     Wenn Sie der Meinung sind, dass es sich um einen Fehler in BiscuIT "
+"handelt, kontaktieren Sie bitte einen Ihrer\n"
+"     Systemadministratoren:\n"
+"    "
 
-#: views.py:23
+#: views.py:20
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
+
+#: views.py:24
 msgid ""
 "This page does not exist. If you were redirected by a link on an external "
-"page, it would be possible that the link was wrong. But it you were "
-"redirected to this page by a link on this site, please contact"
+"page, it is possible that that link was outdated."
 msgstr ""
-"Diese Seite existiert leider nicht. Sollten Sie durch einen Link von "
-"einer externen Seite hierher gelangt sein, kann es sein, dass dieser "
-"falsch ist. Sollten Sie jedoch durch einen Link auf dieser Seite hierher "
-"gelangt sein, kontaktieren Sie bitte umgehend"
+"Diese Seite existiert leider nicht. Wenn Sie über einen Link auf einer "
+"externen Seite hierher gelangt sind, ist es möglich, dass dieser veraltet "
+"war."
 
-#: views.py:38
-msgid ""
-"An unexpected error has occurred. This is probably due a bug in BiscuIT. "
-"Please contact"
-msgstr ""
-"Ein unerwarteter Fehler ist aufgetreten. Das liegt vermutlich an einem "
-"Bug in BiscuIT. Bitte kontaktieren Sie"
-
-#~ msgid "Interfaces"
-#~ msgstr "Schnittstellen"
+#: views.py:26
+msgid "An unexpected error has occurred."
+msgstr "Ein Fehler ist aufgetreten."
