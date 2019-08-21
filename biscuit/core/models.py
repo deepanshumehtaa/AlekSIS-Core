@@ -74,6 +74,8 @@ class Person(SchoolRelated):
     guardians = models.ManyToManyField('self', verbose_name=_('Guardians / Parents'),
                                        symmetrical=False, related_name='children')
 
+    primary_group = models.ForeignKey('Group', models.SET_NULL, null=True)
+
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)
 

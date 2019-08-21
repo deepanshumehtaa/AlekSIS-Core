@@ -14,3 +14,7 @@
 	path = apps/official/BiscuIT-App-SchILD-NRW
 	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-SchILD-NRW
 	ignore = untracked
+[submodule "apps/official/BiscuIT-App-Alsijil"]
+	path = apps/official/BiscuIT-App-Alsijil
+	url = https://edugit.org/Teckids/BiscuIT/BiscuIT-App-Alsijil
+	ignore = untracked
