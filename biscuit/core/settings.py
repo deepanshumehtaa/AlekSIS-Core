@@ -152,8 +152,8 @@ MEDIA_URL = _settings.get('media.url', '/media/')
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
-STATIC_ROOT = _settings.get('static.root')
-MEDIA_ROOT = _settings.get('media.root')
+STATIC_ROOT = _settings.get('static.root', os.path.join(BASE_DIR, 'static'))
+MEDIA_ROOT = _settings.get('media.root', os.path.join(BASE_DIR, 'media'))
 
 FONT_AWESOME = {'url': _settings.get(
     'bootstrap.fa_url', '/javascript/font-awesome/css/font-awesome.min.css')}
