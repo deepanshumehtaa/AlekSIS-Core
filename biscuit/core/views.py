@@ -12,36 +12,22 @@ def index(request):
     context = {}
     return render(request, 'core/index.html', context)
 
+def error_handler(status):
+    def real_handler(request, *args, **kwargs):
+        context = {}
 
-def handler404(request, exception):
-    context = {}
+        context['status'] = status
+        context['caption'] = _('Page not found')
+        context['admins'] = settings.ADMINS
 
-    error = 404
-    context['error'] = error
+        if status == 404:
+            context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
+        elif status == 500:
+            context['message'] = _('An unexpected error has occurred.')
 
-    admins = settings.ADMINS
-    context['admins'] = admins
+        return render(request, 'error.html', context, status=status)
 
-    message = _('This page does not exist. If you were redirected by a link on an external page, it would be possible that the link was wrong. But it you were redirected to this page by a link on this site, please contact one of the following contacts.')
-    context['message'] = message
-
-    return render(request, 'error.html', context, status=404)
-
-
-def handler500(request):
-    context = {}
-
-    error = 500
-    context['error'] = error
-
-    admins = settings.ADMINS
-    context['admins'] = admins
-
-    message = _('An unexpected error has occurred. This is probably due a bug in BiscuIT. Please contact one of the following contacts.')
-    context['message'] = message
-
-    return render(request, 'error.html', context, status=500)
-
+    return real_handler
 
 @login_required
 def persons(request):
