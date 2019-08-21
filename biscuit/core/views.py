@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.http import Http404
 from django.shortcuts import render
 from django_tables2 import RequestConfig
+from django.utils.translation import ugettext_lazy as _
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 
@@ -20,7 +22,7 @@ def handler404(request, exception):
     admins = settings.ADMINS
     context['admins'] = admins
 
-    message = _('This page does not exist. If you were redirected by a link on an external page, it would be possible that the link was wrong. But it you were redirected to this page by a link on this site, please contact')
+    message = _('This page does not exist. If you were redirected by a link on an external page, it would be possible that the link was wrong. But it you were redirected to this page by a link on this site, please contact one of the following contacts.')
     context['message'] = message
 
     return render(request, 'error.html', context, status=404)
@@ -35,7 +37,7 @@ def handler500(request):
     admins = settings.ADMINS
     context['admins'] = admins
 
-    message = _('An unexpected error has occurred. This is probably due a bug in BiscuIT. Please contact')
+    message = _('An unexpected error has occurred. This is probably due a bug in BiscuIT. Please contact one of the following contacts.')
     context['message'] = message
 
     return render(request, 'error.html', context, status=500)
