@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 00:10+0200\n"
-"PO-Revision-Date: 2019-08-19 00:11+0200\n"
+"POT-Creation-Date: 2019-08-21 19:06+0200\n"
+"PO-Revision-Date: 2019-08-21 19:07+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.3\n"
+
+#: biscuit/core/apps.py:11
+msgid "BiscuIT - The Free School Information System"
+msgstr "BiscuIT - Das freie Schulinformationssystem"
 
 #: biscuit/core/migrations/0007_school.py:11
 msgid "Default school"
@@ -106,13 +110,21 @@ msgstr "Referenz-ID der Import-Quelle"
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: biscuit/core/models.py:90
+#: biscuit/core/models.py:92
 msgid "Long name of group"
 msgstr "Langer Name der Gruppe"
 
-#: biscuit/core/models.py:92
+#: biscuit/core/models.py:94
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
+
+#: biscuit/core/settings.py:140
+msgid "German"
+msgstr "Deutsch"
+
+#: biscuit/core/settings.py:141
+msgid "English"
+msgstr "Englisch"
 
 #: biscuit/core/templates/core/group_full.html:10
 msgid "Edit group"
@@ -123,7 +135,7 @@ msgid "Details"
 msgstr "Details"
 
 #: biscuit/core/templates/core/group_full.html:26
-#: biscuit/core/templates/core/person_full.html:64
+#: biscuit/core/templates/core/person_full.html:65
 msgid "Person not found"
 msgstr "Person nicht gefunden"
 
@@ -145,15 +157,15 @@ msgstr "Gruppen"
 msgid "List of all groups"
 msgstr "Liste aller Gruppen"
 
-#: biscuit/core/templates/core/person_full.html:10
+#: biscuit/core/templates/core/person_full.html:11
 msgid "Edit person"
 msgstr "Person editiern"
 
-#: biscuit/core/templates/core/person_full.html:13
+#: biscuit/core/templates/core/person_full.html:14
 msgid "Contact details"
 msgstr "Kontaktdetails"
 
-#: biscuit/core/templates/core/person_full.html:67
+#: biscuit/core/templates/core/person_full.html:68
 msgid ""
 "\n"
 "    There is no person with this id.\n"
