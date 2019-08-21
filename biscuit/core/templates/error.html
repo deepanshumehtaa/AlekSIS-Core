@@ -5,7 +5,7 @@
  <h1>{% blocktrans %}Oops!{% endblocktrans %} [{{ error }}]</h1>
  <div class="jumbotron">
   <p>
-   {{ message }} <a href="mailto:{{ admins[1] }}">{{ admins[0] }}</a>.
+   {{ message }} <a href="mailto:{{ admins.0.1 }}">{{ admins.0.0 }}</a>.
   </p>
  </div>
 {% endblock %}
