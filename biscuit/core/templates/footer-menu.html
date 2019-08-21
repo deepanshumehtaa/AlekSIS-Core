@@ -1,0 +1,24 @@
+{# -*- engine:django -*- #}
+{% load menu_generator %}
+    {% get_menu "FOOTER_MENU_CORE" as footer_menu %}
+     {% for item in footer_menu %}
+      <ul class="footer-link-list">
+       {% if not item.submenu %}
+         <a href="{{ item.url }}"> <i class="{{ item.icon_class }}"></i> {{ item.name }}</a>
+       {% endif %}
+      </ul>
+      {% if item.submenu %}
+       <div class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" id="footerDropdown" aria-expanded="false" role="button" aria-haspopup="true" href="#">
+         {{ item.name }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="footerDropdown">
+        {% for menu in item.submenu %}
+         <a class="dropdown-item" href="{{ menu.url }}">
+          {{ menu.name }}
+         </a>
+        {% endfor %}
+        </div>
+       </li>
+      {% endif %}
+     {% endfor %}

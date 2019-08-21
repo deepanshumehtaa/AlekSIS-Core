@@ -46,16 +46,23 @@
 
  <footer class="footer text-dark bg-light">
   <div class="container">
-   <span class="text-muted">
-    <a href="https://biscuit.edugit.org/">
-     BiscuIT - The Free School Information System
-    </a>
-    &middot;
-    &copy; The BiscuIT Team @
-    <a href="https://www.teckids.org/">
-     Teckids e.V.
-    </a>
-   </span>
+   <div class="row">
+    <div class="col-sm-4 col-sm-offset-1 col-xs-10 col-xs-offset-1 text-center text-md-left">
+     <span class="text-muted text-left">
+      <a href="https://biscuit.edugit.org/">
+       BiscuIT - The Free School Information System
+      </a>
+      &middot;
+      &copy; The BiscuIT Team @
+      <a href="https://www.teckids.org/">
+       Teckids e.V.
+      </a>
+     </span>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-1 text-center text-md-right">
+     {% with menu=FOOTER_MENU_CORE %}{% include "footer-menu.html" %}{% endwith %}
+    </div>
+   </div>
   </div>
  </footer>
 {% endblock %}

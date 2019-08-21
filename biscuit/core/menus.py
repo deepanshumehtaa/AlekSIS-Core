@@ -20,5 +20,7 @@ MENUS = {
             'url': 'groups',
             'validators': ['menu_generator.validators.is_authenticated']
         }
+    ],
+    'FOOTER_MENU_CORE': [
     ]
 }
