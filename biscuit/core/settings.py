@@ -2,6 +2,8 @@ from glob import glob
 import os
 import sys
 
+from django.utils.translation import ugettext_lazy as _
+
 from dynaconf import LazySettings
 
 from .util.core_helpers import get_app_packages
@@ -70,6 +72,7 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django_global_request.middleware.GlobalRequestMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -133,14 +136,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = _settings.get('l10n.lang', 'de-de')
-
-TIME_ZONE = _settings.get('l10n.tz', 'Europe/Berlin')
-
+LANGUAGES = [
+    ('de', _('German')),
+    ('en', _('English')),
+]
+LANGUAGE_CODE = _settings.get('l10n.lang', 'en')
+TIME_ZONE = _settings.get('l10n.tz', 'UTC')
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
