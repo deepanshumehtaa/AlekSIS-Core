@@ -22,9 +22,8 @@ urlpatterns = [
 ]
 
 # Custom error pages
-
-handler404 = views.handler404
-handler500 = views.handler500
+handler404 = views.error_handler(404)
+handler500 = views.error_handler(500)
 
 # Serve javascript-common if in development
 if settings.DEBUG:
