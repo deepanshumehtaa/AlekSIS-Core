@@ -76,6 +76,33 @@ class Person(SchoolRelated):
 
     primary_group = models.ForeignKey('Group', models.SET_NULL, null=True)
 
+    @property
+    def primary_group_short_name(self) -> Optional[str]:
+        """ Returns the short_name field of the primary
+        group related object.
+        """
+
+        if self.primary_group:
+            return self.primary_group.short_name
+    @primary_group_short_name.setter
+    def primary_group_short_name(self, value: str) -> None:
+        """ Sets the primary group related object by
+        a short name. It uses the first existing group
+        with this short name it can find, creating one
+        if it can't find one.
+        """
+
+        group, created = Group.objects.get_or_create(short_name=value,
+                                                     defaults={'name': value})
+        self.primary_group = group
+
+    def save(self, *args, **kwargs):
+        if self.primary_group:
+            if self.primary_group not in self.member_of:
+                self.member_of.append(self.primary_group)
+
+        return super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return '%s, %s' % (self.last_name, self.first_name)
 
