@@ -100,8 +100,8 @@ class Person(SchoolRelated):
 
     def save(self, *args, **kwargs):
         if self.primary_group:
-            if self.primary_group not in self.member_of:
-                self.member_of.append(self.primary_group)
+            if self.primary_group not in self.member_of.all():
+                self.member_of.add(self.primary_group)
 
         return super().save(*args, **kwargs)
 
