@@ -1,5 +1,5 @@
 {# -*- engine:django -*- #}
-{% load menu_generator %}
+{% load menu_generator font_awesome i18n %}
     {% get_menu "FOOTER_MENU_CORE" as footer_menu %}
     {% for item in footer_menu %}
      {% if item.submenu %}
@@ -7,18 +7,17 @@
       <h5>{{ item.name }}</h5>
        <ul class="list-unstyled quick-links">
         {% for menu in item.submenu %}
-         <li><a href="{{ menu.url }}"><i class="fa fa-angle-double-right"></i>{{ menu.name }}</a></li>
+         <li><a href="{{ menu.url }}">{% fa 'fa-angle-double-right' %} {{ menu.name }}</a></li>
         {% endfor %}
        </ul>
       </div>
      {% endif %}
-    {% endfor %}
       <div class="col-xs-12 col-sm-4 ">
-       <h5>Assorted</h5>
+       <h5>{% blocktrans %}Assorted{% endblocktrans %}</h5>
         <ul class="list-unstyled quick-links">
          {% for item in footer_menu %}
           {% if not item.submenu %}
-           <li><a href="{{ item.url }}"><i class="fa fa-angle-double-right"></i>{{ item.name }}</a></li>
+           <li><a href="{{ item.url }}">{% fa 'fa-angle-double-right' %} {{ item.name }}</a></li>
           {% endif %}
          {% endfor %}
         </ul>
