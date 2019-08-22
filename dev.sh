@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 remove_pip_metadata() {
     find . -type d -name pip-wheel-metadata -print0 | xargs -0r rm -rf --
 }
