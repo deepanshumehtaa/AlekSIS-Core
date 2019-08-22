@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -116,9 +118,9 @@ class Group(SchoolRelated):
         unique_together = [['school', 'name'], ['school', 'short_name']]
 
     name = models.CharField(verbose_name=_(
-        'Long name of group'), max_length=30, unique=True)
+        'Long name of group'), max_length=30)
     short_name = models.CharField(verbose_name=_(
-        'Short name of group'), max_length=8, unique=True)
+        'Short name of group'), max_length=8)
 
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
