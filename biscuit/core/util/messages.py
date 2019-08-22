@@ -12,21 +12,21 @@ def add_message(request: Optional[HttpRequest], level: int, message: str, **kwar
         return logging.getLogger(__name__).log(level, message)
 
 
-def debug(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]
+def debug(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
     return add_message(request, messages.DEBUG, message, **kwargs)
 
 
-def info(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]
+def info(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
     return add_message(request, messages.INFO, message, **kwargs)
 
 
-def success(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]
+def success(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
     return add_message(request, messages.SUCCESS, message, **kwargs)
 
 
-def warning(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]
+def warning(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
     return add_message(request, messages.WARNING, message, **kwargs)
 
 
-def error(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]
+def error(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
     return add_message(request, messages.ERROR, message, **kwargs)
