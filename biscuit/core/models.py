@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -76,6 +78,33 @@ class Person(SchoolRelated):
 
     primary_group = models.ForeignKey('Group', models.SET_NULL, null=True)
 
+    @property
+    def primary_group_short_name(self) -> Optional[str]:
+        """ Returns the short_name field of the primary
+        group related object.
+        """
+
+        if self.primary_group:
+            return self.primary_group.short_name
+    @primary_group_short_name.setter
+    def primary_group_short_name(self, value: str) -> None:
+        """ Sets the primary group related object by
+        a short name. It uses the first existing group
+        with this short name it can find, creating one
+        if it can't find one.
+        """
+
+        group, created = Group.objects.get_or_create(short_name=value,
+                                                     defaults={'name': value})
+        self.primary_group = group
+
+    def save(self, *args, **kwargs):
+        if self.primary_group:
+            if self.primary_group not in self.member_of.all():
+                self.member_of.add(self.primary_group)
+
+        return super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return '%s, %s' % (self.last_name, self.first_name)
 
@@ -89,9 +118,9 @@ class Group(SchoolRelated):
         unique_together = [['school', 'name'], ['school', 'short_name']]
 
     name = models.CharField(verbose_name=_(
-        'Long name of group'), max_length=30, unique=True)
+        'Long name of group'), max_length=30)
     short_name = models.CharField(verbose_name=_(
-        'Short name of group'), max_length=8, unique=True)
+        'Short name of group'), max_length=8)
 
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')

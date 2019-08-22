@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 remove_pip_metadata() {
     find . -type d -name pip-wheel-metadata -print0 | xargs -0r rm -rf --
 }
@@ -16,7 +18,7 @@ case "$1" in
 	remove_pip_metadata
 	poetry run ./manage.py migrate
 	poetry run ./manage.py compilemessages
-	poetry run ./manage.py collectstatic
+	poetry run ./manage.py collectstatic --no-input
 	;;
     *)
 	;;
