@@ -20,11 +20,14 @@
    </tr>
   </table>
 
-  <h3>Members</h3>
-  {% render_table persons_table %}
+  <h3>{% blocktrans %}Owners{% endblocktrans %}</h3>
+  {% render_table owners_table %}
+
+  <h3>{% blocktrans %}Members{% endblocktrans %}</h3>
+  {% render_table members_table %}
 
  {% else %}
-  <h2>{% blocktrans %}Person not found{% endblocktrans %}</h2>
+  <h2>{% blocktrans %}Group not found{% endblocktrans %}</h2>
 
   <p>
    {% blocktrans %}
