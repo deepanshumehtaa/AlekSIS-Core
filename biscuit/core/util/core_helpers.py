@@ -1,11 +1,13 @@
 from importlib import import_module
 import pkgutil
-from typing import Sequence
+from typing import Optional, Sequence
 
 from django_global_request.middleware import get_request
 
+from ..models import School
 
-def get_app_packages() -> Sequence:
+
+def get_app_packages() -> Sequence[str]:
     """ Find all packages within the biscuit.apps namespace. """
 
     # Import error are non-fatal here because probably simply no app is installed.
@@ -29,7 +31,7 @@ def get_app_packages() -> Sequence:
     return pkgs
 
 
-def get_current_school():
+def get_current_school() -> Optional[School]:
     request = get_request()
 
     if request:

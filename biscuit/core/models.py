@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -76,7 +76,7 @@ class Person(SchoolRelated):
 
     primary_group = models.ForeignKey('Group', models.SET_NULL, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s, %s' % (self.last_name, self.first_name)
 
 
@@ -96,5 +96,5 @@ class Group(SchoolRelated):
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '%s (%s)' % (self.name, self.short_name)
