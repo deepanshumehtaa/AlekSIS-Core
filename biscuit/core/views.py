@@ -89,7 +89,7 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     group = Group.objects.get(pk=id_)
 
     # Get members
-    persons = group.members
+    persons = group.members.all()
 
     # Build table
     persons_table = PersonsTable(persons)
