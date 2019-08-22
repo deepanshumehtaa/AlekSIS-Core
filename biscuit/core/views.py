@@ -89,12 +89,20 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     group = Group.objects.get(pk=id_)
 
     # Get members
-    persons = group.members.all()
+    members = group.members.all()
 
     # Build table
-    persons_table = PersonsTable(persons)
-    RequestConfig(request).configure(persons_table)
-    context['persons_table'] = persons_table
+    members_table = PersonsTable(members)
+    RequestConfig(request).configure(members_table)
+    context['members_table'] = members_table
+
+    # Get owners
+    owners = group.owners.all()
+
+    # Build table
+    owners_table = PersonsTable(owners)
+    RequestConfig(request).configure(owners_table)
+    context['owners_table'] = owners_table
 
     return render(request, 'core/group_%s.html' % template, context)
 
