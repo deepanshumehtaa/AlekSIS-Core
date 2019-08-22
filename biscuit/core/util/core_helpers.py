@@ -4,8 +4,6 @@ from typing import Optional, Sequence
 
 from django_global_request.middleware import get_request
 
-from ..models import School
-
 
 def get_app_packages() -> Sequence[str]:
     """ Find all packages within the biscuit.apps namespace. """
@@ -31,7 +29,8 @@ def get_app_packages() -> Sequence[str]:
     return pkgs
 
 
-def get_current_school() -> Optional[School]:
+# FIXME Use more specific result type
+def get_current_school() -> Optional:
     request = get_request()
 
     if request:
