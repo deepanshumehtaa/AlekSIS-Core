@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+
 MENUS = {
     'NAV_MENU_CORE': [
         {
