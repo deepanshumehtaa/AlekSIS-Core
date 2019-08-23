@@ -6,7 +6,7 @@
 
 {% for menu in footer_menus %}
  {% if not menu.grouper %}
-  {% for item menu.list %}
+  {% for item in menu.list %}
    <div class="col-xs-12 col-sm-4 ">
     <h5>{{ item.name }}</h5>
     <ul class="list-unstyled quick-links">
