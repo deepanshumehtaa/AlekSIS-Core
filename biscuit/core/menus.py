@@ -22,5 +22,19 @@ MENUS = {
         }
     ],
     'FOOTER_MENU_CORE': [
+        {
+            'name': _('BiscuIT Software'),
+            'url': '#',
+            'submenu': [
+                {
+                    'name': _('Website'),
+                    'url': 'https://biscuit.edugit.org/'
+                },
+                {
+                    'name': 'Teckids e.V.',
+                    'url': 'https://www.teckids.org/'
+                }
+            ],
+        },
     ]
 }
