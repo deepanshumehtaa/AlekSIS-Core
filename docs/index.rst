@@ -10,6 +10,7 @@ Welcome to BiscuIT's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   admin/00_index
    dev/00_index
    ref/00_index
 
