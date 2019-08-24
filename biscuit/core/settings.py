@@ -132,6 +132,41 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication backends are dynamically populated
+AUTEHNTICATION_BACKENDS = []
+
+if _settings.get('ldap.uri', None):
+    # LDAP dependencies are not necessarily installed, so import them here
+    import ldap  # noqa
+    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType  # noqa
+
+    # Enable Django's integration to LDAP
+    AUTHENTICATION_BACKENDS.append('django_auth_ldap.backend.LDAPBackend')
+
+    AUTH_LDAP_SERVER_URI = _settings.get('ldap.uri')
+
+    # Optional: non-anonymous bind
+    if _settings.get('ldap.bind.dn', None):
+        AUTH_LDAP_BIND_DN = _settings.get('ldap.bind.dn')
+        AUTH_LDAP_BIND_PASSWORD = _settings.get('ldap.bind.password')
+
+    # Search attributes to find users by username
+    AUTH_LDAP_USER_SEARCH = LDAPSearch(
+        _settings.get('ldap.users.base'),
+        ldap.SCOPE_SUBTREE,
+        _settings.get('ldap.users.filter')
+    )
+
+    # Mapping of LDAP attributes to Django model fields
+    AUTH_LDAP_USER_ATTR_MAP = {
+        'first_name': _settings.get('ldap.map.first_name', 'givenName'),
+        'last_name': _settings.get('ldap.map.first_name', 'sn'),
+        'email': _settings.get('ldap.map.email', 'mail'),
+    }
+
+# Add ModelBckend last so all other backends get a chance
+# to verify passwords first
+AUTHENTICATION_BACKENDS.append('django.contrib.auth.backends.ModelBackend')
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
