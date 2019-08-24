@@ -1,14 +1,12 @@
 {% include "mail/header.html" %}
 
 <main>
-    <p>Hallo,</p>
-    <p>es gibt eine neue REBUS-Meldung:</p>
     <blockquote>
         <p>{{ a }} → {{ b }} → {{ c }}</p>
         <p>{{ short_desc }}</p>
         <p>{{ long_desc }}</p>
-        <p>Übermittelt von {{ user }}</p>
+        <p>Übermittelt von {{ user.get_full_name }} ({{ user.username }})</p>
     </blockquote>
 
-    <i>Dein SchoolApps-Team</i>
+    <em>Der Fehlerbericht wurde über REBUS in SchoolApps übermittelt.</em>
 </main>

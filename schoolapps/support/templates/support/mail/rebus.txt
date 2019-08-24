@@ -1,15 +1,10 @@
-Hallo,
-
-es gibt eine neue REBUS-Meldung:
-
-
 {{ a }} → {{ b }} → {{ c }}
 
 {{ short_desc }}
 
 {{ long_desc }}
 
-Übermittelt von {{ user }}
+Übermittelt von {{ user.get_full_name }} ({{ user.username }})
 
 
-Dein SchoolApps-Team
+Der Fehlerbericht wurde über REBUS in SchoolApps übermittelt.

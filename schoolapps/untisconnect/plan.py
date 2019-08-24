@@ -4,13 +4,10 @@ from django.utils import timezone
 
 from schoolapps import settings
 from schoolapps.settings import LESSONS
-from untisconnect.api import format_classes
+from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
+from untisconnect.events import get_all_events_by_date
 from untisconnect.parse import parse
-from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION
-
-TYPE_TEACHER = 0
-TYPE_ROOM = 1
-TYPE_CLASS = 2
+from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION, generate_event_table
 
 
 class LessonContainer(object):
@@ -40,7 +37,9 @@ class LessonElementContainer(object):
         self.element = element
         self.room = room
         self.substitution = substitution
-        self.is_old = False
+        self.is_old = False  #
+
+        self.is_event = substitution["table"].is_event if substitution is not None else False
         if self.element is not None:
             self.classes_formatted = format_classes(self.element.classes)
 
@@ -51,8 +50,6 @@ def parse_lesson_times():
         start_split = t[0].split(":")
         start_time = timezone.datetime(year=2000, day=1, month=1, hour=int(start_split[0]), minute=int(start_split[1]))
         end_time = start_time + timezone.timedelta(minutes=45)
-        # print(start_time)
-        # print(end_time)
         times.append({
             "number": i + 1,
             "number_format": t[1],
@@ -70,16 +67,12 @@ def get_plan(type, id, smart=False, monday_of_week=None):
     times_parsed = parse_lesson_times()
 
     if smart:
-        # print("Get substitutions for smart plan")
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
-        # print(week_days)
         subs_for_weekday = []
         for week_day in week_days:
-            # print(week_day)
             subs = get_substitutions_by_date_as_dict(week_day)
             subs_for_weekday.append(subs)
-            # print(subs)
-            # print(len(subs))
+
     # Init plan array
     plan = []
     already_added_subs_as_ids = []
@@ -110,7 +103,6 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                 for time in lesson.times:
                     for j, lroom in enumerate(time.rooms):
                         if lroom.id == id:
-                            # print(lroom.name)
                             found = True
 
             # If the lesson element is important then add it to plan array
@@ -139,8 +131,10 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                         if subs_for_weekday[time.day - 1].get(lesson.id, None) is not None:
                             for sub in subs_for_weekday[time.day - 1][lesson.id]:
                                 # ... check whether the sub has the right old teacher and the right lesson number
-                                if sub["sub"].teacher_old.id == element.teacher.id and sub["sub"].lesson == time.hour:
-                                    matching_sub = sub
+                                if sub["sub"].teacher_old is not None and element.teacher is not None:
+                                    if sub["sub"].teacher_old.id == element.teacher.id and \
+                                            sub["sub"].lesson == time.hour and sub["table"].is_event is False:
+                                        matching_sub = sub
 
                         # If the lesson matches, add it to the list of already added subs
                         if matching_sub:
@@ -172,6 +166,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
             subs_for_this_weekday = subs_for_weekday[i]
             for lesson_id, subs in subs_for_this_weekday.items():
                 for sub in subs:
+
                     found = False
                     room = sub["sub"].room_old
                     if type == TYPE_CLASS:
@@ -184,6 +179,10 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                             if sub["sub"].teacher_new.id == id:
                                 found = True
 
+                        if sub["sub"].teacher_old:
+                            if sub["sub"].teacher_old.id == id:
+                                found = True
+
                     elif type == TYPE_ROOM:
                         if sub["sub"].room_new:
                             if sub["sub"].room_new.id == id:
@@ -192,5 +191,33 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                         element_container = LessonElementContainer(sub["sub"].lesson_element, room, substitution=sub)
                         if sub["sub"].id not in already_added_subs_as_ids:
                             plan[sub["sub"].lesson - 1][0][i].append(element_container)
+
+            # Get all events for this week day
+            events = get_all_events_by_date(week_day)
+            event_table = generate_event_table(events)
+
+            for event in event_table:
+                found = False
+                # Check if event is relevant for type and id
+                if type == TYPE_CLASS:
+                    for _class in event.event.classes:
+                        if _class.id == id:
+                            found = True
+                elif type == TYPE_TEACHER:
+                    for teacher in event.teachers:
+                        if teacher.id == id:
+                            found = True
+
+                elif type == TYPE_ROOM:
+                    for room in event.rooms:
+                        if room.id == id:
+                            found = True
+
+                if found:
+                    # Add event to plan
+                    element_container = LessonElementContainer(None, None,
+                                                               substitution={"sub": None, "table": event})
+                    for j in range(event.event.from_lesson - 1, event.event.to_lesson):
+                        plan[j][0][i].append(element_container)
 
     return plan

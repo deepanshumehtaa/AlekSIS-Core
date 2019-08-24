@@ -2,31 +2,32 @@
 
 <main>
     {% if msg == "success" %}
-        {% msg_box "Der Speiseplan wurde erfolgreich hochgeladen." "green" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich hochgeladen." "success" "check_circle" %}
     {% elif msg == "delete_success" %}
-        {% msg_box "Der Speiseplan wurde erfolgreich gelöscht." "green" %}
+        {% msg_box "Der Speiseplan wurde erfolgreich gelöscht." "success" "check_circle" %}
     {% endif %}
     <script type="text/javascript">
-
         $('#alert_close').click(function () {
             $("#alert_box").fadeOut("slow", function () {
             });
         });
     </script>
     <a class="waves-effect waves-light btn green" href="{% url "menu_upload" %}"><i class="material-icons left">add</i>
-        Neuen Speiseplan hochladen</a>
-    <a class="waves-effect waves-light btn" href="{% url "menu_show_current" %}"><i class="material-icons left">picture_as_pdf</i>
-        Aktuellen Speiseplan anzeigen</a>
+        Neuen Speiseplan hochladen
+    </a>
+    <a class="waves-effect waves-light btn orange" href="{% url "menu_show_current" %}"><i class="material-icons left">picture_as_pdf</i>
+        Aktuellen Speiseplan anzeigen
+    </a>
     <h5>Übersicht der hochgeladenen Speisepläne</h5>
     <ul class="collection">
         {% for menu in menus %}
             <li class="collection-item ">
                 <span class="title">{{ menu }}</span>
                 <p>
-                    <a class="btn-flat" href="/media/{{ menu.pdf }}" target="_blank">
+                    <a class="btn-flat waves-effect waves-green" href="/media/{{ menu.pdf }}" target="_blank">
                         <i class="material-icons left">picture_as_pdf</i> Anzeigen
                     </a>
-                    <a class="btn-flat delete-menu" href="{% url "menu_delete"  menu.id %}">
+                    <a class="btn-flat delete-menu waves-effect waves-red" href="{% url "menu_delete"  menu.id %}">
                         <i class="material-icons left">delete</i> Löschen
                     </a>
                 </p>

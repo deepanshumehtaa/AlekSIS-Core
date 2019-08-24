@@ -111,28 +111,8 @@ class LessonTime(object):
 from .api import *
 from .api_helper import untis_split_third
 
-
-def build_drive():
-    odrive = {
-        "teachers": get_all_teachers(),
-        "rooms": get_all_rooms(),
-        "classes": get_all_classes(),
-        "subjects": get_all_subjects(),
-        "corridors": get_all_corridors(),
-    }
-
-    drive = {}
-    for key, value in odrive.items():
-        drive[key] = {}
-        for el in value:
-            id = el.id
-            drive[key][id] = el
-
-    return drive
-
-
-drive = build_drive()
-
+from .drive import drive
+drive = drive
 
 def parse():
     global drive

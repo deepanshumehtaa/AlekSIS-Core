@@ -24,7 +24,7 @@ def index(request):
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
 
     # Load notifications
-    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')
+    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
 
     # user_type = UserInformation.user_type(request.user)
     context = {

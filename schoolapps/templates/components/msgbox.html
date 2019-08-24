@@ -1,10 +1,10 @@
-<div class="row" id="alert_box">
-    <div class="col s12 m12">
-        <p class="{{ color }}-text darken-1">
+{% if msg %}
+    <div class="alert {{ status }}">
+        <div>
             {% if icon != "" %}
                 <i class="material-icons left">{{ icon }}</i>
             {% endif %}
             {{ msg }}
-        </p>
+        </div>
     </div>
-</div>
+{% endif %}
