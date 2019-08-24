@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Authentication backends are dynamically populated
-AUTEHNTICATION_BACKENDS = []
+AUTHENTICATION_BACKENDS = []
 
 if _settings.get('ldap.uri', None):
     # LDAP dependencies are not necessarily installed, so import them here
