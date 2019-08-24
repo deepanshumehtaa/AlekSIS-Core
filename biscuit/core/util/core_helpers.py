@@ -53,7 +53,7 @@ def get_current_school() -> Optional:
 
         School = apps.get_model('core.School')
 
-        if 'DEFAULT_SCHOOL' in settings:
+        if hasattr(settings, 'DEFAULT_SCHOOL'):
             # Use school defined in settings
             return School.objects.get(pk=settings.DEFAULT_SCHOOL)
         else:
