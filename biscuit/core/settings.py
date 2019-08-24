@@ -154,7 +154,7 @@ if _settings.get('ldap.uri', None):
     AUTH_LDAP_USER_SEARCH = LDAPSearch(
         _settings.get('ldap.users.base'),
         ldap.SCOPE_SUBTREE,
-        _settings.get('ldap.users.filter')
+        _settings.get('ldap.users.filter', '(uid=%(user)s)')
     )
 
     # Mapping of LDAP attributes to Django model fields
