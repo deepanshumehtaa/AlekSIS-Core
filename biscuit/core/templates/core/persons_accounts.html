@@ -1,0 +1,32 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load bootstrap4 i18n %}
+
+{% block page_title %}
+ {% blocktrans %}Link persons to accounts{% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+ <form method="post">
+  {% csrf_token %}
+  {{ persons_accounts_formset.management_form }}
+
+  <table class="table table-striped table-bordered table-hover table-condensed table-responsive w-100 d-block d-md-table">
+   <tr>
+    <th>{% blocktrans %}Person{% endblocktrans %}</th>
+    <th>{% blocktrans %}Existing account{% endblocktrans %}</th>
+    <th>{% blocktrans %}New account{% endblocktrans %}</th>
+   </tr>
+   {% for form in persons_accounts_formset %}
+    {{ form.id }}
+    <tr>
+     <td>{{ form.person_name }}</td>
+     <td>{{ form.user }}</td>
+     <td>{{ form.new_user }}</td>
+    </tr>
+   {% endfor %}
+  </table>
+
+  <input type="submit" value="Update" />
+ </form>
+{% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('persons', views.persons, name='persons'),
+    path('persons/accounts', views.persons_accounts, name='persons_accounts'),
     path('person', views.person, name='person'),
     path('person/<int:id_>', views.person,
          {'template': 'full'}, name='person_by_id'),

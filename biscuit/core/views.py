@@ -6,6 +6,9 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
+
+from .decorators import admin_required
+from .forms import PersonsAccountsFormSet
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 
@@ -120,3 +123,19 @@ def groups(request: HttpRequest) -> HttpResponse:
     context['groups_table'] = groups_table
 
     return render(request, 'core/groups.html', context)
+
+
+@admin_required
+def persons_accounts(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    persons_qs = Person.objects.all()
+    persons_accounts_formset = PersonsAccountsFormSet(request.POST or None, queryset=persons_qs)
+
+    if request.method == 'POST':
+        if persons_accounts_formset.is_valid():
+            persons_accounts_formset.save()
+
+    context['persons_accounts_formset'] = persons_accounts_formset
+
+    return render(request, 'core/persons_accounts.html', context)

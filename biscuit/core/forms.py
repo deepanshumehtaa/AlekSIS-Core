@@ -1,0 +1,34 @@
+from django import forms
+from django.contrib.auth import create_user, get_user_model
+from django.utils.translation import ugettext_lazy as _
+
+from .models import Person
+
+
+class PersonAccountForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ['user']
+
+    last_name = forms.CharField(disabled=True)
+    first_name = forms.CharField(disabled=True)
+    user = forms.ModelChoiceField(queryset=get_user_model().objects.all())
+    new_user = forms.CharField(required=False)
+
+    def clean(self) -> None:
+        if 'new_user' in self.cleaned_data:
+            if 'user' in self.cleaned_data and self.cleaned_data['user']:
+                self.add_error('new_user', _('You cannot set a new username when also selecting an existing user.'))
+            elif get_user_model().objects.filter(username=self.cleaned_data['new_user']).exists():
+                self.add_error('new_user', _('This username is already in use.'))
+            else:
+                new_user_obj = create_user(self.cleaned_data['new_user'],
+                                           self.instance.email,
+                                           first_name=self.instance.first_name,
+                                           last_name=self.instance.last_name)
+
+                self.cleaned_data['user'] = new_user_obj
+
+
+PersonsAccountsFormSet = forms.modelformset_factory(
+    Person, form=PersonAccountForm, max_num=0, extra=0)
