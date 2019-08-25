@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 22:42+0200\n"
-"PO-Revision-Date: 2019-08-21 22:44+0200\n"
+"POT-Creation-Date: 2019-08-26 00:46+0200\n"
+"PO-Revision-Date: 2019-08-26 00:56+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,124 +22,166 @@ msgstr ""
 msgid "BiscuIT - The Free School Information System"
 msgstr "BiscuIT - Das freie Schulinformationssystem"
 
+#: forms.py:25
+msgid "You cannot set a new username when also selecting an existing user."
+msgstr ""
+"Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
+"existierenden Benutzer auswählen."
+
+#: forms.py:27
+msgid "This username is already in use."
+msgstr "Dieser Benutzername wird bereits genutzt."
+
+#: menus.py:6
+msgid "Login"
+msgstr "Anmelden"
+
+#: menus.py:11
+msgid "Logout"
+msgstr "Abmelden"
+
+#: menus.py:16 templates/core/persons.html:5
+msgid "Persons"
+msgstr "Personen"
+
+#: menus.py:21 templates/core/groups.html:5
+msgid "Groups"
+msgstr "Gruppen"
+
+#: menus.py:28
+msgid "BiscuIT Software"
+msgstr "BiscuIT-Software"
+
+#: menus.py:32
+msgid "Website"
+msgstr "Website"
+
 #: migrations/0007_school.py:11
 msgid "Default school"
 msgstr "Standardschule"
 
-#: models.py:17
+#: models.py:19
 msgid "Name"
 msgstr "Name"
 
-#: models.py:19
+#: models.py:21
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: models.py:31
+#: models.py:33
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:32
+#: models.py:34
 msgid "male"
 msgstr "männlich"
 
-#: models.py:39
+#: models.py:41
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: models.py:41
+#: models.py:43
 msgid "First name"
 msgstr "Vorname"
 
-#: models.py:42
+#: models.py:44
 msgid "Last name"
 msgstr "Nachname"
 
-#: models.py:44
+#: models.py:46
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: models.py:47
+#: models.py:49
 msgid "Short name"
 msgstr "Kurzname"
 
-#: models.py:50
+#: models.py:52
 msgid "Street"
 msgstr "Straße"
 
-#: models.py:52
+#: models.py:54
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: models.py:54
+#: models.py:56
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: models.py:56
+#: models.py:58
 msgid "Place"
 msgstr "Ort"
 
-#: models.py:58
+#: models.py:60
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: models.py:60
+#: models.py:62
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: models.py:62
+#: models.py:64
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: models.py:65
+#: models.py:67
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: models.py:67
+#: models.py:69
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: models.py:69
+#: models.py:71
 msgid "Photo"
 msgstr "Foto"
 
-#: models.py:72
+#: models.py:74
 msgid "Reference ID of import source"
 msgstr "Referenz-ID der Import-Quelle"
 
-#: models.py:74
+#: models.py:76
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: models.py:92
+#: models.py:121
 msgid "Long name of group"
 msgstr "Langer Name der Gruppe"
 
-#: models.py:94
+#: models.py:123
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
-#: settings.py:140
+#: settings.py:177
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:141
+#: settings.py:178
 msgid "English"
 msgstr "Englisch"
 
-#: templates/core/group_full.html:10
+#: templates/core/group_full.html:11
 msgid "Edit group"
 msgstr "Gruppe editiern"
 
-#: templates/core/group_full.html:13
+#: templates/core/group_full.html:14
 msgid "Details"
 msgstr "Details"
 
-#: templates/core/group_full.html:26 templates/core/person_full.html:65
-msgid "Person not found"
-msgstr "Person nicht gefunden"
+#: templates/core/group_full.html:23
+msgid "Owners"
+msgstr "Leiter"
 
-#: templates/core/group_full.html:29
+#: templates/core/group_full.html:26
+msgid "Members"
+msgstr "Mitglieder"
+
+#: templates/core/group_full.html:30
+msgid "Group not found"
+msgstr "Gruppe nicht gefunden"
+
+#: templates/core/group_full.html:33
 msgid ""
 "\n"
 "    There is no group with this id.\n"
@@ -148,10 +190,6 @@ msgstr ""
 "\n"
 "    Es existiert keine Gruppe mit dieser ID.\n"
 "   "
-
-#: templates/core/groups.html:5
-msgid "Groups"
-msgstr "Gruppen"
 
 #: templates/core/groups.html:9
 msgid "List of all groups"
@@ -165,6 +203,10 @@ msgstr "Person editiern"
 msgid "Contact details"
 msgstr "Kontaktdetails"
 
+#: templates/core/person_full.html:65
+msgid "Person not found"
+msgstr "Person nicht gefunden"
+
 #: templates/core/person_full.html:68
 msgid ""
 "\n"
@@ -175,13 +217,44 @@ msgstr ""
 "    Es existiert keine Person mit dieser ID.\n"
 "   "
 
-#: templates/core/persons.html:5
-msgid "Persons"
-msgstr "Personen"
-
 #: templates/core/persons.html:9
 msgid "List of all persons"
 msgstr "Liste aller Personen"
+
+#: templates/core/persons_accounts.html:6
+msgid "Link persons to accounts"
+msgstr "Personen mit Benutzerkonten verknüpfen"
+
+#: templates/core/persons_accounts.html:12
+msgid ""
+"\n"
+"    You can use this form to assign user accounts to persons. Use the\n"
+"    dropdowns to select existing accounts; use the text fields to create "
+"new\n"
+"    accounts on-the-fly. The latter will create a new account with the\n"
+"    entered username and copy all other details from the person.\n"
+"   "
+msgstr ""
+"\n"
+"    Sie können dieses Formular nutzen, um Benutzerkonten Personen "
+"zuzuweisen. Nutzen Sie das\n"
+"    Auswahlfeld um ein existierendes Benutzerkonto auszuwählen; nutzen Sie "
+"das Textfeld, um einen neuen Benutzer zu\n"
+"    erstellen. Letzteres erstellt ein neues Benutzerkonto mit dem\n"
+"    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
+"   "
+
+#: templates/core/persons_accounts.html:27
+msgid "Person"
+msgstr "Person"
+
+#: templates/core/persons_accounts.html:28
+msgid "Existing account"
+msgstr "Existierendes Konto"
+
+#: templates/core/persons_accounts.html:29
+msgid "New account"
+msgstr "Neues Konto"
 
 #: templates/error.html:13
 msgid ""
@@ -196,11 +269,11 @@ msgstr ""
 "     Systemadministratoren:\n"
 "    "
 
-#: views.py:20
-msgid "Page not found"
-msgstr "Seite nicht gefunden"
+#: templates/footer-menu.html:25
+msgid "Assorted"
+msgstr "Unsortiert"
 
-#: views.py:24
+#: views.py:28
 msgid ""
 "This page does not exist. If you were redirected by a link on an external "
 "page, it is possible that that link was outdated."
@@ -209,6 +282,14 @@ msgstr ""
 "externen Seite hierher gelangt sind, ist es möglich, dass dieser veraltet "
 "war."
 
-#: views.py:26
+#: views.py:29
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
+
+#: views.py:31
+msgid "Internal server error"
+msgstr "Interner Serverfehler"
+
+#: views.py:32
 msgid "An unexpected error has occurred."
 msgstr "Ein Fehler ist aufgetreten."

@@ -3,22 +3,22 @@ from django.utils.translation import ugettext_lazy as _
 MENUS = {
     'NAV_MENU_CORE': [
         {
-            'name': 'Login',
+            'name': _('Login'),
             'url': 'login',
             'validators': ['menu_generator.validators.is_anonymous']
         },
         {
-            'name': 'Logout',
+            'name': _('Logout'),
             'url': 'logout',
             'validators': ['menu_generator.validators.is_authenticated']
         },
         {
-            'name': 'Persons',
+            'name': _('Persons'),
             'url': 'persons',
             'validators': ['menu_generator.validators.is_authenticated']
         },
         {
-            'name': 'Groups',
+            'name': _('Groups'),
             'url': 'groups',
             'validators': ['menu_generator.validators.is_authenticated']
         }
