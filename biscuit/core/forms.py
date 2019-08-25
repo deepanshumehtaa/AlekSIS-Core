@@ -8,7 +8,7 @@ from .models import Person
 class PersonAccountForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ['user']
+        fields = ['last_name', 'first_name', 'user']
 
     last_name = forms.CharField(disabled=True)
     first_name = forms.CharField(disabled=True)
