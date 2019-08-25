@@ -20,7 +20,6 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
         context = {}
 
         context['status'] = status
-        context['admins'] = settings.ADMINS
 
         if status == 404:
             context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
