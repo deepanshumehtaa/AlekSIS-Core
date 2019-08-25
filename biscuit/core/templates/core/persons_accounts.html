@@ -20,7 +20,10 @@
    {% for form in persons_accounts_formset %}
     {{ form.id }}
     <tr>
-     <td>{{ form.person_name }}</td>
+     <td>
+      {{ form.last_name }}
+      {{ form.first_name }}
+     </td>
      <td>{{ form.user }}</td>
      <td>{{ form.new_user }}</td>
     </tr>
