@@ -7,6 +7,17 @@
 {% endblock %}
 
 {% block content %}
+ <div class="jumbotron">
+  <p>
+   {% blocktrans %}
+    You can use this form to assign user accounts to persons. Use the
+    dropdowns to select existing accounts; use the text fields to create new
+    accounts on-the-fly. The latter will create a new account with the
+    entered username and copy all other details from the person.
+   {% endblocktrans %}
+  </p>
+ </div>
+
  <form method="post">
   {% csrf_token %}
   {{ persons_accounts_formset.management_form }}
