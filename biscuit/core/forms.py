@@ -12,6 +12,11 @@ class PersonAccountForm(forms.ModelForm):
 
     new_user = forms.CharField(required=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].disabled = True
+        self.fields['last_name'].disabled = True
+
     def clean(self) -> None:
         User = get_user_model()
 
