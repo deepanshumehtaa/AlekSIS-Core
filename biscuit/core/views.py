@@ -20,11 +20,12 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
         context = {}
 
         context['status'] = status
-        context['caption'] = _('Page not found')
 
         if status == 404:
             context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
+            context['caption'] = _('Page not found') 
         elif status == 500:
+            context['caption'] = _('Internal server error') 
             context['message'] = _('An unexpected error has occurred.')
 
         return render(request, 'error.html', context, status=status)
