@@ -10,9 +10,6 @@ class PersonAccountForm(forms.ModelForm):
         model = Person
         fields = ['last_name', 'first_name', 'user']
 
-    last_name = forms.CharField(disabled=True)
-    first_name = forms.CharField(disabled=True)
-    user = forms.ModelChoiceField(queryset=get_user_model().objects.all())
     new_user = forms.CharField(required=False)
 
     def clean(self) -> None:
