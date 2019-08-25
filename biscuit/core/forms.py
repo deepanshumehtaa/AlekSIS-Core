@@ -18,8 +18,8 @@ class PersonAccountForm(forms.ModelForm):
     def clean(self) -> None:
         User = get_user_model()
 
-        if 'new_user' in self.cleaned_data:
-            if 'user' in self.cleaned_data and self.cleaned_data['user']:
+        if self.cleaned_data.get('new_user', None):
+            if self.cleaned_data.get('user', None):
                 self.add_error('new_user', _('You cannot set a new username when also selecting an existing user.'))
             elif User.objects.filter(username=self.cleaned_data['new_user']).exists():
                 self.add_error('new_user', _('This username is already in use.'))
