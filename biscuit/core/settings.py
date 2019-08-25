@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_global_request',
+    'settings_context_processor',
     'sass_processor',
     'easyaudit',
     'bootstrap4',
@@ -95,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'settings_context_processor.context_processors.settings'
             ],
         },
     },
@@ -228,5 +230,7 @@ COLOUR_LIGHT = _settings.get('theme.colours.light', '#f8f9fa')
 COLOUR_DARK = _settings.get('theme.colours.dark', '#343a40')
 
 ADMINS = _settings.get('admins', [])
+
+TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
 
 _settings.populate_obj(sys.modules[__name__])
