@@ -30,6 +30,9 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
         elif status == 500:
             context['caption'] = _('Internal server error')
             context['message'] = _('An unexpected error has occurred.')
+        elif status == 503:
+            context['caption'] = _('Maintenance mode')
+            context['message'] = _('The maintenance mode is currently enabled. Please try again later.')
 
         return render(request, 'error.html', context, status=status)
 
