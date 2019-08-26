@@ -37,7 +37,7 @@ class PersonAccountForm(forms.ModelForm):
 PersonsAccountsFormSet = forms.modelformset_factory(
     Person, form=PersonAccountForm, max_num=0, extra=0)
 
-class EditPersonForm(forms.ModelForm)
+class EditPersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ['user', 'is_active', 'first_name', 'last_name', 'additional_name', 'short_name', 'street', 'housenumber', 'postal_code', 'place', 'phone_number', 'mobile_number', 'email', 'date_of_birth', 'sex', 'photo']
