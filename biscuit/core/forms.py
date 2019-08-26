@@ -45,7 +45,7 @@ class EditPersonForm(forms.ModelForm):
     new_user = forms.CharField(
         required=False,
         label=_('New user'),
-        help_text=_('Create a new account'),
+        help_text=_('Create a new account'))
 
     def clean(self) -> None:
         User = get_user_model()
