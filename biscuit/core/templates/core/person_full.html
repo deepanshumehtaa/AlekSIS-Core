@@ -7,7 +7,7 @@
  {% if person %}
   <h2>{{ person.first_name }} {{ person.last_name }}</h2>
   <p>
-   <a href="{{ '#' }}">
+   <a href="{% url 'edit_person_by_id' person.id %}">
     {% blocktrans %}Edit person{% endblocktrans %}
    </a>
   </p>

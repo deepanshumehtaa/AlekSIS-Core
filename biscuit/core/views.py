@@ -8,7 +8,7 @@ from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
 
 from .decorators import admin_required
-from .forms import PersonsAccountsFormSet
+from .forms import PersonsAccountsFormSet, EditPersonForm
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 
@@ -26,9 +26,9 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
 
         if status == 404:
             context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
-            context['caption'] = _('Page not found') 
+            context['caption'] = _('Page not found')
         elif status == 500:
-            context['caption'] = _('Internal server error') 
+            context['caption'] = _('Internal server error')
             context['message'] = _('An unexpected error has occurred.')
 
         return render(request, 'error.html', context, status=status)
@@ -139,3 +139,24 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     context['persons_accounts_formset'] = persons_accounts_formset
 
     return render(request, 'core/persons_accounts.html', context)
+
+@admin_required
+def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    person = get_object_or_404(Person, id=id_)
+
+    edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
+
+    context['person'] = person
+
+    if request.method == 'POST':
+        if edit_person_form.is_valid():
+            edit_person_form.save(commit=True)
+
+            messages.success(request, _('The person has been saved.'))
+            return render(request, 'core/person_full.html', context)
+
+    context['edit_person_form'] = edit_person_form
+
+    return render(request, 'core/edit_person.html', context)
