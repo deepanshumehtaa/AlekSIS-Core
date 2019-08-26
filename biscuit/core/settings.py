@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'fa',
     'django_any_js',
     'django_tables2',
+    'django_ipware',
+    'maintenance_mode',
     'menu_generator',
     'phonenumber_field',
     'debug_toolbar',
@@ -88,6 +90,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'biscuit.core.urls'
@@ -103,6 +106,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',
                 'settings_context_processor.context_processors.settings'
             ],
         },
@@ -239,5 +243,10 @@ COLOUR_DARK = _settings.get('theme.colours.dark', '#343a40')
 ADMINS = _settings.get('admins', [])
 
 TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
+
+MAINTENANCE_MODE = _settings.get('maintenance.activate', 'None')
+MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get('maintenance.ignore_ip_addresses', ())
+MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
+MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 
 _settings.populate_obj(sys.modules[__name__])
