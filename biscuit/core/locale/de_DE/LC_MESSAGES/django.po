@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 00:46+0200\n"
-"PO-Revision-Date: 2019-08-26 00:56+0200\n"
+"POT-Creation-Date: 2019-08-26 19:58+0200\n"
+"PO-Revision-Date: 2019-08-26 19:59+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,15 +22,23 @@ msgstr ""
 msgid "BiscuIT - The Free School Information System"
 msgstr "BiscuIT - Das freie Schulinformationssystem"
 
-#: forms.py:25
+#: forms.py:25 forms.py:55
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
 "existierenden Benutzer auswählen."
 
-#: forms.py:27
+#: forms.py:27 forms.py:57
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
+
+#: forms.py:47
+msgid "New user"
+msgstr "Neuer Benutzer"
+
+#: forms.py:48
+msgid "Create a new account"
+msgstr "Neues Benutzerkonto erstellen"
 
 #: menus.py:6
 msgid "Login"
@@ -293,3 +301,7 @@ msgstr "Interner Serverfehler"
 #: views.py:32
 msgid "An unexpected error has occurred."
 msgstr "Ein Fehler ist aufgetreten."
+
+#: views.py:157
+msgid "The person has been saved."
+msgstr "Die Person wurde gespeichert."
