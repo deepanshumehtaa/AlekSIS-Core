@@ -3,7 +3,7 @@ from typing import Callable
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
 
