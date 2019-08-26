@@ -2,7 +2,7 @@ from django.apps import apps
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path, url
+from django.urls import include, path
 
 from . import views
 
@@ -21,7 +21,7 @@ urlpatterns = [
     path('group/<int:id_>', views.group,
          {'template': 'full'}, name='group_by_id'),
     path('', views.index, name='index'),
-    url(r'^maintenance-mode/', include('maintenance_mode.urls')),
+    path('maintenance-mode/', include('maintenance_mode.urls')),
 ]
 
 # Custom error pages

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'fa',
     'django_any_js',
     'django_tables2',
+    'django_ipware',
     'maintenance_mode',
     'menu_generator',
     'phonenumber_field',
