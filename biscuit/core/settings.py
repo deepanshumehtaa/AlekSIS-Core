@@ -29,7 +29,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = _settings.get('secret_key', 'DoNotUseInProduction')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = _settings.get('debug', False)
+DEBUG = _settings.get('debug.enabled', False)
+INTERNAL_IPS = _settings.get('debug.internal_ips', [])
+DEBUG_TOOLBAR_CONFIG = {
+    'RENDER_PANELS': True,
+    'SHOW_COLLAPSED': True
+}
 
 ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
 
@@ -52,6 +57,7 @@ INSTALLED_APPS = [
     'maintenance_mode',
     'menu_generator',
     'phonenumber_field',
+    'debug_toolbar',
     'biscuit.core'
 ]
 
@@ -72,6 +78,7 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
