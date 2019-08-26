@@ -3,7 +3,7 @@ from typing import Callable
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
 
@@ -159,7 +159,7 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
             edit_person_form.save(commit=True)
 
             messages.success(request, _('The person has been saved.'))
-            return render(request, 'core/person_full.html', context)
+            return redirect('persons')
 
     context['edit_person_form'] = edit_person_form
 
