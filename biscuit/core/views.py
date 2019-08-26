@@ -11,6 +11,7 @@ from .decorators import admin_required
 from .forms import PersonsAccountsFormSet, EditPersonForm
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
+from .util import messages
 
 
 def index(request: HttpRequest) -> HttpResponse:
