@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from .models import Person
-from .utils import
 
 
 class PersonAccountForm(forms.ModelForm):
