@@ -15,12 +15,12 @@ MENUS = {
         {
             'name': _('Persons'),
             'url': 'persons',
-            'validators': ['menu_generator.validators.is_authenticated']
+            'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
         },
         {
             'name': _('Groups'),
             'url': 'groups',
-            'validators': ['menu_generator.validators.is_authenticated']
+            'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
         }
     ],
     'FOOTER_MENU_CORE': [
