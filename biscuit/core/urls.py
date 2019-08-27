@@ -30,7 +30,6 @@ urlpatterns = [
 # Custom error pages
 handler404 = views.error_handler(404)
 handler500 = views.error_handler(500)
-handler503 = views.error_handler(503)
 
 # Serve javascript-common if in development
 if settings.DEBUG:

@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load bootstrap4 i18n staticfiles %}
+
+{% block content %}
+ <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+   <h1>503 - Maintenance mode</h1>
+   <p class="lead">
+    {% blocktrans %}
+     The maintenance mode is currently enabled. Please try again later.
+    {% endblocktrans %}
+   </p>
+  </div>
+ </div>
+{% endblock %}
