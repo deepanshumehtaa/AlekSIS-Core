@@ -1,19 +1,26 @@
 html {
-  position: relative;
   min-height: 100%;
 }
 
-.footer {
-  width: 100%;
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-body > .container {
+main {
   padding: 60px 15px 0;
 }
 
-.footer > .container {
+footer {
+  width: 100%;
+  margin-top: auto;
+}
+
+footer > .container {
   padding-right: 15px;
   padding-left: 15px;
+  width: 100%;
 }
 
 img.person-img {
