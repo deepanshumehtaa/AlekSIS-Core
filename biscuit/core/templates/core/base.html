@@ -25,7 +25,7 @@
      {% fa 'fa-align-justify' %}
     </button>
     <a class="navbar-brand" href="{% url "index" %}">
-     {% fa 'fa-briefcase' %} BiscuIT School Information System
+     {% fa 'fa-briefcase' %} BiscuIT SIS
     </a>
 
    <div class="collapse navbar-collapse" id="navbar-main">
@@ -43,7 +43,7 @@
 
   {% block content %}{% endblock %}
  </main>
- <footer class="footer text-dark bg-light">
+ <footer class="footer text-dark bg-light mt-auto">
   <div class="container-fluid">
    <div class="row text-center text-xs-center text-sm-left text-md-left text-dark">
     {% with menu=FOOTER_MENU_CORE %}{% include "footer-menu.html" %}{% endwith %}
