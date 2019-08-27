@@ -6,6 +6,11 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 70px;
+}
+
+main {
+  margin-bottom: 2em;
 }
 
 footer {
