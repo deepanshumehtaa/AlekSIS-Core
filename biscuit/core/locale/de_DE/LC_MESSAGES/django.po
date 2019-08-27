@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-27 12:50+0200\n"
-"PO-Revision-Date: 2019-08-27 12:51+0200\n"
+"PO-Revision-Date: 2019-08-27 14:45+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -182,11 +182,11 @@ msgstr ""
 
 #: templates/core/edit_person.html:4 templates/core/person_full.html:11
 msgid "Edit person"
-msgstr "Person editiern"
+msgstr "Person editieren"
 
 #: templates/core/group_full.html:11
 msgid "Edit group"
-msgstr "Gruppe editiern"
+msgstr "Gruppe editieren"
 
 #: templates/core/group_full.html:14
 msgid "Details"
