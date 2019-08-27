@@ -243,7 +243,7 @@ ADMINS = _settings.get('admins', [])
 
 TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
 
-MAINTENANCE_MODE = _settings.get('maintenance.enabled', 'None')
+MAINTENANCE_MODE = _settings.get('maintenance.enabled', None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
     'maintenance.ignore_ips', _settings.get('debug.internal_ips', []))
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
