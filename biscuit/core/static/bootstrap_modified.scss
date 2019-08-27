@@ -1,12 +1,12 @@
 $theme-colors: (
-    "primary":    get-colour(get-setting(COLOUR_PRIMARY)),
-    "secondary":  get-colour(get-setting(COLOUR_SECONDARY)),
-    "success":    get-colour(get-setting(COLOUR_SUCCESS)),
-    "info":       get-colour(get-setting(COLOUR_INFO)),
-    "warning":    get-colour(get-setting(COLOUR_WARNING)),
-    "danger":     get-colour(get-setting(COLOUR_DANGER)),
-    "light":      get-colour(get-setting(COLOUR_LIGHT)),
-    "dark":       get-colour(get-setting(COLOUR_DARK)),
+    "primary":    adjust-color(get-colour(get-setting(COLOUR_PRIMARY)), $alpha: 1),
+    "secondary":  adjust-color(get-colour(get-setting(COLOUR_SECONDARY)), $alpha: 1),
+    "success":    adjust-color(get-colour(get-setting(COLOUR_SUCCESS)), $alpha: 1),
+    "info":       adjust-color(get-colour(get-setting(COLOUR_INFO)), $alpha: 1),
+    "warning":    adjust-color(get-colour(get-setting(COLOUR_WARNING)), $alpha: 1),
+    "danger":     adjust-color(get-colour(get-setting(COLOUR_DANGER)), $alpha: 1),
+    "light":      adjust-color(get-colour(get-setting(COLOUR_LIGHT)), $alpha: 1),
+    "dark":       adjust-color(get-colour(get-setting(COLOUR_DARK)), $alpha: 1),
 );
 
 @import "bootstrap";
