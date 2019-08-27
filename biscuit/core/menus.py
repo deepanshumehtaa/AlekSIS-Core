@@ -4,6 +4,8 @@ MENUS = {
     'NAV_MENU_CORE': [
         {
             'name': _('Account'),
+            'url': '#',
+            'root': True,
             'submenu': [
                 {
                     'name': _('Login'),
@@ -19,6 +21,8 @@ MENUS = {
         },
         {
             'name': _('People'),
+            'url': '#',
+            'root': True,
             'submenu': [
                 {
                     'name': _('Persons'),
