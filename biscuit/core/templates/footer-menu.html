@@ -7,7 +7,7 @@
 {% for menu in footer_menus %}
  {% if not menu.grouper %}
   {% for item in menu.list %}
-   <div class="col-xs-12 col-sm-4 ">
+   <div class="col-xs-6 col-sm-3 ">
     <h5>{{ item.name }}</h5>
     <ul class="list-unstyled quick-links">
      {% for menu in item.submenu %}
@@ -21,7 +21,7 @@
 
 {% for menu in footer_menus %}
  {% if menu.grouper %}
-  <div class="col-xs-12 col-sm-4 ">
+  <div class="col-xs-6 col-sm-3 ">
    <h5>{% blocktrans %}Assorted{% endblocktrans %}</h5>
    <ul class="list-unstyled quick-links">
     {% for item in menu.list %}
@@ -31,3 +31,7 @@
   </div>
  {% endif %}
 {% endfor %}
+
+<div class="col-xs-6 col-sm-3">
+  {% include 'core/language_form.html ' %}
+</div>
