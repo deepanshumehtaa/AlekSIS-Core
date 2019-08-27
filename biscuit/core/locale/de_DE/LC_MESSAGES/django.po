@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 19:58+0200\n"
-"PO-Revision-Date: 2019-08-26 19:59+0200\n"
+"POT-Creation-Date: 2019-08-27 12:50+0200\n"
+"PO-Revision-Date: 2019-08-27 12:51+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -161,13 +161,28 @@ msgstr "Langer Name der Gruppe"
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
-#: settings.py:177
+#: settings.py:187
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:178
+#: settings.py:188
 msgid "English"
 msgstr "Englisch"
+
+#: templates/503.html:9
+msgid ""
+"\n"
+"     The maintenance mode is currently enabled. Please try again later.\n"
+"    "
+msgstr ""
+"\n"
+"     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es "
+"später erneut.\n"
+"    "
+
+#: templates/core/edit_person.html:4 templates/core/person_full.html:11
+msgid "Edit person"
+msgstr "Person editiern"
 
 #: templates/core/group_full.html:11
 msgid "Edit group"
@@ -202,10 +217,6 @@ msgstr ""
 #: templates/core/groups.html:9
 msgid "List of all groups"
 msgstr "Liste aller Gruppen"
-
-#: templates/core/person_full.html:11
-msgid "Edit person"
-msgstr "Person editiern"
 
 #: templates/core/person_full.html:14
 msgid "Contact details"
@@ -281,7 +292,7 @@ msgstr ""
 msgid "Assorted"
 msgstr "Unsortiert"
 
-#: views.py:28
+#: views.py:29
 msgid ""
 "This page does not exist. If you were redirected by a link on an external "
 "page, it is possible that that link was outdated."
@@ -290,18 +301,28 @@ msgstr ""
 "externen Seite hierher gelangt sind, ist es möglich, dass dieser veraltet "
 "war."
 
-#: views.py:29
+#: views.py:30
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
 
-#: views.py:31
+#: views.py:32
 msgid "Internal server error"
 msgstr "Interner Serverfehler"
 
-#: views.py:32
+#: views.py:33
 msgid "An unexpected error has occurred."
 msgstr "Ein Fehler ist aufgetreten."
 
-#: views.py:157
+#: views.py:35
+msgid "Maintenance mode"
+msgstr "Wartungsmodus"
+
+#: views.py:36
+msgid "The maintenance mode is currently enabled. Please try again later."
+msgstr ""
+"Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+"erneut."
+
+#: views.py:161
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
