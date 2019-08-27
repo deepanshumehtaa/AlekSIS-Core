@@ -1,7 +1,6 @@
 {# -*- engine:django -*- #}
 {% load menu_generator %}
     {% get_menu "NAV_MENU_CORE" as core_menu %}
-    <ul class="nav navbar-nav ml-auto">
      {% for item in core_menu %}
       {% if not item.submenu %}
        <li class="{% if item.selected %} active {% endif %} nav-item">
