@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-27 12:50+0200\n"
+"POT-Creation-Date: 2019-08-27 15:36+0200\n"
 "PO-Revision-Date: 2019-08-27 14:45+0200\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: \n"
@@ -41,26 +41,42 @@ msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
 #: menus.py:6
+#, fuzzy
+#| msgid "New account"
+msgid "Account"
+msgstr "Neues Konto"
+
+#: menus.py:11
 msgid "Login"
 msgstr "Anmelden"
 
-#: menus.py:11
+#: menus.py:16
 msgid "Logout"
 msgstr "Abmelden"
 
-#: menus.py:16 templates/core/persons.html:5
+#: menus.py:23
+msgid "People"
+msgstr ""
+
+#: menus.py:28 templates/core/persons.html:5
 msgid "Persons"
 msgstr "Personen"
 
-#: menus.py:21 templates/core/groups.html:5
+#: menus.py:33 templates/core/groups.html:5
 msgid "Groups"
 msgstr "Gruppen"
 
-#: menus.py:28
+#: menus.py:38
+#, fuzzy
+#| msgid "Link persons to accounts"
+msgid "Persons and accounts"
+msgstr "Personen mit Benutzerkonten verknüpfen"
+
+#: menus.py:47
 msgid "BiscuIT Software"
 msgstr "BiscuIT-Software"
 
-#: menus.py:32
+#: menus.py:51
 msgid "Website"
 msgstr "Website"
 
@@ -176,8 +192,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es "
-"später erneut.\n"
+"     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+"erneut.\n"
 "    "
 
 #: templates/core/edit_person.html:4 templates/core/person_full.html:11
@@ -292,6 +308,10 @@ msgstr ""
 msgid "Assorted"
 msgstr "Unsortiert"
 
+#: templates/footer-menu.html:36
+msgid "Language"
+msgstr ""
+
 #: views.py:29
 msgid ""
 "This page does not exist. If you were redirected by a link on an external "
@@ -313,16 +333,14 @@ msgstr "Interner Serverfehler"
 msgid "An unexpected error has occurred."
 msgstr "Ein Fehler ist aufgetreten."
 
-#: views.py:35
-msgid "Maintenance mode"
-msgstr "Wartungsmodus"
-
-#: views.py:36
-msgid "The maintenance mode is currently enabled. Please try again later."
-msgstr ""
-"Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
-"erneut."
-
-#: views.py:161
+#: views.py:158
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
+
+#~ msgid "Maintenance mode"
+#~ msgstr "Wartungsmodus"
+
+#~ msgid "The maintenance mode is currently enabled. Please try again later."
+#~ msgstr ""
+#~ "Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+#~ "erneut."
