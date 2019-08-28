@@ -22,6 +22,7 @@ urlpatterns = [
     path('groups', views.groups, name='groups'),
     path('group/<int:id_>', views.group,
          {'template': 'full'}, name='group_by_id'),
+    path('group/<int:id_>/edit', views.edit_group, name='edit_group_by_id'),
     path('', views.index, name='index'),
     path('maintenance-mode/', include('maintenance_mode.urls')),
     path('__i18n__/', include('django.conf.urls.i18n'))

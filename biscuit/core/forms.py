@@ -62,3 +62,14 @@ class EditPersonForm(forms.ModelForm):
                                                          last_name=self.instance.last_name)
 
                 self.cleaned_data['user'] = new_user_obj
+
+class EditGroupForm(forms.ModelForm):
+    members = forms.MultipleChoiceField(
+        choices=[(person.id, person.__str__) for person in Person.objects.all()])
+
+    owners = forms.MultipleChoiceField(
+        choices=[(person.id, person.__str__) for person in Person.objects.all()])
+
+    class Meta:
+        model = Group
+        fields = ['name', 'short_name', 'members', 'owners']

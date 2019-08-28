@@ -141,6 +141,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'core/persons_accounts.html', context)
 
+
 @admin_required
 def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
@@ -161,3 +162,25 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context['edit_person_form'] = edit_person_form
 
     return render(request, 'core/edit_person.html', context)
+
+
+@admin_required
+def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    group = get_object_or_404(Group, id=id_)
+
+    edit_group_form = EditPersonForm(request.POST or None, instance=group)
+
+    context['group'] = group
+
+    if request.method == 'POST':
+        if edit_group_form.is_valid():
+            edit_group_form.save(commit=True)
+
+            messages.success(request, _('The group has been saved.'))
+            return redirect('groups')
+
+    context['edit_group_form'] = edit_group_form
+
+    return render(request, 'core/edit_group.html', context)
