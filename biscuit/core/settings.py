@@ -224,7 +224,8 @@ BOOTSTRAP4 = {
     'jquery_url': _settings.get('bootstrap.jquery_url', '/javascript/jquery/jquery.min.js'),
     'popper_url': _settings.get('bootstrap.popper_url', '/javascript/popper.js/umd/popper.min.js'),
     'include_jquery': True,
-    'include_popper': True
+    'include_popper': True,
+    'javascript_in_head': True
 }
 
 DATATABLES_BASE = _settings.get(
