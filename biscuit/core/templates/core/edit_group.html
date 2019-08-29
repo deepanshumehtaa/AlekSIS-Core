@@ -1,11 +1,11 @@
 {% extends "core/base.html" %}
 {% load bootstrap4 i18n %}
 
-{% block page_title %}{% blocktrans %}Edit Group{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans %}Edit group{% endblocktrans %}{% endblock %}
 
 {% block content %}
 
- <form method="post" enctype="multipart/form-data">
+ <form method="post">
   {% csrf_token %}
   {% bootstrap_form edit_group_form %}
   <input type="submit" value="Edit" />

@@ -8,7 +8,7 @@ from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
 
 from .decorators import admin_required
-from .forms import PersonsAccountsFormSet, EditPersonForm
+from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 from .util import messages
@@ -170,9 +170,8 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
 
     group = get_object_or_404(Group, id=id_)
 
-    edit_group_form = EditPersonForm(request.POST or None, instance=group)
+    edit_group_form = EditGroupForm(request.POST or None, instance=group)
 
-    context['group'] = group
 
     if request.method == 'POST':
         if edit_group_form.is_valid():
@@ -181,6 +180,7 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
             messages.success(request, _('The group has been saved.'))
             return redirect('groups')
 
+    context['group'] = group
     context['edit_group_form'] = edit_group_form
 
     return render(request, 'core/edit_group.html', context)

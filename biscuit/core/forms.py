@@ -63,13 +63,13 @@ class EditPersonForm(forms.ModelForm):
 
                 self.cleaned_data['user'] = new_user_obj
 
+
 class EditGroupForm(forms.ModelForm):
-    members = forms.MultipleChoiceField(
-        choices=[(person.id, person.__str__) for person in Person.objects.all()])
-
-    owners = forms.MultipleChoiceField(
-        choices=[(person.id, person.__str__) for person in Person.objects.all()])
-
     class Meta:
         model = Group
         fields = ['name', 'short_name', 'members', 'owners']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['members'].queryset = Person.objects.all()
+        self.fields['owners'].queryset = Person.objects.all()
