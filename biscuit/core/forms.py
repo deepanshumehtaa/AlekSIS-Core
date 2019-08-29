@@ -40,7 +40,7 @@ PersonsAccountsFormSet = forms.modelformset_factory(
 class EditPersonForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ['user', 'is_active', 'first_name', 'last_name', 'additional_name', 'short_name', 'street', 'housenumber', 'postal_code', 'place', 'phone_number', 'mobile_number', 'email', 'date_of_birth', 'sex', 'photo']
+        fields = ['user', 'is_active', 'first_name', 'last_name', 'additional_name', 'short_name', 'street', 'housenumber', 'postal_code', 'place', 'phone_number', 'mobile_number', 'email', 'date_of_birth', 'sex', 'photo', 'photo_cropping']
 
     new_user = forms.CharField(
         required=False,
