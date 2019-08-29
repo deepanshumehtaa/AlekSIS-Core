@@ -69,7 +69,7 @@ class Person(SchoolRelated):
     sex = models.CharField(verbose_name=_(
         'Sex'), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageCropField(verbose_name=_('Photo'), blank=True, null=True)
+    photo = ImageCropField(verbose_name=_('Photo'), blank=True, null=True)
     photo_cropping = ImageRatioField('photo', '600x800', size_warning=True)
 
     import_ref = models.CharField(verbose_name=_(
