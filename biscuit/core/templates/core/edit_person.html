@@ -3,6 +3,11 @@
 
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 
+{% block bootstrap4_extra_head %}
+ {{ block.super }}
+ {{ edit_person_form.media }}
+{% endblock %}
+
 {% block content %}
 
  <form method="post" enctype="multipart/form-data">
