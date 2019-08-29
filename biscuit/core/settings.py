@@ -119,6 +119,9 @@ THUMBNAIL_PROCESSORS = (
     'image_cropping.thumbnail_processors.crop_corners',
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
+# Already included by base template / Bootstrap
+IMAGE_CROPPING_JQUERY_URL = None
+
 WSGI_APPLICATION = 'biscuit.core.wsgi.application'
 
 
