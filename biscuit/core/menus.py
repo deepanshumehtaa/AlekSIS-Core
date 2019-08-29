@@ -27,12 +27,12 @@ MENUS = {
                 {
                     'name': _('Persons'),
                     'url': 'persons',
-                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                    'validators': ['menu_generator.validators.is_authenticated']
                 },
                 {
                     'name': _('Groups'),
                     'url': 'groups',
-                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                    'validators': ['menu_generator.validators.is_authenticated']
                 },
                 {
                     'name': _('Persons and accounts'),
