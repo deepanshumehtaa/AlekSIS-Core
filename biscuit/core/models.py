@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .mixins import SchoolRelated
@@ -68,7 +69,7 @@ class Person(SchoolRelated):
     sex = models.CharField(verbose_name=_(
         'Sex'), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageField(verbose_name=_('Photo'), blank=True, null=True)
+    photo = models.ImageCropField(verbose_name=_('Photo'), blank=True, null=True)
     photo_cropping = ImageRatioField('photo', '600x800', size_warning=True)
 
     import_ref = models.CharField(verbose_name=_(
