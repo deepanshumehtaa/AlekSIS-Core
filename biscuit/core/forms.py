@@ -62,3 +62,14 @@ class EditPersonForm(forms.ModelForm):
                                                          last_name=self.instance.last_name)
 
                 self.cleaned_data['user'] = new_user_obj
+
+
+class EditGroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name', 'short_name', 'members', 'owners']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['members'].queryset = Person.objects.all()
+        self.fields['owners'].queryset = Person.objects.all()

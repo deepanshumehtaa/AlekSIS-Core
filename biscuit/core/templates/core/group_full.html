@@ -7,7 +7,7 @@
  {% if group %}
   <h2>{{ group.name }} <small>{{ group.short_name }}</small></h2>
   <p>
-   <a href="{{ '#' }}">
+   <a href="{% url 'edit_group_by_id' group.id %}">
     {% blocktrans %}Edit group{% endblocktrans %}
    </a>
   </p>
