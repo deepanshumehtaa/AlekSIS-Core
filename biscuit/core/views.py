@@ -156,7 +156,6 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
             edit_person_form.save(commit=True)
 
             messages.success(request, _('The person has been saved.'))
-            return redirect('persons')
 
     context['edit_person_form'] = edit_person_form
 
