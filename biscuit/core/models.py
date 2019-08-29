@@ -69,6 +69,7 @@ class Person(SchoolRelated):
         'Sex'), max_length=1, choices=SEX_CHOICES, blank=True)
 
     photo = models.ImageField(verbose_name=_('Photo'), blank=True, null=True)
+    photo_cropping = ImageRatioField('photo', '600x800', size_warning=True)
 
     import_ref = models.CharField(verbose_name=_(
         'Reference ID of import source'), max_length=64, blank=True, null=True, editable=False)
