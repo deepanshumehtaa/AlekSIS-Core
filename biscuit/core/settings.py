@@ -5,6 +5,7 @@ import sys
 from django.utils.translation import ugettext_lazy as _
 
 from dynaconf import LazySettings
+from easy_thumbnails.conf import Settings as thumbnail_settings
 
 from .util.core_helpers import get_app_packages
 
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
     'fa',
     'django_any_js',
     'django_tables2',
+    'easy_thumbnails',
+    'image_cropping',
     'maintenance_mode',
     'menu_generator',
     'phonenumber_field',
@@ -111,6 +114,13 @@ TEMPLATES = [
         },
     },
 ]
+
+THUMBNAIL_PROCESSORS = (
+    'image_cropping.thumbnail_processors.crop_corners',
+) + thumbnail_settings.THUMBNAIL_PROCESSORS
+
+# Already included by base template / Bootstrap
+IMAGE_CROPPING_JQUERY_URL = None
 
 WSGI_APPLICATION = 'biscuit.core.wsgi.application'
 
@@ -214,7 +224,8 @@ BOOTSTRAP4 = {
     'jquery_url': _settings.get('bootstrap.jquery_url', '/javascript/jquery/jquery.min.js'),
     'popper_url': _settings.get('bootstrap.popper_url', '/javascript/popper.js/umd/popper.min.js'),
     'include_jquery': True,
-    'include_popper': True
+    'include_popper': True,
+    'javascript_in_head': True
 }
 
 DATATABLES_BASE = _settings.get(
