@@ -24,7 +24,7 @@ MENUS = {
             'url': '#',
             'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser'],
             'submenu': [
-                }
+                {
                     'name': _('Data management'),
                     'url': 'data_management',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
