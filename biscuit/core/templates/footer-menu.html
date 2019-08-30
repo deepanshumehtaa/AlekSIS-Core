@@ -11,7 +11,7 @@
     <h5>{{ item.name }}</h5>
     <ul class="list-unstyled quick-links">
      {% for menu in item.submenu %}
-      <li><a class="core-footer-link text-dark" href="{{ menu.url }}">{% fa 'fa-angle-double-right' %} {{ menu.name }}</a></li>
+      <li><a class="font-weight-bold text-dark" href="{{ menu.url }}">{% fa 'fa-angle-double-right' %} {{ menu.name }}</a></li>
      {% endfor %}
     </ul>
    </div>
@@ -25,7 +25,7 @@
    <h5>{% blocktrans %}Assorted{% endblocktrans %}</h5>
    <ul class="list-unstyled quick-links">
     {% for item in menu.list %}
-     <li><a class="core-footer-link text-dark" href="{{ item.url }}">{% fa 'fa-angle-double-right' %} {{ item.name }}</a></li>
+     <li><a class="font-weight-bold text-dark" href="{{ item.url }}">{% fa 'fa-angle-double-right' %} {{ item.name }}</a></li>
     {% endfor %}
    </ul>
   </div>
