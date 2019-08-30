@@ -20,6 +20,18 @@ MENUS = {
             ]
         },
         {
+            'name': _('Admin'),
+            'url': '#',
+            'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser'],
+            'submenu': [
+                }
+                    'name': _('Data management'),
+                    'url': 'data_management',
+                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                }
+            ]
+        },
+        {
             'name': _('People'),
             'url': '#',
             'root': True,
@@ -57,5 +69,7 @@ MENUS = {
                 }
             ]
         }
+    ],
+    'DATA_MANAGEMENT_MENU': [
     ]
 }
