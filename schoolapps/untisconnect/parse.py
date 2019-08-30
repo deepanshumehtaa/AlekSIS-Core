@@ -1,3 +1,13 @@
+from dashboard import caches
+
+from .api import *
+from .api_helper import untis_split_third
+
+from .drive import drive
+
+drive = drive
+
+
 class Lesson(object):
     def __init__(self):
         self.filled = False
@@ -108,22 +118,19 @@ class LessonTime(object):
         self.rooms = rooms
 
 
-from .api import *
-from .api_helper import untis_split_third
-
-from .drive import drive
-drive = drive
-
 def parse():
     global drive
+
+    cached = caches.PARSED_LESSONS_CACHE.get()
+    if cached is not False:
+        print("Lessons come from cache")
+        return cached
     lessons = []
+
+    # Load lessons from Django ORM
     raw_lessons = get_raw_lessons()
 
     for raw_lesson in raw_lessons:
-        # print("[RAW LESSON]")
-        # print("LESSON_ID      | ", raw_lesson.lesson_id)
-        # print("LessonElement1 | ", raw_lesson.lessonelement1)
-        # print("Lesson_TT      | ", raw_lesson.lesson_tt)
 
         if raw_lesson.lesson_tt and raw_lesson.lessonelement1:
             # Create object
@@ -131,6 +138,9 @@ def parse():
             lesson_obj.create(raw_lesson, drive)
 
             lessons.append(lesson_obj)
+
+    print("Lesson cache was refreshed")
+    caches.PARSED_LESSONS_CACHE.update(lessons)
 
     return lessons
 
@@ -144,8 +154,6 @@ def get_lesson_by_id(id):
 
 
 def get_lesson_element_by_id_and_teacher(lesson_id, teacher, hour=None, weekday=None):
-    # print(lesson_id)
-    # print(hour, "LEWE", weekday)
     try:
         lesson = get_lesson_by_id(lesson_id)
     except Exception:

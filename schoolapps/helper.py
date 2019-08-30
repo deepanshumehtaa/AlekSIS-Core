@@ -1,8 +1,6 @@
 import os
 from uuid import uuid4
 
-from django.template.loader_tags import register
-
 
 def path_and_rename(instance, filename):
     upload_to = 'menus'
@@ -15,8 +13,3 @@ def path_and_rename(instance, filename):
         filename = '{}.{}'.format(uuid4().hex, ext)
     # return the whole path to the file
     return os.path.join(upload_to, filename)
-
-
-@register.inclusion_tag("components/msgbox.html")
-def msg_box(msg, status="success", icon="info"):
-    return {"msg": msg, "status": status, "icon": icon}

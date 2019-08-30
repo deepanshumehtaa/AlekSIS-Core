@@ -66,7 +66,7 @@ header a.sidenav-trigger {
     z-index: 2;
 }
 
-header div.nav-wrapper{
+header div.nav-wrapper {
     z-index: -5;
 }
 
@@ -81,20 +81,22 @@ header, main, footer {
 }
 
 
-
 @media only screen and (min-width: 1384px) {
     .footer-row-large {
         display: flex;
         align-items: center;
     }
+
     .footer-row-small {
         display: none;
     }
 }
+
 @media only screen and (max-width: 1383px) {
     .footer-row-large {
-    display: none;
-}
+        display: none;
+    }
+
     .footer-row-small {
         display: block;
     }
@@ -399,6 +401,11 @@ table.striped > tbody > tr:nth-child(odd) {
 .alert.primary p, .alert.primary div {
     background-color: #eca4af;
     border-color: #da1f3d;
+}
+
+.alert.warning p, .alert.warning div {
+    background-color: #ffb74d;
+    border-color: #e65100;
 }
 
 main .alert p:first-child, main .alert div:first-child {
