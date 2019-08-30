@@ -184,3 +184,8 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
     context['edit_group_form'] = edit_group_form
 
     return render(request, 'core/edit_group.html', context)
+
+
+def data_management(request: HttpRequest) -> HttpResponse:
+    context = {}
+    return render(request, 'core/data_management.html', context)
