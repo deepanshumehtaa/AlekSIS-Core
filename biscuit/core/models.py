@@ -22,6 +22,10 @@ class School(models.Model):
         'Official name of the school, e.g. as given by supervisory authority'))
 
 
+    class Meta:
+        ordering = ['name', 'name_official']
+
+
 class Person(SchoolRelated):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
@@ -29,6 +33,7 @@ class Person(SchoolRelated):
 
     class Meta:
         unique_together = [['school', 'short_name'], ['school', 'import_ref']]
+        ordering = ['last_name', 'first_name']
 
     SEX_CHOICES = [
         ('f', _('female')),
@@ -118,6 +123,7 @@ class Group(SchoolRelated):
 
     class Meta:
         unique_together = [['school', 'name'], ['school', 'short_name']]
+        ordering = ['short_name', 'name']
 
     name = models.CharField(verbose_name=_(
         'Long name of group'), max_length=30)
