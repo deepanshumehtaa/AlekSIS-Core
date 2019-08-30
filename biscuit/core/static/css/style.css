@@ -27,3 +27,7 @@ img.person-img {
         display: block;
         margin-top:0px;
 }
+
+.core-footer-link {
+  font-weight: bold;
+}
