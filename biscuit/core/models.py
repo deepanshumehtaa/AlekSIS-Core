@@ -105,8 +105,12 @@ class Person(SchoolRelated):
                                                      defaults={'name': value})
         self.primary_group = group
 
-    def __str__(self) -> str:
+    @property
+    def full_name(self) -> str:
         return '%s, %s' % (self.last_name, self.first_name)
+
+    def __str__(self) -> str:
+        return self.full_name
 
 
 class Group(SchoolRelated):
