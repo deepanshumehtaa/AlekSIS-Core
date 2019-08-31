@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Activity, register_notification
@@ -39,6 +40,29 @@ def index(request):
     }
 
     return render(request, 'dashboard/index.html', context)
+
+
+@login_required
+def api_information(request):
+    # Load activities
+    activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
+
+    # Load notifications
+    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
+
+    # user_type = UserInformation.user_type(request.user)
+    context = {
+        'activities': list(activities.values()),
+        'notifications': list(notifications.values()),
+        'user_type': UserInformation.user_type(request.user),
+        'user_type_formatted': UserInformation.user_type_formatted(request.user),
+        'classes': UserInformation.user_classes(request.user),
+        'courses': UserInformation.user_courses(request.user),
+        'subjects': UserInformation.user_subjects(request.user),
+        'has_wifi': UserInformation.user_has_wifi(request.user)
+    }
+    print(context)
+    return JsonResponse(context)
 
 
 @login_required
