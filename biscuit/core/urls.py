@@ -32,8 +32,8 @@ urlpatterns = [
     path('maintenance-mode/', include('maintenance_mode.urls')),
     path('contact/support/', ContactFormView.as_view(form_class=SupportContactForm),
         name='support_contact_form'))
-    path('contact/support/sent/', TemplateView.as_view(template_name='contact_form/support/sent.html'),
-        name='support_contact_form_sent'),
+    path('contact/sent/', TemplateView.as_view(template_name='contact_form/sent.html'),
+        name='contact_form_sent'),
     path('__i18n__/', include('django.conf.urls.i18n'))
 ]
 
