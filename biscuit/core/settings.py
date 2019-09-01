@@ -256,6 +256,16 @@ SERVER_EMAIL = _settings.get('contact.from', 'root@localhost')
 DEFAULT_FROM_EMAIL = _settings.get('contact.from', 'root@localhost')
 MANAGERS = _settings.get('contact.admins', [])
 
+if _settings.get('mail.server.host', None):
+    EMAIL_HOST = _settings.get('mail.server.host')
+    EMAIL_USE_TLS = _settings.get('mail.server.tls', False)
+    EMAIL_USE_SSL = _settings.get('mail.server.ssl', False)
+    if _settings.get('mail.server.port', None):
+        EMAIL_PORT = _settings.get('mail.server.port')
+    if _settings.get('mail.server.user', None):
+        EMAIL_HOST_USER = _settings.get('mail.server.user')
+        EMAIL_HOST_PASSWORD = _settings.get('mail.server.password')
+
 TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
 
 MAINTENANCE_MODE = _settings.get('maintenance.enabled', None)
