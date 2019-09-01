@@ -68,6 +68,16 @@ MENUS = {
                     'url': 'https://www.teckids.org/'
                 }
             ]
+        },
+        {
+            'name': _('Support'),
+            'url': '#',
+            'submenu': [
+                {
+                    'name': _('Get support'),
+                    'url': 'support_contact_form'
+                }
+            ]
         }
     ],
     'DATA_MANAGEMENT_MENU': [
