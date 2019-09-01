@@ -75,7 +75,7 @@ MENUS = {
             'submenu': [
                 {
                     'name': _('Get support'),
-                    'url': 'support_contact_form'
+                    'url': 'contact_form'
                 }
             ]
         }

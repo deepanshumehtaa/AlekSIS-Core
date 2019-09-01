@@ -2,8 +2,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from contact_form.forms import ContactForm
-
 from .models import Person, Group
 
 
@@ -75,9 +73,3 @@ class EditGroupForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['members'].queryset = Person.objects.all()
         self.fields['owners'].queryset = Person.objects.all()
-
-
-class SupportContactForm(ContactForm):
-    subject_template_name = 'contact_form/support/subject.txt'
-    template_name = 'contact_form/support/body.txt'
-    
