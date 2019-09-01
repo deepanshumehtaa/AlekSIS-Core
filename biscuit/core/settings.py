@@ -253,6 +253,8 @@ COLOUR_DARK = _settings.get('theme.colours.dark', '#343a40')
 
 ADMINS = _settings.get('contact.admins', [])
 SERVER_EMAIL = _settings.get('contact.from', 'root@localhost')
+DEFAULT_FROM_EMAIL = _settings.get('contact.from', 'root@localhost')
+MANAGERS = _settings.get('contact.admins', [])
 
 TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
 
