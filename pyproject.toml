@@ -42,6 +42,7 @@ django-maintenance-mode = "^0.13.3"
 django-ipware = "^2.1"
 easy-thumbnails = "^2.6"
 django-image-cropping = "^1.2"
+django-contact-form = "^1.7"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

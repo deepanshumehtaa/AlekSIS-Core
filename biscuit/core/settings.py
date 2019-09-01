@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'menu_generator',
     'phonenumber_field',
     'debug_toolbar',
+    'contact_form',
     'biscuit.core'
 ]
 
