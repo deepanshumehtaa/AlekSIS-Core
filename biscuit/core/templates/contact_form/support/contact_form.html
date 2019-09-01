@@ -5,12 +5,11 @@
 {% block page_title %}BiscuIT SIS support{% endblock %}
 
 {% block content %}
-{% blocktrans %}<h2>Get support</h2>{% endblocktrans %}
+ <h1>{% blocktrans %}Get support{% endblocktrans %}</h1>
 
-<form method="post">
- {% csrf_token %}
- {% bootstrap_form form %}
- <input type="submit" value="Sent" />
-</form>
-
+ <form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" value="Send" />
+ </form>
 {% endblock %}
