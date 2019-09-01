@@ -35,6 +35,7 @@ class Notification(models.Model):
 
     app = models.CharField(max_length=100)
 
+    read = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

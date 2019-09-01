@@ -106,10 +106,19 @@ var Dashboard = function (_React$Component) {
     }, {
         key: "closeNotification",
         value: function closeNotification(notification) {
+            console.log(notification);
+            $("#not-" + notification.id).addClass("scale-out");
+            window.setTimeout(function () {
+                $("#not-" + notification.id).remove();
+            }, 200);
+            $.getJSON(API_URL + "/notifications/read/" + notification.id);
+            this.updateData();
+            this.setState({time: new Date()});
         }
     }, {
         key: "render",
         value: function render() {
+            var that = this;
             return React.createElement(
                 "div",
                 null,
@@ -130,47 +139,60 @@ var Dashboard = function (_React$Component) {
                     {className: "flow-text"},
                     "Willkommen bei SchoolApps!"
                 ),
-                React.createElement(
-                    "div",
-                    {className: "alert primary"},
-                    React.createElement(
+                this.state.unread_notifications && this.state.unread_notifications.length > 0 ? this.state.unread_notifications.map(function (notification) {
+                    return React.createElement(
                         "div",
-                        null,
+                        {
+                            className: "alert primary scale-transition", id: "not-" + notification.id,
+                            key: notification.id
+                        },
                         React.createElement(
-                            "i",
-                            {className: "material-icons left"},
-                            "info"
-                        ),
-                        React.createElement(
-                            "button",
-                            {className: "btn-flat right"},
+                            "div",
+                            null,
                             React.createElement(
                                 "i",
-                                {className: "material-icons center"},
-                                "close"
+                                {className: "material-icons left"},
+                                "info"
+                            ),
+                            React.createElement(
+                                "div",
+                                {className: "right"},
+                                React.createElement(
+                                    "button",
+                                    {
+                                        className: "btn-flat", onClick: function onClick() {
+                                            return that.closeNotification(notification);
+                                        }
+                                    },
+                                    React.createElement(
+                                        "i",
+                                        {className: "material-icons center"},
+                                        "close"
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "strong",
+                                null,
+                                notification.title
+                            ),
+                            React.createElement(
+                                "p",
+                                null,
+                                notification.description
                             )
-                        ),
-                        React.createElement(
-                            "strong",
-                            null,
-                            "Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt"
-                        ),
-                        React.createElement(
-                            "p",
-                            null,
-                            "Ihr Antrag auf Unterrichtsbefreiung vom 20. August 2019, 08:45 Uhr bis 29. August 2019, 13:10 Uhr wurde von der Schulleitung genehmigt. "
                         )
-                    )
-                ),
+                    );
+                }) : "",
                 React.createElement(
                     "div",
                     {className: "row"},
                     React.createElement(
                         "div",
-                        {className: "col s12 m8"},
+                        {className: "col s12 m6 l6 xl8 no-padding"},
                         React.createElement(
                             "div",
-                            {className: "col s12 m6"},
+                            {className: "col s12 m12 l12 xl6"},
                             React.createElement(
                                 "div",
                                 {className: "card"},
@@ -212,7 +234,7 @@ var Dashboard = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            {className: "col s12 m6"},
+                            {className: "col s12 m12 l12 xl6"},
                             React.createElement(
                                 "div",
                                 {className: "card"},
@@ -260,7 +282,7 @@ var Dashboard = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            {className: "col s12 m6"},
+                            {className: "col s12 m12 l12 xl6"},
                             React.createElement(
                                 "div",
                                 {className: "card"},
@@ -318,7 +340,7 @@ var Dashboard = function (_React$Component) {
                         ),
                         React.createElement(
                             "div",
-                            {className: "col s12 m6"},
+                            {className: "col s12 m12 l12 xl6"},
                             React.createElement(
                                 "div",
                                 {className: "card"},
@@ -370,44 +392,59 @@ var Dashboard = function (_React$Component) {
                             )
                         )
                     ),
-                    React.createElement(
+                    this.state.newest_article ? React.createElement(
                         "div",
-                        {className: "col s12 m4"},
+                        {className: "col s12 m6 l6 xl4"},
                         React.createElement(
                             "div",
                             {className: "card"},
                             React.createElement(
                                 "div",
                                 {className: "card-image"},
-                                React.createElement("img", {
-                                    src: "https://katharineum-zu-luebeck.de/wp-content/uploads/2019/08/E969562D-C413-4B18-AC63-26C768499BFF.jpeg"
-                                }),
                                 React.createElement(
                                     "span",
-                                    {className: "card-title"},
-                                    "Ein gro\xDFer Tag - Die Einschulung der neuen Sextaner"
-                                )
+                                    {className: "badge-image"},
+                                    "Aktuelles von der Homepage"
+                                ),
+                                React.createElement("img", {
+                                    src: this.state.newest_article.image_url,
+                                    alt: this.state.newest_article.title
+                                }),
+                                React.createElement("span", {
+                                    className: "card-title",
+                                    dangerouslySetInnerHTML: {__html: this.state.newest_article.title}
+                                })
                             ),
                             React.createElement(
                                 "div",
                                 {className: "card-content"},
-                                React.createElement(
-                                    "p",
-                                    null,
-                                    "Am 13.08. war es wieder so weit: am Katharineum wurden die neuen Sextaner willkommen gehei\xDFen. Bereits zehn Minuten vor Beginn der allj\xE4hrlichen Veranstaltung war die\u2026"
-                                )
+                                React.createElement("p", {dangerouslySetInnerHTML: {__html: this.state.newest_article.short_text}})
                             ),
                             React.createElement(
                                 "div",
                                 {className: "card-action"},
                                 React.createElement(
                                     "a",
-                                    {href: "#"},
+                                    {href: this.state.newest_article.link, target: "_blank"},
                                     "Mehr lesen"
                                 )
                             )
+                        ),
+                        React.createElement(
+                            "a",
+                            {
+                                className: "btn hundred-percent primary-color",
+                                href: "https://katharineum-zu-luebeck.de/",
+                                target: "_blank"
+                            },
+                            "Weitere Artikel",
+                            React.createElement(
+                                "i",
+                                {className: "material-icons right"},
+                                "arrow_forward"
+                            )
                         )
-                    )
+                    ) : ""
                 ),
                 React.createElement(
                     "div",

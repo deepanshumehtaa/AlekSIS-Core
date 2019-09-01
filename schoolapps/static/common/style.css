@@ -399,7 +399,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .alert.primary p, .alert.primary div {
-    background-color: #eca4af;
+    background-color: #ececec;
     border-color: #da1f3d;
 }
 
@@ -517,6 +517,10 @@ i.collapsible-trigger {
     margin: 0 !important;
 }
 
+.no-padding {
+    padding: 0 !important;
+}
+
 .no-pad-left {
     padding-left: 0 !important;
 }
@@ -577,4 +581,21 @@ i.collapsible-trigger {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+}
+
+.hundred-percent {
+    width: 100%;
+}
+
+.badge-image {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    z-index: 1;
+    background-color: #da1f3d;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 0 3px 3px 0;
+    text-transform: uppercase;
+    font-weight: 300;
 }

@@ -45,28 +45,45 @@ class Dashboard extends React.Component {
     }
 
     closeNotification(notification) {
-
+        console.log(notification);
+        $("#not-" + notification.id).addClass("scale-out");
+        window.setTimeout(() => {
+            $("#not-" + notification.id).remove();
+        }, 200);
+        $.getJSON(API_URL + "/notifications/read/" + notification.id);
+        this.updateData();
+        this.setState({time: new Date()});
     }
 
     render() {
+        const that = this;
         return <div>
             <button className={"btn-flat right grey-text"} onClick={this.updateData}>
                 <i className={"material-icons left"}>refresh</i>
                 in {this.state.refreshIn} s
             </button>
             <p className="flow-text">Willkommen bei SchoolApps!</p>
-            <div className={"alert primary"}>
-                <div>
-                    <i className={"material-icons left"}>info</i>
-                    <button className={"btn-flat right"}><i className={"material-icons center"}>close</i></button>
-                    <strong>Ihr Antrag auf Unterrichtsbefreiung wurde genehmigt</strong>
-                    <p>Ihr Antrag auf Unterrichtsbefreiung vom 20. August 2019, 08:45 Uhr bis 29. August 2019, 13:10 Uhr
-                        wurde von der Schulleitung genehmigt. </p>
-                </div>
-            </div>
+            {this.state.unread_notifications && this.state.unread_notifications.length > 0 ?
+                this.state.unread_notifications.map(function (notification) {
+                    return <div className={"alert primary scale-transition"} id={"not-" + notification.id}
+                                key={notification.id}>
+                        <div>
+                            <i className={"material-icons left"}>info</i>
+                            <div className={"right"}>
+                                <button className={"btn-flat"} onClick={() => that.closeNotification(notification)}>
+                                    <i className={"material-icons center"}>close</i>
+                                    {/*Gelesen*/}
+                                </button>
+                            </div>
+                            <strong>{notification.title}</strong>
+                            <p>{notification.description}</p>
+                        </div>
+                    </div>;
+                }) : ""}
+
             <div className={"row"}>
-                <div className={"col s12 m8"}>
-                    <div className="col s12 m6">
+                <div className={"col s12 m6 l6 xl8 no-padding"}>
+                    <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             <div className="card-content">
                                 <span className="card-title">Vertretungen der <em>Eb</em> für heute</span>
@@ -81,7 +98,7 @@ class Dashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col s12 m6">
+                    <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             <div className="card-content">
                                 <span className="card-title">Aktuelle Termine</span>
@@ -103,7 +120,7 @@ class Dashboard extends React.Component {
                     </div>
 
 
-                    <div className="col s12 m6">
+                    <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             <div className="card-content">
                                 <span className="card-title">Mein Status</span>
@@ -134,7 +151,7 @@ class Dashboard extends React.Component {
                     </div>
 
 
-                    <div className="col s12 m6">
+                    <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             <div className="card-content">
                                 <span className="card-title">Klausuren der <em>Eb</em></span>
@@ -156,22 +173,27 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
 
-                <div className="col s12 m4">
+                {this.state.newest_article ? <div className="col s12 m6 l6 xl4">
                     <div className="card">
                         <div className="card-image">
-                            <img
-                                src="https://katharineum-zu-luebeck.de/wp-content/uploads/2019/08/E969562D-C413-4B18-AC63-26C768499BFF.jpeg"/>
-                            <span className="card-title">Ein großer Tag - Die Einschulung der neuen Sextaner</span>
+                            <span className={"badge-image"}>Aktuelles von der Homepage</span>
+                            <img src={this.state.newest_article.image_url} alt={this.state.newest_article.title}/>
+                            <span className="card-title"
+                                  dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
                         </div>
                         <div className="card-content">
-                            <p>Am 13.08. war es wieder so weit: am Katharineum wurden die neuen Sextaner willkommen
-                                geheißen. Bereits zehn Minuten vor Beginn der alljährlichen Veranstaltung war die…</p>
+                            <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
                         </div>
                         <div className="card-action">
-                            <a href="#">Mehr lesen</a>
+                            <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
                         </div>
                     </div>
-                </div>
+                    <a className={"btn hundred-percent primary-color"} href={"https://katharineum-zu-luebeck.de/"}
+                       target={"_blank"}>
+                        Weitere Artikel
+                        <i className={"material-icons right"}>arrow_forward</i>
+                    </a>
+                </div> : ""}
 
             </div>
             <div className={"row"}>
