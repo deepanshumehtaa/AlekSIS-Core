@@ -1,0 +1,16 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_title %}BiscuIT SIS support{% endblock %}
+
+{% block content %}
+<h2>Get support</h2>
+
+ <form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" value="Edit" />
+ </form>
+
+{% endblock %}
