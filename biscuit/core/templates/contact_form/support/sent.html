@@ -1,0 +1,15 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_title %}BiscuIT School Information System (SIS){% endblock %}
+
+{% block content %}
+ <div class="alert alert-success" role="alert">
+  <p>
+   {% blocktrans %}
+    The message was successfully submitted.
+   {% endblocktrans %}
+  </p>
+ </div>
+{% endblock %}
