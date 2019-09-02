@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-02 13:14+0000\n"
-"PO-Revision-Date: 2019-08-27 14:45+0200\n"
-"Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
-"Language-Team: \n"
-"Language: de\n"
+"PO-Revision-Date: 2019-09-02 14:11+0000\n"
+"Last-Translator: Dominik George <dominik.george@teckids.org>\n"
+"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
+"biscuit-ng/de/>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.8\n"
 
 #: apps.py:11
 msgid "BiscuIT - The Free School Information System"
@@ -39,14 +40,12 @@ msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
 #: menus.py:6
-#, fuzzy
-#| msgid "New account"
 msgid "Account"
-msgstr "Neues Konto"
+msgstr "Konto"
 
 #: menus.py:11
 msgid "Stop impersonation"
-msgstr ""
+msgstr "Verkleidung beenden"
 
 #: menus.py:16
 msgid "Login"
@@ -58,21 +57,19 @@ msgstr "Abmelden"
 
 #: menus.py:28
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: menus.py:33
 msgid "Data management"
-msgstr ""
+msgstr "Datenverwaltung"
 
 #: menus.py:38
-#, fuzzy
-#| msgid "Is person active?"
 msgid "Impersonation"
-msgstr "Ist die Person aktiv?"
+msgstr "Verkleidung"
 
 #: menus.py:45
 msgid "People"
-msgstr ""
+msgstr "Leute"
 
 #: menus.py:50 templates/core/persons.html:5
 msgid "Persons"
@@ -83,10 +80,8 @@ msgid "Groups"
 msgstr "Gruppen"
 
 #: menus.py:60
-#, fuzzy
-#| msgid "Link persons to accounts"
 msgid "Persons and accounts"
-msgstr "Personen mit Benutzerkonten verknüpfen"
+msgstr "Personen und Konten"
 
 #: menus.py:69
 msgid "BiscuIT Software"
@@ -98,11 +93,11 @@ msgstr "Website"
 
 #: menus.py:83
 msgid "Support"
-msgstr ""
+msgstr "Unterstützung"
 
 #: menus.py:87 templates/contact_form/contact_form.html:8
 msgid "Get support"
-msgstr ""
+msgstr "Unterstützung erhalten"
 
 #: migrations/0007_school.py:11
 msgid "Default school"
@@ -224,6 +219,9 @@ msgid ""
 "   The message was successfully submitted.\n"
 "  "
 msgstr ""
+"\n"
+"   Die Nachricht wurde erfolgreich übermittelt.\n"
+"  "
 
 #: templates/core/edit_group.html:4 templates/core/group_full.html:11
 msgid "Edit group"
@@ -265,7 +263,7 @@ msgstr "Liste aller Gruppen"
 
 #: templates/core/language_form.html:2
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: templates/core/person_full.html:14
 msgid "Contact details"
@@ -338,10 +336,8 @@ msgid "Assorted"
 msgstr "Unsortiert"
 
 #: templates/impersonate/list_users.html:8
-#, fuzzy
-#| msgid "Is person active?"
 msgid "Impersonate user"
-msgstr "Ist die Person aktiv?"
+msgstr "Als Benutzer verkleiden"
 
 #: views.py:29
 msgid "This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated."
@@ -364,10 +360,8 @@ msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
 #: views.py:180
-#, fuzzy
-#| msgid "The person has been saved."
 msgid "The group has been saved."
-msgstr "Die Person wurde gespeichert."
+msgstr "Die Gruppe wurde gespeichert."
 
 #~ msgid "Maintenance mode"
 #~ msgstr "Wartungsmodus"
