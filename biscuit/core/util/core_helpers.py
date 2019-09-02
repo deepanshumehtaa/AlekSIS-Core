@@ -69,3 +69,12 @@ def get_current_school() -> Optional:
 def is_impersonate(request: HttpRequest) -> bool:
     if hasattr(request, 'user'):
         return getattr(request.user, 'is_impersonate', False)
+    else:
+        return False
+
+
+def has_person(request: HttpRequest) -> bool:
+    if hasattr(request, 'user'):
+        return getattr(request.user, 'person', None) is not None
+    else:
+        return False

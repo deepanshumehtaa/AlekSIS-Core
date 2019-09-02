@@ -45,7 +45,7 @@ MENUS = {
             'name': _('People'),
             'url': '#',
             'root': True,
-            'validators': ['menu_generator.validators.is_authenticated'],
+            'validators': ['menu_generator.validators.is_authenticated', 'biscuit.core.util.core_helpers.has_person'],
             'submenu': [
                 {
                     'name': _('Persons'),
