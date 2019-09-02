@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-02 21:22+0000\n"
-"PO-Revision-Date: 2019-09-02 14:11+0000\n"
+"PO-Revision-Date: 2019-09-02 21:26+0000\n"
 "Last-Translator: Dominik George <dominik.george@teckids.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/biscuit-ng/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
+"biscuit-ng/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -195,10 +196,8 @@ msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
 #: models.py:134
-#, fuzzy
-#| msgid "Edit group"
 msgid "Parent groups"
-msgstr "Gruppe editieren"
+msgstr "Übergeordnete Gruppen"
 
 #: settings.py:200
 msgid "German"
@@ -276,6 +275,9 @@ msgid ""
 "       You are not linked to a person\n"
 "     "
 msgstr ""
+"\n"
+"       Sie sind nicht mit einer Person verknüpft\n"
+"     "
 
 #: templates/core/no_person.html:11
 msgid ""
@@ -285,6 +287,13 @@ msgid ""
 "       the managers of BiscuIT at your school.\n"
 "     "
 msgstr ""
+"\n"
+"       Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das bedeutet, "
+"dass Sie\n"
+"       keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie "
+"sich an\n"
+"       die Verwaltenden von BiscuIT an Ihrer Schule.\n"
+"     "
 
 #: templates/core/person_full.html:14
 msgid "Contact details"
