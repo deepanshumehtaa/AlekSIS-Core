@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 13:14+0000\n"
+"POT-Creation-Date: 2019-09-02 21:22+0000\n"
 "PO-Revision-Date: 2019-09-02 14:11+0000\n"
 "Last-Translator: Dominik George <dominik.george@teckids.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
-"biscuit-ng/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/biscuit-ng/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,19 +22,19 @@ msgstr ""
 msgid "BiscuIT - The Free School Information System"
 msgstr "BiscuIT - Das freie Schulinformationssystem"
 
-#: forms.py:25 forms.py:55
+#: forms.py:26 forms.py:59
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen existierenden Benutzer auswählen."
 
-#: forms.py:27 forms.py:57
+#: forms.py:28 forms.py:61
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
 
-#: forms.py:47
+#: forms.py:50
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: forms.py:48
+#: forms.py:51
 msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
@@ -71,31 +70,31 @@ msgstr "Verkleidung"
 msgid "People"
 msgstr "Leute"
 
-#: menus.py:50 templates/core/persons.html:5
+#: menus.py:51 templates/core/persons.html:5
 msgid "Persons"
 msgstr "Personen"
 
-#: menus.py:55 templates/core/groups.html:5
+#: menus.py:56 templates/core/groups.html:5
 msgid "Groups"
 msgstr "Gruppen"
 
-#: menus.py:60
+#: menus.py:61
 msgid "Persons and accounts"
 msgstr "Personen und Konten"
 
-#: menus.py:69
+#: menus.py:70
 msgid "BiscuIT Software"
 msgstr "BiscuIT-Software"
 
-#: menus.py:73
+#: menus.py:74
 msgid "Website"
 msgstr "Website"
 
-#: menus.py:83
+#: menus.py:84
 msgid "Support"
 msgstr "Unterstützung"
 
-#: menus.py:87 templates/contact_form/contact_form.html:8
+#: menus.py:88 templates/contact_form/contact_form.html:8
 msgid "Get support"
 msgstr "Unterstützung erhalten"
 
@@ -111,79 +110,79 @@ msgstr "Name"
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: models.py:39
+#: models.py:38
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:40
+#: models.py:39
 msgid "male"
 msgstr "männlich"
 
-#: models.py:47
+#: models.py:46
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: models.py:49
+#: models.py:48
 msgid "First name"
 msgstr "Vorname"
 
-#: models.py:50
+#: models.py:49
 msgid "Last name"
 msgstr "Nachname"
 
-#: models.py:52
+#: models.py:51
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: models.py:55
+#: models.py:54
 msgid "Short name"
 msgstr "Kurzname"
 
-#: models.py:58
+#: models.py:57
 msgid "Street"
 msgstr "Straße"
 
-#: models.py:60
+#: models.py:59
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: models.py:62
+#: models.py:61
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: models.py:64
+#: models.py:63
 msgid "Place"
 msgstr "Ort"
 
-#: models.py:66
+#: models.py:65
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: models.py:68
+#: models.py:67
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: models.py:70
+#: models.py:69
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: models.py:73
+#: models.py:72
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: models.py:75
+#: models.py:74
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: models.py:77
+#: models.py:76
 msgid "Photo"
 msgstr "Foto"
 
-#: models.py:81
+#: models.py:80
 msgid "Reference ID of import source"
 msgstr "Referenz-ID der Import-Quelle"
 
-#: models.py:83
+#: models.py:82
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
@@ -194,6 +193,12 @@ msgstr "Langer Name der Gruppe"
 #: models.py:128
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
+
+#: models.py:134
+#, fuzzy
+#| msgid "Edit group"
+msgid "Parent groups"
+msgstr "Gruppe editieren"
 
 #: settings.py:200
 msgid "German"
@@ -264,6 +269,22 @@ msgstr "Liste aller Gruppen"
 #: templates/core/language_form.html:2
 msgid "Language"
 msgstr "Sprache"
+
+#: templates/core/no_person.html:6
+msgid ""
+"\n"
+"       You are not linked to a person\n"
+"     "
+msgstr ""
+
+#: templates/core/no_person.html:11
+msgid ""
+"\n"
+"       Your user account is not linked to a person. This means you\n"
+"       cannot access any school-related information. Please contact\n"
+"       the managers of BiscuIT at your school.\n"
+"     "
+msgstr ""
 
 #: templates/core/person_full.html:14
 msgid "Contact details"
@@ -359,7 +380,7 @@ msgstr "Ein Fehler ist aufgetreten."
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: views.py:180
+#: views.py:182
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
