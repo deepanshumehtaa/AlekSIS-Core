@@ -123,9 +123,9 @@ class Group(SchoolRelated):
         ordering = ['short_name', 'name']
 
     name = models.CharField(verbose_name=_(
-        'Long name of group'), max_length=30)
+        'Long name of group'), max_length=60)
     short_name = models.CharField(verbose_name=_(
-        'Short name of group'), max_length=8)
+        'Short name of group'), max_length=16)
 
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
