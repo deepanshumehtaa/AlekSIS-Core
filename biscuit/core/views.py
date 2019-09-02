@@ -188,6 +188,7 @@ def edit_group(request: HttpRequest, id_: Optional[int]) -> HttpResponse:
     return render(request, 'core/edit_group.html', context)
 
 
+@admin_required
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/data_management.html', context)
