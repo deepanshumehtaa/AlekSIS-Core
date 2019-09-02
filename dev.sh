@@ -1,13 +1,12 @@
 #!/bin/sh
 
-set -e
-
 remove_pip_metadata() {
     find . -type d -name pip-wheel-metadata -print0 | xargs -0r rm -rf --
 }
 
 case "$1" in
     "install-all")
+        set -e
 	cd "$(dirname "$0")"
 	remove_pip_metadata
 	poetry install
@@ -19,6 +18,7 @@ case "$1" in
 	poetry run ./manage.py migrate
 	poetry run ./manage.py compilemessages
 	poetry run ./manage.py collectstatic --no-input
+	set +e
 	;;
     "makemessages")
         cd "$(dirname "$0")"
@@ -38,9 +38,10 @@ case "$1" in
         ;;
     "pylama")
         cd "$(dirname "$0")"
+        tox_ini=$(realpath tox.ini)
         for d in biscuit/core apps/official/*/biscuit/apps/*; do
         	echo; echo "Entering $d."
-        	poetry run sh -c "cd $d; pylama ."
+        	poetry run sh -c "cd $d; pylama -a -o $tox_ini ."
         done
         ;;
     *)
