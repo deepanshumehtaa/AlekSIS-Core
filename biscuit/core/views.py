@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
@@ -165,12 +165,15 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 @admin_required
-def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
+def edit_group(request: HttpRequest, id_: [Optional]int) -> HttpResponse:
     context = {}
 
     group = get_object_or_404(Group, id=id_)
 
-    edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    if id_:
+        edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    else:
+        edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == 'POST':
         if edit_group_form.is_valid():
@@ -188,27 +191,3 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/data_management.html', context)
-
-
-@admin_required
-def create_group(request: HttpRequest) -> HttpResponse:
-    context = {}
-
-    create_group_form = EditGroupForm(request.POST or None)
-
-    if request.method == 'POST':
-        create_group_form=EditGroupForm(request.POST)
-        if create_group_form.is_valid():
-            create_group = Group.objects.create(
-                name = create_group_form.cleaned_data['name'],
-                short_name = create_group_form.cleaned_data['short_name'],
-                members = create_group_form.cleaned_data['members'],
-                owners = create_group_form.cleaned_data['owners']
-            )
-
-            messages.success(request, _('The group has been created.'))
-            return redirect('groups')
-
-    context['create_group_form'] = create_group_form
-
-    return render(request, 'core/create_group.html', context)
