@@ -188,3 +188,27 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/data_management.html', context)
+
+
+@admin_required
+def create_group(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    create_group_form = EditGroupForm(request.POST or None)
+
+    if request.method == 'POST':
+        create_group_form=EditGroupForm(request.POST)
+        if create_group_form.is_valid():
+            create_group = Group.objects.create(
+                name = create_group_form.cleaned_data['name'],
+                short_name = create_group_form.cleaned_data['short_name'],
+                members = create_group_form.cleaned_data['members'],
+                owners = create_group_form.cleaned_data['owners']
+            )
+
+            messages.success(request, _('The group has been created.'))
+            return redirect('groups')
+
+    context['create_group_form'] = create_group_form
+
+    return render(request, 'core/create_group.html', context)
