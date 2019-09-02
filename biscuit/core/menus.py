@@ -8,6 +8,11 @@ MENUS = {
             'root': True,
             'submenu': [
                 {
+                    'name': _('Stop impersonation'),
+                    'url': 'impersonate-stop',
+                    'validators': ['menu_generator.validators.is_authenticated', 'biscuit.core.util.core_helpers.is_impersonate']
+                },
+                {
                     'name': _('Login'),
                     'url': 'login',
                     'validators': ['menu_generator.validators.is_anonymous']
@@ -27,6 +32,11 @@ MENUS = {
                 {
                     'name': _('Data management'),
                     'url': 'data_management',
+                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                },
+                {
+                    'name': _('Impersonation'),
+                    'url': 'impersonate-list',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
                 }
             ]

@@ -5,6 +5,7 @@ from warnings import warn
 
 from django.apps import apps
 from django.conf import settings
+from django.http import HttpRequest
 
 from django_global_request.middleware import get_request
 
@@ -63,3 +64,8 @@ def get_current_school() -> Optional:
 
     # Raise an exception because not finding a school wreaks havoc
     raise RuntimeError('No school set or found. Check your database.')
+
+
+def is_impersonate(request: HttpRequest) -> bool:
+    if hasattr(request, 'user'):
+        return getattr(request.user, 'is_impersonate', False)
