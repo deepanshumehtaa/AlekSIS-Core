@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
@@ -165,12 +165,15 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 @admin_required
-def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
+def edit_group(request: HttpRequest, id_: [Optional]int) -> HttpResponse:
     context = {}
 
-    group = get_object_or_404(Group, id=id_)
-
-    edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    if id_:
+        group = get_object_or_404(Group, id=id_)
+        edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    else:
+        group = None
+        edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == 'POST':
         if edit_group_form.is_valid():
