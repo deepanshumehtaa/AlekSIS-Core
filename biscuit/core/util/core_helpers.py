@@ -26,7 +26,7 @@ def get_app_packages() -> Sequence[str]:
         # Add additional apps defined in module's INSTALLED_APPS constant
         additional_apps = getattr(mod, 'INSTALLED_APPS', [])
         for app in additional_apps:
-            if not app in pkgs:
+            if app not in pkgs:
                 pkgs.append(app)
 
         pkgs.append('biscuit.apps.%s' % pkg[1])

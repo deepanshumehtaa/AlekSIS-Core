@@ -1,4 +1,3 @@
-from django.utils.translation import ugettext_lazy as _
 import django_tables2 as tables
 from django_tables2.utils import A
 

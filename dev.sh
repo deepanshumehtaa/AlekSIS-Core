@@ -36,7 +36,13 @@ case "$1" in
         	poetry run sh -c "cd $d; autopep8 -i -r ."
         done
         ;;
-
+    "pylama")
+        cd "$(dirname "$0")"
+        for d in biscuit/core apps/official/*/biscuit/apps/*; do
+        	echo; echo "Entering $d."
+        	poetry run sh -c "cd $d; pylama ."
+        done
+        ;;
     *)
 	;;
 esac
