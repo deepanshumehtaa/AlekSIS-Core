@@ -9,7 +9,6 @@ import debug_toolbar
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('data_management/', views.data_management, name='data_management'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('persons', views.persons, name='persons'),
