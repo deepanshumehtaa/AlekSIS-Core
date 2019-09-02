@@ -165,7 +165,7 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 @admin_required
-def edit_group(request: HttpRequest, id_: Optional[int]) -> HttpResponse:
+def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     if id_:
