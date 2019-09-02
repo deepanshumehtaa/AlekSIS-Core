@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'settings_context_processor',
     'sass_processor',
     'easyaudit',
-    'impersonate',
     'bootstrap4',
     'fa',
     'django_any_js',
@@ -63,7 +62,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'contact_form',
-    'biscuit.core'
+    'biscuit.core',
+    'impersonate',
 ]
 
 INSTALLED_APPS += get_app_packages()
