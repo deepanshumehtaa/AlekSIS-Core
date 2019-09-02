@@ -168,11 +168,11 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
 def edit_group(request: HttpRequest, id_: [Optional]int) -> HttpResponse:
     context = {}
 
-    group = get_object_or_404(Group, id=id_)
-
     if id_:
+        group = get_object_or_404(Group, id=id_)
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
+        group = None
         edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == 'POST':
