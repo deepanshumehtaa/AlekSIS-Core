@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'settings_context_processor',
     'sass_processor',
     'easyaudit',
+    'impersonate',
     'bootstrap4',
     'fa',
     'django_any_js',
@@ -90,6 +91,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'impersonate.middleware.ImpersonateMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
@@ -273,5 +275,11 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
     'maintenance.ignore_ips', _settings.get('debug.internal_ips', []))
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
+
+IMPERSONATE = {
+    'USE_HTTP_REFERER': True,
+    'REQUIRE_SUPERUSER': True,
+    'ALLOW_SUPERUSER': True
+}
 
 _settings.populate_obj(sys.modules[__name__])

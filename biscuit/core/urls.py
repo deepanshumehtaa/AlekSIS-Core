@@ -27,6 +27,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('maintenance-mode/', include('maintenance_mode.urls')),
     path('contact/', include('contact_form.urls')),
+    path('impersonate/', include('impersonate.urls')),
     path('__i18n__/', include('django.conf.urls.i18n'))
 ]
 
