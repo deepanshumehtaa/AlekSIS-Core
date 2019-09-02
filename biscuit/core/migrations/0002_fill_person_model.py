@@ -32,7 +32,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='guardians',
-            field=models.ManyToManyField(related_name='children', to=settings.AUTH_USER_MODEL, verbose_name='Guardians / Parents'),
+            field=models.ManyToManyField(
+                related_name='children', to=settings.AUTH_USER_MODEL, verbose_name='Guardians / Parents'),
         ),
         migrations.AddField(
             model_name='person',
@@ -42,7 +43,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='import_ref',
-            field=models.CharField(blank=True, editable=False, max_length=64, verbose_name='Reference ID of import source'),
+            field=models.CharField(blank=True, editable=False, max_length=64,
+                                   verbose_name='Reference ID of import source'),
         ),
         migrations.AddField(
             model_name='person',
@@ -72,7 +74,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='sex',
-            field=models.CharField(blank=True, choices=[('f', 'female'), ('m', 'male')], max_length=1, verbose_name='Sex'),
+            field=models.CharField(blank=True, choices=[(
+                'f', 'female'), ('m', 'male')], max_length=1, verbose_name='Sex'),
         ),
         migrations.AddField(
             model_name='person',

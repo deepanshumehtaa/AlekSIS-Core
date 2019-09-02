@@ -14,19 +14,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='school',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
+            field=models.ForeignKey(
+                default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='person',
             name='school',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
+            field=models.ForeignKey(
+                default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='person',
             name='import_ref',
-            field=models.CharField(blank=True, editable=False, max_length=64, verbose_name='Reference ID of import source'),
+            field=models.CharField(blank=True, editable=False, max_length=64,
+                                   verbose_name='Reference ID of import source'),
         ),
         migrations.AlterField(
             model_name='person',

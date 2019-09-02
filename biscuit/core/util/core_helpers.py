@@ -60,7 +60,7 @@ def get_current_school() -> Optional:
         else:
             # Use first school
             warn('No school set, using first known school.', RuntimeWarning)
-            return School.objects.first()    
+            return School.objects.first()
 
     # Raise an exception because not finding a school wreaks havoc
     raise RuntimeError('No school set or found. Check your database.')

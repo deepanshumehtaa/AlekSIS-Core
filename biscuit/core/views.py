@@ -26,7 +26,8 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
         context['status'] = status
 
         if status == 404:
-            context['message'] = _('This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
+            context['message'] = _(
+                'This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
             context['caption'] = _('Page not found')
         elif status == 500:
             context['caption'] = _('Internal server error')
@@ -171,7 +172,6 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
     group = get_object_or_404(Group, id=id_)
 
     edit_group_form = EditGroupForm(request.POST or None, instance=group)
-
 
     if request.method == 'POST':
         if edit_group_form.is_valid():

@@ -22,14 +22,15 @@ class PersonAccountForm(forms.ModelForm):
 
         if self.cleaned_data.get('new_user', None):
             if self.cleaned_data.get('user', None):
-                self.add_error('new_user', _('You cannot set a new username when also selecting an existing user.'))
+                self.add_error('new_user', _(
+                    'You cannot set a new username when also selecting an existing user.'))
             elif User.objects.filter(username=self.cleaned_data['new_user']).exists():
                 self.add_error('new_user', _('This username is already in use.'))
             else:
                 new_user_obj = User.objects.create_user(self.cleaned_data['new_user'],
                                                         self.instance.email,
                                                         first_name=self.instance.first_name,
-                                                         last_name=self.instance.last_name)
+                                                        last_name=self.instance.last_name)
 
                 self.cleaned_data['user'] = new_user_obj
 
@@ -37,10 +38,12 @@ class PersonAccountForm(forms.ModelForm):
 PersonsAccountsFormSet = forms.modelformset_factory(
     Person, form=PersonAccountForm, max_num=0, extra=0)
 
+
 class EditPersonForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ['user', 'is_active', 'first_name', 'last_name', 'additional_name', 'short_name', 'street', 'housenumber', 'postal_code', 'place', 'phone_number', 'mobile_number', 'email', 'date_of_birth', 'sex', 'photo', 'photo_cropping']
+        fields = ['user', 'is_active', 'first_name', 'last_name', 'additional_name', 'short_name', 'street', 'housenumber',
+                  'postal_code', 'place', 'phone_number', 'mobile_number', 'email', 'date_of_birth', 'sex', 'photo', 'photo_cropping']
 
     new_user = forms.CharField(
         required=False,
@@ -52,14 +55,15 @@ class EditPersonForm(forms.ModelForm):
 
         if self.cleaned_data.get('new_user', None):
             if self.cleaned_data.get('user', None):
-                self.add_error('new_user', _('You cannot set a new username when also selecting an existing user.'))
+                self.add_error('new_user', _(
+                    'You cannot set a new username when also selecting an existing user.'))
             elif User.objects.filter(username=self.cleaned_data['new_user']).exists():
                 self.add_error('new_user', _('This username is already in use.'))
             else:
                 new_user_obj = User.objects.create_user(self.cleaned_data['new_user'],
                                                         self.instance.email,
                                                         first_name=self.instance.first_name,
-                                                         last_name=self.instance.last_name)
+                                                        last_name=self.instance.last_name)
 
                 self.cleaned_data['user'] = new_user_obj
 

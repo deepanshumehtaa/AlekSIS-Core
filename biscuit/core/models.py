@@ -21,7 +21,6 @@ class School(models.Model):
     name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
         'Official name of the school, e.g. as given by supervisory authority'))
 
-
     class Meta:
         ordering = ['name', 'name_official']
 
@@ -93,6 +92,7 @@ class Person(SchoolRelated):
 
         if self.primary_group:
             return self.primary_group.short_name
+
     @primary_group_short_name.setter
     def primary_group_short_name(self, value: str) -> None:
         """ Sets the primary group related object by

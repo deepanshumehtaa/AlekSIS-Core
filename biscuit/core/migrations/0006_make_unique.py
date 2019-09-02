@@ -23,11 +23,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='import_ref',
-            field=models.CharField(blank=True, editable=False, max_length=64, unique=True, verbose_name='Reference ID of import source'),
+            field=models.CharField(blank=True, editable=False, max_length=64,
+                                   unique=True, verbose_name='Reference ID of import source'),
         ),
         migrations.AlterField(
             model_name='person',
             name='short_name',
-            field=models.CharField(blank=True, max_length=5, unique=True, verbose_name='Short name'),
+            field=models.CharField(blank=True, max_length=5, unique=True,
+                                   verbose_name='Short name'),
         ),
     ]

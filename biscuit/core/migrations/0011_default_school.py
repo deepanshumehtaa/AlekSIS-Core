@@ -15,11 +15,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='group',
             name='school',
-            field=models.ForeignKey(default=biscuit.core.util.core_helpers.get_current_school, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
+            field=models.ForeignKey(default=biscuit.core.util.core_helpers.get_current_school,
+                                    on_delete=django.db.models.deletion.CASCADE, to='core.School'),
         ),
         migrations.AlterField(
             model_name='person',
             name='school',
-            field=models.ForeignKey(default=biscuit.core.util.core_helpers.get_current_school, on_delete=django.db.models.deletion.CASCADE, to='core.School'),
+            field=models.ForeignKey(default=biscuit.core.util.core_helpers.get_current_school,
+                                    on_delete=django.db.models.deletion.CASCADE, to='core.School'),
         ),
     ]

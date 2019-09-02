@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='photo_cropping',
-            field=image_cropping.fields.ImageRatioField('photo', '600x800', adapt_rotation=False, allow_fullsize=False, free_crop=False, help_text=None, hide_image_field=False, size_warning=True, verbose_name='photo cropping'),
+            field=image_cropping.fields.ImageRatioField('photo', '600x800', adapt_rotation=False, allow_fullsize=False,
+                                                        free_crop=False, help_text=None, hide_image_field=False, size_warning=True, verbose_name='photo cropping'),
         ),
         migrations.AlterField(
             model_name='person',
             name='photo',
-            field=image_cropping.fields.ImageCropField(blank=True, null=True, upload_to='', verbose_name='Photo'),
+            field=image_cropping.fields.ImageCropField(
+                blank=True, null=True, upload_to='', verbose_name='Photo'),
         ),
     ]

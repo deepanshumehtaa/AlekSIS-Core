@@ -65,7 +65,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='guardians',
-            field=models.ManyToManyField(related_name='children', to='core.Person', verbose_name='Guardians / Parents'),
+            field=models.ManyToManyField(related_name='children',
+                                         to='core.Person', verbose_name='Guardians / Parents'),
         ),
         migrations.AlterField(
             model_name='person',
@@ -80,11 +81,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='mobile_number',
-            field=phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, verbose_name='Mobile phone'),
+            field=phonenumber_field.modelfields.PhoneNumberField(
+                blank=True, max_length=128, region=None, verbose_name='Mobile phone'),
         ),
         migrations.AlterField(
             model_name='person',
             name='phone_number',
-            field=phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, verbose_name='Home phone'),
+            field=phonenumber_field.modelfields.PhoneNumberField(
+                blank=True, max_length=128, region=None, verbose_name='Home phone'),
         ),
     ]
