@@ -130,5 +130,8 @@ class Group(SchoolRelated):
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
 
+    parent_groups = models.ManyToManyField('self', related_name='child_groups',
+        symmetrical=False, verbose_name=_('Parent groups'))
+
     def __str__(self) -> str:
         return '%s (%s)' % (self.name, self.short_name)

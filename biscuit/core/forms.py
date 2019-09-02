@@ -71,9 +71,10 @@ class EditPersonForm(forms.ModelForm):
 class EditGroupForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'short_name', 'members', 'owners']
+        fields = ['name', 'short_name', 'members', 'owners', 'parent_groups']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['members'].queryset = Person.objects.all()
         self.fields['owners'].queryset = Person.objects.all()
+        self.fields['parent_groups'].queryset = Group.objects.all()
