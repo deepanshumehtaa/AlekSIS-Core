@@ -43,7 +43,7 @@ class Person(SchoolRelated):
         get_user_model(), on_delete=models.SET_NULL, blank=True, null=True,
         related_name='person')
     is_active = models.BooleanField(
-        verbose_name=_('Is person active?'), default=False)
+        verbose_name=_('Is person active?'), default=True)
 
     first_name = models.CharField(verbose_name=_('First name'), max_length=30)
     last_name = models.CharField(verbose_name=_('Last name'), max_length=30)
