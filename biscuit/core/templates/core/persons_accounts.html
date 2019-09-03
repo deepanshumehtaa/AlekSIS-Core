@@ -2,6 +2,8 @@
 {% extends "core/base.html" %}
 {% load bootstrap4 i18n %}
 
+{% block bootstrap4_title %}{% blocktrans %}Link persons to accounts{% endblocktrans%} - {{ block.super }}{% endblock %}
+
 {% block page_title %}
  {% blocktrans %}Link persons to accounts{% endblocktrans %}
 {% endblock %}
