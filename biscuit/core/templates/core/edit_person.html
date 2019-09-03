@@ -1,6 +1,8 @@
 {% extends "core/base.html" %}
 {% load bootstrap4 i18n %}
 
+{% block bootstrap4_title %}{% blocktrans %}Edit person{% endblocktrans %} - {{ block.super}}{% endblock %}
+
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 
 {% block bootstrap4_extra_head %}

@@ -2,12 +2,11 @@
 {% load bootstrap4 font_awesome i18n %}
 {% load render_table from django_tables2 %}
 
+{% block bootstrap4_title %}{% blocktrans %}Groups{% endblocktrans %} - {{ block.super }}{% endblock %}
+
 {% block page_title %}{% blocktrans %}Groups{% endblocktrans %}{% endblock %}
 
 {% block content %}
- <h2>
-  {% blocktrans %}List of all groups{% endblocktrans %}
- </h2>
  <div class="btn-group" role="group" aria-lable="Group actions">
   <a href="{% url 'create_group' %}" class="btn btn-secondary">
    {% fa 'plus' %}
