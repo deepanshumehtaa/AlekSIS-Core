@@ -32,7 +32,7 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
             context['caption'] = _('Internal server error')
             context['message'] = _('An unexpected error has occurred.')
 
-        return render(request, 'error.html', context, status=status)
+        return render(request, 'core/error.html', context, status=status)
 
     return real_handler
 
