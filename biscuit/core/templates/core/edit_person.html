@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load bootstrap4 i18n %}
 
-<title>{% block bootstrap4_title %}{% blocktrans %}BiscuIT SIS - Edit person{% endblocktrans %}{% endblock % </title>
+{% block bootstrap4_title %}{% blocktrans %}Edit person{% endblocktrans %} - {{ block.super}}{% endblock %}
 
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 
