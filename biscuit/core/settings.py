@@ -137,6 +137,10 @@ DATABASES = {
     'default': {
         'ENGINE': _settings.get('database.engine', 'django.db.backends.sqlite3'),
         'NAME': _settings.get('database.name', 'db.sqlite3'),
+        'USER': _settings.get('database.username', None),
+        'PASSWORD': _settings.get('database.password', None),
+        'HOST': _settings.get('database.host', '127.0.0.1'),
+        'PORT': _settings.get('database.port', '5432'),
     }
 }
 
