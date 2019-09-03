@@ -1,0 +1,8 @@
+{% load static thumbnail %}
+{% get_static_prefix as static_prefix %}
+
+{% with path="{{ static_prefix }}biscuit-logo.png" %}
+ <link rel="shortcut icon" type="image/png" href="{% thumbnail path 196x196 crop %}" />
+ <link rel="shortcut icon" sizes="196x196" href="{% thumbnail path 196x196 crop %}" />
+ <link rel="apple-touch-icon" href="{% thumbnail path 196x196 crop %}" />
+{% endwith %}

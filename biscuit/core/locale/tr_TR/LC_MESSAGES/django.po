@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 13:14+0000\n"
+"POT-Creation-Date: 2019-09-02 21:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,19 +21,19 @@ msgstr ""
 msgid "BiscuIT - The Free School Information System"
 msgstr ""
 
-#: forms.py:25 forms.py:55
+#: forms.py:26 forms.py:59
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 
-#: forms.py:27 forms.py:57
+#: forms.py:28 forms.py:61
 msgid "This username is already in use."
 msgstr ""
 
-#: forms.py:47
+#: forms.py:50
 msgid "New user"
 msgstr ""
 
-#: forms.py:48
+#: forms.py:51
 msgid "Create a new account"
 msgstr ""
 
@@ -69,31 +69,31 @@ msgstr ""
 msgid "People"
 msgstr ""
 
-#: menus.py:50 templates/core/persons.html:5
+#: menus.py:51 templates/core/persons.html:5
 msgid "Persons"
 msgstr ""
 
-#: menus.py:55 templates/core/groups.html:5
+#: menus.py:56 templates/core/groups.html:5
 msgid "Groups"
 msgstr ""
 
-#: menus.py:60
+#: menus.py:61
 msgid "Persons and accounts"
 msgstr ""
 
-#: menus.py:69
+#: menus.py:70
 msgid "BiscuIT Software"
 msgstr ""
 
-#: menus.py:73
+#: menus.py:74
 msgid "Website"
 msgstr ""
 
-#: menus.py:83
+#: menus.py:84
 msgid "Support"
 msgstr ""
 
-#: menus.py:87 templates/contact_form/contact_form.html:8
+#: menus.py:88 templates/contact_form/contact_form.html:8
 msgid "Get support"
 msgstr ""
 
@@ -109,79 +109,79 @@ msgstr ""
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 
-#: models.py:39
+#: models.py:38
 msgid "female"
 msgstr ""
 
-#: models.py:40
+#: models.py:39
 msgid "male"
 msgstr ""
 
-#: models.py:47
+#: models.py:46
 msgid "Is person active?"
 msgstr ""
 
-#: models.py:49
+#: models.py:48
 msgid "First name"
 msgstr ""
 
-#: models.py:50
+#: models.py:49
 msgid "Last name"
 msgstr ""
 
-#: models.py:52
+#: models.py:51
 msgid "Additional name(s)"
 msgstr ""
 
-#: models.py:55
+#: models.py:54
 msgid "Short name"
 msgstr ""
 
-#: models.py:58
+#: models.py:57
 msgid "Street"
 msgstr ""
 
-#: models.py:60
+#: models.py:59
 msgid "Street number"
 msgstr ""
 
-#: models.py:62
+#: models.py:61
 msgid "Postal code"
 msgstr ""
 
-#: models.py:64
+#: models.py:63
 msgid "Place"
 msgstr ""
 
-#: models.py:66
+#: models.py:65
 msgid "Home phone"
 msgstr ""
 
-#: models.py:68
+#: models.py:67
 msgid "Mobile phone"
 msgstr ""
 
-#: models.py:70
+#: models.py:69
 msgid "E-mail address"
 msgstr ""
 
-#: models.py:73
+#: models.py:72
 msgid "Date of birth"
 msgstr ""
 
-#: models.py:75
+#: models.py:74
 msgid "Sex"
 msgstr ""
 
-#: models.py:77
+#: models.py:76
 msgid "Photo"
 msgstr ""
 
-#: models.py:81
+#: models.py:80
 msgid "Reference ID of import source"
 msgstr ""
 
-#: models.py:83
+#: models.py:82
 msgid "Guardians / Parents"
 msgstr ""
 
@@ -191,6 +191,10 @@ msgstr ""
 
 #: models.py:128
 msgid "Short name of group"
+msgstr ""
+
+#: models.py:134
+msgid "Parent groups"
 msgstr ""
 
 #: settings.py:200
@@ -252,6 +256,22 @@ msgstr ""
 
 #: templates/core/language_form.html:2
 msgid "Language"
+msgstr ""
+
+#: templates/core/no_person.html:6
+msgid ""
+"\n"
+"       You are not linked to a person\n"
+"     "
+msgstr ""
+
+#: templates/core/no_person.html:11
+msgid ""
+"\n"
+"       Your user account is not linked to a person. This means you\n"
+"       cannot access any school-related information. Please contact\n"
+"       the managers of BiscuIT at your school.\n"
+"     "
 msgstr ""
 
 #: templates/core/person_full.html:14
@@ -335,6 +355,6 @@ msgstr ""
 msgid "The person has been saved."
 msgstr ""
 
-#: views.py:180
+#: views.py:182
 msgid "The group has been saved."
 msgstr ""

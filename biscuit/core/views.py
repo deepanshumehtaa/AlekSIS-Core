@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
@@ -32,7 +32,7 @@ def error_handler(status: int) -> Callable[..., HttpResponse]:
             context['caption'] = _('Internal server error')
             context['message'] = _('An unexpected error has occurred.')
 
-        return render(request, 'error.html', context, status=status)
+        return render(request, 'core/error.html', context, status=status)
 
     return real_handler
 
@@ -165,12 +165,15 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 @admin_required
-def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
+def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
-    group = get_object_or_404(Group, id=id_)
-
-    edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    if id_:
+        group = get_object_or_404(Group, id=id_)
+        edit_group_form = EditGroupForm(request.POST or None, instance=group)
+    else:
+        group = None
+        edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == 'POST':
         if edit_group_form.is_valid():
@@ -185,6 +188,7 @@ def edit_group(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, 'core/edit_group.html', context)
 
 
+@admin_required
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/data_management.html', context)

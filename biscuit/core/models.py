@@ -43,7 +43,7 @@ class Person(SchoolRelated):
         get_user_model(), on_delete=models.SET_NULL, blank=True, null=True,
         related_name='person')
     is_active = models.BooleanField(
-        verbose_name=_('Is person active?'), default=False)
+        verbose_name=_('Is person active?'), default=True)
 
     first_name = models.CharField(verbose_name=_('First name'), max_length=30)
     last_name = models.CharField(verbose_name=_('Last name'), max_length=30)
@@ -123,12 +123,15 @@ class Group(SchoolRelated):
         ordering = ['short_name', 'name']
 
     name = models.CharField(verbose_name=_(
-        'Long name of group'), max_length=30)
+        'Long name of group'), max_length=60)
     short_name = models.CharField(verbose_name=_(
-        'Short name of group'), max_length=8)
+        'Short name of group'), max_length=16)
 
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
+
+    parent_groups = models.ManyToManyField('self', related_name='child_groups',
+        symmetrical=False, verbose_name=_('Parent groups'))
 
     def __str__(self) -> str:
         return '%s (%s)' % (self.name, self.short_name)

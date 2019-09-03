@@ -19,6 +19,7 @@ urlpatterns = [
          {'template': 'card'}, name='person_by_id_card'),
     path('person/<int:id_>/edit', views.edit_person, name='edit_person_by_id'),
     path('groups', views.groups, name='groups'),
+    path('group/create', views.edit_group, name='create_group'),
     path('group/<int:id_>', views.group,
          {'template': 'full'}, name='group_by_id'),
     path('group/<int:id_>/edit', views.edit_group, name='edit_group_by_id'),
