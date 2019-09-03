@@ -85,14 +85,15 @@ var Dashboard = function (_React$Component) {
             $.getJSON(API_URL, function (data) {
                 console.log(data);
                 if (data) {
-                    that.setState(Object.assign({}, data, {refreshIn: REFRESH_TIME + 1}));
+                    that.setState(Object.assign({}, data, {refreshIn: REFRESH_TIME + 1, isLoading: false}));
                     that.updateRefreshTime();
                 }
             });
         };
 
         _this.state = {
-            refreshIn: REFRESH_TIME
+            refreshIn: REFRESH_TIME,
+            isLoading: true
         };
         return _this;
     }
@@ -118,7 +119,47 @@ var Dashboard = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            if (this.state.isLoading) {
+                return React.createElement(
+                    "div",
+                    {className: "row center-via-flex container", style: {"height": "10em"}},
+                    React.createElement(
+                        "div",
+                        {className: "center2-via-flex"},
+                        React.createElement(
+                            "div",
+                            {className: "preloader-wrapper big active"},
+                            React.createElement(
+                                "div",
+                                {className: "spinner-layer spinner-primary"},
+                                React.createElement(
+                                    "div",
+                                    {className: "circle-clipper left"},
+                                    React.createElement("div", {className: "circle"})
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "gap-patch"},
+                                    React.createElement("div", {className: "circle"})
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "circle-clipper right"},
+                                    React.createElement("div", {className: "circle"})
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            "p",
+                            {className: "text-center"},
+                            "Wird geladen \u2026"
+                        )
+                    )
+                );
+            }
+
             var that = this;
+            console.log(MY_PLAN_URL);
             return React.createElement(
                 "div",
                 null,
@@ -196,32 +237,39 @@ var Dashboard = function (_React$Component) {
                             React.createElement(
                                 "div",
                                 {className: "card"},
-                                React.createElement(
+                                this.state.has_plan ? React.createElement(
                                     "div",
                                     {className: "card-content"},
                                     React.createElement(
                                         "span",
                                         {className: "card-title"},
-                                        "Vertretungen der ",
+                                        "Vertretungen ",
+                                        this.state.plan.type == 2 ? "der" : "für",
+                                        " ",
                                         React.createElement(
                                             "em",
                                             null,
-                                            "Eb"
+                                            this.state.plan.name
                                         ),
-                                        " f\xFCr heute"
+                                        " f\xFCr ",
+                                        this.state.date_formatted
                                     ),
                                     React.createElement(
                                         "p",
                                         null,
-                                        "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively."
+                                        "Keine Vertretungen f\xFCr morgen vorhanden."
                                     )
+                                ) : React.createElement(
+                                    "p",
+                                    {className: "flow-text"},
+                                    "Keine Vertretungen vorhanden."
                                 ),
-                                React.createElement(
+                                this.state.has_plan ? React.createElement(
                                     "div",
                                     {className: "card-action"},
                                     React.createElement(
                                         "a",
-                                        {href: "#"},
+                                        {href: MY_PLAN_URL},
                                         React.createElement(
                                             "span",
                                             {className: "badge new primary-color card-action-badge"},
@@ -229,7 +277,7 @@ var Dashboard = function (_React$Component) {
                                         ),
                                         "anzeigen"
                                     )
-                                )
+                                ) : ""
                             )
                         ),
                         React.createElement(
@@ -246,28 +294,19 @@ var Dashboard = function (_React$Component) {
                                         {className: "card-title"},
                                         "Aktuelle Termine"
                                     ),
-                                    React.createElement(
-                                        "div",
-                                        {className: "card-panel event-card"},
-                                        React.createElement(
-                                            "span",
-                                            {className: "title"},
-                                            "Sextanereinschulung"
-                                        ),
-                                        React.createElement("br", null),
-                                        "28.Aug. 2019 18:30 - 22:00"
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        {className: "card-panel event-card"},
-                                        React.createElement(
-                                            "span",
-                                            {className: "title"},
-                                            "Sextanereinschulung"
-                                        ),
-                                        React.createElement("br", null),
-                                        "28.Aug. 2019 18:30 - 22:00"
-                                    )
+                                    this.state.current_events && this.state.current_events.length > 0 ? this.state.current_events.map(function (event) {
+                                        return React.createElement(
+                                            "div",
+                                            {className: "card-panel event-card"},
+                                            React.createElement(
+                                                "span",
+                                                {className: "title"},
+                                                event.name
+                                            ),
+                                            React.createElement("br", null),
+                                            event.formatted
+                                        );
+                                    }) : "Keine aktuellen Termine"
                                 ),
                                 React.createElement(
                                     "div",

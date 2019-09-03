@@ -11,7 +11,8 @@ class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {
-            refreshIn: REFRESH_TIME
+            refreshIn: REFRESH_TIME,
+            isLoading: true
         };
     }
 
@@ -33,7 +34,7 @@ class Dashboard extends React.Component {
         $.getJSON(API_URL, (data) => {
             console.log(data);
             if (data) {
-                that.setState({...data, refreshIn: REFRESH_TIME + 1});
+                that.setState({...data, refreshIn: REFRESH_TIME + 1, isLoading: false});
                 that.updateRefreshTime();
             }
         })
@@ -56,7 +57,29 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <div className={"row center-via-flex container"} style={{"height": "10em"}}>
+                <div className={"center2-via-flex"}>
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-primary">
+                            <div className="circle-clipper left">
+                                <div className="circle"/>
+                            </div>
+                            <div className="gap-patch">
+                                <div className="circle"/>
+                            </div>
+                            <div className="circle-clipper right">
+                                <div className="circle"/>
+                            </div>
+                        </div>
+                    </div>
+                    <p className={"text-center"}>Wird geladen …</p>
+                </div>
+            </div>;
+        }
+
         const that = this;
+        console.log(MY_PLAN_URL);
         return <div>
             <button className={"btn-flat right grey-text"} onClick={this.updateData}>
                 <i className={"material-icons left"}>refresh</i>
@@ -85,33 +108,30 @@ class Dashboard extends React.Component {
                 <div className={"col s12 m6 l6 xl8 no-padding"}>
                     <div className="col s12 m12 l12 xl6">
                         <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">Vertretungen der <em>Eb</em> für heute</span>
-                                <p>I am a very simple card. I am good at containing small bits of information.
-                                    I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div className="card-action">
-                                <a href="#">
+                            {this.state.has_plan ? <div className="card-content">
+                                <span className="card-title">Vertretungen {this.state.plan.type == 2 ? "der" : "für"}
+                                    <em>{this.state.plan.name}</em> für {this.state.date_formatted}</span>
+                                <p>Keine Vertretungen für morgen vorhanden.</p>
+                            </div> : <p className={"flow-text"}>Keine Vertretungen vorhanden.</p>}
+                            {this.state.has_plan ? <div className="card-action">
+                                <a href={MY_PLAN_URL}>
                                     <span className="badge new primary-color card-action-badge">SMART PLAN</span>
                                     anzeigen
                                 </a>
-                            </div>
+                            </div> : ""}
                         </div>
                     </div>
                     <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             <div className="card-content">
                                 <span className="card-title">Aktuelle Termine</span>
-                                <div className="card-panel event-card">
-                                    <span className={"title"}>Sextanereinschulung</span>
-                                    <br/>
-                                    28.Aug. 2019 18:30 - 22:00
-                                </div>
-                                <div className="card-panel event-card">
-                                    <span className={"title"}>Sextanereinschulung</span>
-                                    <br/>
-                                    28.Aug. 2019 18:30 - 22:00
-                                </div>
+                                {this.state.current_events && this.state.current_events.length > 0 ? this.state.current_events.map(function (event) {
+                                    return <div className="card-panel event-card">
+                                        <span className={"title"}>{event.name}</span>
+                                        <br/>
+                                        {event.formatted}
+                                    </div>;
+                                }) : "Keine aktuellen Termine"}
                             </div>
                             <div className="card-action">
                                 <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Weitere Termine</a>

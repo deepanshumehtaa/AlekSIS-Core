@@ -2,6 +2,10 @@ import os
 from uuid import uuid4
 
 from django.template.loader_tags import register
+from datetime import datetime
+
+from django.utils import timezone, formats
+from ics import Calendar
 
 
 def path_and_rename(instance, filename):
@@ -65,3 +69,48 @@ def get_newest_articles(domain, limit=0, author_blacklist=None):
             break
 
     return posts
+
+
+CALENDAR_URL = "https://nimbus.katharineum.de/remote.php/dav/public-calendars/owit7yysLB2CYNTq?export"
+
+
+def get_current_events():
+    c = Calendar(requests.get(CALENDAR_URL).text)
+    print(c.events)
+    e = list(c.timeline)[0]
+    print(c.timeline.today())
+    i = 0
+    events = []
+    for event in c.timeline.start_after(timezone.now()):
+        if i >= 5:
+            break
+        i += 1
+
+        begin_date_formatted = formats.date_format(event.begin)
+        end_date_formatted = formats.date_format(event.end)
+        begin_time_formatted = formats.time_format(event.begin.time())
+        end_time_formatted = formats.time_format(event.end.time())
+        if event.begin.date() == event.end.date():
+            formatted = begin_date_formatted
+            if not event.all_day:
+                formatted += " " + begin_time_formatted
+            if event.begin.time != event.end.time():
+                formatted += " – " + end_time_formatted
+        else:
+            if event.all_day:
+                formatted = "{} – {}".format(begin_date_formatted, end_date_formatted)
+            else:
+                formatted = "{} {} – {} {}".format(begin_date_formatted, begin_time_formatted, end_date_formatted,
+                                                   end_time_formatted)
+        print(formatted)
+        print(formats.date_format(event.begin))
+        events.append({
+            "name": event.name,
+            # "begin": event.begin,
+            # "end": event.end,
+            "formatted": formatted
+        })
+        # print(event)
+    print(events)
+    print("Event '{}' started {}".format(e.name, e.begin.humanize()))
+    return events

@@ -10,3 +10,4 @@ kanboard
 PyPDF2
 martor
 django_widget_tweaks
+ics
