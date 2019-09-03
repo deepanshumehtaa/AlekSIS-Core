@@ -1,0 +1,29 @@
+Instaling BiscuIT with PostgreSQL backend
+─────────────────────────────────────────
+
+• Install PostgreSQL, for example with:
+
+	sudo apt install postgresql-contrib
+
+• Create a database role with login permissions:
+
+	sudo -u postgres createuser -D -P -R -S biscuit
+    <username>─────────────────────────────────────┘
+
+  This step asks interactively for the password to set.
+
+• Create a database belonging to the new user:
+
+	sudo -u postgres createdb -E UTF-8 -O biscuit -T template0 -l C.UTF-8 biscuit
+    <username>───────────────────────────────────┘                               │
+    <databasename>───────────────────────────────────────────────────────────────┘
+
+• Fill in the configuration under /etc/biscuit/*.toml:
+
+	[default.database]
+	engine = "django.db.backends.postgresql"
+	name = "biscuit"
+	username = "biscuit"
+	password = "biscuit"
+
+• Run the migrations.
