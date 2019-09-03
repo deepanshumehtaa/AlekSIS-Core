@@ -295,4 +295,6 @@ IMPERSONATE = {
     'ALLOW_SUPERUSER': True
 }
 
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
 _settings.populate_obj(sys.modules[__name__])
