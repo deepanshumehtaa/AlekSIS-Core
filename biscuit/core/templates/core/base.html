@@ -39,7 +39,9 @@
   </header>
 
   <main role="main" class="container">
-    {% include 'core/no_person.html' %}
+    {% if user.is_authenticated%}
+     {% include 'core/no_person.html' %}
+    {% endif %}
 
     {% bootstrap_messages %}
 
