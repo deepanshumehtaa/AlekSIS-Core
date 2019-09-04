@@ -1,4 +1,7 @@
+{# -*- engine:django -*- #}
+
 {% extends "core/base.html" %}
+
 {% load bootstrap4 i18n %}
 
 {% block bootstrap4_title %}{% blocktrans %}Edit person{% endblocktrans %} - {{ block.super}}{% endblock %}
@@ -6,16 +9,16 @@
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 
 {% block bootstrap4_extra_head %}
- {{ block.super }}
- {{ edit_person_form.media }}
+  {{ block.super }}
+  {{ edit_person_form.media }}
 {% endblock %}
 
 {% block content %}
 
- <form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {% bootstrap_form edit_person_form %}
-  <input type="submit" value="Edit" />
- </form>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form edit_person_form %}
+    <input type="submit" value="Edit" />
+  </form>
 
 {% endblock %}

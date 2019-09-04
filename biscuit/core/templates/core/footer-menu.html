@@ -1,35 +1,36 @@
 {# -*- engine:django -*- #}
+
 {% load menu_generator font_awesome i18n %}
 
 {% get_menu "FOOTER_MENU_CORE" as footer_menu %}
 {% regroup footer_menu by submenu|length_is:"0" as footer_menus %}
 
 {% for menu in footer_menus %}
- {% if not menu.grouper %}
-  {% for item in menu.list %}
-   <div class="col">
-    <h5>{{ item.name }}</h5>
-    <ul class="list-unstyled quick-links">
-     {% for menu in item.submenu %}
-      <li><a class="font-weight-bold text-dark" href="{{ menu.url }}">{% fa 'fa-angle-double-right' %} {{ menu.name }}</a></li>
-     {% endfor %}
-    </ul>
-   </div>
-  {% endfor %}
- {% endif %}
+  {% if not menu.grouper %}
+    {% for item in menu.list %}
+      <div class="col">
+        <h5>{{ item.name }}</h5>
+        <ul class="list-unstyled quick-links">
+          {% for menu in item.submenu %}
+            <li><a class="font-weight-bold text-dark" href="{{ menu.url }}">{% fa 'fa-angle-double-right' %} {{ menu.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endfor %}
 
 {% for menu in footer_menus %}
- {% if menu.grouper %}
-  <div class="col">
-   <h5>{% blocktrans %}Assorted{% endblocktrans %}</h5>
-   <ul class="list-unstyled quick-links">
-    {% for item in menu.list %}
-     <li><a class="font-weight-bold text-dark" href="{{ item.url }}">{% fa 'fa-angle-double-right' %} {{ item.name }}</a></li>
-    {% endfor %}
-   </ul>
-  </div>
- {% endif %}
+  {% if menu.grouper %}
+    <div class="col">
+      <h5>{% blocktrans %}Assorted{% endblocktrans %}</h5>
+      <ul class="list-unstyled quick-links">
+        {% for item in menu.list %}
+          <li><a class="font-weight-bold text-dark" href="{{ item.url }}">{% fa 'fa-angle-double-right' %} {{ item.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 {% endfor %}
 
 <div class="col">

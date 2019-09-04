@@ -1,18 +1,20 @@
+{# -*- engine:django -*- #}
+
 {% load i18n %}
 
 {% if not user.person %}
- <div class="alert alert-danger" role="alert">
-   <h2 class="alert-heading">
-     {% blocktrans %}
-       You are not linked to a person
-     {% endblocktrans %}
-   </h2>
-   <p>
-     {% blocktrans %}
-       Your user account is not linked to a person. This means you
-       cannot access any school-related information. Please contact
-       the managers of BiscuIT at your school.
-     {% endblocktrans %}
-   </p>
- </div>
+  <div class="alert alert-danger" role="alert">
+    <h2 class="alert-heading">
+      {% blocktrans %}
+        You are not linked to a person
+      {% endblocktrans %}
+    </h2>
+    <p>
+      {% blocktrans %}
+        Your user account is not linked to a person. This means you
+        cannot access any school-related information. Please contact
+        the managers of BiscuIT at your school.
+      {% endblocktrans %}
+    </p>
+  </div>
 {% endif %}

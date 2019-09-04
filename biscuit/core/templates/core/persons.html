@@ -1,4 +1,7 @@
+{# -*- engine:django -*- #}
+
 {% extends "core/base.html" %}
+
 {% load bootstrap4 i18n %}
 {% load render_table from django_tables2 %}
 
@@ -7,7 +10,5 @@
 {% block page_title %}{% blocktrans %}Persons{% endblocktrans %}{% endblock %}
 
 {% block content %}
-
- {% render_table persons_table %}
-
+  {% render_table persons_table %}
 {% endblock %}
