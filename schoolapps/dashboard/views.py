@@ -1,14 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, formats
 
 from helper import get_newest_articles, get_current_events
 from schoolapps.settings import SHORT_WEEK_DAYS, LONG_WEEK_DAYS
 from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
-from timetable.views import get_next_weekday_with_time, get_type_and_object_of_user
+from timetable.views import get_next_weekday_with_time, get_type_and_object_of_user, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
+from untisconnect.plan import get_plan
 from .models import Activity, register_notification, Notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
@@ -88,6 +90,10 @@ def api_information(request):
         "newest_article": newest_article,
         "current_events": get_current_events()[:3],
         "date_formatted": date_formatted,
+        "user": {
+            "username": request.user.username,
+            "full_name": request.user.first_name
+        }
     }
 
     if _type is not None:
@@ -110,6 +116,56 @@ def api_read_notification(request, id):
     notification.read = True
     notification.save()
     return JsonResponse({"success": True})
+
+
+@login_required
+def api_my_plan_html(request):
+    # Get user type (student, teacher, etc.)
+    _type, el = get_type_and_object_of_user(request.user)
+    hints = None
+    if _type == TYPE_TEACHER:
+        # Teacher
+        plan_id = el.id
+        raw_type = "teacher"
+
+        # Get hints
+        # hints = list(get_all_hints_for_teachers_by_time_period(next_weekday, next_weekday))
+
+    elif _type == TYPE_CLASS:
+        # Student
+
+        plan_id = el.id
+        raw_type = "class"
+
+        # Get hints
+        # hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
+    else:
+        return JsonResponse({"success": False})
+
+    # Get calendar week and monday of week
+    next_weekday = get_next_weekday_with_time(timezone.now(), timezone.now().time())
+    calendar_week = next_weekday.isocalendar()[1]
+    monday_of_week = get_calendar_week(calendar_week, next_weekday.year)["first_day"]
+    week_day = next_weekday.isoweekday() - 1
+    print(raw_type, plan_id, next_weekday, calendar_week, monday_of_week)
+
+    # Get plan
+    plan = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
+    lessons = []
+    for row, time in plan:
+        lesson_container = row[week_day]
+        for element in lesson_container.elements:
+            if element.substitution is not None:
+                print(time)
+                html = render_to_string("timetable/lesson.html", {"col": lesson_container}, request=request)
+                time["start"] = formats.date_format(time["start"], "H:i")
+                time["end"] = formats.date_format(time["end"], "H:i")
+
+                lessons.append({"time": time, "html": html})
+                break
+    print(lessons)
+
+    return JsonResponse({"success": True, "lessons": lessons})
 
 
 @login_required

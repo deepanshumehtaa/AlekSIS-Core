@@ -89,6 +89,12 @@ var Dashboard = function (_React$Component) {
                     that.updateRefreshTime();
                 }
             });
+            $.getJSON(API_URL + "/my-plan", function (data) {
+                console.log(data);
+                if (data && data.lessons) {
+                    that.setState({lessons: data.lessons});
+                }
+            });
         };
 
         _this.state = {
@@ -178,7 +184,9 @@ var Dashboard = function (_React$Component) {
                 React.createElement(
                     "p",
                     {className: "flow-text"},
-                    "Willkommen bei SchoolApps!"
+                    "Moin Moin, ",
+                    this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username,
+                    ". Hier findest du alle aktuellen Informationen:"
                 ),
                 this.state.unread_notifications && this.state.unread_notifications.length > 0 ? this.state.unread_notifications.map(function (notification) {
                     return React.createElement(
@@ -244,7 +252,7 @@ var Dashboard = function (_React$Component) {
                                         "span",
                                         {className: "card-title"},
                                         "Vertretungen ",
-                                        this.state.plan.type == 2 ? "der" : "für",
+                                        this.state.plan.type === 2 ? "der" : "für",
                                         " ",
                                         React.createElement(
                                             "em",
@@ -254,7 +262,54 @@ var Dashboard = function (_React$Component) {
                                         " f\xFCr ",
                                         this.state.date_formatted
                                     ),
-                                    React.createElement(
+                                    this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
+                                        "div",
+                                        null,
+                                        this.state.lessons.map(function (lesson) {
+                                            return React.createElement(
+                                                "div",
+                                                {className: "row"},
+                                                React.createElement(
+                                                    "div",
+                                                    {className: "col s4"},
+                                                    React.createElement(
+                                                        "div",
+                                                        {className: "card timetable-title-card"},
+                                                        React.createElement(
+                                                            "div",
+                                                            {className: "card-content"},
+                                                            React.createElement(
+                                                                "span",
+                                                                {className: "card-title left"},
+                                                                lesson.time.number_format
+                                                            ),
+                                                            React.createElement(
+                                                                "div",
+                                                                {
+                                                                    className: "right timetable-time grey-text text-darken-2"
+                                                                },
+                                                                React.createElement(
+                                                                    "span",
+                                                                    null,
+                                                                    lesson.time.start
+                                                                ),
+                                                                React.createElement("br", null),
+                                                                React.createElement(
+                                                                    "span",
+                                                                    null,
+                                                                    lesson.time.end
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                ),
+                                                React.createElement("div", {
+                                                    className: "col s8",
+                                                    dangerouslySetInnerHTML: {__html: lesson.html}
+                                                })
+                                            );
+                                        })
+                                    ) : React.createElement(
                                         "p",
                                         null,
                                         "Keine Vertretungen f\xFCr morgen vorhanden."

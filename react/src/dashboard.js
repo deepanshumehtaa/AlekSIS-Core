@@ -37,7 +37,13 @@ class Dashboard extends React.Component {
                 that.setState({...data, refreshIn: REFRESH_TIME + 1, isLoading: false});
                 that.updateRefreshTime();
             }
-        })
+        });
+        $.getJSON(API_URL + "/my-plan", (data) => {
+            console.log(data);
+            if (data && data.lessons) {
+                that.setState({lessons: data.lessons});
+            }
+        });
     };
 
     componentDidMount() {
@@ -85,7 +91,9 @@ class Dashboard extends React.Component {
                 <i className={"material-icons left"}>refresh</i>
                 in {this.state.refreshIn} s
             </button>
-            <p className="flow-text">Willkommen bei SchoolApps!</p>
+            <p className="flow-text">Moin
+                Moin, {this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username}. Hier
+                findest du alle aktuellen Informationen:</p>
             {this.state.unread_notifications && this.state.unread_notifications.length > 0 ?
                 this.state.unread_notifications.map(function (notification) {
                     return <div className={"alert primary scale-transition"} id={"not-" + notification.id}
@@ -109,9 +117,38 @@ class Dashboard extends React.Component {
                     <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             {this.state.has_plan ? <div className="card-content">
-                                <span className="card-title">Vertretungen {this.state.plan.type == 2 ? "der" : "für"}
-                                    <em>{this.state.plan.name}</em> für {this.state.date_formatted}</span>
-                                <p>Keine Vertretungen für morgen vorhanden.</p>
+                                <span className="card-title">
+                                    Vertretungen {this.state.plan.type === 2 ? "der" : "für"} <em>
+                                    {this.state.plan.name}</em> für {this.state.date_formatted}
+                                </span>
+                                {this.state.lessons && this.state.lessons.length > 0 ? <div>
+                                        {this.state.lessons.map(function (lesson) {
+                                            return <div className="row">
+                                                <div className="col s4">
+                                                    <div className="card timetable-title-card">
+                                                        <div className="card-content">
+
+                                                            <span className="card-title left">
+                                                                {lesson.time.number_format}
+                                                            </span>
+
+                                                            <div
+                                                                className="right timetable-time grey-text text-darken-2">
+                                                                <span>{lesson.time.start}</span>
+                                                                <br/>
+                                                                <span>{lesson.time.end}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
+                                            </div>;
+                                        })}
+                                    </div>
+                                    :
+                                    <p>Keine Vertretungen für morgen vorhanden.</p>
+                                }
                             </div> : <p className={"flow-text"}>Keine Vertretungen vorhanden.</p>}
                             {this.state.has_plan ? <div className="card-action">
                                 <a href={MY_PLAN_URL}>
