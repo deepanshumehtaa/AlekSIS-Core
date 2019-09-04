@@ -2,15 +2,22 @@
 {% load i18n %}
 
 {% block page_title %}
- {% blocktrans %}Maintenance mode{% endblocktrans %}
+ {% blocktrans %}Internal Server Error{% endblocktrans %}
 {% endblock %}
 
 {% block content %}
  <div class="jumbotron jumbotron-fluid">
   <div class="container">
    <p class="lead">
+     {% blocktrans %}
+      An unexpected error has occured.
+     {% endblocktrans %}
+   </p>
+   <hr />
+   <p>
     {% blocktrans %}
-     The maintenance mode is currently enabled. Please try again later.
+     Your site administrators will automatically be notified about this
+     error.
     {% endblocktrans %}
    </p>
   </div>

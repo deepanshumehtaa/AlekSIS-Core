@@ -18,25 +18,6 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'core/index.html', context)
 
 
-def error_handler(status: int) -> Callable[..., HttpResponse]:
-    def real_handler(request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        context = {}
-
-        context['status'] = status
-
-        if status == 404:
-            context['message'] = _(
-                'This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated.')
-            context['caption'] = _('Page not found')
-        elif status == 500:
-            context['caption'] = _('Internal server error')
-            context['message'] = _('An unexpected error has occurred.')
-
-        return render(request, 'core/error.html', context, status=status)
-
-    return real_handler
-
-
 @login_required
 def persons(request: HttpRequest) -> HttpResponse:
     context = {}
