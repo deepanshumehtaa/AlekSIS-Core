@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-05 20:34+0000\n"
-"PO-Revision-Date: 2019-09-02 21:26+0000\n"
+"PO-Revision-Date: 2019-09-05 20:54+0000\n"
 "Last-Translator: Dominik George <dominik.george@teckids.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/biscuit-ng/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
+"biscuit-ng/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -204,19 +205,15 @@ msgstr "Englisch"
 
 #: templates/403.html:5
 msgid "Forbidden"
-msgstr ""
+msgstr "Verboten"
 
 #: templates/403.html:12
 msgid "You are not allowed to access the requested page or object."
 msgstr ""
+"Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das angefragte "
+"Objekt zuzugreifen."
 
 #: templates/403.html:16 templates/404.html:20
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "     If you think this is an error in BiscuIT, please contact one of your\n"
-#| "     site administrators:\n"
-#| "    "
 msgid ""
 "\n"
 "     If you think this is an error in BiscuIT, please contact your site\n"
@@ -224,44 +221,44 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"     Wenn Sie der Meinung sind, dass es sich um einen Fehler in BiscuIT handelt, kontaktieren Sie bitte einen Ihrer\n"
+"     Wenn Sie der Meinung sind, dass es sich um einen Fehler in BiscuIT "
+"handelt, kontaktieren Sie bitte einen Ihrer\n"
 "     Systemadministratoren:\n"
 "    "
 
 #: templates/404.html:5
-#, fuzzy
-#| msgid "Page not found"
 msgid "Not found"
-msgstr "Seite nicht gefunden"
+msgstr "Nicht gefunden"
 
 #: templates/404.html:12
 msgid "The requested page or object was not found."
-msgstr ""
+msgstr "Die angefragte Seite oder das angefragte Objekt wurde nicht gefunden."
 
 #: templates/404.html:16
-#, fuzzy
-#| msgid "This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated."
 msgid ""
 "\n"
 "     If you were redirected by a link on an external page,\n"
 "     it is possible that that link was outdated.\n"
 "    "
-msgstr "Diese Seite existiert leider nicht. Wenn Sie über einen Link auf einer externen Seite hierher gelangt sind, ist es möglich, dass dieser veraltet war."
+msgstr ""
+"\n"
+"     Wenn Sie über einen Link auf einer externen Seite hierher gelangt sind, "
+"ist es möglich, dass dieser veraltet war.\n"
+"    "
 
 #: templates/500.html:5
-#, fuzzy
-#| msgid "Internal server error"
 msgid "Internal Server Error"
 msgstr "Interner Serverfehler"
 
 #: templates/500.html:12
-#, fuzzy
-#| msgid "An unexpected error has occurred."
 msgid ""
 "\n"
 "      An unexpected error has occured.\n"
 "     "
-msgstr "Ein Fehler ist aufgetreten."
+msgstr ""
+"\n"
+"      Ein unerwarteter Fehler ist aufgetreten.\n"
+"     "
 
 #: templates/500.html:18
 msgid ""
@@ -270,6 +267,9 @@ msgid ""
 "     error.\n"
 "    "
 msgstr ""
+"\n"
+"     Ihre Administratoren werden automatisch über diesen Fehler informiert.\n"
+"    "
 
 #: templates/503.html:5
 msgid "Maintenance mode"
@@ -297,7 +297,7 @@ msgstr ""
 
 #: templates/core/data_management.html:5
 msgid "Administration"
-msgstr ""
+msgstr "Verwaltung"
 
 #: templates/core/edit_group.html:6 templates/core/edit_group.html:8
 #: templates/core/group_full.html:16
@@ -314,10 +314,8 @@ msgid "Assorted"
 msgstr "Unsortiert"
 
 #: templates/core/group_full.html:8
-#, fuzzy
-#| msgid "Groups"
 msgid "Group"
-msgstr "Gruppen"
+msgstr "Gruppe"
 
 #: templates/core/group_full.html:19
 msgid "Details"
@@ -336,19 +334,14 @@ msgid "Group not found"
 msgstr "Gruppe nicht gefunden"
 
 #: templates/core/group_full.html:38
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    There is no group with this id.\n"
-#| "   "
 msgid ""
 "\n"
 "          There is no group with this id.\n"
 "        "
 msgstr ""
 "\n"
-"    Es existiert keine Gruppe mit dieser ID.\n"
-"   "
+"          Es existiert keine Gruppe mit dieser ID.\n"
+"        "
 
 #: templates/core/index.html:10
 msgid ""
@@ -357,34 +350,27 @@ msgid ""
 "        manage and/or publish organisational data of educational institutions.\n"
 "      "
 msgstr ""
+"\n"
+"        BiscuIT ist ein webbasiertes Schul-Informations-System (SIS), das "
+"verwendet werden kann, um organisatorische Daten von Bildungseinrichten zu "
+"verwalten oder zu publizieren.\n"
+"      "
 
 #: templates/core/language_form.html:5
 msgid "Language"
 msgstr "Sprache"
 
 #: templates/core/no_person.html:8
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "       You are not linked to a person\n"
-#| "     "
 msgid ""
 "\n"
 "        You are not linked to a person\n"
 "      "
 msgstr ""
 "\n"
-"       Sie sind nicht mit einer Person verknüpft\n"
-"     "
+"        Sie sind nicht mit einer Person verknüpft\n"
+"      "
 
 #: templates/core/no_person.html:13
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "       Your user account is not linked to a person. This means you\n"
-#| "       cannot access any school-related information. Please contact\n"
-#| "       the managers of BiscuIT at your school.\n"
-#| "     "
 msgid ""
 "\n"
 "        Your user account is not linked to a person. This means you\n"
@@ -393,10 +379,12 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"       Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das bedeutet, dass Sie\n"
-"       keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie sich an\n"
+"        Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das "
+"bedeutet, dass Sie\n"
+"       keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie "
+"sich an\n"
 "       die Verwaltenden von BiscuIT an Ihrer Schule.\n"
-"     "
+"      "
 
 #: templates/core/person_full.html:8 templates/core/persons_accounts.html:31
 msgid "Person"
@@ -411,19 +399,14 @@ msgid "Person not found"
 msgstr "Person nicht gefunden"
 
 #: templates/core/person_full.html:73
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    There is no person with this id.\n"
-#| "   "
 msgid ""
 "\n"
 "          There is no person with this id.\n"
 "        "
 msgstr ""
 "\n"
-"    Es existiert keine Person mit dieser ID.\n"
-"   "
+"          Es existiert keine Person mit dieser ID.\n"
+"        "
 
 #: templates/core/persons_accounts.html:7
 #: templates/core/persons_accounts.html:10
@@ -431,14 +414,6 @@ msgid "Link persons to accounts"
 msgstr "Personen mit Benutzerkonten verknüpfen"
 
 #: templates/core/persons_accounts.html:16
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    You can use this form to assign user accounts to persons. Use the\n"
-#| "    dropdowns to select existing accounts; use the text fields to create new\n"
-#| "    accounts on-the-fly. The latter will create a new account with the\n"
-#| "    entered username and copy all other details from the person.\n"
-#| "   "
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -448,11 +423,13 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"    Sie können dieses Formular nutzen, um Benutzerkonten Personen zuzuweisen. Nutzen Sie das\n"
-"    Auswahlfeld um ein existierendes Benutzerkonto auszuwählen; nutzen Sie das Textfeld, um einen neuen Benutzer zu\n"
+"        Sie können dieses Formular nutzen, um Benutzerkonten Personen "
+"zuzuweisen. Nutzen Sie das\n"
+"    Auswahlfeld um ein existierendes Benutzerkonto auszuwählen; nutzen Sie "
+"das Textfeld, um einen neuen Benutzer zu\n"
 "    erstellen. Letzteres erstellt ein neues Benutzerkonto mit dem\n"
 "    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
-"   "
+"      "
 
 #: templates/core/persons_accounts.html:32
 msgid "Existing account"
