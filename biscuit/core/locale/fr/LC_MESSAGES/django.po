@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 21:22+0000\n"
+"POT-Creation-Date: 2019-09-05 20:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: apps.py:11
-msgid "BiscuIT - The Free School Information System"
-msgstr ""
 
 #: forms.py:26 forms.py:59
 msgid "You cannot set a new username when also selecting an existing user."
@@ -70,11 +66,11 @@ msgstr ""
 msgid "People"
 msgstr ""
 
-#: menus.py:51 templates/core/persons.html:5
+#: menus.py:51 templates/core/persons.html:8 templates/core/persons.html:10
 msgid "Persons"
 msgstr ""
 
-#: menus.py:56 templates/core/groups.html:5
+#: menus.py:56 templates/core/groups.html:8 templates/core/groups.html:10
 msgid "Groups"
 msgstr ""
 
@@ -98,7 +94,7 @@ msgstr ""
 msgid "Get support"
 msgstr ""
 
-#: migrations/0007_school.py:11
+#: migrations/0001_initial.py:15
 msgid "Default school"
 msgstr ""
 
@@ -198,15 +194,70 @@ msgstr ""
 msgid "Parent groups"
 msgstr ""
 
-#: settings.py:200
+#: settings.py:213
 msgid "German"
 msgstr ""
 
-#: settings.py:201
+#: settings.py:214
 msgid "English"
 msgstr ""
 
-#: templates/503.html:9
+#: templates/403.html:5
+msgid "Forbidden"
+msgstr ""
+
+#: templates/403.html:12
+msgid "You are not allowed to access the requested page or object."
+msgstr ""
+
+#: templates/403.html:16 templates/404.html:20
+msgid ""
+"\n"
+"     If you think this is an error in BiscuIT, please contact your site\n"
+"     administrators.\n"
+"    "
+msgstr ""
+
+#: templates/404.html:5
+msgid "Not found"
+msgstr ""
+
+#: templates/404.html:12
+msgid "The requested page or object was not found."
+msgstr ""
+
+#: templates/404.html:16
+msgid ""
+"\n"
+"     If you were redirected by a link on an external page,\n"
+"     it is possible that that link was outdated.\n"
+"    "
+msgstr ""
+
+#: templates/500.html:5
+msgid "Internal Server Error"
+msgstr ""
+
+#: templates/500.html:12
+msgid ""
+"\n"
+"      An unexpected error has occured.\n"
+"     "
+msgstr ""
+
+#: templates/500.html:18
+msgid ""
+"\n"
+"     Your site administrators will automatically be notified about this\n"
+"     error.\n"
+"    "
+msgstr ""
+
+#: templates/503.html:5
+msgid "Maintenance mode"
+msgstr ""
+
+#: templates/503.html:12
 msgid ""
 "\n"
 "     The maintenance mode is currently enabled. Please try again later.\n"
@@ -220,142 +271,129 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/core/edit_group.html:4 templates/core/group_full.html:11
+#: templates/core/data_management.html:5
+msgid "Administration"
+msgstr ""
+
+#: templates/core/edit_group.html:6 templates/core/edit_group.html:8
+#: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr ""
 
-#: templates/core/edit_person.html:4 templates/core/person_full.html:11
+#: templates/core/edit_person.html:7 templates/core/edit_person.html:9
+#: templates/core/person_full.html:16
 msgid "Edit person"
 msgstr ""
 
-#: templates/core/group_full.html:14
+#: templates/core/footer-menu.html:26
+msgid "Assorted"
+msgstr ""
+
+#: templates/core/group_full.html:8
+msgid "Group"
+msgstr ""
+
+#: templates/core/group_full.html:19
 msgid "Details"
 msgstr ""
 
-#: templates/core/group_full.html:23
+#: templates/core/group_full.html:28
 msgid "Owners"
 msgstr ""
 
-#: templates/core/group_full.html:26
+#: templates/core/group_full.html:31
 msgid "Members"
 msgstr ""
 
-#: templates/core/group_full.html:30
+#: templates/core/group_full.html:35
 msgid "Group not found"
 msgstr ""
 
-#: templates/core/group_full.html:33
+#: templates/core/group_full.html:38
 msgid ""
 "\n"
-"    There is no group with this id.\n"
-"   "
+"          There is no group with this id.\n"
+"        "
 msgstr ""
 
-#: templates/core/groups.html:9
-msgid "List of all groups"
+#: templates/core/index.html:10
+msgid ""
+"\n"
+"        BiscuIT is a web-based school information system (SIS) which can be used to\n"
+"        manage and/or publish organisational data of educational institutions.\n"
+"      "
 msgstr ""
 
-#: templates/core/language_form.html:2
+#: templates/core/language_form.html:5
 msgid "Language"
 msgstr ""
 
-#: templates/core/no_person.html:6
+#: templates/core/no_person.html:8
 msgid ""
 "\n"
-"       You are not linked to a person\n"
-"     "
+"        You are not linked to a person\n"
+"      "
 msgstr ""
 
-#: templates/core/no_person.html:11
+#: templates/core/no_person.html:13
 msgid ""
 "\n"
-"       Your user account is not linked to a person. This means you\n"
-"       cannot access any school-related information. Please contact\n"
-"       the managers of BiscuIT at your school.\n"
-"     "
+"        Your user account is not linked to a person. This means you\n"
+"        cannot access any school-related information. Please contact\n"
+"        the managers of BiscuIT at your school.\n"
+"      "
 msgstr ""
 
-#: templates/core/person_full.html:14
-msgid "Contact details"
-msgstr ""
-
-#: templates/core/person_full.html:65
-msgid "Person not found"
-msgstr ""
-
-#: templates/core/person_full.html:68
-msgid ""
-"\n"
-"    There is no person with this id.\n"
-"   "
-msgstr ""
-
-#: templates/core/persons.html:9
-msgid "List of all persons"
-msgstr ""
-
-#: templates/core/persons_accounts.html:6
-msgid "Link persons to accounts"
-msgstr ""
-
-#: templates/core/persons_accounts.html:12
-msgid ""
-"\n"
-"    You can use this form to assign user accounts to persons. Use the\n"
-"    dropdowns to select existing accounts; use the text fields to create new\n"
-"    accounts on-the-fly. The latter will create a new account with the\n"
-"    entered username and copy all other details from the person.\n"
-"   "
-msgstr ""
-
-#: templates/core/persons_accounts.html:27
+#: templates/core/person_full.html:8 templates/core/persons_accounts.html:31
 msgid "Person"
 msgstr ""
 
-#: templates/core/persons_accounts.html:28
+#: templates/core/person_full.html:19
+msgid "Contact details"
+msgstr ""
+
+#: templates/core/person_full.html:70
+msgid "Person not found"
+msgstr ""
+
+#: templates/core/person_full.html:73
+msgid ""
+"\n"
+"          There is no person with this id.\n"
+"        "
+msgstr ""
+
+#: templates/core/persons_accounts.html:7
+#: templates/core/persons_accounts.html:10
+msgid "Link persons to accounts"
+msgstr ""
+
+#: templates/core/persons_accounts.html:16
+msgid ""
+"\n"
+"        You can use this form to assign user accounts to persons. Use the\n"
+"        dropdowns to select existing accounts; use the text fields to create new\n"
+"        accounts on-the-fly. The latter will create a new account with the\n"
+"        entered username and copy all other details from the person.\n"
+"      "
+msgstr ""
+
+#: templates/core/persons_accounts.html:32
 msgid "Existing account"
 msgstr ""
 
-#: templates/core/persons_accounts.html:29
+#: templates/core/persons_accounts.html:33
 msgid "New account"
-msgstr ""
-
-#: templates/error.html:13
-msgid ""
-"\n"
-"     If you think this is an error in BiscuIT, please contact one of your\n"
-"     site administrators:\n"
-"    "
-msgstr ""
-
-#: templates/footer-menu.html:25
-msgid "Assorted"
 msgstr ""
 
 #: templates/impersonate/list_users.html:8
 msgid "Impersonate user"
 msgstr ""
 
-#: views.py:29
-msgid "This page does not exist. If you were redirected by a link on an external page, it is possible that that link was outdated."
-msgstr ""
-
-#: views.py:30
-msgid "Page not found"
-msgstr ""
-
-#: views.py:32
-msgid "Internal server error"
-msgstr ""
-
-#: views.py:33
-msgid "An unexpected error has occurred."
-msgstr ""
-
-#: views.py:159
+#: views.py:140
 msgid "The person has been saved."
 msgstr ""
 
-#: views.py:182
+#: views.py:163
 msgid "The group has been saved."
 msgstr ""
