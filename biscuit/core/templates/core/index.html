@@ -2,15 +2,15 @@
 
 {% extends "core/base.html" %}
 
-{% load bootstrap4 %}
-
-{% block page_title %}BiscuIT School Information System (SIS){% endblock %}
+{% load bootstrap4 i18n %}
 
 {% block content %}
   <div class="jumbotron">
     <p>
-      BiscuIT is a web-based school information system (SIS) which can be used to
-      manage and/or publish organisational subjects of educational institutions.
+      {% blocktrans %}
+        BiscuIT is a web-based school information system (SIS) which can be used to
+        manage and/or publish organisational data of educational institutions.
+      {% endblocktrans %}
     </p>
   </div>
 {% endblock %}
