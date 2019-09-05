@@ -39,7 +39,7 @@ def api_information(request):
     unread_notifications = request.user.notifications.all().filter(user=request.user, read=False).order_by(
         '-created_at')
     # user_type = UserInformation.user_type(request.user)
-    newest_articles = get_newest_articles("https://katharineum-zu-luebeck.de", 1, [22])
+    newest_articles = get_newest_articles(limit=1)
     if len(newest_articles) >= 0:
         newest_article = newest_articles[0]
     else:

@@ -1,3 +1,4 @@
+requests
 mysqlclient
 django
 django-auth-ldap
