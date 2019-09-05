@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% if not user.person %}
+{% if not user.person and not user.is_anonymous %}
   <div class="alert alert-danger" role="alert">
     <h2 class="alert-heading">
       {% blocktrans %}
