@@ -1,36 +1,29 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.utils import timezone, formats
 
-from helper import get_newest_articles, get_current_events
-from schoolapps.settings import SHORT_WEEK_DAYS, LONG_WEEK_DAYS
-from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
-from timetable.views import get_next_weekday_with_time, get_type_and_object_of_user, get_calendar_week
+from helper import get_newest_articles, get_current_events, get_newest_article_from_news
+from schoolapps.settings import LONG_WEEK_DAYS
+from timetable.helper import get_name_for_next_week_day_from_today, get_type_and_object_of_user
+from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.plan import get_plan
-from .models import Activity, register_notification, Notification
-# from .apps import DashboardConfig
-from mailer import send_mail_with_template
+from .models import Activity, Notification
 from userinformation import UserInformation
 
 
-# Create your views here.
-
 @login_required
 def index(request):
-    """ Index page: Lists activities und notifications """
+    """ Dashboard: Show daily relevant information """
 
-    context = {
-    }
-
-    return render(request, 'dashboard/index.html', context)
+    return render(request, 'dashboard/index.html')
 
 
 @login_required
 def api_information(request):
+    """ API request: Give information for dashboard in JSON """
     # Load activities
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
 
@@ -38,24 +31,9 @@ def api_information(request):
     notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
     unread_notifications = request.user.notifications.all().filter(user=request.user, read=False).order_by(
         '-created_at')
-    # user_type = UserInformation.user_type(request.user)
-    newest_articles = get_newest_articles(limit=1)
-    if len(newest_articles) >= 0:
-        newest_article = newest_articles[0]
-    else:
-        newest_article = None
-    print(newest_articles)
+    newest_article = get_newest_article_from_news()
 
-    next_weekday = get_next_weekday_with_time(timezone.now(), timezone.now().time())
-    if next_weekday.date() == timezone.now().date():
-        date_formatted = "heute"
-        print("Gleicher Tag")
-    elif next_weekday.date() == timezone.now().date() + timezone.timedelta(days=1):
-        print("Nächster Tag")
-        date_formatted = "morgen"
-    else:
-        print("Ganz anderer Tag")
-        date_formatted = LONG_WEEK_DAYS[next_weekday.isoweekday() - 2]
+    date_formatted = get_name_for_next_week_day_from_today()
 
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
@@ -112,6 +90,8 @@ def api_information(request):
 
 @login_required
 def api_read_notification(request, id):
+    """ API request: Mark notification as read """
+
     notification = get_object_or_404(Notification, id=id, user=request.user)
     notification.read = True
     notification.save()
@@ -120,6 +100,8 @@ def api_read_notification(request, id):
 
 @login_required
 def api_my_plan_html(request):
+    """ API request: Get rendered lessons with substitutions for dashboard """
+
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
     hints = None
@@ -166,17 +148,6 @@ def api_my_plan_html(request):
     print(lessons)
 
     return JsonResponse({"success": True, "lessons": lessons})
-
-
-@login_required
-def test_notification(request):
-    """ Sends a test mail """
-    # send_mail_with_template("Test", [request.user.email], 'mail/email.txt', 'mail/email.html', {'user': request.user})
-    register_notification(user=request.user, title="Ihr Antrag wurde genehmigt",
-                          description="Ihr Antrag XY wurde von der Schulleitung genehmigt.", app="AUB",
-                          link=reverse("aub_details", args=[1]))
-    print(reverse("aub_details", args=[1]))
-    return redirect(reverse('dashboard'))
 
 
 def error_404(request, exception):

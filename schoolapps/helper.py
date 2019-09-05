@@ -2,7 +2,6 @@ import os
 from uuid import uuid4
 
 from django.template.loader_tags import register
-from datetime import datetime
 
 from django.utils import timezone, formats
 from ics import Calendar
@@ -94,6 +93,14 @@ def get_newest_articles(domain: str = WP_DOMAIN,
             break
 
     return posts
+
+
+def get_newest_article_from_news():
+    newest_articles: list = get_newest_articles(limit=1, category_whitelist=[1, 27])
+    if len(newest_articles) >= 0:
+        return newest_articles[0]
+    else:
+        return None
 
 
 # Set calendar here
