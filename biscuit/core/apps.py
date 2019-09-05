@@ -3,7 +3,7 @@ import os
 
 from django.apps import AppConfig
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 
 class CoreConfig(AppConfig):
