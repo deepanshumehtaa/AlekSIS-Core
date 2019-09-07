@@ -1,0 +1,22 @@
+{% load font_awesome %}
+
+<ul class="{{ class_ul }}">
+  {% for event in obj.crud_events %}
+    <li clas="{{ class_li }}">
+      {% if event.event_type == event.CREATE %}
+        {% fa 'plus' %} 
+      {% elif event.event_type == event.UPDATE %}
+        {% fa 'pencil' %} 
+      {% elif event.event_type == event.DELETE %}
+        {% fa 'trash' %} 
+      {% elif event.event_type == event.M2M_CHANGE %}
+        {% fa 'pencil' %} 
+      {% elif event.event_type == event.M2M_CHANGE_REV %}
+        {% fa 'pencil' %} 
+      {% endif %}
+
+      {{ event.user.person.full_name }}
+      ({{ event.datetime.date }})
+    </li>
+  {% endfor %}
+</ul>
