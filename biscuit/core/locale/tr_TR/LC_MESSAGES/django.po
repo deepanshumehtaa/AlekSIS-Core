@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-05 20:34+0000\n"
+"POT-Creation-Date: 2019-09-07 23:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,7 @@ msgid "Persons"
 msgstr ""
 
 #: menus.py:56 templates/core/groups.html:8 templates/core/groups.html:10
+#: templates/core/person_full.html:66
 msgid "Groups"
 msgstr ""
 
@@ -279,6 +280,10 @@ msgstr ""
 msgid "Edit group"
 msgstr ""
 
+#: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+msgid "Edit"
+msgstr ""
+
 #: templates/core/edit_person.html:7 templates/core/edit_person.html:9
 #: templates/core/person_full.html:16
 msgid "Edit person"
@@ -315,11 +320,20 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/core/index.html:10
+#: templates/core/index.html:8
 msgid ""
 "\n"
-"        BiscuIT is a web-based school information system (SIS) which can be used to\n"
-"        manage and/or publish organisational data of educational institutions.\n"
+"    BiscuIT School Information System (SIS)\n"
+"  "
+msgstr ""
+
+#: templates/core/index.html:16
+msgid ""
+"\n"
+"        BiscuIT is a web-based school information system (SIS) which can be "
+"used to\n"
+"        manage and/or publish organisational data of educational "
+"institutions.\n"
 "      "
 msgstr ""
 
@@ -371,7 +385,8 @@ msgstr ""
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
-"        dropdowns to select existing accounts; use the text fields to create new\n"
+"        dropdowns to select existing accounts; use the text fields to create "
+"new\n"
 "        accounts on-the-fly. The latter will create a new account with the\n"
 "        entered username and copy all other details from the person.\n"
 "      "
@@ -383,6 +398,10 @@ msgstr ""
 
 #: templates/core/persons_accounts.html:33
 msgid "New account"
+msgstr ""
+
+#: templates/core/persons_accounts.html:49
+msgid "Update"
 msgstr ""
 
 #: templates/impersonate/list_users.html:8

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-05 20:34+0000\n"
+"POT-Creation-Date: 2019-09-07 23:33+0200\n"
 "PO-Revision-Date: 2019-09-05 20:54+0000\n"
 "Last-Translator: Dominik George <dominik.george@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
@@ -21,7 +21,9 @@ msgstr ""
 
 #: forms.py:26 forms.py:59
 msgid "You cannot set a new username when also selecting an existing user."
-msgstr "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen existierenden Benutzer auswählen."
+msgstr ""
+"Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
+"existierenden Benutzer auswählen."
 
 #: forms.py:28 forms.py:61
 msgid "This username is already in use."
@@ -72,6 +74,7 @@ msgid "Persons"
 msgstr "Personen"
 
 #: menus.py:56 templates/core/groups.html:8 templates/core/groups.html:10
+#: templates/core/person_full.html:66
 msgid "Groups"
 msgstr "Gruppen"
 
@@ -105,7 +108,8 @@ msgstr "Name"
 
 #: models.py:22
 msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
+msgstr ""
+"Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
 #: models.py:38
 msgid "female"
@@ -282,7 +286,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später erneut.\n"
+"     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+"erneut.\n"
 "    "
 
 #: templates/contact_form/contact_form_sent.html:9
@@ -303,6 +308,10 @@ msgstr "Verwaltung"
 #: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr "Gruppe editieren"
+
+#: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+msgid "Edit"
+msgstr ""
 
 #: templates/core/edit_person.html:7 templates/core/edit_person.html:9
 #: templates/core/person_full.html:16
@@ -343,11 +352,22 @@ msgstr ""
 "          Es existiert keine Gruppe mit dieser ID.\n"
 "        "
 
-#: templates/core/index.html:10
+#: templates/core/index.html:8
+#, fuzzy
+#| msgid "BiscuIT - The Free School Information System"
 msgid ""
 "\n"
-"        BiscuIT is a web-based school information system (SIS) which can be used to\n"
-"        manage and/or publish organisational data of educational institutions.\n"
+"    BiscuIT School Information System (SIS)\n"
+"  "
+msgstr "BiscuIT - Das freie Schulinformationssystem"
+
+#: templates/core/index.html:16
+msgid ""
+"\n"
+"        BiscuIT is a web-based school information system (SIS) which can be "
+"used to\n"
+"        manage and/or publish organisational data of educational "
+"institutions.\n"
 "      "
 msgstr ""
 "\n"
@@ -417,7 +437,8 @@ msgstr "Personen mit Benutzerkonten verknüpfen"
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
-"        dropdowns to select existing accounts; use the text fields to create new\n"
+"        dropdowns to select existing accounts; use the text fields to create "
+"new\n"
 "        accounts on-the-fly. The latter will create a new account with the\n"
 "        entered username and copy all other details from the person.\n"
 "      "
@@ -439,6 +460,10 @@ msgstr "Existierendes Konto"
 msgid "New account"
 msgstr "Neues Konto"
 
+#: templates/core/persons_accounts.html:49
+msgid "Update"
+msgstr ""
+
 #: templates/impersonate/list_users.html:8
 msgid "Impersonate user"
 msgstr "Als Benutzer verkleiden"
@@ -451,9 +476,6 @@ msgstr "Die Person wurde gespeichert."
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#~ msgid "BiscuIT - The Free School Information System"
-#~ msgstr "BiscuIT - Das freie Schulinformationssystem"
-
 #~ msgid "List of all groups"
 #~ msgstr "Liste aller Gruppen"
 
@@ -461,4 +483,6 @@ msgstr "Die Gruppe wurde gespeichert."
 #~ msgstr "Liste aller Personen"
 
 #~ msgid "The maintenance mode is currently enabled. Please try again later."
-#~ msgstr "Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später erneut."
+#~ msgstr ""
+#~ "Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+#~ "erneut."
