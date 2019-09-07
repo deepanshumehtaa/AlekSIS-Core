@@ -3,20 +3,23 @@
 <ul class="{{ class_ul }}">
   {% for event in obj.crud_events %}
     <li clas="{{ class_li }}">
-      {% if event.event_type == event.CREATE %}
-        {% fa 'plus' %} 
-      {% elif event.event_type == event.UPDATE %}
-        {% fa 'pencil' %} 
-      {% elif event.event_type == event.DELETE %}
-        {% fa 'trash' %} 
-      {% elif event.event_type == event.M2M_CHANGE %}
-        {% fa 'pencil' %} 
-      {% elif event.event_type == event.M2M_CHANGE_REV %}
-        {% fa 'pencil' %} 
-      {% endif %}
-
-      {{ event.user.person.full_name }}
-      ({{ event.datetime.date }})
+      <div>
+        <p>{{ event.user.person.full_name }}</p>
+        <small>({{ event.datetime }})</small>
+      </div>
+      <span class="badge badge-light text-dark">
+        {% if event.event_type == event.CREATE %}
+          {% fa 'plus' %} 
+        {% elif event.event_type == event.UPDATE %}
+          {% fa 'pencil' %} 
+        {% elif event.event_type == event.DELETE %}
+          {% fa 'trash' %} 
+        {% elif event.event_type == event.M2M_CHANGE %}
+          {% fa 'pencil' %} 
+        {% elif event.event_type == event.M2M_CHANGE_REV %}
+          {% fa 'pencil' %} 
+        {% endif %}
+      </span>
     </li>
   {% endfor %}
 </ul>
