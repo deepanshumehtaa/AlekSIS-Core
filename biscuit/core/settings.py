@@ -299,7 +299,7 @@ IMPERSONATE = {
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
-DBBACKUP_STORAGE = _settings.get('backup.storage', 'dbbackup.storage.filesystem_storage')
+DBBACKUP_STORAGE = _settings.get('backup.storage', 'django.core.files.storage.FileSystemStorage')
 DBBACKUP_STORAGE_OPTIONS = {
     'location': _settings.get('backup.location', '/var/backups/biscuit')
 }
