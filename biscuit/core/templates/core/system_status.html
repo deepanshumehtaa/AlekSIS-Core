@@ -1,0 +1,29 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load i18n font_awesome %}
+
+{% block bootstrap4_title %}{% blocktrans %}System status{% endblocktrans %} - {{ block.super }}{% endblock %}
+
+{% block page_title %}{% blocktrans %}System status{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header bg-light text-dark">
+      {% blocktrans %}Recent backup cron jobs%{ endblocktrans %}
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for backup in backups %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <p>{{ backup.end_time }}</p>
+          </div>
+          {% if backup.is_success %}
+            <span class="badge badge-success">{% fa 'check' %}</span>
+          {% else %}
+            <span class="badge badge-danger">{% fa 'times' %}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

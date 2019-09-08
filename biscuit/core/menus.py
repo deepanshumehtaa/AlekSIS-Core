@@ -35,6 +35,11 @@ MENUS = {
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
                 },
                 {
+                    'name': _('System status'),
+                    'url': 'system_status',
+                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                },
+                {
                     'name': _('Impersonation'),
                     'url': 'impersonate-list',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']

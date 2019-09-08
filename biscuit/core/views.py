@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django_tables2 import RequestConfig
 from django.utils.translation import ugettext_lazy as _
 
+from django_cron.models import CronJobLog
+
 from .decorators import admin_required
 from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm
 from .models import Person, Group
@@ -173,3 +175,14 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, 'core/data_management.html', context)
+
+
+@admin_required
+def system_status(request: HttpRequest) -> HttpResponse:
+    context = {}
+    
+    context['backups'] = CronJobLog.objects.filter(
+        code='biscuit.core.Backup'
+    ).order_by('-end_time')[:10]
+
+    return render(request, 'core/system_status.html', context)
