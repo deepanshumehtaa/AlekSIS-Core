@@ -64,8 +64,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'contact_form',
-    'impersonate',
     'biscuit.core',
+    'impersonate',
 ]
 
 INSTALLED_APPS += get_app_packages()
