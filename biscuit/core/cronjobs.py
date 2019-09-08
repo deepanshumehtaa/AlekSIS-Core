@@ -12,4 +12,4 @@ class Backup(CronJobBase):
 
     def do(self):
         management.call_command('dbbackup', '-z')
-        management.call_command('mediabackup' '-z')
+        management.call_command('mediabackup', '-z')
