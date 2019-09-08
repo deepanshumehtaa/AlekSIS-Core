@@ -44,6 +44,7 @@ django-image-cropping = "^1.2"
 django-contact-form = "^1.7"
 django-impersonate = "^1.4"
 python-memcached = "^1.59"
+django-dbbackup = "^3.2"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

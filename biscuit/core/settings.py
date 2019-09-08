@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'settings_context_processor',
     'sass_processor',
     'easyaudit',
+    'dbbackup',
     'bootstrap4',
     'fa',
     'django_any_js',
@@ -62,8 +63,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'contact_form',
-    'biscuit.core',
     'impersonate',
+    'biscuit.core',
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -296,5 +297,12 @@ IMPERSONATE = {
 }
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
+DBBACKUP_STORAGE = _settings.get('backup.storage', 'dbbackup.storage.filesystem_storage')
+DBBACKUP_STORAGE_OPTIONS = {
+    'location': _settings.get('backup.location', '/var/backups/biscuit')
+}
+DBBACKUP_CLEANUP_KEEP = _settings('backup.keep.database', 10)
+DBBACKUP_CLEANUP_KEEP_MEDIA = _settings('backup.keep.media', 10)
 
 _settings.populate_obj(sys.modules[__name__])
