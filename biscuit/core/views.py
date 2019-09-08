@@ -23,7 +23,7 @@ def persons(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all persons
-    persons = Person.objects.all()
+    persons = Person.objects.filter(is_active=True)
 
     # Build table
     persons_table = PersonsTable(persons)
@@ -74,7 +74,7 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     group = Group.objects.get(pk=id_)
 
     # Get members
-    members = group.members.all()
+    members = group.members.filter(is_active=True)
 
     # Build table
     members_table = PersonsTable(members)
@@ -82,7 +82,7 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     context['members_table'] = members_table
 
     # Get owners
-    owners = group.owners.all()
+    owners = group.owners.filter(is_active=True)
 
     # Build table
     owners_table = PersonsTable(owners)
