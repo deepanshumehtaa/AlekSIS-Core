@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'easyaudit',
     'dbbackup',
+    'django_cron',
     'bootstrap4',
     'fa',
     'django_any_js',
@@ -302,7 +303,12 @@ DBBACKUP_STORAGE = _settings.get('backup.storage', 'dbbackup.storage.filesystem_
 DBBACKUP_STORAGE_OPTIONS = {
     'location': _settings.get('backup.location', '/var/backups/biscuit')
 }
-DBBACKUP_CLEANUP_KEEP = _settings('backup.keep.database', 10)
-DBBACKUP_CLEANUP_KEEP_MEDIA = _settings('backup.keep.media', 10)
+DBBACKUP_CLEANUP_KEEP = _settings.get('backup.keep.database', 10)
+DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get('backup.keep.media', 10)
+DBBACKUP_CRON_TIMES = _settings.get('backup.times', ['03:57'])
+
+CRON_CLASSES = [
+    'biscuit.core.cronjobs.Backup'
+]
 
 _settings.populate_obj(sys.modules[__name__])
