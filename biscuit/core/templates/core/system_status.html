@@ -7,6 +7,22 @@
 {% block page_title %}{% blocktrans %}System status{% endblocktrans %}{% endblock %}
 
 {% block content %}
+ {% if maintenance_mode %}
+  <div class="card">
+    <div class="card-header bg-light text-dark">
+      {% blocktrans %}Maintenance mode{% endblocktrans %}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <p>{% blocktrans %}Maintenance mode currently enabled!{% endblocktrans %}</p>
+          </div>
+            <span class="badge badge-danger">{% fa 'exclamation-triangle' %}</span>
+        </li>
+    </ul>
+  </div>
+ {% endif %}
+
   <div class="card">
     <div class="card-header bg-light text-dark">
       {% blocktrans %}Recent backup cron jobs{% endblocktrans %}
