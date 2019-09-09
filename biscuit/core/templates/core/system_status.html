@@ -18,8 +18,10 @@
           <p class="text-muted small">{% blocktrans%}Only admin and visitors from internal IPs can access the site.{% endblocktrans %}</p>
         </div>
         {% if maintenance_mode %}
+          <a href="{% url 'maintenance_mode_off' %}" class="float-right btn btn-danger">{% fa 'toggle-on' %}</a>
           <span class="badge badge-danger">{% fa 'times' %}</span>
         {% else %}
+          <a href="{% url 'maintenance_mode_on' %}" class="float-right btn btn-success">{% fa 'toggle-off' %}</a>
           <span class="badge badge-success">{% fa 'check' %}</span>
         {% endif %}
       </li>
@@ -29,9 +31,9 @@
           <p class="text-muted small">{% blocktrans%}The web server throws back debug informations on errors. Do not use in production!{% endblocktrans %}</p>
         </div>
         {% if debug_mode %}  
-          <span class="badge badge-success">{% fa 'check' %}</span>
-        {% else %}
           <span class="badge badge-danger">{% fa 'times' %}</span>
+        {% else %}
+          <span class="badge badge-success">{% fa 'check' %}</span>
         {% endif %}
       </li>
     </ul>
