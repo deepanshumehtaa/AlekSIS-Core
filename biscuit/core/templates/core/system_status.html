@@ -9,31 +9,39 @@
 {% block content %}
   <div class="card">
     <div class="card-header bg-light text-dark">
-      {% blocktrans %}Services{% endblocktrans %}
+      {% blocktrans %}System checks{% endblocktrans %}
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item d-flex justify-content-between align-items-center">
+       {% if maintenance_mode %} 
         <div>
-          <p>{% blocktrans %}Maintenance mode disabled{% endblocktrans %}</p>
+          <p>{% blocktrans %}Maintenance mode enabled{% endblocktrans %}</p>
           <p class="text-muted small">{% blocktrans%}Only admin and visitors from internal IPs can access the site.{% endblocktrans %}</p>
         </div>
-        {% if maintenance_mode %}
-          <a href="{% url 'maintenance_mode_off' %}" class="float-right btn btn-danger">{% fa 'toggle-on' %}</a>
-          <span class="badge badge-danger">{% fa 'times' %}</span>
-        {% else %}
-          <a href="{% url 'maintenance_mode_on' %}" class="float-right btn btn-success">{% fa 'toggle-off' %}</a>
-          <span class="badge badge-success">{% fa 'check' %}</span>
-        {% endif %}
+        <a href="{% url 'maintenance_mode_off' %}" class="float-right btn btn-danger">{% fa 'toggle-on' %}</a>
+        <span class="badge badge-danger">{% fa 'times' %}</span>
+       {% else %}
+        <div>
+          <p>{% blocktrans %}Maintenance mode disabled{% endblocktrans %}</p>
+          <p class="text-muted small">{% blocktrans%}Everyone can access the site.{% endblocktrans %}</p>
+        </div>
+        <a href="{% url 'maintenance_mode_on' %}" class="float-right btn btn-success">{% fa 'toggle-off' %}</a>
+        <span class="badge badge-success">{% fa 'check' %}</span>
+       {% endif %}
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
+       {% if debug_mode %}
         <div>
-          <p>{% blocktrans %}Debug mode disabled{% endblocktrans %}</p>
+          <p>{% blocktrans %}Debug mode enabled{% endblocktrans %}</p>
           <p class="text-muted small">{% blocktrans%}The web server throws back debug informations on errors. Do not use in production!{% endblocktrans %}</p>
         </div>
-        {% if debug_mode %}  
-          <span class="badge badge-danger">{% fa 'times' %}</span>
-        {% else %}
-          <span class="badge badge-success">{% fa 'check' %}</span>
+        <span class="badge badge-danger">{% fa 'times' %}</span>
+       {% else %}
+        <div>
+          <p>{% blocktrans %}Debug mode disabled{% endblocktrans %}</p>
+          <p class="text-muted small">{% blocktrans%}Debug mode is disabled. Default error pages are displayed on errors.{% endblocktrans %}</p>
+        </div>
+        <span class="badge badge-success">{% fa 'check' %}</span>
         {% endif %}
       </li>
     </ul>
