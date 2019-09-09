@@ -290,6 +290,7 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
     'maintenance.ignore_ips', _settings.get('debug.internal_ips', []))
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
+MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get('maintenance.state_file_path', 'maintenance_mode_state.txt')
 
 IMPERSONATE = {
     'USE_HTTP_REFERER': True,
