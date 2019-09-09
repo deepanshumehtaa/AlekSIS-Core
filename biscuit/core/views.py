@@ -1,6 +1,5 @@
 from typing import Callable, Optional
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -182,7 +181,6 @@ def data_management(request: HttpRequest) -> HttpResponse:
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
     
-    context['debug-mode'] = settings.DEBUG
     context['backups'] = CronJobLog.objects.filter(
         code='biscuit.core.Backup'
     ).order_by('-end_time')[:10]

@@ -283,7 +283,7 @@ if _settings.get('mail.server.host', None):
         EMAIL_HOST_USER = _settings.get('mail.server.user')
         EMAIL_HOST_PASSWORD = _settings.get('mail.server.password')
 
-TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
+TEMPLATE_VISIBLE_SETTINGS = ['ADMINS', 'DEBUG']
 
 MAINTENANCE_MODE = _settings.get('maintenance.enabled', None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
