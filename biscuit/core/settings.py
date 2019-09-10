@@ -30,8 +30,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = _settings.get('secret_key', 'DoNotUseInProduction')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = _settings.get('debug.enabled', False)
-INTERNAL_IPS = _settings.get('debug.internal_ips', [])
+DEBUG = _settings.get('maintenance.debug', False)
+INTERNAL_IPS = _settings.get('maintenance.internal_ips', [])
 DEBUG_TOOLBAR_CONFIG = {
     'RENDER_PANELS': True,
     'SHOW_COLLAPSED': True
@@ -287,7 +287,7 @@ TEMPLATE_VISIBLE_SETTINGS = ['ADMINS']
 
 MAINTENANCE_MODE = _settings.get('maintenance.enabled', None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
-    'maintenance.ignore_ips', _settings.get('debug.internal_ips', []))
+    'maintenance.ignore_ips', _settings.get('maintenance.internal_ips', []))
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 
