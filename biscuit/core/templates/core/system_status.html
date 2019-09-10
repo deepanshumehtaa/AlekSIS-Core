@@ -9,6 +9,44 @@
 {% block content %}
   <div class="card">
     <div class="card-header bg-light text-dark">
+      {% blocktrans %}System checks{% endblocktrans %}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+       {% if maintenance_mode %} 
+        <div>
+          <p>{% blocktrans %}Maintenance mode enabled{% endblocktrans %}</p>
+          <p class="small">{% blocktrans%}Only admin and visitors from internal IPs can access the site.{% endblocktrans %}</p>
+        </div>
+        <span class="badge badge-danger"><a href="{% url 'maintenance_mode_off' %}">{% fa 'power-off' %}</a></span>
+       {% else %}
+        <div>
+          <p>{% blocktrans %}Maintenance mode disabled{% endblocktrans %}</p>
+          <p class="small">{% blocktrans%}Everyone can access the site.{% endblocktrans %}</p>
+        </div>
+        <span class="badge badge-success"><a href="{% url 'maintenance_mode_on' %}">{% fa 'power-off' %}</a></span>
+       {% endif %}
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+       {% if DEBUG %}
+        <div>
+          <p>{% blocktrans %}Debug mode enabled{% endblocktrans %}</p>
+          <p class="small">{% blocktrans%}The web server throws back debug information on errors. Do not use in production!{% endblocktrans %}</p>
+        </div>
+        <span class="badge badge-danger">{% fa 'power-off' %}</span>
+       {% else %}
+        <div>
+          <p>{% blocktrans %}Debug mode disabled{% endblocktrans %}</p>
+          <p class="small">{% blocktrans%}Debug mode is disabled. Default error pages are displayed on errors.{% endblocktrans %}</p>
+        </div>
+        <span class="badge badge-success">{% fa 'power-off' %}</span>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-light text-dark">
       {% blocktrans %}Recent backup cron jobs{% endblocktrans %}
     </div>
     <ul class="list-group list-group-flush">
