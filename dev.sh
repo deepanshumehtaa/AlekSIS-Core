@@ -44,6 +44,11 @@ case "$1" in
         	poetry run sh -c "cd $d; pylama -a -o $tox_ini ."
         done
         ;;
+    "gource")
+        for d in biscuit/core apps/official/*/biscuit/apps/*; do
+        	gource --output-custom-log - "$d"
+        done | sort -n | gource --log-format custom --background-image biscuit/core/static/img/biscuit-logo.png -
+        ;;
     *)
 	;;
 esac
