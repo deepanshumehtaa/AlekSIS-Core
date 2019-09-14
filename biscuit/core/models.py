@@ -21,6 +21,9 @@ class School(models.Model):
     name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
         'Official name of the school, e.g. as given by supervisory authority'))
 
+    logo = ImageCropField(verbose_name=_('School logo'), blank=True, null=True)
+    logo_cropping = ImageRatioField('logo', '600x600', size_warning=True)
+
     current_term = models.ForeignKey('SchoolTerm', models.CASCADE, related_name='+')
 
     class Meta:
