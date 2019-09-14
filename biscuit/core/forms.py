@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Person, Group
+from .models import Person, Group, School, SchoolTerm
 
 
 class PersonAccountForm(forms.ModelForm):
@@ -72,3 +72,15 @@ class EditGroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name', 'short_name', 'members', 'owners', 'parent_groups']
+
+
+class EditSchoolForm(forms.ModelForm):
+    class Meta:
+        model = School
+        fields = ['name', 'name_official', 'logo', 'logo_cropping']
+
+
+class EditTermForm(forms.ModelForm):
+    class Meta:
+        model = SchoolTerm
+        fields = ['caption', 'date_start', 'date_end']

@@ -1,0 +1,38 @@
+{# -*- engine:django -*- #}
+
+{% extends "core/base.html" %}
+
+{% load bootstrap4 i18n %}
+
+{% block bootstrap4_title %}{% blocktrans %}Edit school{% endblocktrans %} - {{ block.super}}{% endblock %}
+
+{% block page_title %}{% blocktrans %}Edit school{% endblocktrans %}{% endblock %}
+
+{% block bootstrap4_extra_head %}
+  {{ block.super }}
+  {{ edit_school_form.media }}
+{% endblock %}
+
+{% block content %}
+
+  <h3>{% blocktrans %}Edit school information{% endblocktrans%}</h3>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form edit_school_form %}
+    <button type="submit" class="btn btn-secondary">
+      {% blocktrans %}Edit{% endblocktrans %}
+    </button>
+  </form>
+
+  <h3>{% blocktrans %}Edit school term{% endblocktrans%}</h3>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form edit_term_form %}
+    <button type="submit" class="btn btn-secondary">
+      {% blocktrans %}Edit{% endblocktrans %}
+    </button>
+  </form>
+
+{% endblock %}

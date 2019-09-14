@@ -43,6 +43,11 @@ MENUS = {
                     'name': _('Impersonation'),
                     'url': 'impersonate-list',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                },
+                {
+                    'name': _('Manage school'),
+                    'url': 'manage-school',
+                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
                 }
             ]
         },
