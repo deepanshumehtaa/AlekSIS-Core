@@ -41,8 +41,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='school',
             name='current_term',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='core.SchoolTerm'),
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='core.SchoolTerm', null=True),
             preserve_default=False,
         ),
         migrations.RunPython(create_default_terms),
+        migrations.AlterField(
+            model_name='school',
+            name='current_term',
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='core.SchoolTerm'),
+            preserve_default=False,
+        ),
     ]
