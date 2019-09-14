@@ -1,3 +1,4 @@
+import requests
 from typing import Callable, Optional
 
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_cron.models import CronJobLog
 
 from .decorators import admin_required
-from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm
+from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm, EditSchoolForm, EditTermForm
 from .models import Person, Group
 from .tables import PersonsTable, GroupsTable
 from .util import messages
@@ -186,3 +187,41 @@ def system_status(request: HttpRequest) -> HttpResponse:
     ).order_by('-end_time')[:10]
 
     return render(request, 'core/system_status.html', context)
+
+@admin_required
+def edit_school(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    school = request.user.person.school
+    edit_school_form = EditSchoolForm(request.POST or None, request.FILES or None, instance=school)
+
+    context['school'] = school
+
+    if request.method == 'POST':
+        if edit_school_form.is_valid():
+            edit_school_form.save(commit=True)
+
+            messages.success(request, _('The school has been saved.'))
+            return redirect('index')
+
+    context['edit_school_form'] = edit_school_form
+
+    return render(request, 'core/edit_school.html', context)
+
+@admin_required
+def edit_schoolterm(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    term = request.user.person.school.current_term
+    edit_term_form = EditTermForm(request.POST or None, instance=term)
+        
+    if request.method == 'POST':
+        if edit_term_form.is_valid():
+            edit_term_form.save(commit=True)
+
+            messages.success(request, _('The term has been saved.'))
+            return redirect('index')
+
+    context['edit_term_form'] = edit_term_form
+
+    return render(request, 'core/edit_schoolterm.html', context)

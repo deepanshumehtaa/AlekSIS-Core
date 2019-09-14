@@ -43,6 +43,11 @@ MENUS = {
                     'name': _('Impersonation'),
                     'url': 'impersonate-list',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
+                },
+                {
+                    'name': _('Manage school'),
+                    'url': 'manage_school',
+                    'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
                 }
             ]
         },
@@ -97,5 +102,15 @@ MENUS = {
         }
     ],
     'DATA_MANAGEMENT_MENU': [
-    ]
+    ],
+    'SCHOOL_MANAGEMENT_MENU': [
+        {
+            'name': _('Edit school information'),
+            'url': 'edit_school_information',
+        },
+        {
+            'name': _('Edit school term'),
+            'url': 'edit_school_term',
+        }
+    ],
 }
