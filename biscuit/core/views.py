@@ -207,6 +207,12 @@ def edit_school(request: HttpRequest) -> HttpResponse:
 
     context['edit_school_form'] = edit_school_form
 
+    return render(request, 'core/edit_school.html', context)
+
+@admin_required
+def edit_schoolterm(request: HttpRequest) -> HttpResponse:
+    context = {}
+
     term = request.user.Person.school.current_term
 
     edit_term_form = EditTermForm(request.POST or None, instance=term)
@@ -220,4 +226,4 @@ def edit_school(request: HttpRequest) -> HttpResponse:
 
     context['edit_term_form'] = edit_term_form
 
-    return render(request, 'core/edit_school.html', context)
+    return render(request, 'core/edit_schoolterm.html', context)
