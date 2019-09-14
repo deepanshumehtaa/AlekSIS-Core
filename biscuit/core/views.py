@@ -192,7 +192,7 @@ def system_status(request: HttpRequest) -> HttpResponse:
 def edit_school(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    school = request.user.Person.school
+    school = request.user.person.school
 
     edit_school_form = EditSchoolForm(request.POST or None, request.FILES or None, instance=school)
 
@@ -213,7 +213,7 @@ def edit_school(request: HttpRequest) -> HttpResponse:
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    term = request.user.Person.school.current_term
+    term = request.user.person.school.current_term
 
     edit_term_form = EditTermForm(request.POST or None, instance=term)
 
