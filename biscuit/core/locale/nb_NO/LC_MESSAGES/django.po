@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 23:33+0200\n"
+"POT-Creation-Date: 2019-09-15 14:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,49 +53,72 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: menus.py:33
+#: menus.py:33 templates/core/data_management.html:5
+#: templates/core/data_management.html:7
 msgid "Data management"
 msgstr ""
 
-#: menus.py:38
+#: menus.py:38 templates/core/system_status.html:5
+#: templates/core/system_status.html:7
+msgid "System status"
+msgstr ""
+
+#: menus.py:43
 msgid "Impersonation"
 msgstr ""
 
-#: menus.py:45
+#: menus.py:48
+msgid "Manage school"
+msgstr ""
+
+#: menus.py:55
 msgid "People"
 msgstr ""
 
-#: menus.py:51 templates/core/persons.html:8 templates/core/persons.html:10
+#: menus.py:61 templates/core/persons.html:8 templates/core/persons.html:10
 msgid "Persons"
 msgstr ""
 
-#: menus.py:56 templates/core/groups.html:8 templates/core/groups.html:10
+#: menus.py:66 templates/core/groups.html:8 templates/core/groups.html:10
 #: templates/core/person_full.html:66
 msgid "Groups"
 msgstr ""
 
-#: menus.py:61
+#: menus.py:71
 msgid "Persons and accounts"
 msgstr ""
 
-#: menus.py:70
+#: menus.py:80
 msgid "BiscuIT Software"
 msgstr ""
 
-#: menus.py:74
+#: menus.py:84
 msgid "Website"
 msgstr ""
 
-#: menus.py:84
+#: menus.py:94
 msgid "Support"
 msgstr ""
 
-#: menus.py:88 templates/contact_form/contact_form.html:8
+#: menus.py:98 templates/contact_form/contact_form.html:8
 msgid "Get support"
+msgstr ""
+
+#: menus.py:108
+msgid "Edit school information"
+msgstr ""
+
+#: menus.py:112 templates/core/edit_schoolterm.html:7
+#: templates/core/edit_schoolterm.html:9
+msgid "Edit school term"
 msgstr ""
 
 #: migrations/0001_initial.py:15
 msgid "Default school"
+msgstr ""
+
+#: migrations/0002_school_term.py:16
+msgid "Default term"
 msgstr ""
 
 #: models.py:20
@@ -106,99 +129,115 @@ msgstr ""
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 
+#: models.py:24
+msgid "School logo"
+msgstr ""
+
 #: models.py:38
-msgid "female"
+msgid "Visible caption of the term"
 msgstr ""
 
-#: models.py:39
-msgid "male"
+#: models.py:42
+msgid "Effective start date of term"
 msgstr ""
 
-#: models.py:46
-msgid "Is person active?"
-msgstr ""
-
-#: models.py:48
-msgid "First name"
-msgstr ""
-
-#: models.py:49
-msgid "Last name"
-msgstr ""
-
-#: models.py:51
-msgid "Additional name(s)"
-msgstr ""
-
-#: models.py:54
-msgid "Short name"
+#: models.py:44
+msgid "Effective end date of term"
 msgstr ""
 
 #: models.py:57
-msgid "Street"
+msgid "female"
 msgstr ""
 
-#: models.py:59
-msgid "Street number"
-msgstr ""
-
-#: models.py:61
-msgid "Postal code"
-msgstr ""
-
-#: models.py:63
-msgid "Place"
+#: models.py:58
+msgid "male"
 msgstr ""
 
 #: models.py:65
-msgid "Home phone"
+msgid "Is person active?"
 msgstr ""
 
 #: models.py:67
-msgid "Mobile phone"
+msgid "First name"
 msgstr ""
 
-#: models.py:69
-msgid "E-mail address"
+#: models.py:68
+msgid "Last name"
 msgstr ""
 
-#: models.py:72
-msgid "Date of birth"
+#: models.py:70
+msgid "Additional name(s)"
 msgstr ""
 
-#: models.py:74
-msgid "Sex"
+#: models.py:73
+msgid "Short name"
 msgstr ""
 
 #: models.py:76
-msgid "Photo"
+msgid "Street"
+msgstr ""
+
+#: models.py:78
+msgid "Street number"
 msgstr ""
 
 #: models.py:80
-msgid "Reference ID of import source"
+msgid "Postal code"
 msgstr ""
 
 #: models.py:82
+msgid "Place"
+msgstr ""
+
+#: models.py:84
+msgid "Home phone"
+msgstr ""
+
+#: models.py:86
+msgid "Mobile phone"
+msgstr ""
+
+#: models.py:88
+msgid "E-mail address"
+msgstr ""
+
+#: models.py:91
+msgid "Date of birth"
+msgstr ""
+
+#: models.py:93
+msgid "Sex"
+msgstr ""
+
+#: models.py:95
+msgid "Photo"
+msgstr ""
+
+#: models.py:99
+msgid "Reference ID of import source"
+msgstr ""
+
+#: models.py:101
 msgid "Guardians / Parents"
 msgstr ""
 
-#: models.py:126
+#: models.py:145
 msgid "Long name of group"
 msgstr ""
 
-#: models.py:128
+#: models.py:147
 msgid "Short name of group"
 msgstr ""
 
-#: models.py:134
+#: models.py:153
 msgid "Parent groups"
 msgstr ""
 
-#: settings.py:213
+#: settings.py:216
 msgid "German"
 msgstr ""
 
-#: settings.py:214
+#: settings.py:217
 msgid "English"
 msgstr ""
 
@@ -271,22 +310,23 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/core/data_management.html:5
-msgid "Administration"
-msgstr ""
-
 #: templates/core/edit_group.html:6 templates/core/edit_group.html:8
 #: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr ""
 
 #: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+#: templates/core/edit_school.html:22 templates/core/edit_schoolterm.html:22
 msgid "Edit"
 msgstr ""
 
 #: templates/core/edit_person.html:7 templates/core/edit_person.html:9
 #: templates/core/person_full.html:16
 msgid "Edit person"
+msgstr ""
+
+#: templates/core/edit_school.html:7 templates/core/edit_school.html:9
+msgid "Edit school"
 msgstr ""
 
 #: templates/core/footer-menu.html:26
@@ -404,14 +444,69 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+#: templates/core/school_management.html:5
+#: templates/core/school_management.html:7
+msgid "School management"
+msgstr ""
+
+#: templates/core/system_status.html:12
+msgid "System checks"
+msgstr ""
+
+#: templates/core/system_status.html:18
+msgid "Maintenance mode enabled"
+msgstr ""
+
+#: templates/core/system_status.html:19
+msgid "Only admin and visitors from internal IPs can access the site."
+msgstr ""
+
+#: templates/core/system_status.html:24
+msgid "Maintenance mode disabled"
+msgstr ""
+
+#: templates/core/system_status.html:25
+msgid "Everyone can access the site."
+msgstr ""
+
+#: templates/core/system_status.html:33
+msgid "Debug mode enabled"
+msgstr ""
+
+#: templates/core/system_status.html:34
+msgid ""
+"The web server throws back debug information on errors. Do not use in "
+"production!"
+msgstr ""
+
+#: templates/core/system_status.html:39
+msgid "Debug mode disabled"
+msgstr ""
+
+#: templates/core/system_status.html:40
+msgid "Debug mode is disabled. Default error pages are displayed on errors."
+msgstr ""
+
+#: templates/core/system_status.html:50
+msgid "Recent backup cron jobs"
+msgstr ""
+
 #: templates/impersonate/list_users.html:8
 msgid "Impersonate user"
 msgstr ""
 
-#: views.py:140
+#: views.py:143
 msgid "The person has been saved."
 msgstr ""
 
-#: views.py:163
+#: views.py:166
 msgid "The group has been saved."
+msgstr ""
+
+#: views.py:211
+msgid "The school has been saved."
+msgstr ""
+
+#: views.py:229
+msgid "The term has been saved."
 msgstr ""
