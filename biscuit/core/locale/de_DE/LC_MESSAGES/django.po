@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-15 14:11+0200\n"
-"PO-Revision-Date: 2019-09-07 22:04+0000\n"
+"PO-Revision-Date: 2019-09-15 13:40+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
 "biscuit-ng/de/>\n"
@@ -65,7 +65,7 @@ msgstr "Datenverwaltung"
 #: menus.py:38 templates/core/system_status.html:5
 #: templates/core/system_status.html:7
 msgid "System status"
-msgstr ""
+msgstr "System-Status"
 
 #: menus.py:43
 msgid "Impersonation"
@@ -73,7 +73,7 @@ msgstr "Verkleidung"
 
 #: menus.py:48
 msgid "Manage school"
-msgstr ""
+msgstr "Schulverwaltung"
 
 #: menus.py:55
 msgid "People"
@@ -110,22 +110,20 @@ msgstr "Unterstützung erhalten"
 
 #: menus.py:108
 msgid "Edit school information"
-msgstr ""
+msgstr "Schulinformationen bearbeiten"
 
 #: menus.py:112 templates/core/edit_schoolterm.html:7
 #: templates/core/edit_schoolterm.html:9
 msgid "Edit school term"
-msgstr ""
+msgstr "Schuljahr bearbeiten"
 
 #: migrations/0001_initial.py:15
 msgid "Default school"
 msgstr "Standardschule"
 
 #: migrations/0002_school_term.py:16
-#, fuzzy
-#| msgid "Default school"
 msgid "Default term"
-msgstr "Standardschule"
+msgstr "Standardschuljahr"
 
 #: models.py:20
 msgid "Name"
@@ -138,19 +136,19 @@ msgstr ""
 
 #: models.py:24
 msgid "School logo"
-msgstr ""
+msgstr "Schullogo"
 
 #: models.py:38
 msgid "Visible caption of the term"
-msgstr ""
+msgstr "Sichtbare Beschriftung des Schuljahres"
 
 #: models.py:42
 msgid "Effective start date of term"
-msgstr ""
+msgstr "Startdatum des Schuljahres"
 
 #: models.py:44
 msgid "Effective end date of term"
-msgstr ""
+msgstr "Enddatum des Schuljahres"
 
 #: models.py:57
 msgid "female"
@@ -357,10 +355,8 @@ msgid "Edit person"
 msgstr "Person editieren"
 
 #: templates/core/edit_school.html:7 templates/core/edit_school.html:9
-#, fuzzy
-#| msgid "Default school"
 msgid "Edit school"
-msgstr "Standardschule"
+msgstr "Schule bearbeiten"
 
 #: templates/core/footer-menu.html:26
 msgid "Assorted"
@@ -511,56 +507,56 @@ msgstr "Aktualisieren"
 
 #: templates/core/school_management.html:5
 #: templates/core/school_management.html:7
-#, fuzzy
-#| msgid "Data management"
 msgid "School management"
-msgstr "Datenverwaltung"
+msgstr "Schulverwaltung"
 
 #: templates/core/system_status.html:12
 msgid "System checks"
-msgstr ""
+msgstr "Systemprüfungen"
 
 #: templates/core/system_status.html:18
-#, fuzzy
-#| msgid "Maintenance mode"
 msgid "Maintenance mode enabled"
-msgstr "Wartungsmodus"
+msgstr "Wartungsmodus aktiviert"
 
 #: templates/core/system_status.html:19
 msgid "Only admin and visitors from internal IPs can access the site."
 msgstr ""
+"Nur Administratoren und Besucher von internen IP-Adressen können die Seite "
+"aufrufen."
 
 #: templates/core/system_status.html:24
-#, fuzzy
-#| msgid "Maintenance mode"
 msgid "Maintenance mode disabled"
-msgstr "Wartungsmodus"
+msgstr "Wartungsmodus deaktiviert"
 
 #: templates/core/system_status.html:25
 msgid "Everyone can access the site."
-msgstr ""
+msgstr "Jeder kann die Seite aufrufen."
 
 #: templates/core/system_status.html:33
 msgid "Debug mode enabled"
-msgstr ""
+msgstr "Debug-Modus aktiviert"
 
 #: templates/core/system_status.html:34
 msgid ""
 "The web server throws back debug information on errors. Do not use in "
 "production!"
 msgstr ""
+"Der Server gibt Debug-Informationen bei Fehlern zurück. Nicht im "
+"Produktivbetrieb nutzen!"
 
 #: templates/core/system_status.html:39
 msgid "Debug mode disabled"
-msgstr ""
+msgstr "Debug-Modus deaktivert"
 
 #: templates/core/system_status.html:40
 msgid "Debug mode is disabled. Default error pages are displayed on errors."
 msgstr ""
+"Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden bei Fehlern "
+"angezeigt."
 
 #: templates/core/system_status.html:50
 msgid "Recent backup cron jobs"
-msgstr ""
+msgstr "Letzte Backup-Cron-Jobs"
 
 #: templates/impersonate/list_users.html:8
 msgid "Impersonate user"
@@ -575,16 +571,12 @@ msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
 #: views.py:211
-#, fuzzy
-#| msgid "The person has been saved."
 msgid "The school has been saved."
-msgstr "Die Person wurde gespeichert."
+msgstr "Die Schule wurde gespeichert."
 
 #: views.py:229
-#, fuzzy
-#| msgid "The person has been saved."
 msgid "The term has been saved."
-msgstr "Die Person wurde gespeichert."
+msgstr "Das Schuljahr wurde gespeichert."
 
 #~ msgid "Administration"
 #~ msgstr "Verwaltung"
