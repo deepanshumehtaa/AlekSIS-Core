@@ -143,6 +143,7 @@ DATABASES = {
         'PASSWORD': _settings.get('database.password', None),
         'HOST': _settings.get('database.host', '127.0.0.1'),
         'PORT': _settings.get('database.port', '5432'),
+        'ATOMIC_REQUESTS': True
     }
 }
 

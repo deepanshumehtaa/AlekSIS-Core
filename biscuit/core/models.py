@@ -21,9 +21,28 @@ class School(models.Model):
     name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
         'Official name of the school, e.g. as given by supervisory authority'))
 
+    logo = ImageCropField(verbose_name=_('School logo'), blank=True, null=True)
+    logo_cropping = ImageRatioField('logo', '600x600', size_warning=True)
+
+    current_term = models.ForeignKey('SchoolTerm', models.CASCADE, related_name='+')
+
     class Meta:
         ordering = ['name', 'name_official']
 
+
+class SchoolTerm(SchoolRelated):
+    """ Information about a term (limited time frame) that data can
+    be linked to.
+    """
+
+    caption = models.CharField(verbose_name=_('Visible caption of the term'),
+        max_length=30)
+
+    date_start = models.DateField(verbose_name=_(
+        'Effective start date of term'), null=True)
+    date_end = models.DateField(verbose_name=_(
+        'Effective end date of term'), null=True)
+    
 
 class Person(SchoolRelated):
     """ A model describing any person related to a school, including, but not

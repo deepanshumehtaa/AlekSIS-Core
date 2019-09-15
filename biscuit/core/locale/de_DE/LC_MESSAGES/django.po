@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 23:33+0200\n"
-"PO-Revision-Date: 2019-09-07 22:04+0000\n"
+"POT-Creation-Date: 2019-09-15 14:11+0200\n"
+"PO-Revision-Date: 2019-09-15 13:40+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
 "biscuit-ng/de/>\n"
@@ -57,50 +57,73 @@ msgstr "Abmelden"
 msgid "Admin"
 msgstr "Admin"
 
-#: menus.py:33
+#: menus.py:33 templates/core/data_management.html:5
+#: templates/core/data_management.html:7
 msgid "Data management"
 msgstr "Datenverwaltung"
 
-#: menus.py:38
+#: menus.py:38 templates/core/system_status.html:5
+#: templates/core/system_status.html:7
+msgid "System status"
+msgstr "System-Status"
+
+#: menus.py:43
 msgid "Impersonation"
 msgstr "Verkleidung"
 
-#: menus.py:45
+#: menus.py:48
+msgid "Manage school"
+msgstr "Schulverwaltung"
+
+#: menus.py:55
 msgid "People"
 msgstr "Leute"
 
-#: menus.py:51 templates/core/persons.html:8 templates/core/persons.html:10
+#: menus.py:61 templates/core/persons.html:8 templates/core/persons.html:10
 msgid "Persons"
 msgstr "Personen"
 
-#: menus.py:56 templates/core/groups.html:8 templates/core/groups.html:10
+#: menus.py:66 templates/core/groups.html:8 templates/core/groups.html:10
 #: templates/core/person_full.html:66
 msgid "Groups"
 msgstr "Gruppen"
 
-#: menus.py:61
+#: menus.py:71
 msgid "Persons and accounts"
 msgstr "Personen und Konten"
 
-#: menus.py:70
+#: menus.py:80
 msgid "BiscuIT Software"
 msgstr "BiscuIT-Software"
 
-#: menus.py:74
+#: menus.py:84
 msgid "Website"
 msgstr "Website"
 
-#: menus.py:84
+#: menus.py:94
 msgid "Support"
 msgstr "Unterstützung"
 
-#: menus.py:88 templates/contact_form/contact_form.html:8
+#: menus.py:98 templates/contact_form/contact_form.html:8
 msgid "Get support"
 msgstr "Unterstützung erhalten"
+
+#: menus.py:108
+msgid "Edit school information"
+msgstr "Schulinformationen bearbeiten"
+
+#: menus.py:112 templates/core/edit_schoolterm.html:7
+#: templates/core/edit_schoolterm.html:9
+msgid "Edit school term"
+msgstr "Schuljahr bearbeiten"
 
 #: migrations/0001_initial.py:15
 msgid "Default school"
 msgstr "Standardschule"
+
+#: migrations/0002_school_term.py:16
+msgid "Default term"
+msgstr "Standardschuljahr"
 
 #: models.py:20
 msgid "Name"
@@ -111,99 +134,115 @@ msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
+#: models.py:24
+msgid "School logo"
+msgstr "Schullogo"
+
 #: models.py:38
+msgid "Visible caption of the term"
+msgstr "Sichtbare Beschriftung des Schuljahres"
+
+#: models.py:42
+msgid "Effective start date of term"
+msgstr "Startdatum des Schuljahres"
+
+#: models.py:44
+msgid "Effective end date of term"
+msgstr "Enddatum des Schuljahres"
+
+#: models.py:57
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:39
+#: models.py:58
 msgid "male"
 msgstr "männlich"
 
-#: models.py:46
+#: models.py:65
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: models.py:48
+#: models.py:67
 msgid "First name"
 msgstr "Vorname"
 
-#: models.py:49
+#: models.py:68
 msgid "Last name"
 msgstr "Nachname"
 
-#: models.py:51
+#: models.py:70
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: models.py:54
+#: models.py:73
 msgid "Short name"
 msgstr "Kurzname"
 
-#: models.py:57
+#: models.py:76
 msgid "Street"
 msgstr "Straße"
 
-#: models.py:59
+#: models.py:78
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: models.py:61
+#: models.py:80
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: models.py:63
+#: models.py:82
 msgid "Place"
 msgstr "Ort"
 
-#: models.py:65
+#: models.py:84
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: models.py:67
+#: models.py:86
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: models.py:69
+#: models.py:88
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: models.py:72
+#: models.py:91
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: models.py:74
+#: models.py:93
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: models.py:76
+#: models.py:95
 msgid "Photo"
 msgstr "Foto"
 
-#: models.py:80
+#: models.py:99
 msgid "Reference ID of import source"
 msgstr "Referenz-ID der Import-Quelle"
 
-#: models.py:82
+#: models.py:101
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: models.py:126
+#: models.py:145
 msgid "Long name of group"
 msgstr "Langer Name der Gruppe"
 
-#: models.py:128
+#: models.py:147
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
-#: models.py:134
+#: models.py:153
 msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
-#: settings.py:213
+#: settings.py:216
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:214
+#: settings.py:217
 msgid "English"
 msgstr "Englisch"
 
@@ -300,16 +339,13 @@ msgstr ""
 "   Die Nachricht wurde erfolgreich übermittelt.\n"
 "  "
 
-#: templates/core/data_management.html:5
-msgid "Administration"
-msgstr "Verwaltung"
-
 #: templates/core/edit_group.html:6 templates/core/edit_group.html:8
 #: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr "Gruppe editieren"
 
 #: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+#: templates/core/edit_school.html:22 templates/core/edit_schoolterm.html:22
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -317,6 +353,10 @@ msgstr "Bearbeiten"
 #: templates/core/person_full.html:16
 msgid "Edit person"
 msgstr "Person editieren"
+
+#: templates/core/edit_school.html:7 templates/core/edit_school.html:9
+msgid "Edit school"
+msgstr "Schule bearbeiten"
 
 #: templates/core/footer-menu.html:26
 msgid "Assorted"
@@ -465,17 +505,81 @@ msgstr "Neues Konto"
 msgid "Update"
 msgstr "Aktualisieren"
 
+#: templates/core/school_management.html:5
+#: templates/core/school_management.html:7
+msgid "School management"
+msgstr "Schulverwaltung"
+
+#: templates/core/system_status.html:12
+msgid "System checks"
+msgstr "Systemprüfungen"
+
+#: templates/core/system_status.html:18
+msgid "Maintenance mode enabled"
+msgstr "Wartungsmodus aktiviert"
+
+#: templates/core/system_status.html:19
+msgid "Only admin and visitors from internal IPs can access the site."
+msgstr ""
+"Nur Administratoren und Besucher von internen IP-Adressen können die Seite "
+"aufrufen."
+
+#: templates/core/system_status.html:24
+msgid "Maintenance mode disabled"
+msgstr "Wartungsmodus deaktiviert"
+
+#: templates/core/system_status.html:25
+msgid "Everyone can access the site."
+msgstr "Jeder kann die Seite aufrufen."
+
+#: templates/core/system_status.html:33
+msgid "Debug mode enabled"
+msgstr "Debug-Modus aktiviert"
+
+#: templates/core/system_status.html:34
+msgid ""
+"The web server throws back debug information on errors. Do not use in "
+"production!"
+msgstr ""
+"Der Server gibt Debug-Informationen bei Fehlern zurück. Nicht im "
+"Produktivbetrieb nutzen!"
+
+#: templates/core/system_status.html:39
+msgid "Debug mode disabled"
+msgstr "Debug-Modus deaktivert"
+
+#: templates/core/system_status.html:40
+msgid "Debug mode is disabled. Default error pages are displayed on errors."
+msgstr ""
+"Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden bei Fehlern "
+"angezeigt."
+
+#: templates/core/system_status.html:50
+msgid "Recent backup cron jobs"
+msgstr "Letzte Backup-Cron-Jobs"
+
 #: templates/impersonate/list_users.html:8
 msgid "Impersonate user"
 msgstr "Als Benutzer verkleiden"
 
-#: views.py:140
+#: views.py:143
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: views.py:163
+#: views.py:166
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
+
+#: views.py:211
+msgid "The school has been saved."
+msgstr "Die Schule wurde gespeichert."
+
+#: views.py:229
+msgid "The term has been saved."
+msgstr "Das Schuljahr wurde gespeichert."
+
+#~ msgid "Administration"
+#~ msgstr "Verwaltung"
 
 #~ msgid "List of all groups"
 #~ msgstr "Liste aller Gruppen"
