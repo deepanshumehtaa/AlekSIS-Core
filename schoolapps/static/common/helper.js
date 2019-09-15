@@ -30,8 +30,10 @@ function selectActiveLink() {
     var url_name = currlocation.attr("content");
     //console.log(url_name);
 
-    $("#" + url_name).addClass("active");
-    $("#" + url_name).parent().parent().parent().addClass("active");
+    var selector = ".url-" + url_name;
+    console.log(selector);
+    $(selector).addClass("active");
+    $(selector).parent().parent().parent().addClass("active");
 }
 
 $(document).ready(function () {
