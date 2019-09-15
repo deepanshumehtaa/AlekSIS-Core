@@ -188,6 +188,13 @@ def system_status(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'core/system_status.html', context)
 
+
+@admin_required
+def school_management(request: HttpRequest) -> HttpResponse:
+    context = {}
+    return render(request, 'core/school_management.html', context)
+
+
 @admin_required
 def edit_school(request: HttpRequest) -> HttpResponse:
     context = {}
