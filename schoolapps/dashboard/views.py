@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone, formats
 
+from dashboard.settings import latest_article_settings, current_events_settings
 from helper import get_newest_articles, get_current_events, get_newest_article_from_news
 from schoolapps.settings import LONG_WEEK_DAYS
 from timetable.helper import get_name_for_next_week_day_from_today, get_type_and_object_of_user
@@ -31,8 +32,11 @@ def api_information(request):
     notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
     unread_notifications = request.user.notifications.all().filter(user=request.user, read=False).order_by(
         '-created_at')
-    newest_article = get_newest_article_from_news()
-
+    if latest_article_settings.latest_article_is_activated:
+        newest_article = get_newest_article_from_news(domain=latest_article_settings.wp_domain)
+    else:
+        newest_article = None
+        
     date_formatted = get_name_for_next_week_day_from_today()
 
     # Get user type (student, teacher, etc.)
@@ -66,7 +70,8 @@ def api_information(request):
         'subjects': UserInformation.user_subjects(request.user),
         'has_wifi': UserInformation.user_has_wifi(request.user),
         "newest_article": newest_article,
-        "current_events": get_current_events()[:3],
+        "current_events": get_current_events(
+            limit=current_events_settings.events_count) if current_events_settings.current_events_is_activated else None,
         "date_formatted": date_formatted,
         "user": {
             "username": request.user.username,

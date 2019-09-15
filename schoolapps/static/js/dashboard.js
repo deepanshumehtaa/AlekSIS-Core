@@ -238,7 +238,7 @@ var Dashboard = function (_React$Component) {
                     {className: "row"},
                     React.createElement(
                         "div",
-                        {className: "col s12 m6 l6 xl8 no-padding"},
+                        {className: this.state.newest_article ? "col s12 m6 l6 xl8 no-padding" : "col s12 no-padding"},
                         React.createElement(
                             "div",
                             {className: "col s12 m12 l12 xl6"},
@@ -335,7 +335,7 @@ var Dashboard = function (_React$Component) {
                                 ) : ""
                             )
                         ),
-                        React.createElement(
+                        this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
                             "div",
                             {className: "col s12 m12 l12 xl6"},
                             React.createElement(
@@ -349,7 +349,7 @@ var Dashboard = function (_React$Component) {
                                         {className: "card-title"},
                                         "Aktuelle Termine"
                                     ),
-                                    this.state.current_events && this.state.current_events.length > 0 ? this.state.current_events.map(function (event) {
+                                    this.state.current_events.map(function (event) {
                                         return React.createElement(
                                             "div",
                                             {className: "card-panel event-card"},
@@ -361,7 +361,7 @@ var Dashboard = function (_React$Component) {
                                             React.createElement("br", null),
                                             event.formatted
                                         );
-                                    }) : "Keine aktuellen Termine"
+                                    })
                                 ),
                                 React.createElement(
                                     "div",
@@ -373,7 +373,7 @@ var Dashboard = function (_React$Component) {
                                     )
                                 )
                             )
-                        ),
+                        ) : "",
                         React.createElement(
                             "div",
                             {className: "col s12 m12 l12 xl6"},

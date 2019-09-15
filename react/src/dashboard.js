@@ -113,7 +113,7 @@ class Dashboard extends React.Component {
                 }) : ""}
 
             <div className={"row"}>
-                <div className={"col s12 m6 l6 xl8 no-padding"}>
+                <div className={this.state.newest_article ? "col s12 m6 l6 xl8 no-padding" : "col s12 no-padding"}>
                     <div className="col s12 m12 l12 xl6">
                         <div className="card">
                             {this.state.has_plan ? <div className="card-content">
@@ -158,23 +158,24 @@ class Dashboard extends React.Component {
                             </div> : ""}
                         </div>
                     </div>
-                    <div className="col s12 m12 l12 xl6">
-                        <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">Aktuelle Termine</span>
-                                {this.state.current_events && this.state.current_events.length > 0 ? this.state.current_events.map(function (event) {
-                                    return <div className="card-panel event-card">
-                                        <span className={"title"}>{event.name}</span>
-                                        <br/>
-                                        {event.formatted}
-                                    </div>;
-                                }) : "Keine aktuellen Termine"}
+                    {this.state.current_events && this.state.current_events.length > 0 ?
+                        <div className="col s12 m12 l12 xl6">
+                            <div className="card">
+                                <div className="card-content">
+                                    <span className="card-title">Aktuelle Termine</span>
+                                    {this.state.current_events.map(function (event) {
+                                        return <div className="card-panel event-card">
+                                            <span className={"title"}>{event.name}</span>
+                                            <br/>
+                                            {event.formatted}
+                                        </div>;
+                                    })}
+                                </div>
+                                <div className="card-action">
+                                    <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Weitere Termine</a>
+                                </div>
                             </div>
-                            <div className="card-action">
-                                <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Weitere Termine</a>
-                            </div>
-                        </div>
-                    </div>
+                        </div> : ""}
 
 
                     <div className="col s12 m12 l12 xl6">

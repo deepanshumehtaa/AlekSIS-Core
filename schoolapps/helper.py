@@ -1,4 +1,5 @@
 import os
+import re
 from uuid import uuid4
 
 from django.template.loader_tags import register
@@ -6,6 +7,8 @@ from django.template.loader_tags import register
 from django.utils import timezone, formats
 from ics import Calendar
 import requests
+
+from dashboard import settings
 
 
 def path_and_rename(instance, filename):
@@ -27,6 +30,8 @@ def msg_box(msg, status="success", icon="info"):
 
 
 WP_DOMAIN: str = "https://katharineum-zu-luebeck.de"
+
+VS_COMPOSER_REGEX = re.compile(r"\[[\w\s\d!\"§$%&/()=?#'+*~’¸´`;,·.:…\-_–]*\]")
 
 
 def get_newest_articles(domain: str = WP_DOMAIN,
@@ -81,10 +86,16 @@ def get_newest_articles(domain: str = WP_DOMAIN,
                 else:
                     image_url: str = ""
 
+                # Replace VS composer tags if activated
+                if settings.latest_article_settings.replace_vs_composer_stuff:
+                    excerpt = VS_COMPOSER_REGEX.sub("", post["excerpt"]["rendered"])
+                else:
+                    excerpt = post["excerpt"]["rendered"]
+
                 posts.append(
                     {
                         "title": post["title"]["rendered"],
-                        "short_text": post["excerpt"]["rendered"],
+                        "short_text": excerpt,
                         "link": post["link"],
                         "image_url": image_url,
                     }
@@ -95,8 +106,8 @@ def get_newest_articles(domain: str = WP_DOMAIN,
     return posts
 
 
-def get_newest_article_from_news():
-    newest_articles: list = get_newest_articles(limit=1, category_whitelist=[1, 27])
+def get_newest_article_from_news(domain=WP_DOMAIN):
+    newest_articles: list = get_newest_articles(domain=domain, limit=1, category_whitelist=[1, 27])
     if len(newest_articles) >= 0:
         return newest_articles[0]
     else:
@@ -104,7 +115,7 @@ def get_newest_article_from_news():
 
 
 # Set calendar here
-CALENDAR_URL: str = "https://nimbus.katharineum.de/remote.php/dav/public-calendars/owit7yysLB2CYNTq?export"
+CALENDAR_URL: str = settings.current_events_settings.calendar_url
 CALENDAR: Calendar = Calendar(requests.get(CALENDAR_URL).text)
 
 
