@@ -46,7 +46,7 @@ MENUS = {
                 },
                 {
                     'name': _('Manage school'),
-                    'url': 'manage_school',
+                    'url': 'school_management',
                     'validators': ['menu_generator.validators.is_authenticated', 'menu_generator.validators.is_superuser']
                 }
             ]
