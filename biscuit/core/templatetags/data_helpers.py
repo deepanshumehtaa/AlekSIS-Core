@@ -7,4 +7,4 @@ register = template.Library()
 
 @register.filter
 def get_dict(value: Dict[Any, Any], arg: Any) -> Any:
-    return value[arg]
+    return value.get(arg, None)
