@@ -6,6 +6,7 @@ from schoolapps import settings
 from schoolapps.settings import LESSONS
 from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
 from untisconnect.events import get_all_events_by_date
+from untisconnect.api import format_classes, get_today_holidays
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION, generate_event_table
 
@@ -66,12 +67,19 @@ def get_plan(type, id, smart=False, monday_of_week=None):
     lessons = parse()
     times_parsed = parse_lesson_times()
 
+    hols_for_weekday = []
+
     if smart:
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
         subs_for_weekday = []
         for week_day in week_days:
             subs = get_substitutions_by_date_as_dict(week_day)
             subs_for_weekday.append(subs)
+
+            hols = get_today_holidays(week_day)
+            hols_for_weekday.append(hols)
+            # print(subs)
+            # print(len(subs))
 
     # Init plan array
     plan = []
@@ -155,6 +163,12 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                         if matching_sub["sub"].type == TYPE_CANCELLATION:
                             element_container.is_old = True
 
+                    # Check for holidays
+                    if smart and hols_for_weekday[time.day - 1]:
+                        element_container.is_hol = True
+                        element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
+
+
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
                         plan[time.hour - 1][0][time.day - 1].append(element_container)
@@ -219,4 +233,4 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    return plan
+    return plan, hols_for_weekday

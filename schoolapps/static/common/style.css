@@ -552,3 +552,19 @@ i.collapsible-trigger {
 /*section:not(:last-of-type) {*/
 /*    border-bottom: solid #bdbdbd 2px;*/
 /*}*/
+
+
+/*++++++++
++HOLIDAYS+
+++++++++++ */
+
+.holiday-badge{
+    float: left !important;
+    position: relative;
+    margin-left: 0% !important;
+    left: 50%;
+    transform: translate(-50%);
+    width: auto;
+    height: auto !important;
+    min-height: 26px;
+}
