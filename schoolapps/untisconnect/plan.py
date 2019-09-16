@@ -139,9 +139,10 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                         if subs_for_weekday[time.day - 1].get(lesson.id, None) is not None:
                             for sub in subs_for_weekday[time.day - 1][lesson.id]:
                                 # ... check whether the sub has the right old teacher and the right lesson number
-                                if sub["sub"].teacher_old.id == element.teacher.id and \
-                                        sub["sub"].lesson == time.hour and sub["table"].is_event is False:
-                                    matching_sub = sub
+                                if sub["sub"].teacher_old is not None and element.teacher is not None:
+                                    if sub["sub"].teacher_old.id == element.teacher.id and \
+                                            sub["sub"].lesson == time.hour and sub["table"].is_event is False:
+                                        matching_sub = sub
 
                         # If the lesson matches, add it to the list of already added subs
                         if matching_sub:

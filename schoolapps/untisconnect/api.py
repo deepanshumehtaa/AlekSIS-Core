@@ -155,6 +155,8 @@ def format_classes(classes):
     """
     classes_as_dict = {}
 
+    classes = sorted(classes, key=lambda class_: class_.name)
+
     for _class in classes:
         step = _class.name[:-1]
         part = _class.name[-1:]

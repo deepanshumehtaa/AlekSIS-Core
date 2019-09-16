@@ -526,6 +526,9 @@ i.collapsible-trigger {
 .sidenav a:not(.collapsible-header) {
     padding: 0 16px;
 }
+ul.sidenav li.logo > a:hover{
+    background: None!important;
+}
 
 .waves-effect.waves-primary .waves-ripple {
     /* The alpha value allows the text and background color
