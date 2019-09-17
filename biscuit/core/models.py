@@ -18,7 +18,7 @@ class School(models.Model):
     """
 
     name = models.CharField(verbose_name=_('Name'), max_length=30)
-    name_official = models.CharField(verbose_name=('Official name'), max_length=200, help_text=_(
+    name_official = models.CharField(verbose_name=_('Official name'), max_length=200, help_text=_(
         'Official name of the school, e.g. as given by supervisory authority'))
 
     logo = ImageCropField(verbose_name=_('School logo'), blank=True, null=True)
