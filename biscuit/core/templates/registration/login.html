@@ -17,10 +17,10 @@
  <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <button type="submit" class="btn btn-secondary">
+  <button type="submit" class="btn btn-dark">
     {% blocktrans %}Login{% endblocktrans %}
   </button>  
-  <button type="hidden" class="btn btn-secondary">
+  <button type="hidden" class="btn btn-dark">
     {{ next }}
   </button>
  </form>
