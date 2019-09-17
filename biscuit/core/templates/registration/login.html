@@ -1,6 +1,6 @@
 {# -*- engine:django -*- #}
 {% extends "core/base.html" %}
-{% load bootstrap4 %}
+{% load bootstrap4 i18n %}
 
 {% block content %}
  {% if next %}
@@ -17,7 +17,11 @@
  <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <input type="submit" value="Login" />
-  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="btn btn-secondary">
+    {% blocktrans %}Login{% endblocktrans %}
+  </button>  
+  <button type="hidden" class="btn btn-secondary">
+    {{ next }}
+  </button>
  </form>
 {% endblock %}
