@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-15 14:11+0200\n"
+"POT-Creation-Date: 2019-09-17 15:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Stop impersonation"
 msgstr ""
 
-#: menus.py:16
+#: menus.py:16 templates/registration/login.html:21
 msgid "Login"
 msgstr ""
 
@@ -301,6 +301,10 @@ msgid ""
 "\n"
 "     The maintenance mode is currently enabled. Please try again later.\n"
 "    "
+msgstr ""
+
+#: templates/contact_form/contact_form.html:14
+msgid "Send"
 msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:9

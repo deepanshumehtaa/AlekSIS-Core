@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-15 14:11+0200\n"
+"POT-Creation-Date: 2019-09-17 15:43+0200\n"
 "PO-Revision-Date: 2019-09-15 13:40+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
@@ -45,7 +45,7 @@ msgstr "Konto"
 msgid "Stop impersonation"
 msgstr "Verkleidung beenden"
 
-#: menus.py:16
+#: menus.py:16 templates/registration/login.html:21
 msgid "Login"
 msgstr "Anmelden"
 
@@ -328,6 +328,10 @@ msgstr ""
 "     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
 "erneut.\n"
 "    "
+
+#: templates/contact_form/contact_form.html:14
+msgid "Send"
+msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:9
 msgid ""
