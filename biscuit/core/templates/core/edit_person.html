@@ -18,7 +18,7 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form edit_person_form %}
-    <button type="submit" class="btn btn-secondary">
+    <button type="submit" class="btn btn-dark">
       {% blocktrans %}Edit{% endblocktrans %}
     </button>
   </form>
