@@ -186,6 +186,11 @@ PWA_APP_ICONS = [
         "src": "/static/icons/android_192.png",
         "sizes": "192x192",
         "type": "image/png"
+    },
+    {
+        "src": "/static/icons/android_512.png",
+        "sizes": "512x512",
+        "type": "image/png"
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
