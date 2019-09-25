@@ -1,6 +1,5 @@
 import datetime
 
-import dbsettings
 from django.core.cache import cache
 from django.db import models
 from django.contrib.auth.models import User
@@ -8,12 +7,6 @@ from django.utils import timezone
 
 from mailer import send_mail_with_template
 
-
-# def get_default_user():
-#     User.objects.get_or_create(username='nouser')
-
-
-# Create your models here.
 
 class Activity(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
@@ -83,7 +76,7 @@ class Cache(models.Model):
             return None
 
     def is_expired(self):
-        if not self.expiration_time:
+        if self.last_time_updated is None:
             return True
         delta = datetime.timedelta(seconds=self.expiration_time)
         print(self.last_time_updated)

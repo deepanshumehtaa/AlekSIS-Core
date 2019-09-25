@@ -118,12 +118,12 @@ class LessonTime(object):
         self.rooms = rooms
 
 
-def parse():
+def parse(force_update=False):
     global drive
 
     cached = caches.PARSED_LESSONS_CACHE.get()
-    if cached is not False:
-        print("Lessons come from cache")
+    if cached is not False and not force_update:
+        # print("Lessons come from cache")
         return cached
     lessons = []
 
@@ -139,7 +139,7 @@ def parse():
 
             lessons.append(lesson_obj)
 
-    print("Lesson cache was refreshed")
+    # print("Lesson cache was refreshed")
     caches.PARSED_LESSONS_CACHE.update(lessons)
 
     return lessons

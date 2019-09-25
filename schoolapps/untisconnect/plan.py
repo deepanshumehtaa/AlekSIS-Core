@@ -2,7 +2,7 @@ import datetime
 
 from django.utils import timezone
 
-from dashboard import caches
+from dashboard import caches, plan_caches
 from schoolapps import settings
 from schoolapps.settings import LESSONS
 from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
@@ -60,15 +60,15 @@ def parse_lesson_times():
     return times
 
 
-def get_plan(type, id, smart=False, monday_of_week=None):
+def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
     """ Generates a plan for type (TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
     # Check cache
-    cache = caches.get_cache_for_plan(type, id, smart, monday_of_week)
+    cache = plan_caches.get_cache_for_plan(type, id, smart, monday_of_week)
 
     cached = cache.get()
-    print(cached)
-    if cached is not False:
-        print("Plan come from cache", cache.id)
+    # print(cached)
+    if cached is not False and not force_update:
+        # print("Plan come from cache", cache.id)
         return cached
 
     # Get parsed lessons
@@ -229,6 +229,6 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    print("Refresh plan cache for", cache.id)
+    # print("Refresh plan cache for", cache.id)
     cache.update(plan)
     return plan

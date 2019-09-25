@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'martor',
     'widget_tweaks',
     'templatetags.apps.TemplatetagsConfig',
+    "cacheback"
 ]
 
 MIDDLEWARE = [

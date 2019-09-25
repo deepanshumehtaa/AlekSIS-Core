@@ -1,6 +1,12 @@
+from dashboard.caches import DRIVE_CACHE, Cache
 from .api import *
 
-def build_drive():
+
+def build_drive(force_update=False):
+    cached = DRIVE_CACHE.get()
+    if cached is not False and not force_update:
+        print("Drive come from cache")
+        return cached
     odrive = {
         "teachers": get_all_teachers(),
         "rooms": get_all_rooms(),
@@ -16,6 +22,7 @@ def build_drive():
             id = el.id
             drive[key][id] = el
 
+    DRIVE_CACHE.update(drive)
     return drive
 
 
