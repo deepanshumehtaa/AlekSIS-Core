@@ -9,7 +9,7 @@ from dashboard.models import Activity
 
 
 def add_arrows(array: list):
-    return " → ".join([item for item in array if item])
+    return " → ".join([item for item in array if item != ""])
 
 
 def rebus(request):
