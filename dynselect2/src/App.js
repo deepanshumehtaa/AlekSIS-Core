@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import "materialize-css/dist/css/materialize.css";
+//import "materialize-css/dist/css/materialize.css";
 
 import M from "materialize-css/dist/js/materialize";
 import PropTypes from "prop-types";
@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const OPTIONS_ONLINE_COMMON = [
     "Portal ist nicht erreichbar",
     "Fehlermeldung(en) tauchen auf",
-    "Anmeldung funktiontiert nicht",
+    "Anmeldung funktioniert nicht",
     "Zugangsdaten vergessen"
 ];
 
@@ -20,6 +20,11 @@ const BASIC_OPTIONS = [
                 id: "presentationDeviceIssue",
                 name: "Problem mit Beamer/Fernseher",
                 helpText: "Bitte wähle aus, wo der Beamer bzw. Fernseher steht!"
+            },
+            {
+                id: "printerIssue",
+                name: "Problem mit einem Drucker",
+                helpText: "Bitte nenne uns in der Beschreibung das Modell des Druckers, damit wir genau wissen, welchen Drucker du meinst!"
             },
             {
                 id: "subMonitorIssue",
@@ -142,6 +147,10 @@ const BASIC_OPTIONS = [
             {
                 id: "missingKeys",
                 name: "Fehlende Tasten auf der Tastatur"
+            },
+            {
+                id: "hardwareMisc",
+                name: "Andere Hardware defekt / Äußere Schäden"
             }
 
 
@@ -322,7 +331,7 @@ class App extends Component {
                         className="input-field col s12 m12 l4">
                         <i className={"material-icons prefix"}>list</i>
                         <select onChange={this._onCategoryChanges} defaultValue={"noCategory"} className={"validate"}
-                                required={true}>
+                                required={true}>-
                             <option value={"noCategory"} disabled={true}>Keine Kategorie ausgewählt</option>
                             {BASIC_OPTIONS.map(function (category) {
                                 return <optgroup label={category.name} key={category.id}>
@@ -349,11 +358,18 @@ class App extends Component {
                                 defaultValue={"Anderer Raum"} show={sO === "presentationDeviceIssue"}/>
                     </Input>
 
+                    {/* Section B – Printer Issue */}
+                    <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "printerIssue"}>
+                        <Select onChange={this._onSetB}
+                                values={["Papierstau", "Toner leer", "Papier leer", "Drucker bekommt keine Daten"]}
+                                defaultValue={"Anderes Problem"} show={sO === "subMonitorIssue"}/>
+                    </Input>
+
                     {/* Section B – Substitution Monitor Issue */}
                     <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "subMonitorIssue"}>
                         <Select onChange={this._onSetB}
                                 values={["Schwarzer Bildschirm", "Tage wechseln nicht (Eingefroren)"]}
-                                defaultValue={"Anderer Raum"} show={sO === "subMonitorIssue"}/>
+                                defaultValue={"Anderes Problem"} show={sO === "subMonitorIssue"}/>
                     </Input>
 
                     {/* Section B – WLAN Issue */}
@@ -384,6 +400,13 @@ class App extends Component {
                            show={sO === "presentationDeviceIssue" && step === 2}>
                         <Select onChange={this._onSetC} values={["Beamer", "Fernseher/Bildschirm"]}
                                 defaultValue={"Sonstiges"} show={sO === "presentationDeviceIssue" && step === 2}/>
+                    </Input>
+
+                    {/* Section C – Presentation Device Issues */}
+                    <Input label={"Ort des Druckers"} icon={"location_on"}
+                           show={sO === "printerIssue" && step === 2}>
+                        <Select onChange={this._onSetC} values={LOCATIONS}
+                                defaultValue={"Anderer Raum"} show={sO === "presentationDeviceIssue"}/>
                     </Input>
 
                     {/* Section C – WLAN Issue */}
