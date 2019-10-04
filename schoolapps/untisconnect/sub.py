@@ -317,7 +317,10 @@ def get_header_information(subs, date, events=[]):
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).exclude(
-            Q(flags__contains="N") | Q(flags__contains="b") | Q(flags__contains="F")).order_by("classids", "lesson")),
+            Q(flags__contains="N") |
+            Q(flags__contains="b") |
+            Q(flags__contains="F") |
+            Q(flags__exact="g")).order_by("classids", "lesson")),
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)
