@@ -41,7 +41,7 @@
     <!-- Main Link Tags  -->
     <link href="{% static "icons/favicon_16.png" %}" rel="icon" type="image/png" sizes="16x16">
     <link href="{% static "icons/favicon_32.png" %}" rel="icon" type="image/png" sizes="32x32">
-    <link href="{% static "icons/favicon_48.png" %}g" rel="icon" type="image/png" sizes="48x48">
+    <link href="{% static "icons/favicon_48.png" %}" rel="icon" type="image/png" sizes="48x48">
 
     <!-- iOS  -->
     <!-- non-retina iPad iOS 7 -->
@@ -131,7 +131,7 @@
         </li>
 
         {% if user.is_authenticated %}
-            <li id="dashboard">
+            <li class="url-dashboard">
                 <a href="{% url 'dashboard' %}">
                     <i class="material-icons">home</i> Dashboard
                 </a>
@@ -151,28 +151,28 @@
                     <div class="collapsible-body">
                         <ul>
                             {% if perms.aub.apply_for_aub %}
-                                <li id="aub_index">
+                                <li class="url-aub_index url-aub_details url-ab_edit url-aub_apply_for urlaub_applied_for">
                                     <a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i>
                                         Unterrichtsbefreiungen
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.aub.check1_aub %}
-                                <li id="aub_check1">
+                                <li class="url-aub_check1">
                                     <a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge
                                         genehmigen 1
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.aub.check2_aub %}
-                                <li id="aub_check2">
+                                <li class="url-aub_check2">
                                     <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge
                                         genehmigen 2
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.aub.view_archive %}
-                                <li id="aub_archive">
+                                <li class="url-aub_archive">
                                     <a href="{% url 'aub_archive' %}"><i class="material-icons">archive</i>
                                         Archiv
                                     </a>
@@ -194,7 +194,7 @@
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li id="timetable_my_plan">
+                            <li class="url-timetable_my_plan">
                                 <a href="{% url 'timetable_my_plan' %}" style="padding-right: 10px;">
                                     <i class="material-icons">person</i> Mein Plan
                                     <span class="badge new primary-color sidenav-badge">SMART PLAN</span>
@@ -205,25 +205,25 @@
                             {#                        <i class="material-icons">grid_on</i> Alle Pläne#}
                             {#                    </a>#}
                             {#                </li>#}
-                            <li id="timetable_quicklaunch">
+                            <li class="url-timetable_quicklaunch url-timetable_smart_plan url-timetable_regular_plan url-timetable_smart_plan_week">
                                 <a href="{% url 'timetable_quicklaunch' %}">
                                     <i class="material-icons">grid_on</i> Alle Pläne
                                 </a>
                             </li>
-                            <li id="timetable_substitutions_date">
+                            <li class="url-timetable_substitutions_date url-timetable_substitutions">
                                 <a href="{% url 'timetable_substitutions' %}">
                                     <i class="material-icons">update</i> Vertretungsplan
                                 </a>
                             </li>
                             {% if perms.timetable.view_hint %}
-                                <li id="timetable_hints">
+                                <li class="url-timetable_hints url-timetable_add_hint url-timetable_edit_hint url-timetable_delete_hint">
                                     <a href="{% url 'timetable_hints' %}">
                                         <i class="material-icons">announcement</i> Hinweismanagement
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.debug.can_view_debug_log %}
-                                <li id="debug_logs">
+                                <li class="url-debug_logs url-debug">
                                     <a href="{% url 'debug_logs' %}">
                                         <i class="material-icons">error</i> Debuggingtool
                                     </a>
@@ -246,7 +246,7 @@
 
 
             {% if perms.menu.add_menu %}
-                <li id="menu_index">
+                <li class="url-menu_index url-menu_upload url-menu_index_msg">
                     <a href="{% url 'menu_index' %}">
                         <i class="material-icons">restaurant_menu</i> Speiseplan hochladen
                     </a>
@@ -261,17 +261,17 @@
                 <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">help</i> Support</a>
                 <div class="collapsible-body">
                     <ul>
-                        <li id="rebus">
+                        <li class="url-rebus">
                             <a href="{% url 'rebus' %}">
                                 <i class="material-icons">bug_report</i> Fehler melden
                             </a>
                         </li>
-                        <li id="feedback">
+                        <li class="url-feedback">
                             <a href="{% url 'feedback' %}">
                                 <i class="material-icons">feedback</i> Feedback
                             </a>
                         </li>
-                        <li id="faq">
+                        <li class="url-faq">
                             <a href="{% url 'faq' %}">
                                 <i class="material-icons">question_answer</i>FAQ
                             </a>
@@ -282,7 +282,7 @@
         {% endif %}
 
         {% if not user.is_authenticated %}
-            <li id="faq">
+            <li class="url-faq">
                 <a href="{% url 'faq' %}">
                     <i class="material-icons">question_answer</i>FAQ
                 </a>
@@ -328,7 +328,7 @@
             </li>
         {% else %}
 
-            <li id="login">
+            <li class="url-login">
                 <a href="{% url 'login' %}">
                     <i class="material-icons">lock_open</i> Anmelden
                 </a>
@@ -336,20 +336,20 @@
         {% endif %}
     </ul>
 </header>
-<header class="alert success">
-    <p>
-        <i class="material-icons left">info</i>
-        Du befindest dich in der ersten veröffentlichten Version von SchoolApps. Daher kann es immer mal wieder noch zu
-        bislang unvorhergesehenen
-        Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über
-        <a href="mailto:support@katharineum.de">support@katharineum.de</a>
-        schreibst oder die in SchoolApps integrierten
-        <a href="{% url 'rebus' %}">Fehlermelde-</a>
-        und
-        <a href="{% url 'feedback' %}">Feedbackfunktionen</a>
-        nutzt.
-    </p>
-</header>
+{#<header class="alert success">#}
+{#    <p>#}
+{#        <i class="material-icons left">info</i>#}
+{#        Du befindest dich in der ersten veröffentlichten Version von SchoolApps. Daher kann es immer mal wieder noch zu#}
+{#        bislang unvorhergesehenen#}
+{#        Problemen kommen. Es würde uns sehr helfen, wenn du uns dann über#}
+{#        <a href="mailto:support@katharineum.de">support@katharineum.de</a>#}
+{#        schreibst oder die in SchoolApps integrierten#}
+{#        <a href="{% url 'rebus' %}">Fehlermelde-</a>#}
+{#        und#}
+{#        <a href="{% url 'feedback' %}">Feedbackfunktionen</a>#}
+{#        nutzt.#}
+{#    </p>#}
+{#</header>#}
 
 {% if user.is_authenticated %}
     <div class="fixed-action-btn">

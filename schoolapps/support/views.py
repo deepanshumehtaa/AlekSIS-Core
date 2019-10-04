@@ -8,6 +8,10 @@ from .forms import FeedbackForm
 from dashboard.models import Activity
 
 
+def add_arrows(array: list):
+    return " → ".join([item for item in array if item])
+
+
 def rebus(request):
     if request.method == 'POST':
         form = REBUSForm(request.POST)
@@ -20,16 +24,14 @@ def rebus(request):
             long_description = form.cleaned_data['long_description']
 
             # Register activity
-            desc_act = "{} → {} → {} | {}".format(a, b, c, short_description)
+            desc_act = "{} | {}".format(add_arrows([a, b, c]), short_description)
             act = Activity(title="Du hast uns ein Problem gemeldet.", description=desc_act, app="REBUS",
                            user=request.user)
             act.save()
 
             # Send mail
             context = {
-                "a": a,
-                "b": b,
-                "c": c,
+                "arrow_list": add_arrows([a, b, c]),
                 "short_desc": short_description,
                 "long_desc": long_description,
                 "user": request.user
