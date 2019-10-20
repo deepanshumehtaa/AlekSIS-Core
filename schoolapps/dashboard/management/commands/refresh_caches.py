@@ -3,6 +3,7 @@ import datetime
 from django.core.management import BaseCommand
 from django.utils import timezone
 
+from dashboard.caches import BACKGROUND_CACHE_REFRESH
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.drive import build_drive, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM
 from untisconnect.parse import parse
@@ -21,6 +22,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.start("Aktualisiere Drive ... ")
         drive = build_drive(force_update=True)
+        print(drive)
         self.finish()
 
         self.start("Aktualisiered Lessons ...")
@@ -31,7 +33,7 @@ class Command(BaseCommand):
 
         days = []
         days.append(get_next_weekday_with_time(timezone.now(), timezone.now().time()))
-        days.append(get_next_weekday_with_time(days[0], datetime.time(0)))
+        days.append(get_next_weekday_with_time(days[0] + datetime.timedelta(days=1), datetime.time(0)))
         print(days)
 
         types = [
@@ -44,11 +46,21 @@ class Command(BaseCommand):
 
             for id, obj in drive[type_key].items():
                 self.start("  " + obj.name if obj.name is not None else "")
-                self.start("     Regelplan")
+                self.start("    Regelplan")
                 get_plan(type_id, id, force_update=True)
                 for day in days:
+
                     calendar_week = day.isocalendar()[1]
+                    if day != days[0] and days[0].isocalendar()[1] == calendar_week and days[0].year == day.year:
+                        continue
                     monday_of_week = get_calendar_week(calendar_week, day.year)["first_day"]
 
                     self.start("    " + str(monday_of_week))
                     get_plan(type_id, id, smart=True, monday_of_week=monday_of_week, force_update=True)
+
+        self.finish()
+
+        self.start("Aktualisierungszeitpunkt in der Datenbank speichern ...")
+        BACKGROUND_CACHE_REFRESH.last_time_updated = timezone.now()
+        BACKGROUND_CACHE_REFRESH.save()
+        self.finish()
