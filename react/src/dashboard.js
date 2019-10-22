@@ -172,7 +172,9 @@ class Dashboard extends React.Component {
                                     })}
                                 </div>
                                 <div className="card-action">
-                                    <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Weitere Termine</a>
+                                    <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/"
+                                       target={"_blank"}>Weitere Termine
+                                    </a>
                                 </div>
                             </div>
                         </div> : ""}

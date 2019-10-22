@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -8,6 +9,7 @@ from dashboard.settings import latest_article_settings, current_events_settings
 from helper import get_newest_articles, get_current_events, get_newest_article_from_news
 from schoolapps.settings import LONG_WEEK_DAYS
 from timetable.helper import get_name_for_next_week_day_from_today, get_type_and_object_of_user
+from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.plan import get_plan
@@ -36,8 +38,9 @@ def api_information(request):
         newest_article = get_newest_article_from_news(domain=latest_article_settings.wp_domain)
     else:
         newest_article = None
-        
+
     date_formatted = get_name_for_next_week_day_from_today()
+    next_weekday = get_next_weekday_with_time(timezone.now(), timezone.now().time())
 
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
@@ -48,7 +51,7 @@ def api_information(request):
         raw_type = "teacher"
 
         # Get hints
-        # hints = list(get_all_hints_for_teachers_by_time_period(next_weekday, next_weekday))
+        hints = list(get_all_hints_for_teachers_by_time_period(next_weekday, next_weekday))
 
     elif _type == TYPE_CLASS:
         # Student
@@ -57,8 +60,11 @@ def api_information(request):
         raw_type = "class"
 
         # Get hints
-        # hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
-
+        hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
+    else:
+        hints = []
+    hints = serialize("json", hints)
+    print(hints)
     context = {
         'activities': list(activities.values()),
         'notifications': list(notifications.values()),
