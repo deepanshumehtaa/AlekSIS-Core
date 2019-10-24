@@ -1,9 +1,12 @@
+from email.utils import formatdate
+
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone, formats
+from martor.templatetags.martortags import safe_markdown
 
 from dashboard.settings import latest_article_settings, current_events_settings
 from helper import get_newest_articles, get_current_events, get_newest_article_from_news
@@ -63,7 +66,14 @@ def api_information(request):
         hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
     else:
         hints = []
-    hints = serialize("json", hints)
+    ser = []
+    for hint in hints:
+        serialized = {}
+        serialized["from_date"] = formatdate(float(hint.from_date.strftime('%s')))
+        serialized["to_date"] = formatdate(float(hint.to_date.strftime('%s')))
+        serialized["html"] = safe_markdown(hint.text)
+        ser.append(serialized)
+    hints = ser
     print(hints)
     context = {
         'activities': list(activities.values()),

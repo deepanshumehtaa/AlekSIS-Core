@@ -85,15 +85,19 @@ class Dashboard extends React.Component {
         }
 
         const that = this;
-        console.log(MY_PLAN_URL);
         return <div>
+            {/* REFRESH BUTTON*/}
             <button className={"btn-flat right grey-text"} onClick={this.updateData}>
                 <i className={"material-icons left"}>refresh</i>
                 in {this.state.refreshIn} s
             </button>
+
+            {/* GREETINGS */}
             <p className="flow-text">Moin
                 Moin, {this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username}. Hier
                 findest du alle aktuellen Informationen:</p>
+
+            {/* UNREAD NOTIFICATIONS*/}
             {this.state.unread_notifications && this.state.unread_notifications.length > 0 ?
                 this.state.unread_notifications.map(function (notification) {
                     return <div className={"alert primary scale-transition"} id={"not-" + notification.id}
@@ -112,150 +116,177 @@ class Dashboard extends React.Component {
                     </div>;
                 }) : ""}
 
+            {/* HINTS */}
+            {this.state.plan && this.state.plan.hints.length > 0 ?
+                <div>
+                    {this.state.plan.hints.map(function (hint, idx) {
+                        const from_date = moment(hint.from_date);
+                        const to_date = moment(hint.to_date);
+                        return <div className="alert primary" key={idx}>
+                            <div>
+                                <em className="right hide-on-small-and-down">
+                                    Hinweis für {that.state.date_formatted}
+                                </em>
+
+                                <i className="material-icons left">announcement</i>
+                                <p dangerouslySetInnerHTML={{__html: hint.html}}/>
+
+                                <em className="hide-on-med-and-up">
+                                    Hinweis für {that.state.date_formatted}
+                                </em>
+                            </div>
+                        </div>;
+                    })}
+                </div> : ""}
+
+            {/* CARDS */}
             <div className={"row"}>
-                <div className={this.state.newest_article ? "col s12 m6 l6 xl8 no-padding" : "col s12 no-padding"}>
-                    <div className="col s12 m12 l12 xl6">
-                        <div className="card">
-                            {this.state.has_plan ? <div className="card-content">
-                                <span className="card-title">
-                                    Vertretungen {this.state.plan.type === 2 ? "der" : "für"} <em>
-                                    {this.state.plan.name}</em> für {this.state.date_formatted}
-                                </span>
-                                {this.state.lessons && this.state.lessons.length > 0 ? <div>
-                                        {this.state.lessons.map(function (lesson) {
-                                            return <div className="row">
-                                                <div className="col s4">
-                                                    <div className="card timetable-title-card">
-                                                        <div className="card-content">
+                <div className={"dashboard-cards"}>
 
-                                                            <span className="card-title left">
-                                                                {lesson.time.number_format}
-                                                            </span>
+                    {/* CURRENT SUBSTITUTIONS*/}
+                    <div className="card">
+                        {this.state.has_plan ? <div className="card-content">
+                            <span className="card-title">
+                                Vertretungen {this.state.plan.type === 2 ? "der" : "für"} <em>
+                                {this.state.plan.name}</em> für {this.state.date_formatted}
+                            </span>
+                            {this.state.lessons && this.state.lessons.length > 0 ? <div>
+                                    {this.state.lessons.map(function (lesson) {
+                                        return <div className="row">
+                                            <div className="col s4">
+                                                <div className="card timetable-title-card">
+                                                    <div className="card-content">
 
-                                                            <div
-                                                                className="right timetable-time grey-text text-darken-2">
-                                                                <span>{lesson.time.start}</span>
-                                                                <br/>
-                                                                <span>{lesson.time.end}</span>
-                                                            </div>
+                                                        <span className="card-title left">
+                                                            {lesson.time.number_format}
+                                                        </span>
+
+                                                        <div
+                                                            className="right timetable-time grey-text text-darken-2">
+                                                            <span>{lesson.time.start}</span>
+                                                            <br/>
+                                                            <span>{lesson.time.end}</span>
                                                         </div>
                                                     </div>
-
                                                 </div>
-                                                <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
-                                            </div>;
-                                        })}
-                                    </div>
-                                    :
-                                    <p>Keine Vertretungen für morgen vorhanden.</p>
-                                }
-                            </div> : <p className={"flow-text"}>Keine Vertretungen vorhanden.</p>}
-                            {this.state.has_plan ? <div className="card-action">
-                                <a href={MY_PLAN_URL}>
-                                    <span className="badge new primary-color card-action-badge">SMART PLAN</span>
-                                    anzeigen
-                                </a>
-                            </div> : ""}
-                        </div>
-                    </div>
-                    {this.state.current_events && this.state.current_events.length > 0 ?
-                        <div className="col s12 m12 l12 xl6">
-                            <div className="card">
-                                <div className="card-content">
-                                    <span className="card-title">Aktuelle Termine</span>
-                                    {this.state.current_events.map(function (event) {
-                                        return <div className="card-panel event-card">
-                                            <span className={"title"}>{event.name}</span>
-                                            <br/>
-                                            {event.formatted}
+
+                                            </div>
+                                            <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
                                         </div>;
                                     })}
                                 </div>
-                                <div className="card-action">
-                                    <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/"
-                                       target={"_blank"}>Weitere Termine
-                                    </a>
-                                </div>
-                            </div>
+                                :
+                                <p>Keine Vertretungen für morgen vorhanden.</p>
+                            }
+                        </div> : <p className={"flow-text"}>Keine Vertretungen vorhanden.</p>}
+                        {this.state.has_plan ? <div className="card-action">
+                            <a href={MY_PLAN_URL}>
+                                <span className="badge new primary-color card-action-badge">SMART PLAN</span>
+                                anzeigen
+                            </a>
                         </div> : ""}
+                    </div>
 
+                    {/* MY STATUS */}
+                    <div className="card">
+                        <div className="card-content">
+                            <span className="card-title">Mein Status</span>
+                            <div className={"row"}>
+                                <WithCheckCircleIcon>
+                                    {this.state.user_type_formatted}
+                                </WithCheckCircleIcon>
 
-                    <div className="col s12 m12 l12 xl6">
-                        <div className="card">
-                            <div className="card-content">
-                                <span className="card-title">Mein Status</span>
-                                <div className={"row"}>
-                                    <WithCheckCircleIcon>
-                                        {this.state.user_type_formatted}
-                                    </WithCheckCircleIcon>
+                                {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
+                                    Meine Klassen: {this.state.classes.join(", ")}
+                                </WithCheckCircleIcon> : ""}
 
-                                    {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
-                                        Meine Klassen: {this.state.classes.join(", ")}
-                                    </WithCheckCircleIcon> : ""}
+                                {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
+                                    Meine Kurse: {this.state.courses.join(", ")}
+                                </WithCheckCircleIcon> : ""}
 
-                                    {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
-                                        Meine Kurse: {this.state.courses.join(", ")}
-                                    </WithCheckCircleIcon> : ""}
-
-                                    {this.state.user_type === 1 ? <WithCheckCircleIcon>
-                                        Meine Fächer: {this.state.subjects.join(", ")}
-                                    </WithCheckCircleIcon> : ""}
-                                    {this.state.user_type === 1 || this.state.has_wifi ?
-                                        <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>
-                                            <i className={"material-icons left red-text"}>cancel</i>
-                                            Kein WLAN
-                                        </div>}
-                                </div>
+                                {this.state.user_type === 1 ? <WithCheckCircleIcon>
+                                    Meine Fächer: {this.state.subjects.join(", ")}
+                                </WithCheckCircleIcon> : ""}
+                                {this.state.user_type === 1 || this.state.has_wifi ?
+                                    <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>
+                                        <i className={"material-icons left red-text"}>cancel</i>
+                                        Kein WLAN
+                                    </div>}
                             </div>
                         </div>
                     </div>
 
-
-                    <div className="col s12 m12 l12 xl6">
+                    {/* CURRENT EVENTS*/}
+                    {this.state.current_events && this.state.current_events.length > 0 ?
                         <div className="card">
                             <div className="card-content">
-                                <span className="card-title">Klausuren der <em>Eb</em></span>
-                                <div className="card-panel event-card">
-                                    <span className={"title"}>Sextanereinschulung</span>
-                                    <br/>
-                                    28.Aug. 2019 18:30 - 22:00
-                                </div>
-                                <div className="card-panel event-card">
-                                    <span className={"title"}>Sextanereinschulung</span>
-                                    <br/>
-                                    28.Aug. 2019 18:30 - 22:00
-                                </div>
+                                <span className="card-title">Aktuelle Termine</span>
+                                {this.state.current_events.map(function (event) {
+                                    return <div className="card-panel event-card">
+                                        <span className={"title"}>{event.name}</span>
+                                        <br/>
+                                        {event.formatted}
+                                    </div>;
+                                })}
                             </div>
                             <div className="card-action">
-                                <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>
+                                <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/"
+                                   target={"_blank"}>Weitere Termine
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        : ""}
 
-                {this.state.newest_article ? <div className="col s12 m6 l6 xl4">
+                    {/* EXAMS */}
                     <div className="card">
-                        <div className="card-image">
-                            <span className={"badge-image"}>Aktuelles von der Homepage</span>
-                            <img src={this.state.newest_article.image_url} alt={this.state.newest_article.title}/>
-                            <span className="card-title"
-                                  dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
-                        </div>
                         <div className="card-content">
-                            <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
+                            <span className="card-title">Klausuren der <em>Eb</em></span>
+                            <div className="card-panel event-card">
+                                <span className={"title"}>Sextanereinschulung</span>
+                                <br/>
+                                28.Aug. 2019 18:30 - 22:00
+                            </div>
+                            <div className="card-panel event-card">
+                                <span className={"title"}>Sextanereinschulung</span>
+                                <br/>
+                                28.Aug. 2019 18:30 - 22:00
+                            </div>
                         </div>
                         <div className="card-action">
-                            <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
+                            <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>
                         </div>
                     </div>
-                    <a className={"btn hundred-percent primary-color"} href={"https://katharineum-zu-luebeck.de/"}
-                       target={"_blank"}>
-                        Weitere Artikel
-                        <i className={"material-icons right"}>arrow_forward</i>
-                    </a>
-                </div> : ""}
 
+                    {/* NEWEST ARTICLE FROM HOMEPAGE*/}
+                    {this.state.newest_article ?
+                        <div>
+                            <div className="card">
+                                <div className="card-image">
+                                    <span className={"badge-image"}>Aktuelles von der Homepage</span>
+                                    <img src={this.state.newest_article.image_url}
+                                         alt={this.state.newest_article.title}/>
+                                    <span className="card-title"
+                                          dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
+                                </div>
+                                <div className="card-content">
+                                    <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
+                                </div>
+                                <div className="card-action">
+                                    <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
+                                </div>
+                            </div>
+                            <a className={"btn hundred-percent primary-color"}
+                               href={"https://katharineum-zu-luebeck.de/"}
+                               target={"_blank"}>
+                                Weitere Artikel
+                                <i className={"material-icons right"}>arrow_forward</i>
+                            </a>
+                        </div>
+                        : ""}
+                </div>
             </div>
+
+            {/* ACITIVITIES */}
             <div className={"row"}>
                 <div className="col s12 m6">
                     <h5>Letzte Aktivitäten</h5>
@@ -277,6 +308,7 @@ class Dashboard extends React.Component {
                     </p>}
                 </div>
 
+                {/* NOTIFICATIONS */}
                 <div className="col s12 m6">
                     <h5>Letzte Benachrichtigungen</h5>
                     {this.state.notifications && this.state.notifications.length > 0 ? <ul className={"collection"}>

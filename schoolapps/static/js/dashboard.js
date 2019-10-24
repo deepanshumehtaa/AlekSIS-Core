@@ -165,7 +165,6 @@ var Dashboard = function (_React$Component) {
             }
 
             var that = this;
-            console.log(MY_PLAN_URL);
             return React.createElement(
                 "div",
                 null,
@@ -233,312 +232,333 @@ var Dashboard = function (_React$Component) {
                         )
                     );
                 }) : "",
+                this.state.plan && this.state.plan.hints.length > 0 ? React.createElement(
+                    "div",
+                    null,
+                    this.state.plan.hints.map(function (hint, idx) {
+                        var from_date = moment(hint.from_date);
+                        var to_date = moment(hint.to_date);
+                        return React.createElement(
+                            "div",
+                            {className: "alert primary", key: idx},
+                            React.createElement(
+                                "div",
+                                null,
+                                React.createElement(
+                                    "em",
+                                    {className: "right hide-on-small-and-down"},
+                                    "Hinweis f\xFCr ",
+                                    that.state.date_formatted
+                                ),
+                                React.createElement(
+                                    "i",
+                                    {className: "material-icons left"},
+                                    "announcement"
+                                ),
+                                React.createElement("p", {dangerouslySetInnerHTML: {__html: hint.html}}),
+                                React.createElement(
+                                    "em",
+                                    {className: "hide-on-med-and-up"},
+                                    "Hinweis f\xFCr ",
+                                    that.state.date_formatted
+                                )
+                            )
+                        );
+                    })
+                ) : "",
                 React.createElement(
                     "div",
                     {className: "row"},
                     React.createElement(
                         "div",
-                        {className: this.state.newest_article ? "col s12 m6 l6 xl8 no-padding" : "col s12 no-padding"},
+                        {className: "dashboard-cards"},
                         React.createElement(
                             "div",
-                            {className: "col s12 m12 l12 xl6"},
-                            React.createElement(
+                            {className: "card"},
+                            this.state.has_plan ? React.createElement(
                                 "div",
-                                {className: "card"},
-                                this.state.has_plan ? React.createElement(
-                                    "div",
-                                    {className: "card-content"},
+                                {className: "card-content"},
+                                React.createElement(
+                                    "span",
+                                    {className: "card-title"},
+                                    "Vertretungen ",
+                                    this.state.plan.type === 2 ? "der" : "für",
+                                    " ",
                                     React.createElement(
-                                        "span",
-                                        {className: "card-title"},
-                                        "Vertretungen ",
-                                        this.state.plan.type === 2 ? "der" : "für",
-                                        " ",
-                                        React.createElement(
-                                            "em",
-                                            null,
-                                            this.state.plan.name
-                                        ),
-                                        " f\xFCr ",
-                                        this.state.date_formatted
-                                    ),
-                                    this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
-                                        "div",
+                                        "em",
                                         null,
-                                        this.state.lessons.map(function (lesson) {
-                                            return React.createElement(
+                                        this.state.plan.name
+                                    ),
+                                    " f\xFCr ",
+                                    this.state.date_formatted
+                                ),
+                                this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
+                                    "div",
+                                    null,
+                                    this.state.lessons.map(function (lesson) {
+                                        return React.createElement(
+                                            "div",
+                                            {className: "row"},
+                                            React.createElement(
                                                 "div",
-                                                {className: "row"},
+                                                {className: "col s4"},
                                                 React.createElement(
                                                     "div",
-                                                    {className: "col s4"},
+                                                    {className: "card timetable-title-card"},
                                                     React.createElement(
                                                         "div",
-                                                        {className: "card timetable-title-card"},
+                                                        {className: "card-content"},
+                                                        React.createElement(
+                                                            "span",
+                                                            {className: "card-title left"},
+                                                            lesson.time.number_format
+                                                        ),
                                                         React.createElement(
                                                             "div",
-                                                            {className: "card-content"},
+                                                            {
+                                                                className: "right timetable-time grey-text text-darken-2"
+                                                            },
                                                             React.createElement(
                                                                 "span",
-                                                                {className: "card-title left"},
-                                                                lesson.time.number_format
+                                                                null,
+                                                                lesson.time.start
                                                             ),
+                                                            React.createElement("br", null),
                                                             React.createElement(
-                                                                "div",
-                                                                {
-                                                                    className: "right timetable-time grey-text text-darken-2"
-                                                                },
-                                                                React.createElement(
-                                                                    "span",
-                                                                    null,
-                                                                    lesson.time.start
-                                                                ),
-                                                                React.createElement("br", null),
-                                                                React.createElement(
-                                                                    "span",
-                                                                    null,
-                                                                    lesson.time.end
-                                                                )
+                                                                "span",
+                                                                null,
+                                                                lesson.time.end
                                                             )
                                                         )
                                                     )
-                                                ),
-                                                React.createElement("div", {
-                                                    className: "col s8",
-                                                    dangerouslySetInnerHTML: {__html: lesson.html}
-                                                })
-                                            );
-                                        })
-                                    ) : React.createElement(
-                                        "p",
-                                        null,
-                                        "Keine Vertretungen f\xFCr morgen vorhanden."
-                                    )
-                                ) : React.createElement(
-                                    "p",
-                                    {className: "flow-text"},
-                                    "Keine Vertretungen vorhanden."
-                                ),
-                                this.state.has_plan ? React.createElement(
-                                    "div",
-                                    {className: "card-action"},
-                                    React.createElement(
-                                        "a",
-                                        {href: MY_PLAN_URL},
-                                        React.createElement(
-                                            "span",
-                                            {className: "badge new primary-color card-action-badge"},
-                                            "SMART PLAN"
-                                        ),
-                                        "anzeigen"
-                                    )
-                                ) : ""
-                            )
-                        ),
-                        this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
-                            "div",
-                            {className: "col s12 m12 l12 xl6"},
-                            React.createElement(
-                                "div",
-                                {className: "card"},
-                                React.createElement(
-                                    "div",
-                                    {className: "card-content"},
-                                    React.createElement(
-                                        "span",
-                                        {className: "card-title"},
-                                        "Aktuelle Termine"
-                                    ),
-                                    this.state.current_events.map(function (event) {
-                                        return React.createElement(
-                                            "div",
-                                            {className: "card-panel event-card"},
-                                            React.createElement(
-                                                "span",
-                                                {className: "title"},
-                                                event.name
+                                                )
                                             ),
-                                            React.createElement("br", null),
-                                            event.formatted
+                                            React.createElement("div", {
+                                                className: "col s8",
+                                                dangerouslySetInnerHTML: {__html: lesson.html}
+                                            })
                                         );
                                     })
-                                ),
-                                React.createElement(
-                                    "div",
-                                    {className: "card-action"},
-                                    React.createElement(
-                                        "a",
-                                        {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/"},
-                                        "Weitere Termine"
-                                    )
+                                ) : React.createElement(
+                                    "p",
+                                    null,
+                                    "Keine Vertretungen f\xFCr morgen vorhanden."
                                 )
-                            )
-                        ) : "",
-                        React.createElement(
-                            "div",
-                            {className: "col s12 m12 l12 xl6"},
-                            React.createElement(
+                            ) : React.createElement(
+                                "p",
+                                {className: "flow-text"},
+                                "Keine Vertretungen vorhanden."
+                            ),
+                            this.state.has_plan ? React.createElement(
                                 "div",
-                                {className: "card"},
+                                {className: "card-action"},
                                 React.createElement(
-                                    "div",
-                                    {className: "card-content"},
+                                    "a",
+                                    {href: MY_PLAN_URL},
                                     React.createElement(
                                         "span",
-                                        {className: "card-title"},
-                                        "Mein Status"
+                                        {className: "badge new primary-color card-action-badge"},
+                                        "SMART PLAN"
                                     ),
-                                    React.createElement(
-                                        "div",
-                                        {className: "row"},
-                                        React.createElement(
-                                            WithCheckCircleIcon,
-                                            null,
-                                            this.state.user_type_formatted
-                                        ),
-                                        this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
-                                            WithCheckCircleIcon,
-                                            null,
-                                            "Meine Klassen: ",
-                                            this.state.classes.join(", ")
-                                        ) : "",
-                                        this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
-                                            WithCheckCircleIcon,
-                                            null,
-                                            "Meine Kurse: ",
-                                            this.state.courses.join(", ")
-                                        ) : "",
-                                        this.state.user_type === 1 ? React.createElement(
-                                            WithCheckCircleIcon,
-                                            null,
-                                            "Meine F\xE4cher: ",
-                                            this.state.subjects.join(", ")
-                                        ) : "",
-                                        this.state.user_type === 1 || this.state.has_wifi ? React.createElement(
-                                            WithCheckCircleIcon,
-                                            null,
-                                            "WLAN"
-                                        ) : React.createElement(
-                                            "div",
-                                            {className: "col"},
-                                            React.createElement(
-                                                "i",
-                                                {className: "material-icons left red-text"},
-                                                "cancel"
-                                            ),
-                                            "Kein WLAN"
-                                        )
-                                    )
+                                    "anzeigen"
                                 )
-                            )
+                            ) : ""
                         ),
-                        React.createElement(
-                            "div",
-                            {className: "col s12 m12 l12 xl6"},
-                            React.createElement(
-                                "div",
-                                {className: "card"},
-                                React.createElement(
-                                    "div",
-                                    {className: "card-content"},
-                                    React.createElement(
-                                        "span",
-                                        {className: "card-title"},
-                                        "Klausuren der ",
-                                        React.createElement(
-                                            "em",
-                                            null,
-                                            "Eb"
-                                        )
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        {className: "card-panel event-card"},
-                                        React.createElement(
-                                            "span",
-                                            {className: "title"},
-                                            "Sextanereinschulung"
-                                        ),
-                                        React.createElement("br", null),
-                                        "28.Aug. 2019 18:30 - 22:00"
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        {className: "card-panel event-card"},
-                                        React.createElement(
-                                            "span",
-                                            {className: "title"},
-                                            "Sextanereinschulung"
-                                        ),
-                                        React.createElement("br", null),
-                                        "28.Aug. 2019 18:30 - 22:00"
-                                    )
-                                ),
-                                React.createElement(
-                                    "div",
-                                    {className: "card-action"},
-                                    React.createElement(
-                                        "a",
-                                        {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/"},
-                                        "Alle Klausuren"
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    this.state.newest_article ? React.createElement(
-                        "div",
-                        {className: "col s12 m6 l6 xl4"},
                         React.createElement(
                             "div",
                             {className: "card"},
                             React.createElement(
                                 "div",
-                                {className: "card-image"},
+                                {className: "card-content"},
                                 React.createElement(
                                     "span",
-                                    {className: "badge-image"},
-                                    "Aktuelles von der Homepage"
+                                    {className: "card-title"},
+                                    "Mein Status"
                                 ),
-                                React.createElement("img", {
-                                    src: this.state.newest_article.image_url,
-                                    alt: this.state.newest_article.title
-                                }),
-                                React.createElement("span", {
-                                    className: "card-title",
-                                    dangerouslySetInnerHTML: {__html: this.state.newest_article.title}
-                                })
-                            ),
+                                React.createElement(
+                                    "div",
+                                    {className: "row"},
+                                    React.createElement(
+                                        WithCheckCircleIcon,
+                                        null,
+                                        this.state.user_type_formatted
+                                    ),
+                                    this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
+                                        WithCheckCircleIcon,
+                                        null,
+                                        "Meine Klassen: ",
+                                        this.state.classes.join(", ")
+                                    ) : "",
+                                    this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
+                                        WithCheckCircleIcon,
+                                        null,
+                                        "Meine Kurse: ",
+                                        this.state.courses.join(", ")
+                                    ) : "",
+                                    this.state.user_type === 1 ? React.createElement(
+                                        WithCheckCircleIcon,
+                                        null,
+                                        "Meine F\xE4cher: ",
+                                        this.state.subjects.join(", ")
+                                    ) : "",
+                                    this.state.user_type === 1 || this.state.has_wifi ? React.createElement(
+                                        WithCheckCircleIcon,
+                                        null,
+                                        "WLAN"
+                                    ) : React.createElement(
+                                        "div",
+                                        {className: "col"},
+                                        React.createElement(
+                                            "i",
+                                            {className: "material-icons left red-text"},
+                                            "cancel"
+                                        ),
+                                        "Kein WLAN"
+                                    )
+                                )
+                            )
+                        ),
+                        this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
+                            "div",
+                            {className: "card"},
                             React.createElement(
                                 "div",
                                 {className: "card-content"},
-                                React.createElement("p", {dangerouslySetInnerHTML: {__html: this.state.newest_article.short_text}})
+                                React.createElement(
+                                    "span",
+                                    {className: "card-title"},
+                                    "Aktuelle Termine"
+                                ),
+                                this.state.current_events.map(function (event) {
+                                    return React.createElement(
+                                        "div",
+                                        {className: "card-panel event-card"},
+                                        React.createElement(
+                                            "span",
+                                            {className: "title"},
+                                            event.name
+                                        ),
+                                        React.createElement("br", null),
+                                        event.formatted
+                                    );
+                                })
                             ),
                             React.createElement(
                                 "div",
                                 {className: "card-action"},
                                 React.createElement(
                                     "a",
-                                    {href: this.state.newest_article.link, target: "_blank"},
-                                    "Mehr lesen"
+                                    {
+                                        href: "https://katharineum-zu-luebeck.de/aktuelles/termine/",
+                                        target: "_blank"
+                                    },
+                                    "Weitere Termine"
+                                )
+                            )
+                        ) : "",
+                        React.createElement(
+                            "div",
+                            {className: "card"},
+                            React.createElement(
+                                "div",
+                                {className: "card-content"},
+                                React.createElement(
+                                    "span",
+                                    {className: "card-title"},
+                                    "Klausuren der ",
+                                    React.createElement(
+                                        "em",
+                                        null,
+                                        "Eb"
+                                    )
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "card-panel event-card"},
+                                    React.createElement(
+                                        "span",
+                                        {className: "title"},
+                                        "Sextanereinschulung"
+                                    ),
+                                    React.createElement("br", null),
+                                    "28.Aug. 2019 18:30 - 22:00"
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "card-panel event-card"},
+                                    React.createElement(
+                                        "span",
+                                        {className: "title"},
+                                        "Sextanereinschulung"
+                                    ),
+                                    React.createElement("br", null),
+                                    "28.Aug. 2019 18:30 - 22:00"
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                {className: "card-action"},
+                                React.createElement(
+                                    "a",
+                                    {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/"},
+                                    "Alle Klausuren"
                                 )
                             )
                         ),
-                        React.createElement(
-                            "a",
-                            {
-                                className: "btn hundred-percent primary-color",
-                                href: "https://katharineum-zu-luebeck.de/",
-                                target: "_blank"
-                            },
-                            "Weitere Artikel",
+                        this.state.newest_article ? React.createElement(
+                            "div",
+                            null,
                             React.createElement(
-                                "i",
-                                {className: "material-icons right"},
-                                "arrow_forward"
+                                "div",
+                                {className: "card"},
+                                React.createElement(
+                                    "div",
+                                    {className: "card-image"},
+                                    React.createElement(
+                                        "span",
+                                        {className: "badge-image"},
+                                        "Aktuelles von der Homepage"
+                                    ),
+                                    React.createElement("img", {
+                                        src: this.state.newest_article.image_url,
+                                        alt: this.state.newest_article.title
+                                    }),
+                                    React.createElement("span", {
+                                        className: "card-title",
+                                        dangerouslySetInnerHTML: {__html: this.state.newest_article.title}
+                                    })
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "card-content"},
+                                    React.createElement("p", {dangerouslySetInnerHTML: {__html: this.state.newest_article.short_text}})
+                                ),
+                                React.createElement(
+                                    "div",
+                                    {className: "card-action"},
+                                    React.createElement(
+                                        "a",
+                                        {href: this.state.newest_article.link, target: "_blank"},
+                                        "Mehr lesen"
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "a",
+                                {
+                                    className: "btn hundred-percent primary-color",
+                                    href: "https://katharineum-zu-luebeck.de/",
+                                    target: "_blank"
+                                },
+                                "Weitere Artikel",
+                                React.createElement(
+                                    "i",
+                                    {className: "material-icons right"},
+                                    "arrow_forward"
+                                )
                             )
-                        )
-                    ) : ""
+                        ) : ""
+                    )
                 ),
                 React.createElement(
                     "div",
