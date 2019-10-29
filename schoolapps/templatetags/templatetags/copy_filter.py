@@ -1,20 +1,8 @@
-from django import template
-
 import copy as copylib
+
+from django import template
 
 register = template.Library()
 
-
-def copy(obj):
-    """copy.copy()"""
-    return copylib.copy(obj)
-
-
-def deepcopy(obj):
-    """copy.deepcopy()"""
-    return copylib.deepcopy(obj)
-
-
-register.filter("copy", copy)
-register.filter("deepcopy", deepcopy)
-
+register.filter("copy", copylib.copy)
+register.filter("deepcopy", copylib.deepcopy)
