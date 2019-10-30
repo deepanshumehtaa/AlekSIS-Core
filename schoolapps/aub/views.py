@@ -44,7 +44,7 @@ def index(request):
 
 @login_required
 @permission_required('aub.apply_for_aub')
-@check_own_aub(login_url='/index.html')
+@check_own_aub(login_url='/accounts/login/')
 def details(request, id):
     aub = get_object_or_404(Aub, id=id)
     context = {
@@ -142,7 +142,7 @@ def check1(request):
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
 
-    aub_list = Aub.objects.filter(status=0).order_by('created_at')
+    aub_list = Aub.objects.filter(status=0).order_by('from_date')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 
@@ -186,7 +186,7 @@ def check2(request):
                                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
                                       )
 
-    aub_list = Aub.objects.filter(status=1).order_by('created_at')
+    aub_list = Aub.objects.filter(status=1).order_by('from_date')
     aubs = AUBFilter(request.GET, queryset=aub_list)
     return render(request, 'aub/check.html', {'filter': aubs})
 

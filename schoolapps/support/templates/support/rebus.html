@@ -9,7 +9,7 @@
 
     <h5>Fehler melden – REBUS – REport-A-Bug-System</h5>
 
-    <form method="post">
+    <form method="post" id="rebus-form">
         {% csrf_token %}
 
 
@@ -34,11 +34,12 @@
                           class="materialize-textarea"></textarea>
 
                 <label for="{{ form.long_description.id_for_label }}">Bitte beschreibe dein Problem
-                    <strong>genauer</strong> (optional)</label>
+                    <strong>genauer</strong> (optional)
+                </label>
             </div>
         </div>
 
-        <button type="submit" name="go" class="btn waves-effect waves-light green">
+        <button type="submit" name="go" id="go" class="btn waves-effect waves-light green">
             Problem-/Fehlermeldung einreichen
             <i class="material-icons right">send</i>
         </button>
@@ -49,6 +50,15 @@
         var props = JSON.parse(document.getElementById('props').textContent);
         window.props = props;
         window.react_mount = document.getElementById('react-mount');
+
+        $('#go').click(function (event) {
+            var el = $("#rebus-form").get(0);
+            var valid = el.reportValidity();
+            console.log(valid);
+            if (!valid) {
+                M.toast({html: "<i class='material-icons left'>error</i>Bitte fülle alle benötigten Felder aus!"})
+            }
+        });
     </script>
     <script src="{% static "support/bundle.js" %}"></script>
 

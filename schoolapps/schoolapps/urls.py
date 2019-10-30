@@ -21,15 +21,10 @@ from django.contrib.staticfiles.views import serve
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views import defaults
 
 from schoolapps.settings import BASE_DIR
 
-TINYMCE_DEFAULT_CONFIG = {
-    'theme': "simple", # default value
-    'relative_urls': False, # default value
-    'width': '100%',
-    'height': 300
-}
 
 def manifest(request):
     return serve(request, "manifest.json")
@@ -37,6 +32,11 @@ def manifest(request):
 
 def serviceworker(request):
     return serve(request, "common/pwabuilder-sw.js")
+
+handler404 = 'dashboard.views.error_404'
+
+def custom_page_not_found(request):
+    return defaults.page_not_found(request, None, "common/404.html")
 
 
 urlpatterns = [
@@ -55,11 +55,6 @@ urlpatterns = [
     #######
     path('aub/', include('aub.urls')),
 
-    ########
-    # FIBU #
-    ########
-    path('fibu/', include('fibu.urls')),
-
     #############
     # TIMETABLE #
     #############
@@ -73,6 +68,7 @@ urlpatterns = [
     #########
     # Admin #
     #########
+    path("debug/", include("debug.urls")),
     path('settings/', include('dbsettings.urls')),
     path('admin/', admin.site.urls),
 
@@ -80,15 +76,22 @@ urlpatterns = [
     # SUPPORT #
     ###########
     path('support/', include('support.urls')),
+
+    #######
+    # FAQ #
+    #######
+    path('faq/', include('faq.urls')),
+
     path("pwabuilder-sw.js", serviceworker),
 
-    ###########
-    # TinyMCE #
-    ###########
-#    path('tinymce/', include('tinymce.urls')),
+    path('martor/', include('martor.urls')),
+
+    #######
+    # 404 #
+    #######
+    path('404/', custom_page_not_found, name='404'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# handler404 = 'dashboard.views.error_404'

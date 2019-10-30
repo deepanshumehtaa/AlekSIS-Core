@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import HttpResponseNotFound
 from .models import Activity, register_notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
@@ -24,7 +25,7 @@ def index(request):
     activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
 
     # Load notifications
-    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')
+    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
 
     # user_type = UserInformation.user_type(request.user)
     context = {
