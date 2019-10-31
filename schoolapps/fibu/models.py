@@ -22,7 +22,7 @@ class Budget(models.Model):
         )
 
 class Booking(models.Model):
-    cost_center     = models.ForeignKey(to=CostCenter.name, on_delete=models.CASCADE)
+    cost_center     = models.ForeignKey(CostCenter, on_delete=models.CASCADE)
     invoice_date    = models.DateField()
     invoice_number  = models.CharField(max_length=20)
     firma           = models.CharField(max_length=30)
@@ -33,13 +33,12 @@ class Booking(models.Model):
     payout_number   = models.IntegerField()
     booking_date    = models.DateField()
     maturity        = models.DateField()
-    account         = models.ForeignKey(to=Account.number, on_delete=models.CASCADE)
-    budget          = models.ForeignKey(to=Budget.name, on_delete=models.CASCADE)
+    account         = models.ForeignKey(Account, on_delete=models.CASCADE)
+    budget          = models.ForeignKey(Budget, on_delete=models.CASCADE)
     upload          = models.FileField(upload_to='uploads/fibu/%Y/')
 
     class Meta:
         permissions = (
-            ('view_booking', 'Can view a list of bookings'),
             ('edit_booking', 'Can edit bookings'),
             ('apply_acquisition', 'Can apply an acquisition'),
         )

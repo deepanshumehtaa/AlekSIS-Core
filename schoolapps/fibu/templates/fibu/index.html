@@ -2,8 +2,8 @@
 {% load material_form %}
 
 <main>
-
-    <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
+Hallo
+ {% comment %}   <a href="{% url 'aub_apply_for' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>
 
    {% block content %}
 
@@ -60,6 +60,6 @@
             </li>
         {% endfor %}
     </ul>
-    {% endblock %}
+    {% endblock %}{% endcomment %}
 </main>
 {% include 'partials/footer.html' %}
