@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .mixins import SchoolRelated
+from .mixins import ExtensibleModel, SchoolRelated
 
 
 class School(models.Model):
@@ -42,9 +42,9 @@ class SchoolTerm(SchoolRelated):
         'Effective start date of term'), null=True)
     date_end = models.DateField(verbose_name=_(
         'Effective end date of term'), null=True)
-    
 
-class Person(SchoolRelated):
+
+class Person(SchoolRelated, ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -132,7 +132,7 @@ class Person(SchoolRelated):
         return self.full_name
 
 
-class Group(SchoolRelated):
+class Group(SchoolRelated, ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """

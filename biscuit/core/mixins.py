@@ -1,3 +1,5 @@
+from typing import Any, Callable, Optional
+
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
@@ -5,6 +7,30 @@ from django.db.models import QuerySet
 from easyaudit.models import CRUDEvent
 
 from .util.core_helpers import get_current_school
+
+
+class ExtensibleModel(object):
+    """ Mixin that adds class methods for glrofied monkey-patching. """
+
+    @classmethod
+    def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+        """ Adds the passed callable as a property. """
+
+        # Decide the name for the property
+        if name is None:
+            prop_name = func.__name__
+        else:
+            if name.isidentifier():
+                prop_name = name
+            else:
+                raise ValueError('%s is not a valid name.' % name)
+
+        # Verify that property name does not clash with other names in the class
+        if hasattr(cls, prop_name):
+            raise ValueError('%s already used.' % prop_name)
+
+        # Add function wrapped in property decorator if we got here
+        setattr(cls, prop_name, property(func))
 
 
 class SchoolRelated(models.Model):
