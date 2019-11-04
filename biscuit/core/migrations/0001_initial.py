@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='parent_groups',
-            field=models.ManyToManyField(related_name='child_groups', to='core.Group', verbose_name='Parent groups'),
+            field=models.ManyToManyField(related_name='child_groups', to='core.Group', verbose_name='Parent groups', blank=True),
         ),
         migrations.AddField(
             model_name='group',
