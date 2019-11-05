@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking
+from .filters import BookingFilter
 from .forms import MakeBookingForm
 
 
@@ -38,3 +39,34 @@ def index(request):
         return redirect('fibu_index')
     context = {'bookings': items, 'form': form}
     return render(request, 'fibu/index.html', context)
+
+
+
+
+@login_required
+# @permission_required('fibu.check_booking')
+def check(request):
+    if request.method == 'POST':
+        if 'booking-id' in request.POST:
+            booking_id = request.POST['booking-id']
+            booking = Booking.objects.get(id=booking_id)
+            if 'allow' in request.POST:
+                Booking.objects.filter(id=booking_id).update(status=1)
+            elif 'deny' in request.POST:
+                Booking.objects.filter(id=booking_id).update(status=3)
+                # Notify user
+                # register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
+                #                       description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
+                #                                   "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
+                #                                   "bitte die Schulleitung."
+                #                       .format(formats.date_format(aub.from_date),
+                #                               formats.time_format(aub.from_time),
+                #                               formats.date_format(aub.to_date),
+                #                               formats.time_format(aub.to_time)),
+                #                       app=AubConfig.verbose_name, user=aub.created_by,
+                #                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
+                #                       )
+
+    booking_list = Booking.objects.filter(status=0).order_by('submission_date')
+    bookings = BookingFilter(request.GET, queryset=booking_list)
+    return render(request, 'fibu/check.html', {'filter': bookings})

@@ -50,7 +50,7 @@ class Booking(models.Model):
     description     = models.CharField(max_length=50)
 #    amount          = models.DecimalField(max_digits=10, decimal_places=2)
     planned_amount  = models.IntegerField()
-#    submission_date = models.DateField()
+    submission_date = models.DateField(default='2019-01-01')
 #    payout_number   = models.IntegerField()
 #    booking_date    = models.DateField()
 #    maturity        = models.DateField()
