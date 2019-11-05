@@ -571,3 +571,10 @@ ul.sidenav li.logo > a:hover{
     height: auto !important;
     min-height: 26px;
 }
+
+/*++++++++
++AUB/Fibu+
+++++++++++ */
+.flushright {
+    text-align: right;
+}
