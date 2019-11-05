@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db.models import Q
 
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date, \
@@ -316,7 +317,10 @@ def get_header_information(subs, date, events=[]):
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).exclude(
-            flags__contains="N").order_by("classids", "lesson")),
+            Q(flags__contains="N") |
+            Q(flags__contains="b") |
+            Q(flags__contains="F") |
+            Q(flags__exact="g")).order_by("classids", "lesson")),
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)
