@@ -13,9 +13,7 @@ class ExtensibleModel(object):
     """ Mixin that adds class methods for glrofied monkey-patching. """
 
     @classmethod
-    def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
-        """ Adds the passed callable as a property. """
-
+    def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the property
         if name is None:
             prop_name = func.__name__
@@ -30,7 +28,19 @@ class ExtensibleModel(object):
             raise ValueError('%s already used.' % prop_name)
 
         # Add function wrapped in property decorator if we got here
-        setattr(cls, prop_name, property(func))
+        setattr(cls, prop_name, obj)
+
+    @classmethod
+    def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+        """ Adds the passed callable as a property. """
+
+        cls._safe_add(property(func), name)
+
+    @classmethod
+    def method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+        """ Adds the passed callable as a property. """
+
+        cls._safe_add(func, name)
 
 
 class SchoolRelated(models.Model):
