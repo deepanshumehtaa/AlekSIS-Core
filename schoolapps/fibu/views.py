@@ -70,3 +70,9 @@ def check(request):
     booking_list = Booking.objects.filter(status=0).order_by('submission_date')
     bookings = BookingFilter(request.GET, queryset=booking_list)
     return render(request, 'fibu/check.html', {'filter': bookings})
+
+def booking_check1():
+    pass
+
+def booking_check2():
+    pass
