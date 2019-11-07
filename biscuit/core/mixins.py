@@ -14,7 +14,7 @@ class ExtensibleModel(object):
 
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
-        # Decide the name for the property
+        # Decide the name for the attribute
         if name is None:
             prop_name = obj.__name__
         else:
@@ -34,13 +34,13 @@ class ExtensibleModel(object):
     def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """ Adds the passed callable as a property. """
 
-        cls._safe_add(property(func), name)
+        cls._safe_add(property(func), func.__name__)
 
     @classmethod
     def method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
-        """ Adds the passed callable as a property. """
+        """ Adds the passed callable as a method. """
 
-        cls._safe_add(func, name)
+        cls._safe_add(func, func.__name__)
 
 
 class SchoolRelated(models.Model):
