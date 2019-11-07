@@ -16,7 +16,7 @@ class ExtensibleModel(object):
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the property
         if name is None:
-            prop_name = func.__name__
+            prop_name = obj.__name__
         else:
             if name.isidentifier():
                 prop_name = name
