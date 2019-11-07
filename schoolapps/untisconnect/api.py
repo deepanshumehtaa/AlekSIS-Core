@@ -92,6 +92,7 @@ class Teacher(object):
 
 def get_all_teachers():
     teachers = row_by_row(models.Teacher, Teacher)
+    teachers.sort(key=lambda a: a.shortcode)
     return teachers
 
 
@@ -145,6 +146,7 @@ class Class(object):
 
 def get_all_classes():
     classes = row_by_row(models.Class, Class)
+    classes.sort(key=lambda a: a.name)
     return classes
 
 
@@ -217,8 +219,9 @@ class Room(object):
 
 
 def get_all_rooms():
-    db_rooms = row_by_row(models.Room, Room)
-    return db_rooms
+    rooms = row_by_row(models.Room, Room)
+    rooms.sort(key=lambda a: a.shortcode)
+    return rooms
 
 
 def get_room_by_id(id):
@@ -256,6 +259,7 @@ class Corridor(object):
 
 def get_all_corridors():
     corridors = row_by_row(models.Corridor, Corridor, filter_term=False)
+    corridors.sort(key=lambda a: a.name)
     return corridors
 
 
@@ -312,8 +316,10 @@ class Subject(object):
 
 
 def get_all_subjects():
-    db_rooms = row_by_row(models.Subjects, Subject, filter_term=False)
-    return db_rooms
+    subjects = row_by_row(models.Subjects, Subject, filter_term=False)
+    subjects.sort(key=lambda a: a.shortcode)
+
+    return subjects
 
 
 def get_subject_by_id(id):
