@@ -241,6 +241,5 @@ def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    # print("Refresh plan cache for", cache.id)
     cache.update(plan)
     return plan, hols_for_weekday
