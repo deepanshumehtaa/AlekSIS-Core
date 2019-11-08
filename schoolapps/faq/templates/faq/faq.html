@@ -10,35 +10,43 @@
             <ul class="collapsible">
                 {% for question in section.questions.all %}
                     {% if question.show %}
-                    <li>
-                        <div class="collapsible-header flow-text">
-                            <i class="material-icons">
-                                {% if question.icon %}
-                                    {{ question.icon }}
-                                {% else %}
-                                    question_answer
-                                {% endif %}
-                            </i>
-                            {{ question.question_text }}
-                        </div>
-                        <div class="collapsible-body">
-                            {{ question.answer_text|safe }}
-                        </div>
-                    </li>
+                        <li>
+                            <div class="collapsible-header flow-text">
+                                <i class="material-icons">
+                                    {% if question.icon %}
+                                        {{ question.icon }}
+                                    {% else %}
+                                        question_answer
+                                    {% endif %}
+                                </i>
+                                {{ question.question_text }}
+                            </div>
+                            <div class="collapsible-body">
+                                {{ question.answer_text|safe }}
+                            </div>
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
         </section>
     {% endfor %}
 
+
     <p class="flow-text">
         Deine Frage war nicht dabei?
     </p>
     <p>
-        <a class="btn  blue waves-effect waves-green" href="{% url "ask-faq" %}">
-            <i class="material-icons left">chat</i>
-            Deine Frage stellen
-        </a>
+        {% if user.is_authenticated %}
+            <a class="btn  blue waves-effect waves-green" href="{% url "ask-faq" %}">
+                <i class="material-icons left">chat</i>
+                Deine Frage stellen
+            </a>
+        {% else %}
+            Schreibe uns an
+            <a href="mailto:support@katharineum.de">support@katharineum.de</a> und wir versuchen, deine Frage zu
+            beantworten.
+        {% endif %}
     </p>
+
 </main>
 {% include 'partials/footer.html' %}
