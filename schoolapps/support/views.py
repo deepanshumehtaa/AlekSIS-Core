@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from mailer import send_mail_with_template
@@ -12,6 +13,7 @@ def add_arrows(array: list):
     return " → ".join([item for item in array if item != ""])
 
 
+@login_required
 def rebus(request):
     if request.method == 'POST':
         form = REBUSForm(request.POST)
@@ -50,6 +52,7 @@ def rebus(request):
     return render(request, 'support/rebus.html', {'form': form, "props": {"rooms": rooms}})
 
 
+@login_required
 def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
