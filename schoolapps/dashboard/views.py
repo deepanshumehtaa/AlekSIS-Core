@@ -3,6 +3,7 @@ from django.core.cache import cache
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from django.http import HttpResponseNotFound
 from .models import Activity, register_notification, Cache
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template

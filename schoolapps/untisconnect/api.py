@@ -8,6 +8,8 @@ TYPE_TEACHER = 0
 TYPE_ROOM = 1
 TYPE_CLASS = 2
 
+from datetime import date
+
 
 def run_all(obj, filter_term=True):
     return run_default_filter(run_using(obj).all(), filter_term=filter_term)
@@ -73,6 +75,13 @@ class Teacher(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Teacher):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.teacher_id
@@ -114,6 +123,13 @@ class Class(object):
             return self.name or "Unbekannt"
         else:
             return "Unbekannt"
+
+    def __eq__(self, other):
+        if not isinstance(other, Class):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
 
     def create(self, db_obj):
         self.filled = True
@@ -186,6 +202,13 @@ class Room(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Room):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.room_id
@@ -218,6 +241,13 @@ class Corridor(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Corridor):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.corridor_id
@@ -246,6 +276,19 @@ class Subject(object):
         self.name = None
         self.color = None
         self.hex_color = None
+
+    def __str__(self):
+        if self.filled:
+            return self.shortcode or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def __eq__(self, other):
+        if not isinstance(other, Teacher):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
 
     def create(self, db_obj):
         self.filled = True
@@ -382,3 +425,33 @@ def get_all_events_by_date(date):
 ##########
 def get_raw_lessons():
     return run_all(models.Lesson.objects.filter(deleted=0))
+
+
+###########
+# HOLIDAY #
+###########
+class Holiday(object):
+    def __init__(self):
+        self.filled = False
+        self.name = None
+        self.datefrom = None
+        self.dateto = None
+
+    def __str__(self):
+        if self.filled:
+            return self.name or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def create(self, db_obj):
+        self.filled = True
+        self.name = db_obj.name
+        self.datefrom = db_obj.datefrom
+        self.dateto = db_obj.dateto
+
+
+def get_today_holidays(date):
+    # db_holidays = row_by_row(models.Holiday, Holiday)
+    d_i = int(date_to_untis_date(date))
+    db_rows = run_all(models.Holiday.objects.filter(dateto__gte=d_i, datefrom__lte=d_i), filter_term=False)
+    return row_by_row_helper(db_rows, Holiday)
