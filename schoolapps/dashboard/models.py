@@ -23,7 +23,6 @@ class Activity(models.Model):
 
 
 class Notification(models.Model):
-    # to = models.ManyToManyField(User, related_name='notifications')
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
@@ -38,7 +37,6 @@ class Notification(models.Model):
 
 
 def register_notification(user, title, description, app="SchoolApps", link=""):
-    print(link)
     n = Notification(user=user, title=title, description=description, app=app, link=link)
 
     n.save()
@@ -55,6 +53,7 @@ class Cache(models.Model):
     last_time_updated = models.DateTimeField(blank=True, null=True,
                                              verbose_name="Letzter Aktualisierungszeitpunkt des Caches")
     site_cache = models.BooleanField(default=False, verbose_name="Seitencache?")
+    needed_until = models.DateField(default=None, null=True, verbose_name="Benötigt bis")
 
     class Meta:
         verbose_name = "Cacheeintrag"
@@ -75,11 +74,32 @@ class Cache(models.Model):
         else:
             return None
 
-    def is_expired(self):
+    def is_expired(self) -> bool:
+        """
+        Checks whether a cache is expired
+        :return: Is cache expired?
+        """
+        # If cache never was updated it have to
         if self.last_time_updated is None:
             return True
+
+        # Else check if now is bigger than last time updated + expiration time
         delta = datetime.timedelta(seconds=self.expiration_time)
-        print(self.last_time_updated)
-        print(self.last_time_updated + delta)
-        print(timezone.now())
         return timezone.now() > self.last_time_updated + delta
+
+    def is_needed(self) -> bool:
+        """
+        Checks whether a plan can be deleted
+        :return: Is cache needed?
+        """
+        if self.needed_until is None:
+            return True
+        elif timezone.now().date() > self.needed_until:
+            return False
+        else:
+            return True
+
+    def delete(self, *args, **kwargs):
+        """Overrides model function delete to delete cache entry, too"""
+        cache.delete(self.id)
+        super(Cache, self).delete(*args, **kwargs)

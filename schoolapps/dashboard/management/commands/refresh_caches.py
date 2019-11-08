@@ -4,6 +4,7 @@ from django.core.management import BaseCommand
 from django.utils import timezone
 
 from dashboard.caches import BACKGROUND_CACHE_REFRESH
+from dashboard.models import Cache
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.drive import build_drive, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM
 from untisconnect.parse import parse
@@ -20,6 +21,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('  Erledigt.'))
 
     def handle(self, *args, **options):
+        self.start("Alte Caches löschen ...")
+        for cache in Cache.objects.filter(needed_until__isnull=False):
+            if not cache.is_needed():
+                print("Ist nicht mehr benötigt:", cache, ", benötigt bis", cache.needed_until)
+                cache.delete()
+        self.finish()
+
         self.start("Aktualisiere Drive ... ")
         drive = build_drive(force_update=True)
         print(drive)
