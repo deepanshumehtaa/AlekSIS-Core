@@ -10,8 +10,13 @@
         {% form form=form %}
         {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
-            <i class="material-icons left">send</i> Antrag stellen
+            <i class="material-icons left">send</i> Änderungen übernehmen
         </button>
+    <a href="{% url 'fibu_index' %}">
+        <button type="button" class="waves-effect waves-light btn grey">
+            <i class="material-icons left">cancel</i> Abbrechen
+        </button>
+    </a>
     </form>
 
 </main>

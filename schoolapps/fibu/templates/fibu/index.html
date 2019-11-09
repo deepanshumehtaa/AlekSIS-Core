@@ -18,24 +18,23 @@
     </form>
 
     <h5>Laufende Anträge</h5>
-    <table class="highlight">
-    <thead>
-    <tr>
-        <th>Beschreibung</th>
-        <th class="flushright">Erwarteter Betrag</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for item in bookings %}
-            <tr>
-            <td>{{ item.description }}</td>
-            <td class="flushright">{{ item.planned_amount }} €</td>
-                <td><span class="badge new {{ item.getStatus.style_class }}">{{ item.getStatus.name }}</span></td>
-            </tr>
-        {% endfor %}
-    </tbody>
-    </table>
+       <div class="collection">
+           {% for booking in bookings %}
+{#           <div class="collection-item row">#}
+           <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row">
+                    <span class="col s12 m8">{{ booking.description }}</span>
+                    <span class="col s12 m3 flushright">{{ booking.planned_amount }} €</span>
+                    <span class="col s12 m1 badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
+{#                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m2">#}
+{#                        {% csrf_token %}#}
+{#                        <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">#}
+{#                                        <i class="material-icons center green-text">create</i>#}
+{#                        </button>#}
+{#                    </form>#}
+           </a>
+{#           </div>#}
+           {% endfor %}
+       </div>
     {% endblock %}
 </main>
 {% include 'partials/footer.html' %}

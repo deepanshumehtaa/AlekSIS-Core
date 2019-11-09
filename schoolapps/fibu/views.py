@@ -1,15 +1,16 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking
 from .filters import BookingFilter
-from .forms import MakeBookingForm
+from .forms import EditBookingForm
 
 
 @login_required
 #@permission_required('fibu.view_booking')
 def index(request):
-    items = Booking.objects.filter()
-    print(items)
+    bookings = Booking.objects.filter()
+    print(bookings)
 
 # @login_required
 # @permission_required('fibu.make_booking')
@@ -18,16 +19,17 @@ def index(request):
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
             booking = Booking.objects.get(id=booking_id)
-            form = MakeBookingForm(instance=booking)
+            form = EditBookingForm(instance=booking)
             print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
         else:
-            form = MakeBookingForm(request.POST or None)
+            form = EditBookingForm(request.POST or None)
     else:
-        form = MakeBookingForm()
+        form = EditBookingForm()
     if form.is_valid():
         description = form.cleaned_data['description']
         planned_amount = form.cleaned_data['planned_amount']
-        booking = Booking(description=description, planned_amount=planned_amount, contact=request.user)
+        justification = form.cleaned_data['justification']
+        booking = Booking(description=description, planned_amount=planned_amount, contact=request.user, justification=justification)
         booking.save()
 
         # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
@@ -37,8 +39,28 @@ def index(request):
         # a.save()
         # return redirect('fibu_make_booking')
         return redirect('fibu_index')
-    context = {'bookings': items, 'form': form}
+    context = {'bookings': bookings, 'form': form}
     return render(request, 'fibu/index.html', context)
+
+
+@login_required
+# @permission_required('aub.apply_for_aub')
+def edit(request, id):
+    booking = get_object_or_404(Booking, id=id)
+    form = EditBookingForm(instance=booking)
+    template = 'fibu/edit.html'
+    if request.method == 'POST':
+        form = EditBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
+            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
+            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
+            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
+            # a.save()
+            return redirect(reverse('fibu_index'))
+    context = {'form': form}
+    return render(request, template, context)
 
 
 

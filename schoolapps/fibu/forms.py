@@ -45,13 +45,16 @@ from .models import Booking, CostCenter
 #         fields = ('cost_center', 'description', 'planned_amount')
 
 
-class MakeBookingForm(forms.ModelForm):
+class EditBookingForm(forms.ModelForm):
     description = forms.CharField(label='Was soll gekauft werden?')
     planned_amount = forms.IntegerField(label='Welcher Betrag ist dafür erforderlich (Euro)?')
+    justification = forms.CharField(label='Begründe ggf. deinen Antrag.', required=False)
 
-    layout = Layout(Row(Fieldset('Beschreibung', 'description'), Fieldset('Erwarteter Betrag', 'planned_amount')))
+    layout = Layout(Row(Fieldset('Beschreibung', 'description'),
+                        Fieldset('Erwarteter Betrag', 'planned_amount')),
+                    Row(Fieldset('Begründung (optional)', 'justification')))
 
     class Meta:
         model = Booking
-        fields = ('id', 'description', 'planned_amount')
+        fields = ('id', 'description', 'planned_amount', 'justification')
 
