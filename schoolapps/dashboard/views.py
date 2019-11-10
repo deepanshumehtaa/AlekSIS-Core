@@ -1,7 +1,6 @@
 from email.utils import formatdate
 
 from django.contrib.auth.decorators import login_required
-from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -9,15 +8,14 @@ from django.utils import timezone, formats
 from martor.templatetags.martortags import safe_markdown
 
 from dashboard.settings import latest_article_settings, current_events_settings
-from helper import get_newest_articles, get_current_events, get_newest_article_from_news
-from schoolapps.settings import LONG_WEEK_DAYS
+from helper import get_current_events, get_newest_article_from_news, get_current_events_with_cal
 from timetable.helper import get_name_for_next_week_day_from_today, get_type_and_object_of_user
 from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.plan import get_plan
-from .models import Activity, Notification
 from userinformation import UserInformation
+from .models import Activity, Notification
 
 
 @login_required
@@ -37,35 +35,31 @@ def api_information(request):
     notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
     unread_notifications = request.user.notifications.all().filter(user=request.user, read=False).order_by(
         '-created_at')
+
+    # Get latest article from homepage
     if latest_article_settings.latest_article_is_activated:
         newest_article = get_newest_article_from_news(domain=latest_article_settings.wp_domain)
     else:
         newest_article = None
 
+    # Get date information
     date_formatted = get_name_for_next_week_day_from_today()
     next_weekday = get_next_weekday_with_time(timezone.now(), timezone.now().time())
 
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
-    hints = None
+
+    # Get hints
     if _type == TYPE_TEACHER:
-        # Teacher
-        plan_id = el.id
-        raw_type = "teacher"
-
-        # Get hints
+        # Get hints for teachers
         hints = list(get_all_hints_for_teachers_by_time_period(next_weekday, next_weekday))
-
     elif _type == TYPE_CLASS:
-        # Student
-
-        plan_id = el.id
-        raw_type = "class"
-
-        # Get hints
+        # Get hints for students
         hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
     else:
         hints = []
+
+    # Serialize hints
     ser = []
     for hint in hints:
         serialized = {}
@@ -74,7 +68,7 @@ def api_information(request):
         serialized["html"] = safe_markdown(hint.text)
         ser.append(serialized)
     hints = ser
-    print(hints)
+
     context = {
         'activities': list(activities.values()),
         'notifications': list(notifications.values()),
@@ -86,8 +80,7 @@ def api_information(request):
         'subjects': UserInformation.user_subjects(request.user),
         'has_wifi': UserInformation.user_has_wifi(request.user),
         "newest_article": newest_article,
-        "current_events": get_current_events(
-            limit=current_events_settings.events_count) if current_events_settings.current_events_is_activated else None,
+        "current_events": get_current_events_with_cal() if current_events_settings.current_events_is_activated else None,
         "date_formatted": date_formatted,
         "user": {
             "username": request.user.username,
@@ -95,6 +88,7 @@ def api_information(request):
         }
     }
 
+    # If plan is available for user give extra information
     if _type is not None:
         context["plan"] = {
             "type": _type,
@@ -105,7 +99,6 @@ def api_information(request):
     else:
         context["has_plan"] = False
 
-    print(context)
     return JsonResponse(context)
 
 
@@ -116,6 +109,7 @@ def api_read_notification(request, id):
     notification = get_object_or_404(Notification, id=id, user=request.user)
     notification.read = True
     notification.save()
+
     return JsonResponse({"success": True})
 
 
@@ -125,23 +119,14 @@ def api_my_plan_html(request):
 
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
-    hints = None
     if _type == TYPE_TEACHER:
         # Teacher
         plan_id = el.id
         raw_type = "teacher"
-
-        # Get hints
-        # hints = list(get_all_hints_for_teachers_by_time_period(next_weekday, next_weekday))
-
     elif _type == TYPE_CLASS:
         # Student
-
         plan_id = el.id
         raw_type = "class"
-
-        # Get hints
-        # hints = list(get_all_hints_by_class_and_time_period(el, next_weekday, next_weekday))
     else:
         return JsonResponse({"success": False})
 
@@ -150,24 +135,18 @@ def api_my_plan_html(request):
     calendar_week = next_weekday.isocalendar()[1]
     monday_of_week = get_calendar_week(calendar_week, next_weekday.year)["first_day"]
     week_day = next_weekday.isoweekday() - 1
-    print(raw_type, plan_id, next_weekday, calendar_week, monday_of_week)
 
     # Get plan
     plan = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
     lessons = []
     for row, time in plan:
         lesson_container = row[week_day]
-        for element in lesson_container.elements:
-            if element.substitution is not None:
-                print(time)
-                html = render_to_string("timetable/lesson.html", {"col": lesson_container}, request=request)
-                time["start"] = formats.date_format(time["start"], "H:i")
-                time["end"] = formats.date_format(time["end"], "H:i")
+        html = render_to_string("timetable/lesson.html", {"col": lesson_container, "type": _type}, request=request)
+        time["start"] = formats.date_format(time["start"], "H:i")
+        time["end"] = formats.date_format(time["end"], "H:i")
 
-                lessons.append({"time": time, "html": html})
-                break
+        lessons.append({"time": time, "html": html})
     print(lessons)
-
     return JsonResponse({"success": True, "lessons": lessons})
 
 

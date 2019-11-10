@@ -7,6 +7,7 @@ from django.template.loader_tags import register
 from django.utils import timezone, formats
 from ics import Calendar
 import requests
+from requests import RequestException
 
 from dashboard import settings
 
@@ -64,10 +65,12 @@ def get_newest_articles(domain: str = WP_DOMAIN,
 
     suffix: str = "/wp-json/wp/v2/posts"
     url: str = domain + suffix
-
-    site: requests.request = requests.get(url)
-    data: dict = site.json()
-
+    try:
+        site: requests.request = requests.get(url, timeout=10)
+        data: dict = site.json()
+    except RequestException as e:
+        print("E", str(e))
+        return []
     posts: list = []
 
     for post in data:
@@ -108,18 +111,13 @@ def get_newest_articles(domain: str = WP_DOMAIN,
 
 def get_newest_article_from_news(domain=WP_DOMAIN):
     newest_articles: list = get_newest_articles(domain=domain, limit=1, category_whitelist=[1, 27])
-    if len(newest_articles) >= 0:
+    if len(newest_articles) > 0:
         return newest_articles[0]
     else:
         return None
 
 
-# Set calendar here
-CALENDAR_URL: str = settings.current_events_settings.calendar_url
-CALENDAR: Calendar = Calendar(requests.get(CALENDAR_URL).text)
-
-
-def get_current_events(calendar: Calendar = CALENDAR, limit: int = 5) -> list:
+def get_current_events(calendar: Calendar, limit: int = 5) -> list:
     """
     Get upcoming events from calendar
     :param calendar: The calendar object
@@ -170,3 +168,20 @@ def get_current_events(calendar: Calendar = CALENDAR, limit: int = 5) -> list:
         })
 
     return events
+
+
+def get_current_events_with_cal(limit: int = 5) -> list:
+    # Get URL
+    calendar_url: str = settings.current_events_settings.calendar_url
+    if calendar_url is None or calendar_url == "":
+        return []
+
+    # Get ICS
+    try:
+        calendar: Calendar = Calendar(requests.get(calendar_url, timeout=3).text)
+    except RequestException as e:
+        print("E", str(e))
+        return []
+
+    # Get events
+    return get_current_events(calendar, settings.current_events_settings.events_count)

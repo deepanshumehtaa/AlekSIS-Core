@@ -1,11 +1,11 @@
 const REFRESH_TIME = 15;
 
-function WithCheckCircleIcon(props) {
-    return <div className={"col s12"}>
-        <i className={"material-icons left green-text"}>check_circle</i>
-        {props.children}
-    </div>
-}
+// function WithCheckCircleIcon(props) {
+//     return <div className={"col s12"}>
+//         <i className={"material-icons left green-text"}>check_circle</i>
+//         {props.children}
+//     </div>
+// }
 
 class Dashboard extends React.Component {
     constructor() {
@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
             }
             const timeout = window.setTimeout(this.updateRefreshTime, 1000);
             this.setState({refreshIn: this.state.refreshIn - 1, timeout: timeout});
-            console.log("WOrk");
         } else {
             this.updateData();
         }
@@ -55,7 +54,7 @@ class Dashboard extends React.Component {
         console.log(notification);
         $("#not-" + notification.id).addClass("scale-out");
         window.setTimeout(() => {
-            $("#not-" + notification.id).remove();
+            $("#not-" + notification.id).hide();
         }, 200);
         $.getJSON(API_URL + "/notifications/read/" + notification.id);
         this.updateData();
@@ -64,7 +63,8 @@ class Dashboard extends React.Component {
 
     render() {
         if (this.state.isLoading) {
-            return <div className={"row center-via-flex container"} style={{"height": "10em"}}>
+            // Show loading screen until first data are loaded
+            return <div className={"row center-via-flex container"} style={{"height": "15em"}}>
                 <div className={"center2-via-flex"}>
                     <div className="preloader-wrapper big active">
                         <div className="spinner-layer spinner-primary">
@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <p className={"text-center"}>Wird geladen …</p>
+                    <p className={"text-center flow-text"}>Deine aktuellen Informationen werden geladen …</p>
                 </div>
             </div>;
         }
@@ -97,19 +97,32 @@ class Dashboard extends React.Component {
                 Moin, {this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username}. Hier
                 findest du alle aktuellen Informationen:</p>
 
+            <div className={"alert success"}>
+                <p>
+                    <i className={"material-icons left"}>report_problem</i>
+                    Das neue Dashboard von SchoolApps befindet sich momentan in der <strong>Testphase</strong>. Falls
+                    Fehler auftreten oder du einen Verbesserungsvorschlag für uns hast, schreibe uns bitte unter <a
+                    href={"mailto:support@katharineum.de"}>support@katharineum.de</a>.
+                </p>
+            </div>
+
             {/* UNREAD NOTIFICATIONS*/}
             {this.state.unread_notifications && this.state.unread_notifications.length > 0 ?
                 this.state.unread_notifications.map(function (notification) {
                     return <div className={"alert primary scale-transition"} id={"not-" + notification.id}
                                 key={notification.id}>
                         <div>
+                            {/* Info icon */}
                             <i className={"material-icons left"}>info</i>
+
                             <div className={"right"}>
+                                {/* Button for marking as read*/}
                                 <button className={"btn-flat"} onClick={() => that.closeNotification(notification)}>
                                     <i className={"material-icons center"}>close</i>
-                                    {/*Gelesen*/}
                                 </button>
                             </div>
+
+                            {/* Notification title and desc */}
                             <strong>{notification.title}</strong>
                             <p>{notification.description}</p>
                         </div>
@@ -120,8 +133,6 @@ class Dashboard extends React.Component {
             {this.state.plan && this.state.plan.hints.length > 0 ?
                 <div>
                     {this.state.plan.hints.map(function (hint, idx) {
-                        const from_date = moment(hint.from_date);
-                        const to_date = moment(hint.to_date);
                         return <div className="alert primary" key={idx}>
                             <div>
                                 <em className="right hide-on-small-and-down">
@@ -143,78 +154,81 @@ class Dashboard extends React.Component {
             <div className={"row"}>
                 <div className={"dashboard-cards"}>
 
-                    {/* CURRENT SUBSTITUTIONS*/}
-                    <div className="card">
-                        {this.state.has_plan ? <div className="card-content">
+                    {/* MY PLAN */}
+                    {this.state.has_plan ? <div className="card">
+                        <div className="card-content">
+                            {/* Show individualized title */}
                             <span className="card-title">
-                                Vertretungen {this.state.plan.type === 2 ? "der" : "für"} <em>
+                                Plan {this.state.plan.type === 2 ? "der" : "für"} <em>
                                 {this.state.plan.name}</em> für {this.state.date_formatted}
                             </span>
-                            {this.state.lessons && this.state.lessons.length > 0 ? <div>
-                                    {this.state.lessons.map(function (lesson) {
-                                        return <div className="row">
-                                            <div className="col s4">
-                                                <div className="card timetable-title-card">
-                                                    <div className="card-content">
 
-                                                        <span className="card-title left">
-                                                            {lesson.time.number_format}
-                                                        </span>
+                            {/* Show plan */}
+                            {this.state.lessons && this.state.lessons.length > 0 ? <div className={"timetable-plan"}>
+                                {this.state.lessons.map(function (lesson) {
+                                    // Show one lesson row
+                                    return <div className="row">
+                                        {/* Show time information*/}
+                                        <div className="col s4">
+                                            <div className="card timetable-title-card">
+                                                <div className="card-content">
+                                                    {/* Lesson number*/}
+                                                    <span className="card-title left">
+                                                        {lesson.time.number_format}
+                                                    </span>
 
-                                                        <div
-                                                            className="right timetable-time grey-text text-darken-2">
-                                                            <span>{lesson.time.start}</span>
-                                                            <br/>
-                                                            <span>{lesson.time.end}</span>
-                                                        </div>
+                                                    {/* Times */}
+                                                    <div className="right timetable-time grey-text text-darken-2">
+                                                        <span>{lesson.time.start}</span>
+                                                        <br/>
+                                                        <span>{lesson.time.end}</span>
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
-                                        </div>;
-                                    })}
-                                </div>
-                                :
-                                <p>Keine Vertretungen für morgen vorhanden.</p>
-                            }
-                        </div> : <p className={"flow-text"}>Keine Vertretungen vorhanden.</p>}
-                        {this.state.has_plan ? <div className="card-action">
+                                        </div>
+
+                                        {/* Show lesson content (via generated HTML by Django) */}
+                                        <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
+                                    </div>;
+                                })}
+                            </div> : ""}
+                        </div>
+                        <div className="card-action">
                             <a href={MY_PLAN_URL}>
                                 <span className="badge new primary-color card-action-badge">SMART PLAN</span>
                                 anzeigen
                             </a>
-                        </div> : ""}
-                    </div>
+                        </div>
+                    </div> : ""}
 
                     {/* MY STATUS */}
-                    <div className="card">
-                        <div className="card-content">
-                            <span className="card-title">Mein Status</span>
-                            <div className={"row"}>
-                                <WithCheckCircleIcon>
-                                    {this.state.user_type_formatted}
-                                </WithCheckCircleIcon>
+                    {/*<div className="card">*/}
+                    {/*    <div className="card-content">*/}
+                    {/*        <span className="card-title">Mein Status</span>*/}
+                    {/*        <div className={"row"}>*/}
+                    {/*            <WithCheckCircleIcon>*/}
+                    {/*                {this.state.user_type_formatted}*/}
+                    {/*            </WithCheckCircleIcon>*/}
 
-                                {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
-                                    Meine Klassen: {this.state.classes.join(", ")}
-                                </WithCheckCircleIcon> : ""}
+                    {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
+                    {/*                Meine Klassen: {this.state.classes.join(", ")}*/}
+                    {/*            </WithCheckCircleIcon> : ""}*/}
 
-                                {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>
-                                    Meine Kurse: {this.state.courses.join(", ")}
-                                </WithCheckCircleIcon> : ""}
+                    {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
+                    {/*                Meine Kurse: {this.state.courses.join(", ")}*/}
+                    {/*            </WithCheckCircleIcon> : ""}*/}
 
-                                {this.state.user_type === 1 ? <WithCheckCircleIcon>
-                                    Meine Fächer: {this.state.subjects.join(", ")}
-                                </WithCheckCircleIcon> : ""}
-                                {this.state.user_type === 1 || this.state.has_wifi ?
-                                    <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>
-                                        <i className={"material-icons left red-text"}>cancel</i>
-                                        Kein WLAN
-                                    </div>}
-                            </div>
-                        </div>
-                    </div>
+                    {/*            {this.state.user_type === 1 ? <WithCheckCircleIcon>*/}
+                    {/*                Meine Fächer: {this.state.subjects.join(", ")}*/}
+                    {/*            </WithCheckCircleIcon> : ""}*/}
+                    {/*            {this.state.user_type === 1 || this.state.has_wifi ?*/}
+                    {/*                <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>*/}
+                    {/*                    <i className={"material-icons left red-text"}>cancel</i>*/}
+                    {/*                    Kein WLAN*/}
+                    {/*                </div>}*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     {/* CURRENT EVENTS*/}
                     {this.state.current_events && this.state.current_events.length > 0 ?
@@ -230,37 +244,38 @@ class Dashboard extends React.Component {
                                 })}
                             </div>
                             <div className="card-action">
-                                <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/"
-                                   target={"_blank"}>Weitere Termine
+                                <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/" target={"_blank"}>
+                                    Weitere Termine
                                 </a>
                             </div>
                         </div>
                         : ""}
 
                     {/* EXAMS */}
-                    <div className="card">
-                        <div className="card-content">
-                            <span className="card-title">Klausuren der <em>Eb</em></span>
-                            <div className="card-panel event-card">
-                                <span className={"title"}>Sextanereinschulung</span>
-                                <br/>
-                                28.Aug. 2019 18:30 - 22:00
-                            </div>
-                            <div className="card-panel event-card">
-                                <span className={"title"}>Sextanereinschulung</span>
-                                <br/>
-                                28.Aug. 2019 18:30 - 22:00
-                            </div>
-                        </div>
-                        <div className="card-action">
-                            <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>
-                        </div>
-                    </div>
+                    {/*<div className="card">*/}
+                    {/*    <div className="card-content">*/}
+                    {/*        <span className="card-title">Klausuren der <em>Eb</em></span>*/}
+                    {/*        <div className="card-panel event-card">*/}
+                    {/*            <span className={"title"}>Sextanereinschulung</span>*/}
+                    {/*            <br/>*/}
+                    {/*            28.Aug. 2019 18:30 - 22:00*/}
+                    {/*        </div>*/}
+                    {/*        <div className="card-panel event-card">*/}
+                    {/*            <span className={"title"}>Sextanereinschulung</span>*/}
+                    {/*            <br/>*/}
+                    {/*            28.Aug. 2019 18:30 - 22:00*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="card-action">*/}
+                    {/*        <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     {/* NEWEST ARTICLE FROM HOMEPAGE*/}
                     {this.state.newest_article ?
                         <div>
                             <div className="card">
+                                {/* Image with badge and title */}
                                 <div className="card-image">
                                     <span className={"badge-image"}>Aktuelles von der Homepage</span>
                                     <img src={this.state.newest_article.image_url}
@@ -268,13 +283,19 @@ class Dashboard extends React.Component {
                                     <span className="card-title"
                                           dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
                                 </div>
+
+                                {/* Short text */}
                                 <div className="card-content">
                                     <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
                                 </div>
+
+                                {/* Link to article */}
                                 <div className="card-action">
                                     <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
                                 </div>
                             </div>
+
+                            {/* Link to homepage */}
                             <a className={"btn hundred-percent primary-color"}
                                href={"https://katharineum-zu-luebeck.de/"}
                                target={"_blank"}>

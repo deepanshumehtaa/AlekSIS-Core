@@ -14,7 +14,7 @@ class CurrentEventsSettings(dbsettings.Group):
     calendar_url = dbsettings.StringValue("URL des Kalenders", help_text="Pfad zu einer ICS-Datei",
                                           default="https://nimbus.katharineum.de/remote.php/dav/public-calendars"
                                                   "/owit7yysLB2CYNTq?export")
-    events_count = dbsettings.IntegerValue("Anzahl der Termine, die angezeigt werden sollen", default=3)
+    events_count = dbsettings.IntegerValue("Anzahl der Termine, die angezeigt werden sollen", default=5)
 
 
 class MyStatusSettings(dbsettings.Group):

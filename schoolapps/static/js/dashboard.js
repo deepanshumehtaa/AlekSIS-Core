@@ -46,18 +46,12 @@ function _inherits(subClass, superClass) {
 
 var REFRESH_TIME = 15;
 
-function WithCheckCircleIcon(props) {
-    return React.createElement(
-        "div",
-        {className: "col s12"},
-        React.createElement(
-            "i",
-            {className: "material-icons left green-text"},
-            "check_circle"
-        ),
-        props.children
-    );
-}
+// function WithCheckCircleIcon(props) {
+//     return <div className={"col s12"}>
+//         <i className={"material-icons left green-text"}>check_circle</i>
+//         {props.children}
+//     </div>
+// }
 
 var Dashboard = function (_React$Component) {
     _inherits(Dashboard, _React$Component);
@@ -74,7 +68,6 @@ var Dashboard = function (_React$Component) {
                 }
                 var timeout = window.setTimeout(_this.updateRefreshTime, 1000);
                 _this.setState({refreshIn: _this.state.refreshIn - 1, timeout: timeout});
-                console.log("WOrk");
             } else {
                 _this.updateData();
             }
@@ -116,7 +109,7 @@ var Dashboard = function (_React$Component) {
             console.log(notification);
             $("#not-" + notification.id).addClass("scale-out");
             window.setTimeout(function () {
-                $("#not-" + notification.id).remove();
+                $("#not-" + notification.id).hide();
             }, 200);
             $.getJSON(API_URL + "/notifications/read/" + notification.id);
             this.updateData();
@@ -126,9 +119,10 @@ var Dashboard = function (_React$Component) {
         key: "render",
         value: function render() {
             if (this.state.isLoading) {
+                // Show loading screen until first data are loaded
                 return React.createElement(
                     "div",
-                    {className: "row center-via-flex container", style: {"height": "10em"}},
+                    {className: "row center-via-flex container", style: {"height": "15em"}},
                     React.createElement(
                         "div",
                         {className: "center2-via-flex"},
@@ -157,8 +151,8 @@ var Dashboard = function (_React$Component) {
                         ),
                         React.createElement(
                             "p",
-                            {className: "text-center"},
-                            "Wird geladen \u2026"
+                            {className: "text-center flow-text"},
+                            "Deine aktuellen Informationen werden geladen \u2026"
                         )
                     )
                 );
@@ -186,6 +180,34 @@ var Dashboard = function (_React$Component) {
                     "Moin Moin, ",
                     this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username,
                     ". Hier findest du alle aktuellen Informationen:"
+                ),
+                React.createElement(
+                    "div",
+                    {className: "alert success"},
+                    React.createElement(
+                        "p",
+                        null,
+                        React.createElement(
+                            "i",
+                            {className: "material-icons left"},
+                            "report_problem"
+                        ),
+                        "Das neue Dashboard von SchoolApps befindet sich momentan in der ",
+                        React.createElement(
+                            "strong",
+                            null,
+                            "Testphase"
+                        ),
+                        ". Falls Fehler auftreten oder du einen Verbesserungsvorschlag f\xFCr uns hast, schreibe uns bitte unter ",
+                        React.createElement(
+                            "a",
+                            {
+                                href: "mailto:support@katharineum.de"
+                            },
+                            "support@katharineum.de"
+                        ),
+                        "."
+                    )
                 ),
                 this.state.unread_notifications && this.state.unread_notifications.length > 0 ? this.state.unread_notifications.map(function (notification) {
                     return React.createElement(
@@ -236,8 +258,6 @@ var Dashboard = function (_React$Component) {
                     "div",
                     null,
                     this.state.plan.hints.map(function (hint, idx) {
-                        var from_date = moment(hint.from_date);
-                        var to_date = moment(hint.to_date);
                         return React.createElement(
                             "div",
                             {className: "alert primary", key: idx},
@@ -272,16 +292,16 @@ var Dashboard = function (_React$Component) {
                     React.createElement(
                         "div",
                         {className: "dashboard-cards"},
-                        React.createElement(
+                        this.state.has_plan ? React.createElement(
                             "div",
                             {className: "card"},
-                            this.state.has_plan ? React.createElement(
+                            React.createElement(
                                 "div",
                                 {className: "card-content"},
                                 React.createElement(
                                     "span",
                                     {className: "card-title"},
-                                    "Vertretungen ",
+                                    "Plan ",
                                     this.state.plan.type === 2 ? "der" : "für",
                                     " ",
                                     React.createElement(
@@ -294,8 +314,9 @@ var Dashboard = function (_React$Component) {
                                 ),
                                 this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
                                     "div",
-                                    null,
+                                    {className: "timetable-plan"},
                                     this.state.lessons.map(function (lesson) {
+                                        // Show one lesson row
                                         return React.createElement(
                                             "div",
                                             {className: "row"},
@@ -315,9 +336,7 @@ var Dashboard = function (_React$Component) {
                                                         ),
                                                         React.createElement(
                                                             "div",
-                                                            {
-                                                                className: "right timetable-time grey-text text-darken-2"
-                                                            },
+                                                            {className: "right timetable-time grey-text text-darken-2"},
                                                             React.createElement(
                                                                 "span",
                                                                 null,
@@ -339,17 +358,9 @@ var Dashboard = function (_React$Component) {
                                             })
                                         );
                                     })
-                                ) : React.createElement(
-                                    "p",
-                                    null,
-                                    "Keine Vertretungen f\xFCr morgen vorhanden."
-                                )
-                            ) : React.createElement(
-                                "p",
-                                {className: "flow-text"},
-                                "Keine Vertretungen vorhanden."
+                                ) : ""
                             ),
-                            this.state.has_plan ? React.createElement(
+                            React.createElement(
                                 "div",
                                 {className: "card-action"},
                                 React.createElement(
@@ -362,62 +373,8 @@ var Dashboard = function (_React$Component) {
                                     ),
                                     "anzeigen"
                                 )
-                            ) : ""
-                        ),
-                        React.createElement(
-                            "div",
-                            {className: "card"},
-                            React.createElement(
-                                "div",
-                                {className: "card-content"},
-                                React.createElement(
-                                    "span",
-                                    {className: "card-title"},
-                                    "Mein Status"
-                                ),
-                                React.createElement(
-                                    "div",
-                                    {className: "row"},
-                                    React.createElement(
-                                        WithCheckCircleIcon,
-                                        null,
-                                        this.state.user_type_formatted
-                                    ),
-                                    this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
-                                        WithCheckCircleIcon,
-                                        null,
-                                        "Meine Klassen: ",
-                                        this.state.classes.join(", ")
-                                    ) : "",
-                                    this.state.user_type === 1 || this.state.user_type === 2 ? React.createElement(
-                                        WithCheckCircleIcon,
-                                        null,
-                                        "Meine Kurse: ",
-                                        this.state.courses.join(", ")
-                                    ) : "",
-                                    this.state.user_type === 1 ? React.createElement(
-                                        WithCheckCircleIcon,
-                                        null,
-                                        "Meine F\xE4cher: ",
-                                        this.state.subjects.join(", ")
-                                    ) : "",
-                                    this.state.user_type === 1 || this.state.has_wifi ? React.createElement(
-                                        WithCheckCircleIcon,
-                                        null,
-                                        "WLAN"
-                                    ) : React.createElement(
-                                        "div",
-                                        {className: "col"},
-                                        React.createElement(
-                                            "i",
-                                            {className: "material-icons left red-text"},
-                                            "cancel"
-                                        ),
-                                        "Kein WLAN"
-                                    )
-                                )
                             )
-                        ),
+                        ) : "",
                         this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
                             "div",
                             {className: "card"},
@@ -448,63 +405,11 @@ var Dashboard = function (_React$Component) {
                                 {className: "card-action"},
                                 React.createElement(
                                     "a",
-                                    {
-                                        href: "https://katharineum-zu-luebeck.de/aktuelles/termine/",
-                                        target: "_blank"
-                                    },
+                                    {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/", target: "_blank"},
                                     "Weitere Termine"
                                 )
                             )
                         ) : "",
-                        React.createElement(
-                            "div",
-                            {className: "card"},
-                            React.createElement(
-                                "div",
-                                {className: "card-content"},
-                                React.createElement(
-                                    "span",
-                                    {className: "card-title"},
-                                    "Klausuren der ",
-                                    React.createElement(
-                                        "em",
-                                        null,
-                                        "Eb"
-                                    )
-                                ),
-                                React.createElement(
-                                    "div",
-                                    {className: "card-panel event-card"},
-                                    React.createElement(
-                                        "span",
-                                        {className: "title"},
-                                        "Sextanereinschulung"
-                                    ),
-                                    React.createElement("br", null),
-                                    "28.Aug. 2019 18:30 - 22:00"
-                                ),
-                                React.createElement(
-                                    "div",
-                                    {className: "card-panel event-card"},
-                                    React.createElement(
-                                        "span",
-                                        {className: "title"},
-                                        "Sextanereinschulung"
-                                    ),
-                                    React.createElement("br", null),
-                                    "28.Aug. 2019 18:30 - 22:00"
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                {className: "card-action"},
-                                React.createElement(
-                                    "a",
-                                    {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/"},
-                                    "Alle Klausuren"
-                                )
-                            )
-                        ),
                         this.state.newest_article ? React.createElement(
                             "div",
                             null,
