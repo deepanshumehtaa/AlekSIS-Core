@@ -3,21 +3,21 @@
 const CACHE = "schoolapps-cache";
 
 const precacheFiles = [
-    '',
-    '/faq'
+    '/',
+    '/faq/'
 ];
 
-const offlineFallbackPage = '/offline';
+const offlineFallbackPage = '/offline/';
 
 const networkFirstPaths = [
 ];
 
 const avoidCachingPaths = [
-    '/admin',
-    '/settings',
-    '/support/feedback',
-    '/support/rebus',
-    '/faq/ask'
+    '/admin/',
+    '/settings/',
+    '/support/feedback/',
+    '/support/rebus/',
+    '/faq/ask/'
 ];
 
 function pathComparer(requestUrl, pathRegEx) {
@@ -75,7 +75,7 @@ function cacheFirstFetch(event) {
   event.respondWith(
     fromCache(event.request).then(
       function (response) {
-        // The response was found in the cache so we responde with it and update the entry
+        // The response was found in the cache so we respond with it and update the entry
 
         // This is where we call the server to get the newest version of the
         // file to use the next time we show view
@@ -104,9 +104,7 @@ function cacheFirstFetch(event) {
 
             console.log("[SchoolApps PWA] Network request failed and no cache." + error);
             // Use the precached offline page as fallback
-            return caches.open(CACHE).then(function (cache) {
-              cache.match(offlineFallbackPage);
-            });
+            return caches.match(offlineFallbackPage)
           });
       }
     )
