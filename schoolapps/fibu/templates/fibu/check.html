@@ -2,24 +2,15 @@
 
 <main>
     <h4>Anträge prüfen</h4>
-    <table class="highlight">
-    <thead>
-    <tr>
-        <th>Beschreibung</th>
-        <th class="flushright">Erwarteter Betrag</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
+    <div class="collection">
         {% for booking in filter.qs %}
-            <tr>
-            <td>{{ booking.description }}</td>
-            <td class="flushright">{{ booking.planned_amount }} €</td>
-            <td><span class="badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span></td>
-            <td>
-                <form action="" method="POST" class="right">
+           <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row">
+                    <span class="col s12 m6">{{ booking.description }}</span>
+                    <span class="col s12 m3 flushright">{{ booking.planned_amount }} €</span>
+                    <span class="col s12 m1 badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
+                <form action="" method="POST" class="col s12 m2 right">
                     {% csrf_token %}
-                    <input type="hidden" value="{{ booking.id }}" name="aub-id">
+                    <input type="hidden" value="{{ booking.id }}" name="booking-id">
                     {% if booking.status.id != 2 %}
                         <button type="submit" name="allow"
                             class="waves-effect waves-light btn-flat btn-flat-large" title="Annehmen">
@@ -33,12 +24,9 @@
                         </button>
                     {% endif %}
                 </form>
-            </td>
-            </tr>
+           </a>
         {% endfor %}
-    </tbody>
-    </table>
-
+    </div>
 
  </main>
 
