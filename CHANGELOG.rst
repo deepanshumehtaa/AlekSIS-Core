@@ -1,6 +1,15 @@
 Changelog
 =========
 
+`1.0a2`_
+--------
+
+New features
+~~~~~~~~~~~~
+
+* Devs: Add ExtensibleModel to allow injection of methods and properties into models.
+
+
 `1.0a1`_
 --------
 
@@ -29,4 +38,6 @@ Minor changes
 
 * Use bootstrap buttons everywhere
 
+
 _`1.0a1`: https://edugit.org/Teckids/BiscuIT/BiscuIT-ng/-/tags/1.0a1
+_`1.0a2`: https://edugit.org/Teckids/BiscuIT/BiscuIT-ng/-/tags/1.0a2
