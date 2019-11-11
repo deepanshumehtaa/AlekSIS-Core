@@ -10,7 +10,34 @@ from .util.core_helpers import get_current_school
 
 
 class ExtensibleModel(object):
-    """ Mixin that adds class methods for glrofied monkey-patching. """
+    """ Allow injection of code from BiscuIT apps to extend model functionality.
+
+    After all apps have been loaded, the code in the `model_extensions` module
+    in every app is executed. All code that shall be injected into a model goes there.
+
+    :Example:
+    
+    .. code-block:: python
+
+       from datetime import date, timedelta
+
+       from biscuit.core.models import Person
+       
+       @Person.property
+       def is_cool(self) -> bool:
+           return True
+
+       @Person.property
+       def age(self) -> timedelta:
+           return self.date_of_birth - date.today()
+
+    For a more advanced example, using features from the ORM, see BiscuIT-App-Chronos
+    and BiscuIT-App-Alsijil.
+
+    :Date: 2019-11-07
+    :Authors:
+        - Dominik George <dominik.george@teckids.org>
+    """
 
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
