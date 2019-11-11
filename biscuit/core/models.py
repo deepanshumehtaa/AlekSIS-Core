@@ -36,7 +36,7 @@ class SchoolTerm(SchoolRelated):
     """
 
     caption = models.CharField(verbose_name=_('Visible caption of the term'),
-        max_length=30)
+                               max_length=30)
 
     date_start = models.DateField(verbose_name=_(
         'Effective start date of term'), null=True)
@@ -150,7 +150,7 @@ class Group(SchoolRelated, ExtensibleModel):
     owners = models.ManyToManyField('Person', related_name='owner_of')
 
     parent_groups = models.ManyToManyField('self', related_name='child_groups',
-        symmetrical=False, verbose_name=_('Parent groups'), blank=True)
+                                           symmetrical=False, verbose_name=_('Parent groups'), blank=True)
 
     def __str__(self) -> str:
         return '%s (%s)' % (self.name, self.short_name)

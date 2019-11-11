@@ -85,7 +85,7 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 ]
 
 MIDDLEWARE = [
-#    'django.middleware.cache.UpdateCacheMiddleware',
+    #    'django.middleware.cache.UpdateCacheMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -99,7 +99,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'maintenance_mode.middleware.MaintenanceModeMiddleware',
-#    'django.middleware.cache.FetchFromCacheMiddleware'
+    #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
 ROOT_URLCONF = 'biscuit.core.urls'

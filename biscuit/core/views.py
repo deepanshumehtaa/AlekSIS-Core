@@ -181,7 +181,7 @@ def data_management(request: HttpRequest) -> HttpResponse:
 @admin_required
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
-    
+
     context['backups'] = CronJobLog.objects.filter(
         code='biscuit.core.Backup'
     ).order_by('-end_time')[:10]
@@ -215,13 +215,14 @@ def edit_school(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'core/edit_school.html', context)
 
+
 @admin_required
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
     term = request.user.person.school.current_term
     edit_term_form = EditTermForm(request.POST or None, instance=term)
-        
+
     if request.method == 'POST':
         if edit_term_form.is_valid():
             edit_term_form.save(commit=True)
