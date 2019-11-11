@@ -17,11 +17,8 @@ POST_MORTEM = True
 
 ALLOWED_HOSTS = [
     'info.katharineum.de',
-    '178.63.239.184',
-    '159.69.181.50',
     'localhost',
     '127.0.0.1',
-    'bd799848.ngrok.io'
 ]
 
 INTERNAL_IPS = [
