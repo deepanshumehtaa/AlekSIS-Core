@@ -10,7 +10,6 @@ aktuell.tex
 .idea/
 media/
 node_modules/
-latex/
 staticcollect/
 .idea
 dynselect2/src/*
