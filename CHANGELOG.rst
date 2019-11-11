@@ -17,7 +17,7 @@ New features
 ~~~~~~~~~~~~
 
 * Devs: Add API to get an audit trail for any school-related object
-* Devs: Providetemplate snippet to display an audit trail
+* Devs: Provide template snippet to display an audit trail
 * Devs: Provide base template for views that allow browsing back/forth
 * Add management command and Cron job for full backups
 * Add system status overview page
