@@ -21,5 +21,5 @@ class PersonAnonymizer(BaseAnonymizer):
         ('mobile_number', ''),
         ('email', faker.email),
         ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
-        ('photo', lamda **kwargs: urlopen('https://thispersondoesnotexist.com/image').read())
+        ('photo', lambda **kwargs: urlopen('https://thispersondoesnotexist.com/image').read())
     ]
