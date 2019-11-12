@@ -1,4 +1,4 @@
-import re
+from urllib import urlopen
 
 from hattori.base import BaseAnonymizer, faker
 
@@ -21,5 +21,5 @@ class PersonAnonymizer(BaseAnonymizer):
         ('mobile_number', ''),
         ('email', faker.email),
         ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
-        ('photo', '')
+        ('photo', lamda **kwargs: urlopen('https://thispersondoesnotexist.com/image').read())
     ]
