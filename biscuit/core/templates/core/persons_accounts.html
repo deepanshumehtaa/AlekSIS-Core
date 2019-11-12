@@ -4,6 +4,16 @@
 
 {% load bootstrap4 i18n %}
 
+{% block bootstrap4_extra_head %}
+  {{ block.super }}
+  {{ persons_accounts_formset.media.css }}
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+  {{ block.super }}
+  {{ persons_accounts_formset.media.js }}
+{% endblock %}
+
 {% block bootstrap4_title %}{% blocktrans %}Link persons to accounts{% endblocktrans%} - {{ block.super }}{% endblock %}
 
 {% block page_title %}
