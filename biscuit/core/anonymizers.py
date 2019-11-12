@@ -13,9 +13,13 @@ def get_photo(**kwargs):
             'User-Agent': faker.firefox()
         }
     )
-    cf = ContentFile(req.content, faker.file_name(extension='jpg'))
-    cf.__getitem__ = lambda self, key: self
-    return cf
+
+    # Needed to get around hattori trying to truncate to max_length
+    class _ContentFile(ContentFile):
+        def __getitem__(self, key):
+            return self
+
+    return _ContentFile(req.content, faker.file_name(extension='jpg'))
 
 
 class PersonAnonymizer(BaseAnonymizer):
