@@ -11,7 +11,7 @@ class PersonAccountForm(forms.ModelForm):
         model = Person
         fields = ['last_name', 'first_name', 'user']
 
-    new_user = forms.CharField(required=False, widget=Select2Widget(search_fields['username__icontains']))
+    new_user = forms.CharField(required=False, widget=Select2Widget)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,8 +50,7 @@ class EditPersonForm(forms.ModelForm):
         required=False,
         label=_('New user'),
         help_text=_('Create a new account'),
-        widget=Select2Widget(search_fields['username__icontains'])
-    )
+        widget=Select2Widget)
 
     def clean(self) -> None:
         User = get_user_model()
