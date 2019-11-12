@@ -5,13 +5,6 @@ from hattori.base import BaseAnonymizer, faker
 from .models import Person
 
 
-def flattened_phonenumber(**kwargs):
-    pn = faker.phone_number(**kwargs)
-    pn = pn.replace('(0)', '')
-    pn = re.sub('[^0-9]', '', pn)
-    return pn
-
-
 class PersonAnonymizer(BaseAnonymizer):
     model = Person
 
@@ -24,7 +17,7 @@ class PersonAnonymizer(BaseAnonymizer):
         ('housenumber', faker.building_number),
         ('postal_code', faker.postcode),
         ('place', faker.city),
-        ('phone_number', flattened_phonenumber),
+        ('phone_number', ''),
         ('mobile_number', ''),
         ('email', faker.email),
         ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
