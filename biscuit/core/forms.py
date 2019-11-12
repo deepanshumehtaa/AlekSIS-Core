@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-from django_select2.forms import ModelSelect2MultipleWidget
+from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 
 from .models import Person, Group, School, SchoolTerm
 
@@ -11,7 +11,7 @@ class PersonAccountForm(forms.ModelForm):
         model = Person
         fields = ['last_name', 'first_name', 'user']
 
-    new_user = forms.CharField(required=False)
+    new_user = forms.CharField(required=False, widget=Select2Widget(search_fields['username__icontains']))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,7 +49,9 @@ class EditPersonForm(forms.ModelForm):
     new_user = forms.CharField(
         required=False,
         label=_('New user'),
-        help_text=_('Create a new account'))
+        help_text=_('Create a new account'),
+        widget=Select2Widget(search_fields['username__icontains'])
+    )
 
     def clean(self) -> None:
         User = get_user_model()

@@ -11,6 +11,12 @@
 {% block bootstrap4_extra_head %}
   {{ block.super }}
   {{ edit_person_form.media }}
+  {{ edit_person_form.media.css }}
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+  {{ block.super }}
+  {{ edit_person_form.media.js }}
 {% endblock %}
 
 {% block content %}
