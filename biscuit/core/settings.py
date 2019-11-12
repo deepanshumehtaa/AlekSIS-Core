@@ -314,4 +314,6 @@ CRON_CLASSES = [
     'biscuit.core.cronjobs.Backup'
 ]
 
+ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
+
 _settings.populate_obj(sys.modules[__name__])
