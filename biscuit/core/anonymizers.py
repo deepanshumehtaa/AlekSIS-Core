@@ -15,6 +15,7 @@ def get_photo(**kwargs):
     )
     cf = ContentFile(req.content, faker.file_name(extension='jpg'))
     cf.__getitem__ = lambda self, key: self
+    return cf
 
 
 class PersonAnonymizer(BaseAnonymizer):
