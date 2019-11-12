@@ -1,4 +1,4 @@
-from urllib import urlopen
+from urllib.request import urlopen
 
 from hattori.base import BaseAnonymizer, faker
 
