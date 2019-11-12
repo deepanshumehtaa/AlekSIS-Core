@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'contact_form',
+    'hattori',
     'biscuit.core',
     'impersonate',
 ]
