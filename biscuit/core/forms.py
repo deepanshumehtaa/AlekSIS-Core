@@ -11,12 +11,13 @@ class PersonAccountForm(forms.ModelForm):
         model = Person
         fields = ['last_name', 'first_name', 'user']
 
-    new_user = forms.CharField(required=False, widget=Select2Widget)
+    new_user = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].disabled = True
         self.fields['last_name'].disabled = True
+        self.fields['user'].widget = Select2Widget
 
     def clean(self) -> None:
         User = get_user_model()
@@ -49,8 +50,11 @@ class EditPersonForm(forms.ModelForm):
     new_user = forms.CharField(
         required=False,
         label=_('New user'),
-        help_text=_('Create a new account'),
-        widget=Select2Widget)
+        help_text=_('Create a new account'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].widget = Select2Widget
 
     def clean(self) -> None:
         User = get_user_model()
