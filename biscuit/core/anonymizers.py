@@ -13,7 +13,7 @@ class PersonAnonymizer(BaseAnonymizer):
         ('short_name', lambda **kwargs: faker.pystr(min_chars=2, max_chars=4, **kwargs)),
         ('street', faker.street_name),
         ('housenumber', faker.building_number),
-        ('postal_code', faker.postalcode),
+        ('postal_code', faker.postcode),
         ('place', faker.city),
         ('phone_number', faker.phone_number),
         ('mobile_number', ''),
