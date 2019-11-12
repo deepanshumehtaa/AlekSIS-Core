@@ -1,19 +1,19 @@
-from urllib.request import Request, urlopen
+import requests
 
+from django.core.files.base import ContentFile
 from hattori.base import BaseAnonymizer, faker
 
 from .models import Person
 
 
 def get_photo(**kwargs):
-    req = Request(
+    req = requests.get(
         'https://thispersondoesnotexist.com/image',
-        data=None,
         headers={
             'User-Agent': faker.firefox()
         }
     )
-    return urlopen(req).read()
+    return ContentFile(req.content, faker.file_name(extension='jpg'))
 
 
 class PersonAnonymizer(BaseAnonymizer):
