@@ -15,7 +15,7 @@ class PersonAnonymizer(BaseAnonymizer):
         ('housenumber', faker.building_number),
         ('postal_code', faker.postcode),
         ('place', faker.city),
-        ('phone_number', faker.phone_number),
+        ('phone_number', lambda **kwargs: faker.phone_number(**kwargs).replace('(0)', '')),
         ('mobile_number', ''),
         ('email', faker.email),
         ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
