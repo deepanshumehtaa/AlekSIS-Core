@@ -13,7 +13,8 @@ def get_photo(**kwargs):
             'User-Agent': faker.firefox()
         }
     )
-    return ContentFile(req.content, faker.file_name(extension='jpg'))
+    cf = ContentFile(req.content, faker.file_name(extension='jpg'))
+    cf.__getitem__ = lambda self, key: self
 
 
 class PersonAnonymizer(BaseAnonymizer):
