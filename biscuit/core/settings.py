@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'contact_form',
     'django_select2',
+    'hattori',
     'biscuit.core',
     'impersonate',
 ]
@@ -313,5 +314,7 @@ DBBACKUP_CRON_TIMES = _settings.get('backup.times', ['03:57'])
 CRON_CLASSES = [
     'biscuit.core.cronjobs.Backup'
 ]
+
+ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
 
 _settings.populate_obj(sys.modules[__name__])
