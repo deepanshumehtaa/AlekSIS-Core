@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 
 from .models import Person, Group, School, SchoolTerm
 
@@ -10,7 +11,7 @@ class PersonAccountForm(forms.ModelForm):
         model = Person
         fields = ['last_name', 'first_name', 'user']
 
-    new_user = forms.CharField(required=False)
+    new_user = forms.CharField(required=False, widget=Select2Widget)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -48,7 +49,8 @@ class EditPersonForm(forms.ModelForm):
     new_user = forms.CharField(
         required=False,
         label=_('New user'),
-        help_text=_('Create a new account'))
+        help_text=_('Create a new account'),
+        widget=Select2Widget)
 
     def clean(self) -> None:
         User = get_user_model()
@@ -72,7 +74,11 @@ class EditGroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name', 'short_name', 'members', 'owners', 'parent_groups']
-
+        widgets = {
+            'members': ModelSelect2MultipleWidget(search_fields=['first_name__icontains', 'last_name__icontains', 'short_name__icontains']),
+            'owners': ModelSelect2MultipleWidget(search_fields=['first_name__icontains', 'last_name__icontains', 'short_name__icontains']),
+            'parent_groups': ModelSelect2MultipleWidget(search_fields=['name__icontains', 'short_name__icontains']),
+        }
 
 class EditSchoolForm(forms.ModelForm):
     class Meta:

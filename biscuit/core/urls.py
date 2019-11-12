@@ -31,7 +31,8 @@ urlpatterns = [
     path('maintenance-mode/', include('maintenance_mode.urls')),
     path('contact/', include('contact_form.urls')),
     path('impersonate/', include('impersonate.urls')),
-    path('__i18n__/', include('django.conf.urls.i18n'))
+    path('__i18n__/', include('django.conf.urls.i18n')),
+    path('select2/', include('django_select2.urls'))
 ]
 
 # Serve javascript-common if in development
