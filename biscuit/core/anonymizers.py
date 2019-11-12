@@ -1,8 +1,19 @@
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 from hattori.base import BaseAnonymizer, faker
 
 from .models import Person
+
+
+def get_photo(**kwargs):
+    req = Request(
+        'https://thispersondoesnotexist.com/image',
+        data=None,
+        headers={
+            'User-Agent': faker.firefox()
+        }
+    )
+    return urlopen(req).read()
 
 
 class PersonAnonymizer(BaseAnonymizer):
@@ -21,5 +32,5 @@ class PersonAnonymizer(BaseAnonymizer):
         ('mobile_number', ''),
         ('email', faker.email),
         ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
-        ('photo', lambda **kwargs: urlopen('https://thispersondoesnotexist.com/image').read())
+        ('photo', get_photo)
     ]
