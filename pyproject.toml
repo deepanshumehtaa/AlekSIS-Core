@@ -49,6 +49,7 @@ django-cron = "^0.5.1"
 django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
+requests = "^2.22"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

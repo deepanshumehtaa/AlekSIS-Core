@@ -40,7 +40,7 @@ version = "4.8.1"
 soupsieve = ">=1.2"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
 optional = false
@@ -48,7 +48,7 @@ python-versions = "*"
 version = "2019.9.11"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Universal encoding detector for Python 2 and 3"
 name = "chardet"
 optional = false
@@ -469,7 +469,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "0.18.2"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -749,7 +749,7 @@ future = "*"
 mando = ">=0.6,<0.7"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python HTTP for Humans."
 name = "requests"
 optional = false
@@ -929,7 +929,7 @@ python-versions = "*"
 version = "3.7.4.1"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
 optional = false
@@ -940,7 +940,7 @@ version = "1.25.7"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "bce50e53630707d885b8040cdb6adfc09036deb67e154abafcd1193d4008d107"
+content-hash = "8649e58effa8d4f96c1e0ab765ad6ab3c135648dd4bb263c0c3d2675a0000e59"
 python-versions = "^3.7"
 
 [metadata.hashes]
