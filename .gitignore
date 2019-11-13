@@ -54,8 +54,5 @@ db.sqlite3
 # Sphinx
 docs/_build/
 
-# Poetry
-poetry.lock
-
 # Generated files
 biscuit/static/
