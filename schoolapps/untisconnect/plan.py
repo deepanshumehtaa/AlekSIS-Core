@@ -176,7 +176,6 @@ def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
                         element_container.is_hol = True
                         element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
 
-
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
                         plan[time.hour - 1][0][time.day - 1].append(element_container)
@@ -241,5 +240,5 @@ def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    cache.update(plan)
+    cache.update((plan, hols_for_weekday))
     return plan, hols_for_weekday
