@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=biscuit
+      - POSTGRES_PASSWORD=biscuit
+      - POSTGRES_DB=biscuit
+  memcached:
+    image: memcached:latest
+  app:
+    build: .
+    volumes:
+      - biscuit_media:/srv/media
+      - biscuit_static:/srv/static
+      - biscuit_backups:/var/backups/biscuit
+      - javascript:/usr/share/javascript
+    environment:
+      - BISCUIT_secret_key=DoNotUseInProduction
+      - BISCUIT_http.allowed_hosts="['*']"
+      - BISCUIT_database.host=db
+      - BISCUIT_database.password=biscuit
+      - BISCUIT_caching.memcached.address=memcached:11211
+    depends_on:
+      - db
+      - memcached
+  web:
+    build: ./docker/nginx
+    volumes:
+      - biscuit_media:/srv/media
+      - biscuit_static:/srv/static
+      - javascript:/srv/javascript
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:
+  biscuit_media:
+  biscuit_static:
+  biscuit_backups:
+  javascript:
