@@ -309,7 +309,7 @@ DBBACKUP_STORAGE_OPTIONS = {
 }
 DBBACKUP_CLEANUP_KEEP = _settings.get('backup.keep.database', 10)
 DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get('backup.keep.media', 10)
-DBBACKUP_CRON_TIMES = _settings.get('backup.times', ['03:57'])
+DBBACKUP_CRON_TIMES = _settings.get('backup.times', None) or ['03:57']
 
 CRON_CLASSES = [
     'biscuit.core.cronjobs.Backup'
