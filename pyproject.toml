@@ -47,6 +47,7 @@ python-memcached = "^1.59"
 django-dbbackup = "^3.2"
 django-cron = "^0.5.1"
 django-hattori = "^0.2"
+psycopg2-binary = "^2.8"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
