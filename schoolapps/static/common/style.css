@@ -81,6 +81,7 @@ header, main, footer {
 }
 
 
+
 @media only screen and (min-width: 1384px) {
     .footer-row-large {
         display: flex;
@@ -532,6 +533,9 @@ i.collapsible-trigger {
 .sidenav a:not(.collapsible-header) {
     padding: 0 16px;
 }
+ul.sidenav li.logo > a:hover{
+    background: None!important;
+}
 
 .waves-effect.waves-primary .waves-ripple {
     /* The alpha value allows the text and background color
@@ -558,6 +562,23 @@ i.collapsible-trigger {
 /*section:not(:last-of-type) {*/
 /*    border-bottom: solid #bdbdbd 2px;*/
 /*}*/
+
+/*++++++++
++HOLIDAYS+
+++++++++++ */
+
+.holiday-badge{
+    float: left !important;
+    position: relative;
+    margin-left: 0% !important;
+    left: 50%;
+    transform: translate(-50%);
+    width: auto;
+    height: auto !important;
+    min-height: 26px;
+}
+
+/* Dashboard */
 
 .card-action-badge {
     float: left !important;

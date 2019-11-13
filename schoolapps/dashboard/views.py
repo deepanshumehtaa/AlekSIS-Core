@@ -14,6 +14,12 @@ from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hint
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.plan import get_plan
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import HttpResponseNotFound
+from .models import Activity, register_notification
+# from .apps import DashboardConfig
+from mailer import send_mail_with_template
 from userinformation import UserInformation
 from .models import Activity, Notification
 
