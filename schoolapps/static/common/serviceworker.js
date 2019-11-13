@@ -17,7 +17,11 @@ const avoidCachingPaths = [
     '/settings/',
     '/support/',
     '/faq/ask/',
-    '/aub/',
+    '/aub/apply_for/',
+    '/aub/check1/',
+    '/aub/check2/',
+    '/aktuell.pdf',
+    '/timetable/aktuell.pdf',
 ];
 
 function pathComparer(requestUrl, pathRegEx) {
