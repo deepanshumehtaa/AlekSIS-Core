@@ -3,18 +3,51 @@
 
 
 <main>
+    <script>
+        function setTime(lesson_field) {
+            // fill timefield based on lesson value
+            if (lesson_field.id === 'id_from_lesson') {
+                $('[id=id_from_time]').val(lesson_field.value);
+            } else {
+                // calculate lessons end time
+                // string methods easier than date function muddle
+                var h = lesson_field.value.split(':')[0];
+                var m = lesson_field.value.split(':')[1];
+                if (m < 15) {
+                    m = parseInt(m) + 45;
+                } else {
+                    m = parseInt(m) - 15;
+                    h = parseInt(h) + 1;
+                }
+                m = m.toString();
+                h = h.toString();
+                if (m.length === 1) {
+                    m = '0' + m
+                }
+                var newTime = h + ':' + m;
+                $('[id=id_to_time]').val(newTime);
+            }
+        }
+    </script>
+
     <h4>Antrag auf Unterrichtsbefreiung</h4>
 
-    <form method = "POST" >
+    <form method="POST">
         {% csrf_token %}
-{#        Von#}
-{#        <input type="text" label="Von" input_formats=['%d.%m.%Y'] value="{{ from_dt }}" name="from_date" >#}
+        {#        Von#}
+        {#        <input type="text" label="Von" input_formats=['%d.%m.%Y'] value="{{ from_dt }}" name="from_date" >#}
         {% form form=form %}
         {% endform %}
         <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">send</i> Antrag stellen
         </button>
     </form>
+    <script>
+        $("#id_from_date").change(function () {
+            $("#id_to_date").val($("#id_from_date").val());
+            $("#id_to_date").change();
+        })
+    </script>
 </main>
 
 {% include 'partials/footer.html' %}

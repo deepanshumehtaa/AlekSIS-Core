@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from faq.models import FAQSection, FAQQuestion, Question
 from faq.forms import FAQForm
 
@@ -20,6 +21,7 @@ def faq(request):
     }
     return render(request, 'faq/faq.html', context)
 
+@login_required
 def ask(request):
     if request.method == 'POST':
         form = FAQForm(request.POST)

@@ -53,7 +53,7 @@ class Event(object):
                 self.rooms.append(obj)
 
             if element[4] != "0" and element[4] != "":
-                print(element[4])
+                # print(element[4])
                 try:
                     absence_id = int(element[4])
                     absence = get_absence_by_id(absence_id)

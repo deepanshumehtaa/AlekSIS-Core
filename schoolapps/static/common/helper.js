@@ -25,38 +25,15 @@ function getNowFormatted() {
 }
 
 
-function setTime(lesson_field) {
-    // fill timefield based on lesson value
-    if (lesson_field.id === 'id_from_lesson') {
-        $('[id=id_from_time]').val(lesson_field.value);
-    } else {
-        // calculate lessons end time
-        // string methods easier than date function muddle
-        var h = lesson_field.value.split(':')[0];
-        var m = lesson_field.value.split(':')[1];
-        if (m < 15) {
-            m = parseInt(m) + 45;
-        } else {
-            m = parseInt(m) - 15;
-            h = parseInt(h) + 1;
-        }
-        m = m.toString()
-        h = h.toString()
-        if (m.length === 1) {
-            m = '0' + m
-        }
-        var newTime = h + ':' + m;
-        $('[id=id_to_time]').val(newTime);
-    }
-}
-
 function selectActiveLink() {
     var currlocation = $('meta[name="active-loaction"]');
     var url_name = currlocation.attr("content");
     //console.log(url_name);
 
-    $("#" + url_name).addClass("active");
-    $("#" + url_name).parent().parent().parent().addClass("active");
+    var selector = ".url-" + url_name;
+    console.log(selector);
+    $(selector).addClass("active");
+    $(selector).parent().parent().parent().addClass("active");
 }
 
 $(document).ready(function () {
@@ -82,7 +59,7 @@ $(document).ready(function () {
 
             // Buttons
             today: 'Heute',
-            clear: 'Löschen',
+            cancel: 'Abbrechen',
             done: 'OK',
         },
 
@@ -95,9 +72,11 @@ $(document).ready(function () {
     $('.timepicker').timepicker({
         twelveHour: false,
         autoClose: true,
-        cancelText: 'Abbrechen',
-        clearText: 'Löschen',
-        doneText: 'OK'
+        i18n: {
+            cancel: 'Abbrechen',
+            clear: 'Löschen',
+            done: 'OK'
+        },
     });
 
     // Initialize tooltip [MAT]

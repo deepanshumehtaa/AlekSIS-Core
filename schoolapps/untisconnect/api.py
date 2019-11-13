@@ -8,6 +8,8 @@ TYPE_TEACHER = 0
 TYPE_ROOM = 1
 TYPE_CLASS = 2
 
+from datetime import date
+
 
 def run_all(obj, filter_term=True):
     return run_default_filter(run_using(obj).all(), filter_term=filter_term)
@@ -73,6 +75,13 @@ class Teacher(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Teacher):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.teacher_id
@@ -83,6 +92,7 @@ class Teacher(object):
 
 def get_all_teachers():
     teachers = row_by_row(models.Teacher, Teacher)
+    teachers.sort(key=lambda a: a.shortcode)
     return teachers
 
 
@@ -115,6 +125,13 @@ class Class(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Class):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.class_id
@@ -129,6 +146,7 @@ class Class(object):
 
 def get_all_classes():
     classes = row_by_row(models.Class, Class)
+    classes.sort(key=lambda a: a.name)
     return classes
 
 
@@ -153,6 +171,8 @@ def format_classes(classes):
     :return: combined string
     """
     classes_as_dict = {}
+
+    classes = sorted(classes, key=lambda class_: class_.name)
 
     for _class in classes:
         step = _class.name[:-1]
@@ -184,6 +204,13 @@ class Room(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Room):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.room_id
@@ -192,8 +219,9 @@ class Room(object):
 
 
 def get_all_rooms():
-    db_rooms = row_by_row(models.Room, Room)
-    return db_rooms
+    rooms = row_by_row(models.Room, Room)
+    rooms.sort(key=lambda a: a.shortcode)
+    return rooms
 
 
 def get_room_by_id(id):
@@ -216,6 +244,13 @@ class Corridor(object):
         else:
             return "Unbekannt"
 
+    def __eq__(self, other):
+        if not isinstance(other, Corridor):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
+
     def create(self, db_obj):
         self.filled = True
         self.id = db_obj.corridor_id
@@ -224,6 +259,7 @@ class Corridor(object):
 
 def get_all_corridors():
     corridors = row_by_row(models.Corridor, Corridor, filter_term=False)
+    corridors.sort(key=lambda a: a.name)
     return corridors
 
 
@@ -244,6 +280,19 @@ class Subject(object):
         self.name = None
         self.color = None
         self.hex_color = None
+
+    def __str__(self):
+        if self.filled:
+            return self.shortcode or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def __eq__(self, other):
+        if not isinstance(other, Teacher):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+
+        return self.id == other.id
 
     def create(self, db_obj):
         self.filled = True
@@ -267,8 +316,10 @@ class Subject(object):
 
 
 def get_all_subjects():
-    db_rooms = row_by_row(models.Subjects, Subject, filter_term=False)
-    return db_rooms
+    subjects = row_by_row(models.Subjects, Subject, filter_term=False)
+    subjects.sort(key=lambda a: a.shortcode)
+
+    return subjects
 
 
 def get_subject_by_id(id):
@@ -290,8 +341,8 @@ class Absence(object):
 
     def create(self, db_obj):
         self.filled = True
-        print(db_obj.ida)
-        print(db_obj.typea)
+        # print(db_obj.ida)
+        # print(db_obj.typea)
         if db_obj.typea == 101:
             self.type = TYPE_TEACHER
         elif db_obj.typea == 100:
@@ -300,7 +351,7 @@ class Absence(object):
             self.type = TYPE_ROOM
 
         if self.type == TYPE_TEACHER:
-            print("IDA", db_obj.ida)
+            # print("IDA", db_obj.ida)
             self.teacher = get_teacher_by_id(db_obj.ida)
         else:
             self.room = get_room_by_id(db_obj.ida)
@@ -380,3 +431,33 @@ def get_all_events_by_date(date):
 ##########
 def get_raw_lessons():
     return run_all(models.Lesson.objects)
+
+
+###########
+# HOLIDAY #
+###########
+class Holiday(object):
+    def __init__(self):
+        self.filled = False
+        self.name = None
+        self.datefrom = None
+        self.dateto = None
+
+    def __str__(self):
+        if self.filled:
+            return self.name or "Unbekannt"
+        else:
+            return "Unbekannt"
+
+    def create(self, db_obj):
+        self.filled = True
+        self.name = db_obj.name
+        self.datefrom = db_obj.datefrom
+        self.dateto = db_obj.dateto
+
+
+def get_today_holidays(date):
+    # db_holidays = row_by_row(models.Holiday, Holiday)
+    d_i = int(date_to_untis_date(date))
+    db_rows = run_all(models.Holiday.objects.filter(dateto__gte=d_i, datefrom__lte=d_i), filter_term=False)
+    return row_by_row_helper(db_rows, Holiday)

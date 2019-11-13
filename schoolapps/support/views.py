@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from mailer import send_mail_with_template
@@ -8,6 +9,11 @@ from .forms import FeedbackForm
 from dashboard.models import Activity
 
 
+def add_arrows(array: list):
+    return " → ".join([item for item in array if item != ""])
+
+
+@login_required
 def rebus(request):
     if request.method == 'POST':
         form = REBUSForm(request.POST)
@@ -20,22 +26,22 @@ def rebus(request):
             long_description = form.cleaned_data['long_description']
 
             # Register activity
-            desc_act = "{} → {} → {} | {}".format(a, b, c, short_description)
+            desc_act = "{} | {}".format(add_arrows([a, b, c]), short_description)
             act = Activity(title="Du hast uns ein Problem gemeldet.", description=desc_act, app="REBUS",
                            user=request.user)
             act.save()
 
             # Send mail
             context = {
-                "a": a,
-                "b": b,
-                "c": c,
+                "arrow_list": add_arrows([a, b, c]),
                 "short_desc": short_description,
                 "long_desc": long_description,
-                "user": request.user.username
+                "user": request.user
             }
-            send_mail_with_template("Neue REBUS-Meldung", [mail_settings.mail_rebus], "support/mail/rebus.txt",
-                                    "support/mail/rebus.html", context)
+            send_mail_with_template("[REBUS] {}".format(short_description), [mail_settings.mail_rebus],
+                                    "support/mail/rebus.txt",
+                                    "support/mail/rebus.html", context,
+                                    "{} <{}>".format(request.user.get_full_name(), request.user.email))
 
             return render(request, 'support/rebus_submitted.html')
     else:
@@ -46,6 +52,7 @@ def rebus(request):
     return render(request, 'support/rebus.html', {'form': form, "props": {"rooms": rooms}})
 
 
+@login_required
 def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -75,12 +82,13 @@ def feedback(request):
                 "more": more,
                 "apps": apps,
                 "ideas": ideas,
-                "user": request.user.username
+                "user": request.user
             }
-            send_mail_with_template("Neues Feedback von {}".format(request.user.username),
+            send_mail_with_template("Feedback von {}".format(request.user.username),
                                     [mail_settings.mail_feedback],
                                     "support/mail/feedback.txt",
-                                    "support/mail/feedback.html", context)
+                                    "support/mail/feedback.html", context,
+                                    "{} <{}>".format(request.user.get_full_name(), request.user.email))
 
             return render(request, 'support/feedback_submitted.html')
     else:

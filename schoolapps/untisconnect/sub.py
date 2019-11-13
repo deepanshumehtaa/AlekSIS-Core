@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db.models import Q
 
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date, \
@@ -306,6 +307,7 @@ def get_header_information(subs, date, events=[]):
                 # Teacher is only missing a part of day
                 elements.append(
                     "{} ({}.-{}.)".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
+        elements.sort()
         joined = ", ".join(elements)
 
         info.rows.append(("Abwesende Lehrkräfte", joined))
@@ -316,7 +318,10 @@ def get_header_information(subs, date, events=[]):
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).exclude(
-            flags__contains="N").order_by("classids", "lesson")),
+            Q(flags__contains="N") |
+            Q(flags__contains="b") |
+            Q(flags__contains="F") |
+            Q(flags__exact="g")).order_by("classids", "lesson")),
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)
@@ -331,6 +336,10 @@ def get_substitutions_by_date_as_dict(date):
     for i, sub_raw in enumerate(subs_raw):
         if sub_raw.lesson_id not in subs.keys():
             subs[sub_raw.lesson_id] = []
-        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_table[i]})
+        sub_row = None
+        for sub_item in sub_table:
+            if sub_item.sub.id == sub_raw.id:
+                sub_row = sub_item
+        subs[sub_raw.lesson_id].append({"sub": sub_raw, "table": sub_row})
 
     return subs

@@ -5,12 +5,11 @@ venv/
 secure*
 *.aux
 *.log
-class.pdf
-class.tex
+aktuell.pdf
+aktuell.tex
 .idea/
 media/
 node_modules/
-latex/
 staticcollect/
 .idea
 dynselect2/src/*

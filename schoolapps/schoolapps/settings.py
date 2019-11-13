@@ -123,7 +123,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # TIMETABLE
 TIMETABLE_WIDTH = 5
-TIMETABLE_HEIGHT = 10
+TIMETABLE_HEIGHT = 9
 LESSONS = [('8:00', '1.'), ('8:45', '2.'), ('9:45', '3.'), ('10:35', '4.'), ('11:35', '5.'),
            ('12:25', '6.'), ('13:15', '7.'), ('14:05', '8.'), ('14:50', '9.')]
 SHORT_WEEK_DAYS = ["Mo", "Di", "Mi", "Do", "Fr"]

@@ -1,5 +1,6 @@
 import datetime
 import os
+import time
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import FileResponse
@@ -65,6 +66,9 @@ def show_current(request):
     days_to_add = 5 - current_date.isoweekday()
     if days_to_add < 0:
         days_to_add = days_to_add + 7
+
+    if days_to_add == 6 or days_to_add == 7:
+        calendar_week += 1
 
     # Create datetime with next friday and time 14:10
     friday = current_date + datetime.timedelta(days=days_to_add)
