@@ -5,6 +5,7 @@ from django.utils import timezone
 from schoolapps import settings
 from schoolapps.settings import LESSONS
 from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
+from untisconnect.datetimeutils import format_lesson_time
 from untisconnect.events import get_all_events_by_date
 from untisconnect.api import format_classes, get_today_holidays
 from untisconnect.parse import parse
@@ -55,7 +56,9 @@ def parse_lesson_times():
             "number": i + 1,
             "number_format": t[1],
             "start": start_time,
+            "start_format": format_lesson_time(start_time),
             "end": end_time,
+            "end_format": format_lesson_time(end_time)
         })
     return times
 
@@ -168,7 +171,6 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     if smart and hols_for_weekday[time.day - 1]:
                         element_container.is_hol = True
                         element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
-
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array

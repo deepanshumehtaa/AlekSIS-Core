@@ -1,6 +1,6 @@
 import datetime
 
-from django.utils import timezone
+from django.utils import timezone, formats
 
 from schoolapps.settings import LONG_WEEK_DAYS
 from untisconnect.api import TYPE_TEACHER, get_teacher_by_shortcode, TYPE_CLASS, get_class_by_name, get_all_teachers, \
@@ -27,38 +27,6 @@ def get_name_for_next_week_day_from_today() -> str:
         date_formatted = LONG_WEEK_DAYS[next_weekday.isoweekday() - 1][0]
 
     return date_formatted
-
-
-def get_type_and_object_of_user(user):
-    _type = UserInformation.user_type(user)
-    if _type == UserInformation.TEACHER:
-        # Teacher
-        _type = TYPE_TEACHER
-        shortcode = user.username
-        el = get_teacher_by_shortcode(shortcode)
-    elif _type == UserInformation.STUDENT:
-        # Student
-        _type = TYPE_CLASS
-        _name = UserInformation.user_classes(user)[0]
-        el = get_class_by_name(_name)
-    else:
-        return None, None
-
-    return _type, el
-
-
-def get_all_context():
-    teachers = get_all_teachers()
-    classes = get_all_classes()
-    rooms = get_all_rooms()
-    subjects = get_all_subjects()
-    context = {
-        'teachers': teachers,
-        'classes': classes,
-        'rooms': rooms,
-        'subjects': subjects
-    }
-    return context
 
 
 def get_calendar_weeks(year=timezone.datetime.now().year):
@@ -95,14 +63,6 @@ def find_out_what_is_today(year=None, month=None, day=None):
     return date, time
 
 
-def current_calendar_week():
-    return timezone.datetime.now().isocalendar()[1]
-
-
-def current_year():
-    return timezone.datetime.now().year
-
-
 def get_calendar_week(calendar_week, year=timezone.datetime.now().year):
     weeks = get_calendar_weeks(year=year)
     for week in weeks:
@@ -111,8 +71,10 @@ def get_calendar_week(calendar_week, year=timezone.datetime.now().year):
     return None
 
 
-def get_next_weekday(date):
+def get_next_weekday(date=None):
     """Get the next weekday by a datetime object"""
+    if date is None:
+        date = timezone.now().date()
 
     if date.isoweekday() in {6, 7}:
         if date.isoweekday() == 6:
@@ -123,8 +85,12 @@ def get_next_weekday(date):
     return date
 
 
-def get_next_weekday_with_time(date, time) -> datetime.datetime:
+def get_next_weekday_with_time(date=None, time=None) -> datetime.datetime:
     """Get the next weekday by a datetime object"""
+    if date is None:
+        date = timezone.now().date()
+    if time is None:
+        time = timezone.now().time()
 
     if time > datetime.time(15, 35):
         date += datetime.timedelta(days=1)
@@ -135,3 +101,15 @@ def get_next_weekday_with_time(date, time) -> datetime.datetime:
             plus = 1
         date += datetime.timedelta(days=plus)
     return date
+
+
+def calendar_week(date: datetime) -> int:
+    return date.isocalendar()[1]
+
+
+def weekday(date: datetime) -> int:
+    return date.isoweekday() - 1
+
+
+def format_lesson_time(time: datetime) -> str:
+    return formats.date_format(time, "H:i")

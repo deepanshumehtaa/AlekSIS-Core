@@ -9,7 +9,7 @@ from martor.templatetags.martortags import safe_markdown
 
 from dashboard.settings import latest_article_settings, current_events_settings
 from helper import get_current_events, get_newest_article_from_news, get_current_events_with_cal
-from timetable.helper import get_name_for_next_week_day_from_today, get_type_and_object_of_user
+from untisconnect.datetimeutils import get_name_for_next_week_day_from_today, calendar_week, weekday
 from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
@@ -17,6 +17,8 @@ from untisconnect.plan import get_plan
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseNotFound
+
+from untisconnect.utils import get_type_and_object_of_user, get_plan_for_day
 from .models import Activity, register_notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
@@ -68,10 +70,11 @@ def api_information(request):
     # Serialize hints
     ser = []
     for hint in hints:
-        serialized = {}
-        serialized["from_date"] = formatdate(float(hint.from_date.strftime('%s')))
-        serialized["to_date"] = formatdate(float(hint.to_date.strftime('%s')))
-        serialized["html"] = safe_markdown(hint.text)
+        serialized = {
+            "from_date": formatdate(float(hint.from_date.strftime('%s'))),
+            "to_date": formatdate(float(hint.to_date.strftime('%s'))),
+            "html": safe_markdown(hint.text)
+        }
         ser.append(serialized)
     hints = ser
 
@@ -79,12 +82,12 @@ def api_information(request):
         'activities': list(activities.values()),
         'notifications': list(notifications.values()),
         "unread_notifications": list(unread_notifications.values()),
-        'user_type': UserInformation.user_type(request.user),
-        'user_type_formatted': UserInformation.user_type_formatted(request.user),
-        'classes': UserInformation.user_classes(request.user),
-        'courses': UserInformation.user_courses(request.user),
-        'subjects': UserInformation.user_subjects(request.user),
-        'has_wifi': UserInformation.user_has_wifi(request.user),
+        # 'user_type': UserInformation.user_type(request.user),
+        # 'user_type_formatted': UserInformation.user_type_formatted(request.user),
+        # 'classes': UserInformation.user_classes(request.user),
+        # 'courses': UserInformation.user_courses(request.user),
+        # 'subjects': UserInformation.user_subjects(request.user),
+        # 'has_wifi': UserInformation.user_has_wifi(request.user),
         "newest_article": newest_article,
         "current_events": get_current_events_with_cal() if current_events_settings.current_events_is_activated else None,
         "date_formatted": date_formatted,
@@ -125,36 +128,27 @@ def api_my_plan_html(request):
 
     # Get user type (student, teacher, etc.)
     _type, el = get_type_and_object_of_user(request.user)
-    if _type == TYPE_TEACHER:
-        # Teacher
-        plan_id = el.id
-        raw_type = "teacher"
-    elif _type == TYPE_CLASS:
-        # Student
-        plan_id = el.id
-        raw_type = "class"
-    else:
+
+    # Plan is only for teachers and students available
+    if _type != TYPE_TEACHER and _type != TYPE_CLASS:
         return JsonResponse({"success": False})
 
     # Get calendar week and monday of week
-    next_weekday = get_next_weekday_with_time(timezone.now(), timezone.now().time())
-    calendar_week = next_weekday.isocalendar()[1]
-    monday_of_week = get_calendar_week(calendar_week, next_weekday.year)["first_day"]
-    week_day = next_weekday.isoweekday() - 1
+    next_weekday = get_next_weekday_with_time()
 
     # Get plan
-    plan = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
-    lessons = []
-    for row, time in plan:
-        lesson_container = row[week_day]
-        html = render_to_string("timetable/lesson.html", {"col": lesson_container, "type": _type}, request=request)
-        time["start"] = formats.date_format(time["start"], "H:i")
-        time["end"] = formats.date_format(time["end"], "H:i")
+    plan = get_plan_for_day(_type, el.id, next_weekday)
 
+    # Serialize plan
+    lessons = []
+    for lesson_container, time in plan:
+        html = render_to_string("timetable/lesson.html", {"col": lesson_container, "type": _type}, request=request)
         lessons.append({"time": time, "html": html})
-    print(lessons)
+
+    # Return JSON
     return JsonResponse({"success": True, "lessons": lessons})
 
 
 def error_404(request, exception):
+    """ 404 page """
     return render(request, 'common/404.html')

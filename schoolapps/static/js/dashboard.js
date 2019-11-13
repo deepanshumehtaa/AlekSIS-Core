@@ -340,13 +340,13 @@ var Dashboard = function (_React$Component) {
                                                             React.createElement(
                                                                 "span",
                                                                 null,
-                                                                lesson.time.start
+                                                                lesson.time.start_format
                                                             ),
                                                             React.createElement("br", null),
                                                             React.createElement(
                                                                 "span",
                                                                 null,
-                                                                lesson.time.end
+                                                                lesson.time.end_format
                                                             )
                                                         )
                                                     )

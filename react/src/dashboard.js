@@ -179,9 +179,9 @@ class Dashboard extends React.Component {
 
                                                     {/* Times */}
                                                     <div className="right timetable-time grey-text text-darken-2">
-                                                        <span>{lesson.time.start}</span>
+                                                        <span>{lesson.time.start_format}</span>
                                                         <br/>
-                                                        <span>{lesson.time.end}</span>
+                                                        <span>{lesson.time.end_format}</span>
                                                     </div>
                                                 </div>
                                             </div>
