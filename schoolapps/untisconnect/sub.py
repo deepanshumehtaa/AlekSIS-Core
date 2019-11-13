@@ -307,6 +307,7 @@ def get_header_information(subs, date, events=[]):
                 # Teacher is only missing a part of day
                 elements.append(
                     "{} ({}.-{}.)".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
+        elements.sort()
         joined = ", ".join(elements)
 
         info.rows.append(("Abwesende Lehrkräfte", joined))
