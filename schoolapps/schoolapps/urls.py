@@ -30,6 +30,13 @@ def manifest(request):
     return serve(request, "manifest.json")
 
 
+handler404 = 'dashboard.views.error_404'
+
+
+def custom_page_not_found(request):
+    return defaults.page_not_found(request, None, "common/404.html")
+
+
 urlpatterns = [
     #############
     # Dashboard #
@@ -85,4 +92,3 @@ urlpatterns = [
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

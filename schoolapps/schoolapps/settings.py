@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     'info.katharineum.de',
     'localhost',
     '127.0.0.1',
+    '13049d63.ngrok.io'
 ]
 
 INTERNAL_IPS = [

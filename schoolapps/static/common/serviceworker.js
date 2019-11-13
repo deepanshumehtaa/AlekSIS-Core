@@ -4,7 +4,7 @@ const CACHE = "schoolapps-cache";
 
 const precacheFiles = [
     '/',
-    '/faq/'
+    '/faq/',
 ];
 
 const offlineFallbackPage = '/offline/';
@@ -15,9 +15,9 @@ const networkFirstPaths = [
 const avoidCachingPaths = [
     '/admin/',
     '/settings/',
-    '/support/feedback/',
-    '/support/rebus/',
-    '/faq/ask/'
+    '/support/',
+    '/faq/ask/',
+    '/aub/',
 ];
 
 function pathComparer(requestUrl, pathRegEx) {
