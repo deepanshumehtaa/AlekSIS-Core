@@ -30,15 +30,6 @@ def manifest(request):
     return serve(request, "manifest.json")
 
 
-def serviceworker(request):
-    return serve(request, "common/pwabuilder-sw.js")
-
-handler404 = 'dashboard.views.error_404'
-
-def custom_page_not_found(request):
-    return defaults.page_not_found(request, None, "common/404.html")
-
-
 urlpatterns = [
     #############
     # Dashboard #
@@ -82,7 +73,7 @@ urlpatterns = [
     #######
     path('faq/', include('faq.urls')),
 
-    path("pwabuilder-sw.js", serviceworker),
+    path('', include('pwa.urls')),
 
     path('martor/', include('martor.urls')),
 

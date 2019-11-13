@@ -55,3 +55,7 @@ def test_notification(request):
 
 def error_404(request, exception):
     return render(request, 'common/404.html')
+
+
+def offline(request):
+    return render(request, 'common/offline.html')
