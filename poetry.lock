@@ -331,6 +331,18 @@ version = "0.7.4"
 
 [[package]]
 category = "main"
+description = "Select2 option fields for Django"
+name = "django-select2"
+optional = false
+python-versions = "*"
+version = "7.1.1"
+
+[package.dependencies]
+django = ">=2.0"
+django-appconf = ">=0.6.0"
+
+[[package]]
+category = "main"
 description = "Makes specified django settings visible in template rendering context."
 name = "django-settings-context-processor"
 optional = false
@@ -415,8 +427,8 @@ category = "main"
 description = "Faker is a Python package that generates fake data for you."
 name = "faker"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.0.3"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "2.0.4"
 
 [package.dependencies]
 python-dateutil = ">=2.4"
@@ -928,7 +940,7 @@ version = "1.25.7"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "ca3366ea09749f782e9163b9b3d16724f7f6bfcd1e408da5d9a826de9e00611e"
+content-hash = "bce50e53630707d885b8040cdb6adfc09036deb67e154abafcd1193d4008d107"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -964,6 +976,7 @@ django-menu-generator = ["ce71a5055c16933c8aff64fb36c21e5cf8b6d505733aceed1252f8
 django-middleware-global-request = ["f6490759bc9f7dbde4001709554e29ca715daf847f2222914b4e47117dca9313"]
 django-phonenumber-field = ["1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e", "794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"]
 django-sass-processor = ["c1b56e76ce2b57382d26328ecdc204d3f65412d5da35df8a6b7bce6e7f754882"]
+django-select2 = ["ad12132e764ce8099bc2746e6af2f33a952b49eb63f3b062eb4739cd4304ee2f", "e4beb0e4af27f71e9e2e2f52441aecdb24d401942f18a0375031767cd0e2e5a0"]
 django-settings-context-processor = ["d37c853d69a3069f5abbf94c7f4f6fc0fac38bbd0524190cd5a250ba800e496a"]
 django-stubs = ["cd6a7333d518b9168f001b8a31c4ea89a91dea40a9dd1535c798635f69a5f80a", "e3673348a42c7259e81a4ea141dae2b2e711220ec631a6215ba9dc23cdcabdf4"]
 django-tables2 = ["2a94c3458f7cd0cb914d561ec040c616e18f5c1af2c16c1a70c0c6125b299ce9", "78fbac8197721cee4da4bab34a5590365d08224d206462db15a166148cb75562"]
@@ -971,7 +984,7 @@ docutils = ["6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0", 
 dynaconf = ["117b7e52698af82a535bcb71012f3221e1ab9c869bb8163ebf156569f32ff07d", "abeb44db4249c443083584cdd4d9c5c10cd773f11067e270660d15e6eef668d7"]
 easy-thumbnails = ["23fbe3415c93b2369ece8ebdfb5faa05540943bef8b941b3118ce769ba95e275"]
 entrypoints = ["589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19", "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"]
-faker = ["5902379d8df308a204fc11c4f621590ee83975805a6c7b2228203b9defa45250", "5e8c755c619f332d5ec28b7586389665f136bcf528e165eb925e87c06a63eda7"]
+faker = ["48c03580720e0b46538d528b1296e4e5b24a809dcaf33a7dddec719489a9edb8", "6327c665c0d8721280b3036d9c9e851c60092bc1f30c8394cc433f8723e2bda5"]
 flake8 = ["45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb", "49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"]
 flake8-polyfill = ["12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9", "e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"]
 future = ["b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"]
