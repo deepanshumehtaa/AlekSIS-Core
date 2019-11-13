@@ -151,6 +151,17 @@ beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
+description = "Bulk update using one query over Django ORM."
+name = "django-bulk-update"
+optional = false
+python-versions = "*"
+version = "2.2.0"
+
+[package.dependencies]
+Django = ">=1.8"
+
+[[package]]
+category = "main"
 description = "Common things every Django app needs!"
 name = "django-common-helpers"
 optional = false
@@ -226,6 +237,21 @@ version = "1.0.0"
 
 [package.dependencies]
 Django = ">1.4"
+
+[[package]]
+category = "main"
+description = "Command to anonymize sensitive data."
+name = "django-hattori"
+optional = false
+python-versions = "*"
+version = "0.2.1"
+
+[package.dependencies]
+Django = ">=1.8"
+Faker = ">=0.8.13"
+django-bulk-update = ">=2.2.0"
+six = "*"
+tqdm = ">=4.23.4"
 
 [[package]]
 category = "main"
@@ -383,6 +409,19 @@ name = "entrypoints"
 optional = false
 python-versions = ">=2.7"
 version = "0.3"
+
+[[package]]
+category = "main"
+description = "Faker is a Python package that generates fake data for you."
+name = "faker"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "2.0.3"
+
+[package.dependencies]
+python-dateutil = ">=2.4"
+six = ">=1.10"
+text-unidecode = "1.3"
 
 [[package]]
 category = "dev"
@@ -618,6 +657,17 @@ version = "3.4.5"
 
 [[package]]
 category = "main"
+description = "Extensions to the standard Python datetime module"
+name = "python-dateutil"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+version = "2.8.1"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
+category = "main"
 description = "Add .env support to your django/flask apps in development and deployments"
 name = "python-dotenv"
 optional = false
@@ -820,11 +870,27 @@ version = "0.3.0"
 
 [[package]]
 category = "main"
+description = "The most basic Text::Unidecode port"
+name = "text-unidecode"
+optional = false
+python-versions = "*"
+version = "1.3"
+
+[[package]]
+category = "main"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
 python-versions = "*"
 version = "0.10.0"
+
+[[package]]
+category = "main"
+description = "Fast, Extensible Progress Meter"
+name = "tqdm"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*"
+version = "4.38.0"
 
 [[package]]
 category = "dev"
@@ -854,7 +920,7 @@ version = "1.25.7"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "b579de325d260587f02c42f002c079f25dd41d81668cfecbafaddc0edf03a08e"
+content-hash = "db2c8ce2d850b5e996624bbd5be3be5430b2304e40396879483f7f944f388ebb"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -873,6 +939,7 @@ django-any-js = ["1da88b44b861b0f54f6b8ea0eb4c7c4fa1a5772e9a4320532cd4e0871a4e23
 django-appconf = ["35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3", "c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"]
 django-auth-ldap = ["5e2cdcdb0883e12eabf4b0c7662fbbae34b59333eee11916aaa00b63cc462ad8", "7100086a858a5ee13d8da7d9a92c44f4248dc60a833f0a185186458a5ccf55e9"]
 django-bootstrap4 = ["3da770392819267eda2f774bcf832460af00db21089b94caf4df94be8a48c48c"]
+django-bulk-update = ["49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985", "5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"]
 django-common-helpers = ["2d56be6fa261d829a6a224f189bf276267b9082a17d613fe5f015dd4d65c17b4"]
 django-contact-form = ["b42b7e04d6af3318b8427c1eaf62385ec66da252aa79b607ee55d956c7af4a2d", "c31f73faa13f52efa81ac95f41007f3a84eca617f92773a1bed7ca90c61cb3ed"]
 django-cron = ["08d22708c8b2ecab8cda989019a66c7e1e2424c59d822796fd45abf7731d261d"]
@@ -880,6 +947,7 @@ django-dbbackup = ["9470e5d8bdaee4feb878b1b66c59eb9b27a131cccd648bf7cbfe70930acd
 django-debug-toolbar = ["24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8", "77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"]
 django-easy-audit = ["1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6", "4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"]
 django-fa = ["e3ebf97b90e374b5ccb5b8a70e4a932c8787f2ee995c09a97a63bf9a1366c3ff"]
+django-hattori = ["6953d40881317252f19f62c4e7fe8058924b852c7498bc42beb7bc4d268c252c", "e529ed7af8fc34a0169c797c477672b687a205a56f3f5206f90c260acb83b7ac"]
 django-image-cropping = ["157c6f96b2bbe485bde00108cbf379ea0fcb6d7a7252648f7548aa795108dde0"]
 django-impersonate = ["63b62d06f93b0318698c68f7314c78473914c262d4164eb66ad860bb83e04771"]
 django-ipware = ["a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"]
@@ -895,6 +963,7 @@ docutils = ["6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0", 
 dynaconf = ["117b7e52698af82a535bcb71012f3221e1ab9c869bb8163ebf156569f32ff07d", "abeb44db4249c443083584cdd4d9c5c10cd773f11067e270660d15e6eef668d7"]
 easy-thumbnails = ["23fbe3415c93b2369ece8ebdfb5faa05540943bef8b941b3118ce769ba95e275"]
 entrypoints = ["589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19", "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"]
+faker = ["5902379d8df308a204fc11c4f621590ee83975805a6c7b2228203b9defa45250", "5e8c755c619f332d5ec28b7586389665f136bcf528e165eb925e87c06a63eda7"]
 flake8 = ["45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb", "49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"]
 flake8-polyfill = ["12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9", "e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"]
 future = ["b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"]
@@ -919,6 +988,7 @@ pygments = ["71e430bc85c88a430f000ac1d9b331d2407f681d6f6aec95e8bcfbc3df5b0127", 
 pylama = ["9bae53ef9c1a431371d6a8dca406816a60d547147b60a4934721898f553b7d8f", "fd61c11872d6256b019ef1235be37b77c922ef37ac9797df6bd489996dddeb15"]
 pyparsing = ["20f995ecd72f2a1f4bf6b072b63b22e2eb457836601e76d6e5dfcd75436acc1f", "4ca62001be367f01bd3e92ecbb79070272a9d4964dce6a48a82ff0b8bc7e683a"]
 python-box = ["7d091f833680a02b6f1fc6c062ea8f6e5ece28b30b13675b2cdb8d9eb07db918", "ff2ccbbc06b9b8cfb4d00e3113079bfcd4a050365ad9aa774cb3003da705ad06"]
+python-dateutil = ["73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c", "75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"]
 python-dotenv = ["debd928b49dbc2bf68040566f55cdb3252458036464806f4094487244e2a4093", "f157d71d5fec9d4bd5f51c82746b6344dffa680ee85217c123f4a0c8117c4544"]
 python-ldap = ["7d1c4b15375a533564aad3d3deade789221e450052b21ebb9720fb822eccdb8e"]
 python-memcached = ["4dac64916871bd3550263323fc2ce18e1e439080a2d5670c594cf3118d99b594", "a2e28637be13ee0bf1a8b6843e7490f9456fd3f2a4cb60471733c7b5d5557e4f"]
@@ -939,7 +1009,9 @@ sphinxcontrib-jsmath = ["2ec2eaebfb78f3f2078e73666b1415417a116cc848b72e5172e596c
 sphinxcontrib-qthelp = ["513049b93031beb1f57d4daea74068a4feb77aa5630f856fcff2e50de14e9a20", "79465ce11ae5694ff165becda529a600c754f4bc459778778c7017374d4d406f"]
 sphinxcontrib-serializinghtml = ["c0efb33f8052c04fd7a26c0a07f1678e8512e0faec19f4aa8f2473a8b81d5227", "db6615af393650bf1151a6cd39120c29abaf93cc60db8c48eb2dddbfdc3a9768"]
 sqlparse = ["40afe6b8d4b1117e7dff5504d7a8ce07d9a1b15aeeade8a2d10f130a834f8177", "7c3dca29c022744e95b547e867cee89f4fce4373f3549ccd8797d8eb52cdb873"]
+text-unidecode = ["1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8", "bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"]
 toml = ["229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c", "235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e", "f1db651f9657708513243e61e6cc67d101a39bad662eaa9b5546f789338e07a3"]
+tqdm = ["9de4722323451eb7818deb0161d9d5523465353a6707a9f500d97ee42919b902", "c1d677f3a85fa291b34bdf8f770f877119b9754b32673699653556f85e2c2f13"]
 typed-ast = ["1170afa46a3799e18b4c977777ce137bb53c7485379d9706af8a59f2ea1aa161", "18511a0b3e7922276346bcb47e2ef9f38fb90fd31cb9223eed42c85d1312344e", "262c247a82d005e43b5b7f69aff746370538e176131c32dda9cb0f324d27141e", "2b907eb046d049bcd9892e3076c7a6456c93a25bebfe554e931620c90e6a25b0", "354c16e5babd09f5cb0ee000d54cfa38401d8b8891eefa878ac772f827181a3c", "48e5b1e71f25cfdef98b013263a88d7145879fbb2d5185f2a0c79fa7ebbeae47", "4e0b70c6fc4d010f8107726af5fd37921b666f5b31d9331f0bd24ad9a088e631", "630968c5cdee51a11c05a30453f8cd65e0cc1d2ad0d9192819df9978984529f4", "66480f95b8167c9c5c5c87f32cf437d585937970f3fc24386f313a4c97b44e34", "71211d26ffd12d63a83e079ff258ac9d56a1376a25bc80b1cdcdf601b855b90b", "7954560051331d003b4e2b3eb822d9dd2e376fa4f6d98fee32f452f52dd6ebb2", "838997f4310012cf2e1ad3803bce2f3402e9ffb71ded61b5ee22617b3a7f6b6e", "95bd11af7eafc16e829af2d3df510cecfd4387f6453355188342c3e79a2ec87a", "bc6c7d3fa1325a0c6613512a093bc2a2a15aeec350451cbdf9e1d4bffe3e3233", "cc34a6f5b426748a507dd5d1de4c1978f2eb5626d51326e43280941206c209e1", "d755f03c1e4a51e9b24d899561fec4ccaf51f210d52abdf8c07ee2849b212a36", "d7c45933b1bdfaf9f36c579671fec15d25b06c8398f113dab64c18ed1adda01d", "d896919306dd0aa22d0132f62a1b78d11aaf4c9fc5b3410d3c666b818191630a", "fdc1c9bbf79510b76408840e009ed65958feba92a88833cdceecff93ae8fff66", "ffde2fbfad571af120fcbfbbc61c72469e72f550d676c3342492a9dfdefb8f12"]
 typing-extensions = ["091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2", "910f4656f54de5993ad9304959ce9bb903f90aadc7c67a0bef07e678014e892d", "cf8b63fedea4d89bab840ecbb93e75578af28f76f66c35889bd7065f5af88575"]
 urllib3 = ["a8a318824cc77d1fd4b2bec2ded92646630d7fe8619497b142c84a9e6f5a7293", "f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745"]
