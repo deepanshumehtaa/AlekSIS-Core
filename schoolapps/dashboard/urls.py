@@ -21,3 +21,9 @@ except (Terms.DoesNotExist, Schoolyear.DoesNotExist):
         path('api/notifications/read/<int:id>', fallback_view.fallback, name="api_read_notification"),
         path('api/my-plan', fallback_view.fallback, name="api_my_plan_html"),
     ]
+
+urlpatterns += [
+    path("tools", views.tools, name="tools"),
+    path("tools/clear-cache", views.tools_clear_cache, name="tools_clear_cache"),
+    path("tools/clear-cache/<str:id>", views.tools_clear_cache, name="tools_clear_single_cache"),
+]

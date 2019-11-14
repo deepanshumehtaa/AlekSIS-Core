@@ -7,8 +7,8 @@ django_pdb
 django-material
 django-filter
 django_react_templatetags
-kanboard
 PyPDF2
 martor
 django_widget_tweaks
+python-memcached
 ics

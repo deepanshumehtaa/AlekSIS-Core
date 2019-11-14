@@ -14,12 +14,16 @@ from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hint
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.plan import get_plan
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.cache import cache
 from django.shortcuts import render, redirect
 from django.urls import reverse
+
 from django.http import HttpResponseNotFound
 
 from untisconnect.utils import get_type_and_object_of_user, get_plan_for_day
 from .models import Activity, register_notification
+from .models import Activity, register_notification, Cache
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
 from userinformation import UserInformation
@@ -148,6 +152,36 @@ def api_my_plan_html(request):
     # Return JSON
     return JsonResponse(
         {"success": True, "lessons": lessons, "holiday": holiday[0].__dict__ if len(holiday) > 0 else None})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def tools(request):
+    msg = None
+    if request.session.get("msg", False):
+        msg = request.session["msg"]
+        request.session["msg"] = None
+
+    caches = Cache.objects.all()
+    context = {
+        "msg": msg,
+        "caches": caches
+    }
+    return render(request, "dashboard/tools.html", context)
+
+
+@login_required
+def tools_clear_cache(request, id=None):
+    if id is not None:
+        cache.delete(id)
+        request.session["msg"] = "success_cleared_single_cache"
+        print("[IMPORTANT] Single cache cleared!")
+    else:
+        cache.clear()
+        request.session["msg"] = "success_cleared_whole_cache"
+        print("[IMPORTANT] Whole cache cleared!")
+
+    return redirect(reverse("tools"))
 
 
 def error_404(request, exception):

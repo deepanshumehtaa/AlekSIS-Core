@@ -154,20 +154,29 @@ AUTH_LDAP_MIRROR_GROUPS = True
 AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
-# Keep ModelBackend around for per-user permissions and maybe a local
-# superuser.
+# Keep ModelBackend around for per-user permissions and maybe a local superuser.
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
 if DEBUG:
+    logger = logging.getLogger('django_auth_ldap')
+    logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.DEBUG)
 
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#DBSETTINGS_USE_CACHE = False
+# Use cache for db settings (only on production)
+DBSETTINGS_USE_CACHE = not DEBUG
+
+# Cache configs (only on production)
+if not DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }

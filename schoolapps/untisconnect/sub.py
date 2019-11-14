@@ -1,11 +1,12 @@
 from django.utils import timezone
+from django.db.models import Q
 
 from untisconnect import models
 from untisconnect.api import run_default_filter, row_by_row_helper, format_classes, get_all_absences_by_date, \
     TYPE_TEACHER
 from untisconnect.api_helper import run_using, untis_split_first, untis_date_to_date, date_to_untis_date
 from untisconnect.parse import get_lesson_element_by_id_and_teacher
-from untisconnect.drive import build_drive
+from untisconnect.drive import drive
 
 TYPE_SUBSTITUTION = 0
 TYPE_CANCELLATION = 1
@@ -26,10 +27,6 @@ def parse_type_of_untis_flags(flags):
     elif "F" in flags:
         type_ = TYPE_TEACHER_CANCELLATION
     return type_
-
-
-# Build cache
-drive = build_drive()
 
 
 class Substitution(object):
@@ -316,7 +313,10 @@ def get_header_information(subs, date, events=[]):
 def get_substitutions_by_date(date):
     subs_raw = run_default_filter(
         run_using(models.Substitution.objects.filter(date=date_to_untis_date(date), deleted=0).exclude(
-            flags__contains="N").order_by("classids", "lesson")),
+            Q(flags__contains="N") |
+            Q(flags__contains="b") |
+            Q(flags__contains="F") |
+            Q(flags__exact="g")).order_by("classids", "lesson")),
         filter_term=False)
 
     subs = row_by_row_helper(subs_raw, Substitution)

@@ -81,7 +81,6 @@ header, main, footer {
 }
 
 
-
 @media only screen and (min-width: 1384px) {
     .footer-row-large {
         display: flex;
@@ -402,6 +401,11 @@ table.striped > tbody > tr:nth-child(odd) {
 .alert.primary > p, .alert.primary > div {
     background-color: #ececec;
     border-color: #da1f3d;
+}
+
+.alert.warning p, .alert.warning div {
+    background-color: #ffb74d;
+    border-color: #e65100;
 }
 
 main .alert p:first-child, main .alert div:first-child {
