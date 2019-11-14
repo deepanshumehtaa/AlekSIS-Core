@@ -17,7 +17,6 @@ services:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
       - biscuit_backups:/var/backups/biscuit
-      - javascript:/usr/share/javascript
     environment:
       - BISCUIT_secret_key=DoNotUseInProduction
       - BISCUIT_http.allowed_hosts="['*']"
@@ -32,7 +31,6 @@ services:
     volumes:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
-      - javascript:/srv/javascript
     ports:
       - 8080:80
     depends_on:
@@ -43,4 +41,3 @@ volumes:
   biscuit_media:
   biscuit_static:
   biscuit_backups:
-  javascript:
