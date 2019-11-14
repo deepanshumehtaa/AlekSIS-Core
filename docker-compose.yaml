@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:12
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
@@ -12,6 +12,7 @@ services:
     image: memcached:latest
   app:
     build: .
+    image: biscuitsis/biscuit
     volumes:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
@@ -26,6 +27,7 @@ services:
       - memcached
   web:
     build: ./docker/nginx
+    image: biscuitsis/biscuit-nginx
     volumes:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
