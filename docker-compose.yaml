@@ -21,7 +21,7 @@ services:
     environment:
       - BISCUIT_http__allowed_hosts="['*']"
       - BISCUIT_caching__memcached__address=memcached:11211
-      - BISCUIT_databae__host=db
+      - BISCUIT_database__host=db
     depends_on:
       - db
       - memcached
