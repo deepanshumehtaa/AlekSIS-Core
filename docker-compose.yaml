@@ -19,10 +19,10 @@ services:
       - biscuit_backups:/var/backups/biscuit
     environment:
       - BISCUIT_secret_key=DoNotUseInProduction
-      - BISCUIT_http.allowed_hosts="['*']"
-      - BISCUIT_database.host=db
-      - BISCUIT_database.password=biscuit
-      - BISCUIT_caching.memcached.address=memcached:11211
+      - BISCUIT_http__allowed_hosts="['*']"
+      - BISCUIT_database__host=db
+      - BISCUIT_database__password=biscuit
+      - BISCUIT_caching__memcached__address=memcached:11211
     depends_on:
       - db
       - memcached
