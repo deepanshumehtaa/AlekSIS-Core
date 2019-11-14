@@ -98,7 +98,7 @@ def api_information(request):
     }
 
     # If plan is available for user give extra information
-    if _type is not None:
+    if _type is not None and request.user.has_perm("timetable.show_plan"):
         context["plan"] = {
             "type": _type,
             "name": el.shortcode if _type == TYPE_TEACHER else el.name,
@@ -130,14 +130,14 @@ def api_my_plan_html(request):
     _type, el = get_type_and_object_of_user(request.user)
 
     # Plan is only for teachers and students available
-    if _type != TYPE_TEACHER and _type != TYPE_CLASS:
+    if (_type != TYPE_TEACHER and _type != TYPE_CLASS) or not request.user.has_perm("timetable.show_plan"):
         return JsonResponse({"success": False})
 
     # Get calendar week and monday of week
     next_weekday = get_next_weekday_with_time()
 
     # Get plan
-    plan = get_plan_for_day(_type, el.id, next_weekday)
+    plan, holiday = get_plan_for_day(_type, el.id, next_weekday)
 
     # Serialize plan
     lessons = []
@@ -146,7 +146,8 @@ def api_my_plan_html(request):
         lessons.append({"time": time, "html": html})
 
     # Return JSON
-    return JsonResponse({"success": True, "lessons": lessons})
+    return JsonResponse(
+        {"success": True, "lessons": lessons, "holiday": holiday[0].__dict__ if len(holiday) > 0 else None})
 
 
 def error_404(request, exception):

@@ -1,48 +1,10 @@
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);
-        if (staticProps) defineProperties(Constructor, staticProps);
-        return Constructor;
-    };
-}();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            enumerable: false,
-            writable: true,
-            configurable: true
-        }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var REFRESH_TIME = 15;
 
@@ -67,7 +29,7 @@ var Dashboard = function (_React$Component) {
                     window.clearTimeout(_this.state.timeout);
                 }
                 var timeout = window.setTimeout(_this.updateRefreshTime, 1000);
-                _this.setState({refreshIn: _this.state.refreshIn - 1, timeout: timeout});
+                _this.setState({ refreshIn: _this.state.refreshIn - 1, timeout: timeout });
             } else {
                 _this.updateData();
             }
@@ -78,14 +40,14 @@ var Dashboard = function (_React$Component) {
             $.getJSON(API_URL, function (data) {
                 console.log(data);
                 if (data) {
-                    that.setState(Object.assign({}, data, {refreshIn: REFRESH_TIME + 1, isLoading: false}));
+                    that.setState(Object.assign({}, data, { refreshIn: REFRESH_TIME + 1, isLoading: false }));
                     that.updateRefreshTime();
                 }
             });
             $.getJSON(API_URL + "/my-plan", function (data) {
                 console.log(data);
                 if (data && data.lessons) {
-                    that.setState({lessons: data.lessons});
+                    that.setState({ lessons: data.lessons, holiday: data.holiday });
                 }
             });
         };
@@ -113,7 +75,7 @@ var Dashboard = function (_React$Component) {
             }, 200);
             $.getJSON(API_URL + "/notifications/read/" + notification.id);
             this.updateData();
-            this.setState({time: new Date()});
+            this.setState({ time: new Date() });
         }
     }, {
         key: "render",
@@ -122,36 +84,36 @@ var Dashboard = function (_React$Component) {
                 // Show loading screen until first data are loaded
                 return React.createElement(
                     "div",
-                    {className: "row center-via-flex container", style: {"height": "15em"}},
+                    { className: "row center-via-flex container", style: { "height": "15em" } },
                     React.createElement(
                         "div",
-                        {className: "center2-via-flex"},
+                        { className: "center2-via-flex" },
                         React.createElement(
                             "div",
-                            {className: "preloader-wrapper big active"},
+                            { className: "preloader-wrapper big active" },
                             React.createElement(
                                 "div",
-                                {className: "spinner-layer spinner-primary"},
+                                { className: "spinner-layer spinner-primary" },
                                 React.createElement(
                                     "div",
-                                    {className: "circle-clipper left"},
-                                    React.createElement("div", {className: "circle"})
+                                    { className: "circle-clipper left" },
+                                    React.createElement("div", { className: "circle" })
                                 ),
                                 React.createElement(
                                     "div",
-                                    {className: "gap-patch"},
-                                    React.createElement("div", {className: "circle"})
+                                    { className: "gap-patch" },
+                                    React.createElement("div", { className: "circle" })
                                 ),
                                 React.createElement(
                                     "div",
-                                    {className: "circle-clipper right"},
-                                    React.createElement("div", {className: "circle"})
+                                    { className: "circle-clipper right" },
+                                    React.createElement("div", { className: "circle" })
                                 )
                             )
                         ),
                         React.createElement(
                             "p",
-                            {className: "text-center flow-text"},
+                            { className: "text-center flow-text" },
                             "Deine aktuellen Informationen werden geladen \u2026"
                         )
                     )
@@ -164,10 +126,10 @@ var Dashboard = function (_React$Component) {
                 null,
                 React.createElement(
                     "button",
-                    {className: "btn-flat right grey-text", onClick: this.updateData},
+                    { className: "btn-flat right grey-text", onClick: this.updateData },
                     React.createElement(
                         "i",
-                        {className: "material-icons left"},
+                        { className: "material-icons left" },
                         "refresh"
                     ),
                     "in ",
@@ -176,20 +138,20 @@ var Dashboard = function (_React$Component) {
                 ),
                 React.createElement(
                     "p",
-                    {className: "flow-text"},
+                    { className: "flow-text" },
                     "Moin Moin, ",
                     this.state.user.full_name !== "" ? this.state.user.full_name : this.state.user.username,
                     ". Hier findest du alle aktuellen Informationen:"
                 ),
                 React.createElement(
                     "div",
-                    {className: "alert success"},
+                    { className: "alert success" },
                     React.createElement(
                         "p",
                         null,
                         React.createElement(
                             "i",
-                            {className: "material-icons left"},
+                            { className: "material-icons left" },
                             "report_problem"
                         ),
                         "Das neue Dashboard von SchoolApps befindet sich momentan in der ",
@@ -202,8 +164,7 @@ var Dashboard = function (_React$Component) {
                         React.createElement(
                             "a",
                             {
-                                href: "mailto:support@katharineum.de"
-                            },
+                                href: "mailto:support@katharineum.de" },
                             "support@katharineum.de"
                         ),
                         "."
@@ -212,31 +173,27 @@ var Dashboard = function (_React$Component) {
                 this.state.unread_notifications && this.state.unread_notifications.length > 0 ? this.state.unread_notifications.map(function (notification) {
                     return React.createElement(
                         "div",
-                        {
-                            className: "alert primary scale-transition", id: "not-" + notification.id,
-                            key: notification.id
-                        },
+                        { className: "alert primary scale-transition", id: "not-" + notification.id,
+                            key: notification.id },
                         React.createElement(
                             "div",
                             null,
                             React.createElement(
                                 "i",
-                                {className: "material-icons left"},
+                                { className: "material-icons left" },
                                 "info"
                             ),
                             React.createElement(
                                 "div",
-                                {className: "right"},
+                                { className: "right" },
                                 React.createElement(
                                     "button",
-                                    {
-                                        className: "btn-flat", onClick: function onClick() {
+                                    { className: "btn-flat", onClick: function onClick() {
                                             return that.closeNotification(notification);
-                                        }
-                                    },
+                                        } },
                                     React.createElement(
                                         "i",
-                                        {className: "material-icons center"},
+                                        { className: "material-icons center" },
                                         "close"
                                     )
                                 )
@@ -260,25 +217,25 @@ var Dashboard = function (_React$Component) {
                     this.state.plan.hints.map(function (hint, idx) {
                         return React.createElement(
                             "div",
-                            {className: "alert primary", key: idx},
+                            { className: "alert primary", key: idx },
                             React.createElement(
                                 "div",
                                 null,
                                 React.createElement(
                                     "em",
-                                    {className: "right hide-on-small-and-down"},
+                                    { className: "right hide-on-small-and-down" },
                                     "Hinweis f\xFCr ",
                                     that.state.date_formatted
                                 ),
                                 React.createElement(
                                     "i",
-                                    {className: "material-icons left"},
+                                    { className: "material-icons left" },
                                     "announcement"
                                 ),
-                                React.createElement("p", {dangerouslySetInnerHTML: {__html: hint.html}}),
+                                React.createElement("p", { dangerouslySetInnerHTML: { __html: hint.html } }),
                                 React.createElement(
                                     "em",
-                                    {className: "hide-on-med-and-up"},
+                                    { className: "hide-on-med-and-up" },
                                     "Hinweis f\xFCr ",
                                     that.state.date_formatted
                                 )
@@ -288,19 +245,19 @@ var Dashboard = function (_React$Component) {
                 ) : "",
                 React.createElement(
                     "div",
-                    {className: "row"},
+                    { className: "row" },
                     React.createElement(
                         "div",
-                        {className: "dashboard-cards"},
+                        { className: "dashboard-cards" },
                         this.state.has_plan ? React.createElement(
                             "div",
-                            {className: "card"},
+                            { className: "card" },
                             React.createElement(
                                 "div",
-                                {className: "card-content"},
+                                { className: "card-content" },
                                 React.createElement(
                                     "span",
-                                    {className: "card-title"},
+                                    { className: "card-title" },
                                     "Plan ",
                                     this.state.plan.type === 2 ? "der" : "für",
                                     " ",
@@ -312,31 +269,46 @@ var Dashboard = function (_React$Component) {
                                     " f\xFCr ",
                                     this.state.date_formatted
                                 ),
-                                this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
+                                this.state.holiday ? React.createElement(
                                     "div",
-                                    {className: "timetable-plan"},
+                                    { className: "card" },
+                                    React.createElement(
+                                        "div",
+                                        { className: "card-content" },
+                                        React.createElement(
+                                            "span",
+                                            {
+                                                className: "badge new blue center-align holiday-badge" },
+                                            this.state.holiday.name
+                                        ),
+                                        React.createElement("br", null)
+                                    )
+                                ) : this.state.lessons && this.state.lessons.length > 0 ? React.createElement(
+                                    "div",
+                                    { className: "timetable-plan" },
                                     this.state.lessons.map(function (lesson) {
                                         // Show one lesson row
                                         return React.createElement(
                                             "div",
-                                            {className: "row"},
+                                            { className: "row" },
                                             React.createElement(
                                                 "div",
-                                                {className: "col s4"},
+                                                { className: "col s4" },
                                                 React.createElement(
                                                     "div",
-                                                    {className: "card timetable-title-card"},
+                                                    { className: "card timetable-title-card" },
                                                     React.createElement(
                                                         "div",
-                                                        {className: "card-content"},
+                                                        { className: "card-content" },
                                                         React.createElement(
                                                             "span",
-                                                            {className: "card-title left"},
+                                                            { className: "card-title left" },
                                                             lesson.time.number_format
                                                         ),
                                                         React.createElement(
                                                             "div",
-                                                            {className: "right timetable-time grey-text text-darken-2"},
+                                                            {
+                                                                className: "right timetable-time grey-text text-darken-2" },
                                                             React.createElement(
                                                                 "span",
                                                                 null,
@@ -352,23 +324,21 @@ var Dashboard = function (_React$Component) {
                                                     )
                                                 )
                                             ),
-                                            React.createElement("div", {
-                                                className: "col s8",
-                                                dangerouslySetInnerHTML: {__html: lesson.html}
-                                            })
+                                            React.createElement("div", { className: "col s8",
+                                                dangerouslySetInnerHTML: { __html: lesson.html } })
                                         );
                                     })
                                 ) : ""
                             ),
                             React.createElement(
                                 "div",
-                                {className: "card-action"},
+                                { className: "card-action" },
                                 React.createElement(
                                     "a",
-                                    {href: MY_PLAN_URL},
+                                    { href: MY_PLAN_URL },
                                     React.createElement(
                                         "span",
-                                        {className: "badge new primary-color card-action-badge"},
+                                        { className: "badge new primary-color card-action-badge" },
                                         "SMART PLAN"
                                     ),
                                     "anzeigen"
@@ -377,22 +347,22 @@ var Dashboard = function (_React$Component) {
                         ) : "",
                         this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
                             "div",
-                            {className: "card"},
+                            { className: "card" },
                             React.createElement(
                                 "div",
-                                {className: "card-content"},
+                                { className: "card-content" },
                                 React.createElement(
                                     "span",
-                                    {className: "card-title"},
+                                    { className: "card-title" },
                                     "Aktuelle Termine"
                                 ),
                                 this.state.current_events.map(function (event) {
                                     return React.createElement(
                                         "div",
-                                        {className: "card-panel event-card"},
+                                        { className: "card-panel event-card" },
                                         React.createElement(
                                             "span",
-                                            {className: "title"},
+                                            { className: "title" },
                                             event.name
                                         ),
                                         React.createElement("br", null),
@@ -402,10 +372,10 @@ var Dashboard = function (_React$Component) {
                             ),
                             React.createElement(
                                 "div",
-                                {className: "card-action"},
+                                { className: "card-action" },
                                 React.createElement(
                                     "a",
-                                    {href: "https://katharineum-zu-luebeck.de/aktuelles/termine/", target: "_blank"},
+                                    { href: "https://katharineum-zu-luebeck.de/aktuelles/termine/", target: "_blank" },
                                     "Weitere Termine"
                                 )
                             )
@@ -415,50 +385,44 @@ var Dashboard = function (_React$Component) {
                             null,
                             React.createElement(
                                 "div",
-                                {className: "card"},
+                                { className: "card" },
                                 React.createElement(
                                     "div",
-                                    {className: "card-image"},
+                                    { className: "card-image" },
                                     React.createElement(
                                         "span",
-                                        {className: "badge-image"},
+                                        { className: "badge-image z-depth-2" },
                                         "Aktuelles von der Homepage"
                                     ),
-                                    React.createElement("img", {
-                                        src: this.state.newest_article.image_url,
-                                        alt: this.state.newest_article.title
-                                    }),
-                                    React.createElement("span", {
-                                        className: "card-title",
-                                        dangerouslySetInnerHTML: {__html: this.state.newest_article.title}
-                                    })
+                                    React.createElement("img", { src: this.state.newest_article.image_url,
+                                        alt: this.state.newest_article.title }),
+                                    React.createElement("span", { className: "card-title",
+                                        dangerouslySetInnerHTML: { __html: this.state.newest_article.title } })
                                 ),
                                 React.createElement(
                                     "div",
-                                    {className: "card-content"},
-                                    React.createElement("p", {dangerouslySetInnerHTML: {__html: this.state.newest_article.short_text}})
+                                    { className: "card-content" },
+                                    React.createElement("p", { dangerouslySetInnerHTML: { __html: this.state.newest_article.short_text } })
                                 ),
                                 React.createElement(
                                     "div",
-                                    {className: "card-action"},
+                                    { className: "card-action" },
                                     React.createElement(
                                         "a",
-                                        {href: this.state.newest_article.link, target: "_blank"},
+                                        { href: this.state.newest_article.link, target: "_blank" },
                                         "Mehr lesen"
                                     )
                                 )
                             ),
                             React.createElement(
                                 "a",
-                                {
-                                    className: "btn hundred-percent primary-color",
+                                { className: "btn hundred-percent primary-color",
                                     href: "https://katharineum-zu-luebeck.de/",
-                                    target: "_blank"
-                                },
+                                    target: "_blank" },
                                 "Weitere Artikel",
                                 React.createElement(
                                     "i",
-                                    {className: "material-icons right"},
+                                    { className: "material-icons right" },
                                     "arrow_forward"
                                 )
                             )
@@ -467,10 +431,10 @@ var Dashboard = function (_React$Component) {
                 ),
                 React.createElement(
                     "div",
-                    {className: "row"},
+                    { className: "row" },
                     React.createElement(
                         "div",
-                        {className: "col s12 m6"},
+                        { className: "col s12 m6" },
                         React.createElement(
                             "h5",
                             null,
@@ -478,19 +442,19 @@ var Dashboard = function (_React$Component) {
                         ),
                         this.state.activities && this.state.activities.length > 0 ? React.createElement(
                             "ul",
-                            {className: "collection"},
+                            { className: "collection" },
                             this.state.activities.map(function (activity) {
                                 return React.createElement(
                                     "li",
-                                    {className: "collection-item", key: activity.id},
+                                    { className: "collection-item", key: activity.id },
                                     React.createElement(
                                         "span",
-                                        {className: "badge new primary-color"},
+                                        { className: "badge new primary-color" },
                                         activity.app
                                     ),
                                     React.createElement(
                                         "span",
-                                        {className: "title"},
+                                        { className: "title" },
                                         activity.title
                                     ),
                                     React.createElement(
@@ -498,7 +462,7 @@ var Dashboard = function (_React$Component) {
                                         null,
                                         React.createElement(
                                             "i",
-                                            {className: "material-icons left"},
+                                            { className: "material-icons left" },
                                             "access_time"
                                         ),
                                         " ",
@@ -519,7 +483,7 @@ var Dashboard = function (_React$Component) {
                     ),
                     React.createElement(
                         "div",
-                        {className: "col s12 m6"},
+                        { className: "col s12 m6" },
                         React.createElement(
                             "h5",
                             null,
@@ -527,19 +491,19 @@ var Dashboard = function (_React$Component) {
                         ),
                         this.state.notifications && this.state.notifications.length > 0 ? React.createElement(
                             "ul",
-                            {className: "collection"},
+                            { className: "collection" },
                             this.state.notifications.map(function (notification) {
                                 return React.createElement(
                                     "li",
-                                    {className: "collection-item", key: notification.id},
+                                    { className: "collection-item", key: notification.id },
                                     React.createElement(
                                         "span",
-                                        {className: "badge new primary-color"},
+                                        { className: "badge new primary-color" },
                                         notification.app
                                     ),
                                     React.createElement(
                                         "span",
-                                        {className: "title"},
+                                        { className: "title" },
                                         notification.title
                                     ),
                                     React.createElement(
@@ -547,7 +511,7 @@ var Dashboard = function (_React$Component) {
                                         null,
                                         React.createElement(
                                             "i",
-                                            {className: "material-icons left"},
+                                            { className: "material-icons left" },
                                             "access_time"
                                         ),
                                         " ",
@@ -563,7 +527,7 @@ var Dashboard = function (_React$Component) {
                                         null,
                                         React.createElement(
                                             "a",
-                                            {href: notification.link},
+                                            { href: notification.link },
                                             "Mehr Informationen \u2192"
                                         )
                                     ) : ""

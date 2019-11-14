@@ -70,7 +70,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
     lessons = parse()
     times_parsed = parse_lesson_times()
 
-    hols_for_weekday = []
+    hols_for_weekdays = []
 
     if smart:
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
@@ -80,7 +80,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
             subs_for_weekday.append(subs)
 
             hols = get_today_holidays(week_day)
-            hols_for_weekday.append(hols)
+            hols_for_weekdays.append(hols)
             # print(subs)
             # print(len(subs))
 
@@ -168,9 +168,9 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                             element_container.is_old = True
 
                     # Check for holidays
-                    if smart and hols_for_weekday[time.day - 1]:
+                    if smart and hols_for_weekdays[time.day - 1]:
                         element_container.is_hol = True
-                        element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
+                        element_container.element.holiday_reason = hols_for_weekdays[time.day - 1][0].name
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
@@ -236,4 +236,4 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    return plan, hols_for_weekday
+    return plan, hols_for_weekdays

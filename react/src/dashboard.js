@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
         $.getJSON(API_URL + "/my-plan", (data) => {
             console.log(data);
             if (data && data.lessons) {
-                that.setState({lessons: data.lessons});
+                that.setState({lessons: data.lessons, holiday: data.holiday});
             }
         });
     };
@@ -164,34 +164,45 @@ class Dashboard extends React.Component {
                             </span>
 
                             {/* Show plan */}
-                            {this.state.lessons && this.state.lessons.length > 0 ? <div className={"timetable-plan"}>
-                                {this.state.lessons.map(function (lesson) {
-                                    // Show one lesson row
-                                    return <div className="row">
-                                        {/* Show time information*/}
-                                        <div className="col s4">
-                                            <div className="card timetable-title-card">
-                                                <div className="card-content">
-                                                    {/* Lesson number*/}
-                                                    <span className="card-title left">
-                                                        {lesson.time.number_format}
-                                                    </span>
+                            {this.state.holiday ? <div className={"card"}>
+                                    <div className={"card-content"}>
+                                        {/*<i className={"material-icons medium left"}>no_meeting_room</i>*/}
+                                        <span
+                                            className="badge new blue center-align holiday-badge">{this.state.holiday.name}</span>
+                                        <br/>
+                                    </div>
+                                </div> :
+                                (this.state.lessons && this.state.lessons.length > 0 ?
+                                    <div className={"timetable-plan"}>
+                                        {this.state.lessons.map(function (lesson) {
+                                            // Show one lesson row
+                                            return <div className="row">
+                                                {/* Show time information*/}
+                                                <div className="col s4">
+                                                    <div className="card timetable-title-card">
+                                                        <div className="card-content">
+                                                            {/* Lesson number*/}
+                                                            <span className="card-title left">
+                                                                {lesson.time.number_format}
+                                                            </span>
 
-                                                    {/* Times */}
-                                                    <div className="right timetable-time grey-text text-darken-2">
-                                                        <span>{lesson.time.start_format}</span>
-                                                        <br/>
-                                                        <span>{lesson.time.end_format}</span>
+                                                            {/* Times */}
+                                                            <div
+                                                                className="right timetable-time grey-text text-darken-2">
+                                                                <span>{lesson.time.start_format}</span>
+                                                                <br/>
+                                                                <span>{lesson.time.end_format}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        {/* Show lesson content (via generated HTML by Django) */}
-                                        <div className={"col s8"} dangerouslySetInnerHTML={{__html: lesson.html}}/>
-                                    </div>;
-                                })}
-                            </div> : ""}
+                                                {/* Show lesson content (via generated HTML by Django) */}
+                                                <div className={"col s8"}
+                                                     dangerouslySetInnerHTML={{__html: lesson.html}}/>
+                                            </div>;
+                                        })}
+                                    </div> : "")}
                         </div>
                         <div className="card-action">
                             <a href={MY_PLAN_URL}>
@@ -277,7 +288,7 @@ class Dashboard extends React.Component {
                             <div className="card">
                                 {/* Image with badge and title */}
                                 <div className="card-image">
-                                    <span className={"badge-image"}>Aktuelles von der Homepage</span>
+                                    <span className={"badge-image z-depth-2"}>Aktuelles von der Homepage</span>
                                     <img src={this.state.newest_article.image_url}
                                          alt={this.state.newest_article.title}/>
                                     <span className="card-title"

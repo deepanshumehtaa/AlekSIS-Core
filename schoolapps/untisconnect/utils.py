@@ -42,4 +42,6 @@ def get_plan_for_day(_type, plan_id, date):
     # Get plan
     plan, holidays = get_plan(_type, plan_id, smart=True, monday_of_week=monday_of_week)
     lessons = [(row[week_day], time) for row, time in plan]
-    return lessons
+
+    holidays_for_date = holidays[week_day]
+    return lessons, holidays_for_date
