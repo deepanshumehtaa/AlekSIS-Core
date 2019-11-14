@@ -1,4 +1,4 @@
-//This is the service worker with the Advanced caching
+//This is the SchoolApps service worker with Advanced caching
 
 const CACHE = "schoolapps-cache";
 
