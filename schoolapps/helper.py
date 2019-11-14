@@ -10,6 +10,7 @@ import requests
 from requests import RequestException
 
 from dashboard import settings
+from dashboard.caches import LATEST_ARTICLE_CACHE, CURRENT_EVENTS_CACHE
 
 
 def path_and_rename(instance, filename):
@@ -109,6 +110,7 @@ def get_newest_articles(domain: str = WP_DOMAIN,
     return posts
 
 
+@LATEST_ARTICLE_CACHE.decorator
 def get_newest_article_from_news(domain=WP_DOMAIN):
     newest_articles: list = get_newest_articles(domain=domain, limit=1, category_whitelist=[1, 27])
     if len(newest_articles) > 0:
@@ -170,6 +172,7 @@ def get_current_events(calendar: Calendar, limit: int = 5) -> list:
     return events
 
 
+@CURRENT_EVENTS_CACHE.decorator
 def get_current_events_with_cal(limit: int = 5) -> list:
     # Get URL
     calendar_url: str = settings.current_events_settings.calendar_url

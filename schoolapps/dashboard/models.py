@@ -104,3 +104,24 @@ class Cache(models.Model):
         """Overrides model function delete to delete cache entry, too"""
         cache.delete(self.id)
         super(Cache, self).delete(*args, **kwargs)
+
+    def decorator(self, func):
+        decorator_cache = self
+
+        def wrapper(*args, **kwargs):
+            if "force_update" in kwargs:
+                force_update = kwargs["force_update"]
+                del kwargs["force_update"]
+            else:
+                force_update = False
+            cached = decorator_cache.get()
+            if cached is not False and not force_update:
+                print("CACHED VALUE FOR ", func)
+                return cached
+
+            print("NON CACHED VALUE FOR ", func, "FORCE", force_update)
+            res = func(*args, **kwargs)
+            decorator_cache.update(res)
+            return res
+
+        return wrapper

@@ -1,33 +1,24 @@
 from email.utils import formatdate
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.cache import cache
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.utils import timezone, formats
+from django.urls import reverse
+from django.utils import timezone
 from martor.templatetags.martortags import safe_markdown
 
 from dashboard.settings import latest_article_settings, current_events_settings
-from helper import get_current_events, get_newest_article_from_news, get_current_events_with_cal
-from untisconnect.datetimeutils import get_name_for_next_week_day_from_today, calendar_week, weekday
+from helper import get_newest_article_from_news, get_current_events_with_cal
 from timetable.hints import get_all_hints_by_class_and_time_period, get_all_hints_for_teachers_by_time_period
-from timetable.views import get_next_weekday_with_time, get_calendar_week
+from timetable.views import get_next_weekday_with_time
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
-from untisconnect.plan import get_plan
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.cache import cache
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
-from django.http import HttpResponseNotFound
-
+from untisconnect.datetimeutils import get_name_for_next_week_day_from_today
 from untisconnect.utils import get_type_and_object_of_user, get_plan_for_day
-from .models import Activity, register_notification
-from .models import Activity, register_notification, Cache
-# from .apps import DashboardConfig
-from mailer import send_mail_with_template
-from userinformation import UserInformation
 from .models import Activity, Notification
+from .models import Cache
 
 
 @login_required

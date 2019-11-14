@@ -34,3 +34,15 @@ SUBS_VIEW_CACHE, _ = Cache.objects.get_or_create(id="subs_view_cache",
                                                      "site_cache": True,
                                                      "name": "Vertretungen (Tabellenansicht)",
                                                      "expiration_time": 60})
+
+LATEST_ARTICLE_CACHE, _ = Cache.objects.get_or_create(id="latest_article_cache",
+                                                      defaults={
+                                                          "name": "Letzter Artikel von der Homepage",
+                                                          "expiration_time": 60
+                                                      })
+
+CURRENT_EVENTS_CACHE, _ = Cache.objects.get_or_create(id="current_events_cache",
+                                                      defaults={
+                                                          "name": "Aktuelle Termine",
+                                                          "expiration_time": 60
+                                                      })

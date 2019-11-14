@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from dashboard.caches import BACKGROUND_CACHE_REFRESH
 from dashboard.models import Cache
+from helper import get_newest_article_from_news, get_current_events_with_cal
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.drive import build_drive, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM
 from untisconnect.parse import parse
@@ -66,6 +67,14 @@ class Command(BaseCommand):
                     self.start("    " + str(monday_of_week))
                     get_plan(type_id, id, smart=True, monday_of_week=monday_of_week, force_update=True)
 
+        self.finish()
+
+        self.start("Aktualisiere Artikel ...")
+        get_newest_article_from_news(force_update=True)
+        self.finish()
+
+        self.start("Aktualisiere Termine ...")
+        get_current_events_with_cal(force_update=True)
         self.finish()
 
         self.start("Aktualisierungszeitpunkt in der Datenbank speichern ...")

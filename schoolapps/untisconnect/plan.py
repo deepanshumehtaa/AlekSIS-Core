@@ -2,13 +2,13 @@ import datetime
 
 from django.utils import timezone
 
-from dashboard import caches, plan_caches
+from dashboard import plan_caches
 from schoolapps import settings
 from schoolapps.settings import LESSONS
-from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
+from untisconnect.api import TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
+from untisconnect.api import format_classes, get_today_holidays
 from untisconnect.datetimeutils import format_lesson_time
 from untisconnect.events import get_all_events_by_date
-from untisconnect.api import format_classes, get_today_holidays
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION, generate_event_table
 
@@ -90,7 +90,6 @@ def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
 
             hols = get_today_holidays(week_day)
             hols_for_weekdays.append(hols)
-
 
     # Init plan array
     plan = []
