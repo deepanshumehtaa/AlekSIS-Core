@@ -18,10 +18,9 @@ services:
       - biscuit_backups:/var/backups/biscuit
       - biscuit_config:/etc/biscuit
     environment:
-      - BISCUIT_secret_key=DoNotUseInProduction
       - BISCUIT_http__allowed_hosts="['*']"
-      - BISCUIT_database__host=db
       - BISCUIT_caching__memcached__address=memcached:11211
+      - POSTGRES_HOST=db
     depends_on:
       - db
       - memcached
