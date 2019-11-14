@@ -16,6 +16,7 @@ services:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
       - biscuit_backups:/var/backups/biscuit
+      - biscuit_config:/etc/biscuit
     environment:
       - BISCUIT_secret_key=DoNotUseInProduction
       - BISCUIT_http__allowed_hosts="['*']"
@@ -39,3 +40,4 @@ volumes:
   biscuit_media:
   biscuit_static:
   biscuit_backups:
+  biscuit_config:
