@@ -54,7 +54,7 @@ class Cache(models.Model):
     last_time_updated = models.DateTimeField(blank=True, null=True,
                                              verbose_name="Letzter Aktualisierungszeitpunkt des Caches")
     site_cache = models.BooleanField(default=False, verbose_name="Seitencache?")
-    needed_until = models.DateField(default=None, null=True, verbose_name="Benötigt bis")
+    needed_until = models.DateField(default=None, null=True, blank=True, verbose_name="Benötigt bis")
 
     class Meta:
         verbose_name = "Cacheeintrag"
