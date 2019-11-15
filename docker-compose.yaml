@@ -12,7 +12,7 @@ services:
     image: memcached:latest
   app:
     build: .
-    image: biscuitsis/biscuit
+    image: registry.edugit.org/biscuit/biscuit-ng
     volumes:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
@@ -27,7 +27,7 @@ services:
       - memcached
   web:
     build: ./docker/nginx
-    image: biscuitsis/biscuit-nginx
+    image: registry.edugit.org/biscuit/biscuit-ng/nginx
     volumes:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
