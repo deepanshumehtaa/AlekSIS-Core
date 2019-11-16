@@ -12,7 +12,7 @@ services:
     image: memcached:latest
   app:
     build: .
-    image: registry.edugit.org/biscuit/biscuit-ng
+    image: registry.edugit.org/biscuit/biscuit-ng:${BISCUIT_IMAGE_TAG:-latest}
     volumes:
       - biscuit_data:/var/lib/biscuit/
     environment:
