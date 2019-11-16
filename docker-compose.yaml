@@ -14,10 +14,7 @@ services:
     build: .
     image: registry.edugit.org/biscuit/biscuit-ng
     volumes:
-      - biscuit_media:/srv/media
-      - biscuit_static:/srv/static
-      - biscuit_backups:/var/backups/biscuit
-      - biscuit_config:/etc/biscuit
+      - biscuit_data:/var/lib/biscuit/
     environment:
       - BISCUIT_http__allowed_hosts="['*']"
       - BISCUIT_caching__memcached__address=memcached:11211
@@ -29,8 +26,7 @@ services:
     build: ./docker/nginx
     image: registry.edugit.org/biscuit/biscuit-ng/nginx
     volumes:
-      - biscuit_media:/srv/media
-      - biscuit_static:/srv/static
+      - biscuit_data:/var/lib/biscuit/
     ports:
       - ${NGINX_HTTP_PORT:-8080}:80
     depends_on:
@@ -38,7 +34,4 @@ services:
 
 volumes:
   postgres_data:
-  biscuit_media:
-  biscuit_static:
-  biscuit_backups:
-  biscuit_config:
+  biscuit_data:
