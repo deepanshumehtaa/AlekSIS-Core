@@ -32,7 +32,7 @@ services:
       - biscuit_media:/srv/media
       - biscuit_static:/srv/static
     ports:
-      - 8080:80
+      - ${NGINX_HTTP_PORT:-8080}:80
     depends_on:
       - app
 
