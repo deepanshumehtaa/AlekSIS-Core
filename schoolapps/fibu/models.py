@@ -13,6 +13,7 @@ class Status:
 status_list = [
     Status(name='beantragt', style_class='red'),
     Status(name='bewilligt', style_class='orange'),
+    Status(name='abgelehnt', style_class='black'),
     Status(name='bestellt', style_class='yellow'),
     Status(name='bezahlt', style_class='green'),
 ]

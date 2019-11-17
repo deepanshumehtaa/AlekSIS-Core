@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import datetime
 from material import Layout, Row, Fieldset
 from aub.models import Aub
-from tinymce.widgets import TinyMCE
+# from tinymce.widgets import TinyMCE
 
 
 class ApplyForAUBForm(forms.ModelForm):
@@ -18,7 +18,8 @@ class ApplyForAUBForm(forms.ModelForm):
     to_date = forms.DateField(label='Datum', input_formats=['%d.%m.%Y'])
     to_lesson = forms.ChoiceField(label='Stunde', choices=lessons, required=False, widget=forms.Select(attrs={'onchange': 'setTime(this)'}))
     to_time = forms.TimeField(label='Zeit', input_formats=['%H:%M'], initial=initial_to_time)
-    description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    # description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    description = forms.CharField(label='Bitte begründen Sie Ihren Antrag.')
 
     layout = Layout(Fieldset('Von',
                              Row('from_date', 'from_lesson', 'from_time'),

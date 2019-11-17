@@ -17,22 +17,33 @@
         </button>
     </form>
 
-    <h5>Laufende Anträge</h5>
+    <h4>Laufende Anträge</h4>
        <div class="collection">
            {% for booking in bookings %}
-{#           <div class="collection-item row">#}
-           <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row">
+               STATUS_ID: {% booking.status.id %}
+               <div class="collection-item row">
+{#            <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row"> #}
                     <span class="col s12 m8">{{ booking.description }}</span>
-                    <span class="col s12 m3 flushright">{{ booking.planned_amount }} €</span>
+                    <span class="col s12 m2 flushright">{{ booking.planned_amount }} €</span>
                     <span class="col s12 m1 badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
-{#                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m2">#}
-{#                        {% csrf_token %}#}
-{#                        <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">#}
-{#                                        <i class="material-icons center green-text">create</i>#}
-{#                        </button>#}
-{#                    </form>#}
-           </a>
-{#           </div>#}
+                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m1">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                        {% if booking.status.id == 0 %}
+                            <button type="submit" name="edit"
+                                    class="waves-effect waves-light btn-flat btn-flat-large" title="Bearbeiten">
+                                <i class="material-icons center green-text">create</i>
+                            </button>
+                        {% endif %}
+                        {% if booking.status.id == 1 %}
+                            <button type="submit" name="order"
+                                class="waves-effect waves-light btn-flat btn-flat-large" title="Ware ist bestellt">
+                                <i class="material-icons center red-text">shopping-cart</i>
+                            </button>
+                        {% endif %}
+                    </form>
+{#           </a>#}
+           </div>
            {% endfor %}
        </div>
     {% endblock %}

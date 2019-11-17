@@ -75,7 +75,7 @@ def check(request):
             if 'allow' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=1)
             elif 'deny' in request.POST:
-                Booking.objects.filter(id=booking_id).update(status=3)
+                Booking.objects.filter(id=booking_id).update(status=2)
                 # Notify user
                 # register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
                 #                       description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
