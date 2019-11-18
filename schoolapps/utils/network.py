@@ -1,35 +1,12 @@
-import os
 import re
-from uuid import uuid4
 
-from django.template.loader_tags import register
-
+import requests
 from django.utils import timezone, formats
 from ics import Calendar
-import requests
 from requests import RequestException
 
 from dashboard import settings
 from dashboard.caches import LATEST_ARTICLE_CACHE, CURRENT_EVENTS_CACHE
-
-
-def path_and_rename(instance, filename):
-    upload_to = 'menus'
-    ext = filename.split('.')[-1].lower()
-    # get filename
-    if instance.pk:
-        filename = '{}.{}'.format(instance.pk, ext)
-    else:
-        # set filename as random string
-        filename = '{}.{}'.format(uuid4().hex, ext)
-    # return the whole path to the file
-    return os.path.join(upload_to, filename)
-
-
-@register.inclusion_tag("components/msgbox.html")
-def msg_box(msg, status="success", icon="info"):
-    return {"msg": msg, "status": status, "icon": icon}
-
 
 WP_DOMAIN: str = "https://katharineum-zu-luebeck.de"
 

@@ -1,9 +1,10 @@
+from django.db import ProgrammingError
 from django.urls import path
 
 from untisconnect.models import Terms, Schoolyear
 
 try:
-    from . import views
+    import dashboard.views.dashboard as views
 
     urlpatterns = [
         path('', views.index, name='dashboard'),
@@ -12,7 +13,7 @@ try:
         path('api/my-plan', views.api_my_plan_html, name="api_my_plan_html"),
     ]
 
-except (Terms.DoesNotExist, Schoolyear.DoesNotExist):
+except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError):
     from timetable import fallback_view
 
     urlpatterns = [
@@ -22,8 +23,10 @@ except (Terms.DoesNotExist, Schoolyear.DoesNotExist):
         path('api/my-plan', fallback_view.fallback, name="api_my_plan_html"),
     ]
 
+import dashboard.views.tools as tools_views
+
 urlpatterns += [
-    path("tools", views.tools, name="tools"),
-    path("tools/clear-cache", views.tools_clear_cache, name="tools_clear_cache"),
-    path("tools/clear-cache/<str:id>", views.tools_clear_cache, name="tools_clear_single_cache"),
+    path("tools", tools_views.tools, name="tools"),
+    path("tools/clear-cache", tools_views.tools_clear_cache, name="tools_clear_cache"),
+    path("tools/clear-cache/<str:id>", tools_views.tools_clear_cache, name="tools_clear_single_cache"),
 ]
