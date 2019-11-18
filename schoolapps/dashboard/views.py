@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseNotFound
+
+from meta import OPEN_SOURCE_COMPONENTS
 from .models import Activity, register_notification
 # from .apps import DashboardConfig
 from mailer import send_mail_with_template
@@ -51,6 +53,10 @@ def test_notification(request):
                           link=reverse("aub_details", args=[1]))
     print(reverse("aub_details", args=[1]))
     return redirect(reverse('dashboard'))
+
+
+def about(request):
+    return render(request, "common/about.html", context={"components": OPEN_SOURCE_COMPONENTS})
 
 
 def error_404(request, exception):
