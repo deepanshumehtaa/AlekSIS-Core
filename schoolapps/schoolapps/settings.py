@@ -170,4 +170,25 @@ if DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#DBSETTINGS_USE_CACHE = False
+# DBSETTINGS_USE_CACHE = False
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+       'file': {
+           'level': 'DEBUG',
+           'class': 'logging.FileHandler',
+           'filename': 'log.django',
+       },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console','file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}

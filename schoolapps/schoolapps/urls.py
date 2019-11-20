@@ -21,6 +21,7 @@ from django.contrib.staticfiles.views import serve
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.shortcuts import render
 from django.views import defaults
 
 from schoolapps.settings import BASE_DIR
@@ -33,11 +34,13 @@ def manifest(request):
 def serviceworker(request):
     return serve(request, "common/pwabuilder-sw.js")
 
-handler404 = 'dashboard.views.error_404'
 
-def custom_page_not_found(request):
-    return defaults.page_not_found(request, None, "common/404.html")
+def custom_page_not_found(request, exception):
+    print(exception)
+    return render(request, '404.html', context={"martor": False})
 
+
+handler404 = custom_page_not_found
 
 urlpatterns = [
     #############
@@ -94,4 +97,3 @@ urlpatterns = [
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

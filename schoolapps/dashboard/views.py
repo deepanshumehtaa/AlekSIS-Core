@@ -51,7 +51,3 @@ def test_notification(request):
                           link=reverse("aub_details", args=[1]))
     print(reverse("aub_details", args=[1]))
     return redirect(reverse('dashboard'))
-
-
-def error_404(request, exception):
-    return render(request, 'common/404.html')
