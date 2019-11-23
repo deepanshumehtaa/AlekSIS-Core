@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 23:04+0200\n"
+"POT-Creation-Date: 2019-11-23 10:06+0100\n"
 "PO-Revision-Date: 2019-09-17 21:08+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
@@ -19,21 +19,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.8\n"
 
-#: forms.py:26 forms.py:59
+#: forms.py:30 forms.py:66
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
 "existierenden Benutzer auswählen."
 
-#: forms.py:28 forms.py:61
+#: forms.py:32 forms.py:68
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
 
-#: forms.py:50
+#: forms.py:57
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: forms.py:51
+#: forms.py:58
 msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
@@ -242,11 +242,11 @@ msgstr "Kurzer Name der Gruppe"
 msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
-#: settings.py:216
+#: settings.py:218
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:217
+#: settings.py:219
 msgid "English"
 msgstr "Englisch"
 
@@ -347,12 +347,12 @@ msgstr ""
 "   Die Nachricht wurde erfolgreich übermittelt.\n"
 "  "
 
-#: templates/core/edit_group.html:6 templates/core/edit_group.html:8
+#: templates/core/edit_group.html:16 templates/core/edit_group.html:18
 #: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr "Gruppe editieren"
 
-#: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+#: templates/core/edit_group.html:26 templates/core/edit_person.html:28
 #: templates/core/edit_school.html:22 templates/core/edit_schoolterm.html:22
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -455,7 +455,7 @@ msgstr ""
 "       die Verwaltenden von BiscuIT an Ihrer Schule.\n"
 "      "
 
-#: templates/core/person_full.html:8 templates/core/persons_accounts.html:31
+#: templates/core/person_full.html:8 templates/core/persons_accounts.html:41
 msgid "Person"
 msgstr "Person"
 
@@ -477,12 +477,12 @@ msgstr ""
 "          Es existiert keine Person mit dieser ID.\n"
 "        "
 
-#: templates/core/persons_accounts.html:7
-#: templates/core/persons_accounts.html:10
+#: templates/core/persons_accounts.html:17
+#: templates/core/persons_accounts.html:20
 msgid "Link persons to accounts"
 msgstr "Personen mit Benutzerkonten verknüpfen"
 
-#: templates/core/persons_accounts.html:16
+#: templates/core/persons_accounts.html:26
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -501,15 +501,15 @@ msgstr ""
 "    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
 "      "
 
-#: templates/core/persons_accounts.html:32
+#: templates/core/persons_accounts.html:42
 msgid "Existing account"
 msgstr "Existierendes Konto"
 
-#: templates/core/persons_accounts.html:33
+#: templates/core/persons_accounts.html:43
 msgid "New account"
 msgstr "Neues Konto"
 
-#: templates/core/persons_accounts.html:49
+#: templates/core/persons_accounts.html:59
 msgid "Update"
 msgstr "Aktualisieren"
 
@@ -582,7 +582,7 @@ msgstr "Die Gruppe wurde gespeichert."
 msgid "The school has been saved."
 msgstr "Die Schule wurde gespeichert."
 
-#: views.py:229
+#: views.py:230
 msgid "The term has been saved."
 msgstr "Das Schuljahr wurde gespeichert."
 

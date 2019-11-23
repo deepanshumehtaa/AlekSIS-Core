@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 23:04+0200\n"
+"POT-Creation-Date: 2019-11-23 10:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: forms.py:26 forms.py:59
+#: forms.py:30 forms.py:66
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 
-#: forms.py:28 forms.py:61
+#: forms.py:32 forms.py:68
 msgid "This username is already in use."
 msgstr ""
 
-#: forms.py:50
+#: forms.py:57
 msgid "New user"
 msgstr ""
 
-#: forms.py:51
+#: forms.py:58
 msgid "Create a new account"
 msgstr ""
 
@@ -239,11 +239,11 @@ msgstr ""
 msgid "Parent groups"
 msgstr ""
 
-#: settings.py:216
+#: settings.py:218
 msgid "German"
 msgstr ""
 
-#: settings.py:217
+#: settings.py:219
 msgid "English"
 msgstr ""
 
@@ -320,12 +320,12 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/core/edit_group.html:6 templates/core/edit_group.html:8
+#: templates/core/edit_group.html:16 templates/core/edit_group.html:18
 #: templates/core/group_full.html:16
 msgid "Edit group"
 msgstr ""
 
-#: templates/core/edit_group.html:16 templates/core/edit_person.html:22
+#: templates/core/edit_group.html:26 templates/core/edit_person.html:28
 #: templates/core/edit_school.html:22 templates/core/edit_schoolterm.html:22
 msgid "Edit"
 msgstr ""
@@ -407,7 +407,7 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/core/person_full.html:8 templates/core/persons_accounts.html:31
+#: templates/core/person_full.html:8 templates/core/persons_accounts.html:41
 msgid "Person"
 msgstr ""
 
@@ -426,12 +426,12 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/core/persons_accounts.html:7
-#: templates/core/persons_accounts.html:10
+#: templates/core/persons_accounts.html:17
+#: templates/core/persons_accounts.html:20
 msgid "Link persons to accounts"
 msgstr ""
 
-#: templates/core/persons_accounts.html:16
+#: templates/core/persons_accounts.html:26
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -442,15 +442,15 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/core/persons_accounts.html:32
+#: templates/core/persons_accounts.html:42
 msgid "Existing account"
 msgstr ""
 
-#: templates/core/persons_accounts.html:33
+#: templates/core/persons_accounts.html:43
 msgid "New account"
 msgstr ""
 
-#: templates/core/persons_accounts.html:49
+#: templates/core/persons_accounts.html:59
 msgid "Update"
 msgstr ""
 
@@ -517,6 +517,6 @@ msgstr ""
 msgid "The school has been saved."
 msgstr ""
 
-#: views.py:229
+#: views.py:230
 msgid "The term has been saved."
 msgstr ""
