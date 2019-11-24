@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "BiscuIT-ng"
-version = "1.0a4.dev0"
+version = "1.0a3.1"
 packages = [
     { include = "biscuit" }
 ]
