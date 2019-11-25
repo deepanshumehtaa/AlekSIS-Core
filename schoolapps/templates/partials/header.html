@@ -1,4 +1,5 @@
 {% load static %}
+{% load pwa %}
 {% load url_name %}
 
 <!DOCTYPE html>
@@ -66,7 +67,9 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'common/favicon.ico' %}">
-    <link rel="manifest" href="{% static "common/manifest.json" %}">
+
+    <!-- PWA -->
+    {% progressive_web_app_meta %}
 
     <!--------->
     <!-- CSS -->
@@ -75,7 +78,7 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
-    <script src="{% static 'js/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-3.4.1.slim.min.js' %}"></script>
 
 
     <!-- location (for "active" in sidenav -->

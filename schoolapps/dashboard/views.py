@@ -51,3 +51,6 @@ def test_notification(request):
                           link=reverse("aub_details", args=[1]))
     print(reverse("aub_details", args=[1]))
     return redirect(reverse('dashboard'))
+
+def offline(request):
+    return render(request, 'common/offline.html')
