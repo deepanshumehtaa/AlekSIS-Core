@@ -52,10 +52,5 @@ def test_notification(request):
     print(reverse("aub_details", args=[1]))
     return redirect(reverse('dashboard'))
 
-
-def error_404(request, exception):
-    return render(request, 'common/404.html')
-
-
 def offline(request):
     return render(request, 'common/offline.html')

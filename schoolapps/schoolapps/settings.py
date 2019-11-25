@@ -17,6 +17,8 @@ POST_MORTEM = True
 
 ALLOWED_HOSTS = [
     'info.katharineum.de',
+    '178.63.239.184',
+    '159.69.181.50',
     'localhost',
     '127.0.0.1',
     '13049d63.ngrok.io'
@@ -170,6 +172,8 @@ if DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# DBSETTINGS_USE_CACHE = False
+
 # PWA
 PWA_APP_NAME = 'SchoolApps'
 PWA_APP_DESCRIPTION = "Eine Sammlung an nützlichen Apps für den Schulalltag am Katharineum zu Lübeck"
@@ -201,5 +205,24 @@ PWA_APP_DIR = 'ltr'
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/common', 'serviceworker.js')
 PWA_APP_LANG = 'de-DE'
 
-# DB
-#DBSETTINGS_USE_CACHE = False
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'log.django',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
