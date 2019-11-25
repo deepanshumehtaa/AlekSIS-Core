@@ -66,8 +66,11 @@ header a.sidenav-trigger {
     z-index: 2;
 }
 
-header div.nav-wrapper{
-    z-index: -5;
+
+@media only screen and (max-width: 993px) {
+    header div.nav-wrapper {
+        z-index: -5;
+    }
 }
 
 header, main, footer {
@@ -81,20 +84,22 @@ header, main, footer {
 }
 
 
-
 @media only screen and (min-width: 1384px) {
     .footer-row-large {
         display: flex;
         align-items: center;
     }
+
     .footer-row-small {
         display: none;
     }
 }
+
 @media only screen and (max-width: 1383px) {
     .footer-row-large {
-    display: none;
-}
+        display: none;
+    }
+
     .footer-row-small {
         display: block;
     }
@@ -526,8 +531,9 @@ i.collapsible-trigger {
 .sidenav a:not(.collapsible-header) {
     padding: 0 16px;
 }
-ul.sidenav li.logo > a:hover{
-    background: None!important;
+
+ul.sidenav li.logo > a:hover {
+    background: None !important;
 }
 
 .waves-effect.waves-primary .waves-ripple {
@@ -561,7 +567,7 @@ ul.sidenav li.logo > a:hover{
 +HOLIDAYS+
 ++++++++++ */
 
-.holiday-badge{
+.holiday-badge {
     float: left !important;
     position: relative;
     margin-left: 0% !important;
