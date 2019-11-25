@@ -13,29 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import os
 
-from django.conf.urls import include
-from django.contrib import admin
-from django.contrib.staticfiles.views import serve
-from django.urls import path
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls import include
+from django.conf.urls.static import static
+from django.contrib import admin
 from django.shortcuts import render
-from django.views import defaults
+from django.urls import path
 
-from schoolapps.settings import BASE_DIR
-
-
-def manifest(request):
-    return serve(request, "manifest.json")
-
-
-handler404 = 'dashboard.views.error_404'
 
 def custom_page_not_found(request, exception):
     print(exception)
-    return render(request, '404.html', context={"martor": False})
+    return render(request, 'common/404.html', context={"martor": False})
 
 
 handler404 = custom_page_not_found
