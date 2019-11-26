@@ -26,6 +26,7 @@ except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError):
 import dashboard.views.tools as tools_views
 
 urlpatterns += [
+    path('offline', views.offline, name='offline'),
     path("tools", tools_views.tools, name="tools"),
     path("tools/clear-cache", tools_views.tools_clear_cache, name="tools_clear_cache"),
     path("tools/clear-cache/<str:id>", tools_views.tools_clear_cache, name="tools_clear_single_cache"),
