@@ -78,7 +78,7 @@
     <link rel="stylesheet" type="text/css" media="screen"
           href="{% static 'css/materialize.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'common/style.css' %}">
-    <script src="{% static 'js/jquery/jquery-3.4.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-3.3.1.min.js' %}"></script>
 
 
     <!-- location (for "active" in sidenav -->
@@ -302,6 +302,11 @@
                     </a>
                     <div class="collapsible-body">
                         <ul>
+                            <li id="tools">
+                                <a href="{% url "tools" %}">
+                                    <i class="material-icons">build</i> Tools
+                                </a>
+                            </li>
                             <li>
                                 <a href="/admin/">
                                     <i class="material-icons">dashboard</i> Django-Administration

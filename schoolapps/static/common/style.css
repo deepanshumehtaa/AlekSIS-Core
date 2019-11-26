@@ -66,7 +66,7 @@ header a.sidenav-trigger {
     z-index: 2;
 }
 
-header div.nav-wrapper{
+header div.nav-wrapper {
     z-index: -5;
 }
 
@@ -81,20 +81,22 @@ header, main, footer {
 }
 
 
-
 @media only screen and (min-width: 1384px) {
     .footer-row-large {
         display: flex;
         align-items: center;
     }
+
     .footer-row-small {
         display: none;
     }
 }
+
 @media only screen and (max-width: 1383px) {
     .footer-row-large {
-    display: none;
-}
+        display: none;
+    }
+
     .footer-row-small {
         display: block;
     }
@@ -380,25 +382,30 @@ table.striped > tbody > tr:nth-child(odd) {
     margin: 0;
 }
 
-.alert p:first-child, .alert div:first-child {
+.alert > p, .alert > div {
     margin: 10px;
     padding: 10px;
     border-left: 5px solid;
 }
 
-.alert.success p, .alert.success div {
+.alert.success > p, .alert.success > div {
     background-color: #c5e1a5;
     border-color: #4caf50;
 }
 
-.alert.error p, .alert.error div {
+.alert.error > p, .alert.error > div {
     background-color: #ef9a9a;
     border-color: #b71c1c;
 }
 
-.alert.primary p, .alert.primary div {
-    background-color: #eca4af;
+.alert.primary > p, .alert.primary > div {
+    background-color: #ececec;
     border-color: #da1f3d;
+}
+
+.alert.warning p, .alert.warning div {
+    background-color: #ffb74d;
+    border-color: #e65100;
 }
 
 main .alert p:first-child, main .alert div:first-child {
@@ -515,6 +522,10 @@ i.collapsible-trigger {
     margin: 0 !important;
 }
 
+.no-padding {
+    padding: 0 !important;
+}
+
 .no-pad-left {
     padding-left: 0 !important;
 }
@@ -556,7 +567,6 @@ ul.sidenav li.logo > a:hover{
 /*    border-bottom: solid #bdbdbd 2px;*/
 /*}*/
 
-
 /*++++++++
 +HOLIDAYS+
 ++++++++++ */
@@ -570,4 +580,87 @@ ul.sidenav li.logo > a:hover{
     width: auto;
     height: auto !important;
     min-height: 26px;
+}
+
+/* Dashboard */
+
+.card-action-badge {
+    float: left !important;
+    margin-left: 0 !important;
+    margin-top: -3px;
+    margin-right: 10px;
+}
+
+.event-card {
+    padding: 10px;
+}
+
+.event-card .title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hundred-percent {
+    width: 100%;
+}
+
+.badge-image {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    z-index: 1;
+    background-color: #da1f3d;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 0 3px 3px 0;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.center-via-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center2-via-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spinner-primary {
+    border-color: #da1f3d;
+}
+
+.dashboard-cards {
+    -webkit-column-break-inside: avoid;
+    column-count: 3;
+}
+
+@media (min-width: 800px) and (max-width: 1460px) {
+    .dashboard-cards {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 800px) {
+    .dashboard-cards {
+        column-count: 1;
+    }
+}
+
+
+.dashboard-cards .card {
+    display: inline-block;
+    overflow: visible;
+    width: 100%;
 }

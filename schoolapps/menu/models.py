@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from helper import path_and_rename
+from utils.helper import path_and_rename
 
 
 class Menu(models.Model):
