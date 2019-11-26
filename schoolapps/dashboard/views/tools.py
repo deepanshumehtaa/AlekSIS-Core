@@ -6,6 +6,10 @@ from django.urls import reverse
 from dashboard.models import Cache
 
 
+def offline(request):
+    return render(request, 'common/offline.html')
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def tools(request):
