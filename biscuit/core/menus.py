@@ -14,12 +14,17 @@ MENUS = {
                 },
                 {
                     'name': _('Login'),
-                    'url': 'login',
+                    'url': 'two_factor:login',
                     'validators': ['menu_generator.validators.is_anonymous']
                 },
                 {
                     'name': _('Logout'),
                     'url': 'logout',
+                    'validators': ['menu_generator.validators.is_authenticated']
+                },
+                {
+                    'name': _('Two factor auth'),
+                    'url': 'two_factor:profile',
                     'validators': ['menu_generator.validators.is_authenticated']
                 }
             ]
