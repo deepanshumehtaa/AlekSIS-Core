@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 MENUS = {
@@ -14,13 +15,18 @@ MENUS = {
                 },
                 {
                     'name': _('Login'),
-                    'url': 'login',
+                    'url': settings.LOGIN_URL,
                     'validators': ['menu_generator.validators.is_anonymous']
                 },
                 {
                     'name': _('Logout'),
                     'url': 'logout',
                     'validators': ['menu_generator.validators.is_authenticated']
+                },
+                {
+                    'name': _('Two factor auth'),
+                    'url': 'two_factor:profile',
+                    'validators': ['menu_generator.validators.is_authenticated', lambda request: 'two_factor' in settings.INSTALLED_APPS]
                 }
             ]
         },

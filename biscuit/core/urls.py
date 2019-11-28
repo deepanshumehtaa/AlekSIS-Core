@@ -35,6 +35,14 @@ urlpatterns = [
     path('select2/', include('django_select2.urls'))
 ]
 
+# Add URLs for optional features
+if 'two_factor' in settings.INSTALLED_APPS:
+    from two_factor.urls import urlpatterns as tf_urls  # noqa
+    urlpatterns += [path('', include(tf_urls))]
+if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
+    from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
+    urlpatterns += [path('', include(tf_twilio_urls))]
+
 # Serve javascript-common if in development
 if settings.DEBUG:
     urlpatterns += static('/javascript/',
