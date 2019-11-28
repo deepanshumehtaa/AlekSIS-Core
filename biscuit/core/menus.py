@@ -26,7 +26,7 @@ MENUS = {
                 {
                     'name': _('Two factor auth'),
                     'url': 'two_factor:profile',
-                    'validators': ['menu_generator.validators.is_authenticated']
+                    'validators': ['menu_generator.validators.is_authenticated', lambda request: 'two_factor' in settings.INSTALLED_APPS]
                 }
             ]
         },
