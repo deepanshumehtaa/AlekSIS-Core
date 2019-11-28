@@ -65,6 +65,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'contact_form',
     'django_select2',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'otp_yubikey',
+    'two_factor',
     'hattori',
     'biscuit.core',
     'impersonate',
@@ -99,6 +104,7 @@ MIDDLEWARE = [
     'impersonate.middleware.ImpersonateMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'maintenance_mode.middleware.MaintenanceModeMiddleware',
     #    'django.middleware.cache.FetchFromCacheMiddleware'
@@ -230,6 +236,7 @@ USE_TZ = True
 STATIC_URL = _settings.get('static.url', '/static/')
 MEDIA_URL = _settings.get('media.url', '/media/')
 
+LOGIN_URL = 'two_factor:login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 

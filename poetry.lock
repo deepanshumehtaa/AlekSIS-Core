@@ -240,6 +240,17 @@ Django = ">1.4"
 
 [[package]]
 category = "main"
+description = "A set of high-level abstractions for Django forms"
+name = "django-formtools"
+optional = false
+python-versions = "*"
+version = "2.1"
+
+[package.dependencies]
+Django = ">=1.8"
+
+[[package]]
+category = "main"
 description = "Command to anonymize sensitive data."
 name = "django-hattori"
 optional = false
@@ -307,6 +318,18 @@ version = "0.1.2"
 
 [package.dependencies]
 django = "*"
+
+[[package]]
+category = "main"
+description = "A pluggable framework for adding two-factor authentication to Django using one-time passwords."
+name = "django-otp"
+optional = false
+python-versions = "*"
+version = "0.7.4"
+
+[package.dependencies]
+django = ">=1.11"
+six = ">=1.10.0"
 
 [[package]]
 category = "main"
@@ -940,7 +963,7 @@ version = "1.25.7"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "8649e58effa8d4f96c1e0ab765ad6ab3c135648dd4bb263c0c3d2675a0000e59"
+content-hash = "4a10e5dc802fee8d8936df9f06c7e912d8c437035dcb53e3f13f315c8892faba"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -967,6 +990,7 @@ django-dbbackup = ["9470e5d8bdaee4feb878b1b66c59eb9b27a131cccd648bf7cbfe70930acd
 django-debug-toolbar = ["24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8", "77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"]
 django-easy-audit = ["1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6", "4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"]
 django-fa = ["e3ebf97b90e374b5ccb5b8a70e4a932c8787f2ee995c09a97a63bf9a1366c3ff"]
+django-formtools = ["7703793f1675aa6e871f9fed147e8563816d7a5b9affdc5e3459899596217f7c", "cb2bd7c29c2104278e5a0e76f7ff256b9570acf11485d547ee0c1b35347359fb"]
 django-hattori = ["6953d40881317252f19f62c4e7fe8058924b852c7498bc42beb7bc4d268c252c", "e529ed7af8fc34a0169c797c477672b687a205a56f3f5206f90c260acb83b7ac"]
 django-image-cropping = ["157c6f96b2bbe485bde00108cbf379ea0fcb6d7a7252648f7548aa795108dde0"]
 django-impersonate = ["63b62d06f93b0318698c68f7314c78473914c262d4164eb66ad860bb83e04771"]
@@ -974,6 +998,7 @@ django-ipware = ["a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d0
 django-maintenance-mode = ["0afcfa6ff4a87348e40c44f58f8a8c4cd3e8eca40ddcdbeb620b68ca78ecbf9c", "473850f80e7762ae586f8347129e73e0d23b89a36b98a70e0c06f1778cacff7c"]
 django-menu-generator = ["ce71a5055c16933c8aff64fb36c21e5cf8b6d505733aceed1252f8b99369a378"]
 django-middleware-global-request = ["f6490759bc9f7dbde4001709554e29ca715daf847f2222914b4e47117dca9313"]
+django-otp = ["1b6025bbbd2517b7c246828b1d11c83d53567904836ae6d57bc0058f3cd18b50", "76a698466178ce40473726ffd8c33f68d1c47f27c53f67fa4aeeb6fdde74d37b"]
 django-phonenumber-field = ["1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e", "794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"]
 django-sass-processor = ["c1b56e76ce2b57382d26328ecdc204d3f65412d5da35df8a6b7bce6e7f754882"]
 django-select2 = ["ad12132e764ce8099bc2746e6af2f33a952b49eb63f3b062eb4739cd4304ee2f", "e4beb0e4af27f71e9e2e2f52441aecdb24d401942f18a0375031767cd0e2e5a0"]
