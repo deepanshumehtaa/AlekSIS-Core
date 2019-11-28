@@ -38,6 +38,11 @@ urlpatterns = [
     path('', include(tf_urls))
 ]
 
+# Add URLs for optional features
+if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
+    from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
+    urlpatterns += [path('', include(tf_twilio_urls))]
+
 # Serve javascript-common if in development
 if settings.DEBUG:
     urlpatterns += static('/javascript/',

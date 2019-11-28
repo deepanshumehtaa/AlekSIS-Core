@@ -324,4 +324,12 @@ CRON_CLASSES = [
 
 ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
 
+if _settings.get('2fa.twilio.sid', None):
+    MIDDLEWARE.insert(MIDDLEWARE.index('django_otp.middleware.OTPMiddleware')+1, 'two_factor.middleware.threadlocals.ThreadLocals')
+    TWILIO_SID = _settings.get('2fa.twilio.sid')
+    TWILIO_TOKEN = _settings.get('2fa.twilio.token')
+    TWILIO_CALLER_ID = _settings.get('2fa.twilio.callerid')
+    TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+    TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
 _settings.populate_obj(sys.modules[__name__])
