@@ -4,7 +4,7 @@ from otp_yubikey.models import ValidationService
 
 def create_validation_service(apps, schema_editor):
     ValidationService.objects.create(
-        name='default', use_ssl=True
+        name='default', use_ssl=True, param_sl='', param_timeout=''
     )
 
 
