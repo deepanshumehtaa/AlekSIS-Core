@@ -3,8 +3,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 
-from two_factor.urls import urlpatterns as tf_urls
-
 import debug_toolbar
 
 from . import views
@@ -34,11 +32,13 @@ urlpatterns = [
     path('contact/', include('contact_form.urls')),
     path('impersonate/', include('impersonate.urls')),
     path('__i18n__/', include('django.conf.urls.i18n')),
-    path('select2/', include('django_select2.urls')),
-    path('', include(tf_urls))
+    path('select2/', include('django_select2.urls'))
 ]
 
 # Add URLs for optional features
+if 'two_factor' in settings.INSTALLED_APPS:
+    from two_factor.urls import urlpatterns as tf_urls  # noqa
+    urlpatterns += [path('', include(tf_urls))]
 if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
     urlpatterns += [path('', include(tf_twilio_urls))]

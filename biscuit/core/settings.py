@@ -67,10 +67,6 @@ INSTALLED_APPS = [
     'django_select2',
     'hattori',
     'biscuit.core',
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-    'two_factor',
     'impersonate',
 ]
 
@@ -103,7 +99,6 @@ MIDDLEWARE = [
     'impersonate.middleware.ImpersonateMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_otp.middleware.OTPMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'maintenance_mode.middleware.MaintenanceModeMiddleware',
     #    'django.middleware.cache.FetchFromCacheMiddleware'
@@ -323,15 +318,24 @@ CRON_CLASSES = [
 
 ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
 
-if _settings.get('2fa.yubikey.enabled', False):
-    INSTALLED_APPS.insert(INSTALLED_APPS.index('two_factor')+1, 'otp_yubikey')
+if _settings.get('2fa.enabled', False):
+    for app in ['two_factor', 'django_otp.plugins.otp_totp', 'django_otp.plugins.otp_static', 'django_otp']:
+        INSTALLED_APPS.insert(INSTALLED_APPS.index('biscuit.core')+1, app)
+    MIDDLEWARE.insert(MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware')+1, 'django_otp.middleware.OTPMiddleware')
 
-if _settings.get('2fa.twilio.sid', None):
-    MIDDLEWARE.insert(MIDDLEWARE.index('django_otp.middleware.OTPMiddleware')+1, 'two_factor.middleware.threadlocals.ThreadLocals')
-    TWILIO_SID = _settings.get('2fa.twilio.sid')
-    TWILIO_TOKEN = _settings.get('2fa.twilio.token')
-    TWILIO_CALLER_ID = _settings.get('2fa.twilio.callerid')
-    TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
-    TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+    if _settings.get('2fa.yubikey.enabled', False):
+        INSTALLED_APPS.insert(INSTALLED_APPS.index('two_factor')+1, 'otp_yubikey')
+
+    if _settings.get('2fa.call.enabled', False):
+        TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
+    if _settings.get('2fa.sms.enabled', False):
+        TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
+    if _settings.get('2fa.twilio.sid', None):
+        MIDDLEWARE.insert(MIDDLEWARE.index('django_otp.middleware.OTPMiddleware')+1, 'two_factor.middleware.threadlocals.ThreadLocals')
+        TWILIO_SID = _settings.get('2fa.twilio.sid')
+        TWILIO_TOKEN = _settings.get('2fa.twilio.token')
+        TWILIO_CALLER_ID = _settings.get('2fa.twilio.callerid')
 
 _settings.populate_obj(sys.modules[__name__])
