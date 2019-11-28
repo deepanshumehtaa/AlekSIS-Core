@@ -230,7 +230,6 @@ USE_TZ = True
 STATIC_URL = _settings.get('static.url', '/static/')
 MEDIA_URL = _settings.get('media.url', '/media/')
 
-LOGIN_URL = 'two_factor:login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
@@ -322,6 +321,8 @@ if _settings.get('2fa.enabled', False):
     for app in ['two_factor', 'django_otp.plugins.otp_totp', 'django_otp.plugins.otp_static', 'django_otp']:
         INSTALLED_APPS.insert(INSTALLED_APPS.index('biscuit.core')+1, app)
     MIDDLEWARE.insert(MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware')+1, 'django_otp.middleware.OTPMiddleware')
+
+    LOGIN_URL = 'two_factor:login'
 
     if _settings.get('2fa.yubikey.enabled', False):
         INSTALLED_APPS.insert(INSTALLED_APPS.index('two_factor')+1, 'otp_yubikey')
