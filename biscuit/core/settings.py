@@ -65,13 +65,13 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'contact_form',
     'django_select2',
+    'hattori',
+    'biscuit.core',
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
     'otp_yubikey',
     'two_factor',
-    'hattori',
-    'biscuit.core',
     'impersonate',
 ]
 
