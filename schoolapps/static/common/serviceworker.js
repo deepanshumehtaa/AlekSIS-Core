@@ -4,22 +4,22 @@ const CACHE = "schoolapps-cache";
 
 const precacheFiles = [
     '/',
-    '/faq/',
+    '/faq',
 ];
 
-const offlineFallbackPage = '/offline/';
+const offlineFallbackPage = '/offline';
 
 const networkFirstPaths = [
 ];
 
 const avoidCachingPaths = [
-    '/admin/',
-    '/settings/',
-    '/support/',
-    '/faq/ask/',
-    '/aub/apply_for/',
-    '/aub/check1/',
-    '/aub/check2/',
+    '/admin',
+    '/settings',
+    '/support',
+    '/faq/ask',
+    '/aub/apply_for',
+    '/aub/check1',
+    '/aub/check2',
     '/aktuell.pdf',
     '/timetable/aktuell.pdf',
 ];
