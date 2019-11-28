@@ -1,7 +1,7 @@
 from glob import glob
 import os
 
-from django.apps import AppConfig
+from django.apps import AppConfig, apps
 from django.conf import settings
 
 
@@ -17,5 +17,12 @@ class CoreConfig(AppConfig):
                 # Ignore because old is better than nothing
                 pass  # noqa
 
+    def setup_data(self) -> None:
+        if 'otp_yubikey' in settings.INSTALLED_APPS:
+            apps.get_model('otp_yubikey', 'ValidationService').objects.update_or_create(
+                name='default', defaults={'use_ssl': True, 'param_sl': '', 'param_timeout': ''}
+            )
+
     def ready(self) -> None:
         self.clean_scss()
+        self.setup_data()
