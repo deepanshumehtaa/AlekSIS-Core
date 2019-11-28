@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
-    'otp_yubikey',
     'two_factor',
     'impersonate',
 ]
@@ -323,6 +322,9 @@ CRON_CLASSES = [
 ]
 
 ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
+
+if _settings.get('2fa.yubikey.enabled', False):
+    INSTALLED_APPS.insert(INSTALLED_APPS.index('two_factor')+1, 'otp_yubikey')
 
 if _settings.get('2fa.twilio.sid', None):
     MIDDLEWARE.insert(MIDDLEWARE.index('django_otp.middleware.OTPMiddleware')+1, 'two_factor.middleware.threadlocals.ThreadLocals')
