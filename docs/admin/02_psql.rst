@@ -1,9 +1,8 @@
 Installing BiscuIT with PostgreSQL backend
-=========================================
+==========================================
 
-PostgreSQL is the preferred database backend for BiscuIT. You should use it
-in every production setup and use SQLite only for testing.
-
+PostgreSQL is the only supported database backend for BiscuIT. If you are
+installing BiscuIT manually, you need to properly set it up.
 
 Install the PostgreSQL server
 -----------------------------
@@ -34,7 +33,7 @@ Configure BiscuIT to use PostgreSQL
 Fill in the configuration under `/etc/biscuit/*.toml`::
 
   [default.database]
-  engine = "django.db.backends.postgresql"
+  host = "localhost"
   name = "biscuit"
   username = "biscuit"
   password = "Y0urV3ryR4nd0mP4ssw0rd"
