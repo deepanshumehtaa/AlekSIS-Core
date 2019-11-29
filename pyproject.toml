@@ -50,15 +50,13 @@ django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
 requests = "^2.22"
-django-formtools = "^2.1"
-django-otp = { version = "^0.7.4", optional = true }
 django-two-factor-auth = { version = "^1.9", optional = true }
 django-otp-yubikey = { version = '^0.5.2', optional = true }
 twilio = { version = "^6.33", optional = true }
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
-2fa = ["django-otp", "django-two-factor-auth"]
+2fa = ["django-two-factor-auth"]
 twilio = ["twilio"]
 yubikey = ["django-otp-yubikey"]
 
