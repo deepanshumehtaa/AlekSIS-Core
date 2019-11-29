@@ -1,9 +1,11 @@
 from django.apps import apps
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 import debug_toolbar
+from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
 
@@ -13,7 +15,8 @@ urlpatterns = [
     path('school_management', views.school_management, name='school_management'),
     path('school/information/edit', views.edit_school, name='edit_school_information'),
     path('school/term/edit', views.edit_schoolterm, name='edit_school_term'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include(tf_urls)),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('persons', views.persons, name='persons'),
     path('persons/accounts', views.persons_accounts, name='persons_accounts'),
     path('person', views.person, name='person'),
@@ -36,9 +39,6 @@ urlpatterns = [
 ]
 
 # Add URLs for optional features
-if 'two_factor' in settings.INSTALLED_APPS:
-    from two_factor.urls import urlpatterns as tf_urls  # noqa
-    urlpatterns += [path('', include(tf_urls))]
 if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
     urlpatterns += [path('', include(tf_twilio_urls))]
