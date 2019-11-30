@@ -430,7 +430,7 @@ def get_all_events_by_date(date):
 # LESSON #
 ##########
 def get_raw_lessons():
-    return run_all(models.Lesson.objects)
+    return run_all(models.Lesson.objects.filter(deleted=0))
 
 
 ###########

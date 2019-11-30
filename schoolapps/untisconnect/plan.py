@@ -2,11 +2,13 @@ import datetime
 
 from django.utils import timezone
 
+from dashboard import plan_caches
 from schoolapps import settings
 from schoolapps.settings import LESSONS
-from untisconnect.api import format_classes, TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
-from untisconnect.events import get_all_events_by_date
+from untisconnect.api import TYPE_CLASS, TYPE_TEACHER, TYPE_ROOM
 from untisconnect.api import format_classes, get_today_holidays
+from untisconnect.datetimeutils import format_lesson_time
+from untisconnect.events import get_all_events_by_date
 from untisconnect.parse import parse
 from untisconnect.sub import get_substitutions_by_date_as_dict, TYPE_CANCELLATION, generate_event_table
 
@@ -55,19 +57,29 @@ def parse_lesson_times():
             "number": i + 1,
             "number_format": t[1],
             "start": start_time,
+            "start_format": format_lesson_time(start_time),
             "end": end_time,
+            "end_format": format_lesson_time(end_time)
         })
     return times
 
 
-def get_plan(type, id, smart=False, monday_of_week=None):
-    """ Generates a plan for type (TYPE_TEACHE, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
+def get_plan(type, id, smart=False, monday_of_week=None, force_update=False):
+    """ Generates a plan for type (TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM) and a id of the teacher (class, room)"""
+    # Check cache
+    cache = plan_caches.get_cache_for_plan(type, id, smart, monday_of_week)
+
+    cached = cache.get()
+    # print(cached)
+    if cached is not False and not force_update:
+        # print("Plan come from cache", cache.id)
+        return cached
 
     # Get parsed lessons
     lessons = parse()
     times_parsed = parse_lesson_times()
 
-    hols_for_weekday = []
+    hols_for_weekdays = []
 
     if smart:
         week_days = [monday_of_week + datetime.timedelta(days=i) for i in range(5)]
@@ -77,9 +89,7 @@ def get_plan(type, id, smart=False, monday_of_week=None):
             subs_for_weekday.append(subs)
 
             hols = get_today_holidays(week_day)
-            hols_for_weekday.append(hols)
-            # print(subs)
-            # print(len(subs))
+            hols_for_weekdays.append(hols)
 
     # Init plan array
     plan = []
@@ -165,10 +175,9 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                             element_container.is_old = True
 
                     # Check for holidays
-                    if smart and hols_for_weekday[time.day - 1]:
+                    if smart and hols_for_weekdays[time.day - 1]:
                         element_container.is_hol = True
-                        element_container.element.holiday_reason = hols_for_weekday[time.day - 1][0].name
-
+                        element_container.element.holiday_reason = hols_for_weekdays[time.day - 1][0].name
 
                     if type != TYPE_ROOM or i == room_index:
                         # Add this container object to the LessonContainer object in the plan array
@@ -234,4 +243,5 @@ def get_plan(type, id, smart=False, monday_of_week=None):
                     for j in range(event.event.from_lesson - 1, event.event.to_lesson):
                         plan[j][0][i].append(element_container)
 
-    return plan, hols_for_weekday
+    cache.update((plan, hols_for_weekdays))
+    return plan, hols_for_weekdays
