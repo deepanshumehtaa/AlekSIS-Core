@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
     'django_otp',
+    'otp_yubikey',
     'biscuit.core',
     'impersonate',
     'two_factor'
@@ -323,9 +324,6 @@ CRON_CLASSES = [
 ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
 
 LOGIN_URL = 'two_factor:login'
-
-if _settings.get('2fa.yubikey.enabled', False):
-    INSTALLED_APPS.insert(INSTALLED_APPS.index('two_factor')+1, 'otp_yubikey')
 
 if _settings.get('2fa.call.enabled', False):
     TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
