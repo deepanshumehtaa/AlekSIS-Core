@@ -20,13 +20,12 @@ class CoreConfig(AppConfig):
                 pass  # noqa
 
     def setup_data(self) -> None:
-        if 'otp_yubikey' in settings.INSTALLED_APPS:
-            try:
-                apps.get_model('otp_yubikey', 'ValidationService').objects.update_or_create(
-                    name='default', defaults={'use_ssl': True, 'param_sl': '', 'param_timeout': ''}
-                )
-            except ProgrammingError:
-                warn('Yubikey validation service could not be created yet. If you are currently in a migration, this is expected.')
+        try:
+            apps.get_model('otp_yubikey', 'ValidationService').objects.update_or_create(
+                name='default', defaults={'use_ssl': True, 'param_sl': '', 'param_timeout': ''}
+            )
+        except ProgrammingError:
+            warn('Yubikey validation service could not be created yet. If you are currently in a migration, this is expected.')
 
     def ready(self) -> None:
         self.clean_scss()
