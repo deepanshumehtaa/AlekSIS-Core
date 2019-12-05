@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Django = "^2.2"
+Django = "^3.0"
 django-any-js = "^1.0"
 django-bootstrap4 = "^1.0"
 django-fa = "^1.0"
