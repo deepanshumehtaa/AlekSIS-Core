@@ -16,13 +16,13 @@ class ExtensibleModel(object):
     in every app is executed. All code that shall be injected into a model goes there.
 
     :Example:
-    
+
     .. code-block:: python
 
        from datetime import date, timedelta
 
        from biscuit.core.models import Person
-       
+
        @Person.property
        def is_cool(self) -> bool:
            return True

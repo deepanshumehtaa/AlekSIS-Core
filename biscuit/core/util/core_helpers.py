@@ -1,6 +1,6 @@
 from importlib import import_module
 import pkgutil
-from typing import Optional, Sequence
+from typing import Sequence
 
 from django.http import HttpRequest
 
