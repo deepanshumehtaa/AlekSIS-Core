@@ -1,8 +1,34 @@
-import React, {Component} from 'react';
-//import "materialize-css/dist/css/materialize.css";
+/*
+ * This file is part of SchoolApps.
+ *
+ * SchoolApps is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License.
+ *
+ * SchoolApps is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SchoolApps.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import M from "materialize-css/dist/js/materialize";
-import PropTypes from "prop-types";
+/*
+ * This file is part of SchoolApps.
+ *
+ * SchoolApps is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License.
+ *
+ * SchoolApps is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SchoolApps.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 const OPTIONS_ONLINE_COMMON = [
     "Portal ist nicht erreichbar",
@@ -206,7 +232,7 @@ function getOption(option) {
     }
 }
 
-class Select extends Component {
+class Select extends React.Component {
     render() {
         return <select onChange={this.props.onChange} defaultValue={"no"} required={this.props.show}>
             <option value={"no"} disabled={true}>Nichts ausgewählt</option>
@@ -230,7 +256,7 @@ Select.defaultProps = {
     defaultValue: "Sonstiges"
 };
 
-class Input extends Component {
+class Input extends React.Component {
     render() {
         return <div
             className={(this.props.show ? "" : "hide ") + "input-field col s12 m12 l4"
@@ -254,7 +280,7 @@ Input.defaultProps = {
     show: false,
 };
 
-class App extends Component {
+class REBUSDynSelect extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -451,12 +477,11 @@ class App extends Component {
     }
 }
 
-App.propTypes = {
+REBUSDynSelect.propTypes = {
     rooms: PropTypes.array.isRequired
 };
 
-export default App;
-ReactDOM.render(
-    React.createElement(App, window.props),    // gets the props that are passed in the template
-    window.react_mount                                // a reference to the #react div that we render to
-);
+$(document).ready(function () {
+    const domContainer = document.querySelector('#dynselect');
+    ReactDOM.render(<REBUSDynSelect {...props}/>, domContainer);
+});

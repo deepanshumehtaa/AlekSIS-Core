@@ -7,8 +7,7 @@
         var MY_PLAN_URL = "{% url "timetable_my_plan" %}";
     </script>
     <script src="{% static "js/moment-with-locales.min.js" %}"></script>
-    <script src="{% static "js/react/react.development.js" %}"></script>
-    <script src="{% static "js/react/react-dom.development.js" %}"></script>
+    {% include "components/react.html" %}
     <script src="{% static "js/dashboard.js" %}"></script>
 
     <div id="dashboard_container">
