@@ -21,6 +21,7 @@ const avoidCachingPaths = [
     '/aub/check1',
     '/aub/check2',
     '/aktuell.pdf',
+    '/accounts/login',
     '/timetable/aktuell.pdf',
 ];
 
