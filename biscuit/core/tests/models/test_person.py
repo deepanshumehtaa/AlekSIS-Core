@@ -1,14 +1,13 @@
-from django.test import TestCase
+import pytest
 
 from biscuit.core.models import Person
 
 
-class PersonTestCase(TestCase):
-    def setUp(self):
-        self._person = Person.objects.create(
+@pytest.mark.django_db
+def test_full_name():
+    _person = Person.objects.create(
             first_name='Jane',
             last_name='Doe'
-        )
+    )
 
-    def test_full_name(self):
-        assert self._person.full_name == 'Doe, Jane'
+    assert _person.full_name == 'Doe, Jane'
