@@ -183,6 +183,7 @@ li.active > a > .sidenav-badge {
     margin: 0;
     display: flex;
     flex-grow: 1;
+    min-height: 65px;
 }
 
 .lesson-card .card-content {

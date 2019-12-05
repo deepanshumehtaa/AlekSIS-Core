@@ -152,10 +152,11 @@ class Dashboard extends React.Component {
 
             {/* CARDS */}
             <div className={"row"}>
-                <div className={"dashboard-cards"}>
+                {/*<div className={"dashboard-cards"}>*/}
 
-                    {/* MY PLAN */}
-                    {this.state.has_plan ? <div className="card">
+                {/* MY PLAN */}
+                {this.state.has_plan ? <div className="col s12 m12 l6 xl4">
+                    <div className={"card"}>
                         <div className="card-content">
                             {/* Show individualized title */}
                             <span className="card-title">
@@ -210,40 +211,42 @@ class Dashboard extends React.Component {
                                 anzeigen
                             </a>
                         </div>
-                    </div> : ""}
+                    </div>
+                </div> : ""}
 
-                    {/* MY STATUS */}
-                    {/*<div className="card">*/}
-                    {/*    <div className="card-content">*/}
-                    {/*        <span className="card-title">Mein Status</span>*/}
-                    {/*        <div className={"row"}>*/}
-                    {/*            <WithCheckCircleIcon>*/}
-                    {/*                {this.state.user_type_formatted}*/}
-                    {/*            </WithCheckCircleIcon>*/}
+                {/* MY STATUS */}
+                {/*<div className="card">*/}
+                {/*    <div className="card-content">*/}
+                {/*        <span className="card-title">Mein Status</span>*/}
+                {/*        <div className={"row"}>*/}
+                {/*            <WithCheckCircleIcon>*/}
+                {/*                {this.state.user_type_formatted}*/}
+                {/*            </WithCheckCircleIcon>*/}
 
-                    {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
-                    {/*                Meine Klassen: {this.state.classes.join(", ")}*/}
-                    {/*            </WithCheckCircleIcon> : ""}*/}
+                {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
+                {/*                Meine Klassen: {this.state.classes.join(", ")}*/}
+                {/*            </WithCheckCircleIcon> : ""}*/}
 
-                    {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
-                    {/*                Meine Kurse: {this.state.courses.join(", ")}*/}
-                    {/*            </WithCheckCircleIcon> : ""}*/}
+                {/*            {this.state.user_type === 1 || this.state.user_type === 2 ? <WithCheckCircleIcon>*/}
+                {/*                Meine Kurse: {this.state.courses.join(", ")}*/}
+                {/*            </WithCheckCircleIcon> : ""}*/}
 
-                    {/*            {this.state.user_type === 1 ? <WithCheckCircleIcon>*/}
-                    {/*                Meine Fächer: {this.state.subjects.join(", ")}*/}
-                    {/*            </WithCheckCircleIcon> : ""}*/}
-                    {/*            {this.state.user_type === 1 || this.state.has_wifi ?*/}
-                    {/*                <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>*/}
-                    {/*                    <i className={"material-icons left red-text"}>cancel</i>*/}
-                    {/*                    Kein WLAN*/}
-                    {/*                </div>}*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                {/*            {this.state.user_type === 1 ? <WithCheckCircleIcon>*/}
+                {/*                Meine Fächer: {this.state.subjects.join(", ")}*/}
+                {/*            </WithCheckCircleIcon> : ""}*/}
+                {/*            {this.state.user_type === 1 || this.state.has_wifi ?*/}
+                {/*                <WithCheckCircleIcon>WLAN</WithCheckCircleIcon> : <div className={"col"}>*/}
+                {/*                    <i className={"material-icons left red-text"}>cancel</i>*/}
+                {/*                    Kein WLAN*/}
+                {/*                </div>}*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
-                    {/* CURRENT EVENTS*/}
-                    {this.state.current_events && this.state.current_events.length > 0 ?
-                        <div className="card">
+                {/* CURRENT EVENTS*/}
+                {this.state.current_events && this.state.current_events.length > 0 ?
+                    <div className={"col s12 m12 l6 xl4"}>
+                        <div className="card ">
                             <div className="card-content">
                                 <span className="card-title">Aktuelle Termine</span>
                                 {this.state.current_events.map(function (event) {
@@ -260,63 +263,67 @@ class Dashboard extends React.Component {
                                 </a>
                             </div>
                         </div>
-                        : ""}
+                    </div>
+                    : ""}
 
-                    {/* EXAMS */}
-                    {/*<div className="card">*/}
-                    {/*    <div className="card-content">*/}
-                    {/*        <span className="card-title">Klausuren der <em>Eb</em></span>*/}
-                    {/*        <div className="card-panel event-card">*/}
-                    {/*            <span className={"title"}>Sextanereinschulung</span>*/}
-                    {/*            <br/>*/}
-                    {/*            28.Aug. 2019 18:30 - 22:00*/}
-                    {/*        </div>*/}
-                    {/*        <div className="card-panel event-card">*/}
-                    {/*            <span className={"title"}>Sextanereinschulung</span>*/}
-                    {/*            <br/>*/}
-                    {/*            28.Aug. 2019 18:30 - 22:00*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*    <div className="card-action">*/}
-                    {/*        <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                {/* EXAMS */}
+                {/*<div className="card">*/}
+                {/*    <div className="card-content">*/}
+                {/*        <span className="card-title">Klausuren der <em>Eb</em></span>*/}
+                {/*        <div className="card-panel event-card">*/}
+                {/*            <span className={"title"}>Sextanereinschulung</span>*/}
+                {/*            <br/>*/}
+                {/*            28.Aug. 2019 18:30 - 22:00*/}
+                {/*        </div>*/}
+                {/*        <div className="card-panel event-card">*/}
+                {/*            <span className={"title"}>Sextanereinschulung</span>*/}
+                {/*            <br/>*/}
+                {/*            28.Aug. 2019 18:30 - 22:00*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*    <div className="card-action">*/}
+                {/*        <a href="https://katharineum-zu-luebeck.de/aktuelles/termine/">Alle Klausuren</a>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
-                    {/* NEWEST ARTICLE FROM HOMEPAGE*/}
-                    {this.state.newest_article ?
-                        <div>
-                            <div className="card">
-                                {/* Image with badge and title */}
-                                <div className="card-image">
-                                    <span className={"badge-image z-depth-2"}>Aktuelles von der Homepage</span>
-                                    <img src={this.state.newest_article.image_url}
-                                         alt={this.state.newest_article.title}/>
-                                    <span className="card-title"
-                                          dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
-                                </div>
+                {/* NEWEST ARTICLE FROM HOMEPAGE*/}
+                {this.state.newest_article ?
+                    <div className={"col s12 m12 l6 xl4"}>
+                        <div className="card">
+                            {/* Image with badge and title */}
+                            <div className="card-image">
+                                <span className={"badge-image z-depth-2"}>Aktuelles von der Homepage</span>
+                                <img src={this.state.newest_article.image_url}
+                                     alt={this.state.newest_article.title}/>
 
-                                {/* Short text */}
-                                <div className="card-content">
-                                    <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
-                                </div>
-
-                                {/* Link to article */}
-                                <div className="card-action">
-                                    <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
-                                </div>
                             </div>
 
-                            {/* Link to homepage */}
-                            <a className={"btn hundred-percent primary-color"}
-                               href={"https://katharineum-zu-luebeck.de/"}
-                               target={"_blank"}>
-                                Weitere Artikel
-                                <i className={"material-icons right"}>arrow_forward</i>
-                            </a>
+
+                            {/* Short text */}
+                            <div className="card-content">
+                                <span className="card-title"
+                                      dangerouslySetInnerHTML={{__html: this.state.newest_article.title}}/>
+
+                                <p dangerouslySetInnerHTML={{__html: this.state.newest_article.short_text}}/>
+                            </div>
+
+                            {/* Link to article */}
+                            <div className="card-action">
+                                <a href={this.state.newest_article.link} target={"_blank"}>Mehr lesen</a>
+                            </div>
                         </div>
-                        : ""}
-                </div>
+
+                        {/* Link to homepage */}
+                        <a className={"btn hundred-percent primary-color"}
+                           href={"https://katharineum-zu-luebeck.de/"}
+                           target={"_blank"}>
+                            Weitere Artikel
+                            <i className={"material-icons right"}>arrow_forward</i>
+                        </a>
+                    </div>
+                    : ""}
             </div>
+            {/*</div>*/}
 
             {/* ACITIVITIES */}
             <div className={"row"}>

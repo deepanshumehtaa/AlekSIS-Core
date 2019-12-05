@@ -246,10 +246,10 @@ var Dashboard = function (_React$Component) {
                 React.createElement(
                     "div",
                     { className: "row" },
-                    React.createElement(
+                    this.state.has_plan ? React.createElement(
                         "div",
-                        { className: "dashboard-cards" },
-                        this.state.has_plan ? React.createElement(
+                        {className: "col s12 m12 l6 xl4"},
+                        React.createElement(
                             "div",
                             { className: "card" },
                             React.createElement(
@@ -344,10 +344,14 @@ var Dashboard = function (_React$Component) {
                                     "anzeigen"
                                 )
                             )
-                        ) : "",
-                        this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
+                        )
+                    ) : "",
+                    this.state.current_events && this.state.current_events.length > 0 ? React.createElement(
+                        "div",
+                        {className: "col s12 m12 l6 xl4"},
+                        React.createElement(
                             "div",
-                            { className: "card" },
+                            {className: "card "},
                             React.createElement(
                                 "div",
                                 { className: "card-content" },
@@ -379,55 +383,61 @@ var Dashboard = function (_React$Component) {
                                     "Weitere Termine"
                                 )
                             )
-                        ) : "",
-                        this.state.newest_article ? React.createElement(
+                        )
+                    ) : "",
+                    this.state.newest_article ? React.createElement(
+                        "div",
+                        {className: "col s12 m12 l6 xl4"},
+                        React.createElement(
                             "div",
-                            null,
+                            {className: "card"},
                             React.createElement(
                                 "div",
-                                { className: "card" },
+                                {className: "card-image"},
                                 React.createElement(
-                                    "div",
-                                    { className: "card-image" },
-                                    React.createElement(
-                                        "span",
-                                        { className: "badge-image z-depth-2" },
-                                        "Aktuelles von der Homepage"
-                                    ),
-                                    React.createElement("img", { src: this.state.newest_article.image_url,
-                                        alt: this.state.newest_article.title }),
-                                    React.createElement("span", { className: "card-title",
-                                        dangerouslySetInnerHTML: { __html: this.state.newest_article.title } })
+                                    "span",
+                                    {className: "badge-image z-depth-2"},
+                                    "Aktuelles von der Homepage"
                                 ),
-                                React.createElement(
-                                    "div",
-                                    { className: "card-content" },
-                                    React.createElement("p", { dangerouslySetInnerHTML: { __html: this.state.newest_article.short_text } })
-                                ),
-                                React.createElement(
-                                    "div",
-                                    { className: "card-action" },
-                                    React.createElement(
-                                        "a",
-                                        { href: this.state.newest_article.link, target: "_blank" },
-                                        "Mehr lesen"
-                                    )
-                                )
+                                React.createElement("img", {
+                                    src: this.state.newest_article.image_url,
+                                    alt: this.state.newest_article.title
+                                })
                             ),
                             React.createElement(
-                                "a",
-                                { className: "btn hundred-percent primary-color",
-                                    href: "https://katharineum-zu-luebeck.de/",
-                                    target: "_blank" },
-                                "Weitere Artikel",
+                                "div",
+                                {className: "card-content"},
+                                React.createElement("span", {
+                                    className: "card-title",
+                                    dangerouslySetInnerHTML: {__html: this.state.newest_article.title}
+                                }),
+                                React.createElement("p", {dangerouslySetInnerHTML: {__html: this.state.newest_article.short_text}})
+                            ),
+                            React.createElement(
+                                "div",
+                                {className: "card-action"},
                                 React.createElement(
-                                    "i",
-                                    { className: "material-icons right" },
-                                    "arrow_forward"
+                                    "a",
+                                    {href: this.state.newest_article.link, target: "_blank"},
+                                    "Mehr lesen"
                                 )
                             )
-                        ) : ""
-                    )
+                        ),
+                        React.createElement(
+                            "a",
+                            {
+                                className: "btn hundred-percent primary-color",
+                                href: "https://katharineum-zu-luebeck.de/",
+                                target: "_blank"
+                            },
+                            "Weitere Artikel",
+                            React.createElement(
+                                "i",
+                                {className: "material-icons right"},
+                                "arrow_forward"
+                            )
+                        )
+                    ) : ""
                 ),
                 React.createElement(
                     "div",
