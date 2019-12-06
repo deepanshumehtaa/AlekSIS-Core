@@ -1,4 +1,11 @@
-with open("../COPYRIGHT.md", "r") as f:
+import os
+from django.conf import settings
+
+# Build path for copyright
+copyright_path = os.path.abspath(os.path.join(settings.BASE_DIR, '..', 'COPYRIGHT.md'))
+
+# Read copyright from file
+with open(copyright_path, "r") as f:
     COPYRIGHT = f.read()
 
 COPYRIGHT_SHORT = "© 2018–2019 Mitglieder der Computer-AG, Katharineum zu Lübeck"
@@ -52,5 +59,6 @@ OPEN_SOURCE_COMPONENTS = [
 OPEN_SOURCE_COMPONENTS.sort(key=lambda elem: elem[0].lower())
 
 
+# Provide vars to all templates via processor
 def meta_processor(request):
     return {'COPYRIGHT': COPYRIGHT, "COPYRIGHT_SHORT": COPYRIGHT_SHORT, "VERSION": VERSION}
