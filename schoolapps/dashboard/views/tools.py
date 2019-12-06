@@ -4,10 +4,15 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from dashboard.models import Cache
+from meta import OPEN_SOURCE_COMPONENTS
 
 
 def offline(request):
     return render(request, 'common/offline.html')
+
+
+def about(request):
+    return render(request, "common/about.html", context={"components": OPEN_SOURCE_COMPONENTS})
 
 
 @login_required
