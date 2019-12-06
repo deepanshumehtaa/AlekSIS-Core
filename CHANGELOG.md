@@ -1,11 +1,9 @@
 # Releases/Änderungen
 ## 1.0-beta "Aebli"
-_Veröffentlicht_
+siehe 1.0 "Aebli"
 
 ## 1.0 "Aebli"
-Veröffentlicht unter [v1.0](https://github.com/Katharineum/school-apps/releases/tag/v1.0)
 
-### Funktionen
 - AUB (Antrag auf Unterrichtsbefreiung)
   - Antragstellung mit anschließender Bearbeitungs- und Löschfunktion
   - Genehmigen bzw. Ablehnen von Anträgen in zwei Runden
@@ -26,9 +24,6 @@ Veröffentlicht unter [v1.0](https://github.com/Katharineum/school-apps/releases
   - Benachrichtigungen für REBUS, Feedback und FAQ via E-Mail
 
 ## 1.0.1 "Aebli"
-Veröffentlicht unter [v1.0](https://github.com/Katharineum/school-apps/releases/tag/v1.0.1)
-
-### Änderungen
 Diverse Nachbesserungen des Releases 1.0 "Aebli"
 * Umgestaltung des Menüs
 * Umgestaltung des Footers
@@ -39,7 +34,6 @@ Diverse Nachbesserungen des Releases 1.0 "Aebli"
 * Beheben von kleinen Bugs (Timetable, Speiseplan)
 
 ## 1.0.2 "Aebli"
-### Änderungen
 Weitere Nachbesserungen der Releases 1.0 sowie 1.0.1 "Aebli"
 * Ferien/Feiertage werden nun angezeigt
 * Icon für Nimbus im Footer hinzugefügt
@@ -54,7 +48,6 @@ Weitere Nachbesserungen der Releases 1.0 sowie 1.0.1 "Aebli"
 * Interne Optimierungen und Verbesserungen sowie Fehlerbehebungen
 
 ## 1.1 "Aebli"
-### Änderungen
 Weitere Verbesserungen der vorangegeangen Versionen dieses Releases.
 * Einführung eines neuen Dashboards auf JS-Basis
   + dynamische Aktualisierung
@@ -73,3 +66,12 @@ Weitere Verbesserungen der vorangegeangen Versionen dieses Releases.
 * Behebung kleinerer Fehler
   + Support-Seiten waren auch ohne Anmeldung nutzbar
   + Pläne sind auf der Übersichtsseite sortiert
+
+## 1.1.1 "Aebli"
+* Hinzufügen einer "Über"-Seite mit Copyright, Lizenz und Danksagungen
+* Behebung von Fehlern
+  + Anzeigen von "Anmelden als" in Kopfzeile auf Desktopgeräten wieder aktiviert
+  + Titel des aktuellsten Artikel im Dashboard nicht im Bild, sondern unterm Bild anzeigen
+* Interne Verbesserungen
+  + Einfachere Einbindung von React für REBUS
+ 

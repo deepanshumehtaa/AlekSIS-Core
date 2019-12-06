@@ -3,7 +3,7 @@ with open("../COPYRIGHT.md", "r") as f:
 
 COPYRIGHT_SHORT = "© 2018–2019 Mitglieder der Computer-AG, Katharineum zu Lübeck"
 
-VERSION = '1.1-dev "Aebli"'
+VERSION = '1.1.1 "Aebli"'
 
 LICENSE_APACHE_2 = "Apache 2.0 License"
 LICENSE_BSD = "2-Clause BSD License"
