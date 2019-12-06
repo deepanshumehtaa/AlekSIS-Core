@@ -56,6 +56,14 @@ Weitere Nachbesserungen der Releases 1.0 sowie 1.0.1 "Aebli"
 ## 1.1 "Aebli"
 ### Änderungen
 Weitere Verbesserungen der vorangegeangen Versionen dieses Releases.
+* Einführung eines neuen Dashboards auf JS-Basis
+  + dynamische Aktualisierung
+  + SMART PLAN
+  + Aktuelle Termine
+  + Aktueller Artikel von der Homepage
+  + Benachrichtigungen/Hinweise
+* Verbesserung der PWA
+* Verbesserung der Geschwindigkeit
 * Überarbeitung des PDF-Vertretungsplans
   + Ausblenden der Stunden, die durch Veranstaltungen entfallen
   + Ausblenden der Änderungen an Verfügungsstunden
