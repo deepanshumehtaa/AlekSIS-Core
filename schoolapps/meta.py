@@ -1,4 +1,4 @@
-with open("../COPYRIGHT", "r") as f:
+with open("../COPYRIGHT.md", "r") as f:
     COPYRIGHT = f.read()
 
 COPYRIGHT_SHORT = "© 2018–2019 Mitglieder der Computer-AG, Katharineum zu Lübeck"
