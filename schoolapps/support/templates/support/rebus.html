@@ -3,9 +3,6 @@
 {% load static %}
 
 <main>
-    <script src="{% static 'js/react/react.development.js' %}"></script>
-    <script src="{% static 'js/react/react-dom.development.js' %}"></script>
-    {% load react %}
 
     <h5>Fehler melden – REBUS – REport-A-Bug-System</h5>
 
@@ -14,7 +11,9 @@
 
 
         <p class="red-text">{{ form.non_field_errors }}</p>
-        <div id="react-mount"></div>
+
+        {# Filled by REACT #}
+        <div id="dynselect"></div>
 
         <div class="row">
             <p class="red-text">{{ form.short_description.errors }}</p>
@@ -45,11 +44,12 @@
         </button>
     </form>
 
+    {# Provide props in JSON format #}
     {{ props|json_script:"props" }}
     <script>
+        {# Read props as JS var#}
         var props = JSON.parse(document.getElementById('props').textContent);
-        window.props = props;
-        window.react_mount = document.getElementById('react-mount');
+
 
         $('#go').click(function (event) {
             var el = $("#rebus-form").get(0);
@@ -60,7 +60,10 @@
             }
         });
     </script>
-    <script src="{% static "support/bundle.js" %}"></script>
+
+    {# Include React for dynamic select #}
+    {% include "components/react.html" %}
+    <script src="{% static "js/rebus.js" %}"></script>
 
 </main>
 {% include 'partials/footer.html' %}
