@@ -3,7 +3,7 @@ mysqlclient
 django
 django-auth-ldap
 django-dbsettings
-django_pdb
+django-pdb
 django-material
 django-filter
 django_react_templatetags

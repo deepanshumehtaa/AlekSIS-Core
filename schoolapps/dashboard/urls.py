@@ -30,4 +30,5 @@ urlpatterns += [
     path("tools", tools_views.tools, name="tools"),
     path("tools/clear-cache", tools_views.tools_clear_cache, name="tools_clear_cache"),
     path("tools/clear-cache/<str:id>", tools_views.tools_clear_cache, name="tools_clear_single_cache"),
+    path('about/', views.about, name='about')
 ]

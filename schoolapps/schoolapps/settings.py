@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django_react_templatetags.context_processors.react_context_processor',
+                'meta.meta_processor',
             ],
         },
     },
