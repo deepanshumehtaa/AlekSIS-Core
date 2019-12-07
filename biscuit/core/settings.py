@@ -248,36 +248,32 @@ YARN_INSTALLED_APPS = [
     'select2'
 ]
 
-FONT_AWESOME = {'url': _settings.get(
-    'bootstrap.fa_url', STATIC_URL + '/fontawesome/css/fontawesome.min.css')}
+JS_URL = _settings.get('js_assets.url', STATIC_URL)
+JS_ROOT = _settings.get('js_assets.root', NODE_MODULES_ROOT+'/node_modules')
+
+FONT_AWESOME = {'url': JS_URL+'/font-awesome/css/font-awesome.min.css'}
 
 BOOTSTRAP4 = {
-    'css_url': _settings.get('bootstrap.css_url', STATIC_URL + '/bootstrap/dist//css/bootstrap.min.css'),
-    'javascript_url': _settings.get('bootstrap.js_url', STATIC_URL + '/bootstrap/dist/js/bootstrap.min.js'),
-    'jquery_url': _settings.get('bootstrap.jquery_url', STATIC_URL + '/jquery/dist/jquery.min.js'),
-    'popper_url': _settings.get('bootstrap.popper_url', STATIC_URL + '/popper.js/dist/umd/popper.min.js'),
+    'css_url': JS_URL+'/bootstrap/dist//css/bootstrap.min.css',
+    'javascript_url': JS_URL+'/bootstrap/dist/js/bootstrap.min.js',
+    'jquery_url': JS_URL+'/jquery/dist/jquery.min.js',
+    'popper_url': JS_URL+'/popper.js/dist/umd/popper.min.js',
     'include_jquery': True,
     'include_popper': True,
     'javascript_in_head': True
 }
 
-SELECT2_BASE = _settings.get(
-    'bootstrap.select2_base', STATIC_URL + '/select2/dist')
-
-SELECT2_CSS = SELECT2_BASE + '/css/select2.min.css')
-SELECT2_JS = SELECT2_BASE + '/js/select2.min.js')
-SELECT2_I18N_PATH = SELECT2_BASE + '/js/i18n')
-
-DATATABLES_BASE = _settings.get(
-    'bootstrap.datatables_base', STATIC_URL + '/datatables/media')
+SELECT2_CSS = JS_URL+'/select2/dist/css/select2.min.css'
+SELECT2_JS = JS_URL+'/select2/dist/js/select2.min.js'
+SELECT2_I18N_PATH = JS_URL+'/select2/dist/js/i18n'
 
 ANY_JS = {
     'DataTables': {
-        'js_url': DATATABLES_BASE + '/js/jquery.dataTables.min.js'
+        'js_url': JS_URL+'/datatables/media/js/jquery.dataTables.min.js'
     },
     'DataTables-Bootstrap4': {
-        'css_url': DATATABLES_BASE + '/css/dataTables.bootstrap4.min.css',
-        'js_url': DATATABLES_BASE + '/js/dataTables.bootstrap4.min.js'
+        'css_url': JS_URL+'/datatables/media/css/dataTables.bootstrap4.min.css',
+        'js_url': JS_URL'/datatables/media/js/dataTables.bootstrap4.min.js'
     }
 }
 
@@ -286,7 +282,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get('bootstrap.sass_path', NODE_MODULES_ROOT + '/node_modules/bootstrap/scss/')
+    _settings.get('bootstrap.sass_path', JS_ROOT + '/bootstrap/scss/')
 ]
 
 COLOUR_PRIMARY = _settings.get('theme.colours.primary', '#007bff')
