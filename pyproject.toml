@@ -51,7 +51,7 @@ psycopg2 = "^2.8"
 django_select2 = "^7.1"
 requests = "^2.22"
 django-two-factor-auth = { git = "https://github.com/Bouke/django-two-factor-auth", rev = "bf9d0812ab11320a6cadc6709c382a03184f2e31", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
-django-bower = "^5.2"
+django-yarnpkg = "^6.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

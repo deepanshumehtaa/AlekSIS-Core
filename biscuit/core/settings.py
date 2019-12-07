@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'fa',
     'django_any_js',
-    'djangobower',
+    'django_yarnpkg',
     'django_tables2',
     'easy_thumbnails',
     'image_cropping',
@@ -81,7 +81,7 @@ INSTALLED_APPS += get_app_packages()
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
+    'django_yarnpkg.finders.NodeModulesFinder',
     'sass_processor.finders.CssFinder'
 ]
 
@@ -237,15 +237,16 @@ LOGOUT_REDIRECT_URL = 'index'
 
 STATIC_ROOT = _settings.get('static.root', os.path.join(BASE_DIR, 'static'))
 MEDIA_ROOT = _settings.get('media.root', os.path.join(BASE_DIR, 'media'))
-BOWER_COMPONENTS_ROOT = _settings.get('bower.root', os.path.join(BASE_DIR, 'bower'))
+NODE_MODULES_ROOT = _settings.get('node_modules.root', os.path.join(BASE_DIR, 'node_modules'))
 
-BOWER_INSTALLED_APPS = [
+YARN_INSTALLED_APPS = [
     'bootstrap',
-    'fontawesome',
+    'font-awesome',
     'jquery',
     'popper.js',
-    'DataTables',
-    'select2'
+    'datatables',
+    'select2',
+    'paper-css'
 ]
 
 FONT_AWESOME = {'url': _settings.get(
@@ -279,7 +280,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get('bootstrap.sass_path', BOWER_COMPONENTS_ROOT + '/bower_components//bootstrap/scss/')
+    _settings.get('bootstrap.sass_path', NODE_MODULES_ROOT + '/node_modules/bootstrap/scss/')
 ]
 
 COLOUR_PRIMARY = _settings.get('theme.colours.primary', '#007bff')
