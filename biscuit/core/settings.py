@@ -273,7 +273,7 @@ ANY_JS = {
     },
     'DataTables-Bootstrap4': {
         'css_url': JS_URL+'/datatables/media/css/dataTables.bootstrap4.min.css',
-        'js_url': JS_URL'/datatables/media/js/dataTables.bootstrap4.min.js'
+        'js_url': JS_URL+'/datatables/media/js/dataTables.bootstrap4.min.js'
     }
 }
 
@@ -282,7 +282,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get('bootstrap.sass_path', JS_ROOT + '/bootstrap/scss/')
+    _settings.get('bootstrap.sass_path', JS_ROOT+'/bootstrap/scss/')
 ]
 
 COLOUR_PRIMARY = _settings.get('theme.colours.primary', '#007bff')
