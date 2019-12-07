@@ -184,6 +184,18 @@ beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
+description = "Integrate django with bower"
+name = "django-bower"
+optional = false
+python-versions = "*"
+version = "5.2.0"
+
+[package.dependencies]
+django = "*"
+six = "*"
+
+[[package]]
+category = "main"
 description = "Bulk update using one query over Django ORM."
 name = "django-bulk-update"
 optional = false
@@ -1283,7 +1295,7 @@ more-itertools = "*"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "9e01e78dcfb4b415a21ca56d4dd28c2cc6d9dba5391d2957123c0cd38a1b10cb"
+content-hash = "fdf86a11743e04deec91cb46fd68c027184e0d9e60abe213914bd900fc0a2a88"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -1306,6 +1318,7 @@ django-any-js = ["1da88b44b861b0f54f6b8ea0eb4c7c4fa1a5772e9a4320532cd4e0871a4e23
 django-appconf = ["35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3", "c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"]
 django-auth-ldap = ["4d68d21058bd57a316a9e1fcd7a36d0f25d054d4d9d9ec85f766a4991176b454", "5f48232c85ddfa33e3573153e6080526ac2eef5e7ec9cf42b5c4ba3c62afb96d"]
 django-bootstrap4 = ["3da770392819267eda2f774bcf832460af00db21089b94caf4df94be8a48c48c"]
+django-bower = ["3ab5699b782d63d1aa8e5d61f9bdcdb8d29137e7ba6f19d094d566241afee0f2", "f1cf649842c0cb28f8aa28617e99fc7fb7773bac4e8886ee4e36962a38c99a6e"]
 django-bulk-update = ["49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985", "5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"]
 django-common-helpers = ["2d56be6fa261d829a6a224f189bf276267b9082a17d613fe5f015dd4d65c17b4"]
 django-contact-form = ["b42b7e04d6af3318b8427c1eaf62385ec66da252aa79b607ee55d956c7af4a2d", "c31f73faa13f52efa81ac95f41007f3a84eca617f92773a1bed7ca90c61cb3ed"]
