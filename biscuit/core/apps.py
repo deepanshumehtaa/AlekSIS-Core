@@ -29,4 +29,4 @@ class CoreConfig(AppConfig):
 
     def ready(self) -> None:
         self.clean_scss()
-        self.setup_data()
+#        self.setup_data()
