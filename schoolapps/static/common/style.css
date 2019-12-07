@@ -312,9 +312,10 @@ table.substitutions td, table.substitutions th {
 
 /* Table*/
 
-table.striped > tbody > tr:nth-child(odd) {
+table.striped > tbody > tr:nth-child(odd), table tr.striped {
     background-color: rgba(208, 208, 208, 0.5);
 }
+
 
 /*+++++++*/
 /* Print */
