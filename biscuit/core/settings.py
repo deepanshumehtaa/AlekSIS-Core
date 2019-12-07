@@ -245,8 +245,7 @@ YARN_INSTALLED_APPS = [
     'jquery',
     'popper.js',
     'datatables',
-    'select2',
-    'paper-css'
+    'select2'
 ]
 
 FONT_AWESOME = {'url': _settings.get(
