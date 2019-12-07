@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'fa',
     'django_any_js',
+    'djangobower',
     'django_tables2',
     'easy_thumbnails',
     'image_cropping',
@@ -80,16 +81,10 @@ INSTALLED_APPS += get_app_packages()
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
     'sass_processor.finders.CssFinder'
 ]
 
-SASS_PROCESSOR_AUTO_INCLUDE = False
-SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
-    'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
-}
-SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get('bootstrap.sass_path', '/usr/share/sass/bootstrap')
-]
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
@@ -233,6 +228,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+
 STATIC_URL = _settings.get('static.url', '/static/')
 MEDIA_URL = _settings.get('media.url', '/media/')
 
@@ -241,32 +237,50 @@ LOGOUT_REDIRECT_URL = 'index'
 
 STATIC_ROOT = _settings.get('static.root', os.path.join(BASE_DIR, 'static'))
 MEDIA_ROOT = _settings.get('media.root', os.path.join(BASE_DIR, 'media'))
+BOWER_COMPONENTS_ROOT = _settings.get('bower.root', os.path.join(BASE_DIR, 'bower'))
+
+BOWER_INSTALLED_APPS = [
+    'bootstrap',
+    'fontawesome',
+    'jquery',
+    'popper.js',
+    'DataTables',
+    'select2'
+]
 
 FONT_AWESOME = {'url': _settings.get(
-    'bootstrap.fa_url', '/javascript/font-awesome/css/font-awesome.min.css')}
+    'bootstrap.fa_url', STATIC_URL + '/fontawesome/css/fontawesome.min.css')}
 
 BOOTSTRAP4 = {
-    'css_url': _settings.get('bootstrap.css_url', '/javascript/bootstrap4/css/bootstrap.min.css'),
-    'javascript_url': _settings.get('bootstrap.js_url', '/javascript/bootstrap4/js/bootstrap.min.js'),
-    'jquery_url': _settings.get('bootstrap.jquery_url', '/javascript/jquery/jquery.min.js'),
-    'popper_url': _settings.get('bootstrap.popper_url', '/javascript/popper.js/umd/popper.min.js'),
+    'css_url': _settings.get('bootstrap.css_url', STATIC_URL + '/bootstrap/dist//css/bootstrap.min.css'),
+    'javascript_url': _settings.get('bootstrap.js_url', STATIC_URL + '/bootstrap/dist/js/bootstrap.min.js'),
+    'jquery_url': _settings.get('bootstrap.jquery_url', STATIC_URL + '/jquery/dist/jquery.min.js'),
+    'popper_url': _settings.get('bootstrap.popper_url', STATIC_URL + '/popper.js/dist/umd/popper.min.js'),
     'include_jquery': True,
     'include_popper': True,
     'javascript_in_head': True
 }
 
 DATATABLES_BASE = _settings.get(
-    'bootstrap.datatables_base', '/javascript/jquery-datatables')
+    'bootstrap.datatables_base', STATIC_URL + '/datatables/media')
 
 ANY_JS = {
     'DataTables': {
-        'js_url': DATATABLES_BASE + '/jquery.dataTables.min.js'
+        'js_url': DATATABLES_BASE + '/js/jquery.dataTables.min.js'
     },
     'DataTables-Bootstrap4': {
         'css_url': DATATABLES_BASE + '/css/dataTables.bootstrap4.min.css',
-        'js_url': DATATABLES_BASE + '/dataTables.bootstrap4.min.js'
+        'js_url': DATATABLES_BASE + '/js/dataTables.bootstrap4.min.js'
     }
 }
+
+SASS_PROCESSOR_AUTO_INCLUDE = False
+SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
+    'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
+}
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    _settings.get('bootstrap.sass_path', BOWER_COMPONENTS_ROOT + '/bower_components//bootstrap/scss/')
+]
 
 COLOUR_PRIMARY = _settings.get('theme.colours.primary', '#007bff')
 COLOUR_SECONDARY = _settings.get('theme.colours.secondary', '#6c757d')
