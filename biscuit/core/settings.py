@@ -261,6 +261,13 @@ BOOTSTRAP4 = {
     'javascript_in_head': True
 }
 
+SELECT2_BASE = _settings.get(
+    'bootstrap.select2_base', STATIC_URL + '/select2/dist')
+
+SELECT2_CSS = SELECT2_BASE + '/css/select2.min.css')
+SELECT2_JS = SELECT2_BASE + '/js/select2.min.js')
+SELECT2_I18N_PATH = SELECT2_BASE + '/js/i18n')
+
 DATATABLES_BASE = _settings.get(
     'bootstrap.datatables_base', STATIC_URL + '/datatables/media')
 
