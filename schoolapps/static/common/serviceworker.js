@@ -96,7 +96,7 @@ function cacheFirstFetch(event) {
         // The response was not found in the cache so we look for it on the server
         return fetch(event.request)
           .then(function (response) {
-            // If request was success, add or update it in the cache
+            // If request was successful, add or update it in the cache
             event.waitUntil(updateCache(event.request, response.clone()));
 
             return response;
@@ -120,12 +120,12 @@ function networkFirstFetch(event) {
   event.respondWith(
     fetch(event.request)
       .then(function (response) {
-        // If request was success, add or update it in the cache
+        // If request was successful, add or update it in the cache
         event.waitUntil(updateCache(event.request, response.clone()));
         return response;
       })
       .catch(function (error) {
-        console.log("[SchoolApps PWA] Network request Failed. Serving content from cache: " + error);
+        console.log("[SchoolApps PWA] Network request failed. Serving content from cache: " + error);
         return fromCache(event.request);
       })
   );
@@ -138,7 +138,7 @@ function fromCache(request) {
   return caches.open(CACHE).then(function (cache) {
     return cache.match(request).then(function (matching) {
       if (!matching || matching.status === 404) {
-        return Promise.reject("no-match");
+        return caches.match(offlineFallbackPage);
       }
 
       return matching;
