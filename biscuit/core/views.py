@@ -10,7 +10,7 @@ from django_cron.models import CronJobLog
 
 from .decorators import admin_required
 from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm, EditSchoolForm, EditTermForm
-from .models import Person, Group
+from .models import Person, Group, School
 from .tables import PersonsTable, GroupsTable
 from .util import messages
 
@@ -198,7 +198,7 @@ def school_management(request: HttpRequest) -> HttpResponse:
 def edit_school(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    school = request.user.person.school
+    school = School.objects.first()
     edit_school_form = EditSchoolForm(request.POST or None, request.FILES or None, instance=school)
 
     context['school'] = school
@@ -219,7 +219,7 @@ def edit_school(request: HttpRequest) -> HttpResponse:
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    term = request.user.person.school.current_term
+    term = School.objects.first().current_term
     edit_term_form = EditTermForm(request.POST or None, instance=term)
 
     if request.method == 'POST':
