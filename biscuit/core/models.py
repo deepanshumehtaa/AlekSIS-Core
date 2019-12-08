@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .mixins import CRUDMixin, ExtensibleModel
+from .mixins import ExtensibleModel
 
 
 class School(models.Model):
