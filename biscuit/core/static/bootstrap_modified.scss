@@ -1,12 +1,12 @@
 $theme-colors: (
-    "primary":    adjust-color(get-colour(get-setting(COLOUR_PRIMARY)), $alpha: 1),
-    "secondary":  adjust-color(get-colour(get-setting(COLOUR_SECONDARY)), $alpha: 1),
-    "success":    adjust-color(get-colour(get-setting(COLOUR_SUCCESS)), $alpha: 1),
-    "info":       adjust-color(get-colour(get-setting(COLOUR_INFO)), $alpha: 1),
-    "warning":    adjust-color(get-colour(get-setting(COLOUR_WARNING)), $alpha: 1),
-    "danger":     adjust-color(get-colour(get-setting(COLOUR_DANGER)), $alpha: 1),
-    "light":      adjust-color(get-colour(get-setting(COLOUR_LIGHT)), $alpha: 1),
-    "dark":       adjust-color(get-colour(get-setting(COLOUR_DARK)), $alpha: 1),
+    "primary":    adjust-color(get-colour(get-setting(colour_primary)), $alpha: 1),
+    "secondary":  adjust-color(get-colour(get-setting(colour_secondary)), $alpha: 1),
+    "success":    adjust-color(get-colour(get-setting(colour_success)), $alpha: 1),
+    "info":       adjust-color(get-colour(get-setting(colour_info)), $alpha: 1),
+    "warning":    adjust-color(get-colour(get-setting(colour_warning)), $alpha: 1),
+    "danger":     adjust-color(get-colour(get-setting(colour_danger)), $alpha: 1),
+    "light":      adjust-color(get-colour(get-setting(colour_light)), $alpha: 1),
+    "dark":       adjust-color(get-colour(get-setting(colour_dark)), $alpha: 1),
 );
 
 @import "bootstrap";

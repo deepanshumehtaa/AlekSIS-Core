@@ -281,19 +281,11 @@ ANY_JS = {
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
+    'get-theme-setting': 'biscuit.core.util.sass_helpers.get_theme_setting',
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get('bootstrap.sass_path', JS_ROOT+'/bootstrap/scss/')
 ]
-
-COLOUR_PRIMARY = _settings.get('theme.colours.primary', '#007bff')
-COLOUR_SECONDARY = _settings.get('theme.colours.secondary', '#6c757d')
-COLOUR_SUCCESS = _settings.get('theme.colours.success', '#28a745')
-COLOUR_INFO = _settings.get('theme.colours.info', '#17a2b8')
-COLOUR_WARNING = _settings.get('theme.colours.warning', '#ffc107')
-COLOUR_DANGER = _settings.get('theme.colours.danger', '#dc3545')
-COLOUR_LIGHT = _settings.get('theme.colours.light', '#f8f9fa')
-COLOUR_DARK = _settings.get('theme.colours.dark', '#343a40')
 
 ADMINS = _settings.get('contact.admins', [])
 SERVER_EMAIL = _settings.get('contact.from', 'root@localhost')

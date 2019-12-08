@@ -4,10 +4,24 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import dbsettings
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .mixins import ExtensibleModel, SchoolRelated
+
+
+class ThemeSettings(dbsettings.Group):
+    colour_primary = dbsettings.StringValue(default='#007bff')
+    colour_secondary = dbsettings.StringValue(default='#6c757d')
+    colour_success = dbsettings.StringValue(default='#28a745')
+    colour_info = dbsettings.StringValue(default='#17a2b8')
+    colour_warning = dbsettings.StringValue(default='#ffc107')
+    colour_danger = dbsettings.StringValue(default='#dc3545')
+    colour_light = dbsettings.StringValue(default='#f8f9fa')
+    colour_dark = dbsettings.StringValue(default='#343a40')
+
+theme_settings = ThemeSettings()
 
 
 class School(models.Model):
