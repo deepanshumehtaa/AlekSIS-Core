@@ -44,7 +44,7 @@ class SchoolTerm(models.Model):
         'Effective end date of term'), null=True)
 
 
-class Person(ExtensibleModel):
+class Person(models.Model, ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -132,7 +132,7 @@ class Person(ExtensibleModel):
         return self.full_name
 
 
-class Group(ExtensibleModel):
+class Group(models.Model, ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
