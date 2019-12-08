@@ -21,7 +21,7 @@ class ThemeSettings(dbsettings.Group):
     colour_light = dbsettings.StringValue(default='#f8f9fa')
     colour_dark = dbsettings.StringValue(default='#343a40')
 
-theme_settings = ThemeSettings()
+theme_settings = ThemeSettings('Global theme settings')
 
 
 class School(models.Model):
