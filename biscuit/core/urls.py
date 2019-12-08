@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
@@ -36,6 +37,10 @@ urlpatterns = [
     path('__i18n__/', include('django.conf.urls.i18n')),
     path('select2/', include('django_select2.urls'))
 ]
+
+# Serve static files from STATIC_ROOT to make it work with runserver
+# collectstatic is also required in development for this
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Add URLs for optional features
 if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
