@@ -45,8 +45,6 @@ if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
 
 # Serve javascript-common if in development
 if settings.DEBUG:
-    urlpatterns += static('/javascript/',
-                          document_root='/usr/share/javascript/')
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
 
 # Automatically mount URLs from all installed BiscuIT apps
