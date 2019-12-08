@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'easyaudit',
     'dbbackup',
+    'dbsettings',
     'django_cron',
     'bootstrap4',
     'fa',

@@ -242,6 +242,14 @@ six = "*"
 
 [[package]]
 category = "main"
+description = "Application settings whose values can be updated while a project is up and running."
+name = "django-dbsettings"
+optional = false
+python-versions = "*"
+version = "0.11.0"
+
+[[package]]
+category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
 name = "django-debug-toolbar"
 optional = false
@@ -1295,7 +1303,7 @@ more-itertools = "*"
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "9118795c129f38595fa0d118bd48da56dfd8732a359e2d97cbea3f9e97b7f690"
+content-hash = "908e1e56f87aef8ccff2ce9a79bf335b5cb09896566d1dddb45c62c799c86310"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -1323,6 +1331,7 @@ django-common-helpers = ["2d56be6fa261d829a6a224f189bf276267b9082a17d613fe5f015d
 django-contact-form = ["b42b7e04d6af3318b8427c1eaf62385ec66da252aa79b607ee55d956c7af4a2d", "c31f73faa13f52efa81ac95f41007f3a84eca617f92773a1bed7ca90c61cb3ed"]
 django-cron = ["08d22708c8b2ecab8cda989019a66c7e1e2424c59d822796fd45abf7731d261d"]
 django-dbbackup = ["9470e5d8bdaee4feb878b1b66c59eb9b27a131cccd648bf7cbfe70930acd4fc0"]
+django-dbsettings = ["e3147ced54b7db3371df10df8845e4514aeae96720000bca1a01d0a6490a1404"]
 django-debug-toolbar = ["24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8", "77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"]
 django-easy-audit = ["1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6", "4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"]
 django-fa = ["e3ebf97b90e374b5ccb5b8a70e4a932c8787f2ee995c09a97a63bf9a1366c3ff"]
