@@ -1,21 +1,13 @@
-from glob import glob
-import os
+from django.apps import AppConfig, apps
+from django.db.models.signals import post_save
 
-from django.apps import AppConfig
-from django.conf import settings
+from .signals import clean_scss
 
 
 class CoreConfig(AppConfig):
     name = 'biscuit.core'
     verbose_name = 'BiscuIT - The Free School Information System'
 
-    def clean_scss(self) -> None:
-        for source_map in glob(os.path.join(settings.STATIC_ROOT, '*.css.map')):
-            try:
-                os.unlink(source_map)
-            except OSError:
-                # Ignore because old is better than nothing
-                pass  # noqa
-
     def ready(self) -> None:
-        self.clean_scss()
+        clean_scss()
+        post_save.connect(clean_scss, sender=apps.get_model('dbsettings', 'Setting'))
