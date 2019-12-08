@@ -1,4 +1,5 @@
 from django.apps import apps
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -10,6 +11,7 @@ from two_factor.urls import urlpatterns as tf_urls
 from . import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('data_management/', views.data_management, name='data_management'),
     path('status/', views.system_status, name='system_status'),
     path('school_management', views.school_management, name='school_management'),
