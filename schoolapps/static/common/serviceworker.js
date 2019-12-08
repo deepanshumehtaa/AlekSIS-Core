@@ -9,7 +9,8 @@ const precacheFiles = [
 
 const offlineFallbackPage = '/offline';
 
-const networkFirstPaths = [
+const cacheFirstPaths = [
+    '/faq',
 ];
 
 const avoidCachingPaths = [
@@ -69,10 +70,10 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
   if (event.request.method !== "GET") return;
 
-  if (comparePaths(event.request.url, networkFirstPaths)) {
-    networkFirstFetch(event);
-  } else {
+  if (comparePaths(event.request.url, cacheFirstPaths)) {
     cacheFirstFetch(event);
+  } else {
+    networkFirstFetch(event);
   }
 });
 
