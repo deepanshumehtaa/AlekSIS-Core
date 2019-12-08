@@ -1,7 +1,7 @@
 from colour import web2hex
 from sass import SassColor
 
-from .models import theme_settings
+from biscuit.core.models import theme_settings
 
 def get_colour(html_colour: str) -> SassColor:
     rgb = web2hex(html_colour, force_long=True)[1:]
