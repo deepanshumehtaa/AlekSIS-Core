@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('caption', models.CharField(max_length=30, verbose_name='Visible caption of the term')),
                 ('date_start', models.DateField(null=True, verbose_name='Effective start date of term')),
                 ('date_end', models.DateField(null=True, verbose_name='Effective end date of term')),
-                ('school', models.ForeignKey(default=biscuit.core.util.core_helpers.get_current_school, on_delete=django.db.models.deletion.CASCADE, to='core.School')),
+                ('school', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School')),
             ],
             options={
                 'abstract': False,
