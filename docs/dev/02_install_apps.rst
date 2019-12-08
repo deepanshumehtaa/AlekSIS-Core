@@ -17,11 +17,5 @@ This will install the Exlibris app (library management) app by using a
 shell for first ``cd``'ing into the app directory and then using
 poetry to install the app.
 
-
-Migrate the database
---------------------
-
-After installing or updating any apps, the database must be updated as
-well by running Django's ``migrate`` command::
-
-  poetry run ./manage.py migrate
+DO not forget to run the maintenance tasks described earlier after
+installign any app.

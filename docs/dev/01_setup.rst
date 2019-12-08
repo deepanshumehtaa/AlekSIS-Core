@@ -9,6 +9,7 @@ Poetry makes a lot of stuff very easy, especially managing a virtual
 environment that contains BiscuIT and everything you need to run the
 framework and selected apps.
 
+Also, `Yarn`_ is needed to resolve JavaScript dependencies.
 
 Get the source tree
 -------------------
@@ -16,7 +17,7 @@ Get the source tree
 To download BiscuIT and all officially bundled apps in their
 development version, use Git like so::
 
-  git clone --recurse-submodules https://edugit.org/Teckids/BiscuIT/BiscuIT-ng
+  git clone --recurse-submodules https://edugit.org/BiscuIT/BiscuIT-ng
 
 If you do not want to download the bundled apps, leave out the
 ``--recurse-submodules`` option.
@@ -45,13 +46,36 @@ installing BiscuIT is a matter of::
   poetry install
 
 
-Running commands in the virtual environment
--------------------------------------------
+Regular tasks
+-------------
 
-To run commands in the virtual environment, use Poetry's ``run``
-command::
+After making changes to the environment, e.g. installing apps or updates,
+some maintenance tasks need to be done:
 
-  poetry run ./manage.py runserver
+1. Download and install JavaScript dependencies
+2. Collect static files
+3. Run database migrations
+
+All three steps can be done with the ``poetry run`` command and
+``manage.py``::
+
+  poetry run ./manage.py yarn install
+  poetry run ./manage.py collectstatic
+  poetry run ./manage.py migrate
+
+(You might need database settings for the `migrate` command; see below.)
+
+Running the development server
+------------------------------
+
+The development server can be started using Django's ``runserver`` command.
+You can either configure BiscuIT like in a production environment, or pass
+basic settings in as environment variable. Here is an example that runs the
+development server against a local PostgreSQL database with password
+`biscuit` (all else remains default) and with the `debug` setting enabled::
+
+  BISCUIT_debug=true BISCUIT_database__password=biscuit poetry run ./manage.py runserver
 
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
+.. _Yarn: https://yarnpkg.com
