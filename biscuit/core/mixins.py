@@ -6,8 +6,6 @@ from django.db.models import QuerySet
 
 from easyaudit.models import CRUDEvent
 
-from .util.core_helpers import get_current_school
-
 
 class ExtensibleModel(object):
     """ Allow injection of code from BiscuIT apps to extend model functionality.
