@@ -1,10 +1,8 @@
 from glob import glob
 import os
-from warnings import warn
 
 from django.apps import AppConfig
 from django.conf import settings
-from django.db.utils import ProgrammingError
 
 
 class CoreConfig(AppConfig):
