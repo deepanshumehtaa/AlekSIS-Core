@@ -74,4 +74,6 @@ Weitere Verbesserungen der vorangegeangen Versionen dieses Releases.
   + Titel des aktuellsten Artikel im Dashboard nicht im Bild, sondern unterm Bild anzeigen
 * Interne Verbesserungen
   + Einfachere Einbindung von React für REBUS
- 
+
+## 1.1.2 "Aebli"
+* Bugfix in der PWA (zuerst Netzwerk, dann Cache)

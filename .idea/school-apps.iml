@@ -23,7 +23,7 @@
       <excludeFolder url="file://$MODULE_DIR$/env" />
       <excludeFolder url="file://$MODULE_DIR$/schoolapps/staticcollect" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (SchoolApps)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (school-apps)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
@@ -47,8 +47,5 @@
         <option value="$MODULE_DIR$/schoolapps/aub/templates" />
       </list>
     </option>
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>
