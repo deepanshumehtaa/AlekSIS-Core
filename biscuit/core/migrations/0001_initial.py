@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                 ('import_ref', models.CharField(blank=True, editable=False, max_length=64, null=True, verbose_name='Reference ID of import source')),
                 ('guardians', models.ManyToManyField(related_name='children', to='core.Person', verbose_name='Guardians / Parents')),
                 ('primary_group', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Group')),
-                ('school', models.ForeignKey(default=l, on_delete=django.db.models.deletion.CASCADE, to='core.School')),
+                ('school', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='core.School')),
                 ('user', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person', to=settings.AUTH_USER_MODEL)),
             ],
             options={
