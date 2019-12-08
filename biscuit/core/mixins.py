@@ -69,15 +69,9 @@ class ExtensibleModel(object):
 
         cls._safe_add(func, func.__name__)
 
-
-class SchoolRelated(models.Model):
+class CRUDMixin(models.Model):
     class Meta:
         abstract = True
-
-#    objects = SchoolRelatedManager()
-
-    school = models.ForeignKey(
-        'core.School', on_delete=models.CASCADE, default=get_current_school)
 
     @property
     def crud_events(self) -> QuerySet:
