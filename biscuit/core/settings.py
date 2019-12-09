@@ -35,7 +35,8 @@ INTERNAL_IPS = _settings.get('maintenance.internal_ips', [])
 DEBUG_TOOLBAR_CONFIG = {
     'RENDER_PANELS': True,
     'SHOW_COLLAPSED': True,
-    'JQUERY_URL': ''
+    'JQUERY_URL': '',
+    'SHOW_TOOLBAR_CALLBACK': 'biscuit.core.util.core_helpers.dt_show_toolbar'
 }
 
 ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
