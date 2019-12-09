@@ -1,4 +1,8 @@
+include CODE_OF_CONDUCT.rst
+include CONTRIBUTING.rst
 include LICENCE
+include manage.py
 recursive-include biscuit/core/static *
 recursive-include biscuit/core/templates *
 recursive-include biscuit/core/migrations *
+recursive-include docs *

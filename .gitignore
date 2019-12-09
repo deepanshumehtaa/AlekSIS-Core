@@ -56,3 +56,8 @@ docs/_build/
 
 # Generated files
 biscuit/static/
+biscuit/node_modules/
+
+.coverage
+.tox/
+maintenance_mode_state.txt

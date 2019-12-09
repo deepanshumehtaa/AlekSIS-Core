@@ -21,11 +21,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
 	gettext \
-	libjs-bootstrap4 \
 	libpq5 \
 	libpq-dev \
 	libssl-dev \
-	netcat-openbsd
+	netcat-openbsd \
+	yarnpkg
 
 # Install core dependnecies
 WORKDIR /usr/src/app
@@ -42,6 +42,7 @@ RUN mkdir -p /var/lib/biscuit/media /var/lib/biscuit/static /var/lib/biscuit/bac
 
 # Build messages and assets
 RUN python manage.py compilemessages; \
+    python manage.py yarn install; \
     python manage.py collectstatic --no-input --clear
 
 # Clean up build dependencies
@@ -50,12 +51,14 @@ RUN apt-get remove --purge -y \
         gettext \
         libpq-dev \
         libssl-dev \
-        python3-dev; \
+        yarnpkg; \
     apt-get autoremove --purge -y; \
     apt-get clean -y; \
     pip uninstall -y poetry; \
     rm -f /var/lib/apt/lists/*_*; \
-    rm -rf /root/.cache
+    rm -rf /root/.cache; \
+    rm -rf biscuit/node_modules; \
+    rm -rf /usr/local/lib/node_modules
 
 # Declare a persistent volume for all data
 VOLUME /var/lib/biscuit

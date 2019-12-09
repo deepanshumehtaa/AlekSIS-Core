@@ -9,7 +9,8 @@ New features
 
 * Two-factor authentication with TOTP (Google Authenticator), Yubikey, SMS
   and phone call.
-
+* Devs: CRUDMixin provides a crud_event relation that returns all CRUD
+  events for an object
 
 `1.0a2`_
 --------

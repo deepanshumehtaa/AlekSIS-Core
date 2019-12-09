@@ -29,10 +29,6 @@ def get_app_packages() -> Sequence[str]:
     return pkgs
 
 
-def get_current_school() -> int:
-    return 1
-
-
 def is_impersonate(request: HttpRequest) -> bool:
     if hasattr(request, 'user'):
         return getattr(request.user, 'is_impersonate', False)

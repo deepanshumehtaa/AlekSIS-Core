@@ -1,4 +1,5 @@
 from django.apps import apps
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -10,6 +11,7 @@ from two_factor.urls import urlpatterns as tf_urls
 from . import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('data_management/', views.data_management, name='data_management'),
     path('status/', views.system_status, name='system_status'),
     path('school_management', views.school_management, name='school_management'),
@@ -35,8 +37,13 @@ urlpatterns = [
     path('contact/', include('contact_form.urls')),
     path('impersonate/', include('impersonate.urls')),
     path('__i18n__/', include('django.conf.urls.i18n')),
-    path('select2/', include('django_select2.urls'))
+    path('select2/', include('django_select2.urls')),
+    path('settings/', include('dbsettings.urls'))
 ]
+
+# Serve static files from STATIC_ROOT to make it work with runserver
+# collectstatic is also required in development for this
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Add URLs for optional features
 if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
@@ -45,8 +52,6 @@ if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
 
 # Serve javascript-common if in development
 if settings.DEBUG:
-    urlpatterns += static('/javascript/',
-                          document_root='/usr/share/javascript/')
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
 
 # Automatically mount URLs from all installed BiscuIT apps

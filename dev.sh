@@ -17,6 +17,7 @@ case "$1" in
 	remove_pip_metadata
 	poetry run ./manage.py migrate
 	poetry run ./manage.py compilemessages
+	poetry run ./manage.py yarn install
 	poetry run ./manage.py collectstatic --no-input
 	set +e
 	;;

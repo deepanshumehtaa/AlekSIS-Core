@@ -4,10 +4,24 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import dbsettings
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .mixins import ExtensibleModel, SchoolRelated
+from .mixins import ExtensibleModel
+
+
+class ThemeSettings(dbsettings.Group):
+    colour_primary = dbsettings.StringValue(default='#007bff')
+    colour_secondary = dbsettings.StringValue(default='#6c757d')
+    colour_success = dbsettings.StringValue(default='#28a745')
+    colour_info = dbsettings.StringValue(default='#17a2b8')
+    colour_warning = dbsettings.StringValue(default='#ffc107')
+    colour_danger = dbsettings.StringValue(default='#dc3545')
+    colour_light = dbsettings.StringValue(default='#f8f9fa')
+    colour_dark = dbsettings.StringValue(default='#343a40')
+
+theme_settings = ThemeSettings('Global theme settings')
 
 
 class School(models.Model):
@@ -30,7 +44,7 @@ class School(models.Model):
         ordering = ['name', 'name_official']
 
 
-class SchoolTerm(SchoolRelated):
+class SchoolTerm(models.Model):
     """ Information about a term (limited time frame) that data can
     be linked to.
     """
@@ -44,13 +58,12 @@ class SchoolTerm(SchoolRelated):
         'Effective end date of term'), null=True)
 
 
-class Person(SchoolRelated, ExtensibleModel):
+class Person(models.Model, ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
 
     class Meta:
-        unique_together = [['school', 'short_name'], ['school', 'import_ref']]
         ordering = ['last_name', 'first_name']
 
     SEX_CHOICES = [
@@ -70,7 +83,7 @@ class Person(SchoolRelated, ExtensibleModel):
         'Additional name(s)'), max_length=30, blank=True)
 
     short_name = models.CharField(verbose_name=_(
-        'Short name'), max_length=5, blank=True, null=True)
+        'Short name'), max_length=5, blank=True, null=True, unique=True)
 
     street = models.CharField(verbose_name=_(
         'Street'), max_length=30, blank=True)
@@ -96,7 +109,8 @@ class Person(SchoolRelated, ExtensibleModel):
     photo_cropping = ImageRatioField('photo', '600x800', size_warning=True)
 
     import_ref = models.CharField(verbose_name=_(
-        'Reference ID of import source'), max_length=64, blank=True, null=True, editable=False)
+        'Reference ID of import source'), max_length=64,
+        blank=True, null=True, editable=False, unique=True)
 
     guardians = models.ManyToManyField('self', verbose_name=_('Guardians / Parents'),
                                        symmetrical=False, related_name='children')
@@ -132,19 +146,18 @@ class Person(SchoolRelated, ExtensibleModel):
         return self.full_name
 
 
-class Group(SchoolRelated, ExtensibleModel):
+class Group(models.Model, ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
 
     class Meta:
-        unique_together = [['school', 'name'], ['school', 'short_name']]
         ordering = ['short_name', 'name']
 
     name = models.CharField(verbose_name=_(
-        'Long name of group'), max_length=60)
+        'Long name of group'), max_length=60, unique=True)
     short_name = models.CharField(verbose_name=_(
-        'Short name of group'), max_length=16)
+        'Short name of group'), max_length=16, unique=True)
 
     members = models.ManyToManyField('Person', related_name='member_of')
     owners = models.ManyToManyField('Person', related_name='owner_of')
