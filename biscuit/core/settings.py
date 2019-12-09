@@ -34,7 +34,8 @@ DEBUG = _settings.get('maintenance.debug', False)
 INTERNAL_IPS = _settings.get('maintenance.internal_ips', [])
 DEBUG_TOOLBAR_CONFIG = {
     'RENDER_PANELS': True,
-    'SHOW_COLLAPSED': True
+    'SHOW_COLLAPSED': True,
+    'JQUERY_URL': ''
 }
 
 ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
