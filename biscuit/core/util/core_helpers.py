@@ -10,7 +10,6 @@ from debug_toolbar.middleware import show_toolbar
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
     return settings.DEBUG and (show_toolbar(request) or request.user.is_superuser)
-   
 
 
 def get_app_packages() -> Sequence[str]:
