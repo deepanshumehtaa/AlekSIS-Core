@@ -8,8 +8,16 @@ from django.http import HttpRequest
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
     from debug_toolbar.middleware import show_toolbar  # noqa
-    return settings.DEBUG and (show_toolbar(request) or request.user.is_superuser)
 
+    if not settings.DEBUG:
+        return False
+
+    if show_toolbar(request):
+        return True
+    elif hasattr(request, 'user') and request.user.is_superuser:
+        return True
+
+    return False
 
 def get_app_packages() -> Sequence[str]:
     """ Find all packages within the biscuit.apps namespace. """
