@@ -5,10 +5,9 @@ from typing import Sequence
 from django.conf import settings
 from django.http import HttpRequest
 
-from debug_toolbar.middleware import show_toolbar
-
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
+    from debug_toolbar.middleware import show_toolbar  # noqa
     return settings.DEBUG and (show_toolbar(request) or request.user.is_superuser)
 
 
