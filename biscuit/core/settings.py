@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     'menu_generator',
     'phonenumber_field',
     'debug_toolbar',
-    'contact_form',
     'django_select2',
     'hattori',
     'django_otp.plugins.otp_totp',
