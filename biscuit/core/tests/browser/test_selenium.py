@@ -14,4 +14,5 @@ def chrome_options(chrome_options):
 
 def test_index(selenium):
     selenium.get('http://app:8000/')
+    assert 'BiscuIT' in selenium.title
     selenium.save_screenshot('screenshots/index.png')
