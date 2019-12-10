@@ -1,18 +1,41 @@
-import sys
-
 import pytest
 
-if '--driver' not in sys.argv:
-    pytest.skip('Selenium driver not configured', allow_module_level=True)
+from django.test import LiveServerTestCase
 
-@pytest.fixture
-def chrome_options(chrome_options):
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    return chrome_options
+webdriver = pytest.importorskip('selenium.webdriver')
 
-def test_index(selenium):
-    selenium.get('http://app:8000/')
-    assert 'BiscuIT' in selenium.title
-    selenium.save_screenshot('screenshots/index.png')
+
+class SeleniumTests(LiveServerTestCase):
+    __test__ = False
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.selenium.set_window_size(1920, 1080)
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_index(self):
+        self.selenium.get(self.live_server_url + '/')
+        assert 'BiscuIT' in self.selenium.title
+        self.selenium.save_screenshot('screenshots/index.png')
+
+
+class SeleniumTestsChromium(SeleniumTests):
+    __test__ = True
+
+    @classmethod
+    def setUpClass(cls):
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--no-headless')
+        options.add_argument('--disable-shm-usage')
+
+        cls.selenium = webdriver.Chrome(options=options)
+
+        super().setUpClass()
