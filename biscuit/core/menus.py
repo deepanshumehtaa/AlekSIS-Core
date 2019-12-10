@@ -96,16 +96,6 @@ MENUS = {
                 }
             ]
         },
-        {
-            'name': _('Support'),
-            'url': '#',
-            'submenu': [
-                {
-                    'name': _('Get support'),
-                    'url': 'contact_form'
-                }
-            ]
-        }
     ],
     'DATA_MANAGEMENT_MENU': [
     ],

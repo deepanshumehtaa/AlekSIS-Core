@@ -34,7 +34,6 @@ urlpatterns = [
     path('group/<int:id_>/edit', views.edit_group, name='edit_group_by_id'),
     path('', views.index, name='index'),
     path('maintenance-mode/', include('maintenance_mode.urls')),
-    path('contact/', include('contact_form.urls')),
     path('impersonate/', include('impersonate.urls')),
     path('__i18n__/', include('django.conf.urls.i18n')),
     path('select2/', include('django_select2.urls')),
