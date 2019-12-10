@@ -30,6 +30,7 @@ class SeleniumTests(LiveServerTestCase):
         else:
             return False
 
+    @pytest.mark.django_db
     def test_index(self):
         self.selenium.get(self.live_server_url + '/')
         assert 'BiscuIT' in self.selenium.title
