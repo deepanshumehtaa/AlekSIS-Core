@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from django.test import LiveServerTestCase
@@ -20,10 +22,18 @@ class SeleniumTests(LiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
+    @classmethod
+    def _screenshot(cls, filename):
+        screenshot_path = os.environ.get('TEST_SCREENSHOT_PATH', None)
+        if screenshot_path:
+            return cls.selenium.save_screenshot(os.path.join(screenshot_path, filename))
+        else:
+            return False
+
     def test_index(self):
         self.selenium.get(self.live_server_url + '/')
         assert 'BiscuIT' in self.selenium.title
-        self.selenium.save_screenshot('screenshots/index.png')
+        self._screenshot('index.png')
 
 
 class SeleniumTestsChromium(SeleniumTests):
