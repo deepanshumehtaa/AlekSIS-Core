@@ -20,8 +20,11 @@ setting certain environment variables:
 | Variable               | Meaning                                              | Example                      |
 +========================+======================================================+==============================+
 | TEST_SELENIUM_BROWSERS | List of webdrivers to test against, comma-separated. | chrome,firefox               |
++------------------------+------------------------------------------------------+------------------------------+
 | TEST_SELENIUM_HUB      | Address of Selenium hub if using remote grid         | http://127.0.0.1:4444/wd/hub |
++------------------------+------------------------------------------------------+------------------------------+
 | TEST_HOST              | Hostname reachable from Selenium for live server     | 172.17.0.1                   |
++------------------------+------------------------------------------------------+------------------------------+
 | TEST_SCREENSHOT_PATH   | Path to directory to create screenshots in           | ./screenshots                |
 +------------------------+------------------------------------------------------+------------------------------+
 
