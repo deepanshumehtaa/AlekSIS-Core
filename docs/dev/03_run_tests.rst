@@ -52,7 +52,7 @@ Docker Hub::
 
   poetry run env \
     TEST_SELENIUM_BROWSERS=chrome,firefox \
-    TEST_SELENIUM_HUB=http://127.0.0.1:4444 \
+    TEST_SELENIUM_HUB=http://127.0.0.1:4444/wd/hub \
     TEST_HOST=172.17.0.1 \
   tox
 
