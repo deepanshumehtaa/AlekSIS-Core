@@ -251,13 +251,13 @@ var Dashboard = function (_React$Component) {
                         {className: "col s12 m12 l6 xl4"},
                         React.createElement(
                             "div",
-                            { className: "card" },
+                            {className: "card"},
                             React.createElement(
                                 "div",
-                                { className: "card-content" },
+                                {className: "card-content"},
                                 React.createElement(
                                     "span",
-                                    { className: "card-title" },
+                                    {className: "card-title"},
                                     "Plan ",
                                     this.state.plan.type === 2 ? "der" : "für",
                                     " ",
@@ -354,10 +354,10 @@ var Dashboard = function (_React$Component) {
                             {className: "card "},
                             React.createElement(
                                 "div",
-                                { className: "card-content" },
+                                {className: "card-content"},
                                 React.createElement(
                                     "span",
-                                    { className: "card-title" },
+                                    {className: "card-title"},
                                     "Aktuelle Termine"
                                 ),
                                 this.state.current_events.map(function (event) {
