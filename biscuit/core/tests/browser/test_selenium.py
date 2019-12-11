@@ -46,6 +46,8 @@ class SeleniumTestsChromium(SeleniumTests):
         options.add_argument('--headless')
         options.add_argument('--no-headless')
         options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-extensions')
+        options.add_argument('--disable-gpu')
 
         cls.selenium = webdriver.Chrome(options=options)
 
