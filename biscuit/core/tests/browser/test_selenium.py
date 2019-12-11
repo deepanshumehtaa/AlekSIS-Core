@@ -5,14 +5,11 @@ import pytest
 from django.test.selenium import SeleniumTestCase
 
 
-if not os.environ.get('TEST_SELENIUM_HUB', None):
-    pytest.skip('Selenium hub not defined.', allow_module_level=True)
-
-
 class SeleniumTests(SeleniumTestCase):
-    external_host = os.environ.get('TEST_LISTEN_ADDRESS', '127.0.0.1')
-    browsers = ['chrome', 'firefox']
-    selenium_hub = 'http://%s/wd/hub' % os.environ.get('TEST_SELENIUM_HUB', '127.0.0.1:4444')
+    host = os.environ.get('TEST_LISTEN_ADDRESS', '') or '127.0.0.1'
+    external_host = os.environ.get('TEST_HOST', '') or None
+    browsers = list(filter(bool, os.environ.get('TEST_SELENIUM_BROWSERS', '').split(',')))
+    selenium_hub = 'http://%s/wd/hub' % os.environ.get('TEST_SELENIUM_HUB', '') or '127.0.0.1:4444'
 
     @classmethod
     def _screenshot(cls, filename):
