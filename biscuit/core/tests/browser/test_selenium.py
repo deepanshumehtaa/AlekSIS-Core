@@ -11,6 +11,8 @@ SeleniumTestCaseBase.browsers = list(filter(bool, os.environ.get('TEST_SELENIUM_
 SeleniumTestCaseBase.selenium_hub = os.environ.get('TEST_SELENIUM_HUB', '') or None
 
 class SeleniumTests(SeleniumTestCase):
+    serialized_rollback = True
+
     @classmethod
     def _screenshot(cls, filename):
         screenshot_path = os.environ.get('TEST_SCREENSHOT_PATH', None)
