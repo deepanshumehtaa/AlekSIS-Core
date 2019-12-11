@@ -45,7 +45,7 @@ class SeleniumTestsChromium(SeleniumTests):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
         options.add_argument('--no-headless')
-        options.add_argument('--disable-shm-usage')
+        options.add_argument('--disable-dev-shm-usage')
 
         cls.selenium = webdriver.Chrome(options=options)
 
