@@ -48,6 +48,17 @@ class SeleniumTestsChromium(SeleniumTests):
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--disable-extensions')
         options.add_argument('--disable-gpu')
+        options.add_argument("--disable-impl-side-painting")
+        options.add_argument("--disable-setuid-sandbox")
+        options.add_argument("--disable-seccomp-filter-sandbox")
+        options.add_argument("--disable-breakpad")
+        options.add_argument("--disable-client-side-phishing-detection")
+        options.add_argument("--disable-cast")
+        options.add_argument("--disable-cast-streaming-hw-encoding")
+        options.add_argument("--disable-cloud-import")
+        options.add_argument("--disable-popup-blocking")
+        options.add_argument("--ignore-certificate-errors")
+        options.add_argument("--disable-session-crashed-bubble")
 
         cls.selenium = webdriver.Chrome(options=options)
 
