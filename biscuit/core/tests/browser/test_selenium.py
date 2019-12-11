@@ -2,15 +2,13 @@ import os
 
 import pytest
 
-from django.test.selenium import SeleniumTestCase
+from django.test.selenium import SeleniumTestCase, SeleniumTestCaseBase
 
+SeleniumTestCaseBase.external_host = os.environ.get('TEST_HOST', '') or None
+SeleniumTestCaseBase.browsers = list(filter(bool, os.environ.get('TEST_SELENIUM_BROWSERS', '').split(',')))
+SeleniumTestCaseBase.selenium_hub = os.environ.get('TEST_SELENIUM_HUB', '') or None
 
 class SeleniumTests(SeleniumTestCase):
-    host = os.environ.get('TEST_LISTEN_ADDRESS', '') or '127.0.0.1'
-    external_host = os.environ.get('TEST_HOST', '') or None
-    browsers = list(filter(bool, os.environ.get('TEST_SELENIUM_BROWSERS', '').split(',')))
-    selenium_hub = 'http://%s/wd/hub' % os.environ.get('TEST_SELENIUM_HUB', '') or '127.0.0.1:4444'
-
     @classmethod
     def _screenshot(cls, filename):
         screenshot_path = os.environ.get('TEST_SCREENSHOT_PATH', None)
