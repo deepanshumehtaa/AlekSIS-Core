@@ -5,13 +5,13 @@ def test_get_dict_object():
     class _Foo(object):
         bar = 12
 
-    assert _Foo.bar == get_dict(_Foo, 'bar')
+    assert _Foo.bar == get_dict(_Foo, "bar")
 
 
 def test_get_dict_dict():
-    _foo = {'bar': 12}
+    _foo = {"bar": 12}
 
-    assert _foo['bar'] == get_dict(_foo, 'bar')
+    assert _foo["bar"] == get_dict(_foo, "bar")
 
 
 def test_get_dict_list():
@@ -23,4 +23,4 @@ def test_get_dict_list():
 def test_get_dict_invalid():
     _foo = 12
 
-    assert get_dict(_foo, 'bar') is None
+    assert get_dict(_foo, "bar") is None

@@ -10,8 +10,8 @@ class Backup(CronJobBase):
     schedule = Schedule(
         run_at_times=RUN_AT_TIMES, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS
     )
-    code = 'biscuit.core.Backup'
+    code = "biscuit.core.Backup"
 
     def do(self):
-        management.call_command('dbbackup', '-z')
-        management.call_command('mediabackup', '-z')
+        management.call_command("dbbackup", "-z")
+        management.call_command("mediabackup", "-z")

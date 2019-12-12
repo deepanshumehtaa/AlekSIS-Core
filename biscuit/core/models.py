@@ -12,17 +12,17 @@ from .mixins import ExtensibleModel
 
 
 class ThemeSettings(dbsettings.Group):
-    colour_primary = dbsettings.StringValue(default='#007bff')
-    colour_secondary = dbsettings.StringValue(default='#6c757d')
-    colour_success = dbsettings.StringValue(default='#28a745')
-    colour_info = dbsettings.StringValue(default='#17a2b8')
-    colour_warning = dbsettings.StringValue(default='#ffc107')
-    colour_danger = dbsettings.StringValue(default='#dc3545')
-    colour_light = dbsettings.StringValue(default='#f8f9fa')
-    colour_dark = dbsettings.StringValue(default='#343a40')
+    colour_primary = dbsettings.StringValue(default="#007bff")
+    colour_secondary = dbsettings.StringValue(default="#6c757d")
+    colour_success = dbsettings.StringValue(default="#28a745")
+    colour_info = dbsettings.StringValue(default="#17a2b8")
+    colour_warning = dbsettings.StringValue(default="#ffc107")
+    colour_danger = dbsettings.StringValue(default="#dc3545")
+    colour_light = dbsettings.StringValue(default="#f8f9fa")
+    colour_dark = dbsettings.StringValue(default="#343a40")
 
 
-theme_settings = ThemeSettings('Global theme settings')
+theme_settings = ThemeSettings("Global theme settings")
 
 
 class School(models.Model):
@@ -32,22 +32,22 @@ class School(models.Model):
     currently logged-in user.
     """
 
-    name = models.CharField(verbose_name=_('Name'), max_length=30)
+    name = models.CharField(verbose_name=_("Name"), max_length=30)
     name_official = models.CharField(
-        verbose_name=_('Official name'),
+        verbose_name=_("Official name"),
         max_length=200,
-        help_text=_('Official name of the school, e.g. as given by supervisory authority'),
+        help_text=_("Official name of the school, e.g. as given by supervisory authority"),
     )
 
-    logo = ImageCropField(verbose_name=_('School logo'), blank=True, null=True)
-    logo_cropping = ImageRatioField('logo', '600x600', size_warning=True)
+    logo = ImageCropField(verbose_name=_("School logo"), blank=True, null=True)
+    logo_cropping = ImageRatioField("logo", "600x600", size_warning=True)
 
     @property
     def current_term(self):
         return SchoolTerm.objects.get(current=True)
 
     class Meta:
-        ordering = ['name', 'name_official']
+        ordering = ["name", "name_official"]
 
 
 class SchoolTerm(models.Model):
@@ -55,10 +55,10 @@ class SchoolTerm(models.Model):
     be linked to.
     """
 
-    caption = models.CharField(verbose_name=_('Visible caption of the term'), max_length=30)
+    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=30)
 
-    date_start = models.DateField(verbose_name=_('Effective start date of term'), null=True)
-    date_end = models.DateField(verbose_name=_('Effective end date of term'), null=True)
+    date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
+    date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
 
     current = models.NullBooleanField(default=None, unique=True)
 
@@ -74,43 +74,43 @@ class Person(models.Model, ExtensibleModel):
     """
 
     class Meta:
-        ordering = ['last_name', 'first_name']
+        ordering = ["last_name", "first_name"]
 
-    SEX_CHOICES = [('f', _('female')), ('m', _('male'))]
+    SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
-        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name='person'
+        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person"
     )
-    is_active = models.BooleanField(verbose_name=_('Is person active?'), default=True)
+    is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
-    first_name = models.CharField(verbose_name=_('First name'), max_length=30)
-    last_name = models.CharField(verbose_name=_('Last name'), max_length=30)
+    first_name = models.CharField(verbose_name=_("First name"), max_length=30)
+    last_name = models.CharField(verbose_name=_("Last name"), max_length=30)
     additional_name = models.CharField(
-        verbose_name=_('Additional name(s)'), max_length=30, blank=True
+        verbose_name=_("Additional name(s)"), max_length=30, blank=True
     )
 
     short_name = models.CharField(
-        verbose_name=_('Short name'), max_length=5, blank=True, null=True, unique=True
+        verbose_name=_("Short name"), max_length=5, blank=True, null=True, unique=True
     )
 
-    street = models.CharField(verbose_name=_('Street'), max_length=30, blank=True)
-    housenumber = models.CharField(verbose_name=_('Street number'), max_length=10, blank=True)
-    postal_code = models.CharField(verbose_name=_('Postal code'), max_length=5, blank=True)
-    place = models.CharField(verbose_name=_('Place'), max_length=30, blank=True)
+    street = models.CharField(verbose_name=_("Street"), max_length=30, blank=True)
+    housenumber = models.CharField(verbose_name=_("Street number"), max_length=10, blank=True)
+    postal_code = models.CharField(verbose_name=_("Postal code"), max_length=5, blank=True)
+    place = models.CharField(verbose_name=_("Place"), max_length=30, blank=True)
 
-    phone_number = PhoneNumberField(verbose_name=_('Home phone'), blank=True)
-    mobile_number = PhoneNumberField(verbose_name=_('Mobile phone'), blank=True)
+    phone_number = PhoneNumberField(verbose_name=_("Home phone"), blank=True)
+    mobile_number = PhoneNumberField(verbose_name=_("Mobile phone"), blank=True)
 
-    email = models.EmailField(verbose_name=_('E-mail address'), blank=True)
+    email = models.EmailField(verbose_name=_("E-mail address"), blank=True)
 
-    date_of_birth = models.DateField(verbose_name=_('Date of birth'), blank=True, null=True)
-    sex = models.CharField(verbose_name=_('Sex'), max_length=1, choices=SEX_CHOICES, blank=True)
+    date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
+    sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = ImageCropField(verbose_name=_('Photo'), blank=True, null=True)
-    photo_cropping = ImageRatioField('photo', '600x800', size_warning=True)
+    photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
+    photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
 
     import_ref = models.CharField(
-        verbose_name=_('Reference ID of import source'),
+        verbose_name=_("Reference ID of import source"),
         max_length=64,
         blank=True,
         null=True,
@@ -119,10 +119,10 @@ class Person(models.Model, ExtensibleModel):
     )
 
     guardians = models.ManyToManyField(
-        'self', verbose_name=_('Guardians / Parents'), symmetrical=False, related_name='children'
+        "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children"
     )
 
-    primary_group = models.ForeignKey('Group', models.SET_NULL, null=True)
+    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True)
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
@@ -141,12 +141,12 @@ class Person(models.Model, ExtensibleModel):
         if it can't find one.
         """
 
-        group, created = Group.objects.get_or_create(short_name=value, defaults={'name': value})
+        group, created = Group.objects.get_or_create(short_name=value, defaults={"name": value})
         self.primary_group = group
 
     @property
     def full_name(self) -> str:
-        return '%s, %s' % (self.last_name, self.first_name)
+        return "%s, %s" % (self.last_name, self.first_name)
 
     def __str__(self) -> str:
         return self.full_name
@@ -158,21 +158,21 @@ class Group(models.Model, ExtensibleModel):
     """
 
     class Meta:
-        ordering = ['short_name', 'name']
+        ordering = ["short_name", "name"]
 
-    name = models.CharField(verbose_name=_('Long name of group'), max_length=60, unique=True)
-    short_name = models.CharField(verbose_name=_('Short name of group'), max_length=16, unique=True)
+    name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
+    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=16, unique=True)
 
-    members = models.ManyToManyField('Person', related_name='member_of')
-    owners = models.ManyToManyField('Person', related_name='owner_of')
+    members = models.ManyToManyField("Person", related_name="member_of")
+    owners = models.ManyToManyField("Person", related_name="owner_of")
 
     parent_groups = models.ManyToManyField(
-        'self',
-        related_name='child_groups',
+        "self",
+        related_name="child_groups",
         symmetrical=False,
-        verbose_name=_('Parent groups'),
+        verbose_name=_("Parent groups"),
         blank=True,
     )
 
     def __str__(self) -> str:
-        return '%s (%s)' % (self.name, self.short_name)
+        return "%s (%s)" % (self.name, self.short_name)

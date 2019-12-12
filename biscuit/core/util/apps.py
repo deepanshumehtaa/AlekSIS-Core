@@ -12,7 +12,7 @@ class AppConfig(django.apps.AppConfig):
         # Run model extension code
         try:
             import_module(
-                '.'.join(self.__class__.__module__.split('.')[:-1] + ['model_extensions'])
+                ".".join(self.__class__.__module__.split(".")[:-1] + ["model_extensions"])
             )
         except ImportError:
             # ImportErrors are non-fatal because model extensions are optional.
