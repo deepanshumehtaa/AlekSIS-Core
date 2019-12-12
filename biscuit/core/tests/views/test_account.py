@@ -3,12 +3,14 @@ import pytest
 from django.conf import settings
 from django.urls import reverse
 
+
 @pytest.mark.django_db
 def test_index_not_logged_in(client):
     response = client.get('/')
 
     assert response.status_code == 200
     assert reverse(settings.LOGIN_URL) in response.content.decode('utf-8')
+
 
 @pytest.mark.django_db
 def test_login(client, django_user_model):
@@ -23,6 +25,7 @@ def test_login(client, django_user_model):
     assert response.status_code == 200
     assert reverse(settings.LOGIN_URL) not in response.content.decode('utf-8')
 
+
 @pytest.mark.django_db
 def test_index_not_linked_to_person(client, django_user_model):
     username = 'foo'
@@ -35,6 +38,7 @@ def test_index_not_linked_to_person(client, django_user_model):
 
     assert response.status_code == 200
     assert 'You are not linked to a person' in response.content.decode('utf-8')
+
 
 @pytest.mark.django_db
 def test_logout(client, django_user_model):

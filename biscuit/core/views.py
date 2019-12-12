@@ -9,7 +9,13 @@ from django.utils.translation import ugettext_lazy as _
 from django_cron.models import CronJobLog
 
 from .decorators import admin_required
-from .forms import PersonsAccountsFormSet, EditPersonForm, EditGroupForm, EditSchoolForm, EditTermForm
+from .forms import (
+    PersonsAccountsFormSet,
+    EditPersonForm,
+    EditGroupForm,
+    EditSchoolForm,
+    EditTermForm,
+)
 from .models import Person, Group, School
 from .tables import PersonsTable, GroupsTable
 from .util import messages
@@ -181,9 +187,9 @@ def data_management(request: HttpRequest) -> HttpResponse:
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    context['backups'] = CronJobLog.objects.filter(
-        code='biscuit.core.Backup'
-    ).order_by('-end_time')[:10]
+    context['backups'] = CronJobLog.objects.filter(code='biscuit.core.Backup').order_by(
+        '-end_time'
+    )[:10]
 
     return render(request, 'core/system_status.html', context)
 

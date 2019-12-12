@@ -18,6 +18,9 @@ class PersonAnonymizer(BaseAnonymizer):
         ('phone_number', ''),
         ('mobile_number', ''),
         ('email', faker.email),
-        ('date_of_birth', lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs)),
-        ('photo', '')
+        (
+            'date_of_birth',
+            lambda **kwargs: faker.date_of_birth(minimum_age=8, maximum_age=66, **kwargs),
+        ),
+        ('photo', ''),
     ]

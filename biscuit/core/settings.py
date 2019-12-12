@@ -20,7 +20,7 @@ for directory in DIRS_FOR_DYNACONF:
 
 _settings = LazySettings(
     ENVVAR_PREFIX_FOR_DYNACONF=ENVVAR_PREFIX_FOR_DYNACONF,
-    SETTINGS_FILE_FOR_DYNACONF=SETTINGS_FILE_FOR_DYNACONF
+    SETTINGS_FILE_FOR_DYNACONF=SETTINGS_FILE_FOR_DYNACONF,
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -36,7 +36,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'RENDER_PANELS': True,
     'SHOW_COLLAPSED': True,
     'JQUERY_URL': '',
-    'SHOW_TOOLBAR_CALLBACK': 'biscuit.core.util.core_helpers.dt_show_toolbar'
+    'SHOW_TOOLBAR_CALLBACK': 'biscuit.core.util.core_helpers.dt_show_toolbar',
 }
 
 ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     'otp_yubikey',
     'biscuit.core',
     'impersonate',
-    'two_factor'
+    'two_factor',
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -84,7 +84,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django_yarnpkg.finders.NodeModulesFinder',
-    'sass_processor.finders.CssFinder'
+    'sass_processor.finders.CssFinder',
 ]
 
 
@@ -121,7 +121,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'maintenance_mode.context_processors.maintenance_mode',
-                'settings_context_processor.context_processors.settings'
+                'settings_context_processor.context_processors.settings',
             ],
         },
     },
@@ -148,7 +148,7 @@ DATABASES = {
         'PASSWORD': _settings.get('database.password', None),
         'HOST': _settings.get('database.host', '127.0.0.1'),
         'PORT': _settings.get('database.port', '5432'),
-        'ATOMIC_REQUESTS': True
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -156,7 +156,7 @@ if _settings.get('caching.memcached.enabled', True):
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION': _settings.get('caching.memcached.address', '127.0.0.1:11211')
+            'LOCATION': _settings.get('caching.memcached.address', '127.0.0.1:11211'),
         }
     }
 
@@ -164,18 +164,10 @@ if _settings.get('caching.memcached.enabled', True):
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 # Authentication backends are dynamically populated
@@ -200,7 +192,7 @@ if _settings.get('ldap.uri', None):
     AUTH_LDAP_USER_SEARCH = LDAPSearch(
         _settings.get('ldap.users.base'),
         ldap.SCOPE_SUBTREE,
-        _settings.get('ldap.users.filter', '(uid=%(user)s)')
+        _settings.get('ldap.users.filter', '(uid=%(user)s)'),
     )
 
     # Mapping of LDAP attributes to Django model fields
@@ -241,42 +233,33 @@ STATIC_ROOT = _settings.get('static.root', os.path.join(BASE_DIR, 'static'))
 MEDIA_ROOT = _settings.get('media.root', os.path.join(BASE_DIR, 'media'))
 NODE_MODULES_ROOT = _settings.get('node_modules.root', os.path.join(BASE_DIR, 'node_modules'))
 
-YARN_INSTALLED_APPS = [
-    'bootstrap',
-    'font-awesome',
-    'jquery',
-    'popper.js',
-    'datatables',
-    'select2'
-]
+YARN_INSTALLED_APPS = ['bootstrap', 'font-awesome', 'jquery', 'popper.js', 'datatables', 'select2']
 
 JS_URL = _settings.get('js_assets.url', STATIC_URL)
-JS_ROOT = _settings.get('js_assets.root', NODE_MODULES_ROOT+'/node_modules')
+JS_ROOT = _settings.get('js_assets.root', NODE_MODULES_ROOT + '/node_modules')
 
-FONT_AWESOME = {'url': JS_URL+'/font-awesome/css/font-awesome.min.css'}
+FONT_AWESOME = {'url': JS_URL + '/font-awesome/css/font-awesome.min.css'}
 
 BOOTSTRAP4 = {
-    'css_url': JS_URL+'/bootstrap/dist//css/bootstrap.min.css',
-    'javascript_url': JS_URL+'/bootstrap/dist/js/bootstrap.min.js',
-    'jquery_url': JS_URL+'/jquery/dist/jquery.min.js',
-    'popper_url': JS_URL+'/popper.js/dist/umd/popper.min.js',
+    'css_url': JS_URL + '/bootstrap/dist//css/bootstrap.min.css',
+    'javascript_url': JS_URL + '/bootstrap/dist/js/bootstrap.min.js',
+    'jquery_url': JS_URL + '/jquery/dist/jquery.min.js',
+    'popper_url': JS_URL + '/popper.js/dist/umd/popper.min.js',
     'include_jquery': True,
     'include_popper': True,
-    'javascript_in_head': True
+    'javascript_in_head': True,
 }
 
-SELECT2_CSS = JS_URL+'/select2/dist/css/select2.min.css'
-SELECT2_JS = JS_URL+'/select2/dist/js/select2.min.js'
-SELECT2_I18N_PATH = JS_URL+'/select2/dist/js/i18n'
+SELECT2_CSS = JS_URL + '/select2/dist/css/select2.min.css'
+SELECT2_JS = JS_URL + '/select2/dist/js/select2.min.js'
+SELECT2_I18N_PATH = JS_URL + '/select2/dist/js/i18n'
 
 ANY_JS = {
-    'DataTables': {
-        'js_url': JS_URL+'/datatables/media/js/jquery.dataTables.min.js'
-    },
+    'DataTables': {'js_url': JS_URL + '/datatables/media/js/jquery.dataTables.min.js'},
     'DataTables-Bootstrap4': {
-        'css_url': JS_URL+'/datatables/media/css/dataTables.bootstrap4.min.css',
-        'js_url': JS_URL+'/datatables/media/js/dataTables.bootstrap4.min.js'
-    }
+        'css_url': JS_URL + '/datatables/media/css/dataTables.bootstrap4.min.css',
+        'js_url': JS_URL + '/datatables/media/js/dataTables.bootstrap4.min.js',
+    },
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -284,9 +267,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     'get-colour': 'biscuit.core.util.sass_helpers.get_colour',
     'get-theme-setting': 'biscuit.core.util.sass_helpers.get_theme_setting',
 }
-SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get('bootstrap.sass_path', JS_ROOT+'/bootstrap/scss/')
-]
+SASS_PROCESSOR_INCLUDE_DIRS = [_settings.get('bootstrap.sass_path', JS_ROOT + '/bootstrap/scss/')]
 
 ADMINS = _settings.get('contact.admins', [])
 SERVER_EMAIL = _settings.get('contact.from', 'root@localhost')
@@ -307,30 +288,25 @@ TEMPLATE_VISIBLE_SETTINGS = ['ADMINS', 'DEBUG']
 
 MAINTENANCE_MODE = _settings.get('maintenance.enabled', None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
-    'maintenance.ignore_ips', _settings.get('maintenance.internal_ips', []))
+    'maintenance.ignore_ips', _settings.get('maintenance.internal_ips', [])
+)
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = 'ipware.ip.get_ip'
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
-MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get('maintenance.statefile', 'maintenance_mode_state.txt')
+MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
+    'maintenance.statefile', 'maintenance_mode_state.txt'
+)
 
-IMPERSONATE = {
-    'USE_HTTP_REFERER': True,
-    'REQUIRE_SUPERUSER': True,
-    'ALLOW_SUPERUSER': True
-}
+IMPERSONATE = {'USE_HTTP_REFERER': True, 'REQUIRE_SUPERUSER': True, 'ALLOW_SUPERUSER': True}
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 DBBACKUP_STORAGE = _settings.get('backup.storage', 'django.core.files.storage.FileSystemStorage')
-DBBACKUP_STORAGE_OPTIONS = {
-    'location': _settings.get('backup.location', '/var/backups/biscuit')
-}
+DBBACKUP_STORAGE_OPTIONS = {'location': _settings.get('backup.location', '/var/backups/biscuit')}
 DBBACKUP_CLEANUP_KEEP = _settings.get('backup.keep.database', 10)
 DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get('backup.keep.media', 10)
 DBBACKUP_CRON_TIMES = _settings.get('backup.times', None) or ['03:57']
 
-CRON_CLASSES = [
-    'biscuit.core.cronjobs.Backup'
-]
+CRON_CLASSES = ['biscuit.core.cronjobs.Backup']
 
 ANONYMIZE_ENABLED = _settings.get('maintenance.anonymisable', True)
 
@@ -343,7 +319,10 @@ if _settings.get('2fa.sms.enabled', False):
     TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
 if _settings.get('2fa.twilio.sid', None):
-    MIDDLEWARE.insert(MIDDLEWARE.index('django_otp.middleware.OTPMiddleware')+1, 'two_factor.middleware.threadlocals.ThreadLocals')
+    MIDDLEWARE.insert(
+        MIDDLEWARE.index('django_otp.middleware.OTPMiddleware') + 1,
+        'two_factor.middleware.threadlocals.ThreadLocals',
+    )
     TWILIO_SID = _settings.get('2fa.twilio.sid')
     TWILIO_TOKEN = _settings.get('2fa.twilio.token')
     TWILIO_CALLER_ID = _settings.get('2fa.twilio.callerid')

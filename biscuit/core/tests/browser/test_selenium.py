@@ -7,8 +7,11 @@ from django.test.selenium import SeleniumTestCase, SeleniumTestCaseBase
 from django.urls import reverse
 
 SeleniumTestCaseBase.external_host = os.environ.get('TEST_HOST', '') or None
-SeleniumTestCaseBase.browsers = list(filter(bool, os.environ.get('TEST_SELENIUM_BROWSERS', '').split(',')))
+SeleniumTestCaseBase.browsers = list(
+    filter(bool, os.environ.get('TEST_SELENIUM_BROWSERS', '').split(','))
+)
 SeleniumTestCaseBase.selenium_hub = os.environ.get('TEST_SELENIUM_HUB', '') or None
+
 
 class SeleniumTests(SeleniumTestCase):
     serialized_rollback = True
@@ -18,7 +21,9 @@ class SeleniumTests(SeleniumTestCase):
         screenshot_path = os.environ.get('TEST_SCREENSHOT_PATH', None)
         if screenshot_path:
             os.makedirs(os.path.join(screenshot_path, cls.browser), exist_ok=True)
-            return cls.selenium.save_screenshot(os.path.join(screenshot_path, cls.browser, filename))
+            return cls.selenium.save_screenshot(
+                os.path.join(screenshot_path, cls.browser, filename)
+            )
         else:
             return False
 
@@ -47,9 +52,7 @@ class SeleniumTests(SeleniumTestCase):
         self._screenshot('login_default_superuser_filled.png')
 
         # Submit form by clicking django-two-factor-auth's Next button
-        self.selenium.find_element_by_xpath(
-            '//button[contains(text(), "Next")]'
-        ).click()
+        self.selenium.find_element_by_xpath('//button[contains(text(), "Next")]').click()
         self._screenshot('login_default_superuser_submitted.png')
 
         # Should redirect away from login page and not put up an alert about wrong credentials

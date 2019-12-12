@@ -22,22 +22,19 @@ urlpatterns = [
     path('persons', views.persons, name='persons'),
     path('persons/accounts', views.persons_accounts, name='persons_accounts'),
     path('person', views.person, name='person'),
-    path('person/<int:id_>', views.person,
-         {'template': 'full'}, name='person_by_id'),
-    path('person/<int:id_>/card', views.person,
-         {'template': 'card'}, name='person_by_id_card'),
+    path('person/<int:id_>', views.person, {'template': 'full'}, name='person_by_id'),
+    path('person/<int:id_>/card', views.person, {'template': 'card'}, name='person_by_id_card'),
     path('person/<int:id_>/edit', views.edit_person, name='edit_person_by_id'),
     path('groups', views.groups, name='groups'),
     path('group/create', views.edit_group, name='create_group'),
-    path('group/<int:id_>', views.group,
-         {'template': 'full'}, name='group_by_id'),
+    path('group/<int:id_>', views.group, {'template': 'full'}, name='group_by_id'),
     path('group/<int:id_>/edit', views.edit_group, name='edit_group_by_id'),
     path('', views.index, name='index'),
     path('maintenance-mode/', include('maintenance_mode.urls')),
     path('impersonate/', include('impersonate.urls')),
     path('__i18n__/', include('django.conf.urls.i18n')),
     path('select2/', include('django_select2.urls')),
-    path('settings/', include('dbsettings.urls'))
+    path('settings/', include('dbsettings.urls')),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
@@ -47,6 +44,7 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # Add URLs for optional features
 if hasattr(settings, 'TWILIO_ACCOUNT_SID'):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
+
     urlpatterns += [path('', include(tf_twilio_urls))]
 
 # Serve javascript-common if in development
@@ -58,5 +56,4 @@ for app_config in apps.app_configs.values():
     if not app_config.name.startswith('biscuit.apps.'):
         continue
 
-    urlpatterns.append(path('app/%s/' % app_config.label,
-                            include('%s.urls' % app_config.name)))
+    urlpatterns.append(path('app/%s/' % app_config.label, include('%s.urls' % app_config.name)))

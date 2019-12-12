@@ -19,6 +19,7 @@ def dt_show_toolbar(request: HttpRequest) -> bool:
 
     return False
 
+
 def get_app_packages() -> Sequence[str]:
     """ Find all packages within the biscuit.apps namespace. """
 
