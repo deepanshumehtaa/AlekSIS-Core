@@ -632,6 +632,7 @@ ul.sidenav li.logo > a:hover {
 
 .center-via-flex {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
