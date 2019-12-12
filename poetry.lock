@@ -193,7 +193,7 @@ description = "Bootstrap support for Django projects"
 name = "django-bootstrap4"
 optional = false
 python-versions = "*"
-version = "1.0.1"
+version = "1.1.1"
 
 [package.dependencies]
 beautifulsoup4 = "*"
@@ -344,7 +344,7 @@ description = "django-maintenance-mode shows a 503 error page when maintenance-m
 name = "django-maintenance-mode"
 optional = false
 python-versions = "*"
-version = "0.13.3"
+version = "0.14.0"
 
 [[package]]
 category = "main"
@@ -399,7 +399,7 @@ description = "An international phone number field for django models."
 name = "django-phonenumber-field"
 optional = false
 python-versions = ">=3.5"
-version = "3.0.1"
+version = "4.0.0"
 
 [package.dependencies]
 Django = ">=1.11.3"
@@ -478,18 +478,33 @@ version = "1.9.1"
 [package.dependencies]
 Django = ">=1.11"
 django-formtools = "*"
-django-otp-yubikey = "*"
-django-phonenumber-field = ">=1.1.0,<3.99"
+django-phonenumber-field = ">=1.1.0,<4.99"
 django_otp = ">=0.6.0,<0.99"
-phonenumbers = ">=7.0.9,<8.99"
 qrcode = ">=4.0.0,<6.99"
-twilio = ">=6.0"
+
+[package.dependencies.django-otp-yubikey]
+optional = true
+version = "*"
+
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.9,<8.99"
+
+[package.dependencies.twilio]
+optional = true
+version = ">=6.0"
+
+[package.extras]
+Call = ["twilio (>=6.0)"]
+SMS = ["twilio (>=6.0)"]
+YubiKey = ["django-otp-yubikey"]
+phonenumbers = ["phonenumbers (>=7.0.9,<8.99)"]
+phonenumberslite = ["phonenumberslite (>=7.0.9,<8.99)"]
 
 [package.source]
-reference = "bf9d0812ab11320a6cadc6709c382a03184f2e31"
+reference = "fceecb23a60cfd23398cf58f29148be644853697"
 type = "git"
-url = "https://github.com/Bouke/django-two-factor-auth"
-
+url = "https://github.com/Natureshadow/django-two-factor-auth"
 [[package]]
 category = "main"
 description = "Integrate django with yarnpkg"
@@ -643,7 +658,7 @@ marker = "python_version < \"3.8\""
 name = "importlib-metadata"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
-version = "1.2.0"
+version = "1.3.0"
 
 [package.dependencies]
 zipp = ">=0.5"
@@ -850,8 +865,8 @@ category = "dev"
 description = "Python docstring style checker"
 name = "pydocstyle"
 optional = false
-python-versions = ">=3.4"
-version = "4.0.1"
+python-versions = ">=3.5"
+version = "5.0.1"
 
 [package.dependencies]
 snowballstemmer = "*"
@@ -1070,7 +1085,7 @@ description = "Code Metrics in Python"
 name = "radon"
 optional = false
 python-versions = "*"
-version = "3.0.3"
+version = "4.0.0"
 
 [package.dependencies]
 colorama = ">=0.4,<0.5"
@@ -1341,7 +1356,7 @@ description = "Fast, Extensible Progress Meter"
 name = "tqdm"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*"
-version = "4.40.1"
+version = "4.40.2"
 
 [package.extras]
 dev = ["py-make (>=0.1.0)", "twine", "argopt", "pydoc-markdown"]
@@ -1444,7 +1459,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "8f4459d7e92c0497aa0ccb3f5b114b7ca2f1d6fd97f15e1d4273b821b6c6c08e"
+content-hash = "5888b4b86e8e763c54f07a2511b05a8facc27985a1e27cbf7a804cca9df04bf7"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1549,7 +1564,8 @@ django-auth-ldap = [
     {file = "django_auth_ldap-2.1.0-py3-none-any.whl", hash = "sha256:4d68d21058bd57a316a9e1fcd7a36d0f25d054d4d9d9ec85f766a4991176b454"},
 ]
 django-bootstrap4 = [
-    {file = "django-bootstrap4-1.0.1.tar.gz", hash = "sha256:3da770392819267eda2f774bcf832460af00db21089b94caf4df94be8a48c48c"},
+    {file = "django-bootstrap4-1.1.1.tar.gz", hash = "sha256:39f97cbce85eb66f6d76be2029bae171bd3863d0c6932b1c2dae7f299c569b90"},
+    {file = "django_bootstrap4-1.1.1-py3-none-any.whl", hash = "sha256:0fcd84f8414a58b43df0b331c00c8b2f1786ae28f75f419b4d33b06fca43e0d1"},
 ]
 django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
@@ -1596,8 +1612,8 @@ django-ipware = [
     {file = "django-ipware-2.1.0.tar.gz", hash = "sha256:a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"},
 ]
 django-maintenance-mode = [
-    {file = "django-maintenance-mode-0.13.3.tar.gz", hash = "sha256:0afcfa6ff4a87348e40c44f58f8a8c4cd3e8eca40ddcdbeb620b68ca78ecbf9c"},
-    {file = "django_maintenance_mode-0.13.3-py2-none-any.whl", hash = "sha256:473850f80e7762ae586f8347129e73e0d23b89a36b98a70e0c06f1778cacff7c"},
+    {file = "django-maintenance-mode-0.14.0.tar.gz", hash = "sha256:f3fef1760fdcda5e0bf6c2966aadc77eea6f328580a9c751920daba927281a68"},
+    {file = "django_maintenance_mode-0.14.0-py2-none-any.whl", hash = "sha256:b4cc24a469ed10897826a28f05d64e6166a58d130e4940ac124ce198cd4cc778"},
 ]
 django-menu-generator = [
     {file = "django-menu-generator-1.0.4.tar.gz", hash = "sha256:ce71a5055c16933c8aff64fb36c21e5cf8b6d505733aceed1252f8b99369a378"},
@@ -1614,8 +1630,7 @@ django-otp-yubikey = [
     {file = "django_otp_yubikey-0.5.2-py2.py3-none-any.whl", hash = "sha256:26b12c763b37e99b95b8b8a54d06d8d54c3774eb26133a452f54558033de732b"},
 ]
 django-phonenumber-field = [
-    {file = "django-phonenumber-field-3.0.1.tar.gz", hash = "sha256:794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"},
-    {file = "django_phonenumber_field-3.0.1-py3-none-any.whl", hash = "sha256:1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e"},
+    {file = "django-phonenumber-field-4.0.0.tar.gz", hash = "sha256:d4580cc3352f4433962825f9927e6669852c1b40ec484fcb5a74064dabc1201a"},
 ]
 django-sass-processor = [
     {file = "django-sass-processor-0.7.5.tar.gz", hash = "sha256:9267e5fcc7fcde2ec0c7d6ad045b4c6c7e9aea92498ed1725312035a5469b410"},
@@ -1684,8 +1699,8 @@ imagesize = [
     {file = "imagesize-1.1.0.tar.gz", hash = "sha256:f3832918bc3c66617f92e35f5d70729187676313caa60c187eb0f28b8fe5e3b5"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-1.2.0-py2.py3-none-any.whl", hash = "sha256:3a8b2dfd0a2c6a3636e7c016a7e54ae04b997d30e69d5eacdca7a6c2221a1402"},
-    {file = "importlib_metadata-1.2.0.tar.gz", hash = "sha256:41e688146d000891f32b1669e8573c57e39e5060e7f5f647aa617cd9a9568278"},
+    {file = "importlib_metadata-1.3.0-py2.py3-none-any.whl", hash = "sha256:d95141fbfa7ef2ec65cfd945e2af7e5a6ddbd7c8d9a25e66ff3be8e3daf9f60f"},
+    {file = "importlib_metadata-1.3.0.tar.gz", hash = "sha256:073a852570f92da5f744a3472af1b61e28e9f78ccf0c9117658dc32b15de7b45"},
 ]
 jinja2 = [
     {file = "Jinja2-2.10.3-py2.py3-none-any.whl", hash = "sha256:74320bb91f31270f9551d46522e33af46a80c3d619f4a4bf42b3164d30b5911f"},
@@ -1904,8 +1919,8 @@ pycryptodome = [
     {file = "pycryptodome-3.9.4.tar.gz", hash = "sha256:a168e73879619b467072509a223282a02c8047d932a48b74fbd498f27224aa04"},
 ]
 pydocstyle = [
-    {file = "pydocstyle-4.0.1-py3-none-any.whl", hash = "sha256:66aff87ffe34b1e49bff2dd03a88ce6843be2f3346b0c9814410d34987fbab59"},
-    {file = "pydocstyle-4.0.1.tar.gz", hash = "sha256:04c84e034ebb56eb6396c820442b8c4499ac5eb94a3bda88951ac3dc519b6058"},
+    {file = "pydocstyle-5.0.1-py3-none-any.whl", hash = "sha256:4167fe954b8f27ebbbef2fbcf73c6e8ad1e7bb31488fce44a69fdfc4b0cd0fae"},
+    {file = "pydocstyle-5.0.1.tar.gz", hash = "sha256:a0de36e549125d0a16a72a8c8c6c9ba267750656e72e466e994c222f1b6e92cb"},
 ]
 pyflakes = [
     {file = "pyflakes-2.1.1-py2.py3-none-any.whl", hash = "sha256:17dbeb2e3f4d772725c777fabc446d5634d1038f234e77343108ce445ea69ce0"},
@@ -1984,8 +1999,8 @@ qrcode = [
     {file = "qrcode-6.1.tar.gz", hash = "sha256:505253854f607f2abf4d16092c61d4e9d511a3b4392e60bff957a68592b04369"},
 ]
 radon = [
-    {file = "radon-3.0.3-py2.py3-none-any.whl", hash = "sha256:0cde1953547a164d24420ed6ccdfa18b61f1457b96a2b99ff0de76b22d504a0f"},
-    {file = "radon-3.0.3.tar.gz", hash = "sha256:ee20308ce8bae7a89b067425b63b141a0077632ab318d5288da649c830882b3d"},
+    {file = "radon-4.0.0-py2.py3-none-any.whl", hash = "sha256:32ac2f86bfacbddade5c79f0e927e97f90a5cda5b86f880511dd849c4a0096e3"},
+    {file = "radon-4.0.0.tar.gz", hash = "sha256:20f799949e42e6899bc9304539de222d3bdaeec276f38fbd4034859ccd548b46"},
 ]
 requests = [
     {file = "requests-2.22.0-py2.py3-none-any.whl", hash = "sha256:9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"},
@@ -2073,8 +2088,8 @@ tox = [
     {file = "tox-3.14.2.tar.gz", hash = "sha256:7efd010a98339209f3a8292f02909b51c58417bfc6838ab7eca14cf90f96117a"},
 ]
 tqdm = [
-    {file = "tqdm-4.40.1-py2.py3-none-any.whl", hash = "sha256:895796ea8df435b6f502bf122f2b2034a3d48e6d8ff52175606ac1051b0e3e12"},
-    {file = "tqdm-4.40.1.tar.gz", hash = "sha256:e405d16c98fcf30725d0c9d493ed07302a18846b5452de5253030ccd18996f87"},
+    {file = "tqdm-4.40.2-py2.py3-none-any.whl", hash = "sha256:7543892c59720e36e4212180274d8f58dde36803bc1f6370fd09afa20b8f5892"},
+    {file = "tqdm-4.40.2.tar.gz", hash = "sha256:f0ab01cf3ae5673d18f918700c0165e5fad0f26b5ebe4b34f62ead92686b5340"},
 ]
 twilio = [
     {file = "twilio-6.34.0.tar.gz", hash = "sha256:da282a9c02bd9dfb190b798528b478833d8d28cb51464e8c45da0f0794384cde"},
