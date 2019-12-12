@@ -34,7 +34,9 @@ DEBUG = _settings.get('maintenance.debug', False)
 INTERNAL_IPS = _settings.get('maintenance.internal_ips', [])
 DEBUG_TOOLBAR_CONFIG = {
     'RENDER_PANELS': True,
-    'SHOW_COLLAPSED': True
+    'SHOW_COLLAPSED': True,
+    'JQUERY_URL': '',
+    'SHOW_TOOLBAR_CALLBACK': 'biscuit.core.util.core_helpers.dt_show_toolbar'
 }
 
 ALLOWED_HOSTS = _settings.get('http.allowed_hosts', [])
@@ -65,7 +67,6 @@ INSTALLED_APPS = [
     'menu_generator',
     'phonenumber_field',
     'debug_toolbar',
-    'contact_form',
     'django_select2',
     'hattori',
     'django_otp.plugins.otp_totp',
@@ -89,7 +90,6 @@ STATICFILES_FINDERS = [
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -97,6 +97,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'impersonate.middleware.ImpersonateMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

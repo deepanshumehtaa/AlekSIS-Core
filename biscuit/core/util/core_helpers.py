@@ -2,8 +2,22 @@ from importlib import import_module
 import pkgutil
 from typing import Sequence
 
+from django.conf import settings
 from django.http import HttpRequest
 
+
+def dt_show_toolbar(request: HttpRequest) -> bool:
+    from debug_toolbar.middleware import show_toolbar  # noqa
+
+    if not settings.DEBUG:
+        return False
+
+    if show_toolbar(request):
+        return True
+    elif hasattr(request, 'user') and request.user.is_superuser:
+        return True
+
+    return False
 
 def get_app_packages() -> Sequence[str]:
     """ Find all packages within the biscuit.apps namespace. """

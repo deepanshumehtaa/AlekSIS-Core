@@ -38,7 +38,9 @@ class School(models.Model):
     logo = ImageCropField(verbose_name=_('School logo'), blank=True, null=True)
     logo_cropping = ImageRatioField('logo', '600x600', size_warning=True)
 
-    current_term = models.ForeignKey('SchoolTerm', models.CASCADE, related_name='+')
+    @property
+    def current_term(self):
+        return SchoolTerm.objects.get(current=True)
 
     class Meta:
         ordering = ['name', 'name_official']
@@ -56,6 +58,13 @@ class SchoolTerm(models.Model):
         'Effective start date of term'), null=True)
     date_end = models.DateField(verbose_name=_(
         'Effective end date of term'), null=True)
+
+    current = models.NullBooleanField(default=None, unique=True)
+
+    def save(self, *args, **kwargs):
+        if self.current is False:
+            self.current = None
+        super().save(*args, **kwargs)
 
 
 class Person(models.Model, ExtensibleModel):
