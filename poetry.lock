@@ -515,18 +515,6 @@ django-phonenumber-field = ">=1.1.0,<4.99"
 django_otp = ">=0.6.0,<0.99"
 qrcode = ">=4.0.0,<6.99"
 
-[package.dependencies.django-otp-yubikey]
-optional = true
-version = "*"
-
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.9,<8.99"
-
-[package.dependencies.twilio]
-optional = true
-version = ">=6.0"
-
 [package.extras]
 Call = ["twilio (>=6.0)"]
 SMS = ["twilio (>=6.0)"]
@@ -538,6 +526,7 @@ phonenumberslite = ["phonenumberslite (>=7.0.9,<8.99)"]
 reference = "fceecb23a60cfd23398cf58f29148be644853697"
 type = "git"
 url = "https://github.com/Natureshadow/django-two-factor-auth"
+
 [[package]]
 category = "main"
 description = "Integrate django with yarnpkg"
@@ -1162,6 +1151,19 @@ dj-database-url = "*"
 "testing.postgresql" = "*"
 
 [[package]]
+category = "dev"
+description = "pytest-sugar is a plugin for pytest that changes the default look and feel of pytest (e.g. progressbar, show tests that fail instantly)."
+name = "pytest-sugar"
+optional = false
+python-versions = "*"
+version = "0.9.2"
+
+[package.dependencies]
+packaging = ">=14.1"
+pytest = ">=2.9"
+termcolor = ">=1.1.0"
+
+[[package]]
 category = "main"
 description = "Advanced Python dictionaries with dot notation access"
 name = "python-box"
@@ -1496,6 +1498,14 @@ six = ">=1.10.0"
 
 [[package]]
 category = "dev"
+description = "ANSII Color formatting for output in terminal."
+name = "termcolor"
+optional = false
+python-versions = "*"
+version = "1.1.0"
+
+[[package]]
+category = "dev"
 description = "A collection of helpers and mock objects for unit tests and doc tests."
 name = "testfixtures"
 optional = false
@@ -1646,7 +1656,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "70d7b7415d6d3d0f243cd72a5ed37e416d554f2a80ed498cc5ce8b4c5b36ffd7"
+content-hash = "60137d4e1d5a9f537896b5a83a7ff282a776250334740728e423719a2040f2e2"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2197,6 +2207,10 @@ pytest-django-testing-postgresql = [
     {file = "pytest-django-testing-postgresql-0.1.post0.tar.gz", hash = "sha256:78b0c58930084cb4393407b2e5a2a3b8734c627b841ecef7d62d39bbfb8e8a45"},
     {file = "pytest_django_testing_postgresql-0.1.post0-py3-none-any.whl", hash = "sha256:78e52e3d1b0ef5f906d5d69247dd6ac7dfb10d840bd81abab92f3f8c30872cd3"},
 ]
+pytest-sugar = [
+    {file = "pytest-sugar-0.9.2.tar.gz", hash = "sha256:fcd87a74b2bce5386d244b49ad60549bfbc4602527797fac167da147983f58ab"},
+    {file = "pytest_sugar-0.9.2-py2.py3-none-any.whl", hash = "sha256:26cf8289fe10880cbbc130bd77398c4e6a8b936d8393b116a5c16121d95ab283"},
+]
 python-box = [
     {file = "python-box-3.4.6.tar.gz", hash = "sha256:694a7555e3ff9fbbce734bbaef3aad92b8e4ed0659d3ed04d56b6a0a0eff26a9"},
     {file = "python_box-3.4.6-py2.py3-none-any.whl", hash = "sha256:a71d3dc9dbaa34c8597d3517c89a8041bd62fa875f23c0f3dad55e1958e3ce10"},
@@ -2328,6 +2342,9 @@ sqlparse = [
 stevedore = [
     {file = "stevedore-1.31.0-py2.py3-none-any.whl", hash = "sha256:01d9f4beecf0fbd070ddb18e5efb10567801ba7ef3ddab0074f54e3cd4e91730"},
     {file = "stevedore-1.31.0.tar.gz", hash = "sha256:e0739f9739a681c7a1fda76a102b65295e96a144ccdb552f2ae03c5f0abe8a14"},
+]
+termcolor = [
+    {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
 ]
 testfixtures = [
     {file = "testfixtures-6.10.3-py2.py3-none-any.whl", hash = "sha256:9334f64d4210b734d04abff516d6ddaab7328306a0c4c1268ce4624df51c4f6d"},
