@@ -249,7 +249,7 @@ table.substitutions td, table.substitutions th {
 }
 
 .lesson-card a, .substitutions a {
-    color: black;
+    color: inherit;
 }
 
 /*.timetable-time {*/
