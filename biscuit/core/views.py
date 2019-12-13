@@ -9,8 +9,13 @@ from django_cron.models import CronJobLog
 from django_tables2 import RequestConfig
 
 from .decorators import admin_required
-from .forms import (EditGroupForm, EditPersonForm, EditSchoolForm, EditTermForm,
-                    PersonsAccountsFormSet)
+from .forms import (
+    EditGroupForm,
+    EditPersonForm,
+    EditSchoolForm,
+    EditTermForm,
+    PersonsAccountsFormSet,
+)
 from .models import Group, Person, School
 from .tables import GroupsTable, PersonsTable
 from .util import messages
