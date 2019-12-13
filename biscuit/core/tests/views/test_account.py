@@ -4,7 +4,9 @@ from django.urls import reverse
 import pytest
 
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
+
 def test_index_not_logged_in(client):
     response = client.get("/")
 
@@ -12,7 +14,6 @@ def test_index_not_logged_in(client):
     assert reverse(settings.LOGIN_URL) in response.content.decode("utf-8")
 
 
-@pytest.mark.django_db
 def test_login(client, django_user_model):
     username = "foo"
     password = "bar"
@@ -26,7 +27,6 @@ def test_login(client, django_user_model):
     assert reverse(settings.LOGIN_URL) not in response.content.decode("utf-8")
 
 
-@pytest.mark.django_db
 def test_index_not_linked_to_person(client, django_user_model):
     username = "foo"
     password = "bar"
@@ -40,7 +40,6 @@ def test_index_not_linked_to_person(client, django_user_model):
     assert "You are not linked to a person" in response.content.decode("utf-8")
 
 
-@pytest.mark.django_db
 def test_logout(client, django_user_model):
     username = "foo"
     password = "bar"
