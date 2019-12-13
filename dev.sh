@@ -15,7 +15,6 @@ case "$1" in
 	    poetry run sh -c "cd $d; poetry install"
 	done
 	remove_pip_metadata
-	poetry run ./manage.py migrate
 	poetry run ./manage.py compilemessages
 	poetry run ./manage.py yarn install
 	poetry run ./manage.py collectstatic --no-input
