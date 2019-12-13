@@ -43,6 +43,19 @@
             <h3>
                 Stundenplan <i>{{ el }}</i>
             </h3>
+
+            {# Show class teacher and deputy class teacher #}
+            {% if type == 2 and el.teachers %}
+                <h5>Klassenlehrkräfte:
+                    {% for teacher in el.teachers %}
+
+                        <span data-position="bottom" class="tooltipped"
+                              data-tooltip="{{ teacher }}">
+                             <a href="{% url "timetable_smart_plan" "teacher" teacher.id %}">
+                                {{ teacher.shortcode }}</a></span>{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </h5>
+            {% endif %}
         </div>
         {# Show print button only if not on mobile #}
         <div class="col s4 m6 l4 xl3 right align-right no-print">
