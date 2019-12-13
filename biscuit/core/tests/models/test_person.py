@@ -2,7 +2,6 @@ import pytest
 
 from biscuit.core.models import Person
 
-
 pytestmark = pytest.mark.django_db
 
 

@@ -6,7 +6,6 @@ from django.urls import reverse
 
 import pytest
 
-
 pytestmark = pytest.mark.django_db
 
 SeleniumTestCaseBase.external_host = os.environ.get("TEST_HOST", "") or None
