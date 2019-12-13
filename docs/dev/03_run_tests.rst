@@ -57,7 +57,7 @@ Docker Hub::
   tox
 
 The `TEST_HOST` variable is set to the Docker host's IP address, where the
-Selenium nodes can access DJango's live server.  Django automatically
+Selenium nodes can access Django's live server.  Django automatically
 configures the live server to be reachable if a Selenium hub is used.
 
 
