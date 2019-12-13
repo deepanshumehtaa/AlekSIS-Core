@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 
-from .models import Person, Group, School, SchoolTerm
+from .models import Group, Person, School, SchoolTerm
 
 
 class PersonAccountForm(forms.ModelForm):

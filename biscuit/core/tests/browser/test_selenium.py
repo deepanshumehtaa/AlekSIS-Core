@@ -1,10 +1,10 @@
 import os
 
-import pytest
-
 from django.conf import settings
 from django.test.selenium import SeleniumTestCase, SeleniumTestCaseBase
 from django.urls import reverse
+
+import pytest
 
 SeleniumTestCaseBase.external_host = os.environ.get("TEST_HOST", "") or None
 SeleniumTestCaseBase.browsers = list(

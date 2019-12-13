@@ -1,5 +1,5 @@
-from importlib import import_module
 import pkgutil
+from importlib import import_module
 from typing import Sequence
 
 from django.conf import settings

@@ -2,22 +2,17 @@ from typing import Optional
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from django_tables2 import RequestConfig
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
 from django_cron.models import CronJobLog
+from django_tables2 import RequestConfig
 
 from .decorators import admin_required
-from .forms import (
-    PersonsAccountsFormSet,
-    EditPersonForm,
-    EditGroupForm,
-    EditSchoolForm,
-    EditTermForm,
-)
-from .models import Person, Group, School
-from .tables import PersonsTable, GroupsTable
+from .forms import (EditGroupForm, EditPersonForm, EditSchoolForm, EditTermForm,
+                    PersonsAccountsFormSet)
+from .models import Group, Person, School
+from .tables import GroupsTable, PersonsTable
 from .util import messages
 
 

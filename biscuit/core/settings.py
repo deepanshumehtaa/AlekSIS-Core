@@ -1,6 +1,6 @@
-from glob import glob
 import os
 import sys
+from glob import glob
 
 from django.utils.translation import ugettext_lazy as _
 
