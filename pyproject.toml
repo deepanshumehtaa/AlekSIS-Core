@@ -66,7 +66,6 @@ pytest-django = "^3.7"
 pytest-django-testing-postgresql = "^0.1"
 selenium = "^3.141.0"
 safety = "^1.8.5"
-coverage = "^4.5.4"
 flake8 = "^3.7.9"
 flake8-django = "^0.0.4"
 flake8-fixme = "^1.1.1"
@@ -79,6 +78,7 @@ black = "^19.10b0"
 flake8-black = "^0.1.1"
 isort = "^4.3.21"
 flake8-isort = "^2.8.0"
+pytest-cov = "^2.8.1"
 
 [tool.black]
 line-length = 100
