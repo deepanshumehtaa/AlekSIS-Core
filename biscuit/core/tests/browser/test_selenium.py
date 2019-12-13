@@ -6,6 +6,9 @@ from django.urls import reverse
 
 import pytest
 
+
+pytestmark = pytest.mark.django_db
+
 SeleniumTestCaseBase.external_host = os.environ.get("TEST_HOST", "") or None
 SeleniumTestCaseBase.browsers = list(
     filter(bool, os.environ.get("TEST_SELENIUM_BROWSERS", "").split(","))
@@ -27,13 +30,11 @@ class SeleniumTests(SeleniumTestCase):
         else:
             return False
 
-    @pytest.mark.django_db
     def test_index(self):
         self.selenium.get(self.live_server_url + "/")
         assert "BiscuIT" in self.selenium.title
         self._screenshot("index.png")
 
-    @pytest.mark.django_db
     def test_login_default_superuser(self):
         username = "admin"
         password = "admin"
