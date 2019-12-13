@@ -1,6 +1,6 @@
 requests
 mysqlclient
-django
+django<3.0
 django-auth-ldap
 django-dbsettings
 django-pdb
