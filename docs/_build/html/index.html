@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dokumentation von SchoolApps &#8212; SchoolApps Version 1.0.2-dev Dokumentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="App: Dashboard" href="api/dashboard.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="dokumentation-von-schoolapps">
+<h1>Dokumentation von SchoolApps<a class="headerlink" href="#dokumentation-von-schoolapps" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Inhalt:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/dashboard.html">App: Dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/dashboard.html#aktivitaten">Aktivitäten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dashboard.html#benachrichtigungen">Benachrichtigungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dashboard.html#caches">Caches</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/aub.html">AUB (Antrag auf Unterrichtbefreiung)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/aub.html#stichworte">Stichworte</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev/dev.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev/dev.html#versionsverwaltung-einsatz-von-git">Versionsverwaltung – Einsatz von Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/dev.html#codestyle">Codestyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/dev.html#editoren-ides">Editoren/IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/dev.html#dokumentation">Dokumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/dev.html#problem-bug-idee-issues-verwenden">Problem, Bug, Idee? – Issues verwenden!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev/git.html">Git Management Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#hinweis">Hinweis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#git-hosting-von-schoolapps">Git-Hosting von SchoolApps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#clonen-und-ersteinrichtung">Clonen und Ersteinrichtung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#was-gibt-es-zu-tun-issues">Was gibt es zu tun? – Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#am-code-arbeiten-die-branches">Am Code arbeiten – Die Branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#am-code-arbeiten-committen">Am Code arbeiten – Committen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/git.html#am-code-arbeiten-mergen-pull-requests">Am Code arbeiten – Mergen/Pull Requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev/doc.html">Dokumentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev/doc.html#docstrings">Docstrings</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<span class="target" id="module-untisconnect.api"></span><dl class="function">
+<dt id="untisconnect.api.format_classes">
+<code class="sig-prename descclassname">untisconnect.api.</code><code class="sig-name descname">format_classes</code><span class="sig-paren">(</span><em class="sig-param">classes</em><span class="sig-paren">)</span><a class="headerlink" href="#untisconnect.api.format_classes" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Formats a list of Class objects to a combined string</p>
+<p>example return: „9abcd“ for classes 9a, 9b, 9c and 9d</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>classes</strong> – Class list</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>combined string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-untisconnect.sub"></span><dl class="function">
+<dt id="untisconnect.sub.generate_sub_table">
+<code class="sig-prename descclassname">untisconnect.sub.</code><code class="sig-name descname">generate_sub_table</code><span class="sig-paren">(</span><em class="sig-param">subs</em>, <em class="sig-param">events=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#untisconnect.sub.generate_sub_table" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Parse substitutions and prepare than for displaying in plan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subs</strong> – Substitutions to parse</p></li>
+<li><p><strong>events</strong> – Events to include in table</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>A list of SubRow objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="untisconnect.sub.get_header_information">
+<code class="sig-prename descclassname">untisconnect.sub.</code><code class="sig-name descname">get_header_information</code><span class="sig-paren">(</span><em class="sig-param">subs</em>, <em class="sig-param">date</em>, <em class="sig-param">events=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#untisconnect.sub.get_header_information" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Get header information like affected teachers/classes and missing teachers/classes for a given date
+:param date: The date as datetime object
+:param subs: All subs for the given date
+:return: HeaderInformation object with all kind of information</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="untisconnect.sub.parse_type_of_untis_flags">
+<code class="sig-prename descclassname">untisconnect.sub.</code><code class="sig-name descname">parse_type_of_untis_flags</code><span class="sig-paren">(</span><em class="sig-param">flags</em><span class="sig-paren">)</span><a class="headerlink" href="#untisconnect.sub.parse_type_of_untis_flags" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Get type of substitution by parsing UNTIS flags
+:param flags: UNTIS flags (string)
+:return: type (int, constants are provided)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="untisconnect.sub.substitutions_sorter">
+<code class="sig-prename descclassname">untisconnect.sub.</code><code class="sig-name descname">substitutions_sorter</code><span class="sig-paren">(</span><em class="sig-param">sub</em><span class="sig-paren">)</span><a class="headerlink" href="#untisconnect.sub.substitutions_sorter" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Sorting helper (sort function) for substitutions
+:param sub: Substitution to sort
+:return: A string for sorting by</p>
+</dd></dl>
+
+</div>
+<div class="section" id="index">
+<h1>Index<a class="headerlink" href="#index" title="Link zu dieser Überschrift">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Stichwortverzeichnis</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Modulindex</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Suche</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">SchoolApps</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Inhalt:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/dashboard.html">App: Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/aub.html">AUB (Antrag auf Unterrichtbefreiung)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/dev.html">Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/git.html">Git Management Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/doc.html">Dokumentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="api/dashboard.html" title="nächstes Kapitel">App: Dashboard</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; 2019, Hangzhi Yu, Julian Leucker, Jonathan Weth, Frank Poetzsch-Heffter.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,41 @@
+Dokumentation
+=============
+
+Zur Dokumentation wird das Tool sphinx eingesetzt. Die gesamte Dokumentation liegt im Unterordner ``docs``.
+
+- Formatierung in reStructuredText
+- Erstellen der HTML-Ausgabe
+    ``make html``, Ergebnis in ``docs/_build/html``
+
+
+Docstrings
+----------
+
+Struktur bei Funktionen
+
+.. code-block::
+
+    """ [Summary]
+
+    :param [ParamName]: [ParamDescription], defaults to [DefaultParamVal]
+    :type [ParamName]: [ParamType](, optional)
+    ...
+    :raises [ErrorType]: [ErrorDescription]
+    ...
+    :return: [ReturnDescription]
+    :rtype: [ReturnType]
+    """
+
+Struktur bei Klassen
+
+.. code-block::
+
+    """ [Summary]
+
+    """
+
+Struktur bei Variablen
+
+.. code-block::
+
+    #: [Summary]

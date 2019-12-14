@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Git Management Guide &#8212; SchoolApps Version 1.0.2-dev Dokumentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Dokumentation" href="doc.html" />
+    <link rel="prev" title="Development Guide" href="dev.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="git-management-guide">
+<h1>Git Management Guide<a class="headerlink" href="#git-management-guide" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Diese Anleitung soll bei der Benutzung von Git im Projekt SchoolApps helfen.</p>
+<div class="section" id="hinweis">
+<h2>Hinweis<a class="headerlink" href="#hinweis" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Hilfe und Informationen zu Git allgemein gibt es u. a. bei dieser Anleitung:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://rogerdudler.github.io/git-guide/index.de.html">https://rogerdudler.github.io/git-guide/index.de.html</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="git-hosting-von-schoolapps">
+<h2>Git-Hosting von SchoolApps<a class="headerlink" href="#git-hosting-von-schoolapps" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die aktuelle Version von SchoolApps ist auf GitHub in der Organisation Katharineum gehosted:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/Katharineum/school-apps">https://github.com/Katharineum/school-apps</a></p>
+</div></blockquote>
+<p>Das Cloning sowie Pullen und Pushen kann wahlweise mittels SSH oder HTTPS erfolgen (genaueres in der obigen Anleitung).</p>
+<div class="admonition note">
+<p class="admonition-title">Bemerkung</p>
+<p>Der Zugriff auf das Repository wird von Herrn Poetzsch-Heffter (&#64;poetzsch, <a class="reference external" href="mailto:p-h&#37;&#52;&#48;katharineum&#46;de">p-h<span>&#64;</span>katharineum<span>&#46;</span>de</a>) geregelt.</p>
+</div>
+</div>
+<div class="section" id="clonen-und-ersteinrichtung">
+<h2>Clonen und Ersteinrichtung<a class="headerlink" href="#clonen-und-ersteinrichtung" title="Link zu dieser Überschrift">¶</a></h2>
+<dl>
+<dt>Clonen:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Katharineum/school-apps</span></code></p>
+<p>oder <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">git&#64;github.com:Katharineum/school-apps.git</span></code></p>
+</dd>
+</dl>
+<p>Um sich eine Entwicklungsumgebung für SchoolApps einzurichten, wird die Anleitung auf</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/Katharineum/school-apps/blob/dev/README.md">https://github.com/Katharineum/school-apps/blob/dev/README.md</a></p>
+</div></blockquote>
+<p>unter dem Reiter Installation empfohlen.</p>
+</div>
+<div class="section" id="was-gibt-es-zu-tun-issues">
+<h2>Was gibt es zu tun? – Issues<a class="headerlink" href="#was-gibt-es-zu-tun-issues" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="issues-anlegen">
+<h3>Issues anlegen<a class="headerlink" href="#issues-anlegen" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Wenn einem in der SchoolApps etwas auffällt was getan werden sollte (Bug, Rechtschreibfehler, Zusätzliche Funktionen, etc.), dann muss ein Issue auf GitHub erstellt werden. Dies gilt auch, wenn man sich sicher ist, das Problem lösen zu können.</p>
+<div class="section" id="wichtig-beim-erstellen-eines-issues">
+<h4>Wichtig beim Erstellen eines Issues:<a class="headerlink" href="#wichtig-beim-erstellen-eines-issues" title="Link zu dieser Überschrift">¶</a></h4>
+<ul>
+<li><p>Aussagekräftigen Titel verwenden (deutsch)</p></li>
+<li><p>Problem detailliert beschreiben, falls vorhanden, Lösungsmöglichkeit(en) nennen (deutsch)</p></li>
+<li><p><strong>Assignees (Zuständigkeit)</strong> → Wenn man das Problem selbst lösen will bzw. sich darum kümmern will, empfiehlt es sich, sich selbst einzutragen. Damit ist man auch für die Lösung verantwortlich. Wenn man weiß, dass dieses Problem genau von einer bestimmten Person gelöst werden kann bzw. diese dafür zuständig ist, wird diese eingetragen. Es können auch mehrere Personen eingetragen werden.</p></li>
+<li><p><strong>Labels (Kategorisierung)</strong>  →  Es gibt zwei Arten von Labels:</p>
+<ul class="simple">
+<li><p><strong>Bereichslabel</strong> → Hier wird der Teil der Software genannt, der von dem Issue betroffen ist (im Regelfall eine Django-App, manchmal auch <em>whole project</em>)</p></li>
+<li><p><strong>Kategorisierungslabel</strong> → Hier wird die Art des Issue festgelegt.</p>
+<ul>
+<li><p><em>bug</em> → Ein eindeutiger Fehler. (Sicherheits-/ Funktionsbeinträchtigend)</p></li>
+<li><p><em>beauty mistake</em> → Schönheitsfehler. (Meist Designtechnisch)</p></li>
+<li><p><em>refactoring</em> → Code(-style) verbessern, umprogrammieren.</p></li>
+<li><p><em>it works but it is wrong</em> → Unsauber gelöste Probleme, fehlende Komponenten.</p></li>
+<li><p><em>new feature</em> → Neue Funktionen.</p></li>
+<li><p><em>discussion</em> → Zu diskussieren. Diese Issues <em>sollen nicht</em> umgesetzt werden, bis dieses Label entfernt wurde.</p></li>
+</ul>
+</li>
+</ul>
+<p>Es können auch mehrere Bereichs- bzw. Kategorisierungslabel gleichzeitig verwendet werden.</p>
+</li>
+<li><p><strong>Projects</strong> → Die passende Zuordnung eines GitHub-Projekts für das Kanbansystem.</p></li>
+<li><p><strong>Milestones</strong> → Die Version der Software, zu der dieses Problem gelöst werden muss.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="issues-bearbeiten-losen">
+<h3>Issues bearbeiten/lösen<a class="headerlink" href="#issues-bearbeiten-losen" title="Link zu dieser Überschrift">¶</a></h3>
+<p>In der Issue-Liste auf GitHub kann jeder sehen, was es aktuell zu tun gibt.
+Vorzugsweise kümmert man sich um Issues auf dem eigenen Spezial- bzw. Aufgabengebiet. Wenn einem Issue bereits jemand zugeteilt ist, ist unbedingt Rücksprache zur betreffenden Person zu halten (Assignees).
+Das eigentliche Lösen (im Regelfall Programmieren) erfolgt als feature-Branch  (siehe unten).</p>
+</div>
+</div>
+<div class="section" id="am-code-arbeiten-die-branches">
+<h2>Am Code arbeiten – Die Branches<a class="headerlink" href="#am-code-arbeiten-die-branches" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Der Hauptbranch ist der <strong>dev</strong>. In ihm ist immer die aktuelle Entwicklung von SchoolApps gespeichert. Er wird bei jeder stabilen Version im <strong>server-Branch</strong> veröffentlicht. Dieser stellt den aktuellen Stand auf dem Server da.</p>
+<p>In keinem dieser Branches wird aktiv commited (Ausnahmen bestätigen die Regel), sie werden nur über <strong>Pull Requests</strong> „gefüttert“.</p>
+<p>Alle Arbeiten am Code werden in vom dev-Branch abgezweigten Arbeits-Branches durchgeführt. Ein Branch entspricht dabei einer Funktion bzw. einem Issue. Wenn jemand gleichzeitig an mehreren, nicht zusammenhängend Issues arbeitet, wechselt dieser auch die Branches.</p>
+<p>Die <strong>Namenskonvention</strong> für diesen Arbeits-Branch ist wie folgt:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Ist die Änderung, die programmiert wird, ein neues Feature, so wird der Branch so benannt:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">feature/&lt;der-name-des-feature-auf-englisch&gt;</span></code> (Bindestriche, kleingeschrieben)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Ist die Änderung, die programmiert wird, ein Bugfix, so wird der Branch so benannt:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">bugfix/&lt;beschreibung-des-bugs-auf-englisch&gt;</span></code> (Bindestriche, kleingeschrieben)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Ist die Änderung, die programmiert wird, ein Code-Refactoring, so wird der Branch so benannt:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">refactor/&lt;der-name-des-feature-auf-englisch&gt;</span></code> (Bindestriche, kleingeschrieben)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="am-code-arbeiten-committen">
+<h2>Am Code arbeiten – Committen<a class="headerlink" href="#am-code-arbeiten-committen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Nochmal zur Erinnerung: Es wird nur in feature-Branches direkt committed.
+Die Commits erfolgen im Gegensatz zu Issues auf <strong>englisch</strong>, bei Bezug zu einem Issue wird das <strong>Issue mit Hashtag</strong> genannt.</p>
+<p>Beispiel: <code class="docutils literal notranslate"><span class="pre">Solve</span> <span class="pre">LDAP</span> <span class="pre">connection</span> <span class="pre">problems</span> <span class="pre">(issue</span> <span class="pre">#10)</span></code></p>
+</div>
+<div class="section" id="am-code-arbeiten-mergen-pull-requests">
+<h2>Am Code arbeiten – Mergen/Pull Requests<a class="headerlink" href="#am-code-arbeiten-mergen-pull-requests" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ist man der Meinung, dass die Arbeiten am feature-Branch abgeschlossen sind, stellt man auf GitHub ein <strong>Pull Request</strong> und lässt die Arbeiten vom Rest des Entwicklerteams absegnen.
+Dies ist unbedingt zu befolgen.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SchoolApps</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Inhalt:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/dashboard.html">App: Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Development Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Git Management Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hinweis">Hinweis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-hosting-von-schoolapps">Git-Hosting von SchoolApps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clonen-und-ersteinrichtung">Clonen und Ersteinrichtung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#was-gibt-es-zu-tun-issues">Was gibt es zu tun? – Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#am-code-arbeiten-die-branches">Am Code arbeiten – Die Branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#am-code-arbeiten-committen">Am Code arbeiten – Committen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#am-code-arbeiten-mergen-pull-requests">Am Code arbeiten – Mergen/Pull Requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Dokumentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="dev.html" title="vorheriges Kapitel">Development Guide</a></li>
+      <li>Next: <a href="doc.html" title="nächstes Kapitel">Dokumentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; 2019, Hangzhi Yu, Julian Leucker, Jonathan Weth, Frank Poetzsch-Heffter.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/dev/git.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

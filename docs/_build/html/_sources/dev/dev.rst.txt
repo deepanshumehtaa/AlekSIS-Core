@@ -1,0 +1,55 @@
+Development Guide
+=================
+
+Diese Anleitung soll für einen einheitliches Development und einheitlichen Code in SchoolApps sorgen.
+
+Versionsverwaltung – Einsatz von Git
+------------------------------------
+
+Es wird mit **Git** gearbeitet. Die Verwendung ist Pflicht, die Regelungen im Git-Management Guide sind zu beachten. Alle Veränderungen sollten nach Beendigung der Arbeit an SchoolApps direkt im entsprechenden Featurebranch committed und gepusht werden, auch wenn sie noch nicht fertig oder lauffähig sind, um Datenverlust vorzubeugen (hierbei unbedingt den Bereich Branches im Git-Management Guide beachten).
+
+Codestyle
+---------
+
+Grundsätzlich wird **auf englisch gecodet**: Englische Variablen, englische Kommentare und englische Commits. Die Oberfläche wird natürlich auf deutsch lokalisiert. Lediglich Issues auf GitHub und die Dokumentation werden auf deutsch verfasst.
+
+Weiterhin gilt es, die **PEP-8-Richtlinien** der Python Foundation einzuhalten, sie sorgen für einen sauberen, einheitlichen und übersichtlichen Stil.
+
+**Tipp:** Viele Editoren können die Pythonskripte auch automatisch nach PEP8 formatieren – meistens klappt das sehr gut (siehe auch „Editoren/IDEs“).
+
+Editoren/IDEs
+-------------
+
+Natürlich kann man auch im Texteditor des jeweiligen Betriebssystemes oder in der IDLE von Python programmieren.
+Allerdings empfiehlt es sich gerade bei so großen (Django-)Projekten wie SchoolApps einen vernünftigen **Editor** oder eine **IDE** (Integrated Development Environment) zu benutzen.
+Folgende Software ist sehr empfehlenswert:
+
+    Atom
+        Ein Opensource-Editor von GitHub. Einfache Bedienung, gute Syntaxhervorhebung, mit Plugins auch Autovervollständigung und Codeformatierung
+    Visual Code
+        Ein Opensource-Projekt von Microsoft. Sehr ähnlich zu Atom.
+    PyCharm Community/Professional Edition
+        Kommerzielles Programm, gibt es in einer OpenSource-Version (Community) sowie einer Bezahlversion (Professional). Alle Funktionen von VisualCode und Atom enthalten, zudem wird in der Professional Edition Django von Haus aus unterstützt. TIPP: Die Professional Edition gibt es für den Bildungsbereich kostenlos.
+
+Dokumentation
+-------------
+
+    „It was hard to write, it should be hard to read.“
+
+Alle Programmierer hassen es – dennoch ist **Kommentieren** die beste Dokumentationsmöglichkeit, damit andere Leute den eigenen Quellcode lesen können.
+
+Alle Funktionen (Klassen, etc.) sollten mit Docstrings versehen sein.
+Docstrings werden nach dem folgenden Schema aufgebaut: https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html
+
+Jede App, die sich in ihrer Funktion bzw. Funktionsweise nicht selbst erklärt, sollte einen Eintrag in der Dokumentation besitzen,
+die den Programmierer über Sinn und Zweck aufklärt. Dies gilt insbesondere, wenn diese App auch Funktionen für andere Apps bereitstellt.
+Diese sollten in der Dokumentation gesondert erwähnt und sauber dokumentiert werden. Weitere Informationen zur Dokumentation gibt es unter :doc:`doc`.
+
+In der **Install.md** (im Wurzelverzeichnis) sollten alle Schritte zur Installation dokumentiert werden.
+Insbesondere gilt das, wenn man eine neue Bibliothek für eine bestimmte Funktionalität benötigt. Diese muss sofort aufgeführt werden, damit andere Entwickler den Code ohne großes Basteln zum Laufen bekommen.
+
+Problem, Bug, Idee? – Issues verwenden!
+---------------------------------------
+
+
+Hier sei nochmal auf den Bereich „Issues“ im :doc:`git` hingewiesen – unbedingt beachten!

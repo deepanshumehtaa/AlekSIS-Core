@@ -1,0 +1,27 @@
+AUB (Antrag auf Unterrichtbefreiung)
+====================================
+
+Stichworte
+----------
+
+Workflow
+^^^^^^^^
+
+1.  Lehrer füllt Antragsformular aus
+
+    - Beginn Datum (DateField)
+    - Beginn Stunde oder Uhrzeit (Int 1..9 / Time)
+    - Ende Datum (DateField)
+    - Ende Stunde oder Uhrzeit (Int 1..9 / Time)
+    - Beschreibung/Begründung (TextField)
+    - Antragsteller (Lehrerkürzel) wird automatisch aus angemeldetem Benutzer generiert
+
+2. Schulleiter erhält Anträge und a. bewilligt oder b. lehnt ab
+    a. Stellvertreter prüft Antrag und i. bewilligt oder ii. lehnt ab
+        i. Lehrkraft erhält Benachrichtigung über Bewilligung
+        ii. Lehrkraft erhält Benachrichtigung über Ablehnung
+    b. Lehrkraft erhält Benachrichtigung über Ablehnung
+
+
+.. automodule:: aub.models
+    :members:

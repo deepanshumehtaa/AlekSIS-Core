@@ -1,0 +1,26 @@
+Dokumentation von SchoolApps
+======================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Inhalt:
+
+   api/dashboard
+   api/aub
+
+   dev/dev
+   dev/git
+   dev/doc
+
+.. automodule:: untisconnect.api
+   :members:
+
+.. automodule:: untisconnect.sub
+   :members:
+
+Index
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
