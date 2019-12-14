@@ -1,14 +1,13 @@
 from django.conf import settings
 
-from untisconnect.api_helper import get_term_by_ids, run_using, untis_date_to_date, date_to_untis_date
+from untisconnect.api_helper import get_term_by_ids, run_using, untis_date_to_date, date_to_untis_date, \
+    untis_split_first
 from . import models
 from timetable.settings import untis_settings
 
 TYPE_TEACHER = 0
 TYPE_ROOM = 1
 TYPE_CLASS = 2
-
-from datetime import date
 
 
 def run_all(obj, filter_term=True):
@@ -92,6 +91,7 @@ class Teacher(object):
 
 def get_all_teachers():
     teachers = row_by_row(models.Teacher, Teacher)
+    teachers.sort(key=lambda a: a.shortcode)
     return teachers
 
 
@@ -117,6 +117,7 @@ class Class(object):
         self.text1 = None
         self.text2 = None
         self.room = None
+        self.teachers = []
 
     def __str__(self):
         if self.filled:
@@ -137,6 +138,9 @@ class Class(object):
         self.name = db_obj.name
         self.text1 = db_obj.longname
         self.text2 = db_obj.text
+        teacher_ids = untis_split_first(db_obj.teacherids, int)
+        self.teachers = [get_teacher_by_id(t_id) for t_id in teacher_ids]
+        print(self.teachers)
         # print(db_obj.room_id)
         if db_obj.room_id != 0:
             #   print("RAUM")
@@ -145,6 +149,7 @@ class Class(object):
 
 def get_all_classes():
     classes = row_by_row(models.Class, Class)
+    classes.sort(key=lambda a: a.name)
     return classes
 
 
@@ -217,8 +222,9 @@ class Room(object):
 
 
 def get_all_rooms():
-    db_rooms = row_by_row(models.Room, Room)
-    return db_rooms
+    rooms = row_by_row(models.Room, Room)
+    rooms.sort(key=lambda a: a.shortcode)
+    return rooms
 
 
 def get_room_by_id(id):
@@ -256,6 +262,7 @@ class Corridor(object):
 
 def get_all_corridors():
     corridors = row_by_row(models.Corridor, Corridor, filter_term=False)
+    corridors.sort(key=lambda a: a.name)
     return corridors
 
 
@@ -312,8 +319,10 @@ class Subject(object):
 
 
 def get_all_subjects():
-    db_rooms = row_by_row(models.Subjects, Subject, filter_term=False)
-    return db_rooms
+    subjects = row_by_row(models.Subjects, Subject, filter_term=False)
+    subjects.sort(key=lambda a: a.shortcode)
+
+    return subjects
 
 
 def get_subject_by_id(id):
@@ -424,7 +433,7 @@ def get_all_events_by_date(date):
 # LESSON #
 ##########
 def get_raw_lessons():
-    return run_all(models.Lesson.objects)
+    return run_all(models.Lesson.objects.filter(deleted=0))
 
 
 ###########

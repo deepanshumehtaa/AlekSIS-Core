@@ -1,3 +1,4 @@
+from django.db import ProgrammingError, OperationalError
 from django.urls import path
 
 from untisconnect.models import Terms, Schoolyear
@@ -26,8 +27,9 @@ try:
         path('<str:plan_date>-aktuell.pdf', views.sub_pdf, name="timetable_substitutions_pdf_date")
     ]
 
-except (Terms.DoesNotExist, Schoolyear.DoesNotExist):
+except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError, OperationalError) as e:
     from . import fallback_view
+    print(e)
 
     urlpatterns = [
         path('hints', fallback_view.fallback, name="timetable_hints"),

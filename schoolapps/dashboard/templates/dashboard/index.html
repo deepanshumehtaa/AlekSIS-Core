@@ -1,81 +1,17 @@
+{% load staticfiles %}
 {% include 'partials/header.html' %}
 
 <main>
-    <p class="flow-text">Willkommen bei SchoolApps!</p>
+    <script>
+        var API_URL = "{% url "api_information" %}";
+        var MY_PLAN_URL = "{% url "timetable_my_plan" %}";
+    </script>
+    <script src="{% static "js/moment-with-locales.min.js" %}"></script>
+    {% include "components/react.html" %}
+    <script src="{% static "js/dashboard.js" %}"></script>
 
-    <div class="row">
-        <div class="col s12">
-            <h5>Dein Status</h5>
-        </div>
-        <div class="col"><i class="material-icons left green-text">check_circle</i>{{ user_type_formatted }}</div>
-        {% if user_type == 1 or user_type == 2 %}
-            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
-                Klassen: {{ classes|join:", " }}</div>
-            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
-                Kurse: {{ courses|join:", " }}</div>
-        {% endif %}
-        {% if user_type == 1 %}
-            <div class="col"><i class="material-icons left green-text">check_circle</i>Deine
-                Fächer: {{ subjects|join:", " }}</div>
-        {% endif %}
-        {% if user_type == 1 or has_wifi == True %}
-            <div class="col"><i class="material-icons left green-text">check_circle</i>WLAN</div>
-        {% else %}
-            <div class="col"><i class="material-icons left red-text">close</i>Kein WLAN</div>
-        {% endif %}
-    </div>
+    <div id="dashboard_container">
 
-    <div class="row">
-        <div class="col s12 m6">
-            <h5>Letzte Aktivitäten</h5>
-
-            {% if activities %}
-                <ul class="collection">
-                    {% for activity in activities %}
-                        <li class="collection-item">
-                            <span class="badge new primary-color">{{ activity.app }}</span>
-                            <span class="title">{{ activity.title }}</span>
-                            <p>
-                                <i class="material-icons left">access_time</i> {{ activity.created_at }}
-                            </p>
-                            <p>
-                                {{ activity.description }}
-                            </p>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Noch keine Aktivitäten vorhanden.</p>
-            {% endif %}
-        </div>
-
-        <div class="col s12 m6">
-            <h5>Letzte Benachrichtigungen</h5>
-
-            {% if notifications %}
-                <ul class="collection">
-                    {% for notification in notifications %}
-                        <li class="collection-item">
-                            <span class="badge new primary-color">{{ notification.app }}</span>
-                            <span class="title">{{ notification.title }}</span>
-                            <p>
-                                <i class="material-icons left">access_time</i> {{ notification.created_at }}
-                            </p>
-                            <p>
-                                {{ notification.description }}
-                            </p>
-                            {% if notification.link %}
-                                <p>
-                                    <a href="{{ notification.link }}">Mehr Informationen →</a>
-                                </p>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Noch keine Benachrichtigungen vorhanden.</p>
-            {% endif %}
-        </div>
     </div>
 </main>
 

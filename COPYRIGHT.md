@@ -1,0 +1,3 @@
+© 2018 by [Jonathan Weth](mailto:wethjo@katharineum.de), [Frank-Poetzsch-Heffter](mailto:p-h@katharineum.de)
+
+© 2019 by [Hangzhi Yu](mailto:yuha@katharineum.de), [Julian Leucker](mailto:leuckeju@katharineum.de), [Jonathan Weth](mailto:wethjo@katharineum.de), [Frank-Poetzsch-Heffter](mailto:p-h@katharineum.de)

@@ -6,7 +6,7 @@ from untisconnect.api import run_default_filter, row_by_row_helper, format_class
     TYPE_TEACHER
 from untisconnect.api_helper import run_using, untis_split_first, untis_date_to_date, date_to_untis_date
 from untisconnect.parse import get_lesson_element_by_id_and_teacher
-from untisconnect.drive import build_drive
+from untisconnect.drive import drive
 
 TYPE_SUBSTITUTION = 0
 TYPE_CANCELLATION = 1
@@ -27,10 +27,6 @@ def parse_type_of_untis_flags(flags):
     elif "F" in flags:
         type_ = TYPE_TEACHER_CANCELLATION
     return type_
-
-
-# Build cache
-drive = build_drive()
 
 
 class Substitution(object):
@@ -307,6 +303,7 @@ def get_header_information(subs, date, events=[]):
                 # Teacher is only missing a part of day
                 elements.append(
                     "{} ({}.-{}.)".format(absence.teacher.shortcode, absence.from_lesson, absence.to_lesson))
+        elements.sort()
         joined = ", ".join(elements)
 
         info.rows.append(("Abwesende Lehrkräfte", joined))
