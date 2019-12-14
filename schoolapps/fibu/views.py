@@ -10,7 +10,7 @@ from .forms import EditBookingForm
 #@permission_required('fibu.view_booking')
 def index(request):
     bookings = Booking.objects.filter()
-    print(bookings)
+    print('request:',request.method)
 
 # @login_required
 # @permission_required('fibu.make_booking')
@@ -23,6 +23,9 @@ def index(request):
             print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
         else:
             form = EditBookingForm(request.POST or None)
+    elif 'booking-status' in request.GET:
+        print('status',request.GET)
+#        booking-status = str(int(booking-status)+1)
     else:
         form = EditBookingForm()
     if form.is_valid():

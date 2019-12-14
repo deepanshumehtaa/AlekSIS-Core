@@ -7,7 +7,6 @@
            <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row">
                     <span class="col s12 m6">{{ booking.description }}</span>
                     <span class="col s12 m3 flushright">{{ booking.planned_amount }} €</span>
-                    <span class="col s12 m1 badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
                 <form action="" method="POST" class="col s12 m2 right">
                     {% csrf_token %}
                     <input type="hidden" value="{{ booking.id }}" name="booking-id">
