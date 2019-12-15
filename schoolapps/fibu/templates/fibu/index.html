@@ -20,34 +20,36 @@
     <h4>Laufende Anträge</h4>
        <div class="collection">
            {% for booking in bookings %}
-               STATUS_ID: {{ booking.status }}
                <div class="collection-item row">
-{#            <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row"> #}
-                    <span class="col s12 m8">{{ booking.description }}</span>
-                    <span class="col s12 m2 flushright">{{ booking.planned_amount }} €</span>
-                    <span class="col s12 m1 badge new {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
-                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m1">
+                    <span class="col s12 m9">{{ booking.description }}</span>
+                    <span class="col s12 m1 right-align">{{ booking.planned_amount }} €</span>
+                    <span class="col s12 m1 badge new center-align {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
+                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m1 right-align">
                         {% csrf_token %}
                         <input type="hidden" value="{{ booking.id }}" name="booking-id">
                         {% if booking.status == 0 %}
                             <button type="submit" name="edit"
-                                    class="waves-effect waves-light btn-flat btn-flat-large" title="Bearbeiten">
+                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
                                 <i class="material-icons center green-text">create</i>
                             </button>
                         {% endif %}
                     </form>
-                     <form action="{% url 'fibu_index'  %}" class="col s12 m1">
+                     <form action="" method="POST" class="col s12 m1">
                         {% csrf_token %}
                         <input type="hidden" value="{{ booking.id }}" name="booking-id">
                         <input type="hidden" value="{{ booking.status }}" name="booking-status">
                         {% if booking.status == 1 %}
-                            <button type="submit" name="order"
-                                class="waves-effect waves-light btn-flat btn-flat-large" title="Status auf 'bestellt' ändern">
+                            <button type="submit" name="ordered"
+                                class="waves-effect waves-light btn-flat btn-flat-medium right-align" title="Status auf 'bestellt' ändern">
                                 <i class="material-icons center red-text">shopping_cart</i>
+                            </button>
+                        {% elif booking.status == 3 %}
+                            <button type="submit" name="submit-invoice"
+                                class="waves-effect waves-light btn-flat btn-flat-medium right-align" title="Status auf 'Rechnung eingereicht' ändern">
+                                <i class="material-icons center red-text">description</i>
                             </button>
                         {% endif %}
                     </form>
-{#           </a>#}
            </div>
            {% endfor %}
        </div>

@@ -63,7 +63,6 @@ class Booking(models.Model):
 
 
     def getStatus(self):
-        print(self.status, self.contact, self.id)
         return status_list[self.status]
 
 
