@@ -1,0 +1,11 @@
+{% include "mail/header.html" %}
+
+<main>
+    <blockquote>
+        Frage: {{ question }}
+
+        <p>Übermittelt von {{ user.get_full_name }} ({{ user.username }})</p>
+    </blockquote>
+
+    <em>Diese Frage wurde über SchoolApps übermittelt.</em>
+</main>

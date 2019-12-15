@@ -1,0 +1,6 @@
+Frage: {{ question }}
+
+Übermittelt von {{ user.get_full_name }} ({{ user.username }})
+
+
+Diese Frage wurde über SchoolApps übermittelt.

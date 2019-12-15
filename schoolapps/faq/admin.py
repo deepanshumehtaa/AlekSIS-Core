@@ -1,9 +1,8 @@
 from django.contrib import admin
-from faq.models import Question, FAQQuestion, FAQSection
+from faq.models import FAQQuestion, FAQSection
 from django.utils.html import format_html
 
 
-# Register your models here.
 def show(modeladmin, request, queryset):
     queryset.update(show=True)
 
@@ -16,14 +15,6 @@ def hide(modeladmin, request, queryset):
 
 
 hide.short_description = "Ausgewählte Fragen nicht mehr veröffentlichen"
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "pub_date", "user", "answered")
-    list_filter = ("answered",)
-
-
-admin.site.register(Question, QuestionAdmin)
 
 
 class FAQSectionAdmin(admin.ModelAdmin):
