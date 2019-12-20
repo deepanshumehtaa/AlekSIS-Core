@@ -21,31 +21,42 @@
        <div class="collection">
            {% for booking in bookings %}
                <div class="collection-item row">
-                    <span class="col s12 m9">{{ booking.description }}</span>
+                    <span class="col s12 m8">{{ booking.description }}</span>
                     <span class="col s12 m1 right-align">{{ booking.planned_amount }} €</span>
                     <span class="col s12 m1 badge new center-align {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
-                    <form action="{% url 'booking_edit' booking.id %}" class="col s12 m1 right-align">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                        {% if booking.status == 0 %}
+                    <span class="col s12 m2 right-align">
+                    {% if booking.status == 0 %}
+                        <form action="{% url 'booking_edit' booking.id %}" class="left">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
                             <button type="submit" name="edit"
                                     class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
                                 <i class="material-icons center green-text">create</i>
                             </button>
-                        {% endif %}
-                    </form>
-                     <form action="" method="POST" class="col s12 m1">
+                        </form>
+                    {% endif %}
+                    {% if booking.status == 0 or booking.status == 1 %}
+                        <form action="" method="POST" class="left">
+                            {% csrf_token %}
+                                <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                                <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
+                                    <i class="material-icons center red-text">cancel</i>
+                                </button>
+                        </form>
+                    {% endif %}
+                    </span>
+                    <form action="" method="POST" class="col s12 m1 left">
                         {% csrf_token %}
                         <input type="hidden" value="{{ booking.id }}" name="booking-id">
                         <input type="hidden" value="{{ booking.status }}" name="booking-status">
                         {% if booking.status == 1 %}
                             <button type="submit" name="ordered"
-                                class="waves-effect waves-light btn-flat btn-flat-medium right-align" title="Status auf 'bestellt' ändern">
+                                class="waves-effect waves-light btn-flat btn-flat-medium left" title="Status auf 'bestellt' ändern">
                                 <i class="material-icons center red-text">shopping_cart</i>
                             </button>
                         {% elif booking.status == 3 %}
                             <button type="submit" name="submit-invoice"
-                                class="waves-effect waves-light btn-flat btn-flat-medium right-align" title="Status auf 'Rechnung eingereicht' ändern">
+                                class="waves-effect waves-light btn-flat btn-flat-medium left" title="Status auf 'Rechnung eingereicht' ändern">
                                 <i class="material-icons center red-text">description</i>
                             </button>
                         {% endif %}

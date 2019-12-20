@@ -33,7 +33,7 @@
                         <div class="col s12 m4">
                             <p>
                             {% if aub.status == 0 %}
-                                <form action="{% url 'aub_edit' aub.id %}" class="right">
+                                <form action="{% url 'aub_edit' aub.id %}" class="left">
                                     {% csrf_token %}
                                     <button type="submit" name="edit" class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
                                         <i class="material-icons center green-text">create</i>
@@ -41,7 +41,7 @@
                                 </form>
                             {% endif %}
                             {% if aub.status == 0 or aub.status == 1 %}
-                                <form action="" method="POST" class="right">
+                                <form action="" method="POST" class="left">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{ aub.id }}" name="aub-id">
                                     <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">

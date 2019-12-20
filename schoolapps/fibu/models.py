@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+SCHOOLYEARLIST = ['2019/2020','2020/2021','2021/2022','2022/2023','2023/2024']
+
 class Status:
     def __init__(self, name, style_class):
         self.name = name
@@ -20,44 +22,42 @@ status_list = [
 
 status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
-class CostCenter(models.Model):
-    name = models.CharField(max_length=20, primary_key=True, unique=True)
+
+
+class Costcenter(models.Model):
+    # Kostenstellen z.B. Schoolträger-konsumtiv, Schulträger-investiv, Elternberein, ...
+    name = models.CharField(max_length=20)
+    schoolyear = models.CharField(max_length=20)
     class Meta:
         permissions = (
             ('edit_costcenter', 'Can edit cost center'),
         )
 
 class Account(models.Model):
-    number = models.IntegerField(primary_key=True, unique=True)
+    # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
+    name = models.CharField(max_length=20)
+    costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE)
+    budget = models.DecimalField(max_digits=9, decimal_places=2)
     class Meta:
         permissions = (
             ('edit_account', 'Can edit account'),
         )
 
-class Budget(models.Model):
-    name = models.CharField(max_length=30, primary_key=True, unique=True)
-    class Meta:
-        permissions = (
-            ('edit_budget', 'Can edit budget'),
-        )
-
 class Booking(models.Model):
-#    cost_center     = models.ForeignKey(CostCenter, on_delete=models.CASCADE)
-    contact         = models.ForeignKey(User, related_name='bookings', on_delete=models.SET_NULL
+    account         = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
+    contact         = models.ForeignKey(to=User, related_name='bookings', on_delete=models.SET_NULL
                                    , verbose_name="Erstellt von", blank=True, null=True)
 #    invoice_date    = models.DateField()
 #    invoice_number  = models.CharField(max_length=20)
 #    firma           = models.CharField(max_length=30)
     description     = models.CharField(max_length=50)
-#    amount          = models.DecimalField(max_digits=10, decimal_places=2)
+#    amount          = models.DecimalField(max_digits=9, decimal_places=2)
     planned_amount  = models.IntegerField()
     submission_date = models.DateField(default='2019-01-01')
     justification   = models.CharField(max_length=2000, blank=True, null=True)
 #    payout_number   = models.IntegerField()
 #    booking_date    = models.DateField()
 #    maturity        = models.DateField()
-#    account         = models.ForeignKey(Account, on_delete=models.CASCADE)
-#    budget          = models.ForeignKey(Budget, on_delete=models.CASCADE)
 #    upload          = models.FileField(upload_to='uploads/fibu/%Y/')
     status          = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
 

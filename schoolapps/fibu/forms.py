@@ -3,10 +3,19 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
 from material import Layout, Row, Fieldset
-from .models import Booking, CostCenter
+from .models import Booking, Costcenter, SCHOOLYEARLIST
 
-# class AddCostCenterForm(forms.ModelForm):
-#     cost_center = forms.CharField(max_length=30, label='Kostenstelle')
+class EditCostcenterForm(forms.ModelForm):
+     costcenter = forms.CharField(max_length=30, label='Kostenstelle')
+     schoolyear = forms.ChoiceField(choices=SCHOOLYEARLIST)
+
+     layout = Layout(Row(Fieldset('Kostenstelle', 'costcenter'), Fieldset('Schuljahr', 'schoolyear')))
+
+     class Meta:
+         model = Costcenter
+         fields = ('id', 'costcenter', 'schoolyear')
+
+
 #
 # class AcquisitionForm(forms.ModelForm):
 #     # Cost_center choices
