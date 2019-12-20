@@ -77,3 +77,7 @@ Weitere Verbesserungen der vorangegeangen Versionen dieses Releases.
 
 ## 1.1.2 "Aebli"
 * Bugfix in der PWA (zuerst Netzwerk, dann Cache)
+
+## 1.1.3 "Aebli"
+* Bugfix in REBUS (Submit wieder erlaubt) (#335)
+* Klassenlehrkräfte werden im Plan angezeigt (#334)
