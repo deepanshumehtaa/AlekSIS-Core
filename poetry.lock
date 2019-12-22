@@ -311,17 +311,6 @@ version = "1.1.1"
 
 [[package]]
 category = "main"
-description = "Font Awesome for Django"
-name = "django-fa"
-optional = false
-python-versions = "*"
-version = "1.0.0"
-
-[package.dependencies]
-Django = ">1.4"
-
-[[package]]
-category = "main"
 description = "A set of high-level abstractions for Django forms"
 name = "django-formtools"
 optional = false
@@ -1657,10 +1646,15 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [extras]
+app-alsijil = []
+app-chronos = []
+app-exlibris = []
+app-schild-nrw = []
+app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "906253d2c4e2aab165d0a84a3504cf6d2e250859bfe43e2e0aef56f7c67fafa4"
+content-hash = "f453c39e0de04d47e1c53ec8ac5e064a9ad9c2965f9f83c476524d2f867542ab"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1799,9 +1793,6 @@ django-debug-toolbar = [
 django-easy-audit = [
     {file = "django-easy-audit-1.1.1.tar.gz", hash = "sha256:4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"},
     {file = "django_easy_audit-1.1.1-py2.py3-none-any.whl", hash = "sha256:1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6"},
-]
-django-fa = [
-    {file = "django-fa-1.0.0.tar.gz", hash = "sha256:e3ebf97b90e374b5ccb5b8a70e4a932c8787f2ee995c09a97a63bf9a1366c3ff"},
 ]
 django-formtools = [
     {file = "django-formtools-2.2.tar.gz", hash = "sha256:c5272c03c1cd51b2375abf7397a199a3148a9fbbf2f100e186467a84025d13b2"},
