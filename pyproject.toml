@@ -54,6 +54,11 @@ django-yarnpkg = "^6.0"
 django-dbsettings = "^0.11.0"
 
 [tool.poetry.extras]
+app-alsijil = ['BiscuIT-App-Alsijil']
+app-chronos = ['BiscuIT-App-Chronos']
+app-exlibris = ['BiscuIT-App-Exlibris']
+app-schild-nrw = ['BiscuIT-App-SchILD-NRW']
+app-untis = ['BiscuIT-App-Untis']
 ldap = ["django-auth-ldap"]
 
 [tool.poetry.dev-dependencies]
