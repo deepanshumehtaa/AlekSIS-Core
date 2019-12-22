@@ -257,7 +257,7 @@ ANY_JS = {
         "css_url": JS_URL + "/datatables/media/css/dataTables.bootstrap4.min.css",
         "js_url": JS_URL + "/datatables/media/js/dataTables.bootstrap4.min.js",
     },
-    "material-design-icons": STATIC_URL + "@mdi/font/css/materialdesignicons.css",
+    "material-design-icons": {"css_url": JS_URL + "@mdi/font/css/materialdesignicons.css"},
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
