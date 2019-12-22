@@ -18,6 +18,15 @@ class EditBookingForm(forms.ModelForm):
         fields = ('id', 'description', 'planned_amount', 'justification')
 
 
+class CheckBookingForm(forms.ModelForm):
+    costcenterlist = Costcenter.objects.filter()
+    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
+
+    class Meta:
+        model = Costcenter
+        fields = ('id', 'name')
+
+
 class EditCostcenterForm(forms.ModelForm):
      name = forms.CharField(max_length=30, label='Kostenstelle')
      year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
@@ -30,13 +39,9 @@ class EditCostcenterForm(forms.ModelForm):
 
 
 class EditAccountForm(forms.ModelForm):
-    costcenterlist = Costcenter.objects.filter()
-    costcenter_choices = [(x, val.name) for x, val in enumerate(costcenterlist)]
-#    print('choices:', costcenter_choices)
-
     name = forms.CharField(max_length=30, label='Buchungskonto')
+    costcenterlist = Costcenter.objects.filter()
     costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
-    print('costcenter:', costcenter)
     budget = forms.IntegerField(label='Budget')
 
     layout = Layout(Row('name', 'costcenter', 'budget'))

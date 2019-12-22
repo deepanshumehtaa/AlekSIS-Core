@@ -5,18 +5,20 @@
 
    <h4>Kostenstelle bearbeiten</h4>
 
-    <form method="POST">
+    <form method="POST" style="background: #eee">
         {% csrf_token %}
         {% form form=form %}
         {% endform %}
-        <button type="submit" class="waves-effect waves-light btn green">
+        <span class="right">
+            <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">send</i> Änderungen übernehmen
-        </button>
-    <a href="{% url 'costcenter' %}">
-        <button type="button" class="waves-effect waves-light btn grey">
+            </button>
+            <a href="{% url 'costcenter' %}">
+            <button type="button" class="waves-effect waves-light btn grey">
             <i class="material-icons left">cancel</i> Abbrechen
-        </button>
-    </a>
+            </button>
+            </a>
+        </span>
     </form>
 
 </main>

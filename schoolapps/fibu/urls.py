@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='fibu_index'),
-    path('check', views.check, name='booking_check'),
-    path('edit/<int:id>', views.edit, name='booking_edit'),
+    path('booking/check', views.check, name='booking_check'),
+    path('booking/edit/<int:id>', views.edit, name='booking_edit'),
     path('costcenter', views.costcenter, name='costcenter'),
     path('costcenter/edit/<int:id>', views.costcenter_edit, name='costcenter_edit'),
     path('account', views.account, name='account'),

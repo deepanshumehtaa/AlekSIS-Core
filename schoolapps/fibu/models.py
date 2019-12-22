@@ -33,7 +33,7 @@ class Costcenter(models.Model):
     name = models.CharField(max_length=20)
     year = models.IntegerField(default=2019, choices=YEARLIST, verbose_name="Jahr")
     def __str__(self):
-        return self.name
+        return "%s" % (self.name)
 
     class Meta:
         permissions = (

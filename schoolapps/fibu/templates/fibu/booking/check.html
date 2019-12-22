@@ -4,29 +4,24 @@
     <h4>Anträge prüfen</h4>
     <div class="collection">
         {% for booking in filter.qs %}
-           <a href="{% url 'booking_edit' booking.id %}"  class="collection-item row">
-                    <span class="col s12 m6">{{ booking.description }}</span>
-                    <span class="col s12 m3 flushright">{{ booking.planned_amount }} €</span>
-                <form action="" method="POST" class="col s12 m2 right">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                    {% if booking.status.id != 2 %}
+            <span>{{ booking.contact }}</span>
+            <span>{{ booking.description }}</span>
+            <span>{{ booking.planned_amount }} €</span>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                {% if booking.status.id != 2 %}
+                    <span>{{ form.costcenter }}</span>
+                    <span>
                         <button type="submit" name="allow"
-                            class="waves-effect waves-light btn-flat btn-flat-large" title="Annehmen">
-                            <i class="material-icons center green-text">check_circle</i>
-                        </button>
-                    {% endif %}
-                    {% if booking.status.id != 3 %}
-                        <button type="submit" name="deny"
-                             class="waves-effect waves-light btn-flat btn-flat-large" title="Ablehnen">
-                             <i class="material-icons center red-text">not_interested</i>
-                        </button>
-                    {% endif %}
-                </form>
-           </a>
+                        class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
+                        <i class="material-icons center green-text">check_circle</i>
+                    </button>
+                    </span>
+                {% endif %}
+            </form>
         {% endfor %}
     </div>
-
  </main>
 
 {% include 'partials/footer.html' %}

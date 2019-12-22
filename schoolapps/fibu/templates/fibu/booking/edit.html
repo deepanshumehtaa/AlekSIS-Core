@@ -5,10 +5,11 @@
 
    <h4>Beschaffung</h4>
 
-    <form method="POST">
+    <form method="POST" style="background: #eee">
         {% csrf_token %}
         {% form form=form %}
         {% endform %}
+        <span class="right">
         <button type="submit" class="waves-effect waves-light btn green">
             <i class="material-icons left">send</i> Änderungen übernehmen
         </button>
@@ -16,6 +17,7 @@
         <button type="button" class="waves-effect waves-light btn grey">
             <i class="material-icons left">cancel</i> Abbrechen
         </button>
+        </span>
     </a>
     </form>
 

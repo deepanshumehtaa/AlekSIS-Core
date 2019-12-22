@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
-from .forms import EditBookingForm, EditCostcenterForm, EditAccountForm
+from .forms import EditBookingForm, CheckBookingForm, EditCostcenterForm, EditAccountForm
 
 
 @login_required
@@ -58,7 +58,7 @@ def index(request):
 def edit(request, id):
     booking = get_object_or_404(Booking, id=id)
     form = EditBookingForm(instance=booking)
-    template = 'fibu/edit.html'
+    template = 'fibu/booking/edit.html'
     if request.method == 'POST':
         form = EditBookingForm(request.POST, instance=booking)
         if form.is_valid():
@@ -81,7 +81,7 @@ def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
-            booking = Booking.objects.get(id=booking_id)
+            #booking = Booking.objects.get(id=booking_id)
             if 'allow' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=1)
             elif 'deny' in request.POST:
@@ -101,7 +101,8 @@ def check(request):
 
     booking_list = Booking.objects.filter(status=0).order_by('submission_date')
     bookings = BookingFilter(request.GET, queryset=booking_list)
-    return render(request, 'fibu/booking/check.html', {'filter': bookings})
+    form = CheckBookingForm()
+    return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
 
 
 @login_required
