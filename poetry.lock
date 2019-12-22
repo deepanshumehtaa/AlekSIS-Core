@@ -1646,11 +1646,6 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [extras]
-app-alsijil = []
-app-chronos = []
-app-exlibris = []
-app-schild-nrw = []
-app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
