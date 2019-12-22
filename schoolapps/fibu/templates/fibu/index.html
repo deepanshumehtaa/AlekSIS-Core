@@ -8,11 +8,11 @@
    {% block content %}
 
     <h4>Beantragungen von {{ user }}</h4>
-    <form method="POST" style="border-width: 5px;">
+    <form method="POST" style="border-width: 5px; background: #eee">
         {% csrf_token %}
         {% form form=form %}
         {% endform %}
-        <button type="submit" class="waves-effect waves-light btn green">
+        <button type="submit" class="waves-effect waves-light btn green right">
             <i class="material-icons left">send</i> Antrag stellen
         </button>
     </form>

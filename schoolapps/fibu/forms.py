@@ -3,17 +3,47 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
 from material import Layout, Row, Fieldset
-from .models import Booking, Costcenter, SCHOOLYEARLIST
+from .models import YEARLIST, Booking, Costcenter, Account
+
+
+class EditBookingForm(forms.ModelForm):
+    description = forms.CharField(label='Beschreibung - Was soll gekauft werden?')
+    planned_amount = forms.IntegerField(label='Erwarteter Betrag - Welcher Betrag ist erforderlich (in Euro ohne Komma)?')
+    justification = forms.CharField(label='Begründung - Begründe ggf. deinen Antrag.', required=False)
+
+    layout = Layout(Row('description', 'planned_amount'), Row('justification'))
+
+    class Meta:
+        model = Booking
+        fields = ('id', 'description', 'planned_amount', 'justification')
+
 
 class EditCostcenterForm(forms.ModelForm):
-     costcenter = forms.CharField(max_length=30, label='Kostenstelle')
-     schoolyear = forms.ChoiceField(choices=SCHOOLYEARLIST)
+     name = forms.CharField(max_length=30, label='Kostenstelle')
+     year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
 
-     layout = Layout(Row(Fieldset('Kostenstelle', 'costcenter'), Fieldset('Schuljahr', 'schoolyear')))
+     layout = Layout(Row('name','year'))
 
      class Meta:
          model = Costcenter
-         fields = ('id', 'costcenter', 'schoolyear')
+         fields = ('id', 'name', 'year')
+
+
+class EditAccountForm(forms.ModelForm):
+    costcenterlist = Costcenter.objects.filter()
+    costcenter_choices = [(x, val.name) for x, val in enumerate(costcenterlist)]
+#    print('choices:', costcenter_choices)
+
+    name = forms.CharField(max_length=30, label='Buchungskonto')
+    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
+    print('costcenter:', costcenter)
+    budget = forms.IntegerField(label='Budget')
+
+    layout = Layout(Row('name', 'costcenter', 'budget'))
+
+    class Meta:
+        model = Account
+        fields = ('id', 'name', 'costcenter', 'budget')
 
 
 #
@@ -53,17 +83,4 @@ class EditCostcenterForm(forms.ModelForm):
 #         model = Booking
 #         fields = ('cost_center', 'description', 'planned_amount')
 
-
-class EditBookingForm(forms.ModelForm):
-    description = forms.CharField(label='Was soll gekauft werden?')
-    planned_amount = forms.IntegerField(label='Welcher Betrag ist dafür erforderlich (Euro)?')
-    justification = forms.CharField(label='Begründe ggf. deinen Antrag.', required=False)
-
-    layout = Layout(Row(Fieldset('Beschreibung', 'description'),
-                        Fieldset('Erwarteter Betrag', 'planned_amount')),
-                    Row(Fieldset('Begründung (optional)', 'justification')))
-
-    class Meta:
-        model = Booking
-        fields = ('id', 'description', 'planned_amount', 'justification')
 

@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-SCHOOLYEARLIST = ['2019/2020','2020/2021','2021/2022','2022/2023','2023/2024']
+YEARLIST = [(2019,'2019'),
+            (2020,'2020'),
+            (2021,'2021'),
+            (2022,'2022'),
+            (2023,'2023')]
 
 class Status:
     def __init__(self, name, style_class):
@@ -27,7 +31,10 @@ status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 class Costcenter(models.Model):
     # Kostenstellen z.B. Schoolträger-konsumtiv, Schulträger-investiv, Elternberein, ...
     name = models.CharField(max_length=20)
-    schoolyear = models.CharField(max_length=20)
+    year = models.IntegerField(default=2019, choices=YEARLIST, verbose_name="Jahr")
+    def __str__(self):
+        return self.name
+
     class Meta:
         permissions = (
             ('edit_costcenter', 'Can edit cost center'),
@@ -35,16 +42,16 @@ class Costcenter(models.Model):
 
 class Account(models.Model):
     # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
-    name = models.CharField(max_length=20)
-    costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE)
-    budget = models.DecimalField(max_digits=9, decimal_places=2)
+    name = models.CharField(max_length=20, default='')
+    costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, default='')
+    budget = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     class Meta:
         permissions = (
             ('edit_account', 'Can edit account'),
         )
 
 class Booking(models.Model):
-    account         = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
+#    account         = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
     contact         = models.ForeignKey(to=User, related_name='bookings', on_delete=models.SET_NULL
                                    , verbose_name="Erstellt von", blank=True, null=True)
 #    invoice_date    = models.DateField()
