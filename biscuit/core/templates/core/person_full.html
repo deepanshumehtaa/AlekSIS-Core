@@ -13,7 +13,7 @@
       <h2>{{ person.first_name }} {{ person.last_name }}</h2>
       <p>
         <a href="{% url 'edit_person_by_id' person.id %}">
-          {% blocktrans %}Edit person{% endblocktrans %}
+          <span class="mdi mdi-pencil"></span>
         </a>
       </p>
       <h3>{% blocktrans %}Contact details{% endblocktrans %}</h3>
