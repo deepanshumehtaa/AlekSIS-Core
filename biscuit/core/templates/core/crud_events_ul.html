@@ -1,5 +1,3 @@
-{% load font_awesome %}
-
 <ul class="{{ class_ul }}">
   {% for event in obj.crud_events %}
     <li class="{{ class_li }}">
@@ -9,15 +7,15 @@
       </div>
       <span class="badge badge-light text-dark">
         {% if event.event_type == event.CREATE %}
-          {% fa 'plus' %} 
+          <span class="mdi mdi-plus"></span>
         {% elif event.event_type == event.UPDATE %}
-          {% fa 'pencil' %} 
+          <span class="mdi mdi-pencil"></span>
         {% elif event.event_type == event.DELETE %}
-          {% fa 'trash' %} 
+          <span class="mdi mdi-delete"></span>
         {% elif event.event_type == event.M2M_CHANGE %}
-          {% fa 'pencil' %} 
+          <span class="mdi mdi-pencil"></span>
         {% elif event.event_type == event.M2M_CHANGE_REV %}
-          {% fa 'pencil' %} 
+          <span class="mdi mdi-pencil"></span>
         {% endif %}
       </span>
     </li>

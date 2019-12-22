@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load bootstrap4 font_awesome i18n static %}
+{% load bootstrap4 i18n static %}
 {% load render_table from django_tables2 %}
 
 {% block bootstrap4_title %}{% blocktrans %}Group{% endblocktrans %} - {{ block.super }}{% endblock %}
@@ -19,7 +19,7 @@
       <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
       <table class="table table-responsive-xl table-border table-striped">
         <tr>
-          <td>{% fa 'users' %}</td>
+          <td><span class="mdi mdi-account-group"></span></td>
           <td>{{ group.name }}</td>
           <td>{{ group.short_name }}</td>
         </tr>
