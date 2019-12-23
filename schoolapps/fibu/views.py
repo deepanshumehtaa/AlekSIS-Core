@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
-from .forms import EditBookingForm, CheckBookingForm, EditCostcenterForm, EditAccountForm
+from .forms import EditBookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
 
 
 @login_required
@@ -84,6 +84,9 @@ def check(request):
             #booking = Booking.objects.get(id=booking_id)
             if 'allow' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=1)
+                account = request.POST['account']
+                print('account:', account)
+                Booking.objects.filter(id=booking_id).update(account=account)
             elif 'deny' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=2)
                 # Notify user
@@ -103,6 +106,32 @@ def check(request):
     bookings = BookingFilter(request.GET, queryset=booking_list)
     form = CheckBookingForm()
     return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
+
+@login_required
+# @permission_required('fibu.book_booking')
+def booking(request):
+    bookings = Booking.objects.filter()
+    context = {'bookings': bookings}
+    return render(request, 'fibu/booking/index.html', context)
+
+@login_required
+#@permission_required('fibu.book_booking')
+def book(request, id):
+    booking = get_object_or_404(Booking, id=id)
+    form = BookBookingForm(instance=booking)
+    template = 'fibu/booking/book.html'
+    if request.method == 'POST':
+        form = BookBookingForm(request.POST, request.FILES, instance=booking)
+        if form.is_valid():
+            form.save()
+            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
+            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
+            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
+            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
+            # a.save()
+            return redirect(reverse('booking'))
+    context = {'form': form}
+    return render(request, template, context)
 
 
 @login_required

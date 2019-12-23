@@ -178,21 +178,24 @@
                     </div>
                 </li>
             {% endif %}
-                <li class="bold url-fibu_index url-booking-check1 url-booking_check2">
+                <li class="bold url-fibu_index url-booking-check url-booking_book">
                     <a class="collapsible-header waves-effect waves-primary" href="{% url 'fibu_index' %}"><i class="material-icons">euro_symbol</i>
                         Finanzen
                     </a>
                     <div class="collapsible-body">
-                        <ul class="collapsible collapsible-accordion">
-                            <div>
-                                <li><a href="{% url 'booking_check' %}"><i class="material-icons">done</i>Buchungen prüfen</a></li>
-                            </div>
-                            <div>
-                                <li><a href="{% url 'costcenter' %}"><i class="material-icons">done</i>Kostenstellen</a></li>
-                            </div>
-                             <div>
-                                <li><a href="{% url 'account' %}"><i class="material-icons">done</i>Buchungskonten</a></li>
-                            </div>
+                        <ul>
+                            <li class="url-booking_check">
+                                <a href="{% url 'booking_check' %}"><i class="material-icons">done</i>Anträge</a>
+                            </li>
+                            <li class="url-booking_book">
+                                <a href="{% url 'booking' %}"><i class="material-icons">done</i>Buchungen</a>
+                            </li>
+                            <li class="url-costcenter">
+                                <a href="{% url 'costcenter' %}"><i class="material-icons">done</i>Kostenstellen</a>
+                            </li>
+                            <li class="url-account">
+                                <a href="{% url 'account' %}"><i class="material-icons">done</i>Buchungskonten</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

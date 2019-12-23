@@ -2,9 +2,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
+from django.contrib.auth.models import User
 from material import Layout, Row, Fieldset
-from .models import YEARLIST, Booking, Costcenter, Account
-
+from .models import YEARLIST, Booking, Costcenter, Account, status_choices
 
 class EditBookingForm(forms.ModelForm):
     description = forms.CharField(label='Beschreibung - Was soll gekauft werden?')
@@ -19,12 +19,47 @@ class EditBookingForm(forms.ModelForm):
 
 
 class CheckBookingForm(forms.ModelForm):
-    costcenterlist = Costcenter.objects.filter()
-    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
+    accounts = Account.objects.filter().order_by('costcenter','name')
+    account = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
 
     class Meta:
-        model = Costcenter
-        fields = ('id', 'name')
+        model = Account
+        fields = ('account', )
+
+class BookBookingForm(forms.ModelForm):
+    accounts = Account.objects.filter().order_by('costcenter','name')
+    user = User.objects.filter()
+    description = forms.CharField(label='Beschreibung')
+    planned_amount = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
+    justification = forms.CharField(label='Begründung', required=False)
+    account         = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
+    contact         = forms.ModelChoiceField(queryset=user, label='Kontakt')
+    invoice_date    = forms.DateField(label='Rechnungsdatum')
+    invoice_number  = forms.CharField(label='Rechnungsnummer')
+    firma           = forms.CharField(label='Firma')
+    amount          = forms.DecimalField(max_digits=9, decimal_places=2, label='Betrag')
+    submission_date = forms.DateField(label='Bearbeitungsdatum')
+    payout_number   = forms.IntegerField(label='Auszahlungsnummer')
+    booking_date    = forms.DateField(label='Buchungsdatum')
+    maturity        = forms.DateField(label='Fälligkeit')
+    upload          = forms.FileField(label='Scan der Rechnung', required=False)
+    status          = forms.ChoiceField(choices=status_choices, label='Status')
+
+
+    layout = Layout(Row('description', 'justification', 'contact'),
+                    Row('account', 'status', 'planned_amount'),
+                    Fieldset('Details',
+                        Row('firma', 'invoice_number', 'amount'),
+                        Row('invoice_date', 'maturity', 'submission_date', 'booking_date'),
+                        Row('payout_number', 'upload')
+                        )
+                    )
+
+    class Meta:
+        model = Booking
+        fields = ('id', 'description', 'planned_amount', 'justification','account', 'contact', 'invoice_date',
+                  'invoice_number', 'firma', 'amount', 'submission_date', 'payout_number', 'booking_date',
+                  'maturity', 'upload', 'status')
 
 
 class EditCostcenterForm(forms.ModelForm):

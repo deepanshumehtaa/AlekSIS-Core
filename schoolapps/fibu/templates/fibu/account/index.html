@@ -22,7 +22,7 @@
            {% for account in accounts %}
                <div class="collection-item row">
                     <span class="col s12 m6">{{ account.name }}</span>
-                    <span class="col s12 m2 right-align">{{ account.costcenter }}</span>
+                    <span class="col s12 m2">{{ account.costcenter }}</span>
                     <span class="col s12 m2 right-align">{{ account.budget }}</span>
                     <span class="col s12 m2 right-align">
                         <form action="{% url 'account_edit' account.id %}" class="left">

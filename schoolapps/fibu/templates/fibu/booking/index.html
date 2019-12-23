@@ -1,0 +1,36 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+    {% block content %}
+
+    <h4>Buchungen</h4>
+        <div class="collection">
+            {% for booking in bookings %}
+                <a href="/fibu/booking/{{ booking.id }}"  class="collection-item row">
+                    <span class="col s5 m5">{{ booking.description }}</span>
+                    <span class="col s1 m1 right-align">{{ booking.planned_amount }} €</span>
+                    <span class="col s3 m3">{{ booking.account }}</span>
+                    <span class="col s1 m1 center">{{ booking.contact }}</span>
+                    <span class="col s1 m1 badge new center-align {{ booking.getStatus.style_class }}">
+                        {{ booking.getStatus.name }}
+                    </span>
+                    <span class="col s1 m1">
+                    {% if booking.status < 2 %}
+                        <form method="POST" class="left">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                            <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')"
+                                    name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
+                                    title="Löschen">
+                                <i class="material-icons center red-text">cancel</i>
+                            </button>
+                        </form>
+                    {% endif %}
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endblock %}
+</main>
+{% include 'partials/footer.html' %}

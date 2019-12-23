@@ -1,27 +1,38 @@
 {% include 'partials/header.html' %}
+{% load material_form %}
 
 <main>
+{% block content %}
     <h4>Anträge prüfen</h4>
-    <div class="collection">
         {% for booking in filter.qs %}
-            <span>{{ booking.contact }}</span>
-            <span>{{ booking.description }}</span>
-            <span>{{ booking.planned_amount }} €</span>
+            <div class="row">
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                {% if booking.status.id != 2 %}
-                    <span>{{ form.costcenter }}</span>
-                    <span>
+                {% if booking.status < 2 %}
+                    <span class="col s12 m1">{{ booking.contact }}</span>
+                    <span class="col s12 m5">{{ booking.description }}</span>
+                    <span class="col s12 m1">{{ booking.planned_amount }}</span>
+                    <span class="col s12 m3">{{ form.account }}</span>
+                    <span class="col s12 m1">
                         <button type="submit" name="allow"
                         class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
-                        <i class="material-icons center green-text">check_circle</i>
-                    </button>
+                        <i class="material-icons right green-text">check_circle</i>
+                        </button>
+                    </span>
+                {% endif %}
+                {% if booking.status < 3 %}
+                    <span class="col s12 m1">
+                        <button type="submit" name="deny"
+                        class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
+                        <i class="material-icons right red-text">not_interested</i>
+                        </button>
                     </span>
                 {% endif %}
             </form>
+            </div>
         {% endfor %}
-    </div>
+ {% endblock %}
  </main>
 
 {% include 'partials/footer.html' %}
