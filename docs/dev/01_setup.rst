@@ -76,6 +76,13 @@ development server against a local PostgreSQL database with password
 
   BISCUIT_debug=true BISCUIT_database__password=biscuit poetry run ./manage.py runserver
 
+.. figure:: /screenshots/index.png
+   :scale: 50%
+   :alt: Screenshot of index page
+
+   After installing the development environment with default settings,
+   you should see the index page with the BOotstrap style.
+
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
 .. _Yarn: https://yarnpkg.com
