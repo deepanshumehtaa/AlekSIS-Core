@@ -12,6 +12,7 @@ urlpatterns = [
     path('costcenter/edit/<int:id>', views.costcenter_edit, name='costcenter_edit'),
     path('account', views.account, name='account'),
     path('account/edit/<int:id>', views.account_edit, name='account_edit'),
+    path('account/final', views.final_account, name='final_account'),
     # path('make_booking', views.make_booking, name='fibu_make_booking'),
     # path('edit/<int:id>', views.edit, name='booking_edit'),
     ]

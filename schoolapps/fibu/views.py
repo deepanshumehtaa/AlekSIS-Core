@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Sum
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
@@ -257,3 +258,25 @@ def account_edit(request, id):
     context = {'form': form}
     return render(request, template, context)
 
+
+@login_required
+#@permission_required('fibu.view_booking')
+def final_account(request):
+    costcenterlist = Costcenter.objects.filter()
+    costcenter_accounts = {}
+    account_rests = {}
+    for costcenter in costcenterlist:
+        accounts = Account.objects.filter(costcenter=costcenter)
+        # update saldo
+        for account in accounts:
+            saldo = Booking.objects.filter(account=account).aggregate(Sum('amount'))
+            saldo = saldo['amount__sum']
+            rest = account.budget - saldo
+            try:
+                Account.objects.filter(id=account.id).update(saldo=saldo, rest=rest)
+            except:
+                Account.objects.filter(id=account.id).update(saldo=0, rest=0)
+
+        costcenter_accounts[costcenter.name] = list(Account.objects.filter(costcenter=costcenter))
+    context = {'costcenter_accounts': costcenter_accounts, 'account_rests': account_rests}
+    return render(request, 'fibu/account/final.html', context)

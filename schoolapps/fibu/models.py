@@ -42,9 +42,12 @@ class Costcenter(models.Model):
 
 class Account(models.Model):
     # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
-    name = models.CharField(max_length=20, default='')
-    costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, default='')
-    budget = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    name        = models.CharField(max_length=20, default='')
+    costcenter  = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, default='')
+    budget      = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    saldo       = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    rest        = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+
     def __str__(self):
         return "%s: %s" % (self.costcenter, self.name)
 

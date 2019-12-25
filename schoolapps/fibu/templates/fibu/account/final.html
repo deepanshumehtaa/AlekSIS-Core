@@ -1,0 +1,34 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+
+   {% block content %}
+
+    <h4>Schlussrechnung</h4>
+
+    <div class="collection">
+        {% for costcenter, accounts in costcenter_accounts.items %}
+        <h5 class="collection-item">{{ costcenter }}</h5>
+
+        <div class="collection">
+            <div class="collection-item row">
+                <span class="col s4 m4 ">Buchungskonto</span>
+                <span class="col s2 m2 right-align">zugeteiltes Budget</span>
+                <span class="col s2 m2 right-align">bisherige Ausgaben</span>
+                <span class="col s2 m2 right-align">verfügbare Reste</span>
+            </div>
+            {% for account in accounts %}
+                <div class="collection-item row">
+                    <span class="col s4 m4">{{ account.name }}</span>
+                    <span class="col s2 m2 right-align">{{ account.budget }}</span>
+                    <span class="col s2 m2 right-align">{{ account.saldo }}</span>
+                    <span class="col s2 m2 right-align">{{ account.rest }}</span>
+                </div>
+           {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</main>
+{% include 'partials/footer.html' %}
