@@ -1,0 +1,16 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+
+   {% block content %}
+
+    <h4>Berichte</h4>
+
+       <div class="collection">
+       <a href="reports/expenses" class="collection-item">Ausgaben</a>
+       </div>
+
+    {% endblock %}
+</main>
+{% include 'partials/footer.html' %}

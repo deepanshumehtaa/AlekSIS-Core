@@ -49,7 +49,8 @@ def index(request):
         # a.save()
         # return redirect('fibu_make_booking')
         return redirect('fibu_index')
-    bookings = Booking.objects.filter()
+    bookings = Booking.objects.filter().order_by('status')
+
     context = {'bookings': bookings, 'form': form}
     return render(request, 'fibu/index.html', context)
 
@@ -110,9 +111,12 @@ def check(request):
 
 @login_required
 # @permission_required('fibu.book_booking')
-def booking(request):
-    bookings = Booking.objects.filter()
-    context = {'bookings': bookings}
+def booking(request, archiv):
+    if archiv:
+        bookings = Booking.objects.filter(status=5).order_by('-status')
+    else:
+        bookings = Booking.objects.filter(status__lt=5).order_by('-status')
+    context = {'bookings': bookings, 'archiv': archiv}
     return render(request, 'fibu/booking/index.html', context)
 
 @login_required
@@ -123,6 +127,24 @@ def book(request, id):
     template = 'fibu/booking/book.html'
     if request.method == 'POST':
         form = BookBookingForm(request.POST, request.FILES, instance=booking)
+        if form.is_valid():
+            form.save()
+            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
+            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
+            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
+            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
+            # a.save()
+            return redirect(reverse('booking'))
+    context = {'form': form}
+    return render(request, template, context)
+
+@login_required
+#@permission_required('fibu.book_booking')
+def new_booking(request):
+    form = BookBookingForm()
+    template = 'fibu/booking/new.html'
+    if request.method == 'POST':
+        form = BookBookingForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
@@ -221,8 +243,9 @@ def account(request):
     if form.is_valid():
         name = form.cleaned_data['name']
         costcenter = form.cleaned_data['costcenter']
+        income = form.cleaned_data['income']
         budget = form.cleaned_data['budget']
-        account = Account(name=name, costcenter=costcenter, budget=budget)
+        account = Account(name=name, costcenter=costcenter, income=income, budget=budget)
         account.save()
 
         # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
@@ -261,7 +284,12 @@ def account_edit(request, id):
 
 @login_required
 #@permission_required('fibu.view_booking')
-def final_account(request):
+def reports(request):
+    return render(request, 'fibu/reports/index.html')
+
+@login_required
+#@permission_required('fibu.view_booking')
+def expenses(request):
     costcenterlist = Costcenter.objects.filter()
     costcenter_accounts = {}
     account_rests = {}
@@ -271,12 +299,15 @@ def final_account(request):
         for account in accounts:
             saldo = Booking.objects.filter(account=account).aggregate(Sum('amount'))
             saldo = saldo['amount__sum']
-            rest = account.budget - saldo
+            try:
+                rest = account.budget - saldo
+            except:
+                rest = 0
             try:
                 Account.objects.filter(id=account.id).update(saldo=saldo, rest=rest)
             except:
                 Account.objects.filter(id=account.id).update(saldo=0, rest=0)
 
-        costcenter_accounts[costcenter.name] = list(Account.objects.filter(costcenter=costcenter))
+        costcenter_accounts[costcenter.name] = list(Account.objects.filter(costcenter=costcenter).order_by('-income'))
     context = {'costcenter_accounts': costcenter_accounts, 'account_rests': account_rests}
-    return render(request, 'fibu/account/final.html', context)
+    return render(request, 'fibu/reports/expenses.html', context)

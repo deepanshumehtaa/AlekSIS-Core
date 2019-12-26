@@ -27,11 +27,11 @@ class CheckBookingForm(forms.ModelForm):
         fields = ('account', )
 
 class BookBookingForm(forms.ModelForm):
-    accounts = Account.objects.filter().order_by('costcenter','name')
-    user = User.objects.filter()
-    description = forms.CharField(label='Beschreibung')
-    planned_amount = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
-    justification = forms.CharField(label='Begründung', required=False)
+    accounts        = Account.objects.filter().order_by('costcenter','name')
+    user            = User.objects.filter()
+    description     = forms.CharField(label='Beschreibung')
+    planned_amount  = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
+    justification   = forms.CharField(label='Begründung', required=False)
     account         = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
     contact         = forms.ModelChoiceField(queryset=user, label='Kontakt')
     invoice_date    = forms.DateField(label='Rechnungsdatum')
@@ -57,7 +57,7 @@ class BookBookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ('id', 'description', 'planned_amount', 'justification','account', 'contact', 'invoice_date',
+        fields = ('id', 'description', 'planned_amount', 'justification', 'account', 'contact', 'invoice_date',
                   'invoice_number', 'firma', 'amount', 'submission_date', 'payout_number', 'booking_date',
                   'maturity', 'upload', 'status')
 
@@ -74,16 +74,17 @@ class EditCostcenterForm(forms.ModelForm):
 
 
 class EditAccountForm(forms.ModelForm):
-    name = forms.CharField(max_length=30, label='Buchungskonto')
-    costcenterlist = Costcenter.objects.filter()
-    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
-    budget = forms.IntegerField(label='Budget')
+    name            = forms.CharField(max_length=30, label='Buchungskonto')
+    costcenterlist  = Costcenter.objects.filter()
+    costcenter      = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
+    income          = forms.BooleanField(label='Budget-/Einnanhmekonto', required=False)
+    budget          = forms.IntegerField(label='Budget')
 
-    layout = Layout(Row('name', 'costcenter', 'budget'))
+    layout = Layout(Row('name', 'costcenter', 'income', 'budget'))
 
     class Meta:
         model = Account
-        fields = ('id', 'name', 'costcenter', 'budget')
+        fields = ('id', 'name', 'costcenter', 'income', 'budget')
 
 
 #

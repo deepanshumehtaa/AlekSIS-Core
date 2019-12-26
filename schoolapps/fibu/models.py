@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-YEARLIST = [(2019,'2019'),
-            (2020,'2020'),
+YEARLIST = [(2020,'2020'),
             (2021,'2021'),
             (2022,'2022'),
             (2023,'2023')]
@@ -20,7 +19,8 @@ status_list = [
     Status(name='beantragt', style_class='red'),
     Status(name='bewilligt', style_class='orange'),
     Status(name='abgelehnt', style_class='black'),
-    Status(name='bestellt', style_class='yellow'),
+    Status(name='bestellt', style_class='darkyellow'),
+    Status(name='eingereicht', style_class='blue'),
     Status(name='bezahlt', style_class='green'),
 ]
 
@@ -29,7 +29,7 @@ status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
 
 class Costcenter(models.Model):
-    # Kostenstellen z.B. Schoolträger-konsumtiv, Schulträger-investiv, Elternberein, ...
+    # Kostenstellen z.B. Schulträger-konsumtiv, Schulträger-investiv, Elternverein, ...
     name = models.CharField(max_length=30)
     year = models.IntegerField(default=2019, choices=YEARLIST, verbose_name="Jahr")
     def __str__(self):
@@ -44,6 +44,7 @@ class Account(models.Model):
     # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
     name        = models.CharField(max_length=20, default='')
     costcenter  = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, default='')
+    income      = models.BooleanField(default=False)    # True, wenn es sich um ein Einnahmekonto handelt
     budget      = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     saldo       = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     rest        = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)

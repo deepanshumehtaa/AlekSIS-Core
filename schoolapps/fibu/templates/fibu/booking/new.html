@@ -3,7 +3,7 @@
 
 <main>
 
-   <h4>Buchung bearbeiten</h4>
+   <h4>Neue Buchung</h4>
 
     <form method="POST"  style="background: #eee">
         {% csrf_token %}
@@ -11,9 +11,9 @@
         {% endform %}
         <span class="right">
             <button type="submit" class="waves-effect waves-light btn green">
-                <i class="material-icons left">send</i> Änderungen übernehmen
+                <i class="material-icons left">send</i> Buchung anlegen
             </button>
-            <a href="{% url 'booking' 0 %}">
+            <a href="{% url 'booking' %}">
             <button type="button" class="waves-effect waves-light btn grey">
                 <i class="material-icons left">cancel</i> Abbrechen
             </button>

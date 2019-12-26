@@ -7,7 +7,7 @@
 
    {% block content %}
 
-    <h4>Buchungskonten</h4>
+    <h4>Neues Buchungskonto</h4>
     <form method="POST" style="border-width: 5px; background: #eee;">
         {% csrf_token %}
         {% form form=form %}
@@ -21,10 +21,15 @@
        <div class="collection">
            {% for account in accounts %}
                <div class="collection-item row">
-                    <span class="col s12 m6">{{ account.name }}</span>
-                    <span class="col s12 m2">{{ account.costcenter }}</span>
-                    <span class="col s12 m2 right-align">{{ account.budget }}</span>
-                    <span class="col s12 m2 right-align">
+                    <span class="col s6 m6">{{ account.name }}</span>
+                    <span class="col s2 m2">{{ account.costcenter }}</span>
+                   {%  if account.income %}
+                    <span class="col s1 m1 right-align">{{ account.budget }}</span>
+                    <span class="col s1 m1 right-align"></span>
+                   {% else %}
+                    <span class="col s2 m2 right-align">{{ account.budget }}</span>
+                   {% endif %}
+                    <span class="col s2 m2 right-align">
                         <form action="{% url 'account_edit' account.id %}" class="left">
                             {% csrf_token %}
                             <input type="hidden" value="{{ account.id }}" name="account-id">

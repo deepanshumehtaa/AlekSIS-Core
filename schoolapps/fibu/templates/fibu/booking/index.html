@@ -3,11 +3,17 @@
 
 <main>
     {% block content %}
-
+        <a href="{% url 'new_booking' %}" class="waves-effect waves-light btn green right">Neue Buchung anlegen</a>
+        <span class="right" style="width: 20px;">&nbsp;</span>
+        {% if archiv %}
+            <a href="{% url 'booking' 0 %}" class="waves-effect waves-light btn grey right">Zur aktuellen Übersicht</a>
+        {% else %}
+            <a href="{% url 'booking' 1 %}" class="waves-effect waves-light btn grey right">Zum Archiv</a>
+        {% endif %}
     <h4>Buchungen</h4>
         <div class="collection">
             {% for booking in bookings %}
-                <a href="/fibu/booking/{{ booking.id }}"  class="collection-item row">
+                <a href="/fibu/booking/book/{{ booking.id }}"  class="collection-item row">
                     <span class="col s5 m5">{{ booking.description }}</span>
                     <span class="col s1 m1 right-align">{{ booking.planned_amount }} €</span>
                     <span class="col s3 m3">{{ booking.account }}</span>

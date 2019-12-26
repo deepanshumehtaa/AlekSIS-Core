@@ -187,8 +187,8 @@
                             <li class="url-booking_check">
                                 <a href="{% url 'booking_check' %}"><i class="material-icons">done</i>Anträge</a>
                             </li>
-                            <li class="url-booking_book">
-                                <a href="{% url 'booking' %}"><i class="material-icons">done</i>Buchungen</a>
+                            <li class="url-booking">
+                                <a href="{% url 'booking' 0 %}"><i class="material-icons">done</i>Buchungen</a>
                             </li>
                             <li class="url-costcenter">
                                 <a href="{% url 'costcenter' %}"><i class="material-icons">done</i>Kostenstellen</a>
@@ -196,8 +196,8 @@
                             <li class="url-account">
                                 <a href="{% url 'account' %}"><i class="material-icons">done</i>Buchungskonten</a>
                             </li>
-                            <li class="url-accountindex">
-                                <a href="{% url 'final_account' %}"><i class="material-icons">done</i>Schlussrechnung</a>
+                            <li class="url-reports url-expenses">
+                                <a href="{% url 'reports' %}"><i class="material-icons">done</i>Berichte</a>
                             </li>
                         </ul>
                     </div>
