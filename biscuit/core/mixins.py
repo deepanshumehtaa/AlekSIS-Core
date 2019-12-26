@@ -46,11 +46,11 @@ class ExtensibleModel(object):
             if name.isidentifier():
                 prop_name = name
             else:
-                raise ValueError('%s is not a valid name.' % name)
+                raise ValueError("%s is not a valid name." % name)
 
         # Verify that property name does not clash with other names in the class
         if hasattr(cls, prop_name):
-            raise ValueError('%s already used.' % prop_name)
+            raise ValueError("%s already used." % prop_name)
 
         # Add function wrapped in property decorator if we got here
         setattr(cls, prop_name, obj)
@@ -67,6 +67,7 @@ class ExtensibleModel(object):
 
         cls._safe_add(func, func.__name__)
 
+
 class CRUDMixin(models.Model):
     class Meta:
         abstract = True
@@ -78,8 +79,5 @@ class CRUDMixin(models.Model):
         content_type = ContentType.objects.get_for_model(self)
 
         return CRUDEvent.objects.filter(
-            object_id=self.pk,
-            content_type=content_type
-        ).select_related(
-            'user'
-        )
+            object_id=self.pk, content_type=content_type
+        ).select_related("user")

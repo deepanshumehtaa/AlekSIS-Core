@@ -61,3 +61,5 @@ biscuit/node_modules/
 .coverage
 .tox/
 maintenance_mode_state.txt
+htmlcov/
+.mypy_cache/

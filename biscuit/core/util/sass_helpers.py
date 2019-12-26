@@ -12,4 +12,4 @@ def get_colour(html_colour: str) -> SassColor:
 
 
 def get_theme_setting(setting: str) -> str:
-    return getattr(theme_settings, setting, '')
+    return getattr(theme_settings, setting, "")

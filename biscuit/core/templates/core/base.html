@@ -2,11 +2,11 @@
 
 {% extends "bootstrap4/bootstrap4.html" %}
 
-{% load bootstrap4 i18n menu_generator static font_awesome any_js sass_tags %}
+{% load bootstrap4 i18n menu_generator static any_js sass_tags %}
 
 {% block bootstrap4_extra_head %}
-  {% fa_css %}
   {% include_css "DataTables-Bootstrap4" %}
+  {% include_css "material-design-icons"%}
   {% include 'core/icons.html' %}
   <link rel="stylesheet" href="{% sass_src 'bootstrap_modified.scss' %}" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -24,10 +24,10 @@
   <header>
     <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-main">
-        {% fa 'fa-align-justify' %}
+        <span class="mdi mdi-menu"></span>
       </button>
       <a class="navbar-brand" href="{% url "index" %}">
-        {% fa 'fa-briefcase' %} BiscuIT SIS
+        <span class="mdi mdi-briefcase"></span> BiscuIT SIS
       </a>
 
       <div class="collapse navbar-collapse" id="navbar-main">

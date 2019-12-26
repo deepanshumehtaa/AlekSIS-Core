@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.http import HttpRequest
 
 
-def add_message(request: Optional[HttpRequest], level: int, message: str, **kwargs) -> Optional[Any]:
+def add_message(
+    request: Optional[HttpRequest], level: int, message: str, **kwargs
+) -> Optional[Any]:
     if request:
         return messages.add_message(request, level, message, **kwargs)
     else:

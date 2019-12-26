@@ -17,5 +17,5 @@ This will install the Exlibris app (library management) app by using a
 shell for first ``cd``'ing into the app directory and then using
 poetry to install the app.
 
-DO not forget to run the maintenance tasks described earlier after
-installign any app.
+Do not forget to run the maintenance tasks described earlier after
+installing any app.

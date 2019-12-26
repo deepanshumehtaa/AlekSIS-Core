@@ -11,7 +11,7 @@ def get_dict(value: Any, arg: Any) -> Any:
 
     if hasattr(value, str(arg)):
         return getattr(value, arg)
-    elif hasattr(value, 'keys') and arg in value.keys():
+    elif hasattr(value, "keys") and arg in value.keys():
         return value[arg]
     elif str(arg).isnumeric() and len(value) > int(arg):
         return value[int(arg)]

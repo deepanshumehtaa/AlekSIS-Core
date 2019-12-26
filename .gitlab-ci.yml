@@ -1,3 +1,5 @@
+image: registry.edugit.org/teckids/docker-images/python-pimped:master
+
 stages:
   - test
   - build
@@ -5,18 +7,63 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  FF_NETWORK_PER_BUILD: "true"
+
+cache:
+  key:
+    files:
+      - poetry.lock
+      - pyproject.toml
+  paths:
+    - .cache/pip
+    - .tox
 
 test:
   stage: test
-  image:
-    name: python:3.8-buster
+  services:
+    - name: selenium/standalone-firefox
+      alias: selenium
   before_script:
-    - apt-get -y update && apt-get -y install postgresql libpq5 libpq-dev libssl-dev sudo
-    - pip install poetry
     - adduser --disabled-password --gecos "Test User" testuser
+    - chown -R testuser .
   script:
-    - sudo -u testuser poetry install
-    - sudo -u testuser poetry run tox
+    - sudo -u testuser 
+      env TEST_SELENIUM_HUB=http://selenium:4444/wd/hub
+          TEST_SELENIUM_BROWSERS=firefox
+          TEST_HOST=build
+      tox -e selenium -- --junitxml=.tox/junit.xml
+  artifacts:
+    paths:
+      - .tox/screenshots
+    reports:
+      junit: .tox/junit.xml
+
+lint:
+  stage: test
+  script:
+    - tox -e lint,security
+  allow_failure: true
+
+build_dist:
+  stage: build
+  script:
+    - tox -e build
+  artifacts:
+    paths:
+      - dist/
+
+pages:
+  stage: deploy
+  before_script:
+    - cp -r .tox/screenshots/firefox docs/screenshots
+  script:
+    - tox -e docs -- BUILDDIR=../public/docs
+  artifacts:
+    paths:
+    - public/
+  only:
+  - master
 
 build_docker:
   stage: build
@@ -39,14 +86,13 @@ build_docker:
        --cleanup
   only:
     - master
+    - tags
 
 deploy_demo-master:
   stage: deploy
   environment:
     name: demo/master
     url: http://demo-master.biscuit-sis.org  
-  image:
-    name: debian:buster-slim
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -65,25 +111,10 @@ deploy_demo-master:
     - grep -v "build:" docker-compose.yml | ssh root@demo-master.biscuit-sis.org
        env BISCUIT_IMAGE_TAG=${CI_COMMIT_REF_NAME}
            NGINX_HTTP_PORT=80
+           BISCUIT_maintenance__debug=true
        docker-compose
         -p biscuit-${CI_ENVIRONMENT_SLUG}
         -f /dev/stdin
         up -d
   only:
     - master
-
-pages:
-  stage: deploy
-  image:
-    name: python:3.8-buster
-  before_script:
-  - apt-get -y update && apt-get -y install make
-  - pip install poetry
-  script:
-  - poetry install
-  - poetry run make -C docs html BUILDDIR=../public/docs
-  artifacts:
-    paths:
-    - public/
-  only:
-  - master
