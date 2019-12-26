@@ -319,7 +319,10 @@ description = "Yet another Django audit log app, hopefully the simplest one."
 name = "django-easy-audit"
 optional = false
 python-versions = "*"
-version = "1.1.1"
+version = "1.2rc1"
+
+[package.dependencies]
+beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
@@ -440,10 +443,6 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
-
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -1676,7 +1675,7 @@ app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "0f1ffee31adf4e8caaf64df3f5feda1d455f9349f6b59338084ceb5bcc3e6617"
+content-hash = "48631cb4e020e7200fbf7661fe8477c92b10e44f25659f50841bc39bf2d9c355"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1817,8 +1816,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-2.1-py3-none-any.whl", hash = "sha256:77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"},
 ]
 django-easy-audit = [
-    {file = "django-easy-audit-1.1.1.tar.gz", hash = "sha256:4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"},
-    {file = "django_easy_audit-1.1.1-py2.py3-none-any.whl", hash = "sha256:1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6"},
+    {file = "django-easy-audit-1.2rc1.tar.gz", hash = "sha256:80f82fa4006290dcd6589a345e75de1c780de49d38218050eedd9048c54b647d"},
+    {file = "django_easy_audit-1.2rc1-py3-none-any.whl", hash = "sha256:fb9c5ec3e90f0900302448d3648acc11da6d6b3d35d13d77eab917ab8c813d77"},
 ]
 django-formtools = [
     {file = "django-formtools-2.2.tar.gz", hash = "sha256:c5272c03c1cd51b2375abf7397a199a3148a9fbbf2f100e186467a84025d13b2"},
