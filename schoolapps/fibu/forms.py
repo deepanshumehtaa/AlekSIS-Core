@@ -46,8 +46,10 @@ class BookBookingForm(forms.ModelForm):
     upload = forms.FileField(label='Scan der Rechnung', required=False)
     status = forms.ChoiceField(choices=status_choices, label='Status')
 
-    layout = Layout(Row('description', 'justification', 'contact'),
-                    Row('account', 'status', 'planned_amount'),
+    layout = Layout(Fieldset("Allgemeines",
+                             Row('description', 'justification', 'contact'),
+                             Row('account', 'status', 'planned_amount')
+                             ),
                     Fieldset('Details',
                              Row('firma', 'invoice_number', 'amount'),
                              Row('invoice_date', 'maturity', 'submission_date', 'booking_date'),

@@ -120,7 +120,7 @@ def book(request, id):
         form = BookBookingForm(request.POST, request.FILES, instance=booking)
         if form.is_valid():
             form.save()
-
+            messages.success(request, "Die Änderungen an der Buchung wurden erfolgreich übernommen.")
             return redirect(reverse('booking'))
     context = {'form': form}
     return render(request, template, context)
@@ -135,6 +135,7 @@ def new_booking(request):
         form = BookBookingForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Die Buchung wurde erfolgreich angelegt.")
 
             return redirect(reverse('booking'))
     context = {'form': form}

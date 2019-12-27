@@ -2,24 +2,22 @@
 {% load material_form %}
 
 <main>
+    <h4>Buchung bearbeiten</h4>
 
-   <h4>Buchung bearbeiten</h4>
-
-    <form method="POST"  style="background: #eee">
+    <form method="POST">
         {% csrf_token %}
         {% form form=form %}
         {% endform %}
+
         <span class="right">
             <button type="submit" class="waves-effect waves-light btn green">
-                <i class="material-icons left">send</i> Änderungen übernehmen
+                <i class="material-icons left">save</i> Änderungen übernehmen
             </button>
-            <a href="{% url 'booking' 0 %}">
-            <button type="button" class="waves-effect waves-light btn grey">
+            <a href="{% url 'booking' %}" class="waves-effect waves-light btn red">
                 <i class="material-icons left">cancel</i> Abbrechen
-            </button>
             </a>
         </span>
     </form>
-
 </main>
+
 {% include 'partials/footer.html' %}
