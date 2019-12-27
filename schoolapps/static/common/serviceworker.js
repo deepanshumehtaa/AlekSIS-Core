@@ -13,6 +13,7 @@ const avoidCachingPaths = [
     '/admin',
     '/settings',
     '/support',
+    '/tools',
     '/faq/ask',
     '/aub/apply_for',
     '/aub/check1',
