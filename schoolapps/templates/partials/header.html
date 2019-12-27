@@ -177,38 +177,52 @@
                     </ul>
                     </div>
                 </li>
+
+            <li>
+                <div class="divider"></div>
+            </li>
             {% endif %}
+            {% if perms.fibu.request_booking  or perms.fibu.manage_booking or perms.fibu.manage_costcenter or perms.fibu.manage.account %}
                 <li class="bold url-fibu_index url-booking-check url-booking_book">
                     <a class="collapsible-header waves-effect waves-primary" href="{% url 'fibu_index' %}"><i class="material-icons">euro_symbol</i>
                         Finanzen
                     </a>
                     <div class="collapsible-body">
                         <ul>
+                            {% if perms.fibu.request_booking %}
                             <li class="url-booking_check">
                                 <a href="{% url 'booking_check' %}"><i class="material-icons">done</i>Anträge</a>
                             </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_booking %}
                             <li class="url-booking">
                                 <a href="{% url 'booking' 0 %}"><i class="material-icons">done</i>Buchungen</a>
                             </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_costcenter %}
                             <li class="url-costcenter">
                                 <a href="{% url 'costcenter' %}"><i class="material-icons">done</i>Kostenstellen</a>
                             </li>
                             <li class="url-account">
                                 <a href="{% url 'account' %}"><i class="material-icons">done</i>Buchungskonten</a>
                             </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_booking %}
                             <li class="url-reports url-expenses">
                                 <a href="{% url 'reports' %}"><i class="material-icons">done</i>Berichte</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </li>
+
             </ul>
             </li>
 
             <li>
                 <div class="divider"></div>
             </li>
-
+            {% endif %}
             {% if perms.timetable.show_plan %}
                 <li class="bold">
                     <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">school</i>
@@ -254,18 +268,17 @@
                         </ul>
                     </div>
                 </li>
-            {% endif %}
 
             <li>
                 <div class="divider"></div>
             </li>
+            {% endif %}
 
             <li>
                 <a href="{% url 'menu_show_current' %}" target="_blank">
                     <i class="material-icons">picture_as_pdf</i> Aktueller Speiseplan
                 </a>
             </li>
-
 
             {% if perms.menu.add_menu %}
                 <li class="url-menu_index url-menu_upload url-menu_index_msg">

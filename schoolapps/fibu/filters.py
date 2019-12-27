@@ -5,7 +5,7 @@ from django.db.utils import ProgrammingError
 
 
 def get_fibu_users():
-    """ Find all users who sends an AUB """
+    """ Find all users who requests a boooking """
     try:
         fibu_users = Booking.objects.values_list('contact')
         users = list(User.objects.filter(id__in=fibu_users))

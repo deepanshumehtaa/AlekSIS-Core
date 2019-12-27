@@ -5,11 +5,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
 from .forms import EditBookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
-
+from .decorators import check_own_booking
 
 @login_required
-#@permission_required('fibu.view_booking')
+@permission_required('fibu.request_booking')
 def index(request):
+    fibu_user = request.user
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
@@ -49,14 +50,14 @@ def index(request):
         # a.save()
         # return redirect('fibu_make_booking')
         return redirect('fibu_index')
-    bookings = Booking.objects.filter().order_by('status')
+    bookings = Booking.objects.filter(contact=fibu_user).order_by('status')
 
     context = {'bookings': bookings, 'form': form}
     return render(request, 'fibu/index.html', context)
 
 
 @login_required
-# @permission_required('aub.apply_for_aub')
+@permission_required('fibu.request_booking')
 def edit(request, id):
     booking = get_object_or_404(Booking, id=id)
     form = EditBookingForm(instance=booking)
@@ -78,7 +79,7 @@ def edit(request, id):
 
 
 @login_required
-# @permission_required('fibu.check_booking')
+@permission_required('fibu.manage_booking')
 def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
@@ -110,7 +111,7 @@ def check(request):
     return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
 
 @login_required
-# @permission_required('fibu.book_booking')
+@permission_required('fibu.manage_booking')
 def booking(request, archiv):
     if archiv:
         bookings = Booking.objects.filter(status=5).order_by('-status')
@@ -120,7 +121,7 @@ def booking(request, archiv):
     return render(request, 'fibu/booking/index.html', context)
 
 @login_required
-#@permission_required('fibu.book_booking')
+@permission_required('fibu.manage_booking')
 def book(request, id):
     booking = get_object_or_404(Booking, id=id)
     form = BookBookingForm(instance=booking)
@@ -139,7 +140,7 @@ def book(request, id):
     return render(request, template, context)
 
 @login_required
-#@permission_required('fibu.book_booking')
+@permission_required('fibu.manage_booking')
 def new_booking(request):
     form = BookBookingForm()
     template = 'fibu/booking/new.html'
@@ -158,7 +159,7 @@ def new_booking(request):
 
 
 @login_required
-#@permission_required('fibu.view_booking')
+@permission_required('fibu.manage_costcenter')
 def costcenter(request):
     if request.method == 'POST':
         if 'costcenter-id' in request.POST:
@@ -198,7 +199,7 @@ def costcenter(request):
 
 
 @login_required
-# @permission_required('aub.apply_for_aub')
+@permission_required('fibu.manage_costcenter')
 def costcenter_edit(request, id):
     costcenter = get_object_or_404(Costcenter, id=id)
     form = EditCostcenterForm(instance=costcenter)
@@ -219,7 +220,7 @@ def costcenter_edit(request, id):
     return render(request, template, context)
 
 @login_required
-#@permission_required('fibu.view_booking')
+@permission_required('fibu.manage_account')
 def account(request):
     if request.method == 'POST':
         if 'account-id' in request.POST:
@@ -261,7 +262,7 @@ def account(request):
 
 
 @login_required
-# @permission_required('aub.apply_for_aub')
+@permission_required('fibu.manage_account')
 def account_edit(request, id):
     account = get_object_or_404(Account, id=id)
     form = EditAccountForm(instance=account)
@@ -283,12 +284,12 @@ def account_edit(request, id):
 
 
 @login_required
-#@permission_required('fibu.view_booking')
+@permission_required('fibu.manage_booking')
 def reports(request):
     return render(request, 'fibu/reports/index.html')
 
 @login_required
-#@permission_required('fibu.view_booking')
+@permission_required('fibu.manage_booking')
 def expenses(request):
     costcenterlist = Costcenter.objects.filter()
     costcenter_accounts = {}

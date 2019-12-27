@@ -36,9 +36,9 @@ class Costcenter(models.Model):
         return "%s" % (self.name)
 
     class Meta:
-        permissions = (
-            ('edit_costcenter', 'Can edit cost center'),
-        )
+        permissions = [
+            ('manage_costcenter', 'Can manage costcenter'),
+        ]
 
 class Account(models.Model):
     # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
@@ -53,9 +53,9 @@ class Account(models.Model):
         return "%s: %s" % (self.costcenter, self.name)
 
     class Meta:
-        permissions = (
-            ('edit_account', 'Can edit account'),
-        )
+        permissions = [
+            ('manage_account', 'Can manage account'),
+        ]
 
 class Booking(models.Model):
     account         = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
@@ -81,7 +81,7 @@ class Booking(models.Model):
 
 
     class Meta:
-        permissions = (
-            ('edit_booking', 'Can edit bookings'),
-            ('apply_acquisition', 'Can apply an acquisition'),
-        )
+        permissions = [
+            ('manage_booking', 'Can manage bookings'),
+            ('request_booking', 'Can request a booking'),
+        ]
