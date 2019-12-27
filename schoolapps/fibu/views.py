@@ -58,15 +58,18 @@ def index(request):
 def edit(request, id):
     booking = get_object_or_404(Booking, id=id)
     form = BookingForm(instance=booking)
-    template = 'fibu/booking/edit.html'
+
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=booking)
+
         if form.is_valid():
             form.save()
 
+            messages.success(request, "Die Änderungen am Antrag wurden erfolgreich übernommen.")
             return redirect(reverse('fibu_index'))
+
     context = {'form': form}
-    return render(request, template, context)
+    return render(request, 'fibu/booking/edit.html', context)
 
 
 @login_required
@@ -75,17 +78,22 @@ def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
-            # booking = Booking.objects.get(id=booking_id)
+
             if 'allow' in request.POST:
-                Booking.objects.filter(id=booking_id).update(status=1)
-                account = request.POST['account']
-                print('account:', account)
-                Booking.objects.filter(id=booking_id).update(account=account)
+                if "account" in request.POST:
+                    account = request.POST['account']
+                    print('account:', account)
+                    Booking.objects.filter(id=booking_id).update(status=1, account=account)
+                    messages.success(request, "Der Antrag wurde erfolgreich angenommen.")
+                else:
+                    messages.error(request, "Bitte wähle eine Kostenstelle aus, um den Antrag anzunehmen.")
             elif 'deny' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=2)
+                messages.success(request, "Der Antrag wurde erfolgreich abgelehnt.")
 
     booking_list = Booking.objects.filter(status=0).order_by('submission_date')
     bookings = BookingFilter(request.GET, queryset=booking_list)
+
     form = CheckBookingForm()
     return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
 

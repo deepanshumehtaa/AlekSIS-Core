@@ -195,13 +195,14 @@
                         <ul>
                             {% if perms.fibu.request_booking %}
                                 <li class="url-booking_check">
-                                    <a href="{% url 'booking_check' %}"><i class="material-icons">done</i>Anträge
+                                    <a href="{% url 'booking_check' %}"><i class="material-icons">done_all</i>Anträge
+                                        prüfen
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.fibu.manage_booking %}
                                 <li class="url-booking">
-                                    <a href="{% url 'booking' 0 %}"><i class="material-icons">done</i>Buchungen
+                                    <a href="{% url 'booking' 0 %}"><i class="material-icons">receipt</i>Buchungen
                                     </a>
                                 </li>
                             {% endif %}
@@ -217,7 +218,7 @@
                             {% endif %}
                             {% if perms.fibu.manage_booking %}
                                 <li class="url-reports url-expenses">
-                                    <a href="{% url 'reports' %}"><i class="material-icons">done</i>Berichte</a>
+                                    <a href="{% url 'reports' %}"><i class="material-icons">list</i>Berichte</a>
                                 </li>
                             {% endif %}
                         </ul>

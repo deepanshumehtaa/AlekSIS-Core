@@ -3,17 +3,28 @@
 
 <main>
     <h4>Anträge prüfen</h4>
-    {% for booking in filter.qs %}
-        <table>
-            <thead>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Antragsteller</th>
+            <th>Anschaffungswunsch</th>
+            <th>Geplante Kosten</th>
+            <th>Zugeordnete Kostenstelle</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% if not filter.qs %}
             <tr>
-                <th>Antragsteller</th>
-                <th>Anschaffungswunsch</th>
-                <th>Geplante Kosten</th>
-                <th>Zugeordnete Kostenstelle</th>
-                <th>Aktionen</th>
+                <td colspan="5" class="flow-text center-align">
+                    Keine offenen Anträge vorhanden
+                </td>
             </tr>
-            </thead>
+        {% endif %}
+
+        {% for booking in filter.qs %}
             <tr>
                 <form method="POST">
                     {% csrf_token %}
@@ -40,8 +51,9 @@
                         {% endif %}
                 </form>
             </tr>
-        </table>
-    {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
 </main>
 
 {% include 'partials/footer.html' %}
