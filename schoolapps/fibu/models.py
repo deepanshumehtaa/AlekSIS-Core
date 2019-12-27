@@ -86,4 +86,5 @@ class Booking(models.Model):
         permissions = [
             ('manage_booking', 'Can manage bookings'),
             ('request_booking', 'Can request a booking'),
+            ('check_booking', 'Can check bookings'),
         ]

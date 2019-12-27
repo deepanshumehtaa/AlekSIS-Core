@@ -73,7 +73,7 @@ def edit(request, id):
 
 
 @login_required
-@permission_required('fibu.manage_booking')
+@permission_required('fibu.check_booking')
 def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
