@@ -2,42 +2,61 @@
 {% load material_form %}
 
 <main>
-    {% block content %}
-        <a href="{% url 'new_booking' %}" class="waves-effect waves-light btn green right">Neue Buchung anlegen</a>
-        <span class="right" style="width: 20px;">&nbsp;</span>
-        {% if archiv %}
-            <a href="{% url 'booking' 0 %}" class="waves-effect waves-light btn grey right">Zur aktuellen Übersicht</a>
+    <div class="right">
+        {% if is_archive %}
+            <a href="{% url 'booking' %}" class="waves-effect waves-light btn grey">Zur aktuellen Übersicht</a>
         {% else %}
-            <a href="{% url 'booking' 1 %}" class="waves-effect waves-light btn grey right">Zum Archiv</a>
+            <a href="{% url 'booking' "archive" %}" class="waves-effect waves-light btn grey">Zum Archiv</a>
         {% endif %}
-        <h4>Buchungen</h4>
-        <div class="collection">
-            {% for booking in bookings %}
-                <a href="/fibu/booking/book/{{ booking.id }}" class="collection-item row">
-                    <span class="col s5 m5">{{ booking.description }}</span>
-                    <span class="col s1 m1 right-align">{{ booking.planned_amount }} €</span>
-                    <span class="col s3 m3">{{ booking.account }}</span>
-                    <span class="col s1 m1 center">{{ booking.contact }}</span>
-                    <span class="col s1 m1 badge new center-align {{ booking.get_status.style_class }}">
+
+        <a href="{% url 'new_booking' %}" class="waves-effect waves-light btn green">Neue Buchung anlegen</a>&nbsp;
+    </div>
+
+    <h4>{% if is_archive %}Buchungsarchiv{% else %}Aktuelle Buchungen{% endif %}</h4>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Anschaffungswunsch</th>
+            <th>Geplanter Betrag</th>
+            <th>Antragsteller</th>
+            <th>Status</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        {% for booking in bookings %}
+            <tr>
+                <td>
+                    <a href="{% url "booking_book" booking.id %}">{{ booking.description }}</a>
+                </td>
+                <td>{{ booking.planned_amount }} €</td>
+                <td>{{ booking.account|default:"" }}</td>
+                <td>{{ booking.contact.get_full_name }}</td>
+                <td>
+                    <span class="badge new center-align {{ booking.get_status.style_class }}">
                         {{ booking.get_status.name }}
                     </span>
-                    <span class="col s1 m1">
-                        {% if booking.status < 2 %}
-                            <form method="POST" class="left">
-                                {% csrf_token %}
-                                <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                                <button type="submit"
-                                        onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')"
-                                        name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
-                                        title="Löschen">
-                                    <i class="material-icons center red-text">cancel</i>
+                </td>
+                <td>
+                    {% if booking.status < 2 %}
+                        <form method="POST" class="right">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                            <button type="submit"
+                                    onclick="return confirm('Wirklich löschen?')"
+                                    name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium red-text"
+                                    title="Löschen">
+                                <i class="material-icons center">cancel</i>
                             </button>
                         </form>
                     {% endif %}
-                    </span>
-                </a>
-            {% endfor %}
-        </div>
-    {% endblock %}
+                    <a class="waves-effect waves-light btn-flat btn-flat-medium green-text right" title="Bearbeiten"
+                       href="{% url "booking_book" booking.id %}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 </main>
 {% include 'partials/footer.html' %}

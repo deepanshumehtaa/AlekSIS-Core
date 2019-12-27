@@ -100,12 +100,13 @@ def check(request):
 
 @login_required
 @permission_required('fibu.manage_booking')
-def booking(request, archiv):
-    if archiv:
+def booking(request, is_archive=""):
+    is_archive = is_archive == "archive"
+    if is_archive:
         bookings = Booking.objects.filter(status=5).order_by('-status')
     else:
         bookings = Booking.objects.filter(status__lt=5).order_by('-status')
-    context = {'bookings': bookings, 'archiv': archiv}
+    context = {'bookings': bookings, 'is_archive': is_archive}
     return render(request, 'fibu/booking/index.html', context)
 
 
