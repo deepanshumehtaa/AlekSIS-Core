@@ -1,15 +1,15 @@
 from django import forms
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from datetime import datetime
 from django.contrib.auth.models import User
 from material import Layout, Row, Fieldset
+
 from .models import YEARLIST, Booking, Costcenter, Account, status_choices
 
+
 class EditBookingForm(forms.ModelForm):
-    description = forms.CharField(label='Beschreibung - Was soll gekauft werden?')
-    planned_amount = forms.IntegerField(label='Erwarteter Betrag - Welcher Betrag ist erforderlich (in Euro ohne Komma)?')
-    justification = forms.CharField(label='Begründung - Begründe ggf. deinen Antrag.', required=False)
+    description = forms.CharField(label='Beschreibung – Was soll angeschafft werden?')
+    planned_amount = forms.IntegerField(
+        label='Erwarteter Betrag – Welcher Betrag ist erforderlich (in Euro, ohne Komma)?')
+    justification = forms.CharField(label='Begründung – Begründe ggf. deinen Antrag.', required=False)
 
     layout = Layout(Row('description', 'planned_amount'), Row('justification'))
 
@@ -19,40 +19,40 @@ class EditBookingForm(forms.ModelForm):
 
 
 class CheckBookingForm(forms.ModelForm):
-    accounts = Account.objects.filter().order_by('costcenter','name')
+    accounts = Account.objects.filter().order_by('costcenter', 'name')
     account = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
 
     class Meta:
         model = Account
-        fields = ('account', )
+        fields = ('account',)
+
 
 class BookBookingForm(forms.ModelForm):
-    accounts        = Account.objects.filter().order_by('costcenter','name')
-    user            = User.objects.filter()
-    description     = forms.CharField(label='Beschreibung')
-    planned_amount  = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
-    justification   = forms.CharField(label='Begründung', required=False)
-    account         = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
-    contact         = forms.ModelChoiceField(queryset=user, label='Kontakt')
-    invoice_date    = forms.DateField(label='Rechnungsdatum')
-    invoice_number  = forms.CharField(label='Rechnungsnummer')
-    firma           = forms.CharField(label='Firma')
-    amount          = forms.DecimalField(max_digits=9, decimal_places=2, label='Betrag')
+    accounts = Account.objects.filter().order_by('costcenter', 'name')
+    user = User.objects.filter()
+    description = forms.CharField(label='Beschreibung')
+    planned_amount = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
+    justification = forms.CharField(label='Begründung', required=False)
+    account = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
+    contact = forms.ModelChoiceField(queryset=user, label='Kontakt')
+    invoice_date = forms.DateField(label='Rechnungsdatum')
+    invoice_number = forms.CharField(label='Rechnungsnummer')
+    firma = forms.CharField(label='Firma')
+    amount = forms.DecimalField(max_digits=9, decimal_places=2, label='Betrag')
     submission_date = forms.DateField(label='Bearbeitungsdatum')
-    payout_number   = forms.IntegerField(label='Auszahlungsnummer')
-    booking_date    = forms.DateField(label='Buchungsdatum')
-    maturity        = forms.DateField(label='Fälligkeit')
-    upload          = forms.FileField(label='Scan der Rechnung', required=False)
-    status          = forms.ChoiceField(choices=status_choices, label='Status')
-
+    payout_number = forms.IntegerField(label='Auszahlungsnummer')
+    booking_date = forms.DateField(label='Buchungsdatum')
+    maturity = forms.DateField(label='Fälligkeit')
+    upload = forms.FileField(label='Scan der Rechnung', required=False)
+    status = forms.ChoiceField(choices=status_choices, label='Status')
 
     layout = Layout(Row('description', 'justification', 'contact'),
                     Row('account', 'status', 'planned_amount'),
                     Fieldset('Details',
-                        Row('firma', 'invoice_number', 'amount'),
-                        Row('invoice_date', 'maturity', 'submission_date', 'booking_date'),
-                        Row('payout_number', 'upload')
-                        )
+                             Row('firma', 'invoice_number', 'amount'),
+                             Row('invoice_date', 'maturity', 'submission_date', 'booking_date'),
+                             Row('payout_number', 'upload')
+                             )
                     )
 
     class Meta:
@@ -63,29 +63,28 @@ class BookBookingForm(forms.ModelForm):
 
 
 class EditCostcenterForm(forms.ModelForm):
-     name = forms.CharField(max_length=30, label='Kostenstelle')
-     year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
+    name = forms.CharField(max_length=30, label='Kostenstelle')
+    year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
 
-     layout = Layout(Row('name','year'))
+    layout = Layout(Row('name', 'year'))
 
-     class Meta:
-         model = Costcenter
-         fields = ('id', 'name', 'year')
+    class Meta:
+        model = Costcenter
+        fields = ('id', 'name', 'year')
 
 
 class EditAccountForm(forms.ModelForm):
-    name            = forms.CharField(max_length=30, label='Buchungskonto')
-    costcenterlist  = Costcenter.objects.filter()
-    costcenter      = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
-    income          = forms.BooleanField(label='Budget-/Einnanhmekonto', required=False)
-    budget          = forms.IntegerField(label='Budget')
+    name = forms.CharField(max_length=30, label='Buchungskonto')
+    costcenterlist = Costcenter.objects.filter()
+    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
+    income = forms.BooleanField(label='Budget-/Einnanhmekonto', required=False)
+    budget = forms.IntegerField(label='Budget')
 
     layout = Layout(Row('name', 'costcenter', 'income', 'budget'))
 
     class Meta:
         model = Account
         fields = ('id', 'name', 'costcenter', 'income', 'budget')
-
 
 #
 # class AcquisitionForm(forms.ModelForm):
@@ -123,5 +122,3 @@ class EditAccountForm(forms.ModelForm):
 #     class Meta:
 #         model = Booking
 #         fields = ('cost_center', 'description', 'planned_amount')
-
-

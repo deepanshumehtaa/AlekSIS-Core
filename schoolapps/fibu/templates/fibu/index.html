@@ -15,23 +15,23 @@
         </button>
     </form>
 
-    <h4>Laufende Anträge</h4>
+       <h4>Laufende Anträge</h4>
        <div class="collection">
            {% for booking in bookings %}
                <div class="collection-item row">
-                    <span class="col s12 m7">{{ booking.description }}</span>
-                    <span class="col s12 m1 right-align">{{ booking.planned_amount }} €</span>
-                    <span class="col s12 m1 badge new center-align {{ booking.getStatus.style_class }}">{{ booking.getStatus.name }}</span>
-                    <span class="col s12 m3">
-                    {% if booking.status == 0 %}
-                        <form action="{% url 'booking_edit' booking.id %}" class="left">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                            <button type="submit" name="edit"
-                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
-                                <i class="material-icons center green-text">create</i>
-                            </button>
-                        </form>
+                   <span class="col s12 m7">{{ booking.description }}</span>
+                   <span class="col s12 m1 right-align">{{ booking.planned_amount }} €</span>
+                   <span class="col s12 m1 badge new center-align {{ booking.get_status.style_class }}">{{ booking.get_status.name }}</span>
+                   <span class="col s12 m3">
+                       {% if booking.status == 0 %}
+                           <form action="{% url 'booking_edit' booking.id %}" class="left">
+                               {% csrf_token %}
+                               <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                               <button type="submit" name="edit"
+                                       class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
+                                   <i class="material-icons center green-text">create</i>
+                               </button>
+                           </form>
                     {% endif %}
                     {% if booking.status == 0 or booking.status == 1 %}
                         <form action="" method="POST" class="left">

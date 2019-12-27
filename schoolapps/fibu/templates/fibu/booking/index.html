@@ -10,26 +10,27 @@
         {% else %}
             <a href="{% url 'booking' 1 %}" class="waves-effect waves-light btn grey right">Zum Archiv</a>
         {% endif %}
-    <h4>Buchungen</h4>
+        <h4>Buchungen</h4>
         <div class="collection">
             {% for booking in bookings %}
-                <a href="/fibu/booking/book/{{ booking.id }}"  class="collection-item row">
+                <a href="/fibu/booking/book/{{ booking.id }}" class="collection-item row">
                     <span class="col s5 m5">{{ booking.description }}</span>
                     <span class="col s1 m1 right-align">{{ booking.planned_amount }} €</span>
                     <span class="col s3 m3">{{ booking.account }}</span>
                     <span class="col s1 m1 center">{{ booking.contact }}</span>
-                    <span class="col s1 m1 badge new center-align {{ booking.getStatus.style_class }}">
-                        {{ booking.getStatus.name }}
+                    <span class="col s1 m1 badge new center-align {{ booking.get_status.style_class }}">
+                        {{ booking.get_status.name }}
                     </span>
                     <span class="col s1 m1">
-                    {% if booking.status < 2 %}
-                        <form method="POST" class="left">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                            <button type="submit" onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')"
-                                    name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
-                                    title="Löschen">
-                                <i class="material-icons center red-text">cancel</i>
+                        {% if booking.status < 2 %}
+                            <form method="POST" class="left">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                                <button type="submit"
+                                        onclick="return confirm('Wollen Sie den Antrag wirklich löschen?')"
+                                        name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
+                                        title="Löschen">
+                                    <i class="material-icons center red-text">cancel</i>
                             </button>
                         </form>
                     {% endif %}

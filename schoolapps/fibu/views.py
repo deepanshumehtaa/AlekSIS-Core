@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
 from .forms import EditBookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
-from .decorators import check_own_booking
+
 
 @login_required
 @permission_required('fibu.request_booking')
@@ -17,11 +17,7 @@ def index(request):
             booking = Booking.objects.get(id=booking_id)
             if 'cancel' in request.POST:
                 booking.delete()
-#                a = Activity(user=aub_user, title="Antrag auf Unterrichtsbefreiung gelöscht",
-#                             description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-#                                         "für den Zeitraum von {} bis {} gelöscht.".format(
-#                                             aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-#                a.save()
+
                 print('Eintrag gelöscht')
                 return redirect('fibu_index')
             elif 'ordered' in request.POST:
@@ -40,15 +36,10 @@ def index(request):
         description = form.cleaned_data['description']
         planned_amount = form.cleaned_data['planned_amount']
         justification = form.cleaned_data['justification']
-        booking = Booking(description=description, planned_amount=planned_amount, contact=request.user, justification=justification)
+        booking = Booking(description=description, planned_amount=planned_amount, contact=request.user,
+                          justification=justification)
         booking.save()
 
-        # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-        #              description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-        #                          "für den Zeitraum von {} bis {} gestellt.".format(
-        #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-        # a.save()
-        # return redirect('fibu_make_booking')
         return redirect('fibu_index')
     bookings = Booking.objects.filter(contact=fibu_user).order_by('status')
 
@@ -66,16 +57,10 @@ def edit(request, id):
         form = EditBookingForm(request.POST, instance=booking)
         if form.is_valid():
             form.save()
-            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
-            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
-            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-            # a.save()
+
             return redirect(reverse('fibu_index'))
     context = {'form': form}
     return render(request, template, context)
-
-
 
 
 @login_required
@@ -84,7 +69,7 @@ def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
-            #booking = Booking.objects.get(id=booking_id)
+            # booking = Booking.objects.get(id=booking_id)
             if 'allow' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=1)
                 account = request.POST['account']
@@ -92,23 +77,12 @@ def check(request):
                 Booking.objects.filter(id=booking_id).update(account=account)
             elif 'deny' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=2)
-                # Notify user
-                # register_notification(title="Ihr Antrag auf Unterrichtsbefreiung wurde abgelehnt",
-                #                       description="Ihr Antrag auf Unterrichtsbefreiung vom {}, {} Uhr bis {}, {} Uhr wurde von der "
-                #                                   "Schulleitung abgelehnt. Für weitere Informationen kontaktieren Sie "
-                #                                   "bitte die Schulleitung."
-                #                       .format(formats.date_format(aub.from_date),
-                #                               formats.time_format(aub.from_time),
-                #                               formats.date_format(aub.to_date),
-                #                               formats.time_format(aub.to_time)),
-                #                       app=AubConfig.verbose_name, user=aub.created_by,
-                #                       link=request.build_absolute_uri(reverse('aub_details', args=[aub.id]))
-                #                       )
 
     booking_list = Booking.objects.filter(status=0).order_by('submission_date')
     bookings = BookingFilter(request.GET, queryset=booking_list)
     form = CheckBookingForm()
     return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
+
 
 @login_required
 @permission_required('fibu.manage_booking')
@@ -120,6 +94,7 @@ def booking(request, archiv):
     context = {'bookings': bookings, 'archiv': archiv}
     return render(request, 'fibu/booking/index.html', context)
 
+
 @login_required
 @permission_required('fibu.manage_booking')
 def book(request, id):
@@ -130,14 +105,11 @@ def book(request, id):
         form = BookBookingForm(request.POST, request.FILES, instance=booking)
         if form.is_valid():
             form.save()
-            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
-            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
-            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-            # a.save()
+
             return redirect(reverse('booking'))
     context = {'form': form}
     return render(request, template, context)
+
 
 @login_required
 @permission_required('fibu.manage_booking')
@@ -148,11 +120,7 @@ def new_booking(request):
         form = BookBookingForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
-            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
-            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-            # a.save()
+
             return redirect(reverse('booking'))
     context = {'form': form}
     return render(request, template, context)
@@ -167,11 +135,7 @@ def costcenter(request):
             costcenter = Costcenter.objects.get(id=costcenter_id)
             if 'cancel' in request.POST:
                 costcenter.delete()
-#                a = Activity(user=aub_user, title="Antrag auf Unterrichtsbefreiung gelöscht",
-#                             description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-#                                         "für den Zeitraum von {} bis {} gelöscht.".format(
-#                                             aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-#                a.save()
+
                 print('Eintrag gelöscht')
                 return redirect('costcenter')
             print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
@@ -186,12 +150,6 @@ def costcenter(request):
         costcenter = Costcenter(name=name, year=year)
         costcenter.save()
 
-        # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-        #              description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-        #                          "für den Zeitraum von {} bis {} gestellt.".format(
-        #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-        # a.save()
-        # return redirect('fibu_make_booking')
         return redirect('costcenter')
     costcenterlist = Costcenter.objects.filter()
     context = {'costcenterlist': costcenterlist, 'form': form}
@@ -209,15 +167,11 @@ def costcenter_edit(request, id):
         print('\n\n\nBLUBB', form)
         if form.is_valid():
             form.save()
-            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
-            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
-            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-            # a.save()
 
             return redirect(reverse('costcenter'))
     context = {'form': form}
     return render(request, template, context)
+
 
 @login_required
 @permission_required('fibu.manage_account')
@@ -228,11 +182,7 @@ def account(request):
             account = Account.objects.get(id=account_id)
             if 'cancel' in request.POST:
                 account.delete()
-#                a = Activity(user=aub_user, title="Antrag auf Unterrichtsbefreiung gelöscht",
-#                             description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-#                                         "für den Zeitraum von {} bis {} gelöscht.".format(
-#                                             aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-#                a.save()
+
                 print('Eintrag gelöscht')
                 return redirect('account')
             print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
@@ -249,12 +199,6 @@ def account(request):
         account = Account(name=name, costcenter=costcenter, income=income, budget=budget)
         account.save()
 
-        # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung gestellt",
-        #              description="Sie haben einen Antrag auf Unterrichtsbefreiung " +
-        #                          "für den Zeitraum von {} bis {} gestellt.".format(
-        #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-        # a.save()
-        # return redirect('fibu_make_booking')
         return redirect('account')
     accounts = Account.objects.filter()
     context = {'accounts': accounts, 'form': form}
@@ -272,11 +216,6 @@ def account_edit(request, id):
         print('\n\n\nBLUBB', form)
         if form.is_valid():
             form.save()
-            # a = Activity(user=request.user, title="Antrag auf Unterrichtsbefreiung verändert",
-            #              description="Sie haben Ihren Antrag auf Unterrichtsbefreiung " +
-            #                          "für den Zeitraum von {} bis {} bearbeitet.".format(
-            #                              aub.from_date, aub.to_date), app=AubConfig.verbose_name)
-            # a.save()
 
             return redirect(reverse('account'))
     context = {'form': form}
@@ -287,6 +226,7 @@ def account_edit(request, id):
 @permission_required('fibu.manage_booking')
 def reports(request):
     return render(request, 'fibu/reports/index.html')
+
 
 @login_required
 @permission_required('fibu.manage_booking')

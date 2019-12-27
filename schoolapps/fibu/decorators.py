@@ -4,7 +4,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from .models import Booking
 
 
-# prevent to show aub details from foreign users
+# prevent to show booking details from foreign users
 def check_own_booking_verification(user):
     return Booking.objects.all().filter(created_by=user)
 
