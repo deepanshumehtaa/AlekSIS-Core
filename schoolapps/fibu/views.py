@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
-from .forms import BookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
+from .forms import BookingForm, CheckBookingForm, BookBookingForm, CostCenterForm, EditAccountForm
 
 
 @login_required
@@ -144,49 +144,50 @@ def new_booking(request):
 
 @login_required
 @permission_required('fibu.manage_costcenter')
-def costcenter(request):
+def cost_centers(request):
+    form = CostCenterForm()
+
     if request.method == 'POST':
-        if 'costcenter-id' in request.POST:
-            costcenter_id = request.POST['costcenter-id']
-            costcenter = Costcenter.objects.get(id=costcenter_id)
-            if 'cancel' in request.POST:
-                costcenter.delete()
+        if 'id' in request.POST and 'cancel' in request.POST:
+            cost_center_id = request.POST['id']
+            cost_center = Costcenter.objects.get(id=cost_center_id)
+            cost_center.delete()
 
-                print('Eintrag gelöscht')
-                return redirect('costcenter')
-            print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
-            form = EditCostcenterForm(instance=costcenter)
+            messages.success(request, "Die Kostenstelle wurde erfolgreich gelöscht.")
+
+            return redirect('fibu_cost_centers')
         else:
-            form = EditCostcenterForm(request.POST or None)
-    else:
-        form = EditCostcenterForm()
-    if form.is_valid():
-        name = form.cleaned_data['name']
-        year = form.cleaned_data['year']
-        costcenter = Costcenter(name=name, year=year)
-        costcenter.save()
+            form = CostCenterForm(request.POST)
 
-        return redirect('costcenter')
-    costcenterlist = Costcenter.objects.filter()
-    context = {'costcenterlist': costcenterlist, 'form': form}
-    return render(request, 'fibu/costcenter/index.html', context)
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Die Kostenstelle wurde erfolgreich angelegt.")
+        return redirect('fibu_cost_centers')
+
+    cost_centers = Costcenter.objects.filter()
+
+    context = {'cost_centers': cost_centers, 'form': form}
+    return render(request, 'fibu/cost_center/index.html', context)
 
 
 @login_required
 @permission_required('fibu.manage_costcenter')
-def costcenter_edit(request, id):
-    costcenter = get_object_or_404(Costcenter, id=id)
-    form = EditCostcenterForm(instance=costcenter)
-    template = 'fibu/costcenter/edit.html'
+def cost_center_edit(request, id):
+    cost_center = get_object_or_404(Costcenter, id=id)
+    form = CostCenterForm(instance=cost_center)
+
     if request.method == 'POST':
-        form = EditCostcenterForm(request.POST, instance=costcenter)
-        print('\n\n\nBLUBB', form)
+        form = CostCenterForm(request.POST, instance=cost_center)
+
         if form.is_valid():
             form.save()
 
-            return redirect(reverse('costcenter'))
+            messages.success(request, "Die Änderungen an der Kostenstelle wurden erfolgreich übernommen.")
+
+            return redirect(reverse('fibu_cost_centers'))
+
     context = {'form': form}
-    return render(request, template, context)
+    return render(request, 'fibu/cost_center/edit.html', context)
 
 
 @login_required

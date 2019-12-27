@@ -64,7 +64,7 @@ class BookBookingForm(forms.ModelForm):
                   'maturity', 'upload', 'status')
 
 
-class EditCostcenterForm(forms.ModelForm):
+class CostCenterForm(forms.ModelForm):
     name = forms.CharField(max_length=30, label='Kostenstelle')
     year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
 
