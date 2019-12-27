@@ -5,10 +5,10 @@ from material import Layout, Row, Fieldset
 from .models import YEARLIST, Booking, Costcenter, Account, status_choices
 
 
-class EditBookingForm(forms.ModelForm):
+class BookingForm(forms.ModelForm):
     description = forms.CharField(label='Beschreibung – Was soll angeschafft werden?')
     planned_amount = forms.IntegerField(
-        label='Erwarteter Betrag – Welcher Betrag ist erforderlich (in Euro, ohne Komma)?')
+        label='Erwarteter Betrag – Welcher Betrag ist erforderlich?', help_text="in Euro, ohne Komma")
     justification = forms.CharField(label='Begründung – Begründe ggf. deinen Antrag.', required=False)
 
     layout = Layout(Row('description', 'planned_amount'), Row('justification'))

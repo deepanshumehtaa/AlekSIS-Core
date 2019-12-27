@@ -2,37 +2,46 @@
 {% load material_form %}
 
 <main>
-{% block content %}
     <h4>Anträge prüfen</h4>
-        {% for booking in filter.qs %}
-            <div class="row">
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                {% if booking.status < 2 %}
-                    <span class="col s12 m1">{{ booking.contact }}</span>
-                    <span class="col s12 m5">{{ booking.description }}</span>
-                    <span class="col s12 m1">{{ booking.planned_amount }}</span>
-                    <span class="col s12 m3">{{ form.account }}</span>
-                    <span class="col s12 m1">
-                        <button type="submit" name="allow"
-                        class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
-                        <i class="material-icons right green-text">check_circle</i>
-                        </button>
-                    </span>
-                {% endif %}
-                {% if booking.status < 3 %}
-                    <span class="col s12 m1">
-                        <button type="submit" name="deny"
-                        class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
-                        <i class="material-icons right red-text">not_interested</i>
-                        </button>
-                    </span>
-                {% endif %}
-            </form>
-            </div>
-        {% endfor %}
- {% endblock %}
- </main>
+    {% for booking in filter.qs %}
+        <table>
+            <thead>
+            <tr>
+                <th>Antragsteller</th>
+                <th>Anschaffungswunsch</th>
+                <th>Geplante Kosten</th>
+                <th>Zugeordnete Kostenstelle</th>
+                <th>Aktionen</th>
+            </tr>
+            </thead>
+            <tr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                    {% if booking.status < 2 %}
+                        <td>{{ booking.contact }}</td>
+                        <td>{{ booking.description }}</td>
+                        <td>{{ booking.planned_amount }} €</td>
+                        <td>{{ form.account }}</td>
+                    {% endif %}
+                    <td>
+                        {% if booking.status < 2 %}
+                            <button type="submit" name="allow"
+                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
+                                <i class="material-icons center green-text">check_circle</i>
+                            </button>
+                        {% endif %}
+                        {% if booking.status < 3 %}
+                            <button type="submit" name="deny"
+                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
+                                <i class="material-icons center red-text">not_interested</i>
+                            </button>
+                            </td>
+                        {% endif %}
+                </form>
+            </tr>
+        </table>
+    {% endfor %}
+</main>
 
 {% include 'partials/footer.html' %}

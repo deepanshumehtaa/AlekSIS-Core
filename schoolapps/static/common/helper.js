@@ -96,10 +96,17 @@ $(document).ready(function () {
     // Initialize FABs [MAT]
     $('.fixed-action-btn').floatingActionButton();
 
+    // Initialize Modals [MAT]
+    $('.modal').modal();
+
     // Initialize delete button
     $(".delete-button").click(function (e) {
         if (!confirm("Wirklich löschen?")) {
             e.preventDefault();
         }
-    })
+    });
+
+    if (typeof onFinish !== 'undefined') {
+        onFinish();
+    }
 });

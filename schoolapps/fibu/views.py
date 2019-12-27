@@ -1,37 +1,40 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking, Costcenter, Account
 from .filters import BookingFilter
-from .forms import EditBookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
+from .forms import BookingForm, CheckBookingForm, BookBookingForm, EditCostcenterForm, EditAccountForm
 
 
 @login_required
 @permission_required('fibu.request_booking')
 def index(request):
-    fibu_user = request.user
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
-            booking = Booking.objects.get(id=booking_id)
+            booking = get_object_or_404(Booking, pk=booking_id)
+
             if 'cancel' in request.POST:
                 booking.delete()
-
                 print('Eintrag gelöscht')
                 return redirect('fibu_index')
+
             elif 'ordered' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=3)
                 return redirect('fibu_index')
+
             elif 'submit-invoice' in request.POST:
                 Booking.objects.filter(id=booking_id).update(status=4)
                 return redirect('fibu_index')
-            print('Edit-Form erstellt ############# form.is_valid:', form.is_valid())
-            form = EditBookingForm(instance=booking)
+
+            form = BookingForm(instance=booking)
         else:
-            form = EditBookingForm(request.POST or None)
+            form = BookingForm(request.POST)
     else:
-        form = EditBookingForm()
+        form = BookingForm()
+
     if form.is_valid():
         description = form.cleaned_data['description']
         planned_amount = form.cleaned_data['planned_amount']
@@ -40,8 +43,11 @@ def index(request):
                           justification=justification)
         booking.save()
 
+        messages.success(request, "Der Antrag wurde erfolgreich übermittelt.")
+
         return redirect('fibu_index')
-    bookings = Booking.objects.filter(contact=fibu_user).order_by('status')
+
+    bookings = Booking.objects.filter(contact=request.user).order_by('status')
 
     context = {'bookings': bookings, 'form': form}
     return render(request, 'fibu/index.html', context)
@@ -51,10 +57,10 @@ def index(request):
 @permission_required('fibu.request_booking')
 def edit(request, id):
     booking = get_object_or_404(Booking, id=id)
-    form = EditBookingForm(instance=booking)
+    form = BookingForm(instance=booking)
     template = 'fibu/booking/edit.html'
     if request.method == 'POST':
-        form = EditBookingForm(request.POST, instance=booking)
+        form = BookingForm(request.POST, instance=booking)
         if form.is_valid():
             form.save()
 
