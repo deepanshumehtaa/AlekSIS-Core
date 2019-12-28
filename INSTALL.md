@@ -33,7 +33,6 @@ GRANT SELECT ON Untis.* TO 'www-data'@'localhost';
 ### UNTIS-Beispieldaten importieren
 Zum Testen kann die Datei `untiskath.sql` vom Forum in die Datenbank `Untis` importiert werden.
 
-
 ### SchoolApps clonen
 ```
 git clone git@github.com:Katharineum/school-apps.git
