@@ -8,12 +8,12 @@
             Keine offenen Anträge vorhanden
         </span>
     {% else %}
-        <div class="collection-item row grey white-text">
-            <span class="col s2">Antragsteller</span>
-            <span class="col s3">Anschaffungswunsch</span>
-            <span class="col s2 right-align">Geplante Kosten</span>
-            <span class="col s3">Buchungskonto</span>
-            <span class="col s2">Aktionen</span>
+        <div class="collection-item row">
+            <div class="col s2"><strong>Antragsteller</strong></div>
+            <div class="col s3"><strong>Anschaffungswunsch</strong></div>
+            <div class="col s2 right-align"><strong>Geplante Kosten</strong></div>
+            <div class="col s3"><strong>Buchungskonto</strong></div>
+            <div class="col s2"><strong>Aktionen</strong></div>
         </div>
 
         {% for booking in filter.qs %}
@@ -21,11 +21,11 @@
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                    <span class="col s2">{{ booking.contact.get_full_name }}</span>
-                    <span class="col s3">{{ booking.description }}</span>
-                    <span class="col s2 right-align">{{ booking.planned_amount }} €</span>
-                    <span class="col s3">{{ form.account }}</span>
-                    <span  class="col s2">
+                    <div class="col s2">{{ booking.contact.get_full_name }}</div>
+                    <div class="col s3">{{ booking.description }}</div>
+                    <div class="col s2 right-align">{{ booking.planned_amount }} €</div>
+                    <div class="col s3">{{ form.account }}</div>
+                    <div class="col s2">
                         <button type="submit" name="allow"
                                 class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
                             <i class="material-icons center green-text">check_circle</i>
@@ -34,7 +34,7 @@
                                 class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
                             <i class="material-icons center red-text">not_interested</i>
                         </button>
-                    </span>
+                    </div>
                 </form>
             </div>
         {% endfor %}

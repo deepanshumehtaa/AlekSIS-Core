@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from material import Layout, Row, Fieldset
 
-from .models import YEARLIST, Booking, Costcenter, Account, status_choices
+from .models import YEARS, Booking, Costcenter, Account, status_choices
 
 
 class BookingForm(forms.ModelForm):
@@ -19,11 +19,8 @@ class BookingForm(forms.ModelForm):
 
 
 class CheckBookingForm(forms.ModelForm):
-    accounts = Account.objects.filter().order_by('costcenter', 'name')
-    account = forms.ModelChoiceField(required=False, queryset=accounts, label='Buchungskonto')
-
     class Meta:
-        model = Account
+        model = Booking
         fields = ('account',)
 
 
@@ -66,7 +63,7 @@ class BookBookingForm(forms.ModelForm):
 
 class CostCenterForm(forms.ModelForm):
     name = forms.CharField(max_length=30, label='Kostenstelle')
-    year = forms.ChoiceField(choices=YEARLIST, label='Jahr')
+    year = forms.ChoiceField(choices=YEARS, label='Jahr')
 
     layout = Layout(Row('name', 'year'))
 
@@ -75,15 +72,7 @@ class CostCenterForm(forms.ModelForm):
         fields = ('id', 'name', 'year')
 
 
-class EditAccountForm(forms.ModelForm):
-    name = forms.CharField(max_length=30, label='Buchungskonto')
-    costcenterlist = Costcenter.objects.filter()
-    costcenter = forms.ModelChoiceField(queryset=costcenterlist, label='Kostenstelle')
-    income = forms.BooleanField(label='Budget-/Einnanhmekonto', required=False)
-    budget = forms.IntegerField(label='Budget')
-
-    layout = Layout(Row('name', 'costcenter', 'income', 'budget'))
-
+class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('id', 'name', 'costcenter', 'income', 'budget')

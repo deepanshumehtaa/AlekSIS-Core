@@ -2,8 +2,7 @@
 {% load material_form %}
 
 <main>
-
-   <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
+    <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
         <i class="material-icons left">add</i> Buchungskonto anlegen
     </a>
 
@@ -34,47 +33,44 @@
     </form>
 
     <table>
-    <thead>
-    <tr>
-        <th>Buchungskonto</th>
-        <th>Kostenstelle</th>
-        <th>erwartete Einnahmen</th>
-        <th>erwartete Ausgaben</th>
-        <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
+        <thead>
+        <tr>
+            <th>Buchungskonto</th>
+            <th>Kostenstelle</th>
+            <th>erwartete Einnahmen</th>
+            <th>erwartete Ausgaben</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for account in accounts %}
             <tr>
                 <td>{{ account.name }}</td>
                 <td>{{ account.costcenter }}</td>
-                {%  if account.income %}
-                    <td>{{ account.budget }}</td>
+                {% if account.income %}
+                    <td class="green-text">{{ account.budget }}</td>
                     <td></td>
                 {% else %}
                     <td></td>
-                    <td>{{ account.budget }}</td>
+                    <td class="red-text">{{ account.budget }}</td>
                 {% endif %}
                 <td class="right-align">
-                    <form action="{% url 'account_edit' account.id %}" class="left">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{ account.id }}" name="account-id">
-                        <button type="submit" name="edit"
-                                class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
-                            <i class="material-icons center green-text">create</i>
-                        </button>
-                    </form>
+                    <a href="{% url 'account_edit' account.id %}"
+                       class="waves-effect waves-light btn-flat btn-flat-medium left" title="Bearbeiten">
+                        <i class="material-icons center green-text">create</i>
+                    </a>
                     <form action="" method="POST" class="left">
                         {% csrf_token %}
-                            <input type="hidden" value="{{ account.id }}" name="account-id">
-                            <button type="submit" onclick="return confirm('Wollen Sie das Buchungskonto wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
-                                <i class="material-icons center red-text">cancel</i>
-                            </button>
+                        <input type="hidden" value="{{ account.id }}" name="id">
+                        <button type="submit" onclick="return confirm('Buchungskonto wirklich löschen?')"
+                                name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
+                            <i class="material-icons center red-text">cancel</i>
+                        </button>
                     </form>
                 </td>
             </tr>
         {% endfor %}
-    </tbody>
+        </tbody>
     </table>
 </main>
 {% include 'partials/footer.html' %}
