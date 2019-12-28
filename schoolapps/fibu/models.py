@@ -50,7 +50,7 @@ class Account(models.Model):
     costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, blank=False, verbose_name="Kostenstelle")
     income = models.BooleanField(default=False,
                                  verbose_name="Einnahmekonto")  # True, wenn es sich um ein Einnahmekonto handelt
-    budget = models.DecimalField(max_digits=9, decimal_places=2, default=0.00, verbose_name="Budget")
+    budget = models.IntegerField(default=0, verbose_name="Budget")
     saldo = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     rest = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 

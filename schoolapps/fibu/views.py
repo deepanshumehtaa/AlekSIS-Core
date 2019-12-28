@@ -254,11 +254,11 @@ def expenses(request):
             try:
                 rest = account.budget - saldo
             except:
-                rest = 0
+                rest = account.budget
             try:
                 Account.objects.filter(id=account.id).update(saldo=saldo, rest=rest)
             except:
-                Account.objects.filter(id=account.id).update(saldo=0, rest=0)
+                Account.objects.filter(id=account.id).update(saldo=0, rest=account.budget)
 
         cost_center_accounts[cost_center.name] = list(
             Account.objects.filter(costcenter=cost_center).order_by('-income'))

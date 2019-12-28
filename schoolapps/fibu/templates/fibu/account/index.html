@@ -37,8 +37,8 @@
         <tr>
             <th>Buchungskonto</th>
             <th>Kostenstelle</th>
-            <th>erwartete Einnahmen</th>
-            <th>erwartete Ausgaben</th>
+            <th class="right-align">erwartete Einnahmen</th>
+            <th class="right-align">erwartete Ausgaben</th>
             <th>Aktionen</th>
         </tr>
         </thead>
@@ -48,11 +48,11 @@
                 <td>{{ account.name }}</td>
                 <td>{{ account.costcenter }}</td>
                 {% if account.income %}
-                    <td class="green-text">{{ account.budget }}</td>
+                    <td class="green-text right-align">{{ account.budget }}</td>
                     <td></td>
                 {% else %}
                     <td></td>
-                    <td class="red-text">{{ account.budget }}</td>
+                    <td class="red-text right-align">{{ account.budget }}</td>
                 {% endif %}
                 <td class="right-align">
                     <a href="{% url 'account_edit' account.id %}"
