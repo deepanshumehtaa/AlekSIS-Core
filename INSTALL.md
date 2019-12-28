@@ -48,7 +48,6 @@ pip install -r requirements.txt
 
 - `example_secure_settings.py` zu `secure_settings.py` kopieren und anpassen (hier müssen auch die passenden DB-Zugangsdaten eingetragen werden)
 
-
 ### Migrations durchführen/auflösen
 Leider kommt es bei einer Erstinstallation von SchoolApps immer noch zu Problemen mit den Migrations. Sollte es Schwierigkeiten geben, @hansegucker kontaktieren.
 
