@@ -3,59 +3,42 @@
 
 <main>
     <h4>Anträge prüfen</h4>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Antragsteller</th>
-            <th>Anschaffungswunsch</th>
-            <th>Geplante Kosten</th>
-            <th>Buchungskonto</th>
-            <th>Aktionen</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% if not filter.qs %}
-            <tr>
-                <td colspan="5" class="flow-text center-align">
-                    Keine offenen Anträge vorhanden
-                </td>
-            </tr>
-        {% endif %}
+    {% if not filter.qs %}
+        <span  class="flow-text center-align">
+            Keine offenen Anträge vorhanden
+        </span>
+    {% else %}
+        <div class="collection-item row grey white-text">
+            <span class="col s2">Antragsteller</span>
+            <span class="col s3">Anschaffungswunsch</span>
+            <span class="col s2 right-align">Geplante Kosten</span>
+            <span class="col s3">Buchungskonto</span>
+            <span class="col s2">Aktionen</span>
+        </div>
 
         {% for booking in filter.qs %}
-            <tr>
-                <form method="POST" action="">
+            <div class="collection-item row">
+                <form method="POST">
                     {% csrf_token %}
-
                     <input type="hidden" value="{{ booking.id }}" name="booking-id">
-                    {% if booking.status < 2 %}
-                        <td>{{ booking.contact }}</td>
-                        <td>{{ booking.description }}</td>
-                        <td>{{ booking.planned_amount }} €</td>
-                        <td>{{ form.account }}</td>
-                    {% endif %}
-                    <td>
-                        {% if booking.status < 2 %}
-                            <button type="submit" name="allow"
-                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
-                                <i class="material-icons center green-text">check_circle</i>
-                            </button>
-
-                        {% endif %}
-                        {% if booking.status < 3 %}
-                            <button type="submit" name="deny" value="Blubb"
-                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
-                                <i class="material-icons center red-text">not_interested</i>
-                            </button>
-                            </td>
-                        {% endif %}
+                    <span class="col s2">{{ booking.contact.get_full_name }}</span>
+                    <span class="col s3">{{ booking.description }}</span>
+                    <span class="col s2 right-align">{{ booking.planned_amount }} €</span>
+                    <span class="col s3">{{ form.account }}</span>
+                    <span  class="col s2">
+                        <button type="submit" name="allow"
+                                class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
+                            <i class="material-icons center green-text">check_circle</i>
+                        </button>
+                        <button type="submit" name="deny"
+                                class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
+                            <i class="material-icons center red-text">not_interested</i>
+                        </button>
+                    </span>
                 </form>
-            </tr>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+   {% endif %}
 </main>
 
 {% include 'partials/footer.html' %}

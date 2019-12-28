@@ -78,22 +78,19 @@ def check(request):
     if request.method == 'POST':
         if 'booking-id' in request.POST:
             booking_id = request.POST['booking-id']
-
             if 'allow' in request.POST:
                 if "account" in request.POST:
                     account = request.POST['account']
-                    print('account:', account)
-                    Booking.objects.filter(id=booking_id).update(status=1, account=account)
-                    messages.success(request, "Der Antrag wurde erfolgreich angenommen.")
+                    Booking.objects.filter(id=booking_id).update(status=2, account=account)
+                    messages.success(request, "Der Antrag wurde angenommen.")
                 else:
-                    messages.error(request, "Bitte wähle eine Kostenstelle aus, um den Antrag anzunehmen.")
+                    messages.error(request, "Bitte wähle ein Buchungskonto aus, um den Antrag anzunehmen.")
             elif 'deny' in request.POST:
-                Booking.objects.filter(id=booking_id).update(status=2)
-                messages.success(request, "Der Antrag wurde erfolgreich abgelehnt.")
+                Booking.objects.filter(id=booking_id).update(status=1)
+                messages.success(request, "Der Antrag wurde abgelehnt.")
 
     booking_list = Booking.objects.filter(status=0).order_by('submission_date')
     bookings = BookingFilter(request.GET, queryset=booking_list)
-
     form = CheckBookingForm()
     return render(request, 'fibu/booking/check.html', {'filter': bookings, 'form': form})
 

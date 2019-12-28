@@ -20,7 +20,7 @@ class BookingForm(forms.ModelForm):
 
 class CheckBookingForm(forms.ModelForm):
     accounts = Account.objects.filter().order_by('costcenter', 'name')
-    account = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
+    account = forms.ModelChoiceField(required=False, queryset=accounts, label='Buchungskonto')
 
     class Meta:
         model = Account

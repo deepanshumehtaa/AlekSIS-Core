@@ -18,7 +18,8 @@
         <thead>
         <tr>
             <th>Anschaffungswunsch</th>
-            <th>Geplanter Betrag</th>
+            <th class="right-align">Geplanter Betrag</th>
+            <th>Kostenstelle</th>
             <th>Antragsteller</th>
             <th>Status</th>
             <th>Aktionen</th>
@@ -29,7 +30,7 @@
                 <td>
                     <a href="{% url "booking_book" booking.id %}">{{ booking.description }}</a>
                 </td>
-                <td>{{ booking.planned_amount }} €</td>
+                <td class="right-align">{{ booking.planned_amount }} €</td>
                 <td>{{ booking.account|default:"" }}</td>
                 <td>{{ booking.contact.get_full_name }}</td>
                 <td>
@@ -38,8 +39,14 @@
                     </span>
                 </td>
                 <td>
+                    <span class="left">
+                    <a class="waves-effect waves-light btn-flat btn-flat-medium green-text" title="Bearbeiten"
+                       href="{% url "booking_book" booking.id %}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    </span>
                     {% if booking.status < 2 %}
-                        <form method="POST" class="right">
+                        <form method="POST" class="left">
                             {% csrf_token %}
                             <input type="hidden" value="{{ booking.id }}" name="booking-id">
                             <button type="submit"
@@ -50,10 +57,6 @@
                             </button>
                         </form>
                     {% endif %}
-                    <a class="waves-effect waves-light btn-flat btn-flat-medium green-text right" title="Bearbeiten"
-                       href="{% url "booking_book" booking.id %}">
-                        <i class="material-icons">edit</i>
-                    </a>
                 </td>
             </tr>
         {% endfor %}

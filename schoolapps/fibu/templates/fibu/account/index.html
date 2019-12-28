@@ -3,52 +3,78 @@
 
 <main>
 
-{#   <a href="{% url 'fibu_make_booking' %}" class="waves-effect waves-light btn green">Neuen Antrag stellen</a>#}
+   <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
+        <i class="material-icons left">add</i> Buchungskonto anlegen
+    </a>
 
-   {% block content %}
+    <h4>Buchungskonten</h4>
 
-    <h4>Neues Buchungskonto</h4>
-    <form method="POST" style="border-width: 5px; background: #eee;">
-        {% csrf_token %}
-        {% form form=form %}
-        {% endform %}
-        <button type="submit" class="waves-effect waves-light btn green right">
-            <i class="material-icons left">send</i> Buchungskonto anlegen
-        </button>
+    {% if form.errors %}
+        <script>
+            var onFinish = function () {
+                $("#new-modal").modal("open");
+            };
+        </script>
+    {% endif %}
+
+    <form method="POST">
+        <div id="new-modal" class="modal">
+            <div class="modal-content">
+                <h5>Neues Buchungskonto anlegen</h5>
+                {% csrf_token %}
+                {% form form=form %}
+                {% endform %}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn green">
+                    <i class="material-icons left">save</i> Buchungskonto anlegen
+                </button>
+            </div>
+        </div>
     </form>
 
-    <h4>Bestehende Buchungskonten</h4>
-       <div class="collection">
-           {% for account in accounts %}
-               <div class="collection-item row">
-                    <span class="col s6 m6">{{ account.name }}</span>
-                    <span class="col s2 m2">{{ account.costcenter }}</span>
-                   {%  if account.income %}
-                    <span class="col s1 m1 right-align">{{ account.budget }}</span>
-                    <span class="col s1 m1 right-align"></span>
-                   {% else %}
-                    <span class="col s2 m2 right-align">{{ account.budget }}</span>
-                   {% endif %}
-                    <span class="col s2 m2 right-align">
-                        <form action="{% url 'account_edit' account.id %}" class="left">
-                            {% csrf_token %}
+    <table>
+    <thead>
+    <tr>
+        <th>Buchungskonto</th>
+        <th>Kostenstelle</th>
+        <th>erwartete Einnahmen</th>
+        <th>erwartete Ausgaben</th>
+        <th>Aktionen</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for account in accounts %}
+            <tr>
+                <td>{{ account.name }}</td>
+                <td>{{ account.costcenter }}</td>
+                {%  if account.income %}
+                    <td>{{ account.budget }}</td>
+                    <td></td>
+                {% else %}
+                    <td></td>
+                    <td>{{ account.budget }}</td>
+                {% endif %}
+                <td class="right-align">
+                    <form action="{% url 'account_edit' account.id %}" class="left">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ account.id }}" name="account-id">
+                        <button type="submit" name="edit"
+                                class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
+                            <i class="material-icons center green-text">create</i>
+                        </button>
+                    </form>
+                    <form action="" method="POST" class="left">
+                        {% csrf_token %}
                             <input type="hidden" value="{{ account.id }}" name="account-id">
-                            <button type="submit" name="edit"
-                                    class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
-                                <i class="material-icons center green-text">create</i>
+                            <button type="submit" onclick="return confirm('Wollen Sie das Buchungskonto wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
+                                <i class="material-icons center red-text">cancel</i>
                             </button>
-                        </form>
-                        <form action="" method="POST" class="left">
-                            {% csrf_token %}
-                                <input type="hidden" value="{{ account.id }}" name="account-id">
-                                <button type="submit" onclick="return confirm('Wollen Sie das Buchungskonto wirklich löschen?')" name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
-                                    <i class="material-icons center red-text">cancel</i>
-                                </button>
-                        </form>
-                    </span>
-           </div>
-           {% endfor %}
-       </div>
-    {% endblock %}
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
 </main>
 {% include 'partials/footer.html' %}

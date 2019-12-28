@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 # TODO: Make dynamic
 YEARLIST = [(2020, '2020'),
@@ -19,8 +20,8 @@ class Status:
 
 status_list = [
     Status(name='beantragt', style_class='red'),
-    Status(name='bewilligt', style_class='orange'),
     Status(name='abgelehnt', style_class='black'),
+    Status(name='bewilligt', style_class='orange'),
     Status(name='bestellt', style_class='darkyellow'),
     Status(name='eingereicht', style_class='blue'),
     Status(name='bezahlt', style_class='green'),
@@ -65,17 +66,17 @@ class Booking(models.Model):
     account = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
     contact = models.ForeignKey(to=User, related_name='bookings', on_delete=models.SET_NULL
                                 , verbose_name="Erstellt von", blank=True, null=True)
-    invoice_date = models.DateField(default='2000-12-31')
+    invoice_date = models.DateField(default=date.today)
     invoice_number = models.CharField(max_length=20, default='0')
     firma = models.CharField(max_length=30, default='')
     description = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     planned_amount = models.IntegerField()
-    submission_date = models.DateField(default='2000-12-31')
+    submission_date = models.DateField(default=date.today)
     justification = models.CharField(max_length=2000, blank=True, null=True)
     payout_number = models.IntegerField(default=0)
-    booking_date = models.DateField(default='2000-12-31')
-    maturity = models.DateField(default='2000-12-31')
+    booking_date = models.DateField(default=date.today)
+    maturity = models.DateField(default=date.today)
     upload = models.FileField(upload_to='uploads/fibu/%Y/', default=None, blank=True, null=True)
     status = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
 

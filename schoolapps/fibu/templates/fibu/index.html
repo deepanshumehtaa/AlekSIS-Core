@@ -45,7 +45,7 @@
                 </div>
                 <span class="col s12 m3">
                     {# Delete #}
-                    {% if booking.status == 0 or booking.status == 1 %}
+                    {% if booking.status < 3 %}
                         <form action="" method="POST" class="right">
                             {% csrf_token %}
                             <input type="hidden" value="{{ booking.id }}" name="booking-id">
@@ -77,7 +77,7 @@
                         <input type="hidden" value="{{ booking.status }}" name="booking-status">
 
 
-                        {% if booking.status == 1 %}
+                        {% if booking.status == 2 %}
                             <button type="submit" name="ordered"
                                     class="waves-effect waves-light btn-flat btn-flat-medium left"
                                     title="Status auf 'bestellt' ändern">
