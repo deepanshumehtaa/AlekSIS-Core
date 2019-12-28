@@ -209,7 +209,7 @@ def account(request):
         messages.success(request, "Das Buchungskonto wurde erfolgreich angelegt.")
         return redirect('account')
 
-    accounts = Account.objects.filter()
+    accounts = Account.objects.filter().order_by('costcenter','-income','name')
     context = {'accounts': accounts, 'form': form}
     return render(request, 'fibu/account/index.html', context)
 

@@ -20,7 +20,7 @@ status_list = [
     Status(name='beantragt', style_class='red'),
     Status(name='abgelehnt', style_class='black'),
     Status(name='bewilligt', style_class='orange'),
-    Status(name='bestellt', style_class='darkyellow'),
+    Status(name='bestellt', style_class='yellow darken-1'),
     Status(name='eingereicht', style_class='blue'),
     Status(name='bezahlt', style_class='green'),
 ]
