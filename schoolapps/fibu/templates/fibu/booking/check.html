@@ -10,7 +10,7 @@
             <th>Antragsteller</th>
             <th>Anschaffungswunsch</th>
             <th>Geplante Kosten</th>
-            <th>Zugeordnete Kostenstelle</th>
+            <th>Buchungskonto</th>
             <th>Aktionen</th>
         </tr>
         </thead>
@@ -26,8 +26,9 @@
 
         {% for booking in filter.qs %}
             <tr>
-                <form method="POST">
+                <form method="POST" action="">
                     {% csrf_token %}
+
                     <input type="hidden" value="{{ booking.id }}" name="booking-id">
                     {% if booking.status < 2 %}
                         <td>{{ booking.contact }}</td>
@@ -41,9 +42,10 @@
                                     class="waves-effect waves-light btn-flat btn-flat-medium" title="Annehmen">
                                 <i class="material-icons center green-text">check_circle</i>
                             </button>
+
                         {% endif %}
                         {% if booking.status < 3 %}
-                            <button type="submit" name="deny"
+                            <button type="submit" name="deny" value="Blubb"
                                     class="waves-effect waves-light btn-flat btn-flat-medium" title="Ablehnen">
                                 <i class="material-icons center red-text">not_interested</i>
                             </button>
