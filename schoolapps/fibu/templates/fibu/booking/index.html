@@ -17,9 +17,10 @@
     <table>
         <thead>
         <tr>
-            <th>Anschaffungswunsch</th>
-            <th class="right-align">Geplanter Betrag</th>
-            <th>Kostenstelle</th>
+            <th>Artikelbeschreibung</th>
+            <th class="right-align">erwarteter Betrag</th>
+            <th class="right-align">Rechnungsbetrag</th>
+            <th>Buchungskonto</th>
             <th>Antragsteller</th>
             <th>Status</th>
             <th>Aktionen</th>
@@ -31,6 +32,7 @@
                     <a href="{% url "booking_book" booking.id %}">{{ booking.description }}</a>
                 </td>
                 <td class="right-align">{{ booking.planned_amount }} €</td>
+                <td class="right-align">{{ booking.amount }} €</td>
                 <td>{{ booking.account|default:"" }}</td>
                 <td>{{ booking.contact.get_full_name }}</td>
                 <td>

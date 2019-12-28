@@ -15,13 +15,14 @@ class BookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ('id', 'description', 'planned_amount', 'justification')
+        fields = ['id', 'description', 'planned_amount', 'justification']
 
 
 class CheckBookingForm(forms.ModelForm):
+    account = forms.ModelChoiceField(Account.objects.filter().order_by('costcenter','name'))
     class Meta:
         model = Booking
-        fields = ('account',)
+        fields = ['account',]
 
 
 class BookBookingForm(forms.ModelForm):
@@ -56,9 +57,9 @@ class BookBookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ('id', 'description', 'planned_amount', 'justification', 'account', 'contact', 'invoice_date',
+        fields = ['id', 'description', 'planned_amount', 'justification', 'account', 'contact', 'invoice_date',
                   'invoice_number', 'firma', 'amount', 'submission_date', 'payout_number', 'booking_date',
-                  'maturity', 'upload', 'status')
+                  'maturity', 'upload', 'status']
 
 
 class CostCenterForm(forms.ModelForm):
@@ -69,47 +70,11 @@ class CostCenterForm(forms.ModelForm):
 
     class Meta:
         model = Costcenter
-        fields = ('id', 'name', 'year')
+        fields = ['id', 'name', 'year']
 
 
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ('id', 'name', 'costcenter', 'income', 'budget')
+        fields = ['id', 'name', 'costcenter', 'income', 'budget']
 
-#
-# class AcquisitionForm(forms.ModelForm):
-#     # Cost_center choices
-#     def getCostCenter():
-#         ''' Find all cost center'''
-#         cost_center = CostCenter.objects.values_list('name')
-#         return cost_center
-#     cost_center     = forms.ModelChoiceField(getCostCenter())
-#     #invoice_date    = models.DateField()
-#     #invoice_number  = models.CharField(max_length=20)
-#     #firma           = models.CharField(max_length=30)
-#     description     = models.CharField(max_length=50)
-#     #amount          = models.DecimalField(max_digits=10, decimal_places=2)
-#     planned_amount  = models.IntegerField()
-#     #submission_date = models.DateField()
-#     #payout_number   = models.IntegerField()
-#     #booking_date    = models.DateField()
-#     #maturity        = models.DateField()
-#     #account         = models.ForeignKey(to=Account.number, on_delete=models.CASCADE)
-#     #budget          = models.ForeignKey(to=Budget.name, on_delete=models.CASCADE)
-#     #upload          = models.FileField(upload_to='uploads/fibu/%Y/')
-#
-#
-#     # layout = Layout(Fieldset('Von',
-#     #                          Row('from_date', 'from_lesson', 'from_time'),
-#     #                          ),
-#     #                 Fieldset('Bis',
-#     #                          Row('to_date', 'to_lesson', 'to_time'),
-#     #                          ),
-#     #                 Fieldset('Grund / Vorhaben',
-#     #                          'description'),
-#     #                 )
-#
-#     class Meta:
-#         model = Booking
-#         fields = ('cost_center', 'description', 'planned_amount')

@@ -34,16 +34,23 @@
         </div>
     </form>
 
-
+<div class="collection-item row">
+            <div class="col s5"><strong>Beschreibung</strong></div>
+            <div class="col s2 right-align"><strong>erwarteter Betrag</strong></div>
+            <div class="col s2 right-align"><strong>Rechnungsbetrag</strong></div>
+            <div class="col s1 center-align"><strong>Status</strong></div>
+            <div class="col s2 center-align"><strong>Aktionen</strong></div>
+        </div>
     <div class="collection">
         {% for booking in bookings %}
             <div class="collection-item row">
-                <div class="col s12 m7">{{ booking.description }}</div>
-                <span class="col s12 m1 right-align">{{ booking.planned_amount }} €</span>
-                <div class="col s12 m1">
+                <div class="col s5">{{ booking.description }}</div>
+                <div class="col s2 right-align">{{ booking.planned_amount }} €</div>
+                <div class="col s2 right-align">{{ booking.amount }} €</div>
+                <div class="col s1">
                     <span class="badge new {{ booking.get_status.style_class }}">{{ booking.get_status.name }}</span>
                 </div>
-                <span class="col s12 m3">
+                <div class="col s2">
                     {# Delete #}
                     {% if booking.status < 3 %}
                         <form action="" method="POST" class="right">
@@ -93,7 +100,7 @@
                             </button>
                         {% endif %}
                     </form>
-                </span>
+                </div>
             </div>
         {% endfor %}
     </div>

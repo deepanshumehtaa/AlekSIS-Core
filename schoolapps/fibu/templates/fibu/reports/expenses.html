@@ -22,14 +22,14 @@
             {% for account in accounts %}
                 <div class="collection-item row">
                     <span class="col s5 m5">{{ account.name }}</span>
-                    <span class="col s2 m2 right-align">{{ account.budget }}</span>
+                    <span class="col s2 m2 right-align">{{ account.budget }} €</span>
                     <span class="col s1 m1 right-align">
-                        {% if account.income %}{{ account.saldo }}{% endif %}
+                        {% if account.income %}{{ account.saldo }} €{% endif %}
                     </span>
                     <span class="col s1 m1 right-align">
-                        {% if not account.income %}{{ account.saldo }}{% endif %}
+                        {% if not account.income %}{{ account.saldo }} €{% endif %}
                     </span>
-                    <span class="col s1 m1 right-align">{{ account.rest }}</span>
+                    <span class="col s1 m1 right-align">{{ account.rest }} €</span>
                 </div>
            {% endfor %}
         </div>
