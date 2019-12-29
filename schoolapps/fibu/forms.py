@@ -1,11 +1,11 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.utils import timezone
 from material import Layout, Row, Fieldset
 
-from .models import YEARS, Booking, Costcenter, Account, status_choices
+from .models import Booking, CostCenter, Account
 
 
-class BookingForm(forms.ModelForm):
+class SimpleBookingForm(forms.ModelForm):
     description = forms.CharField(label='Beschreibung – Was soll angeschafft werden?')
     planned_amount = forms.IntegerField(
         label='Erwarteter Betrag – Welcher Betrag ist erforderlich?', help_text="in Euro, ohne Komma")
@@ -19,34 +19,22 @@ class BookingForm(forms.ModelForm):
 
 
 class CheckBookingForm(forms.ModelForm):
-    account = forms.ModelChoiceField(Account.objects.filter().order_by('costcenter','name'))
+    account = forms.ModelChoiceField(Account.objects.filter().order_by('cost_center', 'name'))
+
     class Meta:
         model = Booking
-        fields = ['account',]
+        fields = ['account', ]
 
 
-class BookBookingForm(forms.ModelForm):
-    accounts = Account.objects.filter().order_by('costcenter', 'name')
-    user = User.objects.filter()
-    description = forms.CharField(label='Beschreibung')
-    planned_amount = forms.IntegerField(label='Erwarteter Betrag (ganze Euro)')
-    justification = forms.CharField(label='Begründung', required=False)
-    account = forms.ModelChoiceField(queryset=accounts, label='Buchungskonto')
-    contact = forms.ModelChoiceField(queryset=user, label='Kontakt')
-    invoice_date = forms.DateField(label='Rechnungsdatum')
-    invoice_number = forms.CharField(label='Rechnungsnummer')
-    firma = forms.CharField(label='Firma')
-    amount = forms.DecimalField(max_digits=9, decimal_places=2, label='Betrag')
-    submission_date = forms.DateField(label='Bearbeitungsdatum')
-    payout_number = forms.IntegerField(label='Auszahlungsnummer')
-    booking_date = forms.DateField(label='Buchungsdatum')
-    maturity = forms.DateField(label='Fälligkeit')
-    upload = forms.FileField(label='Scan der Rechnung', required=False)
-    status = forms.ChoiceField(choices=status_choices, label='Status')
+class CompleteBookingForm(forms.ModelForm):
+    accounts = Account.objects.filter().order_by('cost_center', 'name')
+    account = forms.ModelChoiceField(queryset=accounts)
+    submission_date = forms.DateField(label='Bearbeitungsdatum', initial=timezone.now())
 
     layout = Layout(Fieldset("Allgemeines",
-                             Row('description', 'justification', 'contact'),
-                             Row('account', 'status', 'planned_amount')
+                             Row('description', 'justification'),
+                             Row("contact", "planned_amount"),
+                             Row('account', 'status')
                              ),
                     Fieldset('Details',
                              Row('firma', 'invoice_number', 'amount'),
@@ -63,18 +51,12 @@ class BookBookingForm(forms.ModelForm):
 
 
 class CostCenterForm(forms.ModelForm):
-    name = forms.CharField(max_length=30, label='Kostenstelle')
-    year = forms.ChoiceField(choices=YEARS, label='Jahr')
-
-    layout = Layout(Row('name', 'year'))
-
     class Meta:
-        model = Costcenter
+        model = CostCenter
         fields = ['id', 'name', 'year']
 
 
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['id', 'name', 'costcenter', 'income', 'budget']
-
+        fields = ['id', 'name', 'cost_center', 'income', 'budget']

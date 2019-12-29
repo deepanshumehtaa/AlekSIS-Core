@@ -3,9 +3,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Booking, Costcenter, Account
+from .models import Booking, CostCenter, Account
 from .filters import BookingFilter
-from .forms import BookingForm, CheckBookingForm, BookBookingForm, CostCenterForm, AccountForm
+from .forms import SimpleBookingForm, CheckBookingForm, CompleteBookingForm, CostCenterForm, AccountForm
 
 
 @login_required
@@ -29,11 +29,11 @@ def index(request):
                 Booking.objects.filter(id=booking_id).update(status=4)
                 return redirect('fibu_index')
 
-            form = BookingForm(instance=booking)
+            form = SimpleBookingForm(instance=booking)
         else:
-            form = BookingForm(request.POST)
+            form = SimpleBookingForm(request.POST)
     else:
-        form = BookingForm()
+        form = SimpleBookingForm()
 
     if form.is_valid():
         description = form.cleaned_data['description']
@@ -55,12 +55,12 @@ def index(request):
 
 @login_required
 @permission_required('fibu.request_booking')
-def edit(request, id):
-    booking = get_object_or_404(Booking, id=id)
-    form = BookingForm(instance=booking)
+def user_edit(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
+    form = SimpleBookingForm(instance=booking)
 
     if request.method == 'POST':
-        form = BookingForm(request.POST, instance=booking)
+        form = SimpleBookingForm(request.POST, instance=booking)
 
         if form.is_valid():
             form.save()
@@ -109,16 +109,16 @@ def booking(request, is_archive=""):
 
 @login_required
 @permission_required('fibu.manage_booking')
-def book(request, id):
-    booking = get_object_or_404(Booking, id=id)
-    form = BookBookingForm(instance=booking)
+def book(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
+    form = CompleteBookingForm(instance=booking)
     template = 'fibu/booking/book.html'
     if request.method == 'POST':
-        form = BookBookingForm(request.POST, request.FILES, instance=booking)
+        form = CompleteBookingForm(request.POST, request.FILES, instance=booking)
         if form.is_valid():
             form.save()
             messages.success(request, "Die Änderungen an der Buchung wurden erfolgreich übernommen.")
-            return redirect(reverse('booking'))
+            return redirect(reverse('fibu_bookings'))
     context = {'form': form}
     return render(request, template, context)
 
@@ -126,15 +126,15 @@ def book(request, id):
 @login_required
 @permission_required('fibu.manage_booking')
 def new_booking(request):
-    form = BookBookingForm()
+    form = CompleteBookingForm()
     template = 'fibu/booking/new.html'
     if request.method == 'POST':
-        form = BookBookingForm(request.POST, request.FILES)
+        form = CompleteBookingForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Die Buchung wurde erfolgreich angelegt.")
 
-            return redirect(reverse('booking'))
+            return redirect(reverse('fibu_bookings'))
     context = {'form': form}
     return render(request, template, context)
 
@@ -147,7 +147,7 @@ def cost_centers(request):
     if request.method == 'POST':
         if 'id' in request.POST and 'cancel' in request.POST:
             cost_center_id = request.POST['id']
-            cost_center = Costcenter.objects.get(id=cost_center_id)
+            cost_center = CostCenter.objects.get(id=cost_center_id)
             cost_center.delete()
 
             messages.success(request, "Die Kostenstelle wurde erfolgreich gelöscht.")
@@ -161,7 +161,7 @@ def cost_centers(request):
         messages.success(request, "Die Kostenstelle wurde erfolgreich angelegt.")
         return redirect('fibu_cost_centers')
 
-    cost_centers = Costcenter.objects.filter()
+    cost_centers = CostCenter.objects.filter()
 
     context = {'cost_centers': cost_centers, 'form': form}
     return render(request, 'fibu/cost_center/index.html', context)
@@ -169,8 +169,8 @@ def cost_centers(request):
 
 @login_required
 @permission_required('fibu.manage_costcenter')
-def cost_center_edit(request, id):
-    cost_center = get_object_or_404(Costcenter, id=id)
+def cost_center_edit(request, pk):
+    cost_center = get_object_or_404(CostCenter, pk=pk)
     form = CostCenterForm(instance=cost_center)
 
     if request.method == 'POST':
@@ -209,15 +209,15 @@ def account(request):
         messages.success(request, "Das Buchungskonto wurde erfolgreich angelegt.")
         return redirect('account')
 
-    accounts = Account.objects.filter().order_by('costcenter','-income','name')
+    accounts = Account.objects.filter().order_by('cost_center', '-income', 'name')
     context = {'accounts': accounts, 'form': form}
     return render(request, 'fibu/account/index.html', context)
 
 
 @login_required
 @permission_required('fibu.manage_account')
-def account_edit(request, id):
-    account = get_object_or_404(Account, id=id)
+def account_edit(request, pk):
+    account = get_object_or_404(Account, pk=pk)
     form = AccountForm(instance=account)
 
     if request.method == 'POST':
@@ -242,11 +242,11 @@ def reports(request):
 @login_required
 @permission_required('fibu.manage_booking')
 def expenses(request):
-    cost_centers = Costcenter.objects.filter()
+    cost_centers = CostCenter.objects.filter()
     cost_center_accounts = {}
     account_rests = {}
     for cost_center in cost_centers:
-        accounts = Account.objects.filter(costcenter=cost_center)
+        accounts = Account.objects.filter(cost_center=cost_center)
         # update saldo
         for account in accounts:
             saldo = Booking.objects.filter(account=account).aggregate(Sum('amount'))
@@ -261,6 +261,6 @@ def expenses(request):
                 Account.objects.filter(id=account.id).update(saldo=0, rest=account.budget)
 
         cost_center_accounts[cost_center.name] = list(
-            Account.objects.filter(costcenter=cost_center).order_by('-income'))
-    context = {'costcenter_accounts': cost_center_accounts, 'account_rests': account_rests}
+            Account.objects.filter(cost_center=cost_center).order_by('-income'))
+    context = {'cost_center_accounts': cost_center_accounts, 'account_rests': account_rests}
     return render(request, 'fibu/reports/expenses.html', context)

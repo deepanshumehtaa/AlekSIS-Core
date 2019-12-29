@@ -2,7 +2,6 @@
 {% load material_form %}
 
 <main>
-
     <h4>Neue Buchung</h4>
 
     <form method="POST">
@@ -14,11 +13,11 @@
             <button type="submit" class="waves-effect waves-light btn green">
                 <i class="material-icons left">save</i> Buchung anlegen
             </button>
-            <a href="{% url 'booking' %}" class="waves-effect waves-light btn red">
+            <a href="{% url 'fibu_bookings' %}" class="waves-effect waves-light btn red">
                 <i class="material-icons left">cancel</i> Abbrechen
             </a>
         </span>
     </form>
-
 </main>
+
 {% include 'partials/footer.html' %}

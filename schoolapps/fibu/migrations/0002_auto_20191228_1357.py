@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='account',
             name='costcenter',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fibu.Costcenter',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fibu.CostCenter',
                                     verbose_name='Kostenstelle'),
         ),
         migrations.AlterField(

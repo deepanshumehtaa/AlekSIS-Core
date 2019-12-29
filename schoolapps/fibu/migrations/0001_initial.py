@@ -29,11 +29,12 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Costcenter',
+            name='CostCenter',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=30)),
-                ('year', models.IntegerField(choices=[(2020, '2020'), (2021, '2021'), (2022, '2022'), (2023, '2023')], default=2019, verbose_name='Jahr')),
+                ('year', models.IntegerField(choices=[(2020, '2020'), (2021, '2021'), (2022, '2022'), (2023, '2023')],
+                                             default=2019, verbose_name='Jahr')),
             ],
             options={
                 'permissions': [('manage_costcenter', 'Can manage costcenter')],
@@ -66,6 +67,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='account',
             name='costcenter',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='fibu.Costcenter'),
+            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='fibu.CostCenter'),
         ),
     ]

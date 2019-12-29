@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Costcenter, Account, Booking
+from .models import CostCenter, Account, Booking
 
-admin.site.register(Costcenter)
+admin.site.register(CostCenter)
 admin.site.register(Account)
 admin.site.register(Booking)

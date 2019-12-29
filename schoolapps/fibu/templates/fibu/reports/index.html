@@ -2,15 +2,10 @@
 {% load material_form %}
 
 <main>
-
-   {% block content %}
-
     <h4>Berichte</h4>
 
-       <div class="collection">
-       <a href="reports/expenses" class="collection-item">Ausgaben</a>
-       </div>
-
-    {% endblock %}
+    <div class="collection">
+        <a href="{% url "fibu_reports_expenses" %}" class="collection-item">Ausgaben</a>
+    </div>
 </main>
 {% include 'partials/footer.html' %}

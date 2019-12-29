@@ -28,7 +28,7 @@ status_list = [
 status_choices = [(x, val.name) for x, val in enumerate(status_list)]
 
 
-class Costcenter(models.Model):
+class CostCenter(models.Model):
     # Kostenstellen z.B. Schulträger-konsumtiv, Schulträger-investiv, Elternverein, ...
     name = models.CharField(max_length=30, blank=False, verbose_name="Kostenstelle")
     year = models.IntegerField(default=timezone.now().year, choices=YEARS, blank=False, verbose_name="Jahr")
@@ -47,7 +47,7 @@ class Costcenter(models.Model):
 class Account(models.Model):
     # Buchungskonten, z.B. Fachschaften, Sekretariat, Schulleiter, Kopieren, Tafelnutzung
     name = models.CharField(max_length=20, blank=False, verbose_name="Buchungskonto")
-    costcenter = models.ForeignKey(to=Costcenter, on_delete=models.CASCADE, blank=False, verbose_name="Kostenstelle")
+    cost_center = models.ForeignKey(to=CostCenter, on_delete=models.CASCADE, blank=False, verbose_name="Kostenstelle")
     income = models.BooleanField(default=False,
                                  verbose_name="Einnahmekonto")  # True, wenn es sich um ein Einnahmekonto handelt
     budget = models.IntegerField(default=0, verbose_name="Budget")
@@ -55,7 +55,7 @@ class Account(models.Model):
     rest = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return "{}: {}".format(self.costcenter, self.name)
+        return "{}: {}".format(self.cost_center, self.name)
 
     class Meta:
         verbose_name = "Buchungskonto"
@@ -66,21 +66,30 @@ class Account(models.Model):
 
 
 class Booking(models.Model):
-    account = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True)
+    # General information
+    account = models.ForeignKey(to=Account, on_delete=models.SET_NULL, blank=True, null=True,
+                                verbose_name="Buchungskonto")
     contact = models.ForeignKey(to=User, related_name='bookings', on_delete=models.SET_NULL
                                 , verbose_name="Erstellt von", blank=True, null=True)
-    invoice_date = models.DateField(default=date.today)
-    invoice_number = models.CharField(max_length=20, default='0')
-    firma = models.CharField(max_length=30, default='')
-    description = models.CharField(max_length=50)
-    amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
-    planned_amount = models.IntegerField()
-    submission_date = models.DateField(default=date.today)
-    justification = models.CharField(max_length=2000, blank=True, null=True)
-    payout_number = models.IntegerField(default=0)
-    booking_date = models.DateField(default=date.today)
-    maturity = models.DateField(default=date.today)
-    upload = models.FileField(upload_to='uploads/fibu/%Y/', default=None, blank=True, null=True)
+    description = models.CharField(max_length=50, verbose_name="Beschreibung")
+    justification = models.CharField(max_length=2000, blank=True, null=True, verbose_name="Begründung")
+    planned_amount = models.IntegerField(verbose_name="Erwarteter Betrag", help_text="ganze Euro")
+
+    # Details
+    invoice_date = models.DateField(blank=True, null=True, verbose_name="Rechnungsdatum")
+    invoice_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="Rechnungsnummer")
+    firma = models.CharField(max_length=30, blank=True, null=True, verbose_name="Firma")
+    amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00, verbose_name="Betrag")
+    payout_number = models.IntegerField(blank=True, null=True, verbose_name="Auszahlungsnummer")
+
+    submission_date = models.DateField(blank=True, null=True, verbose_name="Bearbeitungsdatum")
+    booking_date = models.DateField(default=date.today, verbose_name="Buchungsdatum")
+    maturity = models.DateField(blank=True, null=True, verbose_name="Fälligkeit")
+
+    upload = models.FileField(upload_to='uploads/fibu/%Y/', default=None, blank=True, null=True,
+                              verbose_name="Scan der Rechnung")
+
+    # Meta information
     status = models.IntegerField(default=0, choices=status_choices, verbose_name="Status")
 
     def get_status(self):

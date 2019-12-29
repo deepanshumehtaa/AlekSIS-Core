@@ -67,7 +67,7 @@
 
                     {# Edit #}
                     {% if booking.status == 0 %}
-                        <form action="{% url 'booking_edit' booking.id %}" class="right">
+                        <form action="{% url 'fibu_bookings_user_edit' booking.id %}" class="right">
                             {% csrf_token %}
                             <input type="hidden" value="{{ booking.id }}" name="booking-id">
                             <button type="submit" name="edit"

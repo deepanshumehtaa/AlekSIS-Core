@@ -46,7 +46,7 @@
         {% for account in accounts %}
             <tr>
                 <td>{{ account.name }}</td>
-                <td>{{ account.costcenter }}</td>
+                <td>{{ account.cost_center }}</td>
                 {% if account.income %}
                     <td class="green-text right-align">{{ account.budget }} €</td>
                     <td></td>
@@ -55,7 +55,7 @@
                     <td class="red-text right-align">{{ account.budget }} €</td>
                 {% endif %}
                 <td class="right-align">
-                    <a href="{% url 'account_edit' account.id %}"
+                    <a href="{% url 'fibu_accounts_edit' account.id %}"
                        class="waves-effect waves-light btn-flat btn-flat-medium left" title="Bearbeiten">
                         <i class="material-icons center green-text">create</i>
                     </a>

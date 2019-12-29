@@ -186,7 +186,7 @@
                 </li>
             {% endif %}
             {% if perms.fibu.request_booking  or perms.fibu.manage_booking or perms.fibu.manage_costcenter or perms.fibu.manage.account %}
-                <li class="bold url-fibu_index url-booking-check url-booking_book">
+                <li class="bold url-fibu_index url-fibu_bookings_user_edit">
                     <a class="collapsible-header waves-effect waves-primary" href="{% url 'fibu_index' %}"><i
                             class="material-icons">euro_symbol</i>
                         Finanzen
@@ -194,31 +194,31 @@
                     <div class="collapsible-body">
                         <ul>
                             {% if perms.fibu.check_booking %}
-                                <li class="url-booking_check">
-                                    <a href="{% url 'booking_check' %}"><i class="material-icons">done_all</i>Anträge
+                                <li class="url-fibu_bookings_check">
+                                    <a href="{% url 'fibu_bookings_check' %}"><i class="material-icons">done_all</i>Anträge
                                         prüfen
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.fibu.manage_booking %}
-                                <li class="url-booking url-booking_book url-new_booking">
-                                    <a href="{% url 'booking' 0 %}"><i class="material-icons">receipt</i>Buchungen
+                                <li class="url-fibu_bookings url-fibu_bookings_edit url-fibu_bookings_new">
+                                    <a href="{% url 'fibu_bookings' %}"><i class="material-icons">receipt</i>Buchungen
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.fibu.manage_costcenter %}
-                                <li class="url-fibu_cost_centers">
+                                <li class="url-fibu_cost_centers url-fibu_cost_centers_edit">
                                     <a href="{% url 'fibu_cost_centers' %}"><i class="material-icons">done</i>Kostenstellen
                                     </a>
                                 </li>
-                                <li class="url-account">
-                                    <a href="{% url 'account' %}"><i class="material-icons">done</i>Buchungskonten
+                                <li class="url-fibu_accounts url-fibu_accounts_edit">
+                                    <a href="{% url 'fibu_accounts' %}"><i class="material-icons">done</i>Buchungskonten
                                     </a>
                                 </li>
                             {% endif %}
                             {% if perms.fibu.manage_booking %}
-                                <li class="url-reports url-expenses">
-                                    <a href="{% url 'reports' %}"><i class="material-icons">list</i>Berichte</a>
+                                <li class="url-fibu_reports url-fibu_reports_expenses">
+                                    <a href="{% url 'fibu_reports' %}"><i class="material-icons">list</i>Berichte</a>
                                 </li>
                             {% endif %}
                         </ul>
