@@ -33,7 +33,6 @@ GRANT SELECT ON Untis.* TO 'www-data'@'localhost';
 ### UNTIS-Beispieldaten importieren
 Zum Testen kann die Datei `untiskath.sql` vom Forum in die Datenbank `Untis` importiert werden.
 
-
 ### SchoolApps clonen
 ```
 git clone git@github.com:Katharineum/school-apps.git
@@ -48,7 +47,6 @@ pip install -r requirements.txt
 ```
 
 - `example_secure_settings.py` zu `secure_settings.py` kopieren und anpassen (hier müssen auch die passenden DB-Zugangsdaten eingetragen werden)
-
 
 ### Migrations durchführen/auflösen
 Leider kommt es bei einer Erstinstallation von SchoolApps immer noch zu Problemen mit den Migrations. Sollte es Schwierigkeiten geben, @hansegucker kontaktieren.

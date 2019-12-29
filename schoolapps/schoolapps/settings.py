@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     "debug.apps.DebugConfig",
     'aub.apps.AubConfig',
+    'fibu.apps.FibuConfig',
     'untisconnect.apps.UntisconnectConfig',
     'timetable.apps.TimetableConfig',
     'menu.apps.MenuConfig',

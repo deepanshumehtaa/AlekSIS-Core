@@ -1,0 +1,108 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+    <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
+        <i class="material-icons left">add</i> Antrag stellen
+    </a>
+    <h4>Meine Anträge</h4>
+
+
+    {% if form.errors %}
+        <script>
+            var onFinish = function () {
+                $("#new-modal").modal("open");
+            };
+        </script>
+    {% endif %}
+
+    <form method="POST">
+        <div id="new-modal" class="modal">
+            <div class="modal-content">
+                <h5>Neuen Antrag stellen</h5>
+                {% csrf_token %}
+                {% form form=form %}
+                    {% part form.planned_amount prefix %}<i class="material-icons prefix">euro_symbol</i>
+                    {% endpart %}
+                {% endform %}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn green">
+                    <i class="material-icons left">send</i> Antrag stellen
+                </button>
+            </div>
+        </div>
+    </form>
+
+<div class="collection-item row">
+            <div class="col s5"><strong>Beschreibung</strong></div>
+            <div class="col s2 right-align"><strong>erwarteter Betrag</strong></div>
+            <div class="col s2 right-align"><strong>Rechnungsbetrag</strong></div>
+            <div class="col s1 center-align"><strong>Status</strong></div>
+            <div class="col s2 center-align"><strong>Aktionen</strong></div>
+        </div>
+    <div class="collection">
+        {% for booking in bookings %}
+            <div class="collection-item row">
+                <div class="col s5">{{ booking.description }}</div>
+                <div class="col s2 right-align">{{ booking.planned_amount }} €</div>
+                <div class="col s2 right-align">{{ booking.amount }} €</div>
+                <div class="col s1">
+                    <span class="badge new {{ booking.get_status.style_class }}">{{ booking.get_status.name }}</span>
+                </div>
+                <div class="col s2">
+                    {# Delete #}
+                    {% if booking.status < 3 %}
+                        <form action="" method="POST" class="right">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                            <button type="submit"
+                                    onclick="return confirm('Wollen Sie den Antrag wirklich zurücknehmen?')"
+                                    name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
+                                    title="Antrag zurücknehmen">
+                                <i class="material-icons center red-text">cancel</i>
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    {# Edit #}
+                    {% if booking.status == 0 %}
+                        <form action="{% url 'fibu_bookings_user_edit' booking.id %}" class="right">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                            <button type="submit" name="edit"
+                                    class="waves-effect waves-light btn-flat btn-flat-medium right"
+                                    title="Bearbeiten">
+                                <i class="material-icons center green-text">create</i>
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    <form action="" method="POST" class="right">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ booking.id }}" name="booking-id">
+                        <input type="hidden" value="{{ booking.status }}" name="booking-status">
+
+
+                        {% if booking.status == 2 %}
+                            <button type="submit" name="ordered"
+                                    class="waves-effect waves-light btn-flat btn-flat-medium left"
+                                    title="Status auf 'bestellt' ändern">
+                                <i class="material-icons center green-text">shopping_cart</i>
+                            </button>
+
+
+                        {% elif booking.status == 3 %}
+                            <button type="submit" name="submit-invoice"
+                                    class="waves-effect waves-light btn-flat btn-flat-medium left"
+                                    title="Status auf 'Rechnung eingereicht' ändern">
+                                <i class="material-icons center green-text">description</i>
+                            </button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% include 'partials/footer.html' %}
