@@ -270,19 +270,6 @@ django-common-helpers = ">=0.6.4"
 
 [[package]]
 category = "main"
-description = "Management commands to help backup and restore a project database and media"
-name = "django-dbbackup"
-optional = false
-python-versions = "*"
-version = "3.2.0"
-
-[package.dependencies]
-Django = ">=1.5"
-pytz = "*"
-six = "*"
-
-[[package]]
-category = "main"
 description = "Application settings whose values can be updated while a project is up and running."
 name = "django-dbsettings"
 optional = false
@@ -1774,9 +1761,6 @@ django-common-helpers = [
 ]
 django-cron = [
     {file = "django-cron-0.5.1.tar.gz", hash = "sha256:08d22708c8b2ecab8cda989019a66c7e1e2424c59d822796fd45abf7731d261d"},
-]
-django-dbbackup = [
-    {file = "django-dbbackup-3.2.0.tar.gz", hash = "sha256:9470e5d8bdaee4feb878b1b66c59eb9b27a131cccd648bf7cbfe70930acd4fc0"},
 ]
 django-dbsettings = [
     {file = "django-dbsettings-0.11.0.tar.gz", hash = "sha256:e3147ced54b7db3371df10df8845e4514aeae96720000bca1a01d0a6490a1404"},

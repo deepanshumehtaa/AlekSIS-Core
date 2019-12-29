@@ -44,24 +44,4 @@
       </li>
     </ul>
   </div>
-
-  <div class="card">
-    <div class="card-header bg-light text-dark">
-      {% blocktrans %}Recent backup cron jobs{% endblocktrans %}
-    </div>
-    <ul class="list-group list-group-flush">
-      {% for backup in backups %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <p>{{ backup.end_time }}</p>
-          </div>
-          {% if backup.is_success %}
-            <span class="badge badge-success mdi mdi-check"> </span>
-          {% else %}
-            <span class="badge badge-danger mdi mdi-error"> </span>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
 {% endblock %}
