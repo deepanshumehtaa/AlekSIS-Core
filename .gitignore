@@ -47,6 +47,7 @@ ENV/
 *~
 DEADJOE
 \#*#
+.idea/
 
 # Database
 db.sqlite3
