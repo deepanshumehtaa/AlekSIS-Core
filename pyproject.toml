@@ -30,7 +30,7 @@ django-menu-generator = "^1.0.4"
 django-tables2 = "^2.1"
 Pillow = "^6.1"
 django-phonenumber-field = {version = ">=3.0, <5.0", extras = ["phonenumbers"]}
-django-sass-processor = "^0.7.3"
+django-sass-processor = { git = "https://github.com/jrief/django-sass-processor", rev = "88da08ce636ec99677a446b9612b1fcf3d31d044" }
 libsass = "^0.19.2"
 colour = "^0.1.5"
 dynaconf = {version = "^2.0", extras = ["yaml", "toml", "ini"]}
