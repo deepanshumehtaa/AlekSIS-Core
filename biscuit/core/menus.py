@@ -113,7 +113,7 @@ MENUS = {
             "name": _("BiscuIT Software"),
             "url": "#",
             "submenu": [
-                {"name": _("Website"), "url": "https://biscuit.edugit.org/"},
+                {"name": _("Website"), "url": "https://biscuit.edugit.io/"},
                 {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
             ],
         },
