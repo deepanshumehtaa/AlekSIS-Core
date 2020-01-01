@@ -61,7 +61,7 @@ def person(request: HttpRequest, id_: int) -> HttpResponse:
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
-    return render(request, "core/person_full.html" % context)
+    return render(request, "core/person_full.html", context)
 
 
 @login_required
