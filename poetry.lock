@@ -418,15 +418,12 @@ description = "SASS processor to compile SCSS files into *.css, while rendering,
 name = "django-sass-processor"
 optional = false
 python-versions = "*"
-version = "0.7.5"
+version = "0.8"
 
 [package.extras]
 dev = ["libsass (>=0.13)"]
+management-command = ["django-compressor (>=2.4)"]
 
-[package.source]
-reference = "88da08ce636ec99677a446b9612b1fcf3d31d044"
-type = "git"
-url = "https://github.com/jrief/django-sass-processor"
 [[package]]
 category = "main"
 description = "Select2 option fields for Django"
@@ -1547,7 +1544,7 @@ description = "Fast, Extensible Progress Meter"
 name = "tqdm"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*"
-version = "4.41.0"
+version = "4.41.1"
 
 [package.extras]
 dev = ["py-make (>=0.1.0)", "twine", "argopt", "pydoc-markdown"]
@@ -1638,7 +1635,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "dee6ccef7746e251c76d78fc7ff14c8a7b12d71b3649cd777bdd0fae51f1cbe7"
+content-hash = "ea8c96d54aef1562f0986603bfe92d5753a17c64108f1be29da486b5a621ab10"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1812,7 +1809,9 @@ django-phonenumber-field = [
     {file = "django-phonenumber-field-3.0.1.tar.gz", hash = "sha256:794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"},
     {file = "django_phonenumber_field-3.0.1-py3-none-any.whl", hash = "sha256:1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e"},
 ]
-django-sass-processor = []
+django-sass-processor = [
+    {file = "django-sass-processor-0.8.tar.gz", hash = "sha256:e039551994feaaba6fcf880412b25a772dd313162a34cbb4289814988cfae340"},
+]
 django-select2 = [
     {file = "django-select2-7.1.2.tar.gz", hash = "sha256:bcd7e5fc920ceee0e63c36372d8e75bd2254d8a37ac67fc16581634766680d30"},
     {file = "django_select2-7.1.2-py2.py3-none-any.whl", hash = "sha256:4c8c4c7c4afee12c17e64d1eabf77af4cd2666a784cba1e74455ce759dd29393"},
@@ -2354,8 +2353,8 @@ toml = [
     {file = "toml-0.10.0.tar.gz", hash = "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c"},
 ]
 tqdm = [
-    {file = "tqdm-4.41.0-py2.py3-none-any.whl", hash = "sha256:9036904496bd2afacf836a6f206c5a766ce11d3e9319d54a4e794c0f34b111dc"},
-    {file = "tqdm-4.41.0.tar.gz", hash = "sha256:166a82cdea964ae45528e0cc89436255ff2be73dc848bdf239f13c501cae5dc7"},
+    {file = "tqdm-4.41.1-py2.py3-none-any.whl", hash = "sha256:efab950cf7cc1e4d8ee50b2bb9c8e4a89f8307b49e0b2c9cfef3ec4ca26655eb"},
+    {file = "tqdm-4.41.1.tar.gz", hash = "sha256:4789ccbb6fc122b5a6a85d512e4e41fc5acad77216533a6f2b8ce51e0f265c23"},
 ]
 twilio = [
     {file = "twilio-6.35.1.tar.gz", hash = "sha256:c784e55d150ebeb2ba837afbab7168edfb91db57e77a9da49f2a1892688a1930"},
