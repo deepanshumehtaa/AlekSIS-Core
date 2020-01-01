@@ -96,7 +96,7 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
-    return render(request, "core/group_full.html" % context)
+    return render(request, "core/group_full.html", context)
 
 
 @login_required
