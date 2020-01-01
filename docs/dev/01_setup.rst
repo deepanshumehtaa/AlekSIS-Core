@@ -81,7 +81,7 @@ development server against a local PostgreSQL database with password
    :alt: Screenshot of index page
 
    After installing the development environment with default settings,
-   you should see the index page with the BOotstrap style.
+   you should see the index page with the Bootstrap style.
 
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
