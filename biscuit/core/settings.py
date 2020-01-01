@@ -252,8 +252,8 @@ SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
     "DataTables-Bootstrap4": {
-        "css_url": JS_URL + "/datatables/media/css/dataTables.bootstrap4.min.css",
-        "js_url": JS_URL + "/datatables/media/js/dataTables.bootstrap4.min.js",
+        "css_url": JS_URL + "/datatables/media/css/jquery.dataTables.min.css",
+        "js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js",
     },
     "material-design-icons": {"css_url": JS_URL + "@mdi/font/css/materialdesignicons.css"},
 }
