@@ -283,7 +283,10 @@ description = "Yet another Django audit log app, hopefully the simplest one."
 name = "django-easy-audit"
 optional = false
 python-versions = "*"
-version = "1.1.1"
+version = "1.2rc1"
+
+[package.dependencies]
+beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
@@ -1632,15 +1635,10 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [extras]
-app-alsijil = []
-app-chronos = []
-app-exlibris = []
-app-schild-nrw = []
-app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "6f516a4b78fc1fd5584d1926e0155e44b9801db844d0363ac71eda18ec0cd2ec"
+content-hash = "dee6ccef7746e251c76d78fc7ff14c8a7b12d71b3649cd777bdd0fae51f1cbe7"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1772,8 +1770,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-2.1-py3-none-any.whl", hash = "sha256:77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"},
 ]
 django-easy-audit = [
-    {file = "django-easy-audit-1.1.1.tar.gz", hash = "sha256:4b40a30599fe721eb0a9946f5023254fa0904d531c9f4adb23ee52601efaf89b"},
-    {file = "django_easy_audit-1.1.1-py2.py3-none-any.whl", hash = "sha256:1c5d5e6d6a33f50f696ed53cdaf51de0a4ae2f110ef8c41b33bc139b737729a6"},
+    {file = "django-easy-audit-1.2rc1.tar.gz", hash = "sha256:80f82fa4006290dcd6589a345e75de1c780de49d38218050eedd9048c54b647d"},
+    {file = "django_easy_audit-1.2rc1-py3-none-any.whl", hash = "sha256:fb9c5ec3e90f0900302448d3648acc11da6d6b3d35d13d77eab917ab8c813d77"},
 ]
 django-formtools = [
     {file = "django-formtools-2.2.tar.gz", hash = "sha256:c5272c03c1cd51b2375abf7397a199a3148a9fbbf2f100e186467a84025d13b2"},
