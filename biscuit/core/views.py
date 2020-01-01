@@ -41,7 +41,7 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def person(request: HttpRequest, id_: int, template: str) -> HttpResponse:
+def person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
     # Get person and check access
@@ -61,11 +61,11 @@ def person(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
-    return render(request, "core/person_%s.html" % template, context)
+    return render(request, "core/person_full.html" % context)
 
 
 @login_required
-def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
+def group(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
     # Get group and check if it exist
@@ -96,7 +96,7 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
-    return render(request, "core/group_%s.html" % template, context)
+    return render(request, "core/group_full.html" % context)
 
 
 @login_required
