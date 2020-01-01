@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "sass_processor",
     "easyaudit",
     "dbsettings",
-    "django_cron",
     "bootstrap4",
     "django_any_js",
     "django_yarnpkg",
