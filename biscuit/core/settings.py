@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "dbbackup",
     "dbsettings",
     "django_cron",
-    "bootstrap4",
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
@@ -233,20 +232,10 @@ STATIC_ROOT = _settings.get("static.root", os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
-YARN_INSTALLED_APPS = ["bootstrap", "@mdi/font", "jquery", "popper.js", "datatables", "select2", "materialize-css", "material-design-icons-iconfont", "jquery"]
+YARN_INSTALLED_APPS = ["jquery", "popper.js", "datatables", "select2", "materialize-css", "material-design-icons-iconfont"]
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
-
-BOOTSTRAP4 = {
-    "css_url": JS_URL + "/bootstrap/dist//css/bootstrap.min.css",
-    "javascript_url": JS_URL + "/bootstrap/dist/js/bootstrap.min.js",
-    "jquery_url": JS_URL + "/jquery/dist/jquery.min.js",
-    "popper_url": JS_URL + "/popper.js/dist/umd/popper.min.js",
-    "include_jquery": True,
-    "include_popper": True,
-    "javascript_in_head": True,
-}
 
 SELECT2_CSS = JS_URL + "/select2/dist/css/select2.min.css"
 SELECT2_JS = JS_URL + "/select2/dist/js/select2.min.js"
@@ -254,10 +243,6 @@ SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
-    "DataTables-Bootstrap4": {
-        "css_url": JS_URL + "/datatables/media/css/dataTables.bootstrap4.min.css",
-        "js_url": JS_URL + "/datatables/media/js/dataTables.bootstrap4.min.js",
-    },
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -265,7 +250,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "biscuit.core.util.sass_helpers.get_colour",
     "get-theme-setting": "biscuit.core.util.sass_helpers.get_theme_setting",
 }
-SASS_PROCESSOR_INCLUDE_DIRS = [_settings.get("bootstrap.sass_path", JS_ROOT + "/materialize-css/sass/"), STATIC_ROOT]
+SASS_PROCESSOR_INCLUDE_DIRS = [_settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"), STATIC_ROOT]
 
 ADMINS = _settings.get("contact.admins", [])
 SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
