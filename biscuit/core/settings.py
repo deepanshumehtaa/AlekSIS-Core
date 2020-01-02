@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
-    "dbbackup",
     "dbsettings",
     "django_cron",
     "django_any_js",
@@ -243,6 +242,10 @@ SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
+    "DataTables-Bootstrap4": {
+        "css_url": JS_URL + "/datatables/media/css/jquery.dataTables.min.css",
+        "js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js",
+    },
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -282,14 +285,6 @@ MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
-
-DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
-DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/biscuit")}
-DBBACKUP_CLEANUP_KEEP = _settings.get("backup.keep.database", 10)
-DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get("backup.keep.media", 10)
-DBBACKUP_CRON_TIMES = _settings.get("backup.times", None) or ["03:57"]
-
-CRON_CLASSES = ["biscuit.core.cronjobs.Backup"]
 
 ANONYMIZE_ENABLED = _settings.get("maintenance.anonymisable", True)
 

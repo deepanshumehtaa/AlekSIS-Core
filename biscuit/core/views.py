@@ -5,7 +5,6 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
-from django_cron.models import CronJobLog
 from django_tables2 import RequestConfig
 
 from .decorators import admin_required
@@ -42,7 +41,7 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def person(request: HttpRequest, id_: int, template: str) -> HttpResponse:
+def person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
     # Get person and check access
@@ -62,11 +61,11 @@ def person(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
-    return render(request, "core/person_%s.html" % template, context)
+    return render(request, "core/person_full.html", context)
 
 
 @login_required
-def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
+def group(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
     # Get group and check if it exist
@@ -97,7 +96,7 @@ def group(request: HttpRequest, id_: int, template: str) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
-    return render(request, "core/group_%s.html" % template, context)
+    return render(request, "core/group_full.html", context)
 
 
 @login_required
@@ -186,10 +185,6 @@ def data_management(request: HttpRequest) -> HttpResponse:
 @admin_required
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
-
-    context["backups"] = CronJobLog.objects.filter(code="biscuit.core.Backup").order_by(
-        "-end_time"
-    )[:10]
 
     return render(request, "core/system_status.html", context)
 

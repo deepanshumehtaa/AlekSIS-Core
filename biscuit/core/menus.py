@@ -122,7 +122,6 @@ MENUS = {
     "FOOTER_MENU_CORE": [
         {"name": _("Website"), "url": "https://biscuit.edugit.org/"},
         {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
-
     ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [
