@@ -11,16 +11,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Selbst programmierte Anwendungen für den Schullaltag am Katharineum zu Lübeck">
+
   <title>School Information System</title>
 
-  {# CSS #}
   {% include 'core/icons.html' %}
+
+  {# CSS #}
   <link rel="stylesheet" href="{% static "material-design-icons-iconfont/dist/material-design-icons.css" %}">
-{#  <link rel="stylesheet" href="{% static "materialize-css/dist/css/materialize.min.css" %}">#}
   <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
 
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+  {# Include jQuery to provide $(document).ready #}
   <script type="text/javascript" src="{% static "jquery/dist/jquery.min.js" %}"></script>
 </head>
 <body>
@@ -34,7 +34,7 @@
   </div>
 
   <!-- Nav bar (logged in as, logout) -->
-  <nav class="primary-color">
+  <nav>
     <a class="brand-logo" href="/">SIS</a>
 
     <div class="nav-wrapper">
@@ -74,7 +74,7 @@
 </main>
 
 
-<footer class="page-footer primary-color">
+<footer class="page-footer">
   <div class="container">
     <div class="row no-margin footer-row-large">
       <div class="col l6 s12 no-pad-left height-inherit">

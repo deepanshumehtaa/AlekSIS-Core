@@ -13,13 +13,6 @@ from .mixins import ExtensibleModel
 
 class ThemeSettings(dbsettings.Group):
     colour_primary = dbsettings.StringValue(default="#007bff")
-    colour_secondary = dbsettings.StringValue(default="#6c757d")
-    colour_success = dbsettings.StringValue(default="#28a745")
-    colour_info = dbsettings.StringValue(default="#17a2b8")
-    colour_warning = dbsettings.StringValue(default="#ffc107")
-    colour_danger = dbsettings.StringValue(default="#dc3545")
-    colour_light = dbsettings.StringValue(default="#f8f9fa")
-    colour_dark = dbsettings.StringValue(default="#343a40")
 
 
 theme_settings = ThemeSettings("Global theme settings")
