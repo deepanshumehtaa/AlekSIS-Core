@@ -1,19 +1,7 @@
 {# -*- engine:django -*- #}
 
 {% extends "core/base.html" %}
-{% load bootstrap4 i18n %}
-
-{% block bootstrap4_extra_head %}
-  {{ block.super }}
-  {{ edit_group_form.media.css }}
-{% endblock %}
-
-{% block bootstrap4_extra_script %}
-  {{ block.super }}
-  {{ edit_group_form.media.js }}
-{% endblock %}
-
-{% block bootstrap4_title %}{% blocktrans %}Edit group{% endblocktrans %} - {{ block.super }}{% endblock %}
+{% load material_form i18n %}
 
 {% block page_title %}{% blocktrans %}Edit group{% endblocktrans %}{% endblock %}
 
@@ -21,10 +9,8 @@
 
   <form method="post">
     {% csrf_token %}
-    {% bootstrap_form edit_group_form %}
-    <button type="submit" class="btn btn-dark">
-      <span class="mdi mdi-pencil"></span>
-    </button>
+    {% form form=edit_group_form %}{% endform %}
+    {% include "core/save_button.html" %}
   </form>
 
 {% endblock %}

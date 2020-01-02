@@ -42,6 +42,7 @@ local_settings.py
 env/
 venv/
 ENV/
+env
 
 # Editors
 *~
@@ -58,6 +59,7 @@ docs/_build/
 # Generated files
 biscuit/static/
 biscuit/node_modules/
+biscuit/media/
 
 .coverage
 .tox/

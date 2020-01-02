@@ -1,6 +1,4 @@
-{% load bootstrap4 %}
+{% load material_form %}
 
-<div class="col-sm-12 col-md-12">
-  {% bootstrap_form wizard.management_form %}
-  {% bootstrap_form wizard.form %}
-</div>
+  {% form form=wizard.management_form %}{% endform %}
+  {% form form=wizard.form %}{% endform %}

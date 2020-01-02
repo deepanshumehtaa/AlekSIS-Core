@@ -2,31 +2,18 @@
 
 {% extends "core/base.html" %}
 
-{% load bootstrap4 i18n %}
+{% load material_form i18n %}
 
-{% block bootstrap4_title %}{% blocktrans %}Edit person{% endblocktrans %} - {{ block.super}}{% endblock %}
 
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 
-{% block bootstrap4_extra_head %}
-  {{ block.super }}
-  {{ edit_person_form.media }}
-  {{ edit_person_form.media.css }}
-{% endblock %}
-
-{% block bootstrap4_extra_script %}
-  {{ block.super }}
-  {{ edit_person_form.media.js }}
-{% endblock %}
 
 {% block content %}
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form edit_person_form %}
-    <button type="submit" class="btn btn-dark">
-      <span class="mdi mdi-pencil"></span>
-    </button>
+    {% form form=edit_person_form %}{% endform %}
+    {% include "core/save_button.html" %}
   </form>
 
 {% endblock %}
