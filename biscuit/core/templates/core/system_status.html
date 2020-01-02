@@ -62,23 +62,4 @@
       </div>
     </div>
   </div>
-
-  {# Backup cron jobs #}
-  <div class="card">
-  <div class="card-content">
-    <span class="card-title">{% blocktrans %}Recent backup cron jobs{% endblocktrans %}</span>
-    <ul class="collection">
-      {% for backup in backups %}
-        <li class="collection-item">
-         {% if backup.is_success %}
-            <i class="material-icons green-text right">check_circle</i>
-          {% else %}
-            <i class="material-icons red-text right">error</i>
-          {% endif %}
-
-          <span class="title">{{ backup.end_time }}</span>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
 {% endblock %}

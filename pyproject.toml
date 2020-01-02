@@ -20,17 +20,17 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Django = "^2.2"
+Django = "^3.0"
 django-any-js = "^1.0"
 django-bootstrap4 = "^1.0"
 django-debug-toolbar = "^2.0"
-django-easy-audit = "^1.1"
+django-easy-audit = {version ="^1.2rc1", allow-prereleases = true}
 django-middleware-global-request = "^0.1.2"
 django-menu-generator = "^1.0.4"
 django-tables2 = "^2.1"
-Pillow = "^6.1"
+Pillow = "^7.0"
 django-phonenumber-field = {version = ">=3.0, <5.0", extras = ["phonenumbers"]}
-django-sass-processor = "^0.7.3"
+django-sass-processor = "^0.8"
 libsass = "^0.19.2"
 colour = "^0.1.5"
 dynaconf = {version = "^2.0", extras = ["yaml", "toml", "ini"]}
@@ -42,8 +42,6 @@ easy-thumbnails = "^2.6"
 django-image-cropping = "^1.2"
 django-impersonate = "^1.4"
 python-memcached = "^1.59"
-django-dbbackup = "^3.2"
-django-cron = "^0.5.1"
 django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
