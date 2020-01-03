@@ -23,12 +23,17 @@ try:
         path('substitutions/', views.substitutions, name='timetable_substitutions'),
         path('substitutions/<int:year>/<int:month>/<int:day>/', views.substitutions,
              name='timetable_substitutions_date'),
+        path('substitutions/<int:year>/<int:month>/<int:day>/print/', views.substitutions_print,
+             name='timetable_substitutions_date_print'),
+        path('substitutions/print/', views.substitutions_print,
+             name='timetable_substitutions_print'),
         path('aktuell.pdf', views.sub_pdf, name="timetable_substitutions_pdf"),
         path('<str:plan_date>-aktuell.pdf', views.sub_pdf, name="timetable_substitutions_pdf_date")
     ]
 
-except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError, OperationalError):
+except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError, OperationalError) as e:
     from . import fallback_view
+    print(e)
 
     urlpatterns = [
         path('hints', fallback_view.fallback, name="timetable_hints"),
@@ -46,5 +51,10 @@ except (Terms.DoesNotExist, Schoolyear.DoesNotExist, ProgrammingError, Operation
         path('substitutions/', fallback_view.fallback, name='timetable_substitutions'),
         path('substitutions/<int:year>/<int:month>/<int:day>/', fallback_view.fallback,
              name='timetable_substitutions_date'),
-        path('aktuell.pdf', fallback_view.fallback, name="timetable_substitutions_pdf")
+        path('substitutions/<int:year>/<int:month>/<int:day>/<str:print_view>/', fallback_view.fallback,
+             name='timetable_substitutions_date_print'),
+        path('substitutions/<str:print_view>/', fallback_view.fallback,
+             name='timetable_substitutions_print'),
+        path('aktuell.pdf', fallback_view.fallback, name="timetable_substitutions_pdf"),
+        path('<str:plan_date>-aktuell.pdf', fallback_view.fallback, name="timetable_substitutions_pdf_date")
     ]

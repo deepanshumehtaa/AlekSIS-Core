@@ -243,8 +243,6 @@ function getOption(option) {
     try {
         for (var _iterator3 = BASIC_OPTIONS[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
             var category = _step3.value;
-
-            // console.log(category);
             var _iteratorNormalCompletion4 = true;
             var _didIteratorError4 = false;
             var _iteratorError4 = undefined;
@@ -253,7 +251,6 @@ function getOption(option) {
                 for (var _iterator4 = category.options[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                     var opt = _step4.value;
 
-                    // console.log(opt);
                     if (opt.id === option) {
                         return opt;
                     }

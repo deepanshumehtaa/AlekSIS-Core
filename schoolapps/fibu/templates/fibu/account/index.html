@@ -1,0 +1,76 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+    <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
+        <i class="material-icons left">add</i> Buchungskonto anlegen
+    </a>
+
+    <h4>Buchungskonten</h4>
+
+    {% if form.errors %}
+        <script>
+            var onFinish = function () {
+                $("#new-modal").modal("open");
+            };
+        </script>
+    {% endif %}
+
+    <form method="POST">
+        <div id="new-modal" class="modal">
+            <div class="modal-content">
+                <h5>Neues Buchungskonto anlegen</h5>
+                {% csrf_token %}
+                {% form form=form %}
+                {% endform %}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn green">
+                    <i class="material-icons left">save</i> Buchungskonto anlegen
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Buchungskonto</th>
+            <th>Kostenstelle</th>
+            <th class="right-align">erwartete Einnahmen</th>
+            <th class="right-align">erwartete Ausgaben</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr>
+                <td>{{ account.name }}</td>
+                <td>{{ account.cost_center }}</td>
+                {% if account.income %}
+                    <td class="green-text right-align">{{ account.budget }} €</td>
+                    <td></td>
+                {% else %}
+                    <td></td>
+                    <td class="red-text right-align">{{ account.budget }} €</td>
+                {% endif %}
+                <td class="right-align">
+                    <a href="{% url 'fibu_accounts_edit' account.id %}"
+                       class="waves-effect waves-light btn-flat btn-flat-medium left" title="Bearbeiten">
+                        <i class="material-icons center green-text">create</i>
+                    </a>
+                    <form action="" method="POST" class="left">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ account.id }}" name="id">
+                        <button type="submit" onclick="return confirm('Buchungskonto wirklich löschen?')"
+                                name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium" title="Löschen">
+                            <i class="material-icons center red-text">cancel</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% include 'partials/footer.html' %}

@@ -45,7 +45,6 @@ class Aub(models.Model):
     created_at = models.DateTimeField(default=timezone.now, verbose_name="Erstellungszeitpunkt")
 
     def getStatus(self):
-        print(self.status, self.created_by, self.id)
         return status_list[self.status]
 
     def __str__(self):

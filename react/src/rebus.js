@@ -222,9 +222,7 @@ function getCategoryOfOption(option) {
 
 function getOption(option) {
     for (const category of BASIC_OPTIONS) {
-        // console.log(category);
         for (const opt of category.options) {
-            // console.log(opt);
             if (opt.id === option) {
                 return opt;
             }
@@ -388,7 +386,7 @@ class REBUSDynSelect extends React.Component {
                     <Input label={"Art des Problems"} icon={"bug_report"} show={sO === "printerIssue"}>
                         <Select onChange={this._onSetB}
                                 values={["Papierstau", "Toner leer", "Papier leer", "Drucker bekommt keine Daten"]}
-                                defaultValue={"Anderes Problem"} show={sO === "subMonitorIssue"}/>
+                                defaultValue={"Anderes Problem"} show={sO === "printerIssue"}/>
                     </Input>
 
                     {/* Section B – Substitution Monitor Issue */}
@@ -432,7 +430,7 @@ class REBUSDynSelect extends React.Component {
                     <Input label={"Ort des Druckers"} icon={"location_on"}
                            show={sO === "printerIssue" && step === 2}>
                         <Select onChange={this._onSetC} values={LOCATIONS}
-                                defaultValue={"Anderer Raum"} show={sO === "presentationDeviceIssue"}/>
+                                defaultValue={"Anderer Raum"} show={sO === "printerIssue"}/>
                     </Input>
 
                     {/* Section C – WLAN Issue */}

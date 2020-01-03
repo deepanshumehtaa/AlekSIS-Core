@@ -13,8 +13,8 @@ class Migration(migrations.Migration):
             name='Cache',
             fields=[
                 ('id',
-                 models.CharField(max_length=200, primary_key=True, serialize=False, unique=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=200, verbose_name='Name')),
+                 models.CharField(max_length=150, primary_key=True, serialize=False, unique=True, verbose_name='ID')),
+                ('name', models.CharField(max_length=150, verbose_name='Name')),
                 ('expiration_time', models.IntegerField(default=20, verbose_name='Ablaufzeit')),
             ],
             options={

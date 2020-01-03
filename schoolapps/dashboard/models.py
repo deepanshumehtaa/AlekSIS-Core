@@ -11,7 +11,7 @@ from mailer import send_mail_with_template
 class Activity(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=150)
     description = models.TextField(max_length=500)
 
     app = models.CharField(max_length=100)
@@ -24,7 +24,7 @@ class Activity(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=150)
     description = models.TextField(max_length=500)
     link = models.URLField(blank=True)
 
@@ -48,8 +48,8 @@ def register_notification(user, title, description, app="SchoolApps", link=""):
 
 
 class Cache(models.Model):
-    id = models.CharField(max_length=200, unique=True, primary_key=True, verbose_name="ID")
-    name = models.CharField(max_length=200, verbose_name="Name")
+    id = models.CharField(max_length=150, unique=True, primary_key=True, verbose_name="ID")
+    name = models.CharField(max_length=150, verbose_name="Name")
     expiration_time = models.IntegerField(default=20, verbose_name="Ablaufzeit")
     last_time_updated = models.DateTimeField(blank=True, null=True,
                                              verbose_name="Letzter Aktualisierungszeitpunkt des Caches")

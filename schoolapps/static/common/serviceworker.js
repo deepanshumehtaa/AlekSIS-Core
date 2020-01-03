@@ -1,22 +1,19 @@
-//This is the SchoolApps service worker with Advanced caching
+//This is the SchoolApps service worker
 
 const CACHE = "schoolapps-cache";
 
 const precacheFiles = [
-    '/',
-    '/faq',
+    '',
+    '/faq/',
 ];
 
 const offlineFallbackPage = '/offline';
-
-const cacheFirstPaths = [
-    '/faq',
-];
 
 const avoidCachingPaths = [
     '/admin',
     '/settings',
     '/support',
+    '/tools',
     '/faq/ask',
     '/aub/apply_for',
     '/aub/check1',
@@ -45,14 +42,14 @@ function comparePaths(requestUrl, pathsArray) {
 }
 
 self.addEventListener("install", function (event) {
-  console.log("[SchoolApps PWA] Install Event processing");
+  console.log("[SchoolApps PWA] Install Event processing.");
 
-  console.log("[SchoolApps PWA] Skip waiting on install");
+  console.log("[SchoolApps PWA] Skipping waiting on install.");
   self.skipWaiting();
 
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
-      console.log("[SchoolApps PWA] Caching pages during install");
+      console.log("[SchoolApps PWA] Caching pages during install.");
 
       return cache.addAll(precacheFiles).then(function () {
         return cache.add(offlineFallbackPage);
@@ -63,84 +60,43 @@ self.addEventListener("install", function (event) {
 
 // Allow sw to control of current page
 self.addEventListener("activate", function (event) {
-  console.log("[SchoolApps PWA] Claiming clients for current page");
+  console.log("[SchoolApps PWA] Claiming clients for current page.");
   event.waitUntil(self.clients.claim());
 });
 
 // If any fetch fails, it will look for the request in the cache and serve it from there first
 self.addEventListener("fetch", function (event) {
   if (event.request.method !== "GET") return;
-
-  if (comparePaths(event.request.url, cacheFirstPaths)) {
-    cacheFirstFetch(event);
-  } else {
-    networkFirstFetch(event);
-  }
+  networkFirstFetch(event);
 });
-
-function cacheFirstFetch(event) {
-  event.respondWith(
-    fromCache(event.request).then(
-      function (response) {
-        // The response was found in the cache so we respond with it and update the entry
-
-        // This is where we call the server to get the newest version of the
-        // file to use the next time we show view
-        event.waitUntil(
-          fetch(event.request).then(function (response) {
-            return updateCache(event.request, response);
-          })
-        );
-
-        return response;
-      },
-      function () {
-        // The response was not found in the cache so we look for it on the server
-        return fetch(event.request)
-          .then(function (response) {
-            // If request was successful, add or update it in the cache
-            event.waitUntil(updateCache(event.request, response.clone()));
-
-            return response;
-          })
-          .catch(function (error) {
-            // The following validates that the request was for a navigation to a new document
-            if (event.request.destination !== "document" || event.request.mode !== "navigate") {
-              return;
-            }
-
-            console.log("[SchoolApps PWA] Network request failed and no cache." + error);
-            // Use the precached offline page as fallback
-            return caches.match(offlineFallbackPage)
-          });
-      }
-    )
-  );
-}
 
 function networkFirstFetch(event) {
   event.respondWith(
     fetch(event.request)
       .then(function (response) {
         // If request was successful, add or update it in the cache
+        console.log("[SchoolApps PWA] Network request successful.");
         event.waitUntil(updateCache(event.request, response.clone()));
         return response;
       })
       .catch(function (error) {
         console.log("[SchoolApps PWA] Network request failed. Serving content from cache: " + error);
-        return fromCache(event.request);
+        return fromCache(event);
       })
   );
 }
 
-function fromCache(request) {
+function fromCache(event) {
   // Check to see if you have it in the cache
   // Return response
   // If not in the cache, then return offline fallback page
   return caches.open(CACHE).then(function (cache) {
-    return cache.match(request).then(function (matching) {
+    return cache.match(event.request)
+    .then(function (matching) {
       if (!matching || matching.status === 404) {
-        return caches.match(offlineFallbackPage);
+        console.log("[SchoolApps PWA] Cache request failed. Serving offline fallback page.");
+        // Use the precached offline page as fallback
+        return caches.match(offlineFallbackPage)
       }
 
       return matching;
