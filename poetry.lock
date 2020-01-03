@@ -419,6 +419,10 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
+
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
@@ -2398,6 +2402,7 @@ urllib3 = [
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
+    {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
 yubiotp = [
     {file = "YubiOTP-0.2.2.post1-py2.py3-none-any.whl", hash = "sha256:7e281801b24678f4bda855ce8ab975a7688a912f5a6cb22b6c2b16263a93cbd2"},
