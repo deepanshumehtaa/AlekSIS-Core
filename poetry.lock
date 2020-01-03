@@ -419,6 +419,10 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
+
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
