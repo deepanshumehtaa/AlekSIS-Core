@@ -17,11 +17,11 @@
   {% include 'core/icons.html' %}
 
   {# CSS #}
-  <link rel="stylesheet" href="{% static "material-design-icons-iconfont/dist/material-design-icons.css" %}">
+  {% include_css "material-design-icons" %}
   <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
 
   {# Include jQuery to provide $(document).ready #}
-  <script type="text/javascript" src="{% static "jquery/dist/jquery.min.js" %}"></script>
+  {% include_js "jQuery" %}
 </head>
 <body>
 
@@ -128,7 +128,7 @@
 </footer>
 
 
-<script type="text/javascript" src="{% static 'materialize-css/dist/js/materialize.min.js' %}"></script>
+{% include_js "materialize" %}
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

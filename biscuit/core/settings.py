@@ -242,10 +242,9 @@ SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
-    "DataTables-Bootstrap4": {
-        "css_url": JS_URL + "/datatables/media/css/jquery.dataTables.min.css",
-        "js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js",
-    },
+    "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
+    "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
+    "material-design-icons": {"css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"},
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
