@@ -1,3 +1,5 @@
+/*** source for biscuit/core/static/js/dashboard.js ***/
+
 const REFRESH_TIME = 15;
 
 // function WithCheckCircleIcon(props) {

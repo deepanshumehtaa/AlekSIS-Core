@@ -1,3 +1,5 @@
+/*** source for biscuit/core/static/js/rebus.js ***/
+
 const OPTIONS_ONLINE_COMMON = [
     "Portal ist nicht erreichbar",
     "Fehlermeldung(en) tauchen auf",
