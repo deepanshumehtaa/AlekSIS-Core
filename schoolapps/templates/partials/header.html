@@ -120,7 +120,8 @@
             <img src="{% static 'common/logo.png' %}">
         </div>
         <div class="col s6 right-align">
-            <a href="/"><strong>SchoolApps</strong></a><br>
+            <a href="/"><strong>SchoolApps</strong></a>
+            <br>
             Katharineum zu Lübeck
         </div>
     </div>
@@ -147,19 +148,13 @@
             <ul class="collapsible collapsible-accordion">
 
             {% if perms.aub.apply_for_aub or perms.aub.check1_aub or perms.aub.check2_aub %}
-                <li class="bold">
-                    <a class="collapsible-header waves-effect waves-primary"><i class="material-icons">assignment</i>
-                        Lehrerfunktionen
+                <li class="bold url-aub_index url-aub_details url-ab_edit url-aub_apply_for urlaub_applied_for">
+                    <a class="collapsible-header waves-effect waves-primary" href="{% url 'aub_index' %}"><i
+                            class="material-icons">business_center</i>
+                        Unterrichtsbefreiungen
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            {% if perms.aub.apply_for_aub %}
-                                <li class="url-aub_index url-aub_details url-ab_edit url-aub_apply_for urlaub_applied_for">
-                                    <a href="{% url 'aub_index' %}"><i class="material-icons">business_center</i>
-                                        Unterrichtsbefreiungen
-                                    </a>
-                                </li>
-                            {% endif %}
                             {% if perms.aub.check1_aub %}
                                 <li class="url-aub_check1">
                                     <a href="{% url 'aub_check1' %}"><i class="material-icons">done</i> Anträge
@@ -169,7 +164,8 @@
                             {% endif %}
                             {% if perms.aub.check2_aub %}
                                 <li class="url-aub_check2">
-                                    <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i> Anträge
+                                    <a href="{% url 'aub_check2' %}"><i class="material-icons">done_all</i>
+                                        Anträge
                                         genehmigen 2
                                     </a>
                                 </li>
@@ -185,6 +181,49 @@
                     </div>
                 </li>
 
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
+            {% if perms.fibu.request_booking  or perms.fibu.manage_booking or perms.fibu.manage_costcenter or perms.fibu.manage.account %}
+                <li class="bold url-fibu_index url-fibu_bookings_user_edit">
+                    <a class="collapsible-header waves-effect waves-primary" href="{% url 'fibu_index' %}"><i
+                            class="material-icons">euro_symbol</i>
+                        Finanzen
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            {% if perms.fibu.check_booking %}
+                                <li class="url-fibu_bookings_check">
+                                    <a href="{% url 'fibu_bookings_check' %}"><i class="material-icons">done_all</i>Anträge
+                                        prüfen
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_booking %}
+                                <li class="url-fibu_bookings url-fibu_bookings_edit url-fibu_bookings_new">
+                                    <a href="{% url 'fibu_bookings' %}"><i class="material-icons">receipt</i>Buchungen
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_costcenter %}
+                                <li class="url-fibu_cost_centers url-fibu_cost_centers_edit">
+                                    <a href="{% url 'fibu_cost_centers' %}"><i class="material-icons">done</i>Kostenstellen
+                                    </a>
+                                </li>
+                                <li class="url-fibu_accounts url-fibu_accounts_edit">
+                                    <a href="{% url 'fibu_accounts' %}"><i class="material-icons">done</i>Buchungskonten
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if perms.fibu.manage_booking %}
+                                <li class="url-fibu_reports url-fibu_reports_expenses">
+                                    <a href="{% url 'fibu_reports' %}"><i class="material-icons">list</i>Berichte</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <div class="divider"></div>
                 </li>
@@ -235,18 +274,17 @@
                         </ul>
                     </div>
                 </li>
-            {% endif %}
 
-            <li>
-                <div class="divider"></div>
-            </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+            {% endif %}
 
             <li>
                 <a href="{% url 'menu_show_current' %}" target="_blank">
                     <i class="material-icons">picture_as_pdf</i> Aktueller Speiseplan
                 </a>
             </li>
-
 
             {% if perms.menu.add_menu %}
                 <li class="url-menu_index url-menu_upload url-menu_index_msg">
@@ -358,6 +396,27 @@
 {#        nutzt.#}
 {#    </p>#}
 {#</header>#}
+
+{% if messages %}
+    <header>
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+                <p>
+                    {% if message.tags == "success" %}
+                        <i class="material-icons left">check_circle</i>
+                    {% elif  message.tags == "info" %}
+                        <i class="material-icons left">info</i>
+                    {% elif  message.tags == "warning" %}
+                        <i class="material-icons left">warning</i>
+                    {% elif  message.tags == "error" %}
+                        <i class="material-icons left">error</i>
+                    {% endif %}
+                    {{ message }}
+                </p>
+            </div>
+        {% endfor %}
+    </header>
+{% endif %}
 
 {% if user.is_authenticated %}
     <div class="fixed-action-btn">

@@ -402,7 +402,7 @@ table.striped > tbody > tr:nth-child(odd) {
     border-color: #b71c1c;
 }
 
-.alert.primary > p, .alert.primary > div {
+.alert.primary > p, .alert.primary > div, .alert.info > p, .alert.info > div {
     background-color: #ececec;
     border-color: #da1f3d;
 }

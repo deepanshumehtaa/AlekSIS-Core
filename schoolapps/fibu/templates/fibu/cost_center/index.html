@@ -1,0 +1,72 @@
+{% include 'partials/header.html' %}
+{% load material_form %}
+
+<main>
+    <a class="waves-effect waves-light btn green modal-trigger right" href="#new-modal">
+        <i class="material-icons left">add</i> Kostenstelle anlegen
+    </a>
+
+    <h4>Kostenstellen</h4>
+
+    {% if form.errors %}
+        <script>
+            var onFinish = function () {
+                $("#new-modal").modal("open");
+            };
+        </script>
+    {% endif %}
+
+    <form method="POST">
+        <div id="new-modal" class="modal">
+            <div class="modal-content">
+                <h5>Neue Kostenstelle anlegen</h5>
+                {% csrf_token %}
+                {% form form=form %}
+                {% endform %}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn green">
+                    <i class="material-icons left">save</i> Kostenstelle anlegen
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Kostenstelle</th>
+            <th>Jahr</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        {% for cost_center in cost_centers %}
+            <tr>
+                <td>{{ cost_center.name }}</td>
+                <td>{{ cost_center.year }}</td>
+                <td>
+                    <form action="{% url 'fibu_cost_centers_edit' cost_center.id %}" class="left">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ cost_center.id }}" name="id">
+                        <button type="submit" name="edit"
+                                class="waves-effect waves-light btn-flat btn-flat-medium" title="Bearbeiten">
+                            <i class="material-icons center green-text">create</i>
+                        </button>
+                    </form>
+                    <form action="" method="POST" class="left">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ cost_center.id }}" name="id">
+                        <button type="submit"
+                                onclick="return confirm('Wollen Sie die Kostenstelle wirklich löschen?')"
+                                name="cancel" class="waves-effect waves-light btn-flat btn-flat-medium"
+                                title="Löschen">
+                            <i class="material-icons center red-text">cancel</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</main>
+
+{% include 'partials/footer.html' %}
