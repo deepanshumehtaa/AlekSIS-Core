@@ -24,20 +24,20 @@ const avoidCachingPaths = [
 ];
 
 function pathComparer(requestUrl, pathRegEx) {
-  return requestUrl.match(new RegExp(pathRegEx));
+    return requestUrl.match(new RegExp(pathRegEx));
 }
 
 function comparePaths(requestUrl, pathsArray) {
-  if (requestUrl) {
-    for (let index = 0; index < pathsArray.length; index++) {
-      const pathRegEx = pathsArray[index];
-      if (pathComparer(requestUrl, pathRegEx)) {
-        return true;
-      }
+    if (requestUrl) {
+        for (let index = 0; index < pathsArray.length; index++) {
+            const pathRegEx = pathsArray[index];
+            if (pathComparer(requestUrl, pathRegEx)) {
+                return true;
+            }
+        }
     }
-  }
 
-  return false;
+    return false;
 }
 
 self.addEventListener("install", function (event) {
@@ -49,12 +49,12 @@ self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       console.log("[SchoolApps PWA] Caching pages during install.");
-
-      return cache.addAll(precacheFiles).then(function () {
-        return cache.add(offlineFallbackPage);
-      });
-    })
-  );
+      
+            return cache.addAll(precacheFiles).then(function () {
+                return cache.add(offlineFallbackPage);
+            });
+        })
+    );
 });
 
 // Allow sw to control of current page
@@ -100,15 +100,14 @@ function fromCache(event) {
 
       return matching;
     });
-  });
 }
 
 function updateCache(request, response) {
-  if (!comparePaths(request.url, avoidCachingPaths)) {
-    return caches.open(CACHE).then(function (cache) {
-      return cache.put(request, response);
-    });
-  }
+    if (!comparePaths(request.url, avoidCachingPaths)) {
+        return caches.open(CACHE).then(function (cache) {
+            return cache.put(request, response);
+        });
+    }
 
-  return Promise.resolve();
+    return Promise.resolve();
 }
