@@ -1,13 +1,16 @@
 from typing import Optional
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 import dbsettings
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
+from .mailer import send_mail_with_template
 from .mixins import ExtensibleModel
 
 
@@ -170,3 +173,40 @@ class Group(models.Model, ExtensibleModel):
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
+
+
+class Activity(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=150)
+    description = models.TextField(max_length=500)
+
+    app = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
+    title = models.CharField(max_length=150)
+    description = models.TextField(max_length=500)
+    link = models.URLField(blank=True)
+
+    app = models.CharField(max_length=100)
+
+    read = models.BooleanField(default=False)
+    mailed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        if not self.mailed:
+            send_mail_with_template(self.title, [self.user.email], "mail/notification.txt", "mail/notification.html",
+                                    {"notification": self})
+            self.mailed = True
