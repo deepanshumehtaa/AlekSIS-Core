@@ -50,6 +50,6 @@ Minor changes
 * Use bootstrap buttons everywhere
 
 
-_`1.0a1`: https://edugit.org/Teckids/BiscuIT/BiscuIT-ng/-/tags/1.0a1
-_`1.0a2`: https://edugit.org/Teckids/BiscuIT/BiscuIT-ng/-/tags/1.0a2
-_`1.0a4`: https://edugit.org/Teckids/BiscuIT/BiscuIT-ng/-/tags/1.0a4
+_`1.0a1`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a1
+_`1.0a2`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a2
+_`1.0a4`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a4

@@ -4,7 +4,7 @@ Configuration files and format
 File locations and order
 ------------------------
 
-BiscuIT is configured through text files in the directory `/etc/biscuit/`.
+AlekSIS is configured through text files in the directory `/etc/aleksis/`.
 You can place any file types there that are supported by the `Dynaconf`_
 configuration system (INI, YAML and TOML).
 
@@ -15,14 +15,14 @@ files, it might be a good idea to number them, e.g. `00_main.toml`,
 `01_myschool.toml`, `99_temporary.toml`.
 
 The TOML format is recommended and is the only format described in detail in
-BiscuIT's documentation. For all other formats, refer to the `Dynaconf`_
+AlekSIS’ documentation. For all other formats, refer to the `Dynaconf`_
 documentation.
 
 Configuration file format (TOML)
 --------------------------------
 
 TOML file are simple text files that define variables, much like in Python
-(i.e. there are scalars, lists and dictionaries). BiscuIT structures its
+(i.e. there are scalars, lists and dictionaries). AlekSIS structures its
 configuration by topic.
 
 A configuration file might look like this::
@@ -31,11 +31,11 @@ A configuration file might look like this::
   secret_key = "VerySecretKeyForSessionSecurity"
 
   [default.http]
-  allowed_hosts = [ "biscuit.myschool.example.com", "localhost" ]
+  allowed_hosts = [ "aleksis.myschool.example.com", "localhost" ]
 
   [default.database]
-  name = "biscuit"
-  user = "biscuit"
+  name = "aleksis"
+  user = "aleksis"
   password = "SuperSecretPassword"
 
   [default.caching]
@@ -48,6 +48,6 @@ have defined another section called `[default.caching.memcached]` and placed
 `enabled` and `address` below it as scalars).
 
 This can be a bit confusing, so this documentation will explain how to
-configure BiscuIT on a per-feature basis.
+configure AlekSIS on a per-feature basis.
 
 .. _Dynaconf: https://dynaconf.readthedocs.io/en/latest/
