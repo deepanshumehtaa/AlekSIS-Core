@@ -230,7 +230,7 @@ STATIC_ROOT = _settings.get("static.root", os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
-YARN_INSTALLED_APPS = ["bootstrap", "@mdi/font", "jquery", "popper.js", "datatables", "select2"]
+YARN_INSTALLED_APPS = ["@mdi/font", "bootstrap", "datatables", "highlight.js", "jquery", "manup", "materialize-css", "moment", "popper.js", "prop-types", "react", "react-dom", "select2"]
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
