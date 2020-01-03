@@ -50,7 +50,7 @@ self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       console.log("[SchoolApps PWA] Caching pages during install.");
-      
+
             return cache.addAll(precacheFiles).then(function () {
                 return cache.add(offlineFallbackPage);
             });

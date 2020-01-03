@@ -66,5 +66,3 @@ class ApplyForAUBForm(forms.ModelForm):
             raise ValidationError('Bitte teilen Sie uns etwas mehr über Ihren Befreiungswunsch mit.')
 
         return data
-
- 

@@ -23,7 +23,7 @@ CREATE USER 'untis-read'@'localhost' IDENTIFIED BY 'grummelPASS1531';
 GRANT SELECT ON Untis.* TO 'untis-read'@'localhost';
 ```
 
-Hinweis: In Testumgebungen kann untis-read auch entfallen und 
+Hinweis: In Testumgebungen kann untis-read auch entfallen und
 stattdessen www-data auch für den Zugriff auf die Datenbank `Untis` verwendet werden:
 
 ```
