@@ -419,10 +419,6 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
-
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
@@ -1647,15 +1643,10 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [extras]
-app-alsijil = []
-app-chronos = []
-app-exlibris = []
-app-schild-nrw = []
-app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "e1b65a86bf9cf86d9fb9fb31f3014be757c419a771c28e7f2b97119dfc1d86a4"
+content-hash = "40917beab5394838573def3e2c8a6719f37040d826df74b3cdc9b52262ad0290"
 python-versions = "^3.7"
 
 [metadata.files]
