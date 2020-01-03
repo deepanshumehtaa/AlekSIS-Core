@@ -1,0 +1,36 @@
+[submodule "apps/official/AlekSIS-App-Alsijil"]
+	path = apps/official/AlekSIS-App-Alsijil
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Alsijil
+	branch = master
+[submodule "apps/official/AlekSIS-App-Chronos"]
+	path = apps/official/AlekSIS-App-Chronos
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Chronos
+	branch = master
+[submodule "apps/official/AlekSIS-App-Exlibris"]
+	path = apps/official/AlekSIS-App-Exlibris
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Exlibris
+	branch = master
+[submodule "apps/official/AlekSIS-App-FiBu"]
+	path = apps/official/AlekSIS-App-FiBu
+	url = https://edugit.org/AlekSIS/AlekSIS-App-FiBu
+	branch = master
+[submodule "apps/official/AlekSIS-App-Hjelp"]
+	path = apps/official/AlekSIS-App-Hjelp
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Hjelp
+	branch = master
+[submodule "apps/official/AlekSIS-App-Kopo"]
+	path = apps/official/AlekSIS-App-Kopo
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Kopo
+	branch = master
+[submodule "apps/official/AlekSIS-App-SchILD-NRW"]
+	path = apps/official/AlekSIS-App-SchILD-NRW
+	url = https://edugit.org/AlekSIS/AlekSIS-App-SchILD-NRW
+	branch = master
+[submodule "apps/official/AlekSIS-App-Untis"]
+	path = apps/official/AlekSIS-App-Untis
+	url = https://edugit.org/AlekSIS/AlekSIS-App-Untis
+	branch = master
+[submodule "apps/official/AlekSIS-App-mensa"]
+	path = apps/official/AlekSIS-App-mensa
+	url = https://edugit.org/AlekSIS/AlekSIS-App-mensa
+	branch = master
