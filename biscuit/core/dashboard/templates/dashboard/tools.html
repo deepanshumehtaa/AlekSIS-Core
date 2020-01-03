@@ -1,0 +1,76 @@
+{% include 'partials/header.html' %}
+{% load msg_box %}
+<main>
+    <h4>Tools</h4>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">
+                Cache-Management
+            </span>
+            {% msg_box "Nach Änderung der Ablaufzeit muss der entsprechende Cache (bei Variablencaches) bzw. der gesamte Cache (bei Sitecaches) geleert werden, damit die Änderung wirksam wird." "warning" "warning" %}
+            <table class="highlight">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Typ</th>
+                    <th>Ablaufzeit</th>
+                    <th>Letzter Aktualisierungszeitpunkt des Caches</th>
+                    <th>Aktionen</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cache in caches %}
+                    <tr>
+                        <td>
+                            <pre>{{ cache.id }}</pre>
+                        </td>
+                        <td>{{ cache.name }}</td>
+                        <td>
+                            <span class="badge new">{{ cache.site_cache|yesno:"Seitencache,Variablencache" }}</span>
+                        </td>
+
+                        <td>{{ cache.expiration_time }} s</td>
+                        <td>
+                            {% if cache.site_cache %}
+                                k. A.
+                            {% else %}
+                                {{ cache.last_time_updated }}
+                                {% if cache.is_expired %}
+                                    <span class="badge new red">Abgelaufen</span>
+                                {% else %}
+                                    <span class="badge new green">Gültig</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not cache.site_cache %}
+                                <a class="btn-flat waves-effect waves-red red-text"
+                                   href="{% url "tools_clear_single_cache" cache.id %}">
+                                    <i class="material-icons left">delete</i> Cache leeren
+                                </a>
+                            {% endif %}
+                            <a class="btn-flat waves-effect waves-orange orange-text"
+                               href="{% url "admin:dashboard_cache_change" cache.id %}" target="_blank">
+                                <i class="material-icons left">edit</i>
+                                Ablaufzeit bearbeiten
+                            </a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if msg == "success_cleared_whole_cache" %}
+                {% msg_box "Der gesamte Cache wurde erfolgreich geleert." "success" "check_circle" %}
+            {% elif msg == "success_cleared_single_cache" %}
+                {% msg_box "Ein Cache wurde erfolgreich geleert." "success" "check_circle" %}
+            {% endif %}
+        </div>
+        <div class="card-action">
+            <a href="{% url "tools_clear_cache" %}">Cache leeren</a>
+        </div>
+    </div>
+</main>
+
+{% include 'partials/footer.html' %}
