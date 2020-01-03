@@ -522,7 +522,7 @@ description = "Integrate django with yarnpkg"
 name = "django-yarnpkg"
 optional = false
 python-versions = "*"
-version = "6.0.0"
+version = "6.0.1"
 
 [package.dependencies]
 django = "*"
@@ -1651,7 +1651,7 @@ app-untis = []
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "9e4dda5cc59668f75b50cc22768e9980b8adfed7c14d633f5fadf75d19ae29fa"
+content-hash = "e1b65a86bf9cf86d9fb9fb31f3014be757c419a771c28e7f2b97119dfc1d86a4"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1852,8 +1852,7 @@ django-two-factor-auth = [
     {file = "django_two_factor_auth-1.10.0-py2.py3-none-any.whl", hash = "sha256:0945260fa84e4522d8fa951c35e401616579fd8564938441614399dc588a1c1f"},
 ]
 django-yarnpkg = [
-    {file = "django-yarnpkg-6.0.0.tar.gz", hash = "sha256:010af70049cca94496d4c96ca45e62f13339edd1c22653ab8bfe055acbccd41b"},
-    {file = "django_yarnpkg-6.0.0-py3-none-any.whl", hash = "sha256:0d63c7b17e4b9c6c144c4093de3877ce70152f957b36fd7a50b259dc500a4948"},
+    {file = "django-yarnpkg-6.0.1.tar.gz", hash = "sha256:aa059347b246c6f242401581d2c129bdcb45aa726be59fe2f288762a9843348a"},
 ]
 docutils = [
     {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
