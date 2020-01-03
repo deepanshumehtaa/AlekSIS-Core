@@ -15,7 +15,7 @@ from timetable.views import get_next_weekday_with_time
 from untisconnect.api import TYPE_TEACHER, TYPE_CLASS
 from untisconnect.datetimeutils import get_name_for_next_week_day_from_today
 from untisconnect.utils import get_type_and_object_of_user, get_plan_for_day
-from utils.network import get_newest_article_from_news, get_current_events_with_cal
+from util.network import get_newest_article_from_news, get_current_events_with_cal
 
 
 @login_required

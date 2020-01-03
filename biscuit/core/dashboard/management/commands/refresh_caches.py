@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from dashboard.caches import BACKGROUND_CACHE_REFRESH
 from dashboard.models import Cache
-from utils.network import get_newest_article_from_news, get_current_events_with_cal
+from util.network import get_newest_article_from_news, get_current_events_with_cal
 from timetable.views import get_next_weekday_with_time, get_calendar_week
 from untisconnect.drive import build_drive, TYPE_TEACHER, TYPE_CLASS, TYPE_ROOM
 from untisconnect.parse import parse
