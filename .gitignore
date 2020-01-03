@@ -47,6 +47,7 @@ ENV/
 *~
 DEADJOE
 \#*#
+.idea/
 
 # Database
 db.sqlite3
@@ -57,6 +58,7 @@ docs/_build/
 # Generated files
 biscuit/static/
 biscuit/node_modules/
+biscuit/media/
 
 .coverage
 .tox/
