@@ -31,18 +31,14 @@ class Notification(models.Model):
     app = models.CharField(max_length=100)
 
     read = models.BooleanField(default=False)
+    mailed = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
 
-
-def register_notification(user, title, description, app="SchoolApps", link=""):
-    n = Notification(user=user, title=title, description=description, app=app, link=link)
-
-    n.save()
-    context = {
-        'notification': n
-    }
-    send_mail_with_template(title, [user.email], "mail/notification.txt", "mail/notification.html", context)
-
+    def save(self):
+        super().save()
+        if not self.mailed:
+            send_mail_with_template(title, [user.email], "mail/notification.txt", "mail/notification.html", context)
+            self.mailed = True
