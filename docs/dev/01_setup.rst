@@ -23,6 +23,14 @@ If you do not want to download the bundled apps, leave out the
 ``--recurse-submodules`` option.
 
 
+Install native dependencies
+---------------------------
+
+Some system libraries are required to install BiscuIT::
+
+  sudo apt install libpq5 libpq-dev libssl-dev python3-dev yarnpkg python3-pip python3-venv
+
+
 Get Poetry
 ----------
 
@@ -31,7 +39,6 @@ documentation. Right now, we encourage using pip to install Poetry
 once system-wide (this will change once distributions pick up
 Poetry). On Debian, for example, this would be done with::
 
-  sudo apt install python3-pip python3-venv
   sudo pip3 install poetry
 
 You can use any other of the `Poetry installation methods`_.
@@ -61,6 +68,7 @@ All three steps can be done with the ``poetry run`` command and
 
   poetry run ./manage.py yarn install
   poetry run ./manage.py collectstatic
+  poetry run ./manage.py compilemessages
   poetry run ./manage.py migrate
 
 (You might need database settings for the `migrate` command; see below.)
