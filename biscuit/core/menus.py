@@ -76,6 +76,15 @@ MENUS = {
                         "menu_generator.validators.is_superuser",
                     ],
                 },
+                {
+                    "name": _("Settings"),
+                    "url": "site_settings",
+                    "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "menu_generator.validators.is_superuser",
+                    ],
+                },
             ],
         },
         {
@@ -113,7 +122,7 @@ MENUS = {
             "name": _("BiscuIT Software"),
             "url": "#",
             "submenu": [
-                {"name": _("Website"), "url": "https://biscuit.edugit.org/"},
+                {"name": _("Website"), "url": "https://biscuit.edugit.io/"},
                 {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
             ],
         },
