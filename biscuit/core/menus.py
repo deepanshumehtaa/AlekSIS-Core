@@ -87,6 +87,15 @@ MENUS = {
                         "menu_generator.validators.is_superuser",
                     ],
                 },
+                {
+                    "name": _("Settings"),
+                    "url": "site_settings",
+                    "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "menu_generator.validators.is_superuser",
+                    ],
+                },
             ],
         },
         {
