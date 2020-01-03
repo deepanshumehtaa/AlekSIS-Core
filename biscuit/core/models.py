@@ -113,7 +113,7 @@ class Person(models.Model, ExtensibleModel):
     )
 
     guardians = models.ManyToManyField(
-        "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children"
+        "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
     )
 
     primary_group = models.ForeignKey("Group", models.SET_NULL, null=True)
@@ -157,8 +157,8 @@ class Group(models.Model, ExtensibleModel):
     name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=16, unique=True)
 
-    members = models.ManyToManyField("Person", related_name="member_of")
-    owners = models.ManyToManyField("Person", related_name="owner_of")
+    members = models.ManyToManyField("Person", related_name="member_of", blank=True)
+    owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
 
     parent_groups = models.ManyToManyField(
         "self",
