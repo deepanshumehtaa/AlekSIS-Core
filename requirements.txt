@@ -1,8 +1,4 @@
-requests
 mysqlclient
-django<3.0
-django-auth-ldap
-django-dbsettings
 django-pdb
 django-material
 django-filter
@@ -11,5 +7,4 @@ PyPDF2
 martor
 django-pwa
 django_widget_tweaks
-python-memcached
 ics
