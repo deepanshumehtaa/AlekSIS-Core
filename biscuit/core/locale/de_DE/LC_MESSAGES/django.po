@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BiscuIT - School Information System (SIS)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-23 10:06+0100\n"
+"POT-Creation-Date: 2020-01-01 20:19+0000\n"
 "PO-Revision-Date: 2019-09-17 21:08+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/biscuit-sis/"
@@ -19,248 +19,241 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.8\n"
 
-#: forms.py:30 forms.py:66
+#: biscuit/core/forms.py:30 biscuit/core/forms.py:85
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
 "existierenden Benutzer auswählen."
 
-#: forms.py:32 forms.py:68
+#: biscuit/core/forms.py:33 biscuit/core/forms.py:88
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
 
-#: forms.py:57
+#: biscuit/core/forms.py:75
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: forms.py:58
+#: biscuit/core/forms.py:75
 msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
-#: menus.py:6
-msgid "Account"
-msgstr "Konto"
-
-#: menus.py:11
-msgid "Stop impersonation"
-msgstr "Verkleidung beenden"
-
-#: menus.py:16 templates/registration/login.html:21
+#: biscuit/core/menus.py:7 biscuit/core/templates/registration/login.html:21
+#: biscuit/core/templates/two_factor/core/login.html:6
+#: biscuit/core/templates/two_factor/core/login.html:59
 msgid "Login"
 msgstr "Anmelden"
 
-#: menus.py:21
+#: biscuit/core/menus.py:13
+msgid "Account"
+msgstr "Konto"
+
+#: biscuit/core/menus.py:20
+msgid "Stop impersonation"
+msgstr "Verkleidung beenden"
+
+#: biscuit/core/menus.py:29 biscuit/core/templates/core/base.html:49
 msgid "Logout"
 msgstr "Abmelden"
 
-#: menus.py:28
+#: biscuit/core/menus.py:35
+msgid "Two factor auth"
+msgstr ""
+
+#: biscuit/core/menus.py:46
 msgid "Admin"
 msgstr "Admin"
 
-#: menus.py:33 templates/core/data_management.html:5
-#: templates/core/data_management.html:7
+#: biscuit/core/menus.py:55 biscuit/core/templates/core/data_management.html:6
 msgid "Data management"
 msgstr "Datenverwaltung"
 
-#: menus.py:38 templates/core/system_status.html:5
-#: templates/core/system_status.html:7
+#: biscuit/core/menus.py:64 biscuit/core/templates/core/system_status.html:7
 msgid "System status"
 msgstr "System-Status"
 
-#: menus.py:43
+#: biscuit/core/menus.py:73
 msgid "Impersonation"
 msgstr "Verkleidung"
 
-#: menus.py:48
+#: biscuit/core/menus.py:82
 msgid "Manage school"
 msgstr "Schulverwaltung"
 
-#: menus.py:55
+#: biscuit/core/menus.py:93
 msgid "People"
 msgstr "Leute"
 
-#: menus.py:61 templates/core/persons.html:8 templates/core/persons.html:10
+#: biscuit/core/menus.py:102 biscuit/core/templates/core/persons.html:8
+#: biscuit/core/templates/core/persons.html:10
 msgid "Persons"
 msgstr "Personen"
 
-#: menus.py:66 templates/core/groups.html:8 templates/core/groups.html:10
-#: templates/core/person_full.html:66
+#: biscuit/core/menus.py:107 biscuit/core/templates/core/groups.html:8
+#: biscuit/core/templates/core/groups.html:10
+#: biscuit/core/templates/core/person_full.html:66
 msgid "Groups"
 msgstr "Gruppen"
 
-#: menus.py:71
+#: biscuit/core/menus.py:112
 msgid "Persons and accounts"
 msgstr "Personen und Konten"
 
-#: menus.py:80
-msgid "BiscuIT Software"
-msgstr "BiscuIT-Software"
-
-#: menus.py:84
+#: biscuit/core/menus.py:123
 msgid "Website"
 msgstr "Website"
 
-#: menus.py:94
-msgid "Support"
-msgstr "Unterstützung"
-
-#: menus.py:98 templates/contact_form/contact_form.html:8
-msgid "Get support"
-msgstr "Unterstützung erhalten"
-
-#: menus.py:108
+#: biscuit/core/menus.py:129
 msgid "Edit school information"
 msgstr "Schulinformationen bearbeiten"
 
-#: menus.py:112 templates/core/edit_schoolterm.html:7
-#: templates/core/edit_schoolterm.html:9
+#: biscuit/core/menus.py:130 biscuit/core/templates/core/edit_schoolterm.html:8
 msgid "Edit school term"
 msgstr "Schuljahr bearbeiten"
 
-#: migrations/0001_initial.py:15
+#: biscuit/core/migrations/0001_initial.py:15
 msgid "Default school"
 msgstr "Standardschule"
 
-#: migrations/0002_school_term.py:16
+#: biscuit/core/migrations/0002_school_term.py:15
 msgid "Default term"
 msgstr "Standardschuljahr"
 
-#: models.py:20
+#: biscuit/core/models.py:35
 msgid "Name"
 msgstr "Name"
 
-#: models.py:21
+#: biscuit/core/models.py:37
 msgid "Official name"
 msgstr "Offizieller Name"
 
-#: models.py:22
+#: biscuit/core/models.py:39
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: models.py:24
+#: biscuit/core/models.py:42
 msgid "School logo"
 msgstr "Schullogo"
 
-#: models.py:38
+#: biscuit/core/models.py:58
 msgid "Visible caption of the term"
 msgstr "Sichtbare Beschriftung des Schuljahres"
 
-#: models.py:42
+#: biscuit/core/models.py:60
 msgid "Effective start date of term"
 msgstr "Startdatum des Schuljahres"
 
-#: models.py:44
+#: biscuit/core/models.py:61
 msgid "Effective end date of term"
 msgstr "Enddatum des Schuljahres"
 
-#: models.py:57
+#: biscuit/core/models.py:79
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:58
+#: biscuit/core/models.py:79
 msgid "male"
 msgstr "männlich"
 
-#: models.py:65
+#: biscuit/core/models.py:84
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: models.py:67
+#: biscuit/core/models.py:86
 msgid "First name"
 msgstr "Vorname"
 
-#: models.py:68
+#: biscuit/core/models.py:87
 msgid "Last name"
 msgstr "Nachname"
 
-#: models.py:70
+#: biscuit/core/models.py:89
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: models.py:73
+#: biscuit/core/models.py:93
 msgid "Short name"
 msgstr "Kurzname"
 
-#: models.py:76
+#: biscuit/core/models.py:96
 msgid "Street"
 msgstr "Straße"
 
-#: models.py:78
+#: biscuit/core/models.py:97
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: models.py:80
+#: biscuit/core/models.py:98
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: models.py:82
+#: biscuit/core/models.py:99
 msgid "Place"
 msgstr "Ort"
 
-#: models.py:84
+#: biscuit/core/models.py:101
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: models.py:86
+#: biscuit/core/models.py:102
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: models.py:88
+#: biscuit/core/models.py:104
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: models.py:91
+#: biscuit/core/models.py:106
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: models.py:93
+#: biscuit/core/models.py:107
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: models.py:95
+#: biscuit/core/models.py:109
 msgid "Photo"
 msgstr "Foto"
 
-#: models.py:99
+#: biscuit/core/models.py:113
 msgid "Reference ID of import source"
 msgstr "Referenz-ID der Import-Quelle"
 
-#: models.py:101
+#: biscuit/core/models.py:122
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: models.py:145
+#: biscuit/core/models.py:163
 msgid "Long name of group"
 msgstr "Langer Name der Gruppe"
 
-#: models.py:147
+#: biscuit/core/models.py:164
 msgid "Short name of group"
 msgstr "Kurzer Name der Gruppe"
 
-#: models.py:153
+#: biscuit/core/models.py:173
 msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
-#: settings.py:218
+#: biscuit/core/settings.py:213
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:219
+#: biscuit/core/settings.py:214
 msgid "English"
 msgstr "Englisch"
 
-#: templates/403.html:5
+#: biscuit/core/templates/403.html:5
 msgid "Forbidden"
 msgstr "Verboten"
 
-#: templates/403.html:12
+#: biscuit/core/templates/403.html:12
 msgid "You are not allowed to access the requested page or object."
 msgstr ""
 "Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das angefragte "
 "Objekt zuzugreifen."
 
-#: templates/403.html:16 templates/404.html:20
+#: biscuit/core/templates/403.html:16 biscuit/core/templates/404.html:20
 msgid ""
 "\n"
 "     If you think this is an error in BiscuIT, please contact your site\n"
@@ -273,15 +266,15 @@ msgstr ""
 "     Systemadministratoren:\n"
 "    "
 
-#: templates/404.html:5
+#: biscuit/core/templates/404.html:5
 msgid "Not found"
 msgstr "Nicht gefunden"
 
-#: templates/404.html:12
+#: biscuit/core/templates/404.html:12
 msgid "The requested page or object was not found."
 msgstr "Die angefragte Seite oder das angefragte Objekt wurde nicht gefunden."
 
-#: templates/404.html:16
+#: biscuit/core/templates/404.html:16
 msgid ""
 "\n"
 "     If you were redirected by a link on an external page,\n"
@@ -293,11 +286,11 @@ msgstr ""
 "ist es möglich, dass dieser veraltet war.\n"
 "    "
 
-#: templates/500.html:5
+#: biscuit/core/templates/500.html:5
 msgid "Internal Server Error"
 msgstr "Interner Serverfehler"
 
-#: templates/500.html:12
+#: biscuit/core/templates/500.html:12
 msgid ""
 "\n"
 "      An unexpected error has occured.\n"
@@ -307,7 +300,7 @@ msgstr ""
 "      Ein unerwarteter Fehler ist aufgetreten.\n"
 "     "
 
-#: templates/500.html:18
+#: biscuit/core/templates/500.html:18
 msgid ""
 "\n"
 "     Your site administrators will automatically be notified about this\n"
@@ -318,11 +311,11 @@ msgstr ""
 "     Ihre Administratoren werden automatisch über diesen Fehler informiert.\n"
 "    "
 
-#: templates/503.html:5
+#: biscuit/core/templates/503.html:5
 msgid "Maintenance mode"
 msgstr "Wartungsmodus"
 
-#: templates/503.html:12
+#: biscuit/core/templates/503.html:12
 msgid ""
 "\n"
 "     The maintenance mode is currently enabled. Please try again later.\n"
@@ -333,64 +326,45 @@ msgstr ""
 "erneut.\n"
 "    "
 
-#: templates/contact_form/contact_form.html:14
-msgid "Send"
-msgstr "Absenden"
-
-#: templates/contact_form/contact_form_sent.html:9
-msgid ""
-"\n"
-"   The message was successfully submitted.\n"
-"  "
+#: biscuit/core/templates/core/base.html:47
+msgid "Logged in as"
 msgstr ""
-"\n"
-"   Die Nachricht wurde erfolgreich übermittelt.\n"
-"  "
 
-#: templates/core/edit_group.html:16 templates/core/edit_group.html:18
-#: templates/core/group_full.html:16
+#: biscuit/core/templates/core/edit_group.html:16
+#: biscuit/core/templates/core/edit_group.html:18
 msgid "Edit group"
 msgstr "Gruppe editieren"
 
-#: templates/core/edit_group.html:26 templates/core/edit_person.html:28
-#: templates/core/edit_school.html:22 templates/core/edit_schoolterm.html:22
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: templates/core/edit_person.html:7 templates/core/edit_person.html:9
-#: templates/core/person_full.html:16
+#: biscuit/core/templates/core/edit_person.html:7
+#: biscuit/core/templates/core/edit_person.html:9
 msgid "Edit person"
 msgstr "Person editieren"
 
-#: templates/core/edit_school.html:7 templates/core/edit_school.html:9
+#: biscuit/core/templates/core/edit_school.html:8
 msgid "Edit school"
 msgstr "Schule bearbeiten"
 
-#: templates/core/footer-menu.html:26
-msgid "Assorted"
-msgstr "Unsortiert"
-
-#: templates/core/group_full.html:8
+#: biscuit/core/templates/core/group_full.html:8
 msgid "Group"
 msgstr "Gruppe"
 
-#: templates/core/group_full.html:19
+#: biscuit/core/templates/core/group_full.html:19
 msgid "Details"
 msgstr "Details"
 
-#: templates/core/group_full.html:28
+#: biscuit/core/templates/core/group_full.html:28
 msgid "Owners"
 msgstr "Leiter/-innen"
 
-#: templates/core/group_full.html:31
+#: biscuit/core/templates/core/group_full.html:31
 msgid "Members"
 msgstr "Mitglieder"
 
-#: templates/core/group_full.html:35
+#: biscuit/core/templates/core/group_full.html:35
 msgid "Group not found"
 msgstr "Gruppe nicht gefunden"
 
-#: templates/core/group_full.html:38
+#: biscuit/core/templates/core/group_full.html:38
 msgid ""
 "\n"
 "          There is no group with this id.\n"
@@ -400,7 +374,7 @@ msgstr ""
 "          Es existiert keine Gruppe mit dieser ID.\n"
 "        "
 
-#: templates/core/index.html:8
+#: biscuit/core/templates/core/index.html:8
 msgid ""
 "\n"
 "    BiscuIT School Information System (SIS)\n"
@@ -410,7 +384,7 @@ msgstr ""
 "    BiscuIT Schulinformationssystem (SIS)\n"
 "  "
 
-#: templates/core/index.html:16
+#: biscuit/core/templates/core/index.html:16
 msgid ""
 "\n"
 "        BiscuIT is a web-based school information system (SIS) which can be "
@@ -425,27 +399,20 @@ msgstr ""
 "verwalten oder zu publizieren.\n"
 "      "
 
-#: templates/core/language_form.html:5
-msgid "Language"
-msgstr "Sprache"
-
-#: templates/core/no_person.html:8
+#: biscuit/core/templates/core/no_person.html:11
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "        Your user account is not linked to a person. This means you\n"
+#| "        cannot access any school-related information. Please contact\n"
+#| "        the managers of BiscuIT at your school.\n"
+#| "      "
 msgid ""
 "\n"
-"        You are not linked to a person\n"
-"      "
-msgstr ""
-"\n"
-"        Sie sind nicht mit einer Person verknüpft\n"
-"      "
-
-#: templates/core/no_person.html:13
-msgid ""
-"\n"
-"        Your user account is not linked to a person. This means you\n"
-"        cannot access any school-related information. Please contact\n"
-"        the managers of BiscuIT at your school.\n"
-"      "
+"          Your user account is not linked to a person. This means you\n"
+"          cannot access any school-related information. Please contact\n"
+"          the managers of BiscuIT at your school.\n"
+"        "
 msgstr ""
 "\n"
 "        Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das "
@@ -455,19 +422,20 @@ msgstr ""
 "       die Verwaltenden von BiscuIT an Ihrer Schule.\n"
 "      "
 
-#: templates/core/person_full.html:8 templates/core/persons_accounts.html:41
+#: biscuit/core/templates/core/person_full.html:8
+#: biscuit/core/templates/core/persons_accounts.html:41
 msgid "Person"
 msgstr "Person"
 
-#: templates/core/person_full.html:19
+#: biscuit/core/templates/core/person_full.html:19
 msgid "Contact details"
 msgstr "Kontaktdetails"
 
-#: templates/core/person_full.html:70
+#: biscuit/core/templates/core/person_full.html:70
 msgid "Person not found"
 msgstr "Person nicht gefunden"
 
-#: templates/core/person_full.html:73
+#: biscuit/core/templates/core/person_full.html:73
 msgid ""
 "\n"
 "          There is no person with this id.\n"
@@ -477,12 +445,12 @@ msgstr ""
 "          Es existiert keine Person mit dieser ID.\n"
 "        "
 
-#: templates/core/persons_accounts.html:17
-#: templates/core/persons_accounts.html:20
+#: biscuit/core/templates/core/persons_accounts.html:17
+#: biscuit/core/templates/core/persons_accounts.html:20
 msgid "Link persons to accounts"
 msgstr "Personen mit Benutzerkonten verknüpfen"
 
-#: templates/core/persons_accounts.html:26
+#: biscuit/core/templates/core/persons_accounts.html:26
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -501,90 +469,489 @@ msgstr ""
 "    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
 "      "
 
-#: templates/core/persons_accounts.html:42
+#: biscuit/core/templates/core/persons_accounts.html:42
 msgid "Existing account"
 msgstr "Existierendes Konto"
 
-#: templates/core/persons_accounts.html:43
+#: biscuit/core/templates/core/persons_accounts.html:43
 msgid "New account"
 msgstr "Neues Konto"
 
-#: templates/core/persons_accounts.html:59
+#: biscuit/core/templates/core/persons_accounts.html:59
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: templates/core/school_management.html:5
-#: templates/core/school_management.html:7
+#: biscuit/core/templates/core/save_button.html:3
+msgid "Save"
+msgstr ""
+
+#: biscuit/core/templates/core/school_management.html:6
 msgid "School management"
 msgstr "Schulverwaltung"
 
-#: templates/core/system_status.html:12
+#: biscuit/core/templates/core/system_status.html:12
 msgid "System checks"
 msgstr "Systemprüfungen"
 
-#: templates/core/system_status.html:18
+#: biscuit/core/templates/core/system_status.html:21
 msgid "Maintenance mode enabled"
 msgstr "Wartungsmodus aktiviert"
 
-#: templates/core/system_status.html:19
-msgid "Only admin and visitors from internal IPs can access the site."
+#: biscuit/core/templates/core/system_status.html:23
+#, fuzzy
+#| msgid "Only admin and visitors from internal IPs can access the site."
+msgid ""
+"\n"
+"                Only admin and visitors from internal IPs can access "
+"thesite.\n"
+"              "
 msgstr ""
 "Nur Administratoren und Besucher von internen IP-Adressen können die Seite "
 "aufrufen."
 
-#: templates/core/system_status.html:24
+#: biscuit/core/templates/core/system_status.html:34
 msgid "Maintenance mode disabled"
 msgstr "Wartungsmodus deaktiviert"
 
-#: templates/core/system_status.html:25
+#: biscuit/core/templates/core/system_status.html:35
 msgid "Everyone can access the site."
 msgstr "Jeder kann die Seite aufrufen."
 
-#: templates/core/system_status.html:33
+#: biscuit/core/templates/core/system_status.html:45
 msgid "Debug mode enabled"
 msgstr "Debug-Modus aktiviert"
 
-#: templates/core/system_status.html:34
+#: biscuit/core/templates/core/system_status.html:47
+#, fuzzy
+#| msgid ""
+#| "The web server throws back debug information on errors. Do not use in "
+#| "production!"
 msgid ""
-"The web server throws back debug information on errors. Do not use in "
-"production!"
+"\n"
+"                The web server throws back debug information on errors. Do "
+"not use in production!\n"
+"              "
 msgstr ""
 "Der Server gibt Debug-Informationen bei Fehlern zurück. Nicht im "
 "Produktivbetrieb nutzen!"
 
-#: templates/core/system_status.html:39
+#: biscuit/core/templates/core/system_status.html:54
 msgid "Debug mode disabled"
 msgstr "Debug-Modus deaktivert"
 
-#: templates/core/system_status.html:40
-msgid "Debug mode is disabled. Default error pages are displayed on errors."
+#: biscuit/core/templates/core/system_status.html:56
+#, fuzzy
+#| msgid "Debug mode is disabled. Default error pages are displayed on errors."
+msgid ""
+"\n"
+"                Debug mode is disabled. Default error pages are displayed on "
+"errors.\n"
+"              "
 msgstr ""
 "Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden bei Fehlern "
 "angezeigt."
 
-#: templates/core/system_status.html:50
+#: biscuit/core/templates/core/system_status.html:69
 msgid "Recent backup cron jobs"
 msgstr "Letzte Backup-Cron-Jobs"
 
-#: templates/impersonate/list_users.html:8
+#: biscuit/core/templates/impersonate/list_users.html:8
 msgid "Impersonate user"
 msgstr "Als Benutzer verkleiden"
 
-#: views.py:143
+#: biscuit/core/templates/two_factor/_wizard_actions.html:6
+msgid "Cancel"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/_wizard_actions.html:14
+#: biscuit/core/templates/two_factor/_wizard_actions.html:19
+msgid "Back"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/_wizard_actions.html:24
+msgid "Next"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:5
+#: biscuit/core/templates/two_factor/profile/profile.html:42
+msgid "Backup Tokens"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:10
+msgid ""
+"\n"
+"        Backup tokens can be used when your primary and backup\n"
+"        phone numbers aren't available. The backup tokens below can be used\n"
+"        for login verification. If you've used up all your backup tokens, "
+"you\n"
+"        can generate a new set of backup tokens. Only the backup tokens "
+"shown\n"
+"        below will be valid.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:29
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "          There is no person with this id.\n"
+#| "        "
+msgid ""
+"\n"
+"          Print these tokens and keep them somewhere safe.\n"
+"        "
+msgstr ""
+"\n"
+"          Es existiert keine Person mit dieser ID.\n"
+"        "
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:35
+msgid "You don't have any backup codes yet."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:41
+msgid "Back to Account Security"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/backup_tokens.html:45
+msgid "Generate Tokens"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:13
+msgid "Enter your credentials."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:16
+msgid ""
+"We are calling your phone right now, please enter the\n"
+"            digits you hear."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:19
+msgid ""
+"We sent you a text message, please enter the tokens we\n"
+"            sent."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:22
+msgid ""
+"Please enter the tokens generated by your token\n"
+"            generator."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:26
+msgid ""
+"Use this form for entering backup tokens for logging in.\n"
+"          These tokens have been generated for you to print and keep safe. "
+"Please\n"
+"          enter one of these backup tokens to login to your account."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:42
+msgid "Or, alternatively, use one of your backup phones:"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:52
+msgid "As a last resort, you can use a backup token:"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/login.html:55
+msgid "Use Backup Token"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/otp_required.html:5
+msgid "Permission Denied"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/otp_required.html:7
+msgid ""
+"The page you requested, enforces users to verify using\n"
+"    two-factor authentication for security reasons. You need to enable "
+"these\n"
+"    security features in order to access this page."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/otp_required.html:11
+msgid ""
+"Two-factor authentication is not enabled for your\n"
+"    account. Enable two-factor authentication for enhanced account\n"
+"    security."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/otp_required.html:16
+msgid "Go back"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/otp_required.html:18
+#: biscuit/core/templates/two_factor/core/setup.html:5
+#: biscuit/core/templates/two_factor/core/setup_complete.html:5
+#: biscuit/core/templates/two_factor/profile/profile.html:82
+msgid "Enable Two-Factor Authentication"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/phone_register.html:5
+msgid "Add Backup Phone"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/phone_register.html:8
+msgid ""
+"You'll be adding a backup phone number to your\n"
+"        account. This number will be used if your primary method of\n"
+"        registration is not available."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/phone_register.html:12
+msgid ""
+"We've sent a token to your phone number. Please\n"
+"        enter the token you've received."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:8
+msgid ""
+"\n"
+"        You are about to take your account security to the\n"
+"        next level. Follow the steps in this wizard to enable two-factor\n"
+"        authentication.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:16
+msgid ""
+"\n"
+"        Please select which authentication method you would like to use.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:22
+msgid ""
+"\n"
+"        To start using a token generator, please use your\n"
+"        smartphone to scan the QR code below. For example, use Google\n"
+"        Authenticator. Then, enter the token generated by the app.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:33
+msgid ""
+"\n"
+"        Please enter the phone number you wish to receive the\n"
+"        text messages on. This number will be validated in the next step.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:40
+msgid ""
+"\n"
+"        Please enter the phone number you wish to be called on.\n"
+"        This number will be validated in the next step.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:49
+msgid ""
+"\n"
+"            We are calling your phone right now, please enter the digits you "
+"hear.\n"
+"          "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:55
+msgid ""
+"\n"
+"            We sent you a text message, please enter the tokens we sent.\n"
+"          "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:62
+msgid ""
+"\n"
+"          We've encountered an issue with the selected authentication "
+"method. Please\n"
+"          go back and verify that you entered your information correctly, "
+"try\n"
+"          again, or use a different authentication method instead. If the "
+"issue\n"
+"          persists, contact the site administrator.\n"
+"        "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup.html:72
+msgid ""
+"\n"
+"        To identify and verify your YubiKey, please insert a\n"
+"        token in the field below. Your YubiKey will be linked to your\n"
+"        account.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup_complete.html:10
+msgid ""
+"\n"
+"        Congratulations, you've successfully enabled two-factor "
+"authentication.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup_complete.html:20
+#: biscuit/core/templates/two_factor/core/setup_complete.html:40
+msgid "Back to Profile"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup_complete.html:24
+#: biscuit/core/templates/two_factor/core/setup_complete.html:44
+#, fuzzy
+#| msgid "Recent backup cron jobs"
+msgid "Generate backup codes"
+msgstr "Letzte Backup-Cron-Jobs"
+
+#: biscuit/core/templates/two_factor/core/setup_complete.html:30
+msgid ""
+"\n"
+"          However, it might happen that you don't have access to\n"
+"          your primary token device. To enable account recovery, generate "
+"backup codes\n"
+"          or add a phone number.\n"
+"        "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/core/setup_complete.html:48
+#: biscuit/core/templates/two_factor/profile/profile.html:37
+msgid "Add Phone Number"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:6
+#, fuzzy
+#| msgid "Account"
+msgid "Account Security"
+msgstr "Konto"
+
+#: biscuit/core/templates/two_factor/profile/profile.html:11
+msgid "Tokens will be generated by your token generator."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:13
+#, python-format
+msgid "Primary method: %(primary)s"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:15
+msgid "Tokens will be generated by your YubiKey."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:19
+msgid "Backup Phone Numbers"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:20
+msgid ""
+"If your primary method is not available, we are able to\n"
+"        send backup tokens to the phone numbers listed below."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:29
+msgid "Unregister"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:44
+msgid ""
+"If you don't have any device with you, you can access\n"
+"        your account using backup tokens."
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:46
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "        You are not linked to a person\n"
+#| "      "
+msgid ""
+"\n"
+"        You have only one backup token remaining.\n"
+"      "
+msgid_plural ""
+"\n"
+"        You have %(counter)s backup tokens remaining.\n"
+"      "
+msgstr[0] ""
+"\n"
+"        Sie sind nicht mit einer Person verknüpft\n"
+"      "
+msgstr[1] ""
+"\n"
+"        Sie sind nicht mit einer Person verknüpft\n"
+"      "
+
+#: biscuit/core/templates/two_factor/profile/profile.html:55
+msgid "Show Codes"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:59
+#: biscuit/core/templates/two_factor/profile/profile.html:69
+msgid "Disable Two-Factor Authentication"
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:61
+msgid ""
+"\n"
+"        However we strongly discourage you to do so, you can\n"
+"        also disable two-factor authentication for your account.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/templates/two_factor/profile/profile.html:74
+msgid ""
+"\n"
+"        Two-factor authentication is not enabled for your\n"
+"        account. Enable two-factor authentication for enhanced account\n"
+"        security.\n"
+"      "
+msgstr ""
+
+#: biscuit/core/views.py:148
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: views.py:166
+#: biscuit/core/views.py:171
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#: views.py:211
+#: biscuit/core/views.py:216
 msgid "The school has been saved."
 msgstr "Die Schule wurde gespeichert."
 
-#: views.py:230
+#: biscuit/core/views.py:235
 msgid "The term has been saved."
 msgstr "Das Schuljahr wurde gespeichert."
+
+#~ msgid "BiscuIT Software"
+#~ msgstr "BiscuIT-Software"
+
+#~ msgid "Support"
+#~ msgstr "Unterstützung"
+
+#~ msgid "Get support"
+#~ msgstr "Unterstützung erhalten"
+
+#~ msgid "Send"
+#~ msgstr "Absenden"
+
+#~ msgid ""
+#~ "\n"
+#~ "   The message was successfully submitted.\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "   Die Nachricht wurde erfolgreich übermittelt.\n"
+#~ "  "
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "Assorted"
+#~ msgstr "Unsortiert"
+
+#~ msgid "Language"
+#~ msgstr "Sprache"
 
 #~ msgid "Administration"
 #~ msgstr "Verwaltung"

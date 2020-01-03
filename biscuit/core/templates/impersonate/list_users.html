@@ -2,7 +2,7 @@
 {# Derived from the original template in django-impersonate #}
 
 {% extends "core/base.html" %}
-{% load bootstrap4 i18n %}
+{% load i18n %}
 
 {% block page_title %}
   {% blocktrans %}Impersonate user{% endblocktrans %}
@@ -10,11 +10,13 @@
 
 {% block content %}
   {% if page.object_list %}
-    <ul>
+    <div class="collection">
       {% for user in page.object_list %}
-        <li><a href="{% url 'impersonate-start' user.pk %}{{redirect}}">{{ user }}</a> - Impersonate</li>
+        <a class="collection-item" href="{% url 'impersonate-start' user.pk %}{{ redirect }}">
+          {{ user }}
+        </a>
       {% endfor %}
-    </ul>
+    </div>
   {% endif %}
 
   {% if page.has_previous %}

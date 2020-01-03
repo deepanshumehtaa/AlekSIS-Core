@@ -7,7 +7,7 @@ packages = [
 readme = "README.rst"
 
 description = "BiscuIT School Information System (SIS) - Next Generation Platform"
-authors = ["Dominik George <dominik.george@teckids.org>", "mirabilos <thorsten.glaser@teckids.org>", "Tom Teichler <tom.teichler@teckids.org>"]
+authors = ["Dominik George <dominik.george@teckids.org>", "mirabilos <thorsten.glaser@teckids.org>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <sis@jonathanweth.de>"]
 license = "EUPL-1.2"
 homepage = "https://biscuit.edugit.io/"
 repository = "https://edugit.org/BiscuIT/BiscuIT-ng"
@@ -49,6 +49,7 @@ requests = "^2.22"
 django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
 django-yarnpkg = "^6.0"
 django-dbsettings = "^1.0.0"
+django-material = "^1.6.0"
 
 [tool.poetry.extras]
 app-alsijil = ['BiscuIT-App-Alsijil']

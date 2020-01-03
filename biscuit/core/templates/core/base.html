@@ -1,63 +1,134 @@
 {# -*- engine:django -*- #}
 
-{% extends "bootstrap4/bootstrap4.html" %}
 
-{% load bootstrap4 i18n menu_generator static any_js sass_tags %}
+{% load i18n menu_generator static sass_tags %}
 
-{% block bootstrap4_extra_head %}
-  {% include_css "DataTables-Bootstrap4" %}
-  {% include_css "material-design-icons"%}
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Selbst programmierte Anwendungen für den Schullaltag am Katharineum zu Lübeck">
+
+  <title>School Information System</title>
+
   {% include 'core/icons.html' %}
-  <link rel="stylesheet" href="{% sass_src 'bootstrap_modified.scss' %}" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-{% endblock %}
 
-{% block bootstrap4_title %}BiscuIT School Information System{% endblock %}
+  {# CSS #}
+  {% include_css "material-design-icons" %}
+  <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
 
-{% block bootstrap4_extra_script %}
-  {% include_js "DataTables" %}
-  {% include_js "DataTables-Bootstrap4" %}
-{% endblock %}
+  {# Include jQuery to provide $(document).ready #}
+  {% include_js "jQuery" %}
+</head>
+<body>
 
-{% block bootstrap4_content %}
-  <header>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-main">
-        <span class="mdi mdi-menu"></span>
-      </button>
-      <a class="navbar-brand" href="{% url "index" %}">
-        <span class="mdi mdi-briefcase"></span> BiscuIT SIS
+<header>
+  <!-- Menu button (sidenav) -->
+  <div class="container">
+    <a href="#" data-target="slide-out" class="top-nav sidenav-trigger hide-on-large-only">
+      <i class="material-icons">menu</i>
+    </a>
+  </div>
+
+  <!-- Nav bar (logged in as, logout) -->
+  <nav>
+    <a class="brand-logo" href="/">SIS</a>
+
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if user.is_authenticated %}
+          <li>{% trans "Logged in as" %} {{ user.get_username }}</li>
+          <li>
+            <a href="{% url 'logout' %}">{% trans "Logout" %} <i class="material-icons right">exit_to_app</i></a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main nav (sidenav) -->
+  <ul id="slide-out" class="sidenav sidenav-fixed">
+    <li class="logo">
+      <a id="logo-container" href="/" class="brand-logo">
+        <img src="{% static 'img/biscuit-logo.png' %}" alt="BiscuIT Logo" style="height: 70px; width:auto;">
       </a>
+    </li>
+    <li class="no-padding">
+      {% include "core/sidenav.html" %}
+    </li>
+  </ul>
+</header>
 
-      <div class="collapse navbar-collapse" id="navbar-main">
-        <ul class="nav navbar-nav ml-auto">
-          {% with menu=NAV_MENU_CORE %}{% include "core/bootstrap4-navbar.html" %}{% endwith %}
+
+<main role="main">
+  {% include 'core/no_person.html' %}
+
+  {#  {% bootstrap_messages %}#}
+
+  <h4>{% block page_title %}{% endblock %}</h4>
+
+  {% block content %}{% endblock %}
+</main>
+
+
+<footer class="page-footer">
+  <div class="container">
+    <div class="row no-margin footer-row-large">
+      <div class="col l6 s12 no-pad-left height-inherit">
+        <p class="white-text valign-bot">
+          {% include 'core/language_form.html' %}
+
+        </p>
+      </div>
+      <div class="col xl15 l6 offset-xl01 s12 no-pad-right">
+        <ul class="no-margin right">
+          {% include "core/footer-menu.html" %}
         </ul>
       </div>
-    </nav>
-  </header>
-
-  <main role="main" class="container">
-    {% include 'core/no_person.html' %}
-
-    {% bootstrap_messages %}
-
-    <h1>{% block page_title %}{% endblock %}</h1>
-
-    {% block content %}{% endblock %}
-  </main>
-  <footer class="footer text-dark bg-light mt-auto">
-    <div class="container-fluid">
-      <div class="row text-center text-xs-center text-sm-left text-md-left text-dark">
-        {% with menu=FOOTER_MENU_CORE %}{% include "core/footer-menu.html" %}{% endwith %}
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-dark">
-          <p>
-            <a class="font-weight-bold text-dark" href="https://biscuit.edugit.org/">BiscuIT - The Free School Information System</a> © The BiscuIT Team @ <a class="font-weight-bold text-dark" href="https://www.teckids.org">Teckids e.V.</a>
-          </p>
-        </div>
-      </div>
     </div>
-  </footer>
-{% endblock %}
+    <div class="row no-margin footer-row-small">
+            <span class="white-text make-it-higher">
+  {% include 'core/language_form.html' %}
+
+            </span>
+      <ul class="no-margin footer-ul">
+        {% include "core/footer-menu.html" %}
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+            <span class="left">
+              <a class="blue-text text-lighten-4" href="https://biscuit.edugit.org/">
+                BiscuIT - The Free School Information System
+            </a>
+              © The BiscuIT Team @
+              <a class="blue-text text-lighten-4" href="https://www.teckids.org">
+              Teckids e.V.
+            </a>
+              and
+              <a class="blue-text text-lighten-4" href="https://katharineum-zu-luebeck.de">
+                Katharineum zu Lübeck
+              </a>
+            </span>
+      <span class="right">
+                <span id="doit"></span>
+
+                <a class="blue-text text-lighten-4" href="https://katharineum-zu-luebeck.de/impressum/">Impressum</a>
+                ·
+                <a class="blue-text text-lighten-4" href="https://katharineum-zu-luebeck.de/datenschutzerklaerung/">
+                    Datenschutzerklärung
+                </a>
+            </span>
+    </div>
+  </div>
+</footer>
+
+
+{% include_js "materialize" %}
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

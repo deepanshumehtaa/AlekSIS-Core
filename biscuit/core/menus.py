@@ -4,31 +4,37 @@ from django.utils.translation import ugettext_lazy as _
 MENUS = {
     "NAV_MENU_CORE": [
         {
+            "name": _("Login"),
+            "url": settings.LOGIN_URL,
+            "icon": "lock_open",
+            "validators": ["menu_generator.validators.is_anonymous"],
+        },
+        {
             "name": _("Account"),
             "url": "#",
+            "icon": "person",
             "root": True,
+            "validators": ["menu_generator.validators.is_authenticated"],
             "submenu": [
                 {
                     "name": _("Stop impersonation"),
                     "url": "impersonate-stop",
+                    "icon": "stop",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "biscuit.core.util.core_helpers.is_impersonate",
                     ],
                 },
                 {
-                    "name": _("Login"),
-                    "url": settings.LOGIN_URL,
-                    "validators": ["menu_generator.validators.is_anonymous"],
-                },
-                {
                     "name": _("Logout"),
                     "url": "logout",
+                    "icon": "exit_to_app",
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
                     "name": _("Two factor auth"),
                     "url": "two_factor:profile",
+                    "icon": "phonelink_lock",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         lambda request: "two_factor" in settings.INSTALLED_APPS,
@@ -39,6 +45,7 @@ MENUS = {
         {
             "name": _("Admin"),
             "url": "#",
+            "icon": "security",
             "validators": [
                 "menu_generator.validators.is_authenticated",
                 "menu_generator.validators.is_superuser",
@@ -47,6 +54,7 @@ MENUS = {
                 {
                     "name": _("Data management"),
                     "url": "data_management",
+                    "icon": "view_list",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
@@ -55,6 +63,7 @@ MENUS = {
                 {
                     "name": _("System status"),
                     "url": "system_status",
+                    "icon": "power_settings_new",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
@@ -63,6 +72,7 @@ MENUS = {
                 {
                     "name": _("Impersonation"),
                     "url": "impersonate-list",
+                    "icon": "people",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
@@ -71,6 +81,7 @@ MENUS = {
                 {
                     "name": _("Manage school"),
                     "url": "school_management",
+                    "icon": "school",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
@@ -118,18 +129,12 @@ MENUS = {
         },
     ],
     "FOOTER_MENU_CORE": [
-        {
-            "name": _("BiscuIT Software"),
-            "url": "#",
-            "submenu": [
-                {"name": _("Website"), "url": "https://biscuit.edugit.io/"},
-                {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
-            ],
-        },
+        {"name": _("Website"), "url": "https://biscuit.edugit.org/"},
+        {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
     ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [
-        {"name": _("Edit school information"), "url": "edit_school_information",},
-        {"name": _("Edit school term"), "url": "edit_school_term",},
+        {"name": _("Edit school information"), "url": "edit_school_information", },
+        {"name": _("Edit school term"), "url": "edit_school_term", },
     ],
 }
