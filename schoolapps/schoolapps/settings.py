@@ -177,11 +177,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DBSETTINGS_USE_CACHE = not DEBUG
 
 # Cache configs (only on production)
-if not DEBUG:
+TEST_MEMCACHE = False
+if not DEBUG or TEST_MEMCACHE:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
             'LOCATION': '127.0.0.1:11211',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 
