@@ -1,10 +1,10 @@
-.. BiscuIT documentation master file, created by
+.. AlekSIS documentation master file, created by
    sphinx-quickstart on Thu Aug 15 10:49:03 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to BiscuIT's documentation!
-===================================
+Welcome to AlekSIS’ documentation!
+==================================
 
 .. toctree::
    :maxdepth: 2

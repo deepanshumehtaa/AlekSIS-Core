@@ -25,14 +25,14 @@ case "$1" in
 	cd "$(dirname "$0")"
 	manage_py=$(realpath manage.py)
 	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR"
-	for d in biscuit/core apps/official/*/biscuit/apps/*; do
+	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -i static $locales"
 	done
 	;;
     "autopep8")
 	cd "$(dirname "$0")"
-	for d in biscuit/core apps/official/*/biscuit/apps/*; do
+	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; autopep8 -i -r ."
 	done
@@ -40,15 +40,15 @@ case "$1" in
     "pylama")
 	cd "$(dirname "$0")"
 	tox_ini=$(realpath tox.ini)
-	for d in biscuit/core apps/official/*/biscuit/apps/*; do
+	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; pylama -a -o $tox_ini ."
 	done
 	;;
     "gource")
-	for d in biscuit/core apps/official/*/biscuit/apps/*; do
+	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		gource --output-custom-log - "$d"
-	done | sort -n | gource --log-format custom --background-image biscuit/core/static/img/biscuit-logo.png -
+	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-logo.png -
 	;;
     *)
 	;;

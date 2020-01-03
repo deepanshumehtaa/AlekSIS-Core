@@ -62,8 +62,8 @@ docs/_build/
 *.aux
 
 # Generated files
-biscuit/node_modules/
-biscuit/static/
+aleksis/node_modules/
+aleksis/static/
 
 .coverage
 .mypy_cache/

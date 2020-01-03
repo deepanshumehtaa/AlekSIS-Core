@@ -1,5 +1,5 @@
 Core data models
 ================
 
-.. automodule:: biscuit.core.models
+.. automodule:: aleksis.core.models
    :members:

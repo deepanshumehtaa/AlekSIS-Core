@@ -1,12 +1,12 @@
 Setting up the development environment
 ======================================
 
-BiscuIT and all official apps use `Poetry`_ to manage virtualenvs and
+AlekSIS and all official apps use `Poetry`_ to manage virtualenvs and
 dependencies. You should make yourself a bit confortable with poetry
 by reading its documentation.
 
 Poetry makes a lot of stuff very easy, especially managing a virtual
-environment that contains BiscuIT and everything you need to run the
+environment that contains AlekSIS and everything you need to run the
 framework and selected apps.
 
 Also, `Yarn`_ is needed to resolve JavaScript dependencies.
@@ -14,10 +14,10 @@ Also, `Yarn`_ is needed to resolve JavaScript dependencies.
 Get the source tree
 -------------------
 
-To download BiscuIT and all officially bundled apps in their
+To download AlekSIS and all officially bundled apps in their
 development version, use Git like so::
 
-  git clone --recurse-submodules https://edugit.org/BiscuIT/BiscuIT-ng
+  git clone --recurse-submodules https://edugit.org/AlekSIS/AlekSIS
 
 If you do not want to download the bundled apps, leave out the
 ``--recurse-submodules`` option.
@@ -37,11 +37,11 @@ Poetry). On Debian, for example, this would be done with::
 You can use any other of the `Poetry installation methods`_.
 
 
-Install BiscuIT-ng in its own virtual environment
--------------------------------------------------
+Install AlekSIS in its own virtual environment
+----------------------------------------------
 
 Poetry will automatically manage virtual environments per project, so
-installing BiscuIT is a matter of::
+installing AlekSIS is a matter of::
 
   poetry install
 
@@ -69,12 +69,12 @@ Running the development server
 ------------------------------
 
 The development server can be started using Django's ``runserver`` command.
-You can either configure BiscuIT like in a production environment, or pass
+You can either configure AlekSIS like in a production environment, or pass
 basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
-`biscuit` (all else remains default) and with the `debug` setting enabled::
+`aleksis` (all else remains default) and with the `debug` setting enabled::
 
-  BISCUIT_debug=true BISCUIT_database__password=biscuit poetry run ./manage.py runserver
+  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run ./manage.py runserver
 
 .. figure:: /screenshots/index.png
    :scale: 50%

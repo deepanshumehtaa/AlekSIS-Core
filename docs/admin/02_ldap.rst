@@ -1,9 +1,9 @@
 Authenticating against LDAP
 ===========================
 
-BiscuIT can authenticate users against an LDAP directory (like OpenLDAP or
-Active Directory). The BiscuIT core can only authenticate and synchronise
-authenticated users to BiscuIT's database. There are apps that help with
+AlekSIS can authenticate users against an LDAP directory (like OpenLDAP or
+Active Directory). The AlekSIS core can only authenticate and synchronise
+authenticated users to AlekSIS’ database. There are apps that help with
 tasks like mass-importing accounts and linking accounts to persons in
 the BiscuIY system (see below).
 
@@ -20,9 +20,9 @@ TBA.
 Configuration of LDAP support
 -----------------------------
 
-Configuration is done under the `default.ldap` section in BiscuIT's
+Configuration is done under the `default.ldap` section in AlekSIS’
 configuration file. For example, add something like the following to your
-configuration (normally in `/etc/biscuit`; you can either append to an
+configuration (normally in `/etc/aleksis`; you can either append to an
 existing file or add a new one)::
 
   [default.ldap]

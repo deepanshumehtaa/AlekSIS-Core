@@ -11,7 +11,7 @@ are running.
 
 Installing apps into the existing virtual environment is a bit awkward::
 
-  poetry run sh -c "cd apps/official/BiscuIT-App-Exlibris; poetry install"
+  poetry run sh -c "cd apps/official/AlekSIS-App-Exlibris; poetry install"
 
 This will install the Exlibris app (library management) app by using a
 shell for first ``cd``'ing into the app directory and then using

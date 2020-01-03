@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "BiscuIT-ng"
+name = "AlekSIS"
 version = "1.0a4.dev0"
 packages = [
-    { include = "biscuit" }
+    { include = "aleksis" }
 ]
 readme = "README.rst"
 
-description = "BiscuIT School Information System (SIS) - Next Generation Platform"
+description = "AlekSIS (School Information System) — Core"
 authors = ["Dominik George <dominik.george@teckids.org>", "Martin Gummi <martin.gummi@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
 license = "EUPL-1.2"
-homepage = "https://biscuit.edugit.io/"
-repository = "https://edugit.org/BiscuIT/BiscuIT-ng"
-documentation = "https://biscuit.edugit.io/BiscuIT-ng/docs/html/"
+homepage = "https://aleksis.edugit.io/"
+repository = "https://edugit.org/AlekSIS/AlekSIS"
+documentation = "https://aleksis.edugit.io/AlekSIS/docs/html/"
 classifiers = [
     "Environment :: Web Environment",
     "Intended Audience :: Education",
@@ -52,11 +52,11 @@ django-dbsettings = "^1.0.0"
 django-material = "^1.6.0"
 
 [tool.poetry.extras]
-app-alsijil = ['BiscuIT-App-Alsijil']
-app-chronos = ['BiscuIT-App-Chronos']
-app-exlibris = ['BiscuIT-App-Exlibris']
-app-schild-nrw = ['BiscuIT-App-SchILD-NRW']
-app-untis = ['BiscuIT-App-Untis']
+app-alsijil = ['AlekSIS-App-Alsijil']
+app-chronos = ['AlekSIS-App-Chronos']
+app-exlibris = ['AlekSIS-App-Exlibris']
+app-schild-nrw = ['AlekSIS-App-SchILD-NRW']
+app-untis = ['AlekSIS-App-Untis']
 ldap = ["django-auth-ldap"]
 
 [tool.poetry.dev-dependencies]
