@@ -52,11 +52,6 @@ django-dbsettings = "^1.0.0"
 django-material = "^1.6.0"
 
 [tool.poetry.extras]
-app-alsijil = ['AlekSIS-App-Alsijil']
-app-chronos = ['AlekSIS-App-Chronos']
-app-exlibris = ['AlekSIS-App-Exlibris']
-app-schild-nrw = ['AlekSIS-App-SchILD-NRW']
-app-untis = ['AlekSIS-App-Untis']
 ldap = ["django-auth-ldap"]
 
 [tool.poetry.dev-dependencies]
