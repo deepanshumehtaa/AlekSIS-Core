@@ -45,7 +45,7 @@ MENUS = {
         {
             "name": _("Admin"),
             "url": "#",
-            "icon": "settings",
+            "icon": "security",
             "validators": [
                 "menu_generator.validators.is_authenticated",
                 "menu_generator.validators.is_superuser",
