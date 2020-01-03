@@ -27,8 +27,5 @@ import dashboard.views.tools as tools_views
 
 urlpatterns += [
     path('offline', tools_views.offline, name='offline'),
-    path("tools", tools_views.tools, name="tools"),
-    path("tools/clear-cache", tools_views.tools_clear_cache, name="tools_clear_cache"),
-    path("tools/clear-cache/<str:id>", tools_views.tools_clear_cache, name="tools_clear_single_cache"),
     path('about/', tools_views.about, name='about')
 ]
