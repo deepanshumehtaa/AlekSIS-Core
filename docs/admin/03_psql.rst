@@ -30,7 +30,7 @@ random, password. You can generate one using the pwgen utility if you like::
 Configure BiscuIT to use PostgreSQL
 -----------------------------------
 
-Fill in the configuration under `/etc/biscuit/*.toml`::
+Fill in the configuration under `/etc/biscuit/aleksis.toml`::
 
   [default.database]
   host = "localhost"
