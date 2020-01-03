@@ -1,29 +1,29 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
 *$py.class
+*.py[cod]
+__pycache__/
 
 # Distribution / packaging
+*.egg
+*.egg-info/
 .Python
+.eggs/
+.installed.cfg
 build/
 develop-eggs/
 dist/
 downloads/
 eggs/
-.eggs/
 lib/
 lib64/
 parts/
 sdist/
 var/
 wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 
 # Installer logs
-pip-log.txt
 pip-delete-this-directory.txt
+pip-log.txt
 
 # Translations
 *.mo
@@ -39,14 +39,17 @@ local_settings.py
 # Environments
 .env
 .venv
+ENV/
 env/
 venv/
-ENV/
 
 # Editors
 *~
 DEADJOE
 \#*#
+
+# IntelliJ
+.idea
 .idea/
 
 # Database
@@ -55,13 +58,17 @@ db.sqlite3
 # Sphinx
 docs/_build/
 
+# TeX
+*.aux
+
 # Generated files
-biscuit/static/
 biscuit/node_modules/
-biscuit/media/
+biscuit/static/
 
 .coverage
-.tox/
-maintenance_mode_state.txt
-htmlcov/
 .mypy_cache/
+.tox/
+htmlcov/
+maintenance_mode_state.txt
+media/
+package-lock.json
