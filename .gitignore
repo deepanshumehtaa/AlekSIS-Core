@@ -1,19 +1,74 @@
-*.aux
+# Byte-compiled / optimized / DLL files
+*$py.class
+*.py[cod]
+__pycache__/
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+.Python
+.eggs/
+.installed.cfg
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# Installer logs
+pip-delete-this-directory.txt
+pip-log.txt
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
 *.log
-*.pyc
+local_settings.py
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.venv
+ENV/
+env/
+venv/
+
+# Editors
+*~
+DEADJOE
+\#*#
+
+# IntelliJ
 .idea
 .idea/
-__pycache__
-aktuell.pdf
-aktuell.tex
-dynselect2/bundle.js
-dynselect2/src/*
-env/
+
+# Database
+db.sqlite3
+
+# Sphinx
+docs/_build/
+
+# TeX
+*.aux
+
+# Generated files
+biscuit/node_modules/
+biscuit/static/
+
+.coverage
+.mypy_cache/
+.tox/
+htmlcov/
+maintenance_mode_state.txt
 media/
-node_modules/
 package-lock.json
-schoolapps/latex/
-schoolapps/log.django
-secure*
-staticcollect/
-venv/
