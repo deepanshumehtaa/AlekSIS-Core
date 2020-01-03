@@ -36,25 +36,36 @@ var Dashboard = function (_React$Component) {
         };
 
         _this.updateData = function () {
+            if (_this.state.networkProblems) {
+                _this.setState({isLoading: true, networkProblems: false});
+            }
+
             var that = _this;
             $.getJSON(API_URL, function (data) {
                 console.log(data);
                 if (data) {
-                    that.setState(Object.assign({}, data, { refreshIn: REFRESH_TIME + 1, isLoading: false }));
+                    that.setState(Object.assign({}, data, {refreshIn: REFRESH_TIME + 1, isLoading: false}));
                     that.updateRefreshTime();
                 }
+            }).fail(function () {
+                console.log("error");
+                that.setState({refreshIn: REFRESH_TIME + 1, networkProblems: true});
             });
             $.getJSON(API_URL + "/my-plan", function (data) {
                 console.log(data);
                 if (data && data.lessons) {
-                    that.setState({ lessons: data.lessons, holiday: data.holiday });
+                    that.setState({lessons: data.lessons, holiday: data.holiday});
                 }
+            }).fail(function () {
+                console.log("error");
+                that.setState({networkProblems: true});
             });
         };
 
         _this.state = {
             refreshIn: REFRESH_TIME,
-            isLoading: true
+            isLoading: true,
+            networkProblems: false
         };
         return _this;
     }
@@ -80,14 +91,39 @@ var Dashboard = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            if (this.state.networkProblems) {
+                // Show loading screen until first data are loaded
+                return React.createElement(
+                    "div",
+                    {className: "row center-via-flex container", style: {"height": "20em"}},
+                    React.createElement(
+                        "i",
+                        {className: "material-icons large"},
+                        "signal_wifi_off"
+                    ),
+                    React.createElement(
+                        "p",
+                        {className: "flow-text text-center"},
+                        "Es ist ein Fehler bei der Netzwerkverbindung aufgetreten."
+                    ),
+                    React.createElement(
+                        "button",
+                        {className: "btn-flat grey-text", onClick: this.updateData},
+                        "Erneuter Versuch in ",
+                        this.state.refreshIn,
+                        " s"
+                    )
+                );
+            }
+
             if (this.state.isLoading) {
                 // Show loading screen until first data are loaded
                 return React.createElement(
                     "div",
-                    { className: "row center-via-flex container", style: { "height": "15em" } },
+                    {className: "row center-via-flex container", style: {"height": "15em"}},
                     React.createElement(
                         "div",
-                        { className: "center2-via-flex" },
+                        {className: "center2-via-flex"},
                         React.createElement(
                             "div",
                             { className: "preloader-wrapper big active" },

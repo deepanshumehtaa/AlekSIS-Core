@@ -536,7 +536,7 @@ var REBUSDynSelect = function (_React$Component3) {
                         React.createElement(Select, {
                             onChange: this._onSetB,
                             values: ["Papierstau", "Toner leer", "Papier leer", "Drucker bekommt keine Daten"],
-                            defaultValue: "Anderes Problem", show: sO === "printerIssue"
+                            defaultValue: "Anderes Problem", show: sO === "subMonitorIssue"
                         })
                     ),
                     React.createElement(
@@ -595,7 +595,7 @@ var REBUSDynSelect = function (_React$Component3) {
                         },
                         React.createElement(Select, {
                             onChange: this._onSetC, values: LOCATIONS,
-                            defaultValue: "Anderer Raum", show: sO === "printerIssue"
+                            defaultValue: "Anderer Raum", show: sO === "presentationDeviceIssue"
                         })
                     ),
                     React.createElement(

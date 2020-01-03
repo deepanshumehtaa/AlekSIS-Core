@@ -12,7 +12,8 @@ class Dashboard extends React.Component {
         super();
         this.state = {
             refreshIn: REFRESH_TIME,
-            isLoading: true
+            isLoading: true,
+            networkProblems: false
         };
     }
 
@@ -29,6 +30,10 @@ class Dashboard extends React.Component {
     };
 
     updateData = () => {
+        if (this.state.networkProblems) {
+            this.setState({isLoading: true, networkProblems: false});
+        }
+
         const that = this;
         $.getJSON(API_URL, (data) => {
             console.log(data);
@@ -36,12 +41,18 @@ class Dashboard extends React.Component {
                 that.setState({...data, refreshIn: REFRESH_TIME + 1, isLoading: false});
                 that.updateRefreshTime();
             }
+        }).fail(() => {
+            console.log("error");
+            that.setState({refreshIn: REFRESH_TIME + 1, networkProblems: true});
         });
         $.getJSON(API_URL + "/my-plan", (data) => {
             console.log(data);
             if (data && data.lessons) {
                 that.setState({lessons: data.lessons, holiday: data.holiday});
             }
+        }).fail(() => {
+            console.log("error");
+            that.setState({networkProblems: true});
         });
     };
 
@@ -62,6 +73,17 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        if (this.state.networkProblems) {
+            // Show loading screen until first data are loaded
+            return <div className={"row center-via-flex container"} style={{"height": "20em"}}>
+                <i className={"material-icons large"}>signal_wifi_off</i>
+                <p className={"flow-text text-center"}>Es ist ein Fehler bei der Netzwerkverbindung aufgetreten.</p>
+                <button className={"btn-flat grey-text"} onClick={this.updateData}>
+                    Erneuter Versuch in {this.state.refreshIn} s
+                </button>
+            </div>;
+        }
+
         if (this.state.isLoading) {
             // Show loading screen until first data are loaded
             return <div className={"row center-via-flex container"} style={{"height": "15em"}}>
@@ -83,6 +105,7 @@ class Dashboard extends React.Component {
                 </div>
             </div>;
         }
+
 
         const that = this;
         return <div>

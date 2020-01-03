@@ -21,6 +21,7 @@ const avoidCachingPaths = [
     '/aktuell.pdf',
     '/accounts/login',
     '/timetable/aktuell.pdf',
+    '/api'
 ];
 
 function pathComparer(requestUrl, pathRegEx) {
