@@ -1,24 +1,26 @@
-BiscuIT - The Free School Information System (SIS) - Next Generation Platform
-==============================================================================
+AlekSIS (School Information System) — Core
+==========================================
 
 Warning
 -------
 
-**This is a preview version of BiscuIT. Do not use with sensitive data. Especially, do not grant access to students yet.**
+**This is a preview version of AlekSIS. Do not use with sensitive data. Especially, do not grant access to students yet.**
 
 
-What BiscuIT is
+What AlekSIS is
 ----------------
 
-BiscuIT is a web-based school information system (SIS) which can be used to
+AlekSIS is a web-based school information system (SIS) which can be used to
 manage and/or publish organisational subjects of educational institutions.
 
 It was originally developed together with Städt. Leibniz-Gymnasium Remscheid
 as a proprietary product. Five years after the school stole the original
-code base, BiscuIT-ng started as a complete re-implementation as
-well-designed, free and open source software.
+code base, as a complete re-implementation as well-designed, free and open
+source software, BiscuIT-ng was started. In the meantime, students from the
+Katharineum in Lübeck implemented School-Apps with the same goals and tools.
+In 2020, BiscuIT-ng and School-Apps were combined into AlekSIS.
 
-BiscuIT-ng is a platform based on Django, that provides central funstions
+AlekSIS is a platform based on Django, that provides central funstions
 and data structures that can be used by apps that are developed and provided
 seperately. The core can interact closely with the Debian Edu / Skolelinux
 system.
@@ -49,4 +51,4 @@ full licence text or on the `Europen Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
-.. _BiscuIT-ng: https://edugit.org/BiscuIT/BiscuIT-ng
+.. _AlekSIS: https://edugit.org/AlekSIS/AlekSIS
