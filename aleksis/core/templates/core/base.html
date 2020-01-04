@@ -66,7 +66,24 @@
 <main role="main">
   {% include 'core/no_person.html' %}
 
-  {#  {% bootstrap_messages %}#}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+        <p>
+          {% if message.tags == "success" %}
+            <i class="material-icons left">check_circle</i>
+          {% elif  message.tags == "info" %}
+            <i class="material-icons left">info</i>
+          {% elif  message.tags == "warning" %}
+            <i class="material-icons left">warning</i>
+          {% elif  message.tags == "error" %}
+            <i class="material-icons left">error</i>
+          {% endif %}
+          {{ message }}
+        </p>
+      </div>
+    {% endfor %}
+  {% endif %}
 
   <h4>{% block page_title %}{% endblock %}</h4>
 
