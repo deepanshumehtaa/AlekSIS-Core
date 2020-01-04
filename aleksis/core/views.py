@@ -25,6 +25,10 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "core/index.html", context)
 
 
+def offline(request):
+    return render(request, 'common/offline.html')
+
+
 @login_required
 def persons(request: HttpRequest) -> HttpResponse:
     context = {}

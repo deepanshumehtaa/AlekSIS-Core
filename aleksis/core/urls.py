@@ -11,6 +11,7 @@ from two_factor.urls import urlpatterns as tf_urls
 from . import views
 
 urlpatterns = [
+    path('offline/', views.offline, name='offline'),
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.system_status, name="system_status"),

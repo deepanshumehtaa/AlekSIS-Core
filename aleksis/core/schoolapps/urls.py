@@ -77,7 +77,6 @@ urlpatterns = [
     #######
     path('faq/', include('faq.urls')),
 
-    path('', include('pwa.urls')),
 
     path('martor/', include('martor.urls')),
 
