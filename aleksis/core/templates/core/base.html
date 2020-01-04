@@ -1,7 +1,7 @@
 {# -*- engine:django -*- #}
 
 
-{% load i18n menu_generator static sass_tags any_js %}
+{% load i18n menu_generator static sass_tags any_js pwa %}
 
 
 <!DOCTYPE html>
@@ -14,7 +14,13 @@
 
   <title>School Information System</title>
 
-  {% include 'core/icons.html' %}
+  {# Favicons #}
+  <link href="{% static "icons/favicon_16.png" %}" rel="icon" type="image/png" sizes="16x16">
+  <link href="{% static "icons/favicon_32.png" %}" rel="icon" type="image/png" sizes="32x32">
+  <link href="{% static "icons/favicon_48.png" %}" rel="icon" type="image/png" sizes="48x48">
+
+  <!-- PWA -->
+  {% progressive_web_app_meta %}
 
   {# CSS #}
   {% include_css "material-design-icons" %}
