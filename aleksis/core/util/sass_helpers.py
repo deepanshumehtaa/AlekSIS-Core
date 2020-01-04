@@ -12,5 +12,5 @@ def get_colour(html_colour: str) -> SassColor:
     return SassColor(r, g, b, 255)
 
 
-def get_setting(setting: str) -> str:
+def get_config(setting: str) -> str:
     return getattr(config, setting, "") or getattr(settings, setting, "")

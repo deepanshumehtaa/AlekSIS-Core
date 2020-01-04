@@ -266,8 +266,6 @@ python-versions = "*"
 version = "2.5.0"
 
 [package.dependencies]
-six = "*"
-
 [package.dependencies.django-picklefield]
 optional = true
 version = "*"
@@ -276,6 +274,10 @@ version = "*"
 database = ["django-picklefield"]
 redis = ["redis"]
 
+[package.source]
+reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
+type = "git"
+url = "https://github.com/jazzband/django-constance"
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -429,6 +431,10 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
+
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -1671,7 +1677,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "bca26513f4520039661e719a675e767eef8a19273d1430cd0810ea8a10ea40da"
+content-hash = "98fb74e38bacbbf64bd0919e01f0807bf1bb5fafb78056384ca84bf14f6aaad3"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1795,10 +1801,7 @@ django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
 ]
-django-constance = [
-    {file = "django-constance-2.5.0.tar.gz", hash = "sha256:c47db4abd5788584115db681c0e8fef8ff870d49af90aa359076f0833a537199"},
-    {file = "django_constance-2.5.0-py2.py3-none-any.whl", hash = "sha256:1b536d153c168ef548fea5bdcdea84afab83892e2163ec4e896557a3139effd7"},
-]
+django-constance = []
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.1.tar.gz", hash = "sha256:24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8"},
     {file = "django_debug_toolbar-2.1-py3-none-any.whl", hash = "sha256:77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"},

@@ -34,11 +34,11 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: adjust-color(get-colour(get-setting(COLOUR_PRIMARY)), $alpha: 1);
+$primary-color: adjust-color(get-colour(get-config(COLOUR_PRIMARY)), $alpha: 1);
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: darken($primary-color, 15%) !default;
 
-$secondary-color: adjust-color(get-colour(get-setting(COLOUR_SECONDARY)), $alpha: 1);
+$secondary-color: adjust-color(get-colour(get-config(COLOUR_SECONDARY)), $alpha: 1);
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 $link-color: color("light-blue", "darken-1") !default;
