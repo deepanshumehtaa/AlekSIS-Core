@@ -5,7 +5,7 @@ from constance import config
 
 
 mail_out = "{} <{}>".format(config.MAIL_OUT_NAME,
-                            config.MAIL_OUT) if config.MAIL_OUT_NAME else mail_settings.mail_out
+                            config.MAIL_OUT) if config.MAIL_OUT_NAME else config.MAIL_OUT
 
 
 def send_mail_with_template(title, receivers, plain_template, html_template, context={}, mail_out=mail_out):
