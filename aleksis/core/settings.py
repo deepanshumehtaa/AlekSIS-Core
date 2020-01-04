@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "easyaudit",
     "constance",
+    "constance.backends.database",
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
