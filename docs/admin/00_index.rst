@@ -1,5 +1,5 @@
-Configuration and andministration
-=================================
+Configuration and administration
+================================
 
 .. toctree::
    :glob:
