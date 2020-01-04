@@ -1,7 +1,8 @@
-from colour import web2hex
-from sass import SassColor
+from django.conf import settings
 
-from aleksis.core.db_settings import theme_settings
+from colour import web2hex
+from constance import config
+from sass import SassColor
 
 
 def get_colour(html_colour: str) -> SassColor:
@@ -11,5 +12,5 @@ def get_colour(html_colour: str) -> SassColor:
     return SassColor(r, g, b, 255)
 
 
-def get_theme_setting(setting: str) -> str:
-    return getattr(theme_settings, setting, "")
+def get_setting(setting: str) -> str:
+    return getattr(config, setting, "") or getattr(settings, setting, "")

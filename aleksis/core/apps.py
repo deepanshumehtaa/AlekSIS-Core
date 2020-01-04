@@ -1,5 +1,6 @@
 from django.apps import AppConfig, apps
-from django.db.models.signals import post_save
+
+from constance.signals import config_updated
 
 from .signals import clean_scss
 
@@ -10,4 +11,4 @@ class CoreConfig(AppConfig):
 
     def ready(self) -> None:
         clean_scss()
-        post_save.connect(clean_scss, sender=apps.get_model("dbsettings", "Setting"))
+        config_updated.connect(clean_scss)
