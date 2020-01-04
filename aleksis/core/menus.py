@@ -88,8 +88,8 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Settings"),
-                    "url": "site_settings",
+                    "name": _("Backend Admin"),
+                    "url": "admin:index",
                     "icon": "settings",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
