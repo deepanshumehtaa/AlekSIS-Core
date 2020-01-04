@@ -273,15 +273,17 @@ TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_ADDITIONAL_FIELDS = {
-    "image_field": ["django.forms.ImageField", {}]
+    "image_field": ["django.forms.ImageField", {}],
+    "email_field": ["django.forms.EmailField", {}],
+    "url_field": ["django.forms.URLField", {}],
 }
 CONSTANCE_CONFIG = {
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
     "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": ("aleksis@example.com", _("Mail out address")),
-    "PRIVACY_URL": ("", _("Link to privacy policy")),
-    "IMPRINT_URL": ("", _("Link to imprint")),
+    "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field'),
+    "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
+    "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
