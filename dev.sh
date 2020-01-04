@@ -46,7 +46,7 @@ case "$1" in
 	done
 	;;
     "gource")
-	for d in aleksis/core apps/official/*/aleksis/apps/*; do
+	for d in . apps/official/*; do
 		gource --output-custom-log - "$d"
 	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-logo.png -
 	;;
