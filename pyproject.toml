@@ -49,7 +49,7 @@ requests = "^2.22"
 django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
-django-constance = {version = "^2.5.0", extras = ["database"]}
+django-constance = {git = "https://github.com/jazzband/django-constance", rev = "590fa02eb30e377da0eda5cc3a84254b839176a7", extras = ["database"]}
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

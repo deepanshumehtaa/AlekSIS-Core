@@ -161,6 +161,9 @@ optional = false
 python-versions = "*"
 version = "5.0.6"
 
+[package.dependencies]
+six = "*"
+
 [[package]]
 category = "dev"
 description = "Code coverage measurement for Python"
@@ -263,8 +266,6 @@ python-versions = "*"
 version = "2.5.0"
 
 [package.dependencies]
-six = "*"
-
 [package.dependencies.django-picklefield]
 optional = true
 version = "*"
@@ -273,6 +274,10 @@ version = "*"
 database = ["django-picklefield"]
 redis = ["redis"]
 
+[package.source]
+reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
+type = "git"
+url = "https://github.com/jazzband/django-constance"
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -448,17 +453,6 @@ Django = ">=1.11"
 
 [package.extras]
 tests = ["tox"]
-
-[[package]]
-category = "main"
-description = "A Django app to include a manifest.json and Service Worker instance to enable progressive web app behavior"
-name = "django-pwa"
-optional = false
-python-versions = "*"
-version = "1.0.6"
-
-[package.dependencies]
-django = ">=1.8"
 
 [[package]]
 category = "main"
@@ -1259,7 +1253,7 @@ category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
 optional = false
-python-versions = "*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "5.2"
 
 [[package]]
@@ -1683,7 +1677,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "4a3c439532738081f6bdb12939df1ce22f2d338fca6344df269d3bd08ee7026a"
+content-hash = "98fb74e38bacbbf64bd0919e01f0807bf1bb5fafb78056384ca84bf14f6aaad3"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1807,10 +1801,7 @@ django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
 ]
-django-constance = [
-    {file = "django-constance-2.5.0.tar.gz", hash = "sha256:c47db4abd5788584115db681c0e8fef8ff870d49af90aa359076f0833a537199"},
-    {file = "django_constance-2.5.0-py2.py3-none-any.whl", hash = "sha256:1b536d153c168ef548fea5bdcdea84afab83892e2163ec4e896557a3139effd7"},
-]
+django-constance = []
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.1.tar.gz", hash = "sha256:24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8"},
     {file = "django_debug_toolbar-2.1-py3-none-any.whl", hash = "sha256:77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"},
@@ -1865,10 +1856,6 @@ django-phonenumber-field = [
 django-picklefield = [
     {file = "django-picklefield-2.0.tar.gz", hash = "sha256:f1733a8db1b6046c0d7d738e785f9875aa3c198215de11993463a9339aa4ea24"},
     {file = "django_picklefield-2.0-py2.py3-none-any.whl", hash = "sha256:9052f2dcf4882c683ce87b4356f29b4d014c0dad645b6906baf9f09571f52bc8"},
-]
-django-pwa = [
-    {file = "django-pwa-1.0.6.tar.gz", hash = "sha256:b3f1ad0c5241fae4c7505423540de4db93077d7c88416ff6d2af545ffe209f34"},
-    {file = "django_pwa-1.0.6-py3-none-any.whl", hash = "sha256:9306105fcb637ae16fea6527be4b147d45fd53db85efb1d4f61dfea6bf793e56"},
 ]
 django-sass-processor = [
     {file = "django-sass-processor-0.8.tar.gz", hash = "sha256:e039551994feaaba6fcf880412b25a772dd313162a34cbb4289814988cfae340"},
@@ -2444,6 +2431,7 @@ urllib3 = [
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
+    {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
 yubiotp = [
     {file = "YubiOTP-0.2.2.post1-py2.py3-none-any.whl", hash = "sha256:7e281801b24678f4bda855ce8ab975a7688a912f5a6cb22b6c2b16263a93cbd2"},
