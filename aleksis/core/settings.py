@@ -276,12 +276,12 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     "image_field": ["django.forms.ImageField", {}]
 }
 CONSTANCE_CONFIG = {
-    "COLOUR_PRIMARY": ("#007bff", "Primary colour"),
-    "COLOUR_SECONDARY": ("#007bff", "Secondary colour"),
-    "MAIL_OUT_NAME": ("AlekSIS", "Mail out name"),
-    "MAIL_OUT": ("aleksis@example.com", "Mail out address"),
-    "PRIVACY_URL": ("", "Link to privacy policy"),
-    "IMPRINT_URL": ("", "Link to imprint"),
+    "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
+    "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
+    "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
+    "MAIL_OUT": ("aleksis@example.com", _("Mail out address")),
+    "PRIVACY_URL": ("", _("Link to privacy policy")),
+    "IMPRINT_URL": ("", _("Link to imprint")),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
