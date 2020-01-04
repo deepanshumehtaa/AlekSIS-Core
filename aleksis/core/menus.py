@@ -129,8 +129,9 @@ MENUS = {
         },
     ],
     "FOOTER_MENU_CORE": [
-        {"name": _("Website"), "url": "https://aleksis.edugit.org/"},
+        {"name": _("Website"), "url": "https://aleksis.edugit.io/"},
         {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
+        {"name": "Katharineum zu Lübeck", "url": "https://katharineum-zu-luebeck.de"}
     ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [

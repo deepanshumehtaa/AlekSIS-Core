@@ -35,7 +35,6 @@ urlpatterns = [
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path("select2/", include("django_select2.urls")),
-    path("settings/", include("dbsettings.urls")),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
