@@ -5,21 +5,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
-import dbsettings
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .mailer import send_mail_with_template
 from .mixins import ExtensibleModel
-
-
-class ThemeSettings(dbsettings.Group):
-    colour_primary = dbsettings.StringValue(default="#007bff")
-    colour_secondary = dbsettings.StringValue(default="#007bff")
-
-
-theme_settings = ThemeSettings("Global theme settings")
 
 
 class School(models.Model):

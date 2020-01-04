@@ -1,7 +1,7 @@
 from colour import web2hex
 from sass import SassColor
 
-from aleksis.core.models import theme_settings
+from aleksis.core.db_settings import theme_settings
 
 
 def get_colour(html_colour: str) -> SassColor:
