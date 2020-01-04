@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
-    "dbsettings",
+    "constance",
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
@@ -119,7 +119,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
-                "aleksis.core.processors.db_settings_processor"
+                "constance.context_processors.config"
             ],
         },
     },
@@ -270,6 +270,24 @@ if _settings.get("mail.server.host", None):
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_ADDITIONAL_FIELDS = {
+    "image_field": ["django.forms.ImageField", {}]
+}
+CONSTANCE_CONFIG = {
+    "COLOUR_PRIMARY": ("#007bff", "Primary colour"),
+    "COLOUR_SECONDARY": ("#007bff", "Secondary colour"),
+    "MAIL_OUT_NAME": ("AlekSIS", "Mail out name"),
+    "MAIL_OUT": ("aleksis@example.com", "Mail out address"),
+    "PRIVACY_URL": ("", "Link to privacy policy"),
+    "IMPRINT_URL": ("", "Link to imprint"),
+}
+CONSTANCE_CONFIG_FIELDSETS = {
+    "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
+    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
+    "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
+}
 
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(

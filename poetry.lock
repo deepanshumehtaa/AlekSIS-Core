@@ -259,11 +259,22 @@ Django = ">=1.8"
 
 [[package]]
 category = "main"
-description = "Application settings whose values can be updated while a project is up and running."
-name = "django-dbsettings"
+description = "Django live settings with pluggable backends, including Redis."
+name = "django-constance"
 optional = false
 python-versions = "*"
-version = "1.0.0"
+version = "2.5.0"
+
+[package.dependencies]
+six = "*"
+
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
+
+[package.extras]
+database = ["django-picklefield"]
+redis = ["redis"]
 
 [[package]]
 category = "main"
@@ -419,13 +430,23 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
-
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
+
+[[package]]
+category = "main"
+description = "Pickled object field for Django"
+name = "django-picklefield"
+optional = false
+python-versions = "*"
+version = "2.0"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[package.extras]
+tests = ["tox"]
 
 [[package]]
 category = "main"
@@ -1650,7 +1671,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "40917beab5394838573def3e2c8a6719f37040d826df74b3cdc9b52262ad0290"
+content-hash = "bca26513f4520039661e719a675e767eef8a19273d1430cd0810ea8a10ea40da"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1774,8 +1795,9 @@ django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
 ]
-django-dbsettings = [
-    {file = "django-dbsettings-1.0.0.tar.gz", hash = "sha256:42b04dffd3bc90d91718c822f1e0212d9368e8efe340f7ef09517b5fb1cf49f5"},
+django-constance = [
+    {file = "django-constance-2.5.0.tar.gz", hash = "sha256:c47db4abd5788584115db681c0e8fef8ff870d49af90aa359076f0833a537199"},
+    {file = "django_constance-2.5.0-py2.py3-none-any.whl", hash = "sha256:1b536d153c168ef548fea5bdcdea84afab83892e2163ec4e896557a3139effd7"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.1.tar.gz", hash = "sha256:24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8"},
@@ -1827,6 +1849,10 @@ django-otp-yubikey = [
 django-phonenumber-field = [
     {file = "django-phonenumber-field-3.0.1.tar.gz", hash = "sha256:794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"},
     {file = "django_phonenumber_field-3.0.1-py3-none-any.whl", hash = "sha256:1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e"},
+]
+django-picklefield = [
+    {file = "django-picklefield-2.0.tar.gz", hash = "sha256:f1733a8db1b6046c0d7d738e785f9875aa3c198215de11993463a9339aa4ea24"},
+    {file = "django_picklefield-2.0-py2.py3-none-any.whl", hash = "sha256:9052f2dcf4882c683ce87b4356f29b4d014c0dad645b6906baf9f09571f52bc8"},
 ]
 django-sass-processor = [
     {file = "django-sass-processor-0.8.tar.gz", hash = "sha256:e039551994feaaba6fcf880412b25a772dd313162a34cbb4289814988cfae340"},

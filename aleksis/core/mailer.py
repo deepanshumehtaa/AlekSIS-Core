@@ -1,10 +1,11 @@
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
-from aleksis.core.db_settings import mail_settings
+from constance import config
 
-mail_out = "{} <{}>".format(mail_settings.mail_out_name,
-                            mail_settings.mail_out) if mail_settings.mail_out_name != "" else mail_settings.mail_out
+
+mail_out = "{} <{}>".format(config.MAIL_OUT_NAME,
+                            config.MAIL_OUT) if config.MAIL_OUT_NAME else mail_settings.mail_out
 
 
 def send_mail_with_template(title, receivers, plain_template, html_template, context={}, mail_out=mail_out):

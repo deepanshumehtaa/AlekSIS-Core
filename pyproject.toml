@@ -48,8 +48,8 @@ django_select2 = "^7.1"
 requests = "^2.22"
 django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
 django-yarnpkg = "^6.0"
-django-dbsettings = "^1.0.0"
 django-material = "^1.6.0"
+django-constance = {version = "^2.5.0", extras = ["database"]}
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
