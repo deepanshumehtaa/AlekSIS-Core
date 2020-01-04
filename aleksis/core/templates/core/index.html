@@ -1,22 +1,81 @@
-{# -*- engine:django -*- #}
-
-{% extends "core/base.html" %}
-
+{% extends 'core/base.html' %}
 {% load i18n %}
 
-{% block page_title %}
-  {% blocktrans %}
-    AlekSIS (School Information System)
-  {% endblocktrans %}
-{% endblock %}
-
 {% block content %}
-  <div class="flow-text">
-    <p>
-      {% blocktrans %}
-        AlekSIS is a web-based school information system (SIS) which can be used to
-        manage and/or publish organisational data of educational institutions.
-      {% endblocktrans %}
-    </p>
-  </div>
+    <p class="flow-text">{% blocktrans %}AlekSIS (School Information System){% endblocktrans %}</p>
+
+    <div class="row">
+        <div class="col s12">
+            <h5>{% blocktrans %}Your status{% endblocktrans %}</h5>
+        </div>
+        <div class="col"><i class="material-icons left green-text">check_circle</i>{{ user_type_formatted }}</div>
+        {% if user_type == 1 or user_type == 2 %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Your
+                classes: {{ classes|join:", " }}</div>
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Your
+                courses: {{ courses|join:", " }}</div>
+        {% endif %}
+        {% if user_type == 1 %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Your
+                subjects: {{ subjects|join:", " }}</div>
+        {% endif %}
+        {% if user_type == 1 or has_wifi == True %}
+            <div class="col"><i class="material-icons left green-text">check_circle</i>Wifi</div>
+        {% else %}
+            <div class="col"><i class="material-icons left red-text">close</i>No Wifi</div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <h5>Letzte Aktivitäten</h5>
+
+            {% if activities %}
+                <ul class="collection">
+                    {% for activity in activities %}
+                        <li class="collection-item">
+                            <span class="badge new primary-color">{{ activity.app }}</span>
+                            <span class="title">{{ activity.title }}</span>
+                            <p>
+                                <i class="material-icons left">access_time</i> {{ activity.created_at }}
+                            </p>
+                            <p>
+                                {{ activity.description }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Noch keine Aktivitäten vorhanden.</p>
+            {% endif %}
+        </div>
+
+        <div class="col s12 m6">
+            <h5>Letzte Benachrichtigungen</h5>
+
+            {% if notifications %}
+                <ul class="collection">
+                    {% for notification in notifications %}
+                        <li class="collection-item">
+                            <span class="badge new primary-color">{{ notification.app }}</span>
+                            <span class="title">{{ notification.title }}</span>
+                            <p>
+                                <i class="material-icons left">access_time</i> {{ notification.created_at }}
+                            </p>
+                            <p>
+                                {{ notification.description }}
+                            </p>
+                            {% if notification.link %}
+                                <p>
+                                    <a href="{{ notification.link }}">Mehr Informationen →</a>
+                                </p>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Noch keine Benachrichtigungen vorhanden.</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
