@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env mksh
 
 remove_pip_metadata() {
     find . -type d -name pip-wheel-metadata -print0 | xargs -0r rm -rf --
@@ -55,51 +55,36 @@ case "$1" in
 	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-logo.png -
 	exit
 	;;
-    "devstats"*)
-	case $KSH_VERSION in
-	(*MIRBSD\ KSH*) ;;
-	(*) echo >&2 E: need mksh; exit 1 ;;
-	esac
-	;;
-    *)
-	echo >&2 "E: unknown command '$1'"
-	exit 1
-	;;
-esac
 
-# this line is only reached if the shell is mksh
-# and $1 is one of the known commands (devstats*)
+    "devstats-commits")
+	# Copyright © 2018
+	#	mirabilos <m@mirbsd.org>
+	# Copyright © 2017
+	#	mirabilos <t.glaser@tarent.de>
+	# Copyright © 2015, 2017, 2020
+	#	mirabilos <thorsten.glaser@teckids.org>
+	#
+	# Provided that these terms and disclaimer and all copyright notices
+	# are retained or reproduced in an accompanying document, permission
+	# is granted to deal in this work without restriction, including un‐
+	# limited rights to use, publicly perform, distribute, sell, modify,
+	# merge, give away, or sublicence.
+	#
+	# This work is provided “AS IS” and WITHOUT WARRANTY of any kind, to
+	# the utmost extent permitted by applicable law, neither express nor
+	# implied; without malicious intent or gross negligence. In no event
+	# may a licensor, author or contributor be held liable for indirect,
+	# direct, other damage, loss, or other issues arising in any way out
+	# of dealing in the work, even if advised of the possibility of such
+	# damage or existence of a defect, except proven that it results out
+	# of said person’s immediate fault when using the work as intended.
 
-# Copyright © 2018
-#	mirabilos <m@mirbsd.org>
-# Copyright © 2017
-#	mirabilos <t.glaser@tarent.de>
-# Copyright © 2015, 2017, 2020
-#	mirabilos <thorsten.glaser@teckids.org>
-#
-# Provided that these terms and disclaimer and all copyright notices
-# are retained or reproduced in an accompanying document, permission
-# is granted to deal in this work without restriction, including un‐
-# limited rights to use, publicly perform, distribute, sell, modify,
-# merge, give away, or sublicence.
-#
-# This work is provided “AS IS” and WITHOUT WARRANTY of any kind, to
-# the utmost extent permitted by applicable law, neither express nor
-# implied; without malicious intent or gross negligence. In no event
-# may a licensor, author or contributor be held liable for indirect,
-# direct, other damage, loss, or other issues arising in any way out
-# of dealing in the work, even if advised of the possibility of such
-# damage or existence of a defect, except proven that it results out
-# of said person’s immediate fault when using the work as intended.
+	set -e
+	set -o pipefail
+	unset LANGUAGE
+	export LC_ALL=C.UTF-8
+	set -o utf8-mode
 
-set -e
-set -o pipefail
-unset LANGUAGE
-export LC_ALL=C.UTF-8
-set -o utf8-mode
-
-case $1 in
-(devstats-commits)
 	for d in . apps/official/*; do
 		cd "$d"
 		if [[ ! -s pyproject.toml ]]; then
@@ -184,7 +169,7 @@ case $1 in
 	done
 	exit
 	;;
-(*)
+    *)
 	print -ru2 -- "E: unknown command ${1@Q}"
 	exit 1
 	;;
