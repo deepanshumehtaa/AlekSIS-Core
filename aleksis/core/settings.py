@@ -281,7 +281,7 @@ CONSTANCE_CONFIG = {
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
     "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field'),
+    "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
 }
