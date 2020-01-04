@@ -50,6 +50,7 @@ django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumb
 django-yarnpkg = "^6.0"
 django-dbsettings = "^1.0.0"
 django-material = "^1.6.0"
+django-pwa = "^1.0.6"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

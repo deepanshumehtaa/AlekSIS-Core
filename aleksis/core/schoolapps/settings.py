@@ -192,36 +192,6 @@ else:
         }
     }
 
-# PWA
-PWA_APP_NAME = 'SchoolApps'
-PWA_APP_DESCRIPTION = "Eine Sammlung an nützlichen Apps für den Schulalltag am Katharineum zu Lübeck"
-PWA_APP_THEME_COLOR = '#da1f3d'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/'
-PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
-PWA_APP_ICONS = [
-    {
-        "src": "/static/icons/android_192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-    },
-    {
-        "src": "/static/icons/android_512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-    }
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        'src': '/static/icons/android_512.png',
-        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-    }
-]
-PWA_APP_DIR = 'ltr'
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/common', 'serviceworker.js')
-PWA_APP_LANG = 'de-DE'
 
 LOGGING = {
     'version': 1,

@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     "aleksis.core",
     "impersonate",
     "two_factor",
-    "material"
+    "material",
+    "pwa"
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -83,7 +84,6 @@ STATICFILES_FINDERS = [
     "django_yarnpkg.finders.NodeModulesFinder",
     "sass_processor.finders.CssFinder",
 ]
-
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
@@ -125,14 +125,13 @@ TEMPLATES = [
 ]
 
 THUMBNAIL_PROCESSORS = (
-    "image_cropping.thumbnail_processors.crop_corners",
-) + thumbnail_settings.THUMBNAIL_PROCESSORS
+                           "image_cropping.thumbnail_processors.crop_corners",
+                       ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 # Already included by base template / Bootstrap
 IMAGE_CROPPING_JQUERY_URL = None
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -161,10 +160,10 @@ if _settings.get("caching.memcached.enabled", True):
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 # Authentication backends are dynamically populated
@@ -230,7 +229,8 @@ STATIC_ROOT = _settings.get("static.root", os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
-YARN_INSTALLED_APPS = ["datatables", "highlight.js", "jquery", "manup", "materialize-css", "moment", "popper.js", "prop-types", "react", "react-dom", "material-design-icons-iconfont", "select2"]
+YARN_INSTALLED_APPS = ["datatables", "highlight.js", "jquery", "manup", "materialize-css", "moment", "popper.js",
+                       "prop-types", "react", "react-dom", "material-design-icons-iconfont", "select2"]
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
@@ -304,3 +304,49 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
 _settings.populate_obj(sys.modules[__name__])
+
+PWA_APP_NAME = 'AlekSIS'  # dbsettings
+PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
+PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [  # three icons to upload dbsettings
+    {
+        "src": "/static/icons/android_192.png",
+        "sizes": "192x192"
+    },
+    {
+        "src": "/static/icons/android_512.png",
+        "sizes": "512x512"
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        "src": "/static/icons/apple_76.png",
+        "sizes": "76x76"
+    },
+    {
+        "src": "/static/icons/apple_114.png",
+        "sizes": "114x114"
+    },
+    {
+        "src": "/static/icons/apple_152.png",
+        "sizes": "152x152"
+    },
+    {
+        "src": "/static/icons/apple_180.png",
+        "sizes": "180x180"
+    },
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/icons/android_512.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, 'js', 'serviceworker.js')
+# PWA_APP_LANG = 'de-DE'
