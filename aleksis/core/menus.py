@@ -101,6 +101,7 @@ MENUS = {
         {
             "name": _("People"),
             "url": "#",
+            "icon": "people",
             "root": True,
             "validators": [
                 "menu_generator.validators.is_authenticated",
@@ -110,16 +111,19 @@ MENUS = {
                 {
                     "name": _("Persons"),
                     "url": "persons",
+                    "icon": "person",
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
                     "name": _("Groups"),
                     "url": "groups",
+                    "icon": "group",
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
                     "name": _("Persons and accounts"),
                     "url": "persons_accounts",
+                    "icon": "person_add",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
