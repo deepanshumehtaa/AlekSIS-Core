@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     "aleksis.core",
     "impersonate",
     "two_factor",
-    "material"
+    "material",
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -120,7 +120,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
-                "constance.context_processors.config"
+                "constance.context_processors.config",
             ],
         },
     },
@@ -232,7 +232,13 @@ STATIC_ROOT = _settings.get("static.root", os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
-YARN_INSTALLED_APPS = ["datatables", "jquery", "materialize-css", "material-design-icons-iconfont", "select2"]
+YARN_INSTALLED_APPS = [
+    "datatables",
+    "jquery",
+    "materialize-css",
+    "material-design-icons-iconfont",
+    "select2",
+]
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
@@ -245,7 +251,9 @@ ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
     "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
-    "material-design-icons": {"css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"},
+    "material-design-icons": {
+        "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
+    },
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -253,7 +261,10 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
     "get-config": "aleksis.core.util.sass_helpers.get_config",
 }
-SASS_PROCESSOR_INCLUDE_DIRS = [_settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"), STATIC_ROOT]
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT,
+]
 
 ADMINS = _settings.get("contact.admins", [])
 SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
@@ -272,7 +283,7 @@ if _settings.get("mail.server.host", None):
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 CONSTANCE_ADDITIONAL_FIELDS = {
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
