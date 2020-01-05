@@ -195,9 +195,9 @@ class Activity(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
-    title = models.CharField(max_length=150)
-    description = models.TextField(max_length=500)
-    link = models.URLField(blank=True)
+    title = models.CharField(max_length=150, verbose_name=_("Title"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"))
+    link = models.URLField(blank=True, verbose_name=_("Link"))
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
 
