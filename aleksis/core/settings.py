@@ -73,7 +73,8 @@ INSTALLED_APPS = [
     "aleksis.core",
     "impersonate",
     "two_factor",
-    "material"
+    "material",
+    "pwa",
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -84,7 +85,6 @@ STATICFILES_FINDERS = [
     "django_yarnpkg.finders.NodeModulesFinder",
     "sass_processor.finders.CssFinder",
 ]
-
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
@@ -120,7 +120,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
-                "constance.context_processors.config"
+                "constance.context_processors.config",
             ],
         },
     },
@@ -134,7 +134,6 @@ THUMBNAIL_PROCESSORS = (
 IMAGE_CROPPING_JQUERY_URL = None
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -232,7 +231,13 @@ STATIC_ROOT = _settings.get("static.root", os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
-YARN_INSTALLED_APPS = ["datatables", "jquery", "materialize-css", "material-design-icons-iconfont", "select2"]
+YARN_INSTALLED_APPS = [
+    "datatables",
+    "jquery",
+    "materialize-css",
+    "material-design-icons-iconfont",
+    "select2",
+]
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
@@ -245,7 +250,9 @@ ANY_JS = {
     "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
     "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
-    "material-design-icons": {"css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"},
+    "material-design-icons": {
+        "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
+    },
 }
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -253,7 +260,10 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
     "get-config": "aleksis.core.util.sass_helpers.get_config",
 }
-SASS_PROCESSOR_INCLUDE_DIRS = [_settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"), STATIC_ROOT]
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT,
+]
 
 ADMINS = _settings.get("contact.admins", [])
 SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
@@ -272,7 +282,7 @@ if _settings.get("mail.server.host", None):
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 CONSTANCE_ADDITIONAL_FIELDS = {
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
@@ -304,7 +314,7 @@ MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
-DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+DJANGO_TABLES2_TEMPLATE = "django_tables2/materialize.html"
 
 ANONYMIZE_ENABLED = _settings.get("maintenance.anonymisable", True)
 
@@ -326,3 +336,31 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
 _settings.populate_obj(sys.modules[__name__])
+
+PWA_APP_NAME = "AlekSIS"  # dbsettings
+PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
+PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_BACKGROUND_COLOR = "#ffffff"
+PWA_APP_DISPLAY = "standalone"
+PWA_APP_SCOPE = "/"
+PWA_APP_ORIENTATION = "any"
+PWA_APP_START_URL = "/"
+PWA_APP_ICONS = [  # three icons to upload dbsettings
+    {"src": STATIC_URL + "/icons/android_192.png", "sizes": "192x192"},
+    {"src": STATIC_URL + "/icons/android_512.png", "sizes": "512x512"},
+]
+PWA_APP_ICONS_APPLE = [
+    {"src": STATIC_URL + "/icons/apple_76.png", "sizes": "76x76"},
+    {"src": STATIC_URL + "/icons/apple_114.png", "sizes": "114x114"},
+    {"src": STATIC_URL + "/icons/apple_152.png", "sizes": "152x152"},
+    {"src": STATIC_URL + "/icons/apple_180.png", "sizes": "180x180"},
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        "src": STATIC_URL + "/icons/android_512.png",
+        "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
+    }
+]
+PWA_APP_DIR = "ltr"
+PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+# PWA_APP_LANG = 'de-DE'
