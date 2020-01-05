@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_activity_notification'),
+        ('core', '0003_add_verbose_names'),
     ]
 
     operations = [
