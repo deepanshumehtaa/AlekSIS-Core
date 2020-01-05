@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "impersonate",
     "two_factor",
     "material",
+    "pwa",
 ]
 
 INSTALLED_APPS += get_app_packages()
@@ -84,7 +85,6 @@ STATICFILES_FINDERS = [
     "django_yarnpkg.finders.NodeModulesFinder",
     "sass_processor.finders.CssFinder",
 ]
-
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
@@ -134,7 +134,6 @@ THUMBNAIL_PROCESSORS = (
 IMAGE_CROPPING_JQUERY_URL = None
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -337,3 +336,31 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
 _settings.populate_obj(sys.modules[__name__])
+
+PWA_APP_NAME = "AlekSIS"  # dbsettings
+PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
+PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_BACKGROUND_COLOR = "#ffffff"
+PWA_APP_DISPLAY = "standalone"
+PWA_APP_SCOPE = "/"
+PWA_APP_ORIENTATION = "any"
+PWA_APP_START_URL = "/"
+PWA_APP_ICONS = [  # three icons to upload dbsettings
+    {"src": STATIC_URL + "/icons/android_192.png", "sizes": "192x192"},
+    {"src": STATIC_URL + "/icons/android_512.png", "sizes": "512x512"},
+]
+PWA_APP_ICONS_APPLE = [
+    {"src": STATIC_URL + "/icons/apple_76.png", "sizes": "76x76"},
+    {"src": STATIC_URL + "/icons/apple_114.png", "sizes": "114x114"},
+    {"src": STATIC_URL + "/icons/apple_152.png", "sizes": "152x152"},
+    {"src": STATIC_URL + "/icons/apple_180.png", "sizes": "180x180"},
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        "src": STATIC_URL + "/icons/android_512.png",
+        "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
+    }
+]
+PWA_APP_DIR = "ltr"
+PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+# PWA_APP_LANG = 'de-DE'

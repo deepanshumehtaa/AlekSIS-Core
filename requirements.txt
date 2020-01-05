@@ -4,6 +4,5 @@ django-filter
 django_react_templatetags
 PyPDF2
 martor
-django-pwa
 django_widget_tweaks
 ics
