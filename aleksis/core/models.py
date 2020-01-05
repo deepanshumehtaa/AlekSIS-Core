@@ -166,7 +166,7 @@ class Group(models.Model, ExtensibleModel):
 
 
 class Activity(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -180,10 +180,10 @@ class Activity(models.Model):
 
 
 class Notification(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
-    title = models.CharField(max_length=150, verbose_name=_("Title"))
-    description = models.TextField(max_length=500, verbose_name=("Description"))
-    link = models.URLField(blank=True, verbose_name=_("Link"))
+    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+    title = models.CharField(max_length=150)
+    description = models.TextField(max_length=500)
+    link = models.URLField(blank=True)
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
 
