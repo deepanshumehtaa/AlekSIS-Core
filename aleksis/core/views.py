@@ -23,14 +23,14 @@ from .util import messages
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    activities = Activity.objects.filter(user=request.user).order_by("-created_at")[:5]
+    activities = Activity.objects.filter(user=request.user.person).order_by("-created_at")[:5]
 
     notifications = (
-        request.user.notifications.all().filter(user=request.user).order_by("-created_at")[:5]
+        request.user.person.notifications.all().filter(user=request.user.person).order_by("-created_at")[:5]
     )
     unread_notifications = (
-        request.user.notifications.all()
-        .filter(user=request.user, read=False)
+        request.user.person.notifications.all()
+        .filter(user=request.user.person, read=False)
         .order_by("-created_at")
     )
 
