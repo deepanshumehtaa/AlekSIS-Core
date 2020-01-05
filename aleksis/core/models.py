@@ -35,6 +35,8 @@ class School(models.Model):
 
     class Meta:
         ordering = ["name", "name_official"]
+        verbose_name = _("School")
+        verbose_name_plural = _("Schools")
 
 
 class SchoolTerm(models.Model):
@@ -54,6 +56,10 @@ class SchoolTerm(models.Model):
             self.current = None
         super().save(*args, **kwargs)
 
+    class Meta:
+        verbose_name = _("School term")
+        verbose_name_plural = _("School terms")
+
 
 class Person(models.Model, ExtensibleModel):
     """ A model describing any person related to a school, including, but not
@@ -62,6 +68,8 @@ class Person(models.Model, ExtensibleModel):
 
     class Meta:
         ordering = ["last_name", "first_name"]
+        verbose_name = _("Person")
+        verbose_name_plural = _("Persons")
 
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
@@ -146,6 +154,8 @@ class Group(models.Model, ExtensibleModel):
 
     class Meta:
         ordering = ["short_name", "name"]
+        verbose_name = _("Group")
+        verbose_name_plural = _("Groups")
 
     name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=16, unique=True)
@@ -178,6 +188,10 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = _("Activity")
+        verbose_name_plural = _("Activities")
+
 
 class Notification(models.Model):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
@@ -200,3 +214,7 @@ class Notification(models.Model):
             send_mail_with_template(self.title, [self.user.email], "mail/notification.txt", "mail/notification.html",
                                     {"notification": self})
             self.mailed = True
+
+    class Meta:
+        verbose_name = _("Notification")
+        verbose_name_plural = _("Notifications")
