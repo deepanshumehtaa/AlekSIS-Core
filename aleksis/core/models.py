@@ -168,12 +168,12 @@ class Group(models.Model, ExtensibleModel):
 class Activity(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=150)
-    description = models.TextField(max_length=500)
+    title = models.CharField(max_length=150, verbose_name=_("Title"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"))
 
-    app = models.CharField(max_length=100)
+    app = models.CharField(max_length=100, verbose_name=_("Application"))
 
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -181,15 +181,15 @@ class Activity(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="notifications")
-    title = models.CharField(max_length=150)
-    description = models.TextField(max_length=500)
-    link = models.URLField(blank=True)
+    title = models.CharField(max_length=150, verbose_name=_("Title"))
+    description = models.TextField(max_length=500, verbose_name=("Description"))
+    link = models.URLField(blank=True, verbose_name=_("Link"))
 
-    app = models.CharField(max_length=100)
+    app = models.CharField(max_length=100, verbose_name=_("Application"))
 
-    read = models.BooleanField(default=False)
-    mailed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=timezone.now)
+    read = models.BooleanField(default=False, verbose_name=_("Read"))
+    mailed = models.BooleanField(default=False, verbose_name=_("Mailed"))
+    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
