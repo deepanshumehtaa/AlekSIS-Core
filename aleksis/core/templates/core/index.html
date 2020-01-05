@@ -33,7 +33,7 @@
 
             {% if notifications %}
                 <ul class="collection">
-                    {% for notification in notifications %}
+                    {% for notification in unread_notifications %}
                         <li class="collection-item">
                             <span class="badge new primary-color">{{ notification.app }}</span>
                             <span class="title">{{ notification.title }}</span>
@@ -48,6 +48,9 @@
                                     <a href="{{ notification.link }}">{% blocktrans %}More information →{% endblocktrans %}</a>
                                 </p>
                             {% endif %}
+                            <p>
+                                <a href="{% url 'notification_mark_read' notification.id %}">{% blocktrans %}Mark as read{% endblocktrans%}</a>
+                            </p>
                         </li>
                     {% endfor %}
                 </ul>

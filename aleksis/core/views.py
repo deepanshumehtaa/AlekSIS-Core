@@ -15,7 +15,7 @@ from .forms import (
     EditTermForm,
     PersonsAccountsFormSet,
 )
-from .models import Activity, Group, Person, School
+from .models import Activity, Group, Notification, Person, School
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 
@@ -244,3 +244,15 @@ def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context["edit_term_form"] = edit_term_form
 
     return render(request, "core/edit_schoolterm.html", context)
+
+
+@admin_required
+def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    notification = get_object_or_404(Notification, pk=id_)
+
+    Notification.objects.get(id=notification).delete()
+
+    messages.success(request, _("Marked as read"))
+    return redirect("index")
