@@ -22,16 +22,21 @@ from .util import messages
 
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
-    
-    activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
 
-    notifications = request.user.notifications.all().filter(user=request.user).order_by('-created_at')[:5]
-    unread_notifications = request.user.notifications.all().filter(user=request.user, read=False).order_by(
-        '-created_at')
+    activities = Activity.objects.filter(user=request.user).order_by("-created_at")[:5]
 
-    context['activities'] = activities
-    context['notifications'] = notifications
-    context['unread_notifications'] = unread_notifications
+    notifications = (
+        request.user.notifications.all().filter(user=request.user).order_by("-created_at")[:5]
+    )
+    unread_notifications = (
+        request.user.notifications.all()
+        .filter(user=request.user, read=False)
+        .order_by("-created_at")
+    )
+
+    context["activities"] = activities
+    context["notifications"] = notifications
+    context["unread_notifications"] = unread_notifications
 
     return render(request, "core/index.html", context)
 
@@ -256,7 +261,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
 
     notification = get_object_or_404(Notification, pk=id_)
 
-    Notification.objects.get(id=notification).delete()
+    notification.read = True
+    notification.save()
 
-    messages.success(request, _("Marked as read"))
     return redirect("index")
