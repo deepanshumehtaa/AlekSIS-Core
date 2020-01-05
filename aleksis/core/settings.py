@@ -314,7 +314,7 @@ MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
-DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+DJANGO_TABLES2_TEMPLATE = "django_tables2/materialize.html"
 
 ANONYMIZE_ENABLED = _settings.get("maintenance.anonymisable", True)
 
