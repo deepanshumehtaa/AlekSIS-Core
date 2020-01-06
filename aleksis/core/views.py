@@ -24,18 +24,14 @@ from .util import messages
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    user = request.user
-
-    if user.is_authenticated:
+    if request.user.is_authenticated:
         activities = request.user.person.activities.all()[:5]
 
         notifications = (
-            request.user.person.notifications.all().filter(user=request.user.person).order_by("-created_at")[:5]
+            request.user.person.notifications.all()[:5]
         )
         unread_notifications = (
-            request.user.person.notifications.all()
-            .filter(user=request.user.person, read=False)
-            .order_by("-created_at")
+            request.user.person.notifications.all().filter(read=False)
         )
 
         context["activities"] = activities
@@ -259,13 +255,15 @@ def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     return render(request, "core/edit_schoolterm.html", context)
 
 
-@admin_required
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
     notification = get_object_or_404(Notification, pk=id_)
 
-    notification.read = True
-    notification.save()
+    if notification.user == request.user:
+        notification.read = True
+        notification.save()
+    else:
+        messages.danger(request, _("You are not allowed to mark notifications from other users as read."))
 
     return redirect("index")
