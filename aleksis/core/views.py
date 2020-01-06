@@ -1,6 +1,7 @@
 from typing import Optional
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
@@ -264,6 +265,6 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
         notification.read = True
         notification.save()
     else:
-        messages.danger(request, _("You are not allowed to mark notifications from other users as read."))
+        raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
     return redirect("index")
