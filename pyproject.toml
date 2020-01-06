@@ -7,7 +7,7 @@ packages = [
 readme = "README.rst"
 
 description = "AlekSIS (School Information System) — Core"
-authors = ["Dominik George <dominik.george@teckids.org>", "Martin Gummi <martin.gummi@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
+authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
 license = "EUPL-1.2"
 homepage = "https://aleksis.edugit.io/"
 repository = "https://edugit.org/AlekSIS/AlekSIS"
