@@ -1,8 +1,0 @@
-mysqlclient
-django-pdb
-django-filter
-django_react_templatetags
-PyPDF2
-martor
-django_widget_tweaks
-ics
