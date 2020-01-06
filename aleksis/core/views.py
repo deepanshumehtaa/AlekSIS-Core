@@ -1,6 +1,7 @@
 from typing import Optional
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
@@ -15,13 +16,29 @@ from .forms import (
     EditTermForm,
     PersonsAccountsFormSet,
 )
-from .models import Group, Person, School
+from .models import Activity, Group, Notification, Person, School
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 
 
+@login_required
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
+
+    if request.user.is_authenticated:
+        activities = request.user.person.activities.all()[:5]
+
+        notifications = (
+            request.user.person.notifications.all()[:5]
+        )
+        unread_notifications = (
+            request.user.person.notifications.all().filter(read=False)
+        )
+
+        context["activities"] = activities
+        context["notifications"] = notifications
+        context["unread_notifications"] = unread_notifications
+
     return render(request, "core/index.html", context)
 
 
@@ -237,3 +254,17 @@ def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context["edit_term_form"] = edit_term_form
 
     return render(request, "core/edit_schoolterm.html", context)
+
+
+def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    notification = get_object_or_404(Notification, pk=id_)
+
+    if notification.user == request.user:
+        notification.read = True
+        notification.save()
+    else:
+        raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
+
+    return redirect("index")

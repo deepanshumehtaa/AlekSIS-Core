@@ -31,6 +31,7 @@ urlpatterns = [
     path("group/<int:id_>", views.group, name="group_by_id"),
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
     path("", views.index, name="index"),
+    path("notifications/mark-read/<int:id_>", views.notification_mark_read, name="notification_mark_read"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),
