@@ -35,11 +35,11 @@ Licence
 
 ::
 
-  Copyright © 2018, 2019, 2020 Dominik George <dominik.george@teckids.org>
-  Copyright © 2018, 2019, 2020 Julian Leucker <leuckeju@katharineum.de>
+  Copyright © 2019, 2020 Dominik George <dominik.george@teckids.org>
+  Copyright © 2018, 2019 Julian Leucker <leuckeju@katharineum.de>
   Copyright © 2019, 2020 mirabilos <thorsten.glaser@teckids.org>
   Copyright © 2017, 2018, 2019 Frank Poetzsch-Heffter <p-h@katharineum.de>
-  Copyright © 2018, [2019, 2020 Tom Teichler <tom.teichler@teckids.org>
+  Copyright © 2019, 2020 Tom Teichler <tom.teichler@teckids.org>
   Copyright © 2017, 2018, 2019, 2020 Jonathan Weth <wethjo@katharineum.de>
   Copyright © 2018, 2019, 2020 Hangzhi Yu <yuha@katharineum.de>
 
