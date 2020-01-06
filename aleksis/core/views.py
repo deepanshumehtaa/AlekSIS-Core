@@ -20,6 +20,7 @@ from .tables import GroupsTable, PersonsTable
 from .util import messages
 
 
+@login_required
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
