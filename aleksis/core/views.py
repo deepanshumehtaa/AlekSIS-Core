@@ -23,20 +23,23 @@ from .util import messages
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    activities = Activity.objects.filter(user=request.user.person).order_by("-created_at")[:5]
+    user = request.user
 
-    notifications = (
-        request.user.person.notifications.all().filter(user=request.user.person).order_by("-created_at")[:5]
-    )
-    unread_notifications = (
-        request.user.person.notifications.all()
-        .filter(user=request.user.person, read=False)
-        .order_by("-created_at")
-    )
+    if user.is_authenticated:
+        activities = Activity.objects.filter(user=request.user.person).order_by("-created_at")[:5]
 
-    context["activities"] = activities
-    context["notifications"] = notifications
-    context["unread_notifications"] = unread_notifications
+        notifications = (
+            request.user.person.notifications.all().filter(user=request.user.person).order_by("-created_at")[:5]
+        )
+        unread_notifications = (
+            request.user.person.notifications.all()
+            .filter(user=request.user.person, read=False)
+            .order_by("-created_at")
+        )
+
+        context["activities"] = activities
+        context["notifications"] = notifications
+        context["unread_notifications"] = unread_notifications
 
     return render(request, "core/index.html", context)
 
