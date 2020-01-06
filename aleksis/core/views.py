@@ -27,7 +27,7 @@ def index(request: HttpRequest) -> HttpResponse:
     user = request.user
 
     if user.is_authenticated:
-        activities = Activity.objects.filter(user=request.user.person).order_by("-created_at")[:5]
+        activities = request.user.person.activities.all()[:5]
 
         notifications = (
             request.user.person.notifications.all().filter(user=request.user.person).order_by("-created_at")[:5]
