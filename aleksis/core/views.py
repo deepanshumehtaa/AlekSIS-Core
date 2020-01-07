@@ -43,7 +43,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def offline(request):
-    return render(request, "common/offline.html")
+    return render(request, "core/offline.html")
 
 
 @login_required
