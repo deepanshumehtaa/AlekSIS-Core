@@ -1,8 +1,9 @@
 import pkgutil
 from importlib import import_module
-from typing import Sequence
+from typing import Sequence, Union
 
 from django.conf import settings
+from django.db.models import Model
 from django.http import HttpRequest
 
 
@@ -51,8 +52,16 @@ def is_impersonate(request: HttpRequest) -> bool:
         return False
 
 
-def has_person(request: HttpRequest) -> bool:
-    if hasattr(request, "user"):
-        return getattr(request.user, "person", None) is not None
-    else:
-        return False
+def has_person(obj: Union[HttpRequest, Model]) -> bool:
+    """ Check wehether a model object has a person attribute linking it to a Person
+    object. The passed object can also be a HttpRequest object, in which case its
+    associated User object is unwrapped and tested.
+    """
+
+    if isinstance(obj, HttpRequest):
+        if hasattr(obj, "user"):
+            obj = obj.user
+        else:
+            return False
+
+    return getattr(obj, "person", None) is not None
