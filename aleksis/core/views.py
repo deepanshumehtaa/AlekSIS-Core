@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_tables2 import RequestConfig
 
-from .decorators import admin_required
+from .decorators import admin_required, person_required
 from .forms import (
     EditGroupForm,
     EditPersonForm,
@@ -21,23 +21,17 @@ from .tables import GroupsTable, PersonsTable
 from .util import messages
 
 
-@login_required
+@person_required
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    if request.user.is_authenticated:
-        activities = request.user.person.activities.all()[:5]
+    activities = request.user.person.activities.all()[:5]
+    notifications = request.user.person.notifications.all()[:5]
+    unread_notifications = request.user.person.notifications.all().filter(read=False)
 
-        notifications = (
-            request.user.person.notifications.all()[:5]
-        )
-        unread_notifications = (
-            request.user.person.notifications.all().filter(read=False)
-        )
-
-        context["activities"] = activities
-        context["notifications"] = notifications
-        context["unread_notifications"] = unread_notifications
+    context["activities"] = activities
+    context["notifications"] = notifications
+    context["unread_notifications"] = unread_notifications
 
     return render(request, "core/index.html", context)
 
