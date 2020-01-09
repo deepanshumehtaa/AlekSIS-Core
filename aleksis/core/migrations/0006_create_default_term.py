@@ -1,13 +1,17 @@
 from django.db import migrations, models
 
+from datetime import date
 
-def mark_current_term(apps, schema_editor):
+def create_or_mark_current_term(apps, schema_editor):
     db_alias = schema_editor.connection.alias
 
     SchoolTerm = apps.get_model('core', 'SchoolTerm')  # noqa
 
     if not SchoolTerm.objects.filter(current=True).exists():
-        SchoolTerm.objects.using(db_alias).latest('date_start').update(current=True)
+        if SchoolTerm.objects.using(db_alias).latest():
+            SchoolTerm.objects.using(db_alias).latest('date_start').update(current=True)
+        else:
+            SchoolTerm.objects.using(db_alias).create(date_start=date.today(), current=True)
 
 
 class Migration(migrations.Migration):
@@ -17,14 +21,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='school',
-            name='current_term',
-        ),
-        migrations.AddField(
-            model_name='schoolterm',
-            name='current',
-            field=models.NullBooleanField(default=None, unique=True),
-        ),
+        migrations.RunPython(create_or_mark_current_term)
     ]
-
