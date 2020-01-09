@@ -534,14 +534,6 @@ tablib = ["tablib"]
 
 [[package]]
 category = "main"
-description = "A Django application that contains a widget to render a form field as a TinyMCE editor."
-name = "django-tinymce"
-optional = false
-python-versions = "*"
-version = "2.8.0"
-
-[[package]]
-category = "main"
 description = "Complete Two-Factor Authentication for Django"
 name = "django-two-factor-auth"
 optional = false
@@ -1712,7 +1704,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "db1c410e8c21d3edca0265628e994b34cf843ad217ac101f69f5cb3b723f9437"
+content-hash = "3ab1c505c7f668d1a7e80bb9d2e62916283a9ab820dddf4c7ab1a2bb98c06b0d"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1921,10 +1913,6 @@ django-stubs = [
 django-tables2 = [
     {file = "django-tables2-2.2.1.tar.gz", hash = "sha256:0d9b17f5c030ba1b5fcaeb206d8397bf58f1fdfc6beaf56e7874841b8647aa94"},
     {file = "django_tables2-2.2.1-py2.py3-none-any.whl", hash = "sha256:6afa0496695e15b332e98537265d09fe01a55b28c75a85323d8e6b0dc2350280"},
-]
-django-tinymce = [
-    {file = "django-tinymce-2.8.0.tar.gz", hash = "sha256:bb7311a2ce705a0b95f4ae8fab4f17445982719b557f4e935d68dae514f7df0a"},
-    {file = "django_tinymce-2.8.0-py2.py3-none-any.whl", hash = "sha256:5a6e21406daafab22124be5c447abdfe78937307420daae0b997d2be0f08c58b"},
 ]
 django-two-factor-auth = [
     {file = "django-two-factor-auth-1.10.0.tar.gz", hash = "sha256:3c3af3cd747462be18e7494c4068a2bdc606d7a2d2b2914f8d4590fc80995a71"},
