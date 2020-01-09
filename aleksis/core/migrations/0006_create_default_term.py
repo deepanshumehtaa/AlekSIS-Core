@@ -9,7 +9,9 @@ def create_or_mark_current_term(apps, schema_editor):
 
     if not SchoolTerm.objects.filter(current=True).exists():
         if SchoolTerm.objects.using(db_alias).exists():
-            SchoolTerm.objects.using(db_alias).latest('date_start').update(current=True)
+            term = SchoolTerm.objects.using(db_alias).latest('date_start')
+            term.current=True
+            term.save()
         else:
             SchoolTerm.objects.using(db_alias).create(date_start=date.today(), current=True)
 
