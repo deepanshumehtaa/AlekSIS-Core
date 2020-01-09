@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     "material",
     "pwa",
     "ckeditor",
-    "tinymce",
 ]
 
 INSTALLED_APPS += get_app_packages()
