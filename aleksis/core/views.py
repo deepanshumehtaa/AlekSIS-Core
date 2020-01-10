@@ -255,7 +255,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
 
     notification = get_object_or_404(Notification, pk=id_)
 
-    if notification.user == request.user:
+    if notification.user == request.user.person:
         notification.read = True
         notification.save()
     else:
