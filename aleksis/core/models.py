@@ -144,7 +144,11 @@ class Person(models.Model, ExtensibleModel):
 
     @property
     def full_name(self) -> str:
-        return "%s, %s" % (self.last_name, self.first_name)
+        return f"{self.last_name}, {self.first_name}"
+
+    @property
+    def adressing_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return self.full_name
@@ -216,7 +220,7 @@ class Notification(models.Model):
 
         if not self.mailed:
             context = self.__dict__
-            context["notification_user"] = " ".join([self.user.first_name, self.user.last_name])
+            context["notification_user"] = self.user.adressing_name
             send_templated_mail(
                 template_name='notification',
                 from_email=config.MAIL_OUT,
