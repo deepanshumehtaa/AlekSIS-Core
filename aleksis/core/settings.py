@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages
+from .util.core_helpers import get_app_packages, merge_app_settings
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "pwa",
 ]
 
+merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
 INSTALLED_APPS += get_app_packages()
 
 STATICFILES_FINDERS = [
@@ -149,6 +150,8 @@ DATABASES = {
         "ATOMIC_REQUESTS": True,
     }
 }
+
+merge_app_settings("DATABASES", DATABASES, False)
 
 if _settings.get("caching.memcached.enabled", True):
     CACHES = {
@@ -239,6 +242,8 @@ YARN_INSTALLED_APPS = [
     "select2",
 ]
 
+merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
+
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
 
@@ -254,6 +259,8 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
 }
+
+merge_app_settings("ANY_JS", ANY_JS, True)
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
@@ -301,6 +308,9 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
 }
+
+merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
+merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(

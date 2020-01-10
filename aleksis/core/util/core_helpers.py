@@ -30,19 +30,41 @@ def get_app_packages() -> Sequence[str]:
     except ImportError:
         return []
 
-    pkgs = []
-    for pkg in pkgutil.iter_modules(aleksis.apps.__path__):
-        mod = import_module("aleksis.apps.%s" % pkg[1])
+    return ["aleksis.apps.%s" % pkg[1] for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
 
-        # Add additional apps defined in module's INSTALLED_APPS constant
-        additional_apps = getattr(mod, "INSTALLED_APPS", [])
-        for app in additional_apps:
-            if app not in pkgs:
-                pkgs.append(app)
 
-        pkgs.append("aleksis.apps.%s" % pkg[1])
+def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: bool = False) -> Union[dict, list]:
+    """ Get a named settings constant from all apps and merge it into the original.
+    To use this, add a settings.py file to the app, in the same format as Django's
+    main settings.py.
 
-    return pkgs
+    Note: Only selected names will be imported frm it to minimise impact of
+    potentially malicious apps!
+    """
+
+    for pkg in get_app_packages():
+        try:
+            mod_settings = import_module(pkg)
+        except ImportError:
+            # Import errors are non-fatal. They mean that the app has no settings.py.
+            continue
+
+        app_setting = getattr(mod_settings, setting, None)
+        if not app_setting:
+            # The app might not have this setting or it might be empty. Ignore it in that case.
+            continue
+
+        for entry in app_setting:
+            if entry in original:
+                if not deduplicate:
+                    raise AttributeError("%s already set in original.")
+            else:
+                if isinstance(original, list):
+                    original.append(entry)
+                elif isinstance(original, dict):
+                    original[entry] = app_setting[entry]
+                else:
+                    raise TypeError("Only dict and list settings can be merged.")
 
 
 def is_impersonate(request: HttpRequest) -> bool:
