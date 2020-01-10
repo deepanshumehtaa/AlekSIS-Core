@@ -148,7 +148,12 @@ class Person(models.Model, ExtensibleModel):
 
     @property
     def adressing_name(self) -> str:
-        return f"{self.first_name} {self.last_name}"
+        if config.ADRESSING_NAME_FORMAT == "dutch":
+            return f"{self.last_name} {self.first_name}"
+        elif config.ADRESSING_NAME_FORMAT == "english":
+            return f"{self.last_name}, {self.first_name}"
+        else:
+            return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return self.full_name
