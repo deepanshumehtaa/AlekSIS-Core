@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages
+from .util.core_helpers import get_app_packages, merge_app_settings
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -77,8 +77,10 @@ INSTALLED_APPS = [
     "two_factor",
     "material",
     "pwa",
+    "ckeditor",
 ]
 
+merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
 INSTALLED_APPS += get_app_packages()
 
 STATICFILES_FINDERS = [
@@ -151,6 +153,8 @@ DATABASES = {
         "ATOMIC_REQUESTS": True,
     }
 }
+
+merge_app_settings("DATABASES", DATABASES, False)
 
 if _settings.get("caching.memcached.enabled", True):
     CACHES = {
@@ -241,6 +245,8 @@ YARN_INSTALLED_APPS = [
     "select2",
 ]
 
+merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
+
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
 
@@ -256,6 +262,8 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
 }
+
+merge_app_settings("ANY_JS", ANY_JS, True)
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
@@ -320,6 +328,9 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
 }
 
+merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
+merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
+
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
     "maintenance.ignore_ips", _settings.get("maintenance.internal_ips", [])
@@ -382,3 +393,52 @@ PWA_APP_SPLASH_SCREEN = [
 PWA_APP_DIR = "ltr"
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 # PWA_APP_LANG = 'de-DE'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_Full': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            {'name': 'customtools', 'items': [
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'Full',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}

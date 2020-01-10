@@ -259,6 +259,17 @@ Django = ">=1.8"
 
 [[package]]
 category = "main"
+description = "Django admin CKEditor integration."
+name = "django-ckeditor"
+optional = false
+python-versions = "*"
+version = "5.8.0"
+
+[package.dependencies]
+django-js-asset = ">=1.2.2"
+
+[[package]]
+category = "main"
 description = "Django live settings with pluggable backends, including Redis."
 name = "django-constance"
 optional = false
@@ -364,6 +375,14 @@ name = "django-ipware"
 optional = false
 python-versions = "*"
 version = "2.1.0"
+
+[[package]]
+category = "main"
+description = "script tag with additional attributes for django.forms.Media"
+name = "django-js-asset"
+optional = false
+python-versions = "*"
+version = "1.2.2"
 
 [[package]]
 category = "main"
@@ -1858,6 +1877,10 @@ django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
 ]
+django-ckeditor = [
+    {file = "django-ckeditor-5.8.0.tar.gz", hash = "sha256:46fc9c7346ea36183dc0cea350f98704f8b04c4722b7fe4fb18baf8ae20423fb"},
+    {file = "django_ckeditor-5.8.0-py2.py3-none-any.whl", hash = "sha256:a59bab13f4481318f8a048b1b0aef5c7da768a6352dcfb9ba0e77d91fbb9462a"},
+]
 django-constance = []
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.1.tar.gz", hash = "sha256:24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8"},
@@ -1887,6 +1910,10 @@ django-impersonate = [
 ]
 django-ipware = [
     {file = "django-ipware-2.1.0.tar.gz", hash = "sha256:a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"},
+]
+django-js-asset = [
+    {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
+    {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
 ]
 django-maintenance-mode = [
     {file = "django-maintenance-mode-0.14.0.tar.gz", hash = "sha256:f3fef1760fdcda5e0bf6c2966aadc77eea6f328580a9c751920daba927281a68"},
