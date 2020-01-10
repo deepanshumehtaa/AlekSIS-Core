@@ -1,26 +1,23 @@
 {% load i18n %}
 
-{% block subject %} My subject for {{username}} {% endblock %}
+{% block subject %} {% trans "New notification for" %} {{ notification_user }} {% endblock %}
 
 {% block html %}
 <main>
     {% blocktrans %}
-    <h1>Dear {{ username }},</h1>
-    <p>thank you for using <em>AlekSIS</em>!</p>
-
-    <p>Yours sincerely
-    <br>
-    AlekSIS team</p>
-
-    <p>Dear {{ notification.user.get_full_name }}, <br>
-        weǜe got a new message for you:</p>
+    <h1>{{ notification }}</h1>
+    <p>Dear {{ notification_user }}, <br>
+        we got a new message for you:</p>
+    {% endblocktrans %}
     <blockquote>
-        <p>{{ notification.description }}</p>
-        {% if notification.link %}
-            <a href="{{ notification.link }}">More information →</a>
+        <p>{{ description }}</p>
+        {% if link %}
+            <a href="{{ link }}">{% trans "More information" %} →</a>
         {% endif %}
     </blockquote>
-    <p>By {{ notification.app }} at {{ notification.created_at }}</p>
+
+    {% blocktrans %}
+    <p>By {{ app }} at {{ created_at }}</p>
 
     <i>Your AlekSIS team</i>
     {% endblocktrans %}

@@ -212,15 +212,19 @@ class Notification(models.Model):
         return self.title
 
     def save(self, **kwargs):
+        super().save(**kwargs)
+
         if not self.mailed:
+            context = self.__dict__
+            context["notification_user"] = " ".join([self.user.first_name, self.user.last_name])
             send_templated_mail(
                 template_name='notification',
                 from_email=config.MAIL_OUT,
                 recipient_list=[self.user.email],
-                context={"notification": self}
+                context=context,
             )
             self.mailed = True
-        super().save(**kwargs)
+            super().save(**kwargs)
 
     class Meta:
         verbose_name = _("Notification")
