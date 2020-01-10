@@ -4,11 +4,8 @@
 
 {% block html %}
 <main>
-    {% blocktrans %}
-    <h1>{{ notification }}</h1>
-    <p>Dear {{ notification_user }}, <br>
-        we got a new message for you:</p>
-    {% endblocktrans %}
+    <p>{% trans "Dear" %} {{ notification_user }}, <br>
+        {% trans "we got a new notification for you:" %}</p>
     <blockquote>
         <p>{{ description }}</p>
         {% if link %}
@@ -16,8 +13,8 @@
         {% endif %}
     </blockquote>
 
-    {% blocktrans %}
-    <p>By {{ app }} at {{ created_at }}</p>
+    {% blocktrans with trans_app=app trans_created_at=created_at %}
+    <p>By {{ trans_app }} at {{ trans_created_at }}</p>
 
     <i>Your AlekSIS team</i>
     {% endblocktrans %}
