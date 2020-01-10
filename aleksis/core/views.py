@@ -18,16 +18,16 @@ from .forms import (
 )
 from .models import Activity, Group, Notification, Person, School
 from .tables import GroupsTable, PersonsTable
-from .util import messages
+from .util import messages, network
 
 
 @person_required
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    activities = request.user.person.activities.all().order_by('-created_at')[:5]
+    notifications = request.user.person.notifications.all().order_by('-created_at')[:5]
+    unread_notifications = request.user.person.notifications.all().filter(read=False).order_by('-created_at')
 
     context["activities"] = activities
     context["notifications"] = notifications
