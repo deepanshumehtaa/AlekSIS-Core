@@ -265,11 +265,6 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
-[package.dependencies]
-[package.dependencies.django-picklefield]
-optional = true
-version = "*"
-
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -278,6 +273,7 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
+
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -443,27 +439,9 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
-
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
-
-[[package]]
-category = "main"
-description = "Pickled object field for Django"
-name = "django-picklefield"
-optional = false
-python-versions = "*"
-version = "2.0"
-
-[package.dependencies]
-Django = ">=1.11"
-
-[package.extras]
-tests = ["tox"]
 
 [[package]]
 category = "main"
@@ -1887,10 +1865,6 @@ django-phonenumber-field = [
     {file = "django-phonenumber-field-3.0.1.tar.gz", hash = "sha256:794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"},
     {file = "django_phonenumber_field-3.0.1-py3-none-any.whl", hash = "sha256:1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e"},
 ]
-django-picklefield = [
-    {file = "django-picklefield-2.0.tar.gz", hash = "sha256:f1733a8db1b6046c0d7d738e785f9875aa3c198215de11993463a9339aa4ea24"},
-    {file = "django_picklefield-2.0-py2.py3-none-any.whl", hash = "sha256:9052f2dcf4882c683ce87b4356f29b4d014c0dad645b6906baf9f09571f52bc8"},
-]
 django-pwa = [
     {file = "django-pwa-1.0.6.tar.gz", hash = "sha256:b3f1ad0c5241fae4c7505423540de4db93077d7c88416ff6d2af545ffe209f34"},
     {file = "django_pwa-1.0.6-py3-none-any.whl", hash = "sha256:9306105fcb637ae16fea6527be4b147d45fd53db85efb1d4f61dfea6bf793e56"},
@@ -2473,7 +2447,6 @@ urllib3 = [
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
-    {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
 yubiotp = [
     {file = "YubiOTP-0.2.2.post1-py2.py3-none-any.whl", hash = "sha256:7e281801b24678f4bda855ce8ab975a7688a912f5a6cb22b6c2b16263a93cbd2"},

@@ -75,4 +75,13 @@
       </div>
     </div>
   {% endif %}
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      setInterval(function () {
+        $('#body').load("/");
+      }, 3000);
+    });
+
+  </script>
 {% endblock %}
