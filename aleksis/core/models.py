@@ -224,8 +224,10 @@ class Notification(models.Model):
         super().save(**kwargs)
 
         if not self.mailed:
-            context = self.__dict__
-            context["notification_user"] = self.user.adressing_name
+            context = {
+                "notification": self,
+                "notification_user": self.user.adressing_name,
+            }
             send_templated_mail(
                 template_name='notification',
                 from_email=config.MAIL_OUT,

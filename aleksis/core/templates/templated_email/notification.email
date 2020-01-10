@@ -7,13 +7,13 @@
     <p>{% trans "Dear" %} {{ notification_user }}, <br>
         {% trans "we got a new notification for you:" %}</p>
     <blockquote>
-        <p>{{ description }}</p>
-        {% if link %}
-            <a href="{{ link }}">{% trans "More information" %} →</a>
+        <p>{{ notification.description }}</p>
+        {% if notification.link %}
+            <a href="{{ notification.link }}">{% trans "More information" %} →</a>
         {% endif %}
     </blockquote>
 
-    {% blocktrans with trans_app=app trans_created_at=created_at %}
+    {% blocktrans with trans_app=notification.app trans_created_at=notification.created_at %}
     <p>By {{ trans_app }} at {{ trans_created_at }}</p>
 
     <i>Your AlekSIS team</i>
