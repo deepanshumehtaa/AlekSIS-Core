@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_select2",
     "hattori",
+    "templated_email",
+    "html2text",
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
     "django_otp",
@@ -279,6 +281,10 @@ if _settings.get("mail.server.host", None):
     if _settings.get("mail.server.user", None):
         EMAIL_HOST_USER = _settings.get("mail.server.user")
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
+
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django'
+TEMPLATED_EMAIL_AUTO_PLAIN = True
+
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 

@@ -9,7 +9,10 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .mailer import send_mail_with_template
+from templated_email import send_templated_mail
 from .mixins import ExtensibleModel
+
+from constance import config
 
 
 class School(models.Model):
@@ -209,11 +212,15 @@ class Notification(models.Model):
         return self.title
 
     def save(self, **kwargs):
-        super().save(**kwargs)
         if not self.mailed:
-            send_mail_with_template(self.title, [self.user.email], "mail/notification.txt", "mail/notification.html",
-                                    {"notification": self})
+            send_templated_mail(
+                template_name='notification',
+                from_email=config.MAIL_OUT,
+                recipient_list=[self.user.email],
+                context={"notification": self}
+            )
             self.mailed = True
+        super().save(**kwargs)
 
     class Meta:
         verbose_name = _("Notification")
