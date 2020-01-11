@@ -9,7 +9,10 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .mailer import send_mail_with_template
+from templated_email import send_templated_mail
 from .mixins import ExtensibleModel
+
+from constance import config
 
 
 class School(models.Model):
@@ -141,7 +144,16 @@ class Person(models.Model, ExtensibleModel):
 
     @property
     def full_name(self) -> str:
-        return "%s, %s" % (self.last_name, self.first_name)
+        return f"{self.last_name}, {self.first_name}"
+
+    @property
+    def adressing_name(self) -> str:
+        if config.ADRESSING_NAME_FORMAT == "dutch":
+            return f"{self.last_name} {self.first_name}"
+        elif config.ADRESSING_NAME_FORMAT == "english":
+            return f"{self.last_name}, {self.first_name}"
+        else:
+            return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return self.full_name
@@ -210,10 +222,20 @@ class Notification(models.Model):
 
     def save(self, **kwargs):
         super().save(**kwargs)
+
         if not self.mailed:
-            send_mail_with_template(self.title, [self.user.email], "mail/notification.txt", "mail/notification.html",
-                                    {"notification": self})
+            context = {
+                "notification": self,
+                "notification_user": self.user.adressing_name,
+            }
+            send_templated_mail(
+                template_name='notification',
+                from_email=config.MAIL_OUT,
+                recipient_list=[self.user.email],
+                context=context,
+            )
             self.mailed = True
+            super().save(**kwargs)
 
     class Meta:
         verbose_name = _("Notification")

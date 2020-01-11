@@ -2,12 +2,12 @@ import os
 import sys
 from glob import glob
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, merge_app_settings
+from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_select2",
     "hattori",
+    "templated_email",
+    "html2text",
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
     "django_otp",
@@ -75,6 +77,7 @@ INSTALLED_APPS = [
     "two_factor",
     "material",
     "pwa",
+    "ckeditor",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -287,6 +290,10 @@ if _settings.get("mail.server.host", None):
         EMAIL_HOST_USER = _settings.get("mail.server.user")
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
 
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django'
+TEMPLATED_EMAIL_AUTO_PLAIN = True
+
+
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
@@ -294,6 +301,17 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
     "url_field": ["django.forms.URLField", {}],
+    "adressing-select": ['django.forms.fields.ChoiceField', {
+        'widget': 'django.forms.Select',
+        'choices': ((None, "-----"),
+                    # ("german", _("<first name>") + " " + _("<last name>")),
+                    # ("english", _("<last name>") + ", " + _("<first name>")),
+                    # ("netherlands", _("<last name>") + " " + _("<first name>")),
+                    ("german", "John Doe"),
+                    ("english", "Doe, John"),
+                    ("dutch", "Doe John"),
+                    )
+    }],
 }
 CONSTANCE_CONFIG = {
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
@@ -302,10 +320,11 @@ CONSTANCE_CONFIG = {
     "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
+    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select")
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
-    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
+    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
 }
 
@@ -349,7 +368,7 @@ _settings.populate_obj(sys.modules[__name__])
 
 PWA_APP_NAME = "AlekSIS"  # dbsettings
 PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
-PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_SCOPE = "/"
@@ -374,3 +393,52 @@ PWA_APP_SPLASH_SCREEN = [
 PWA_APP_DIR = "ltr"
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 # PWA_APP_LANG = 'de-DE'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_Full': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            {'name': 'customtools', 'items': [
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'Full',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}
