@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, merge_app_settings
+from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -368,7 +368,7 @@ _settings.populate_obj(sys.modules[__name__])
 
 PWA_APP_NAME = "AlekSIS"  # dbsettings
 PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
-PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_SCOPE = "/"
