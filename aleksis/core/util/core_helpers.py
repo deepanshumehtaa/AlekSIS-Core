@@ -1,10 +1,11 @@
 import pkgutil
 from importlib import import_module
-from typing import Sequence, Union
+from typing import Any, Callable, Sequence, Union
 
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.utils.functional import lazy
 
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
@@ -65,6 +66,20 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
                     original[entry] = app_setting[entry]
                 else:
                     raise TypeError("Only dict and list settings can be merged.")
+
+
+def lazy_config(key: str) -> Callable[[str], Any]:
+    """ Lazily get a config value from constance. Useful to bind constance
+    configs to other global settings to make them available to third-party
+    apps that are not aware of constance.
+    """
+
+    def _get_config(key: str) -> Any:
+        from constance import config  # noqa
+        return getattr(config, key)
+
+    # The type is guessed from the default value to improve lazy()'s behaviour
+    return lazy(_get_config, type(settings.CONSTANCE_CONFIG[key][0]))(key)
 
 
 def is_impersonate(request: HttpRequest) -> bool:
