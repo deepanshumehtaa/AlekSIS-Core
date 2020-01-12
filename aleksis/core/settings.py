@@ -298,6 +298,7 @@ TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 CONSTANCE_ADDITIONAL_FIELDS = {
+    "char_field": ["django.forms.CharField", {}],
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
     "url_field": ["django.forms.URLField", {}],
@@ -314,6 +315,7 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     }],
 }
 CONSTANCE_CONFIG = {
+    "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
     "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
@@ -323,6 +325,7 @@ CONSTANCE_CONFIG = {
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select")
 }
 CONSTANCE_CONFIG_FIELDSETS = {
+    "General settings": ("SITE_TITLE",),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
