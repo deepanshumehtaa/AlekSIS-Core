@@ -273,11 +273,6 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
-[package.dependencies]
-[package.dependencies.django-picklefield]
-optional = true
-version = "*"
-
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -286,6 +281,7 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
+
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -380,6 +376,17 @@ name = "django-js-asset"
 optional = false
 python-versions = "*"
 version = "1.2.2"
+
+[[package]]
+category = "main"
+description = "Javascript url handling for Django that doesn't hurt."
+name = "django-js-reverse"
+optional = false
+python-versions = "*"
+version = "0.9.1"
+
+[package.dependencies]
+Django = ">=1.5"
 
 [[package]]
 category = "main"
@@ -1754,7 +1761,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "e70f0afe8f226b2b0b3d0da38e8687ac8c5233fe2a06b693b1266e186243b9b6"
+content-hash = "e312e9803fee3289e4d403de297d432c3747e437c1b3fedbd2b8baeca3bfa9b0"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1915,6 +1922,10 @@ django-ipware = [
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
     {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
+]
+django-js-reverse = [
+    {file = "django-js-reverse-0.9.1.tar.gz", hash = "sha256:2a392d169f44e30b883c30dfcfd917a14167ce8fe196c99d2385b31c90d77aa0"},
+    {file = "django_js_reverse-0.9.1-py2.py3-none-any.whl", hash = "sha256:8134c2ab6307c945edfa90671ca65e85d6c1754d48566bdd6464be259cc80c30"},
 ]
 django-maintenance-mode = [
     {file = "django-maintenance-mode-0.14.0.tar.gz", hash = "sha256:f3fef1760fdcda5e0bf6c2966aadc77eea6f328580a9c751920daba927281a68"},
