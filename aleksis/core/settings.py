@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "material",
     "pwa",
     "ckeditor",
+    "django_js_reverse",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)

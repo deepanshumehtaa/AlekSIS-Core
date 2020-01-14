@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 import debug_toolbar
+from django_js_reverse.views import urls_js
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
@@ -36,6 +37,7 @@ urlpatterns = [
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path("select2/", include("django_select2.urls")),
+    path("jsreverse.js", urls_js, name='js_reverse'),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
