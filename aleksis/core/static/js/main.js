@@ -11,11 +11,11 @@ $(document).ready( function () {
         format: 'dd.mm.yyyy',
         // Translate to German
         i18n: {
-            months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-            weekdaysAbbrev: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
+            months: calendarweek_i18n.month_names,
+            monthsShort: calendarweek_i18n.month_abbrs,
+            weekdays: calendarweek_i18n.day_names,
+            weekdaysShort: calendarweek_i18n.day_abbrs,
+            weekdaysAbbrev: calendarweek_i18n.day_abbrs.map(([v])=> v),
 
             // Buttons
             today: 'Heute',
