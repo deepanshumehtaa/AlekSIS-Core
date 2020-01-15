@@ -368,7 +368,6 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_TOKEN = _settings.get("2fa.twilio.token")
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
-
 if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat",)
     CELERY_RESULT_BACKEND = "django-db"
@@ -378,8 +377,6 @@ if _settings.get("celery.enabled", False):
 if _settings.get("celery.email", False):
    INSTALLED_APPS += ("djcelery_email",)
    EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
-
-_settings.populate_obj(sys.modules[__name__])
 
 PWA_APP_NAME = "AlekSIS"  # dbsettings
 PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
