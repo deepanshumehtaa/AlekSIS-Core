@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_global_request",
-    "django_celery_beat",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -369,9 +368,12 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_TOKEN = _settings.get("2fa.twilio.token")
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
-CELERY_RESULT_BACKEND = "django-db"
-CELERY_CACHE_BACKEND = "django-cache"
-CELERY_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+if _settings.get("celery.enabled", False):
+    INSTALLED_APPS += ("django_celery_beat",)
+    CELERY_RESULT_BACKEND = "django-db"
+    CELERY_CACHE_BACKEND = "django-cache"
+    CELERY_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 if _settings.get("celery.email", False):
    INSTALLED_APPS += ("djcelery_email",)
