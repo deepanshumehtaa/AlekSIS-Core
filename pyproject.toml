@@ -58,6 +58,8 @@ html2text = "^2019.9.26"
 django-ckeditor = "^5.8.0"
 django-js-reverse = "^0.9.1"
 Celery = "^4.4.0"
+django-celery-results = "^1.1.2"
+django-celery-beat = "^1.5.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
