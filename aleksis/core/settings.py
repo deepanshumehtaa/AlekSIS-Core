@@ -373,6 +373,10 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
+if _settings.get("celery.email", False):
+   INSTALLED_APPS += ("djcelery_email",)
+   EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
 _settings.populate_obj(sys.modules[__name__])
 
 PWA_APP_NAME = "AlekSIS"  # dbsettings

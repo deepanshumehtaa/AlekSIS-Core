@@ -338,6 +338,19 @@ python-crontab = ">=2.3.4"
 
 [[package]]
 category = "main"
+description = "An async Django email backend using celery"
+name = "django-celery-email"
+optional = false
+python-versions = "*"
+version = "3.0.0"
+
+[package.dependencies]
+celery = ">=4.0"
+django = ">=2.2"
+django-appconf = "*"
+
+[[package]]
+category = "main"
 description = "Celery result backends for Django."
 name = "django-celery-results"
 optional = false
@@ -366,6 +379,11 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
+[package.dependencies]
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
+
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -374,7 +392,6 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
-
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -1915,7 +1932,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "cb3d501b2ac2cdc805d9e8e318273aee1050b9d4cf32cd0a5f0e17419937a444"
+content-hash = "b038e7e7e37dcb4751feaa417f3c6ced48a93a9509dbca64d6e2826d2674fc32"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2054,6 +2071,10 @@ django-bulk-update = [
 django-celery-beat = [
     {file = "django-celery-beat-1.5.0.tar.gz", hash = "sha256:659b39232c454ac27022bf679939bce0471fd482f3ee9276f5199716cb4afad9"},
     {file = "django_celery_beat-1.5.0-py2.py3-none-any.whl", hash = "sha256:61c92d4b600a9f24406ee0b8d01a9b192253e15d047e3325e1d81e2cacf7aba6"},
+]
+django-celery-email = [
+    {file = "django-celery-email-3.0.0.tar.gz", hash = "sha256:5546cbba80952cc3b8a0ffa4206ce90a4a996a7ffd1c385a2bdb65903ca18ece"},
+    {file = "django_celery_email-3.0.0-py2.py3-none-any.whl", hash = "sha256:0f72da39cb2ea83c69440566e87f27cd72f68f247f98ce99fb29889fcf329406"},
 ]
 django-celery-results = [
     {file = "django_celery_results-1.1.2-py2.py3-none-any.whl", hash = "sha256:932277e9382528f74778b30cf90e17941cba577b7d73cee09ed55e4972972c32"},
