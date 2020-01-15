@@ -372,7 +372,7 @@ if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat",)
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
-    CELERY_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+    CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 if _settings.get("celery.email", False):
    INSTALLED_APPS += ("djcelery_email",)
