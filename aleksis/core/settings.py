@@ -369,7 +369,7 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat",)
+    INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
     CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
