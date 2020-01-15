@@ -57,6 +57,7 @@ django-templated-email = "^2.3.0"
 html2text = "^2019.9.26"
 django-ckeditor = "^5.8.0"
 django-js-reverse = "^0.9.1"
+Celery = "^4.4.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
