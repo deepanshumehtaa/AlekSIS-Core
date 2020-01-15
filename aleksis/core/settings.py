@@ -368,8 +368,6 @@ if _settings.get("2fa.twilio.sid", None):
     TWILIO_TOKEN = _settings.get("2fa.twilio.token")
     TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
 
-_settings.populate_obj(sys.modules[__name__])
-
 PWA_APP_NAME = "AlekSIS"  # dbsettings
 PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
 PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
