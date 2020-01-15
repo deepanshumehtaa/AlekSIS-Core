@@ -57,7 +57,7 @@ django-templated-email = "^2.3.0"
 html2text = "^2019.9.26"
 django-ckeditor = "^5.8.0"
 django-js-reverse = "^0.9.1"
-Celery = {version="^4.4.0", optional=true}
+Celery = {version="^4.4.0", optional=true, extras=["django", "redis"]}
 django-celery-results = {version="^1.1.2", optional=true}
 django-celery-beat = {version="^1.5.0", optional=true}
 django-celery-email = {version="^3.0.0", optional=true}
