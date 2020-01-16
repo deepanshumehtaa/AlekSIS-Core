@@ -126,7 +126,7 @@ def celery_optional(orig: Callable) -> Callable:
 
 
 def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
-    """ Updates path of an uploaded file while using in Django FileField """
+    """ Updates path of an uploaded file and renames it to a random UUID in Django FileField """
 
     _, ext = os.path.splitext(filename)
 
