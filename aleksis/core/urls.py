@@ -44,6 +44,9 @@ urlpatterns = [
 # collectstatic is also required in development for this
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+# Serve media files from MEDIA_ROOT to make it work with runserver
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
