@@ -1,6 +1,8 @@
+import os
 import pkgutil
 from importlib import import_module
 from typing import Any, Callable, Sequence, Union
+from uuid import uuid4
 
 from django.conf import settings
 from django.db.models import Model
@@ -106,7 +108,7 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
 
 def celery_optional(orig: Callable) -> Callable:
     """ Decorator that makes Celery optional for a function.
-    
+
     If Celery is configured and available, it wraps the function in a Task
     and calls its delay method when invoked; if not, it leaves it untouched
     and it is executed synchronously.
@@ -121,3 +123,16 @@ def celery_optional(orig: Callable) -> Callable:
         return wrapped
     else:
         return orig
+
+
+def path_and_rename(instance, filename):
+    upload_to = 'files'
+    ext = filename.split('.')[-1].lower()
+    # get filename
+    if instance.pk:
+        filename = '{}.{}'.format(instance.pk, ext)
+    else:
+        # set filename as random string
+        filename = '{}.{}'.format(uuid4().hex, ext)
+    # return the whole path to the file
+    return os.path.join(upload_to, filename)
