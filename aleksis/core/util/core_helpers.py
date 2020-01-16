@@ -102,3 +102,22 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
             return False
 
     return getattr(obj, "person", None) is not None
+
+
+def celery_optional(orig: Callable) -> Callable:
+    """ Decorator that makes Celery optional for a function.
+    
+    If Celery is configured and available, it wraps the function in a Task
+    and calls its delay method when invoked; if not, it leaves it untouched
+    and it is executed synchronously.
+    """
+
+    if hasattr(settings, "CELERY_RESULT_BACKEND"):
+        from ..celery import app  # noqa
+        task = app.task(orig)
+
+        def wrapped(*args, **kwargs):
+            task.delay(*args, **kwargs)
+        return wrapped
+    else:
+        return orig
