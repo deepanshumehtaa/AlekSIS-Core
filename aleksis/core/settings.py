@@ -3,6 +3,7 @@ import sys
 from glob import glob
 
 from django.utils.translation import gettext_lazy as _
+from calendarweek.django import i18n_day_name_choices_lazy
 
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
@@ -313,6 +314,10 @@ CONSTANCE_ADDITIONAL_FIELDS = {
                     ("english", "Doe, John"),
                     ("dutch", "Doe John"),
                     )
+    }],
+    "weekday_field": ["django.forms.fields.ChoiceField", {
+        'widget': 'django.forms.Select',
+        "choices":  i18n_day_name_choices_lazy
     }],
 }
 CONSTANCE_CONFIG = {
