@@ -5,10 +5,12 @@ from django.db import models
 from django.db.models import QuerySet
 
 from easyaudit.models import CRUDEvent
+from jsonstore.fields import JSONField, JSONFieldMixin
 
 
-class ExtensibleModel(object):
-    """ Allow injection of code from AlekSIS apps to extend model functionality.
+class ExtensibleModel(models.Model):
+    """ Allow injection of fields and code from AlekSIS apps to extend
+    model functionality.
 
     After all apps have been loaded, the code in the `model_extensions` module
     in every app is executed. All code that shall be injected into a model goes there.
@@ -18,6 +20,8 @@ class ExtensibleModel(object):
     .. code-block:: python
 
        from datetime import date, timedelta
+
+       from jsonstore import CharField
 
        from aleksis.core.models import Person
 
@@ -29,6 +33,8 @@ class ExtensibleModel(object):
        def age(self) -> timedelta:
            return self.date_of_birth - date.today()
 
+       Person.field(shirt_size=CharField())
+
     For a more advanced example, using features from the ORM, see AlekSIS-App-Chronos
     and AlekSIS-App-Alsijil.
 
@@ -36,6 +42,8 @@ class ExtensibleModel(object):
     :Authors:
         - Dominik George <dominik.george@teckids.org>
     """
+
+    extended_data = JSONField(blank=True, null=True)
 
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
@@ -66,6 +74,32 @@ class ExtensibleModel(object):
         """ Adds the passed callable as a method. """
 
         cls._safe_add(func, func.__name__)
+
+    @classmethod
+    def field(cls, **kwargs) -> None:
+        """ Adds the passed jsonstore field. Must be one of the fields in
+        django-jsonstore.
+
+        Accepts exactly one keyword argument, with the name being the desired
+        model field name and the value the field instance.
+        """
+
+        # Force kwargs to be exactly one argument
+        if len(kwargs) != 1:
+            raise TypeError("field() takes 1 keyword argument but %d were given" % len(kwargs))
+        name, field = kwargs.popitem()
+
+        # Force the field to be one of the jsonstore fields
+        if JSONFieldMixin not in field.__class__.__mro__:
+            raise TypeError("Only jsonstore fields can be added to models.")
+
+        # Force use of the one JSONField defined in this mixin
+        field.json_field_name = "extended_data"
+
+        cls._safe_add(field, name)
+
+    class Meta:
+        abstract = True
 
 
 class CRUDMixin(models.Model):
