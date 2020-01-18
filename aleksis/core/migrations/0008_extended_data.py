@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='extended_data',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
+            field=django.contrib.postgres.fields.jsonb.JSONField(default=dict),
         ),
         migrations.AddField(
             model_name='person',
             name='extended_data',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True),
+            field=django.contrib.postgres.fields.jsonb.JSONField(default=dict),
         ),
     ]

@@ -43,7 +43,7 @@ class ExtensibleModel(models.Model):
         - Dominik George <dominik.george@teckids.org>
     """
 
-    extended_data = JSONField(blank=True, null=True)
+    extended_data = JSONField(default=dict)
 
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
@@ -61,7 +61,7 @@ class ExtensibleModel(models.Model):
             raise ValueError("%s already used." % prop_name)
 
         # Add function wrapped in property decorator if we got here
-        setattr(cls, prop_name, obj)
+        cls.add_to_class(name, obj)
 
     @classmethod
     def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
