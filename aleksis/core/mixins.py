@@ -43,8 +43,8 @@ class ExtensibleModel(models.Model):
         - Dominik George <dominik.george@teckids.org>
     """
 
-    extended_data = JSONField(default=dict)
-
+    extended_data = JSONField(default=dict, editable=False)
+    
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the attribute
