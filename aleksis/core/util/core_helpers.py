@@ -47,7 +47,7 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
 
     for pkg in get_app_packages():
         try:
-            mod_settings = import_module(pkg)
+            mod_settings = import_module(pkg + ".settings")
         except ImportError:
             # Import errors are non-fatal. They mean that the app has no settings.py.
             continue
