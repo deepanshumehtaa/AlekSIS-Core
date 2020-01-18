@@ -56,11 +56,11 @@ class ExtensibleModel(models.Model):
             else:
                 raise ValueError("%s is not a valid name." % name)
 
-        # Verify that property name does not clash with other names in the class
+        # Verify that attribute name does not clash with other names in the class
         if hasattr(cls, prop_name):
             raise ValueError("%s already used." % prop_name)
 
-        # Add function wrapped in property decorator if we got here
+        # Let Django's model magic add the attribute if we got here
         cls.add_to_class(name, obj)
 
     @classmethod
