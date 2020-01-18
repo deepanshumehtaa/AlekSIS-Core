@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ['short_name', 'name'],
             },
-            bases=(models.Model, aleksis.core.mixins.ExtensibleModel),
+            bases=(aleksis.core.mixins.ExtensibleModel,),
         ),
         migrations.CreateModel(
             name='School',
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ['last_name', 'first_name'],
             },
-            bases=(models.Model, aleksis.core.mixins.ExtensibleModel),
+            bases=(aleksis.core.mixins.ExtensibleModel,),
         ),
         migrations.AddField(
             model_name='group',
