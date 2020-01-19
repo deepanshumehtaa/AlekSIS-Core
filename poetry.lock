@@ -130,6 +130,17 @@ d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
 category = "main"
+description = "Utilities for working with calendar weeks in Python and Django"
+name = "calendarweek"
+optional = false
+python-versions = ">=3.7,<4.0"
+version = "0.4.4"
+
+[package.extras]
+django = ["Django (>=2.2,<4.0)"]
+
+[[package]]
+category = "main"
 description = "Distributed Task Queue."
 name = "celery"
 optional = true
@@ -235,9 +246,6 @@ name = "configobj"
 optional = false
 python-versions = "*"
 version = "5.0.6"
-
-[package.dependencies]
-six = "*"
 
 [[package]]
 category = "dev"
@@ -505,6 +513,18 @@ version = "0.9.1"
 
 [package.dependencies]
 Django = ">=1.5"
+
+[[package]]
+category = "main"
+description = "Expose JSONField data as a virtual django model fields."
+name = "django-jsonstore"
+optional = false
+python-versions = "*"
+version = "0.4.1"
+
+[package.dependencies]
+Django = ">=1.11"
+six = "*"
 
 [[package]]
 category = "main"
@@ -1026,7 +1046,7 @@ description = "Turn HTML into equivalent Markdown-structured text."
 name = "html2text"
 optional = false
 python-versions = ">=3.5"
-version = "2019.9.26"
+version = "2020.1.16"
 
 [[package]]
 category = "main"
@@ -1223,7 +1243,7 @@ description = "Python version of Google's common library for parsing, formatting
 name = "phonenumbers"
 optional = false
 python-versions = "*"
-version = "8.11.1"
+version = "8.11.2"
 
 [[package]]
 category = "main"
@@ -1354,7 +1374,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=3.5"
-version = "5.3.2"
+version = "5.3.3"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -1371,6 +1391,7 @@ python = "<3.8"
 version = ">=0.12"
 
 [package.extras]
+checkqa-mypy = ["mypy (v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
@@ -1512,7 +1533,7 @@ category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+python-versions = "*"
 version = "5.3"
 
 [[package]]
@@ -1956,7 +1977,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "b2a7c1d9e1318e93322b69bf5b9eaeaee6b6fc4b3f983f1a0c88d2c934f8d848"
+content-hash = "61847d3ffe7092e41f9ad04eadf9056fc09b6682cc945dce4544020a6b2f1712"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2004,6 +2025,10 @@ billiard = [
 black = [
     {file = "black-19.10b0-py36-none-any.whl", hash = "sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b"},
     {file = "black-19.10b0.tar.gz", hash = "sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539"},
+]
+calendarweek = [
+    {file = "calendarweek-0.4.4-py3-none-any.whl", hash = "sha256:6510a42015558f140ed6677e79efbb45d8bf87ccded069db4026283eb639a256"},
+    {file = "calendarweek-0.4.4.tar.gz", hash = "sha256:02f092ec54ebe162dc9f3614de6efbf3d7fb35115e8ca5d62e99d65c342f5732"},
 ]
 celery = [
     {file = "celery-4.4.0-py2.py3-none-any.whl", hash = "sha256:7c544f37a84a5eadc44cab1aa8c9580dff94636bb81978cdf9bf8012d9ea7d8f"},
@@ -2145,6 +2170,9 @@ django-js-asset = [
 django-js-reverse = [
     {file = "django-js-reverse-0.9.1.tar.gz", hash = "sha256:2a392d169f44e30b883c30dfcfd917a14167ce8fe196c99d2385b31c90d77aa0"},
     {file = "django_js_reverse-0.9.1-py2.py3-none-any.whl", hash = "sha256:8134c2ab6307c945edfa90671ca65e85d6c1754d48566bdd6464be259cc80c30"},
+]
+django-jsonstore = [
+    {file = "django-jsonstore-0.4.1.tar.gz", hash = "sha256:d6e42152af3f924e4657c99e80144ba9a6410799256f6134b5a4e9fa4282ec10"},
 ]
 django-maintenance-mode = [
     {file = "django-maintenance-mode-0.14.0.tar.gz", hash = "sha256:f3fef1760fdcda5e0bf6c2966aadc77eea6f328580a9c751920daba927281a68"},
@@ -2291,8 +2319,8 @@ gitpython = [
     {file = "GitPython-3.0.5.tar.gz", hash = "sha256:9c2398ffc3dcb3c40b27324b316f08a4f93ad646d5a6328cafbb871aa79f5e42"},
 ]
 html2text = [
-    {file = "html2text-2019.9.26-py3-none-any.whl", hash = "sha256:55ce85704f244fc18890c5ded89fa22ff7333e41e9f3cad04d51f48d62ad8834"},
-    {file = "html2text-2019.9.26.tar.gz", hash = "sha256:6f56057c5c2993b5cc5b347cb099bdf6d095828fef1b53ef4e2a2bf2a1be9b4f"},
+    {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
+    {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
@@ -2411,8 +2439,8 @@ pg8000 = [
     {file = "pg8000-1.13.2.tar.gz", hash = "sha256:eebcb4176a7e407987e525a07454882f611985e0becb2b73f76efb93bbdc0aab"},
 ]
 phonenumbers = [
-    {file = "phonenumbers-8.11.1-py2.py3-none-any.whl", hash = "sha256:aaa19bc1f2c7efbf7a94be33558e0c5b71620377c9271692d3e314c558962460"},
-    {file = "phonenumbers-8.11.1.tar.gz", hash = "sha256:239507184ee5b1b83557005af1d5fcce70f83ae18f5dff45b94a67226db10d63"},
+    {file = "phonenumbers-8.11.2-py2.py3-none-any.whl", hash = "sha256:796ba25c3064727ca0b8edf7a8ef5ef247c6da37aee498562e6e0ed46970a57f"},
+    {file = "phonenumbers-8.11.2.tar.gz", hash = "sha256:a22d3b14c7f18af9be7c4ade92285035f621c6a17b75352dc9c2e5d146aee348"},
 ]
 pillow = [
     {file = "Pillow-7.0.0-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:5f3546ceb08089cedb9e8ff7e3f6a7042bb5b37c2a95d392fb027c3e53a2da00"},
@@ -2550,8 +2578,8 @@ pyparsing = [
     {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
 ]
 pytest = [
-    {file = "pytest-5.3.2-py3-none-any.whl", hash = "sha256:e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4"},
-    {file = "pytest-5.3.2.tar.gz", hash = "sha256:6b571215b5a790f9b41f19f3531c53a45cf6bb8ef2988bc1ff9afb38270b25fa"},
+    {file = "pytest-5.3.3-py3-none-any.whl", hash = "sha256:9f8d44f4722b3d06b41afaeb8d177cfbe0700f8351b1fc755dd27eedaa3eb9e0"},
+    {file = "pytest-5.3.3.tar.gz", hash = "sha256:f5d3d0e07333119fe7d4af4ce122362dc4053cdd34a71d2766290cf5369c64ad"},
 ]
 pytest-cov = [
     {file = "pytest-cov-2.8.1.tar.gz", hash = "sha256:cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b"},
@@ -2787,7 +2815,6 @@ vine = [
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
-    {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
 yubiotp = [
     {file = "YubiOTP-0.2.2.post1-py2.py3-none-any.whl", hash = "sha256:7e281801b24678f4bda855ce8ab975a7688a912f5a6cb22b6c2b16263a93cbd2"},
