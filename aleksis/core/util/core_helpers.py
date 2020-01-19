@@ -60,7 +60,7 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
         for entry in app_setting:
             if entry in original:
                 if not deduplicate:
-                    raise AttributeError("%s already set in original.")
+                    raise AttributeError("%s already set in original." % entry)
             else:
                 if isinstance(original, list):
                     original.append(entry)
