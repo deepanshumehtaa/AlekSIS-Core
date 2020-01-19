@@ -64,7 +64,7 @@ class SchoolTerm(models.Model):
         verbose_name_plural = _("School terms")
 
 
-class Person(models.Model, ExtensibleModel):
+class Person(ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -159,7 +159,7 @@ class Person(models.Model, ExtensibleModel):
         return self.full_name
 
 
-class Group(models.Model, ExtensibleModel):
+class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
