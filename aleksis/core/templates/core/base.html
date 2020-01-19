@@ -101,7 +101,9 @@
     {% endfor %}
   {% endif %}
 
-  <h4>{% block page_title %}{% endblock %}</h4>
+  {% block no_page_title %}
+    <h4>{% block page_title %}{% endblock %}</h4>
+  {% endblock %}
 
   {% block content %}{% endblock %}
 </main>
