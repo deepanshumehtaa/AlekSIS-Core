@@ -304,6 +304,10 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
     "url_field": ["django.forms.URLField", {}],
+    "integer_field": ["django.forms.IntegerField", {}],
+    "password_field": ["django.forms.CharField", {
+        'widget': 'django.forms.PasswordInput',
+    }],
     "adressing-select": ['django.forms.fields.ChoiceField', {
         'widget': 'django.forms.Select',
         'choices': ((None, "-----"),
