@@ -8,7 +8,7 @@ $(document).ready( function () {
 
     // Initialize datepicker [MAT]
     $('.datepicker').datepicker({
-        format: get_format('SHORT_DATE_FORMAT'),
+        format: get_format('SHORT_DATE_FORMAT').toLowerCase().replace('d', 'dd').replace('m', 'mm').replace('y', 'yyyy'),
         // Pull translations from Django helpers
         i18n: {
             months: calendarweek_i18n.month_names,
