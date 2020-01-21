@@ -30,8 +30,9 @@
   <script src="{% url "js_reverse" %}" type="text/javascript"></script>
 
   {# Add i18n names for calendar (for use in datepicker) #}
-  {# Passing the locale is not necessary for the script to work, but prevents caching issues #}
+  {# Passing the locale is not necessary for the scripts to work, but prevents caching issues #}
   {% get_current_language as LANGUAGE_CODE %}
+  <script src="{% url "javascript-catalog" %}locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
   <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
 
   {# Include jQuery to provide $(document).ready #}
