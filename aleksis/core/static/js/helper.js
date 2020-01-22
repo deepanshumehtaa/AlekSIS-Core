@@ -24,4 +24,7 @@ function getNowFormatted() {
     return formatDate(getNow());
 }
 
+function getJSONScript(elementId) {
+    return JSON.parse(document.getElementById(elementId).textContent);
+}
 
