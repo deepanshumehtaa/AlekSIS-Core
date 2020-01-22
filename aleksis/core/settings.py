@@ -9,6 +9,7 @@ from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
 from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
+from .util.notifications import get_notification_choices_lazy
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -319,6 +320,10 @@ CONSTANCE_ADDITIONAL_FIELDS = {
                     ("dutch", "Doe John"),
                     )
     }],
+    "notifications-select": ["django.forms.fields.MultipleChoiceField", {
+        "widget": "django.forms.CheckboxSelectMultiple",
+        "choices": get_notification_choices_lazy,
+    }],
     "weekday_field": ["django.forms.fields.ChoiceField", {
         'widget': 'django.forms.Select',
         "choices":  i18n_day_name_choices_lazy
@@ -329,15 +334,17 @@ CONSTANCE_CONFIG = {
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
     "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field"),
+    "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
-    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select")
+    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
+    "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "General settings": ("SITE_TITLE",),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
-    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT", "ADRESSING_NAME_FORMAT"),
+    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
+    "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
 }
 
@@ -363,19 +370,25 @@ ANONYMIZE_ENABLED = _settings.get("maintenance.anonymisable", True)
 LOGIN_URL = "two_factor:login"
 
 if _settings.get("2fa.call.enabled", False):
+    if "two_factor.middleware.threadlocals.ThreadLocals" not in MIDDLEWARE:
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
+            "two_factor.middleware.threadlocals.ThreadLocals",
+        )
     TWO_FACTOR_CALL_GATEWAY = "two_factor.gateways.twilio.gateway.Twilio"
 
 if _settings.get("2fa.sms.enabled", False):
+    if "two_factor.middleware.threadlocals.ThreadLocals" not in MIDDLEWARE:
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
+            "two_factor.middleware.threadlocals.ThreadLocals",
+        )
     TWO_FACTOR_SMS_GATEWAY = "two_factor.gateways.twilio.gateway.Twilio"
 
-if _settings.get("2fa.twilio.sid", None):
-    MIDDLEWARE.insert(
-        MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
-        "two_factor.middleware.threadlocals.ThreadLocals",
-    )
-    TWILIO_SID = _settings.get("2fa.twilio.sid")
-    TWILIO_TOKEN = _settings.get("2fa.twilio.token")
-    TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
+if _settings.get("twilio.sid", None):
+    TWILIO_SID = _settings.get("twilio.sid")
+    TWILIO_TOKEN = _settings.get("twilio.token")
+    TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
