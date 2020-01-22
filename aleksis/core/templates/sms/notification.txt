@@ -1,1 +1,6 @@
-🔔 {{ notification.sender }}: {{ notification.description }} · {{ notification.link }}
+{% load i18n %}
+🔔 {{ notification.title }}
+
+{{ notification.description }}
+
+{{ notification.sender }}{% if notification.link %} · {% endif %}{{ notification.link }}
