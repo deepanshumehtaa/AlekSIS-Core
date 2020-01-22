@@ -220,8 +220,9 @@ class Notification(models.Model):
         return self.title
 
     def save(self, **kwargs):
-        super().save(**kwargs)
         send_notification(self)
+        self.sent = True
+        super().save(**kwargs)
 
     class Meta:
         verbose_name = _("Notification")

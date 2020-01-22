@@ -1,20 +1,20 @@
 """ Utility code for notification system """
 
-from typing import Sequence
+from typing import Sequence, Union
 
+from django.apps import apps
 from django.conf import settings
 from django.template.loader import get_template
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
-from constance import config
 from templated_email import send_templated_mail
 try:
     from twilio.rest import Client as TwilioClient
 except ImportError:
     TwilioClient = None
 
-from ..models import Notification
-from .core_helpers import celery_optional
+from .core_helpers import celery_optional, lazy_config
 
 
 def send_templated_sms(template_name: str, from_number: str, recipient_list: Sequence[str], context: dict):
@@ -28,28 +28,28 @@ def send_templated_sms(template_name: str, from_number: str, recipient_list: Seq
         client.messages.create(body=text, to=recipient, from_=from_number)
 
 
-def _send_notification_email(notification: Notification, template: str = "notification") -> None:
+def _send_notification_email(notification: "Notification", template: str = "notification") -> None:
     context = {
         "notification": notification,
-        "notification_user": notification.person.adressing_name,
+        "notification_user": notification.recipient.adressing_name,
     }
     send_templated_mail(
         template_name=template,
-        from_email=config.MAIL_OUT,
-        recipient_list=[notification.person.email],
+        from_email=lazy_config("MAIL_OUT"),
+        recipient_list=[notification.recipient.email],
         context=context,
     )
 
 
-def _send_notification_sms(notification: Notification, template: str = "sms/notification.txt") -> None:
+def _send_notification_sms(notification: "Notification", template: str = "sms/notification.txt") -> None:
     context = {
         "notification": notification,
-        "notification_user": notification.person.adressing_name,
+        "notification_user": notification.recipient.adressing_name,
     }
     send_templated_sms(
         template_name=template,
         from_number=settings.TWILIO_CALLER_ID,
-        recipient_list=[notification.person.mobile_number],
+        recipient_list=[notification.recipient.mobile_number.as_e164],
         context=context,
     )
 
@@ -58,32 +58,30 @@ def _send_notification_sms(notification: Notification, template: str = "sms/noti
 # - Check for availability
 # - Send notification through it
 _CHANNELS_MAP = {
-    "email": (_("E-Mail"), lambda: config.get("MAIL_OUT", None), _send_notification_email),
-    "sms": (_("SMS"), lambda: settings.get("TWILIO_SID", None), _send_notification_sms),
+    "email": (_("E-Mail"), lambda: lazy_config("MAIL_OUT"), _send_notification_email),
+    "sms": (_("SMS"), lambda: getattr(settings, "TWILIO_SID", None), _send_notification_sms),
 }
 
 
 @celery_optional
-def send_notification(notification: Union[int, Notification], resend: bool = False) -> None:
+def send_notification(notification: Union[int, "Notification"], resend: bool = False) -> None:
     """ Send a notification through enabled channels.
 
     If resend is passed as True, the notification is sent even if it was
     previously marked as sent.
     """
 
-    channels = config.get("NOTIFICATION_CHANNELS", [])
+    channels = lazy_config("NOTIFICATION_CHANNELS")
 
     if isinstance(notification, int):
+        Notification = apps.get_model("core", "Notification")
         notification = Notification.objects.get(pk=notification)
 
     if resend or not notification.sent:
         for channel in channels:
-            name, check, send = _CHANNEL_MAPS[channel]
+            name, check, send = _CHANNELS_MAP[channel]
             if check():
                 send(notification)
-
-    notification.sent = True
-    notification.save()
 
 
 def get_notification_choices() -> list:
@@ -95,9 +93,9 @@ def get_notification_choices() -> list:
     """
 
     choices = []
-    for channel, (name, check, send) in _CHANNEL_MAPS:
+    for channel, (name, check, send) in _CHANNELS_MAP.items():
         if check():
-            choices += (channel, name)
+            choices.append((channel, name))
     return choices
 
 get_notification_choices_lazy = lazy(get_notification_choices, tuple)
