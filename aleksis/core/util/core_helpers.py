@@ -114,15 +114,16 @@ def celery_optional(orig: Callable) -> Callable:
     and it is executed synchronously.
     """
 
-    if hasattr(settings, "CELERY_RESULT_BACKEND"):
-        from ..celery import app  # noqa
-        task = app.task(orig)
+    def wrapped(*args, **kwargs):
+        if hasattr(settings, "CELERY_RESULT_BACKEND"):
+            from ..celery import app  # noqa
+            task = app.task(orig)
 
-        def wrapped(*args, **kwargs):
             task.delay(*args, **kwargs)
-        return wrapped
-    else:
-        return orig
+        else:
+            orig(*args, **kwargs)
+
+    return wrapped
 
 
 def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
