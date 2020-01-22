@@ -20,7 +20,7 @@ from .core_helpers import celery_optional, lazy_config
 
 def send_templated_sms(
     template_name: str, from_number: str, recipient_list: Sequence[str], context: dict
-):
+) -> None:
     """ Render a plan-text template and send via SMS to all recipients. """
 
     template = get_template(template_name)
