@@ -206,15 +206,16 @@ class Activity(models.Model):
 
 
 class Notification(models.Model):
-    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+    sender = models.CharField(max_length=100, verbose_name=_("Sender"))
+    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
     link = models.URLField(blank=True, verbose_name=_("Link"))
 
-    app = models.CharField(max_length=100, verbose_name=_("Application"))
-
     read = models.BooleanField(default=False, verbose_name=_("Read"))
-    mailed = models.BooleanField(default=False, verbose_name=_("Mailed"))
+    sent = models.BooleanField(default=False, verbose_name=_("Sent"))
+
     created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
 
     def __str__(self):
@@ -223,18 +224,18 @@ class Notification(models.Model):
     def save(self, **kwargs):
         super().save(**kwargs)
 
-        if not self.mailed:
+        if not self.sent:
             context = {
                 "notification": self,
-                "notification_user": self.user.adressing_name,
+                "notification_user": self.person.adressing_name,
             }
             send_templated_mail(
                 template_name='notification',
                 from_email=config.MAIL_OUT,
-                recipient_list=[self.user.email],
+                recipient_list=[self.person.email],
                 context=context,
             )
-            self.mailed = True
+            self.sent = True
             super().save(**kwargs)
 
     class Meta:
