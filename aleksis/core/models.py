@@ -221,8 +221,6 @@ class Notification(models.Model):
         return self.title
 
     def save(self, **kwargs):
-        super().save(**kwargs)
-
         if not self.sent:
             context = {
                 "notification": self,
@@ -235,7 +233,8 @@ class Notification(models.Model):
                 context=context,
             )
             self.sent = True
-            super().save(**kwargs)
+
+        super().save(**kwargs)
 
     class Meta:
         verbose_name = _("Notification")
