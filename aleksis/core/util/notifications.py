@@ -9,6 +9,7 @@ from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from templated_email import send_templated_mail
+
 try:
     from twilio.rest import Client as TwilioClient
 except ImportError:
@@ -17,7 +18,9 @@ except ImportError:
 from .core_helpers import celery_optional, lazy_config
 
 
-def send_templated_sms(template_name: str, from_number: str, recipient_list: Sequence[str], context: dict):
+def send_templated_sms(
+    template_name: str, from_number: str, recipient_list: Sequence[str], context: dict
+):
     """ Render a plan-text template and send via SMS to all recipients. """
 
     template = get_template(template_name)
@@ -41,7 +44,9 @@ def _send_notification_email(notification: "Notification", template: str = "noti
     )
 
 
-def _send_notification_sms(notification: "Notification", template: str = "sms/notification.txt") -> None:
+def _send_notification_sms(
+    notification: "Notification", template: str = "sms/notification.txt"
+) -> None:
     context = {
         "notification": notification,
         "notification_user": notification.recipient.adressing_name,
@@ -97,5 +102,6 @@ def get_notification_choices() -> list:
         if check():
             choices.append((channel, name))
     return choices
+
 
 get_notification_choices_lazy = lazy(get_notification_choices, tuple)
