@@ -7,9 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .mailer import send_mail_with_template
-from templated_email import send_templated_mail
 from .mixins import ExtensibleModel
+from .util.notifications import send_notification
 
 from constance import config
 
@@ -221,20 +220,8 @@ class Notification(models.Model):
         return self.title
 
     def save(self, **kwargs):
-        if not self.sent:
-            context = {
-                "notification": self,
-                "notification_user": self.person.adressing_name,
-            }
-            send_templated_mail(
-                template_name='notification',
-                from_email=config.MAIL_OUT,
-                recipient_list=[self.person.email],
-                context=context,
-            )
-            self.sent = True
-
         super().save(**kwargs)
+        send_notification(self)
 
     class Meta:
         verbose_name = _("Notification")
