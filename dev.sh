@@ -29,6 +29,7 @@ case "$1" in
 	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -i static $locales"
+		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -d djangojs $locales"
 	done
 	exit
 	;;

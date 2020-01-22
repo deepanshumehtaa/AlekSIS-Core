@@ -8,8 +8,8 @@ $(document).ready( function () {
 
     // Initialize datepicker [MAT]
     $('.datepicker').datepicker({
-        format: 'dd.mm.yyyy',
-        // Translate to German
+        format: get_format('SHORT_DATE_FORMAT').toLowerCase().replace('d', 'dd').replace('m', 'mm').replace('y', 'yyyy'),
+        // Pull translations from Django helpers
         i18n: {
             months: calendarweek_i18n.month_names,
             monthsShort: calendarweek_i18n.month_abbrs,
@@ -18,13 +18,13 @@ $(document).ready( function () {
             weekdaysAbbrev: calendarweek_i18n.day_abbrs.map(([v])=> v),
 
             // Buttons
-            today: 'Heute',
-            cancel: 'Abbrechen',
-            done: 'OK',
+            today: gettext('Today'),
+            cancel: gettext('Cancel'),
+            done: gettext('OK'),
         },
 
         // Set monday as first day of week
-        firstDay: 1,
+        firstDay: get_format('FIRST_DAY_OF_WEEK'),
         autoClose: true
     });
 

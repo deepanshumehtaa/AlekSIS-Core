@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
+from django.views.i18n import JavaScriptCatalog
 
 import calendarweek.django
 import debug_toolbar
@@ -40,6 +41,7 @@ urlpatterns = [
     path("select2/", include("django_select2.urls")),
     path("jsreverse.js", urls_js, name='js_reverse'),
     path("calendarweek_i18n.js", calendarweek.django.i18n_js, name="calendarweek_i18n_js"),
+    path('gettext.js', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
