@@ -3,7 +3,6 @@ from typing import Optional
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -195,7 +194,7 @@ class Activity(models.Model):
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
 
-    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -216,7 +215,7 @@ class Notification(models.Model):
     read = models.BooleanField(default=False, verbose_name=_("Read"))
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
 
-    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
