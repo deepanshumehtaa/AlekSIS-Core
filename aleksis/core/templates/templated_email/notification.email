@@ -13,8 +13,8 @@
         {% endif %}
     </blockquote>
 
-    {% blocktrans with trans_app=notification.app trans_created_at=notification.created_at %}
-    <p>By {{ trans_app }} at {{ trans_created_at }}</p>
+    {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
+    <p>By {{ trans_sender }} at {{ trans_created_at }}</p>
 
     <i>Your AlekSIS team</i>
     {% endblocktrans %}
