@@ -12,6 +12,30 @@
   background-color: lighten($primary-color, 5%);
 }
 
+.success {
+  @extend .light-green, .lighten-3
+}
+
+.success-text {
+  @extend .green-text;
+}
+
+.warning {
+  @extend .orange, .lighten-2;
+}
+
+.warning-text {
+  @extend .orange-text;
+}
+
+.error {
+  @extend .red, .lighten-3;
+}
+
+.error-text {
+  @extend .red-text;
+}
+
 // used in sidenav
 
 /**********/
@@ -311,13 +335,13 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .alert.success > p, .alert.success > div {
-  background-color: #c5e1a5;
-  border-color: #4caf50;
+  @extend .success;
+  border-color: color("green", "base");
 }
 
 .alert.error > p, .alert.error > div {
-  background-color: #ef9a9a;
-  border-color: #b71c1c;
+  @extend .error;
+  border-color: color("red", "darken-4");
 }
 
 .alert.primary > p, .alert.primary > div, .alert.info > p, .alert.info > div {
@@ -326,8 +350,8 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .alert.warning p, .alert.warning div {
-  background-color: #ffb74d;
-  border-color: #e65100;
+  @extend .warning;
+  border-color: color("orange", "darken-4");
 }
 
 main .alert p:first-child, main .alert div:first-child {
