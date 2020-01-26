@@ -22,7 +22,3 @@
 	path = apps/official/AlekSIS-App-Hjelp
 	url = https://edugit.org/AlekSIS/AlekSIS-App-Hjelp.git
 	ignore = untracked
-[submodule "apps/official/AlekSIS-App-LDAP"]
-	path = apps/official/AlekSIS-App-LDAP
-	url = https://edugit.org/AlekSIS/AlekSIS-App-LDAP.git
-	ignore = untracked
