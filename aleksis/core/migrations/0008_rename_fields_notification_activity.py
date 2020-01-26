@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0008_extended_data'),
+        ('core', '0007_create_admin_user'),
     ]
 
     operations = [

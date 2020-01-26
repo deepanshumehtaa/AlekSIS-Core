@@ -13,7 +13,7 @@ from .util.notifications import send_notification
 from constance import config
 
 
-class School(models.Model):
+class School(ExtensibleModel):
     """A school that will have many other objects linked to it.
     AlekSIS has multi-tenant support by linking all objects to a school,
     and limiting all features to objects related to the same school as the
@@ -40,7 +40,7 @@ class School(models.Model):
         verbose_name_plural = _("Schools")
 
 
-class SchoolTerm(models.Model):
+class SchoolTerm(ExtensibleModel):
     """ Information about a term (limited time frame) that data can
     be linked to.
     """
