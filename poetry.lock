@@ -145,7 +145,7 @@ description = "Utilities for working with calendar weeks in Python and Django"
 name = "calendarweek"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.4.4"
+version = "0.4.5"
 
 [package.extras]
 django = ["Django (>=2.2,<4.0)"]
@@ -257,6 +257,9 @@ name = "configobj"
 optional = false
 python-versions = "*"
 version = "5.0.6"
+
+[package.dependencies]
+six = "*"
 
 [[package]]
 category = "dev"
@@ -406,6 +409,11 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
+[package.dependencies]
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
+
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -414,7 +422,6 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
-
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -433,7 +440,7 @@ description = "Yet another Django audit log app, hopefully the simplest one."
 name = "django-easy-audit"
 optional = false
 python-versions = "*"
-version = "1.2rc1"
+version = "1.2.1rc1"
 
 [package.dependencies]
 beautifulsoup4 = "*"
@@ -635,7 +642,7 @@ description = "A Django app to include a manifest.json and Service Worker instan
 name = "django-pwa"
 optional = false
 python-versions = "*"
-version = "1.0.6"
+version = "1.0.7"
 
 [package.dependencies]
 django = ">=1.8"
@@ -1184,7 +1191,7 @@ python-versions = "*"
 version = "0.6.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
@@ -1221,7 +1228,7 @@ description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.0"
+version = "20.1"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
@@ -1391,7 +1398,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=3.5"
-version = "5.3.3"
+version = "5.3.4"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -1550,7 +1557,7 @@ category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
 optional = false
-python-versions = "*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "5.3"
 
 [[package]]
@@ -1759,7 +1766,7 @@ description = "Improve the Sphinx autodoc for Django classes."
 name = "sphinxcontrib-django"
 optional = false
 python-versions = "*"
-version = "0.5"
+version = "0.5.1"
 
 [[package]]
 category = "dev"
@@ -1905,7 +1912,7 @@ description = "Fast, Extensible Progress Meter"
 name = "tqdm"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*"
-version = "4.41.1"
+version = "4.42.0"
 
 [package.extras]
 dev = ["py-make (>=0.1.0)", "twine", "argopt", "pydoc-markdown"]
@@ -1916,7 +1923,7 @@ description = "Twilio API client and TwiML generator"
 name = "twilio"
 optional = false
 python-versions = "*"
-version = "6.35.2"
+version = "6.35.3"
 
 [package.dependencies]
 PyJWT = ">=1.4.2"
@@ -1948,8 +1955,8 @@ category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
-version = "1.25.7"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "1.25.8"
 
 [package.extras]
 brotli = ["brotlipy (>=0.6.0)"]
@@ -1990,22 +1997,19 @@ description = "Backport of pathlib-compatible object wrapper for zip files"
 marker = "python_version < \"3.8\""
 name = "zipp"
 optional = false
-python-versions = ">=2.7"
-version = "1.0.0"
-
-[package.dependencies]
-more-itertools = "*"
+python-versions = ">=3.6"
+version = "2.1.0"
 
 [package.extras]
 docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
-testing = ["pathlib2", "contextlib2", "unittest2"]
+testing = ["jaraco.itertools"]
 
 [extras]
 celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "61847d3ffe7092e41f9ad04eadf9056fc09b6682cc945dce4544020a6b2f1712"
+content-hash = "0ce6ddf6659ad591ee689645d75ebead448cc5cafca3ff0c06d76be6b255802b"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2059,8 +2063,8 @@ black = [
     {file = "black-19.10b0.tar.gz", hash = "sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539"},
 ]
 calendarweek = [
-    {file = "calendarweek-0.4.4-py3-none-any.whl", hash = "sha256:6510a42015558f140ed6677e79efbb45d8bf87ccded069db4026283eb639a256"},
-    {file = "calendarweek-0.4.4.tar.gz", hash = "sha256:02f092ec54ebe162dc9f3614de6efbf3d7fb35115e8ca5d62e99d65c342f5732"},
+    {file = "calendarweek-0.4.5-py3-none-any.whl", hash = "sha256:b35fcc087073969d017cede62a7295bcd714a1304bcb4c4e2b0f23acb0265fb1"},
+    {file = "calendarweek-0.4.5.tar.gz", hash = "sha256:5b1788ca435022f9348fc81a718974e51dd85d080f9aa3dad717df70a1bc6e1f"},
 ]
 celery = [
     {file = "celery-4.4.0-py2.py3-none-any.whl", hash = "sha256:7c544f37a84a5eadc44cab1aa8c9580dff94636bb81978cdf9bf8012d9ea7d8f"},
@@ -2171,8 +2175,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-2.1-py3-none-any.whl", hash = "sha256:77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"},
 ]
 django-easy-audit = [
-    {file = "django-easy-audit-1.2rc1.tar.gz", hash = "sha256:80f82fa4006290dcd6589a345e75de1c780de49d38218050eedd9048c54b647d"},
-    {file = "django_easy_audit-1.2rc1-py3-none-any.whl", hash = "sha256:fb9c5ec3e90f0900302448d3648acc11da6d6b3d35d13d77eab917ab8c813d77"},
+    {file = "django-easy-audit-1.2.1rc1.tar.gz", hash = "sha256:a127264dbfef4aac17bfa74439487540ad41e47ff4c067d3d77bfad82fd23bc5"},
+    {file = "django_easy_audit-1.2.1rc1-py3-none-any.whl", hash = "sha256:00e9a9bc063ad73120fe399f2e7bc216af5fc32186dc5eccad09e2c4cd10abc1"},
 ]
 django-filter = [
     {file = "django-filter-2.2.0.tar.gz", hash = "sha256:c3deb57f0dd7ff94d7dce52a047516822013e2b441bed472b722a317658cfd14"},
@@ -2237,8 +2241,8 @@ django-picklefield = [
     {file = "django_picklefield-2.0-py2.py3-none-any.whl", hash = "sha256:9052f2dcf4882c683ce87b4356f29b4d014c0dad645b6906baf9f09571f52bc8"},
 ]
 django-pwa = [
-    {file = "django-pwa-1.0.6.tar.gz", hash = "sha256:b3f1ad0c5241fae4c7505423540de4db93077d7c88416ff6d2af545ffe209f34"},
-    {file = "django_pwa-1.0.6-py3-none-any.whl", hash = "sha256:9306105fcb637ae16fea6527be4b147d45fd53db85efb1d4f61dfea6bf793e56"},
+    {file = "django-pwa-1.0.7.tar.gz", hash = "sha256:a7670949036f627ae702805aee9c184c1319b377a3cc763a348e5f03c9bf2e37"},
+    {file = "django_pwa-1.0.7-py3-none-any.whl", hash = "sha256:a972283a6befc67560ab35d118d12b487976c34812dcab13b219e76f9232a530"},
 ]
 django-render-block = [
     {file = "django_render_block-0.6-py2.py3-none-any.whl", hash = "sha256:95c7dc9610378a10e0c4a10d8364ec7307210889afccd6a67a6aaa0fd599bd4d"},
@@ -2459,8 +2463,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 packaging = [
-    {file = "packaging-20.0-py2.py3-none-any.whl", hash = "sha256:aec3fdbb8bc9e4bb65f0634b9f551ced63983a529d6a8931817d52fdd0816ddb"},
-    {file = "packaging-20.0.tar.gz", hash = "sha256:fe1d8331dfa7cc0a883b49d75fc76380b2ab2734b220fbb87d774e4fd4b851f8"},
+    {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
+    {file = "packaging-20.1.tar.gz", hash = "sha256:e665345f9eef0c621aa0bf2f8d78cf6d21904eef16a93f020240b704a57f1334"},
 ]
 pathspec = [
     {file = "pathspec-0.7.0-py2.py3-none-any.whl", hash = "sha256:163b0632d4e31cef212976cf57b43d9fd6b0bac6e67c26015d611a647d5e7424"},
@@ -2614,8 +2618,8 @@ pyparsing = [
     {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
 ]
 pytest = [
-    {file = "pytest-5.3.3-py3-none-any.whl", hash = "sha256:9f8d44f4722b3d06b41afaeb8d177cfbe0700f8351b1fc755dd27eedaa3eb9e0"},
-    {file = "pytest-5.3.3.tar.gz", hash = "sha256:f5d3d0e07333119fe7d4af4ce122362dc4053cdd34a71d2766290cf5369c64ad"},
+    {file = "pytest-5.3.4-py3-none-any.whl", hash = "sha256:c13d1943c63e599b98cf118fcb9703e4d7bde7caa9a432567bcdcae4bf512d20"},
+    {file = "pytest-5.3.4.tar.gz", hash = "sha256:1d122e8be54d1a709e56f82e2d85dcba3018313d64647f38a91aec88c239b600"},
 ]
 pytest-cov = [
     {file = "pytest-cov-2.8.1.tar.gz", hash = "sha256:cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b"},
@@ -2755,8 +2759,8 @@ sphinxcontrib-devhelp = [
     {file = "sphinxcontrib_devhelp-1.0.1-py2.py3-none-any.whl", hash = "sha256:9512ecb00a2b0821a146736b39f7aeb90759834b07e81e8cc23a9c70bacb9981"},
 ]
 sphinxcontrib-django = [
-    {file = "sphinxcontrib-django-0.5.tar.gz", hash = "sha256:95831d5d58f780010b0255f298ea03d6bbf971c0f94f631268abd4320400b7db"},
-    {file = "sphinxcontrib_django-0.5-py2.py3-none-any.whl", hash = "sha256:f5bb52d20b64b51087b44247789adaebfc51fa2fad71bfed42c4ca6c05723838"},
+    {file = "sphinxcontrib-django-0.5.1.tar.gz", hash = "sha256:3b48a9067d8db4713d47e3a4160af10288d02d448c866d1b44b001adbe74cc1e"},
+    {file = "sphinxcontrib_django-0.5.1-py2.py3-none-any.whl", hash = "sha256:73ef7fdbf2ed6d4f35b7ae709032bd5ac493d93cedd0624ea7b51bf5fce41267"},
 ]
 sphinxcontrib-htmlhelp = [
     {file = "sphinxcontrib-htmlhelp-1.0.2.tar.gz", hash = "sha256:4670f99f8951bd78cd4ad2ab962f798f5618b17675c35c5ac3b2132a14ea8422"},
@@ -2811,11 +2815,11 @@ toml = [
     {file = "toml-0.10.0.tar.gz", hash = "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c"},
 ]
 tqdm = [
-    {file = "tqdm-4.41.1-py2.py3-none-any.whl", hash = "sha256:efab950cf7cc1e4d8ee50b2bb9c8e4a89f8307b49e0b2c9cfef3ec4ca26655eb"},
-    {file = "tqdm-4.41.1.tar.gz", hash = "sha256:4789ccbb6fc122b5a6a85d512e4e41fc5acad77216533a6f2b8ce51e0f265c23"},
+    {file = "tqdm-4.42.0-py2.py3-none-any.whl", hash = "sha256:01464d5950e9a07a8e463c2767883d9616c099c6502f6c7ef4e2e11d3065bd35"},
+    {file = "tqdm-4.42.0.tar.gz", hash = "sha256:5865f5fef9d739864ff341ddaa69894173ebacedb1aaafcf014de56343d01d5c"},
 ]
 twilio = [
-    {file = "twilio-6.35.2.tar.gz", hash = "sha256:a086443642c0e1f13c8f8f087b426ca81ec883efbe496d8279180a49bb9287bc"},
+    {file = "twilio-6.35.3.tar.gz", hash = "sha256:4474fa87fde5ea5526e296be782d1b06fc6722f9e4698a503c47b5c2f8b70ea9"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:73d785a950fc82dd2a25897d525d003f6378d1cb23ab305578394694202a58c3"},
@@ -2846,8 +2850,8 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.1.tar.gz", hash = "sha256:091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2"},
 ]
 urllib3 = [
-    {file = "urllib3-1.25.7-py2.py3-none-any.whl", hash = "sha256:a8a318824cc77d1fd4b2bec2ded92646630d7fe8619497b142c84a9e6f5a7293"},
-    {file = "urllib3-1.25.7.tar.gz", hash = "sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745"},
+    {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
+    {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
 ]
 vine = [
     {file = "vine-1.3.0-py2.py3-none-any.whl", hash = "sha256:ea4947cc56d1fd6f2095c8d543ee25dad966f78692528e68b4fada11ba3f98af"},
@@ -2861,6 +2865,6 @@ yubiotp = [
     {file = "YubiOTP-0.2.2.post1.tar.gz", hash = "sha256:de83b1560226e38b5923f6ab919f962c8c2abb7c722104cb45b2b6db2ac86e40"},
 ]
 zipp = [
-    {file = "zipp-1.0.0-py2.py3-none-any.whl", hash = "sha256:8dda78f06bd1674bd8720df8a50bb47b6e1233c503a4eed8e7810686bde37656"},
-    {file = "zipp-1.0.0.tar.gz", hash = "sha256:d38fbe01bbf7a3593a32bc35a9c4453c32bc42b98c377f9bff7e9f8da157786c"},
+    {file = "zipp-2.1.0-py3-none-any.whl", hash = "sha256:ccc94ed0909b58ffe34430ea5451f07bc0c76467d7081619a454bf5c98b89e28"},
+    {file = "zipp-2.1.0.tar.gz", hash = "sha256:feae2f18633c32fc71f2de629bfb3bd3c9325cd4419642b1f1da42ee488d9b98"},
 ]
