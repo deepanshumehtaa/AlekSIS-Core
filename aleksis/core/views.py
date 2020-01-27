@@ -27,9 +27,9 @@ from aleksis.apps.dashboardfeeds.views import get_widgets
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    activities = request.user.person.activities.all().order_by('-created_at')[:5]
+    notifications = request.user.person.notifications.all().order_by('-created_at')[:5]
+    unread_notifications = request.user.person.notifications.all().filter(read=False).order_by('-created_at')
 
     context["activities"] = activities
     context["notifications"] = notifications
@@ -259,7 +259,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
 
     notification = get_object_or_404(Notification, pk=id_)
 
-    if notification.recipient.user == request.user:
+    if notification.user == request.user.person:
         notification.read = True
         notification.save()
     else:

@@ -27,6 +27,17 @@ version = "1.4.3"
 
 [[package]]
 category = "main"
+description = "Better dates & times for Python"
+name = "arrow"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.14.7"
+
+[package.dependencies]
+python-dateutil = "*"
+
+[[package]]
+category = "main"
 description = "ASGI specs, helper code, and adapters"
 name = "asgiref"
 optional = false
@@ -395,11 +406,6 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
-[package.dependencies]
-[package.dependencies.django-picklefield]
-optional = true
-version = "*"
-
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -408,6 +414,7 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
+
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -603,10 +610,6 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
-
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -1047,6 +1050,20 @@ name = "html2text"
 optional = false
 python-versions = ">=3.5"
 version = "2020.1.16"
+
+[[package]]
+category = "main"
+description = "Python icalendar (rfc5545) parser"
+name = "ics"
+optional = false
+python-versions = "*"
+version = "0.6"
+
+[package.dependencies]
+arrow = ">=0.11,<0.15"
+python-dateutil = "*"
+six = ">1.5"
+tatsu = ">4.2"
 
 [[package]]
 category = "main"
@@ -1809,6 +1826,17 @@ pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 six = ">=1.10.0"
 
 [[package]]
+category = "main"
+description = "TatSu takes a grammar in a variation of EBNF as input, and outputs a memoizing PEG/Packrat parser in Python."
+name = "tatsu"
+optional = false
+python-versions = "*"
+version = "4.4.0"
+
+[package.extras]
+future-regex = ["regex"]
+
+[[package]]
 category = "dev"
 description = "ANSII Color formatting for output in terminal."
 name = "termcolor"
@@ -1992,6 +2020,10 @@ amqp = [
 appdirs = [
     {file = "appdirs-1.4.3-py2.py3-none-any.whl", hash = "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"},
     {file = "appdirs-1.4.3.tar.gz", hash = "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92"},
+]
+arrow = [
+    {file = "arrow-0.14.7-py2.py3-none-any.whl", hash = "sha256:4bfacea734ead51495dc47df00421ecfd4ca1f2c0fbe58b9a26eaeddedc31caf"},
+    {file = "arrow-0.14.7.tar.gz", hash = "sha256:67f8be7c0cf420424bc62d8d7dc40b44e4bb2f7b515f9cc2954fb36e35797656"},
 ]
 asgiref = [
     {file = "asgiref-3.2.3-py2.py3-none-any.whl", hash = "sha256:ea448f92fc35a0ef4b1508f53a04c4670255a3f33d22a81c8fc9c872036adbe5"},
@@ -2321,6 +2353,10 @@ gitpython = [
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
     {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
+]
+ics = [
+    {file = "ics-0.6-py2.py3-none-any.whl", hash = "sha256:12cf34aed0dafa1bf99d79ca58e99949d6721511b856386e118015fe5f5d6e3a"},
+    {file = "ics-0.6-py3.7.egg", hash = "sha256:daa457478dbaba3ce7ab5f7b3a411e72d7a2771c0781c21013cc6c9f27b2a050"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
@@ -2745,6 +2781,10 @@ sqlparse = [
 stevedore = [
     {file = "stevedore-1.31.0-py2.py3-none-any.whl", hash = "sha256:01d9f4beecf0fbd070ddb18e5efb10567801ba7ef3ddab0074f54e3cd4e91730"},
     {file = "stevedore-1.31.0.tar.gz", hash = "sha256:e0739f9739a681c7a1fda76a102b65295e96a144ccdb552f2ae03c5f0abe8a14"},
+]
+tatsu = [
+    {file = "TatSu-4.4.0-py2.py3-none-any.whl", hash = "sha256:c9211eeee9a2d4c90f69879ec0b518b1aa0d9450249cb0dd181f5f5b18be0a92"},
+    {file = "TatSu-4.4.0.zip", hash = "sha256:80713413473a009f2081148d0f494884cabaf9d6866b71f2a68a92b6442f343d"},
 ]
 termcolor = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
