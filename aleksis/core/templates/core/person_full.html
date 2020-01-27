@@ -5,6 +5,7 @@
 {% load i18n static cropping %}
 {% load render_table from django_tables2 %}
 
+{% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
 {% block content %}
   <h4>{{ person.first_name }} {{ person.last_name }}</h4>

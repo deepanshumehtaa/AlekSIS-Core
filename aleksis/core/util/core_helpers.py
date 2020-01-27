@@ -1,10 +1,13 @@
+import os
 import pkgutil
 from importlib import import_module
-from typing import Sequence, Union
+from typing import Any, Callable, Sequence, Union
+from uuid import uuid4
 
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.utils.functional import lazy
 
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
@@ -30,19 +33,55 @@ def get_app_packages() -> Sequence[str]:
     except ImportError:
         return []
 
-    pkgs = []
-    for pkg in pkgutil.iter_modules(aleksis.apps.__path__):
-        mod = import_module("aleksis.apps.%s" % pkg[1])
+    return ["aleksis.apps.%s" % pkg[1] for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
 
-        # Add additional apps defined in module's INSTALLED_APPS constant
-        additional_apps = getattr(mod, "INSTALLED_APPS", [])
-        for app in additional_apps:
-            if app not in pkgs:
-                pkgs.append(app)
 
-        pkgs.append("aleksis.apps.%s" % pkg[1])
+def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: bool = False) -> Union[dict, list]:
+    """ Get a named settings constant from all apps and merge it into the original.
+    To use this, add a settings.py file to the app, in the same format as Django's
+    main settings.py.
 
-    return pkgs
+    Note: Only selected names will be imported frm it to minimise impact of
+    potentially malicious apps!
+    """
+
+    for pkg in get_app_packages():
+        try:
+            mod_settings = import_module(pkg + ".settings")
+        except ImportError:
+            # Import errors are non-fatal. They mean that the app has no settings.py.
+            continue
+
+        app_setting = getattr(mod_settings, setting, None)
+        if not app_setting:
+            # The app might not have this setting or it might be empty. Ignore it in that case.
+            continue
+
+        for entry in app_setting:
+            if entry in original:
+                if not deduplicate:
+                    raise AttributeError("%s already set in original." % entry)
+            else:
+                if isinstance(original, list):
+                    original.append(entry)
+                elif isinstance(original, dict):
+                    original[entry] = app_setting[entry]
+                else:
+                    raise TypeError("Only dict and list settings can be merged.")
+
+
+def lazy_config(key: str) -> Callable[[str], Any]:
+    """ Lazily get a config value from constance. Useful to bind constance
+    configs to other global settings to make them available to third-party
+    apps that are not aware of constance.
+    """
+
+    def _get_config(key: str) -> Any:
+        from constance import config  # noqa
+        return getattr(config, key)
+
+    # The type is guessed from the default value to improve lazy()'s behaviour
+    return lazy(_get_config, type(settings.CONSTANCE_CONFIG[key][0]))(key)
 
 
 def is_impersonate(request: HttpRequest) -> bool:
@@ -65,3 +104,38 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
             return False
 
     return getattr(obj, "person", None) is not None
+
+
+def celery_optional(orig: Callable) -> Callable:
+    """ Decorator that makes Celery optional for a function.
+
+    If Celery is configured and available, it wraps the function in a Task
+    and calls its delay method when invoked; if not, it leaves it untouched
+    and it is executed synchronously.
+    """
+
+    def wrapped(*args, **kwargs):
+        if hasattr(settings, "CELERY_RESULT_BACKEND"):
+            from ..celery import app  # noqa
+            task = app.task(orig)
+
+            task.delay(*args, **kwargs)
+        else:
+            orig(*args, **kwargs)
+
+    return wrapped
+
+
+def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
+    """ Updates path of an uploaded file and renames it to a random UUID in Django FileField """
+
+    _, ext = os.path.splitext(filename)
+
+    # set filename as random string
+    new_filename = '{}.{}'.format(uuid4().hex, ext)
+
+    # Create upload directory if necessary
+    os.makedirs(os.path.join(settings.MEDIA_ROOT, upload_to), exist_ok=True)
+
+    # return the whole path to the file
+    return os.path.join(upload_to, new_filename)

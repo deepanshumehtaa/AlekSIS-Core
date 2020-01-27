@@ -4,8 +4,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
+from django.views.i18n import JavaScriptCatalog
 
+import calendarweek.django
 import debug_toolbar
+from django_js_reverse.views import urls_js
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
@@ -36,11 +39,17 @@ urlpatterns = [
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path("select2/", include("django_select2.urls")),
+    path("jsreverse.js", urls_js, name='js_reverse'),
+    path("calendarweek_i18n.js", calendarweek.django.i18n_js, name="calendarweek_i18n_js"),
+    path('gettext.js', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
 # collectstatic is also required in development for this
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve media files from MEDIA_ROOT to make it work with runserver
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):

@@ -3,16 +3,17 @@ from typing import Optional
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .mailer import send_mail_with_template
 from .mixins import ExtensibleModel
+from .util.notifications import send_notification
+
+from constance import config
 
 
-class School(models.Model):
+class School(ExtensibleModel):
     """A school that will have many other objects linked to it.
     AlekSIS has multi-tenant support by linking all objects to a school,
     and limiting all features to objects related to the same school as the
@@ -39,7 +40,7 @@ class School(models.Model):
         verbose_name_plural = _("Schools")
 
 
-class SchoolTerm(models.Model):
+class SchoolTerm(ExtensibleModel):
     """ Information about a term (limited time frame) that data can
     be linked to.
     """
@@ -61,7 +62,7 @@ class SchoolTerm(models.Model):
         verbose_name_plural = _("School terms")
 
 
-class Person(models.Model, ExtensibleModel):
+class Person(ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -141,13 +142,22 @@ class Person(models.Model, ExtensibleModel):
 
     @property
     def full_name(self) -> str:
-        return "%s, %s" % (self.last_name, self.first_name)
+        return f"{self.last_name}, {self.first_name}"
+
+    @property
+    def adressing_name(self) -> str:
+        if config.ADRESSING_NAME_FORMAT == "dutch":
+            return f"{self.last_name} {self.first_name}"
+        elif config.ADRESSING_NAME_FORMAT == "english":
+            return f"{self.last_name}, {self.first_name}"
+        else:
+            return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return self.full_name
 
 
-class Group(models.Model, ExtensibleModel):
+class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
@@ -183,7 +193,7 @@ class Activity(models.Model):
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
 
-    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -194,26 +204,25 @@ class Activity(models.Model):
 
 
 class Notification(models.Model):
-    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+    sender = models.CharField(max_length=100, verbose_name=_("Sender"))
+    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
     link = models.URLField(blank=True, verbose_name=_("Link"))
 
-    app = models.CharField(max_length=100, verbose_name=_("Application"))
-
     read = models.BooleanField(default=False, verbose_name=_("Read"))
-    mailed = models.BooleanField(default=False, verbose_name=_("Mailed"))
-    created_at = models.DateTimeField(default=timezone.now, verbose_name=_("Created at"))
+    sent = models.BooleanField(default=False, verbose_name=_("Sent"))
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
 
     def save(self, **kwargs):
+        send_notification(self)
+        self.sent = True
         super().save(**kwargs)
-        if not self.mailed:
-            send_mail_with_template(self.title, [self.user.email], "mail/notification.txt", "mail/notification.html",
-                                    {"notification": self})
-            self.mailed = True
 
     class Meta:
         verbose_name = _("Notification")

@@ -18,7 +18,8 @@ def get_newest_articles(domain: str = WP_DOMAIN,
                         author_whitelist: list = None,
                         author_blacklist: list = None,
                         category_whitelist: list = None,
-                        category_blacklist: list = None
+                        category_blacklist: list = None,
+                        filter_vs_composer: bool = False,
                         ):
     """
     This function returns the newest articles/posts of a WordPress site.
@@ -29,6 +30,7 @@ def get_newest_articles(domain: str = WP_DOMAIN,
     :param author_blacklist: If the author's id (an integer) is in this list, the article won't be shown
     :param category_whitelist: If this list is filled, only articles which are in one of this categories will be shown
     :param category_blacklist: If the category's id (an integer) is in this list, the article won't be shown
+    :param filter_vs_composer: Remove unnecessary Visual Composer Tags
     :return: a list of the newest posts/articles
     """
     # Make mutable default arguments unmutable
@@ -68,7 +70,7 @@ def get_newest_articles(domain: str = WP_DOMAIN,
                     image_url: str = ""
 
                 # Replace VS composer tags if activated
-                if settings.latest_article_settings.replace_vs_composer_stuff:
+                if filter_vs_composer:
                     excerpt = VS_COMPOSER_REGEX.sub("", post["excerpt"]["rendered"])
                 else:
                     excerpt = post["excerpt"]["rendered"]
@@ -81,7 +83,7 @@ def get_newest_articles(domain: str = WP_DOMAIN,
                         "image_url": image_url,
                     }
                 )
-        if len(posts) >= limit and limit >= 0:
+        if len(posts) >= limit >= 0:
             break
 
     return posts

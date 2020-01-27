@@ -8,23 +8,23 @@ $(document).ready( function () {
 
     // Initialize datepicker [MAT]
     $('.datepicker').datepicker({
-        format: 'dd.mm.yyyy',
-        // Translate to German
+        format: get_format('SHORT_DATE_FORMAT').toLowerCase().replace('d', 'dd').replace('m', 'mm').replace('y', 'yyyy'),
+        // Pull translations from Django helpers
         i18n: {
-            months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-            weekdaysAbbrev: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
+            months: calendarweek_i18n.month_names,
+            monthsShort: calendarweek_i18n.month_abbrs,
+            weekdays: calendarweek_i18n.day_names,
+            weekdaysShort: calendarweek_i18n.day_abbrs,
+            weekdaysAbbrev: calendarweek_i18n.day_abbrs.map(([v])=> v),
 
             // Buttons
-            today: 'Heute',
-            cancel: 'Abbrechen',
-            done: 'OK',
+            today: gettext('Today'),
+            cancel: gettext('Cancel'),
+            done: gettext('OK'),
         },
 
         // Set monday as first day of week
-        firstDay: 1,
+        firstDay: get_format('FIRST_DAY_OF_WEEK'),
         autoClose: true
     });
 

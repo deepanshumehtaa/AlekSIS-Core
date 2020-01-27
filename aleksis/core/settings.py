@@ -2,12 +2,14 @@ import os
 import sys
 from glob import glob
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+from calendarweek.django import i18n_day_name_choices_lazy
 
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages
+from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
+from .util.notifications import get_notification_choices_lazy
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -66,6 +68,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_select2",
     "hattori",
+    "templated_email",
+    "html2text",
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
     "django_otp",
@@ -75,8 +79,11 @@ INSTALLED_APPS = [
     "two_factor",
     "material",
     "pwa",
+    "ckeditor",
+    "django_js_reverse",
 ]
 
+merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
 INSTALLED_APPS += get_app_packages()
 
 STATICFILES_FINDERS = [
@@ -91,6 +98,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.http.ConditionalGetMiddleware",
     "django_global_request.middleware.GlobalRequestMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -149,6 +157,8 @@ DATABASES = {
         "ATOMIC_REQUESTS": True,
     }
 }
+
+merge_app_settings("DATABASES", DATABASES, False)
 
 if _settings.get("caching.memcached.enabled", True):
     CACHES = {
@@ -239,6 +249,8 @@ YARN_INSTALLED_APPS = [
     "select2",
 ]
 
+merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
+
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
 
@@ -254,6 +266,8 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
 }
+
+merge_app_settings("ANY_JS", ANY_JS, True)
 
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
@@ -280,27 +294,63 @@ if _settings.get("mail.server.host", None):
         EMAIL_HOST_USER = _settings.get("mail.server.user")
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
 
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django'
+TEMPLATED_EMAIL_AUTO_PLAIN = True
+
+
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 CONSTANCE_ADDITIONAL_FIELDS = {
+    "char_field": ["django.forms.CharField", {}],
     "image_field": ["django.forms.ImageField", {}],
     "email_field": ["django.forms.EmailField", {}],
     "url_field": ["django.forms.URLField", {}],
+    "integer_field": ["django.forms.IntegerField", {}],
+    "password_field": ["django.forms.CharField", {
+        'widget': 'django.forms.PasswordInput',
+    }],
+    "adressing-select": ['django.forms.fields.ChoiceField', {
+        'widget': 'django.forms.Select',
+        'choices': ((None, "-----"),
+                    # ("german", _("<first name>") + " " + _("<last name>")),
+                    # ("english", _("<last name>") + ", " + _("<first name>")),
+                    # ("netherlands", _("<last name>") + " " + _("<first name>")),
+                    ("german", "John Doe"),
+                    ("english", "Doe, John"),
+                    ("dutch", "Doe John"),
+                    )
+    }],
+    "notifications-select": ["django.forms.fields.MultipleChoiceField", {
+        "widget": "django.forms.CheckboxSelectMultiple",
+        "choices": get_notification_choices_lazy,
+    }],
+    "weekday_field": ["django.forms.fields.ChoiceField", {
+        'widget': 'django.forms.Select',
+        "choices":  i18n_day_name_choices_lazy
+    }],
 }
 CONSTANCE_CONFIG = {
+    "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
     "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
     "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": ("aleksis@example.com", _("Mail out address"), "email_field"),
+    "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
+    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
+    "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
+    "General settings": ("SITE_TITLE",),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
+    "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
 }
+
+merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
+merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
@@ -321,30 +371,43 @@ ANONYMIZE_ENABLED = _settings.get("maintenance.anonymisable", True)
 LOGIN_URL = "two_factor:login"
 
 if _settings.get("2fa.call.enabled", False):
+    if "two_factor.middleware.threadlocals.ThreadLocals" not in MIDDLEWARE:
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
+            "two_factor.middleware.threadlocals.ThreadLocals",
+        )
     TWO_FACTOR_CALL_GATEWAY = "two_factor.gateways.twilio.gateway.Twilio"
 
 if _settings.get("2fa.sms.enabled", False):
+    if "two_factor.middleware.threadlocals.ThreadLocals" not in MIDDLEWARE:
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
+            "two_factor.middleware.threadlocals.ThreadLocals",
+        )
     TWO_FACTOR_SMS_GATEWAY = "two_factor.gateways.twilio.gateway.Twilio"
 
-if _settings.get("2fa.twilio.sid", None):
-    MIDDLEWARE.insert(
-        MIDDLEWARE.index("django_otp.middleware.OTPMiddleware") + 1,
-        "two_factor.middleware.threadlocals.ThreadLocals",
-    )
-    TWILIO_SID = _settings.get("2fa.twilio.sid")
-    TWILIO_TOKEN = _settings.get("2fa.twilio.token")
-    TWILIO_CALLER_ID = _settings.get("2fa.twilio.callerid")
+if _settings.get("twilio.sid", None):
+    TWILIO_SID = _settings.get("twilio.sid")
+    TWILIO_TOKEN = _settings.get("twilio.token")
+    TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
-_settings.populate_obj(sys.modules[__name__])
+if _settings.get("celery.enabled", False):
+    INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
+    CELERY_BROKER_URL = "redis://localhost"
+    CELERY_RESULT_BACKEND = "django-db"
+    CELERY_CACHE_BACKEND = "django-cache"
+    CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+    if _settings.get("celery.email", False):
+        INSTALLED_APPS += ("djcelery_email",)
+        EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
 PWA_APP_NAME = "AlekSIS"  # dbsettings
 PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
-PWA_APP_THEME_COLOR = _settings.get("pwa.color", "#da1f3d")  # dbsettings
+PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
-PWA_APP_SCOPE = "/"
 PWA_APP_ORIENTATION = "any"
-PWA_APP_START_URL = "/"
 PWA_APP_ICONS = [  # three icons to upload dbsettings
     {"src": STATIC_URL + "/icons/android_192.png", "sizes": "192x192"},
     {"src": STATIC_URL + "/icons/android_512.png", "sizes": "512x512"},
@@ -361,6 +424,53 @@ PWA_APP_SPLASH_SCREEN = [
         "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
     }
 ]
-PWA_APP_DIR = "ltr"
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
-# PWA_APP_LANG = 'de-DE'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_Full': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            {'name': 'customtools', 'items': [
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'Full',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}
