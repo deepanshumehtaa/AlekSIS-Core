@@ -10,14 +10,6 @@
 	path = apps/official/AlekSIS-App-Exlibris
 	url = https://edugit.org/AlekSIS/AlekSIS-App-Exlibris
 	ignore = untracked
-[submodule "apps/official/AlekSIS-App-SchILD-NRW"]
-	path = apps/official/AlekSIS-App-SchILD-NRW
-	url = https://edugit.org/AlekSIS/AlekSIS-App-SchILD-NRW
-	ignore = untracked
-[submodule "apps/official/AlekSIS-App-Untis"]
-	path = apps/official/AlekSIS-App-Untis
-	url = https://edugit.org/AlekSIS/AlekSIS-App-Untis
-	ignore = untracked
 [submodule "apps/official/AlekSIS-App-Hjelp"]
 	path = apps/official/AlekSIS-App-Hjelp
 	url = https://edugit.org/AlekSIS/AlekSIS-App-Hjelp.git
