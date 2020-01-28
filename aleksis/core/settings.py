@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
+    "include_by_ajax",
     "easy_thumbnails",
     "image_cropping",
     "maintenance_mode",

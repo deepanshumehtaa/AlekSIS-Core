@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-{% load i18n %}
+{% load i18n static include_by_ajax_tags %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
 
@@ -19,19 +19,22 @@
               </a>
             </div>
 
-          <strong>{{ notification.title }}</strong>
-          <p>{{ notification.description }}</p>
-        </div>
-      </div>
-    {% endfor %}
-
-    <div class="row">
-      {% for widget in widgets %}
-        <div class="col s12 m12 l6 xl4">
-          {{ widget }}
+            <strong>{{ notification.title }}</strong>
+            <p>{{ notification.description }}</p>
+          </div>
         </div>
       {% endfor %}
-    </div>
+
+      <div class="row">
+        {% for widget in widgets %}
+          <div class="col s12 m12 l6 xl4">
+{#            {{ widget }}#}
+            {% with widget.1 as d_widget %}
+              {% include_by_ajax "dashboardfeeds/rss.html" %}
+            {% endwith %}
+          </div>
+        {% endfor %}
+      </div>
 
       <div class="row">
         <div class="col s12 m6">
@@ -88,6 +91,7 @@
     {% endif %}
   </div>
 
+  <script src="{% static 'include_by_ajax/js/include_by_ajax.min.js' %}" defer></script>
   <script type="text/javascript">
     const asyncIntervals = [];
 
@@ -130,12 +134,16 @@
     let dashboard_interval = setAsyncInterval(async () => {
       console.log('fetching new data');
       const promise = new Promise((resolve) => {
-        $('#dashboard').load("/ #dashboard");
+        $('#dashboard').load("/?include_by_ajax_full_render=1 #dashboard");
         resolve(1);
       });
       await promise;
       console.log('data fetched successfully');
     }, 15000);
+
+    $(document).on('include_by_ajax_all_loaded', function() {
+        console.log('Now all placeholders are loaded and replaced with content');
+    })
 
   </script>
 {% endblock %}

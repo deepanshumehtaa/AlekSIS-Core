@@ -409,11 +409,6 @@ optional = false
 python-versions = "*"
 version = "2.5.0"
 
-[package.dependencies]
-[package.dependencies.django-picklefield]
-optional = true
-version = "*"
-
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -422,6 +417,7 @@ redis = ["redis"]
 reference = "590fa02eb30e377da0eda5cc3a84254b839176a7"
 type = "git"
 url = "https://github.com/jazzband/django-constance"
+
 [[package]]
 category = "main"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -500,6 +496,17 @@ name = "django-impersonate"
 optional = false
 python-versions = "*"
 version = "1.4.1"
+
+[[package]]
+category = "main"
+description = "A Django App Providing the `{% include_by_ajax %}` Template Tag"
+name = "django-include-by-ajax"
+optional = false
+python-versions = "*"
+version = "2.0.0"
+
+[package.dependencies]
+Django = ">=1.8"
 
 [[package]]
 category = "main"
@@ -2009,7 +2016,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "0ce6ddf6659ad591ee689645d75ebead448cc5cafca3ff0c06d76be6b255802b"
+content-hash = "200c59b4623fdac33a7c5f63a9df19b14ae1d7e46b22780f874e4edab9690243"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2195,6 +2202,10 @@ django-image-cropping = [
 ]
 django-impersonate = [
     {file = "django-impersonate-1.4.1.tar.gz", hash = "sha256:63b62d06f93b0318698c68f7314c78473914c262d4164eb66ad860bb83e04771"},
+]
+django-include-by-ajax = [
+    {file = "django-include-by-ajax-2.0.0.tar.gz", hash = "sha256:d555439e9794fc6b04bc9c248a3d6ae60fe9231541dc73dc037ea8299cf630d6"},
+    {file = "django_include_by_ajax-2.0.0-py2.py3-none-any.whl", hash = "sha256:5b3ea4086403ca01997e38fbe1bbfc7cb9180e640b8bb4269fac8524550c1928"},
 ]
 django-ipware = [
     {file = "django-ipware-2.1.0.tar.gz", hash = "sha256:a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"},
