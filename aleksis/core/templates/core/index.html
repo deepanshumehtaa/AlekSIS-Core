@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-{% load i18n %}
+{% load i18n static dashboard %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
 
@@ -23,6 +23,14 @@
         </div>
       </div>
     {% endfor %}
+
+    <div class="row" id="live_load">
+        {% for widget in widgets %}
+          <div class="col s12 m12 l6 xl4">
+              {% include_widget widget %}
+          </div>
+        {% endfor %}
+    </div>
 
     <div class="row">
       <div class="col s12 m6">
@@ -77,4 +85,6 @@
       </div>
     </div>
   {% endif %}
+
+  <script type="text/javascript" src="{% static "js/include_ajax_live.js" %}"></script>
 {% endblock %}
