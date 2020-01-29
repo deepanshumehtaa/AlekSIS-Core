@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "polymorphic",
     "django_global_request",
     "settings_context_processor",
     "sass_processor",

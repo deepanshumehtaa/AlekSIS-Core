@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
+from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel
 from .util.notifications import send_notification
@@ -229,7 +230,7 @@ class Notification(models.Model):
         verbose_name_plural = _("Notifications")
 
 
-class DashboardWidget(models.Model):
+class DashboardWidget(PolymorphicModel):
     template = None
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
