@@ -24,16 +24,12 @@ const clearAsyncInterval = (intervalIndex) => {
   }
 };
 
-let dashboard_interval = setAsyncInterval(async () => {
+let live_load_interval = setAsyncInterval(async () => {
   console.log('fetching new data');
   const promise = new Promise((resolve) => {
-    $('#dashboard').load("/?include_by_ajax_full_render=1 #dashboard");
+    $('#live_load').load(window.location.pathname + " #live_load");
     resolve(1);
   });
   await promise;
   console.log('data fetched successfully');
 }, 15000);
-
-$(document).on('include_by_ajax_all_loaded', function() {
-    console.log('Now all placeholders are loaded and replaced with content');
-})
