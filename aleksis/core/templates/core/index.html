@@ -25,6 +25,17 @@
     {% endfor %}
 
     <div class="row">
+        {% for widget in widgets %}
+          <div class="col s12 m12 l6 xl4">
+            {% with widget.1 as d_widget %}
+              {% include widget.0 %}
+            {% endwith %}
+          </div>
+        {% endfor %}
+      </div>
+
+
+    <div class="row">
       <div class="col s12 m6">
         <h5>{% blocktrans %}Last activities{% endblocktrans %}</h5>
 
@@ -77,4 +88,59 @@
       </div>
     </div>
   {% endif %}
+
+  <script type="text/javascript">
+    const asyncIntervals = [];
+
+    const runAsyncInterval = async (cb, interval, intervalIndex) => {
+      await cb();
+      if (asyncIntervals[intervalIndex]) {
+        setTimeout(() => runAsyncInterval(cb, interval, intervalIndex), interval);
+      }
+    };
+
+    const setAsyncInterval = (cb, interval) => {
+      if (cb && typeof cb === "function") {
+        const intervalIndex = asyncIntervals.length;
+        asyncIntervals.push(true);
+        runAsyncInterval(cb, interval, intervalIndex);
+        return intervalIndex;
+      } else {
+        throw new Error('Callback must be a function');
+      }
+    };
+
+    const clearAsyncInterval = (intervalIndex) => {
+      if (asyncIntervals[intervalIndex]) {
+        asyncIntervals[intervalIndex] = false;
+      }
+    };
+
+    /* SOURCE: https://dev.to/jsmccrumb/asynchronous-setinterval-4j69 */
+
+    {# ------------------------------------------ #}
+
+    {#$(document).ready(function () {#}
+    {#  setInterval(function () {#}
+    {#    $('#body').load("/");#}
+    {#  }, 3000);#}
+    {# });#}
+
+    {# ------------------------------------------ #}
+
+    let dashboard_interval = setAsyncInterval(async () => {
+      console.log('fetching new data');
+      const promise = new Promise((resolve) => {
+        $('#dashboard').load("/?include_by_ajax_full_render=1 #dashboard");
+        resolve(1);
+      });
+      await promise;
+      console.log('data fetched successfully');
+    }, 15000);
+
+    $(document).on('include_by_ajax_all_loaded', function() {
+        console.log('Now all placeholders are loaded and replaced with content');
+    })
+
+  </script>
 {% endblock %}
