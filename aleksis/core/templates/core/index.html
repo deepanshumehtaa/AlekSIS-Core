@@ -27,8 +27,8 @@
     <div class="row">
         {% for widget in widgets %}
           <div class="col s12 m12 l6 xl4">
-            {% with widget.1 as d_widget %}
-              {% include widget.0 %}
+            {% with widget as d_widget %}
+              {% include widget.template %}
             {% endwith %}
           </div>
         {% endfor %}
