@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-{% load i18n static %}
+{% load i18n static dashboard %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
 
@@ -27,9 +27,7 @@
     <div class="row" id="live_load">
         {% for widget in widgets %}
           <div class="col s12 m12 l6 xl4">
-            {% with widget as d_widget %}
-              {% include widget.template %}
-            {% endwith %}
+              {% include_widget widget %}
           </div>
         {% endfor %}
     </div>

@@ -262,6 +262,9 @@ class DashboardWidget(PolymorphicModel):
     def get_context(self):
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
+    def get_template(self):
+        return self.template
+
     def __str__(self):
         return self.title
 
