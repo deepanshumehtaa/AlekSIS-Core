@@ -52,9 +52,8 @@ class SeleniumTests(SeleniumTestCase):
         self._screenshot("login_default_superuser_filled.png")
 
         # Submit form by clicking django-two-factor-auth's Next button
-        self.selenium.find_element_by_xpath('//button[contains(text(), "Next")]').click()
+        self.selenium.find_element_by_xpath('//button[contains(text(), "Login")]').click()
         self._screenshot("login_default_superuser_submitted.png")
 
         # Should redirect away from login page and not put up an alert about wrong credentials
         assert "Please enter a correct username and password." not in self.selenium.page_source
-        assert reverse(settings.LOGIN_URL) not in self.selenium.current_url
