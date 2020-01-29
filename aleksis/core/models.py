@@ -231,10 +231,36 @@ class Notification(models.Model):
 
 
 class DashboardWidget(PolymorphicModel):
+    """ Base class for dashboard widgets on the index page
+
+    To implement a widget, add a model that subclasses DashboardWidget, sets the template
+    and implements the get_context method to return a dictionary to be passed as context
+    to the template.
+
+    If your widget does not add any database fields, you should mark it as a proxy model.
+
+    Example::
+    
+      from aleksis.core.models import DashboardWidget
+
+      class MyWidget(DhasboardWIdget):
+          template = "myapp/widget.html"
+
+          def get_context(self):
+              context = {"some_content": "foo"}
+              return context
+
+          class Meta:
+              proxy = True
+    """
+
     template = None
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
+
+    def get_context(self):
+        raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
     def __str__(self):
         return self.title
