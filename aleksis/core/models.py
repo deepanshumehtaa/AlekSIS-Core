@@ -227,3 +227,17 @@ class Notification(models.Model):
     class Meta:
         verbose_name = _("Notification")
         verbose_name_plural = _("Notifications")
+
+
+class DashboardWidget(models.Model):
+    template = None
+
+    title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
+    active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _("Dashboard Widget")
+        verbose_name_plural = _("Dashboard Widgets")
