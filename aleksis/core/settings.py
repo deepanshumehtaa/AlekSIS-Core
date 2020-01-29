@@ -130,6 +130,7 @@ TEMPLATES = [
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
                 "constance.context_processors.config",
+                "aleksis.core.util.core_helpers.school_information_processor",
             ],
         },
     },
