@@ -66,4 +66,9 @@ for app_config in apps.app_configs.values():
     if not app_config.name.startswith("aleksis.apps."):
         continue
 
-    urlpatterns.append(path("app/%s/" % app_config.label, include("%s.urls" % app_config.name)))
+    try:
+        urlpatterns.append(path("app/%s/" % app_config.label, include("%s.urls" % app_config.name)))
+    except ModuleNotFoundError:
+        # Ignore exception as app just has no URLs
+        pass  # noqa
+

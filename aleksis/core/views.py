@@ -16,7 +16,7 @@ from .forms import (
     EditTermForm,
     PersonsAccountsFormSet,
 )
-from .models import Activity, Group, Notification, Person, School
+from .models import Activity, Group, Notification, Person, School, DashboardWidget
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 
@@ -32,6 +32,8 @@ def index(request: HttpRequest) -> HttpResponse:
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
+
+    context["widgets"] = DashboardWidget.objects.filter(active=True)
 
     return render(request, "core/index.html", context)
 
