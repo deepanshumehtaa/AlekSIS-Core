@@ -31,6 +31,10 @@ class School(ExtensibleModel):
     logo = ImageCropField(verbose_name=_("School logo"), blank=True, null=True)
     logo_cropping = ImageRatioField("logo", "600x600", size_warning=True)
 
+    @classmethod
+    def get_default(cls):
+        return cls.objects.first()
+
     @property
     def current_term(self):
         return SchoolTerm.objects.get(current=True)

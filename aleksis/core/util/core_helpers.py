@@ -139,3 +139,12 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
 
     # return the whole path to the file
     return os.path.join(upload_to, new_filename)
+
+
+def school_information_processor(request: HttpRequest) -> dict:
+    """ Provides default School object in all templates """
+
+    from ..models import School
+    return {
+        "SCHOOL": School.get_default,
+    }

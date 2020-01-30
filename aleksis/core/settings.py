@@ -130,6 +130,7 @@ TEMPLATES = [
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
                 "constance.context_processors.config",
+                "aleksis.core.util.core_helpers.school_information_processor",
             ],
         },
     },
@@ -248,6 +249,7 @@ YARN_INSTALLED_APPS = [
     "materialize-css",
     "material-design-icons-iconfont",
     "select2",
+    "paper-css",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -266,6 +268,7 @@ ANY_JS = {
     "material-design-icons": {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
+    "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
