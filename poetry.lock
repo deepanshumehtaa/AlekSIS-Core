@@ -398,6 +398,11 @@ optional = false
 python-versions = "*"
 version = "2.6.0"
 
+[package.dependencies]
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
+
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -601,6 +606,20 @@ babel = "*"
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
+
+[[package]]
+category = "main"
+description = "Pickled object field for Django"
+name = "django-picklefield"
+optional = false
+python-versions = "*"
+version = "2.1.1"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[package.extras]
+tests = ["tox"]
 
 [[package]]
 category = "main"
@@ -1965,7 +1984,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "14f6ce32d23b24d7b0dc5a064d286c68343ce8ba1f176dd66ff0646e0f6be3fd"
+content-hash = "d420d561639e0a707bdc319fda33991df01ccef71e5ce639f85cbfd0261e421a"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2189,6 +2208,10 @@ django-otp-yubikey = [
 django-phonenumber-field = [
     {file = "django-phonenumber-field-3.0.1.tar.gz", hash = "sha256:794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"},
     {file = "django_phonenumber_field-3.0.1-py3-none-any.whl", hash = "sha256:1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e"},
+]
+django-picklefield = [
+    {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
+    {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-polymorphic = [
     {file = "django-polymorphic-2.1.2.tar.gz", hash = "sha256:6e08a76c91066635ccb7ef3ebbe9a0ad149febae6b30be2579716ec16d3c6461"},
