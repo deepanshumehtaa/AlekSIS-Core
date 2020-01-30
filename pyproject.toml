@@ -50,7 +50,7 @@ django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumb
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
 django-pwa = {git = "https://github.com/Natureshadow/django-pwa", rev = "67cf917a081df3116968f684ebb28e4c076b2b50" }
-django-constance = {git = "https://github.com/jazzband/django-constance", rev = "590fa02eb30e377da0eda5cc3a84254b839176a7", extras = ["database"]}
+django-constance = "^2.6.0"
 django_widget_tweaks = "^1.4.5"
 django-filter = "^2.2.0"
 django-templated-email = "^2.3.0"
