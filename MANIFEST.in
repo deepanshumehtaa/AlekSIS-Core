@@ -1,8 +1,0 @@
-include CODE_OF_CONDUCT.rst
-include CONTRIBUTING.rst
-include LICENCE.rst
-include manage.py
-recursive-include aleksis/core/static *
-recursive-include aleksis/core/templates *
-recursive-include aleksis/core/migrations *
-recursive-include docs *
