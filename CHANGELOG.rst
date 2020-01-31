@@ -1,6 +1,24 @@
 Changelog
 =========
 
+
+`2.0a1`_
+--------
+
+New features
+~~~~~~~~~~~~
+
+* Migrate to materialize.css
+* Dashboard
+* Notifications via SMS (Twilio), Email, Webpush or on the dashboard
+* Admin interface
+* Background Tasks with Celery
+
+Bug fixes
+~~~~~~~~~
+
+* setup_data no longer forces database connection
+
 `1.0a4`_
 --------
 
@@ -53,3 +71,4 @@ Minor changes
 _`1.0a1`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a1
 _`1.0a2`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a2
 _`1.0a4`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/1.0a4
+_`2.0a1`: https://edugit.org/Teckids/AlekSIS/AlekSIS/-/tags/2.0a1
