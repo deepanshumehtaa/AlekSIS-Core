@@ -10,9 +10,16 @@ New features
 
 * Migrate to materialize.css
 * Dashboard
-* Notifications via SMS (Twilio), Email, Webpush or on the dashboard
+* Notifications via SMS (Twilio), Email or on the dashboard
 * Admin interface
-* Background Tasks with Celery
+* Devs: Background Tasks with Celery
+* Turn into installable PWA
+
+Minor changes
+~~~~~~~~~~~~~
+
+* Customisable save_button template
+* Redesign error pages
 
 Bug fixes
 ~~~~~~~~~
