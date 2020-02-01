@@ -1,0 +1,79 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+
+{% block browser_title %}{% blocktrans %}About AlekSIS{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans %}AlekSIS – The Free School Information System{% endblocktrans %}{% endblock %}
+
+{% block content %}
+
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{% blocktrans %}About AlekSIS{% endblocktrans %}</span>
+      <p>
+        {% blocktrans %}
+          AlekSIS is a web-based school information system (SIS) which can be used to manage and/or publish
+          organisational subjects of educational institutions.
+        {% endblocktrans %}
+      </p>
+    </div>
+    <div class="card-action">
+      <a class="" href="https://aleksis.org/">{% trans "Website of AlekSIS" %}</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{% trans "Licence information" %}</span>
+      <p>
+        {% blocktrans %}
+          The core and the official apps of AlekSIS are licenced under the EUPL, version 1.2 or later. For licence
+          information from third-party apps, if installed, see directly at the respective components below.
+        {% endblocktrans %}
+      </p>
+    </div>
+    <div class="card-action">
+      <a href="https://eupl.eu">{% trans "Full licence text" %}</a>
+      <a href="https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers">{% trans "More information about the EUPL" %}</a>
+    </div>
+  </div>
+
+  {% for short_name, app in licence_information.items %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ app.name }}</span>
+
+        {% if app.copyright_holders %}
+          <p>
+            {% for holder in app.copyright_holders %}
+              Copyright © {{ holder.0|join:", " }}
+
+              {% if holder.2 %}
+                <a href="mailto:{{ holder.2 }}">{{ holder.1 }}</a>
+              {% else %}
+                {{ holder.1 }}
+              {% endif %}
+
+              <br/>
+            {% endfor %}
+          </p>
+          <br/>
+        {% endif %}
+
+        {% if app.licence %}
+          <p>
+            {% blocktrans with licence=app.licence %}
+              This part of AlekSIS is licenced under the {{ licence }}.
+            {% endblocktrans %}
+          </p>
+        {% endif %}
+      </div>
+      {% if app.repository %}
+        <div class="card-action">
+          <a href="{{ app.repository }}">{% trans "Show source code" %}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endblock %}

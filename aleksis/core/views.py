@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from django_tables2 import RequestConfig
 
@@ -41,6 +42,13 @@ def index(request: HttpRequest) -> HttpResponse:
 def offline(request):
     return render(request, "core/offline.html")
 
+
+def about(request):
+    context = {}
+
+    context["licence_information"] = settings.LICENCE_INFORMATION
+
+    return render(request, "core/about.html", context)
 
 @login_required
 def persons(request: HttpRequest) -> HttpResponse:
