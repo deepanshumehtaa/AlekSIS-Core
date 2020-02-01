@@ -55,7 +55,9 @@ def about(request):
     for app in packages:
         app_mod = import_module(app)
         try:
-            licence_information.append(app_mod.LICENCE_INFORMATION)
+            app_licence_information = app_mod.LICENCE_INFORMATION
+            app_licence_information["copyright_holders"].sort(key=lambda x: x[1].split(" ")[-1])
+            licence_information.append(app_licence_information)
         except AttributeError:
             pass
 
