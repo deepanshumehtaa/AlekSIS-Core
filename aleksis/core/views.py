@@ -20,7 +20,7 @@ from .forms import (
 from .models import Activity, Group, Notification, Person, School, DashboardWidget
 from .tables import GroupsTable, PersonsTable
 from .util import messages
-from .util.core_helpers import get_app_packages
+from .util.core_helpers import get_app_licence_information
 
 
 @person_required
@@ -47,21 +47,7 @@ def offline(request):
 def about(request):
     context = {}
 
-    licence_information = []
-
-    packages = list(get_app_packages())
-    packages.insert(0, "aleksis.core")
-
-    for app in packages:
-        app_mod = import_module(app)
-        try:
-            app_licence_information = app_mod.LICENCE_INFORMATION
-            app_licence_information["copyright_holders"].sort(key=lambda x: x[1].split(" ")[-1])
-            licence_information.append(app_licence_information)
-        except AttributeError:
-            pass
-
-    context["licence_information"] = licence_information
+    context["licence_information"] = get_app_licence_information()
 
     return render(request, "core/about.html", context)
 

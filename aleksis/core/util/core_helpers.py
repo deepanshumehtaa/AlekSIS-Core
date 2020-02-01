@@ -1,7 +1,7 @@
 import os
 import pkgutil
 from importlib import import_module
-from typing import Any, Callable, Sequence, Union
+from typing import Any, Callable, Sequence, Union, List
 from uuid import uuid4
 
 from django.conf import settings
@@ -148,3 +148,23 @@ def school_information_processor(request: HttpRequest) -> dict:
     return {
         "SCHOOL": School.get_default,
     }
+
+
+def get_app_licence_information() -> List[dict]:
+    """ Get a list of the attribute LICENCE_INFORMATION from every app and the core """
+
+    licence_information = []
+
+    packages = list(get_app_packages())
+    packages.insert(0, "aleksis.core")
+
+    for app in packages:
+        app_mod = import_module(app)
+        try:
+            app_licence_information = app_mod.LICENCE_INFORMATION
+            app_licence_information["copyright_holders"].sort(key=lambda x: x[1].split(" ")[-1])
+            licence_information.append(app_licence_information)
+        except AttributeError:
+            pass
+
+    return licence_information
