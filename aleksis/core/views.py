@@ -1,3 +1,4 @@
+from importlib import import_module
 from typing import Optional
 
 from django.contrib.auth.decorators import login_required
@@ -5,7 +6,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 
 from django_tables2 import RequestConfig
 
@@ -20,6 +20,7 @@ from .forms import (
 from .models import Activity, Group, Notification, Person, School, DashboardWidget
 from .tables import GroupsTable, PersonsTable
 from .util import messages
+from .util.core_helpers import get_app_packages
 
 
 @person_required
@@ -46,9 +47,22 @@ def offline(request):
 def about(request):
     context = {}
 
-    context["licence_information"] = settings.LICENCE_INFORMATION
+    licence_information = []
+
+    packages = list(get_app_packages())
+    packages.insert(0, "aleksis.core")
+
+    for app in packages:
+        app_mod = import_module(app)
+        try:
+            licence_information.append(app_mod.LICENCE_INFORMATION)
+        except AttributeError:
+            pass
+
+    context["licence_information"] = licence_information
 
     return render(request, "core/about.html", context)
+
 
 @login_required
 def persons(request: HttpRequest) -> HttpResponse:

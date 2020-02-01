@@ -480,16 +480,3 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-
-LICENCE_INFORMATION = []
-
-packages = list(get_app_packages())
-packages.insert(0, "aleksis.core")
-
-for app in packages:
-    app_mod = import_module(app)
-    try:
-        licence_information = app_mod.LICENCE_INFORMATION
-        LICENCE_INFORMATION.append(licence_information)
-    except AttributeError:
-        pass
