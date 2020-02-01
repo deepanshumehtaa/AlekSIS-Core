@@ -1,7 +1,9 @@
 import os
 import sys
 from glob import glob
+from importlib import import_module
 
+from django.apps import apps
 from django.utils.translation import gettext_lazy as _
 from calendarweek.django import i18n_day_name_choices_lazy
 
@@ -479,21 +481,15 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-LICENCE_INFORMATION = {
-    "core": {
-        "name": _("Core"),
-        "repository": "https://edugit.org/AlekSIS/AlekSIS/",
-        "licence": _("EUPL, version 1.2 or later"),
-        "copyright_holders": [
-            ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
-            ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
-            ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
-            ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
-            ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
-            ([2019, 2020], "mirabilos", "thorsten.glaser@teckids.org"),
-            ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
-        ]
-    }
-}
+LICENCE_INFORMATION = []
 
-merge_app_settings("LICENCE_INFORMATION", LICENCE_INFORMATION, False)
+packages = list(get_app_packages())
+packages.insert(0, "aleksis.core")
+
+for app in packages:
+    app_mod = import_module(app)
+    try:
+        licence_information = app_mod.LICENCE_INFORMATION
+        LICENCE_INFORMATION.append(licence_information)
+    except AttributeError:
+        pass
