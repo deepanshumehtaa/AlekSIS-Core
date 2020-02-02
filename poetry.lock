@@ -544,6 +544,10 @@ version = "1.6.0"
 [package.dependencies]
 six = "*"
 
+[package.source]
+reference = "8d9d49e7d7c000e1e637ef9b7f1d9eb289c509c9"
+type = "git"
+url = "https://github.com/viewflow/django-material.git"
 [[package]]
 category = "main"
 description = "A straightforward menu generator for Django"
@@ -2191,10 +2195,7 @@ django-maintenance-mode = [
     {file = "django-maintenance-mode-0.14.0.tar.gz", hash = "sha256:f3fef1760fdcda5e0bf6c2966aadc77eea6f328580a9c751920daba927281a68"},
     {file = "django_maintenance_mode-0.14.0-py2-none-any.whl", hash = "sha256:b4cc24a469ed10897826a28f05d64e6166a58d130e4940ac124ce198cd4cc778"},
 ]
-django-material = [
-    {file = "django-material-1.6.0.tar.gz", hash = "sha256:767ab6ad51f906bf773f927e853c2bff6b4ebdd1bd2bf45dbd4ef3e31657c3d5"},
-    {file = "django_material-1.6.0-py2.py3-none-any.whl", hash = "sha256:6a30e42f0ceefef1ff325bda0017fa6f6a7fa534b15b8fcc48eb96de4b6adc8e"},
-]
+django-material = []
 django-menu-generator = [
     {file = "django-menu-generator-1.0.4.tar.gz", hash = "sha256:ce71a5055c16933c8aff64fb36c21e5cf8b6d505733aceed1252f8b99369a378"},
 ]
