@@ -10,7 +10,7 @@ def create_validation_service(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0010_alter_fields_notification'),
+        ('core', '0009_dashboard_widget'),
     ]
 
     operations = [
