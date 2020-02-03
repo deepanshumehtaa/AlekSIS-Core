@@ -186,7 +186,7 @@ AUTHENTICATION_BACKENDS = []
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
-    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType  # noqa
+    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, GroupOfUniqueNamesType, PosixGroupType  # noqa
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -211,6 +211,28 @@ if _settings.get("ldap.uri", None):
         "last_name": _settings.get("ldap.map.first_name", "sn"),
         "email": _settings.get("ldap.map.email", "mail"),
     }
+
+    # Discover flags by LDAP groups
+    if _settings.get("ldap.groups.base", None):
+        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+            _settings.get("ldap.groups.base"),
+            ldap.SCOPE_SUBTREE,
+            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNams")),
+        )
+
+        if _settings.get("ldap.groups.type", "groupOfNames"):
+            AUTH_LDAP_GROUP_TYPE = NestedGroupOfNamesType()
+        elif _settings.get("ldap.groups.type", "groupOfUniqueNames"):
+            AUTH_LDAP_GROUP_TYPE = NestedGroupOfUniqueNamesType()
+        elif _settings.get("ldap.groups.type", "posixGroup"):
+            AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+
+        AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+        }
+        for flag in ["is_active", "is_staff", "is_superuser"]:
+            dn = _settings.get("ldap.groups.flags.%s" % flag, None)
+            if dn:
+                AUTH_LDAP_USER_FLAGS_BY_GROUP[flag] = dn
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
