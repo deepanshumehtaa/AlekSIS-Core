@@ -123,7 +123,7 @@ class Person(ExtensibleModel):
         "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
     )
 
-    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True)
+    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
