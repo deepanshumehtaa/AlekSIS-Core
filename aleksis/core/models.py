@@ -158,6 +158,16 @@ class Person(ExtensibleModel):
         else:
             return f"{self.first_name} {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Synchronise user fields to linked User object to keep it up to date
+        if self.user:
+            self.user.first_name = self.first_name
+            self.user.last_name = self.last_name
+            self.user.email = self.email
+            self.user.save()
+
     def __str__(self) -> str:
         return self.full_name
 
