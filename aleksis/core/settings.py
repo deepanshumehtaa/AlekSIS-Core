@@ -223,7 +223,7 @@ if _settings.get("ldap.uri", None):
         _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
         if _group_type == "groupofnames":
             AUTH_LDAP_GROUP_TYPE = NestedGroupOfNamesType()
-        elif _group_type == "groupofuniquenames"):
+        elif _group_type == "groupofuniquenames":
             AUTH_LDAP_GROUP_TYPE = NestedGroupOfUniqueNamesType()
         elif _group_type == "posixgroup":
             AUTH_LDAP_GROUP_TYPE = PosixGroupType()
