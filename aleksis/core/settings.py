@@ -186,7 +186,7 @@ AUTHENTICATION_BACKENDS = []
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
-    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, GroupOfUniqueNamesType, PosixGroupType  # noqa
+    from django_auth_ldap.config import LDAPSearch, NestedGroupOfNamesType, NestedGroupOfUniqueNamesType, PosixGroupType  # noqa
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
