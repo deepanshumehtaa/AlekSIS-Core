@@ -217,7 +217,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
             _settings.get("ldap.groups.base"),
             ldap.SCOPE_SUBTREE,
-            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNams")),
+            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNames")),
         )
 
         _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
