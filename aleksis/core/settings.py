@@ -235,6 +235,10 @@ if _settings.get("ldap.uri", None):
             if _dn:
                 AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
 
+        # Backend admin requires superusers to also be staff members
+        if "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP:
+            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP["is_superuser"]
+
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
