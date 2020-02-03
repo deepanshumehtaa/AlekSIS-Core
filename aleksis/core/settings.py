@@ -220,19 +220,20 @@ if _settings.get("ldap.uri", None):
             _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNams")),
         )
 
-        if _settings.get("ldap.groups.type", "groupOfNames"):
+        _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
+        if _group_type == "groupofnames":
             AUTH_LDAP_GROUP_TYPE = NestedGroupOfNamesType()
-        elif _settings.get("ldap.groups.type", "groupOfUniqueNames"):
+        elif _group_type == "groupofuniquenames"):
             AUTH_LDAP_GROUP_TYPE = NestedGroupOfUniqueNamesType()
-        elif _settings.get("ldap.groups.type", "posixGroup"):
+        elif _group_type == "posixgroup":
             AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
         AUTH_LDAP_USER_FLAGS_BY_GROUP = {
         }
-        for flag in ["is_active", "is_staff", "is_superuser"]:
-            dn = _settings.get("ldap.groups.flags.%s" % flag, None)
-            if dn:
-                AUTH_LDAP_USER_FLAGS_BY_GROUP[flag] = dn
+        for _flag in ["is_active", "is_staff", "is_superuser"]:
+            _dn = _settings.get("ldap.groups.flags.%s" % _flag, None)
+            if _dn:
+                AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
