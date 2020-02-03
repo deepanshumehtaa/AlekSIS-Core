@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0009_dashboard_widget'),
+        ('otp_yubikey', '0001_initial'),
     ]
 
     operations = [
