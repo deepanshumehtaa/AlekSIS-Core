@@ -88,6 +88,15 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("Third-party services"),
+                    "url": "third_party_services",
+                    "icon": "share",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "menu_generator.validators.is_superuser",
+                    ],
+                },
+                {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
                     "icon": "settings",

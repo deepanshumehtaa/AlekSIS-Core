@@ -371,6 +371,9 @@ CONSTANCE_CONFIG = {
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
+    "NEXTCLOUD_TALK_SERVER": ("", _("Nextcloud Talk server configured by connection service"), "url_field"),
+    "NEXTCLOUD_TALK_LOGIN_NAME": ("", _("Nextcloud Talk server configured by connection service"), str),
+    "NEXTCLOUD_TALK_APP_PASSWORD": ("", _("Nextcloud Talk server configured by connection service"), str),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "General settings": ("SITE_TITLE",),

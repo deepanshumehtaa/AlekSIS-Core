@@ -132,3 +132,7 @@ class EditTermForm(forms.ModelForm):
     class Meta:
         model = SchoolTerm
         fields = ["caption", "date_start", "date_end"]
+
+
+class NextcloudServerForm(forms.Form):
+    url = forms.URLField(required=True, label=_("URL of your Nextcloud instance"))

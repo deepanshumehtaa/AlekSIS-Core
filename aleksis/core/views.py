@@ -1,8 +1,9 @@
 from typing import Optional
 
+from constance import config
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
@@ -15,10 +16,11 @@ from .forms import (
     EditSchoolForm,
     EditTermForm,
     PersonsAccountsFormSet,
-)
+    NextcloudServerForm)
 from .models import Activity, Group, Notification, Person, School, DashboardWidget
 from .tables import GroupsTable, PersonsTable
-from .util import messages
+from .util import messages, nextcloud
+from .util.nextcloud import initiate_login_process, login_process_poll
 
 
 @person_required
@@ -264,3 +266,80 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
         raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
     return redirect("index")
+
+
+@admin_required
+def third_party_services(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    context["nextcloud"] = {
+        "connected": nextcloud.is_connected(),
+        "login_name": config.NEXTCLOUD_TALK_LOGIN_NAME
+    }
+
+    return render(request, "core/third_party_services.html", context)
+
+
+@admin_required
+def connect_nextcloud_talk(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    if request.method == "GET":
+        form = NextcloudServerForm()
+
+        context["step"] = 1
+        context["form"] = form
+
+    elif request.method == "POST":
+        if "step-1" in request.POST:
+            form = NextcloudServerForm(request.POST)
+
+            if form.is_valid():
+                url = form.cleaned_data["url"]
+                if url[-1] != "/":
+                    url += "/"
+
+                r = initiate_login_process(url)
+
+                request.session["nextcloud_poll"] = True
+                request.session["nextcloud_login_data"] = r
+
+                context["login_data"] = r
+                context["step"] = 2
+
+    return render(request, "core/connect_nextcloud_talk.html", context)
+
+
+@admin_required
+def disconnect_nextcloud_talk(request: HttpRequest) -> HttpResponse:
+    config.NEXTCLOUD_TALK_SERVER = ""
+    config.NEXTCLOUD_TALK_LOGIN_NAME = ""
+    config.NEXTCLOUD_TALK_APP_PASSWORD = ""
+
+    messages.success(request, _("The Nextcloud user was successfully disconnected ."))
+
+    return redirect("third_party_services")
+
+
+@admin_required
+def poll_nextcloud_talk(request: HttpRequest) -> HttpResponse:
+    done = False
+
+    if request.session.get("nextcloud_poll", False):
+        login_data = request.session["nextcloud_login_data"]
+
+        r = login_process_poll(login_data["poll"]["endpoint"], login_data["poll"]["token"])
+
+        done = r != False
+
+        if done:
+            config.NEXTCLOUD_TALK_SERVER = r["server"]
+            config.NEXTCLOUD_TALK_LOGIN_NAME = r["loginName"]
+            config.NEXTCLOUD_TALK_APP_PASSWORD = r["appPassword"]
+
+            messages.success(request, _("The Nextcloud user was successfully connected."))
+
+            del request.session["nextcloud_login_data"]
+            del request.session["nextcloud_poll"]
+
+    return JsonResponse({"done": done})

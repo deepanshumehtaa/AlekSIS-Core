@@ -1,0 +1,46 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block browser_title %}{% blocktrans %}Third-party services{% endblocktrans %}{% endblock %}
+
+{% block page_title %}{% blocktrans %}Third-party services{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-content">
+      {% if nextcloud.connected %}
+        <span class="badge new green right">{% trans "Connected" %}</span>
+      {% else %}
+        <span class="badge new red right">{% trans "Not connected" %}</span>
+      {% endif %}
+
+      <span class="card-title">{% trans "Nextcloud Talk" %}</span>
+
+      {% if nextcloud.connected %}
+        <p>
+          {% blocktrans with login_name=nextcloud.login_name %}
+            Connected Nextcloud user: {{ login_name }}
+          {% endblocktrans %}
+        </p>
+        <br/>
+        <a class="btn red waves-effect waves-light" href="{% url "disconnect_nextcloud_talk" %}">
+          <i class="material-icons left">leak_remove</i>
+          {% trans "Disconnect" %}
+        </a>
+      {% else %}
+        <p>
+          {% blocktrans %}
+            In order to send notifications by Nextcloud Talk you must connect a Nextcloud user which should send the
+            notifications to the users.
+          {% endblocktrans %}
+        </p>
+        <br/>
+        <a class="btn green waves-effect waves-light" href="{% url "connect_nextcloud_talk" %}">
+          <i class="material-icons left">leak_add</i>
+          {% trans "Connect" %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

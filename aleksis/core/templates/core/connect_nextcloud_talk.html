@@ -1,0 +1,39 @@
+{# -*- engine:django -*- #}
+{% extends "core/base.html" %}
+{% load i18n material_form static %}
+
+{% block browser_title %}{% blocktrans %}Connect to Nextcloud Talk{% endblocktrans %}{% endblock %}
+
+{% block page_title %}{% blocktrans %}Connect to Nextcloud Talk{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  {% if step == 1 %}
+    <form action="" method="post">
+      {% csrf_token %}
+      {% form form=form %}{% endform %}
+
+      <button class="btn green waves-effect waves-light" type="submit" name="step-1">
+        <i class="material-icons left">open_in_new</i>
+        {% trans "Open login page" %}
+      </button>
+    </form>
+  {% elif step == 2 %}
+    {{ login_data|json_script:"login_data" }}
+
+    <p class="flow-text">
+      {% blocktrans %}
+        Waiting for successful login ...
+      {% endblocktrans %}
+    </p>
+
+    <p>
+      {% blocktrans with url=login_data.login %}
+        Login window has not opened?
+        <a href="{{ url }}" target="_blank">Try again.</a>
+      {% endblocktrans %}
+    </p>
+
+    <script src="{% static "js/helper.js" %}"></script>
+    <script src="{% static "js/nextcloud_talk.js" %}"></script>
+  {% endif %}
+{% endblock %}
