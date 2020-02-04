@@ -2,6 +2,7 @@ from typing import Optional
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.mail import EmailMessage
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
@@ -15,6 +16,7 @@ from .forms import (
     EditSchoolForm,
     EditTermForm,
     PersonsAccountsFormSet,
+    GroupContactForm,
 )
 from .models import Activity, Group, Notification, Person, School, DashboardWidget
 from .tables import GroupsTable, PersonsTable
@@ -264,3 +266,79 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
         raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
     return redirect("index")
+
+@login_required
+def group_contact(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    current_person = Person.objects.get(user=request.user)
+
+    group = get_object_or_404(Group, id=id_)
+    context['group'] = group
+
+    group_contact_form = GroupContactForm()
+
+    if request.method == 'POST':
+        group_contact_form = GroupContactForm(request.POST)
+        if group_contact_form.is_valid():
+            if group_contact_form.cleaned_data['service'] == 'mail':
+                message = EmailMessage()
+
+                if group_contact_form.cleaned_data['sender'] == 'self':
+                    message.from_email = '"%s" <%s>' % (
+                        current_person.full_name, current_person.email)
+                elif group_contact_form.cleaned_data['sender'] == 'self_masq':
+                    message.from_email = '"%s" <%s>' % (
+                        current_person.first_name, settings.MAIL_OUT)
+                elif group_contact_form.cleaned_data['sender'] == 'org':
+                    message.from_email = settings.MAIL_OUT
+
+                message.bcc = []
+                for person in group.members.all():
+                    if 'group' in group_contact_form.cleaned_data['recipients']:
+                        message.bcc.append(person.email)
+                    if 'guardians' in group_contact_form.cleaned_data['recipients']:
+                        for guardian in person.guardians:
+                            message.bcc.append(guardian.email)
+
+                if 'owners' in group_contact_form.cleaned_data['recipients']:
+                    for owner in group.owners.all():
+                        message.bcc.append(owner.email)
+
+                message.subject = group_contact_form.cleaned_data['subject']
+                message.body = group_contact_form.cleaned_data['text']
+
+                message.send()
+            elif group_contact_form.cleaned_data['service'] == 'sms':
+                if group_contact_form.cleaned_data['sender'] == 'self':
+                    sender = current_person.mobile
+                    if not sender:
+                        sender = current_person.first_name[:11]
+                elif group_contact_form.cleaned_data['sender'] == 'self_masq':
+                    sender = current_person.first_name[:11]
+                elif group_contact_form.cleaned_data['sender'] == 'org':
+                    sender = settings.SITE_TITLE
+
+                to = []
+                for person in group.members.all():
+                    if 'group' in group_contact_form.cleaned_data['recipients']:
+                        to.append(person.mobile_number)
+                    if 'guardians' in group_contact_form.cleaned_data['recipients']:
+                        for guardian in person.guardians:
+                            to.append(guardian.mobile_number)
+
+                if 'owners' in group_contact_form.cleaned_data['recipients']:
+                    for owner in group.owners.all():
+                        to.append(owner.mobile_number)
+
+                msg = group_contact_form.cleaned_data['text']
+
+                ret = send_sms(sender, to, msg)
+                if ret.status_code != 200:
+                    context['error'] = _(
+                        'SMS could not be transmitted to provider.')
+            return redirect('group_by_id', id_=id_)
+
+    context['group_contact_form'] = group_contact_form
+
+    return render(request, 'core/group_contact.html', context)

@@ -33,6 +33,7 @@ urlpatterns = [
     path("group/create", views.edit_group, name="create_group"),
     path("group/<int:id_>", views.group, name="group_by_id"),
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
+    path("group/<int:id_>/contact", views.group_contact, name="contact_group_by_id"),
     path("", views.index, name="index"),
     path("notifications/mark-read/<int:id_>", views.notification_mark_read, name="notification_mark_read"),
     path("maintenance-mode/", include("maintenance_mode.urls")),

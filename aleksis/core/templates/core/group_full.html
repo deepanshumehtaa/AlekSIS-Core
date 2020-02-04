@@ -14,6 +14,10 @@
       <i class="material-icons left">edit</i>
       {% trans "Edit" %}
     </a>
+    <a href="{% url 'contact_group_by_id' group.id %}" class="btn waves-effect waves-light">
+      <i class="material-icons left">send</i>
+      {% trans "Contact" %}
+    </a>
   </p>
 
   <h5>{% blocktrans %}Owners{% endblocktrans %}</h5>

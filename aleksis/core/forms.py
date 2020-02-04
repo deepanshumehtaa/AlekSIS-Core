@@ -6,6 +6,30 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 
 from .models import Group, Person, School, SchoolTerm
 
+RECIPIENT_CHOICES = [
+    ('guardians', _('Guardians')),
+    ('group', _('Group members')),
+    ('owners', _('Group owners')),
+]
+
+SERVICE_CHOICES = [
+    ('mail', _('E mail')),
+    ('sms', _('SMS')),
+]
+
+SENDER_CHOICES = [
+    ('self', _('Personally')),
+    ('self_masq', _('Personally (only first name)')),
+    ('org', _('Organisation')),
+]
+
+class GroupContactForm(forms.Form):
+    service = forms.ChoiceField(label=_('Delivery'), choices=SERVICE_CHOICES)
+    sender = forms.ChoiceField(label=_('Sender'), choices=SENDER_CHOICES)
+    recipients = forms.MultipleChoiceField(
+        label=_('Receiver'), choices=RECIPIENT_CHOICES)
+    subject = forms.CharField(label=_('Subject'))
+    text = forms.CharField(label=_('Text'), widget=forms.Textarea)
 
 class PersonAccountForm(forms.ModelForm):
     class Meta:

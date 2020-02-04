@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load material_form i18n %}
+
+{% block page_title %}{% blocktrans %}Group communication{% endblocktrans %}{% endblock %}
+
+{% block content %}
+ <h4>{{ group.name }} <small class="grey-text">{{ group.short_name }}</small></h4>
+
+ <form method="post">
+  {% csrf_token %}
+  {% form form=group_contact_form %}{% endform %}
+  {% trans "Send" as caption%}
+  {% include "core/save_button.html" with icon="send" caption=caption %}
+ </form>
+{% endblock %}
