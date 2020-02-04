@@ -49,7 +49,7 @@ django_select2 = "^7.1"
 requests = "^2.22"
 django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
 django-yarnpkg = "^6.0"
-django-material = {git = "https://github.com/viewflow/django-material.git", rev = "8d9d49e7d7c000e1e637ef9b7f1d9eb289c509c9"}
+django-material = "^1.6.0"
 django-pwa = {git = "https://github.com/Natureshadow/django-pwa", rev = "67cf917a081df3116968f684ebb28e4c076b2b50" }
 django-constance = { version = "^2.6.0", extras = ["database"] }
 django_widget_tweaks = "^1.4.5"
