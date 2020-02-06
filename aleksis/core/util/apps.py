@@ -59,7 +59,7 @@ class AppConfig(django.apps.AppConfig):
         interactive: bool,
         using: str,
         plan: List[Tuple],
-        apps: django.apps,
+        apps: django.apps.registry.Apps,
     ) -> None:
         """ Called on every app instance before its models are migrated
 
@@ -74,7 +74,7 @@ class AppConfig(django.apps.AppConfig):
         interactive: bool,
         using: str,
         plan: List[Tuple],
-        apps: django.apps,
+        apps: django.apps.registry.Apps,
     ) -> None:
         """ Called on every app instance after its models have been migrated
 

@@ -1,5 +1,7 @@
 from typing import Any, List, Optional, Tuple
 
+import django.apps
+
 from .signals import clean_scss
 from .util.apps import AppConfig
 
@@ -18,7 +20,7 @@ class CoreConfig(AppConfig):
         interactive: bool,
         using: str,
         plan: List[Tuple],
-        apps: django.apps.Apps,
+        apps: django.apps.registry.Apps,
     ) -> None:
         super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
 
