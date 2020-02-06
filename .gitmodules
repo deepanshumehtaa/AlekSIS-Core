@@ -1,16 +1,16 @@
 [submodule "apps/official/AlekSIS-App-Alsijil"]
 	path = apps/official/AlekSIS-App-Alsijil
-	url = https://edugit.org/AlekSIS/AlekSIS-App-Alsijil
+	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-Alsijil
 	ignore = untracked
 [submodule "apps/official/AlekSIS-App-Chronos"]
 	path = apps/official/AlekSIS-App-Chronos
-	url = https://edugit.org/AlekSIS/AlekSIS-App-Chronos
+	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-Chronos
 	ignore = untracked
 [submodule "apps/official/AlekSIS-App-Exlibris"]
 	path = apps/official/AlekSIS-App-Exlibris
-	url = https://edugit.org/AlekSIS/AlekSIS-App-Exlibris
+	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-Exlibris
 	ignore = untracked
 [submodule "apps/official/AlekSIS-App-DashboardFeeds"]
 	path = apps/official/AlekSIS-App-DashboardFeeds
-	url = https://edugit.org/AlekSIS/AlekSIS-App-DashboardFeeds.git
+	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-DashboardFeeds.git
 	ignore = untracked
