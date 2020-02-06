@@ -21,10 +21,11 @@ class CoreConfig(AppConfig):
         using: str,
         plan: List[Tuple],
         apps: django.apps.registry.Apps,
+        **kwargs,
     ) -> None:
         super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
 
         # Ensure presence of a OTP YubiKey default config
-        apps.get_model('otp_yubikey', 'ValidationService').objects.using(using).update_or_create(
-            name='default', defaults={'use_ssl': True, 'param_sl': '', 'param_timeout': ''}
+        apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
+            name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )

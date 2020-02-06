@@ -32,9 +32,7 @@ class AppConfig(django.apps.AppConfig):
 
         # Register system checks of this app
         try:
-            import_module(
-                ".".join(self.__class__.__module__.split(".")[:-1] + ["checks"])
-            )
+            import_module(".".join(self.__class__.__module__.split(".")[:-1] + ["checks"]))
         except ImportError:
             # ImportErrors are non-fatal because checks are optional.
             pass
@@ -44,7 +42,7 @@ class AppConfig(django.apps.AppConfig):
         key: Optional[str] = "",
         old_value: Optional[Any] = None,
         new_value: Optional[Any] = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         """ Called on every app instance if a Constance config chagnes, and once on startup
 
@@ -60,6 +58,7 @@ class AppConfig(django.apps.AppConfig):
         using: str,
         plan: List[Tuple],
         apps: django.apps.registry.Apps,
+        **kwargs,
     ) -> None:
         """ Called on every app instance before its models are migrated
 
@@ -75,6 +74,7 @@ class AppConfig(django.apps.AppConfig):
         using: str,
         plan: List[Tuple],
         apps: django.apps.registry.Apps,
+        **kwargs,
     ) -> None:
         """ Called on every app instance after its models have been migrated
 
