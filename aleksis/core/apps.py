@@ -1,8 +1,5 @@
-from django.apps import AppConfig, apps
-
-from constance.signals import config_updated
-
 from .signals import clean_scss
+from .util.apps import AppConfig
 
 
 class CoreConfig(AppConfig):
@@ -10,5 +7,7 @@ class CoreConfig(AppConfig):
     verbose_name = "AlekSIS — The Free School Information System"
 
     def ready(self) -> None:
+        super().ready()
+
+    def config_updated(self, *args, **kwargs) -> None:
         clean_scss()
-        config_updated.connect(clean_scss)
