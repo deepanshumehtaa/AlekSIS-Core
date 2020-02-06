@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 20:19+0000\n"
-"PO-Revision-Date: 2019-09-17 21:08+0000\n"
+"PO-Revision-Date: 2020-01-24 14:49+0000\n"
 "Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/biscuit-ng/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgstr "Abmelden"
 
 #: aleksis/core/menus.py:35
 msgid "Two factor auth"
-msgstr ""
+msgstr "Zwei-Faktor-Authentifizierung"
 
 #: aleksis/core/menus.py:46
 msgid "Admin"
