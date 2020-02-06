@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 from django.contrib.auth import get_user_model
@@ -61,6 +62,16 @@ class SchoolTerm(ExtensibleModel):
         if self.current is False:
             self.current = None
         super().save(*args, **kwargs)
+
+    @classmethod
+    def maintain_default_data(cls):
+        if not cls.objects.filter(current=True).exists():
+            if cls.objects.exists():
+                term = cls.objects.latest('date_start')
+                term.current=True
+                term.save()
+            else:
+                cls.objects.create(date_start=date.today(), current=True)
 
     class Meta:
         verbose_name = _("School term")
@@ -170,6 +181,22 @@ class Person(ExtensibleModel):
 
     def __str__(self) -> str:
         return self.full_name
+
+    @classmethod
+    def maintain_default_data(cls):
+        # First, ensure we have an admin user
+        User = get_user_model()
+        if not User.objects.filter(is_superuser=True).exists():
+            admin = User.objects.create_superuser(
+                username='admin',
+                email='root@example.com',
+                password='admin'
+            )
+            admin.save()
+
+            # Ensure this admin user has a person linked to it
+            person = Person(user=admin)
+            person.save()
 
 
 class Group(ExtensibleModel):
