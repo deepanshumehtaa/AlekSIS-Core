@@ -15,7 +15,7 @@ def check_app_configs_base_class(
     results = []
 
     if app_configs is None:
-        app_configs = django.apps.get_app_configs()
+        app_configs = django.apps.apps.get_app_configs()
 
     for app_config in app_configs:
         if app_config.name.startswith("aleksis.apps.") and not isinstance(app_config, AppConfig):
