@@ -1,9 +1,11 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, Iterable, Union
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import QuerySet
+from django.forms.widgets import Media
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -280,8 +282,13 @@ class DashboardWidget(PolymorphicModel):
 
     If your widget does not add any database fields, you should mark it as a proxy model.
 
+    You can provide a Media meta class with custom JS and CSS files which will be added to html head.
+    For further information on media definition see https://docs.djangoproject.com/en/3.0/topics/forms/media/
+
     Example::
-    
+
+      from django.forms.widgets import Media
+
       from aleksis.core.models import DashboardWidget
 
       class MyWidget(DhasboardWIdget):
@@ -293,9 +300,25 @@ class DashboardWidget(PolymorphicModel):
 
           class Meta:
               proxy = True
+
+          media = Media(css={
+                  'all': ('pretty.css',)
+              },
+              js=('animations.js', 'actions.js')
+          )
     """
 
+    @staticmethod
+    def get_media(widgets: Union[QuerySet, Iterable]):
+        """ Return all media required to render the selected widgets. """
+
+        media = Media()
+        for widget in widgets:
+            media = media + widget.media
+        return media
+
     template = None
+    media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))

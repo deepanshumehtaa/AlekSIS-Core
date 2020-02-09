@@ -33,7 +33,11 @@ def index(request: HttpRequest) -> HttpResponse:
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    context["widgets"] = DashboardWidget.objects.filter(active=True)
+    widgets = DashboardWidget.objects.filter(active=True)
+    media = DashboardWidget.get_media(widgets)
+
+    context["widgets"] = widgets
+    context["media"] = media
 
     return render(request, "core/index.html", context)
 
