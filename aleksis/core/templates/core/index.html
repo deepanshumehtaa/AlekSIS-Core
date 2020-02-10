@@ -3,6 +3,10 @@
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
 
+{% block extra_head %}
+  {{ media }}
+{% endblock %}
+
 {% block content %}
   <p class="flow-text">{% blocktrans %}AlekSIS (School Information System){% endblocktrans %}</p>
 
