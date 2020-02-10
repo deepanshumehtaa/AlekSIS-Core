@@ -290,10 +290,19 @@ class Announcement(models.Model):
     recipient = GenericForeignKey("content_type", "recipient_id")
 
     @classmethod
-    def relevant_for(cls, obj: models.Model) -> models.QuerySet:
-        """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group) """
+    def relevant_for(cls, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
+        """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
+        or a set of models in a QuerySet.
+        """
 
-        return cls.objects.filter(content_type=ContentType.objects.get_for_model(obj), recipient_id=obj.id)
+        if isinstance(obj, models.QuerySet):
+            ct = ContentType.objects.get_for_model(obj.model)
+            pks = list(obj.values_list('pk', flat=True))
+        else:
+            ct = ContentType.objects.get_for_model(obj)
+            pks = [obj.pk]
+
+        return cls.objects.filter(content_type=ct, recipient_id__in=pks)
 
     @property
     def recipient_persons(self) -> Union[models.QuerySet, Sequence[models.Model]]:
