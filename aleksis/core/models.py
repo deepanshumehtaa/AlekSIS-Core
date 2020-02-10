@@ -1,8 +1,10 @@
-from datetime import date
-from typing import Optional
+from datetime import date, datetime
+from typing import Optional, Sequence, Union
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
@@ -223,6 +225,10 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
+    @property
+    def announcement_recipients(self):
+        return list(self.members) + list(self.owners)
+
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
 
@@ -269,6 +275,44 @@ class Notification(models.Model):
     class Meta:
         verbose_name = _("Notification")
         verbose_name_plural = _("Notifications")
+
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=150, verbose_name=_("Title"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"))
+    link = models.URLField(blank=True, verbose_name=_("Link"))
+
+    valid_from = models.DateTimeField(verbose_name=_("Date and time from when to show"), default=datetime.now)
+    valid_until = models.DateTimeField(verbose_name=_("Date and time until when to show"), null=True, blank=True)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    recipient_id = models.PositiveIntegerField()
+    recipient = GenericForeignKey("content_type", "recipient_id")
+
+    @classmethod
+    def relevant_for(cls, obj: models.Model) -> models.QuerySet:
+        """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group) """
+
+        return cls.objects.filter(content_type=ContentType.objects.get_for_model(obj), recipient_id=obj.id)
+
+    @property
+    def recipient_persons(self) -> Union[models.QuerySet, Sequence[models.Model]]:
+        """ Return a list of Persons this announcement is relevant for
+
+        If the recipient is a Person, return that object. If not, it returns the QUerySet
+        from the announcement_recipients field on the target model.
+        """
+
+        if isinstance(self.recipient, Person):
+            return [self.recipient]
+        else:
+            return getattr(self.recipient, "announcement_recipients", [])
+
+    def save(self, **kwargs):
+        if not self.valid_until:
+            self.valid_until = self.valid_from
+
+        super().save(**kwargs)
 
 
 class DashboardWidget(PolymorphicModel):
