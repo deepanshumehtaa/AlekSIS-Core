@@ -571,10 +571,11 @@ description = "A pluggable framework for adding two-factor authentication to Dja
 name = "django-otp"
 optional = false
 python-versions = "*"
-version = "0.8.1"
+version = "0.7.5"
 
 [package.dependencies]
 django = ">=1.11"
+six = ">=1.10.0"
 
 [package.extras]
 qrcode = ["qrcode"]
@@ -1981,7 +1982,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "2a9bb74e6cd7d9631bb374b32a5f540e4b2570603fa334ea030339f42d715467"
+content-hash = "064f45a5a73e6526a9f0f809bf1646863e42b277135b92daa0a10605bf1db409"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2195,8 +2196,8 @@ django-middleware-global-request = [
     {file = "django-middleware-global-request-0.1.2.tar.gz", hash = "sha256:f6490759bc9f7dbde4001709554e29ca715daf847f2222914b4e47117dca9313"},
 ]
 django-otp = [
-    {file = "django-otp-0.8.1.tar.gz", hash = "sha256:ad3206e4a6f461c8968a2366a7cccfb340b93294e604b278aa9ab8b26f1017a1"},
-    {file = "django_otp-0.8.1-py3-none-any.whl", hash = "sha256:523a87f8d0c52ce9a9f0a5e248c59dab3e85cdda5bbcd106cf49138a8f3f3209"},
+    {file = "django-otp-0.7.5.tar.gz", hash = "sha256:1f16c2b93fe484706ff16ac6f5e64ecc73dd240318c333e0560384ba548d3837"},
+    {file = "django_otp-0.7.5-py2.py3-none-any.whl", hash = "sha256:cd4975539be478417033561e9832a1a69a583189f680e92a649f412c661f90aa"},
 ]
 django-otp-yubikey = [
     {file = "django-otp-yubikey-0.5.2.tar.gz", hash = "sha256:f0b1881562fb42ee9f12c28d284cbdb90d1f0383f2d53a595373b080a19bc261"},
