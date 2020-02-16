@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Optional, Iterable, Union, Sequence
 
 from django.contrib.auth import get_user_model
@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -281,11 +282,16 @@ class Notification(models.Model):
 
 class Announcement(models.Model):
     title = models.CharField(max_length=150, verbose_name=_("Title"))
-    description = models.TextField(max_length=500, verbose_name=_("Description"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
     link = models.URLField(blank=True, verbose_name=_("Link"))
 
-    valid_from = models.DateTimeField(verbose_name=_("Date and time from when to show"), default=datetime.now)
-    valid_until = models.DateTimeField(verbose_name=_("Date and time until when to show"), null=True, blank=True)
+    valid_from = models.DateTimeField(
+        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+    )
+    valid_until = models.DateTimeField(
+        verbose_name=_("Date and time until when to show"),
+        default=lambda: timezone.datetime.now() + timedelta(days=1),
+    )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     recipient_id = models.PositiveIntegerField()
@@ -319,11 +325,12 @@ class Announcement(models.Model):
         else:
             return getattr(self.recipient, "announcement_recipients", [])
 
-    def save(self, **kwargs):
-        if not self.valid_until:
-            self.valid_until = self.valid_from
+    def __str__(self):
+        return self.title
 
-        super().save(**kwargs)
+    class Meta:
+        verbose_name = _("Announcement")
+        verbose_name_plural = _("Announcements")
 
 
 class DashboardWidget(PolymorphicModel):
