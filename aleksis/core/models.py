@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-from typing import Optional, Iterable, Union, Sequence
+from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -311,6 +311,22 @@ class Announcement(models.Model):
             pks = [obj.pk]
 
         return cls.objects.filter(content_type=ct, recipient_id__in=pks)
+
+    @classmethod
+    def for_person_at_time(cls, person: Person, when: Optional[datetime] = None) -> List:
+        """ Get all announcements for one person at a certain time """
+        when = when or timezone.datetime.now()
+
+        # Get announcements by time
+        announcements = cls.objects.filter(valid_from__lte=when, valid_until__gte=when)
+
+        # Filter by person
+        announcements_for_person = []
+        for announcement in announcements:
+            if person in announcement.recipient_persons:
+                announcements_for_person.append(announcement)
+
+        return announcements_for_person
 
     @property
     def recipient_persons(self) -> Union[models.QuerySet, Sequence[models.Model]]:
