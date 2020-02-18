@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "polymorphic",
@@ -457,6 +458,8 @@ PWA_APP_SPLASH_SCREEN = [
     }
 ]
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+
+SITE_ID = 1
 
 CKEDITOR_CONFIGS = {
     'default': {
