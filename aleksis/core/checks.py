@@ -17,7 +17,7 @@ def check_app_configs_base_class(
     if app_configs is None:
         app_configs = django.apps.apps.get_app_configs()
 
-    for app_config in filter(lambda c: c.name.startswith("aleksis.apps."), app_configs):
+    for app_config in filter(lambda c: c.name.startswith("aleksis."), app_configs):
         if not isinstance(app_config, AppConfig):
             results.append(
                 Warning(
