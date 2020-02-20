@@ -70,20 +70,44 @@ class ExtensibleModel(CRUDMixin):
     """
 
     @property
+    def crud_event_create(self) -> Optional[CRUDEvent]:
+        """ Return create event of this object """
+        return self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
+
+    @property
+    def crud_event_update(self) -> Optional[CRUDEvent]:
+        """ Return last event of this object """
+        return self.crud_events.latest("datetime")
+
+    @property
     def created_at(self) -> Optional[datetime]:
         """ Determine creation timestamp from CRUD log """
 
-        event = self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
-        if event:
-            return event.datetime
+        if self.crud_event_create:
+            return self.crud_event_create.datetime
 
     @property
     def updated_at(self) -> Optional[datetime]:
         """ Determine last timestamp from CRUD log """
 
-        event = self.crud_events.latest("datetime")
-        if event:
-            return event.datetime
+        if self.crud_event_update:
+            return self.crud_event_update.datetime
+
+    extended_data = JSONField(default=dict, editable=False)
+
+    @property
+    def created_by(self) -> Optional[models.Model]:
+        """ Determine user who created this object from CRUD log """
+
+        if self.crud_event_create:
+            return self.crud_event_create.user
+
+    @property
+    def updated_by(self) -> Optional[models.Model]:
+        """ Determine user who last updated this object from CRUD log """
+
+        if self.crud_event_update:
+            return self.crud_event_update.user
 
     extended_data = JSONField(default=dict, editable=False)
 
