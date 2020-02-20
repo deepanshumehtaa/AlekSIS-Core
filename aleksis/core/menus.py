@@ -58,6 +58,15 @@ MENUS = {
             ],
             "submenu": [
                 {
+                    "name": _("Announcements"),
+                    "url": "announcements",
+                    "icon": "announcement",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "menu_generator.validators.is_superuser",
+                    ],
+                },
+                {
                     "name": _("Data management"),
                     "url": "data_management",
                     "icon": "view_list",

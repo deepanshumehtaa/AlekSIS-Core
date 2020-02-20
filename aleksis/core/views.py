@@ -15,6 +15,7 @@ from .forms import (
     EditSchoolForm,
     EditTermForm,
     PersonsAccountsFormSet,
+    AnnouncementForm,
 )
 from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
@@ -271,3 +272,47 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
         raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
     return redirect("index")
+
+
+@admin_required
+def announcements(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    # Get all persons
+    announcements = Announcement.objects.all()
+    context["announcements"] = announcements
+
+    return render(request, "core/announcement/list.html", context)
+
+
+@admin_required
+def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
+    context = {}
+
+    if pk:
+        announcement = get_object_or_404(Announcement, pk=pk)
+        form = AnnouncementForm(
+            request.POST or None,
+            instance=announcement,
+            initial={
+                "valid_from_date": announcement.valid_from.date(),
+                "valid_from_time": announcement.valid_from.time(),
+                "valid_until_date": announcement.valid_until.date(),
+                "valid_until_time": announcement.valid_until.time()
+            }
+        )
+        context["mode"] = "edit"
+    else:
+        form = AnnouncementForm(request.POST or None, initial=AnnouncementForm.get_initial())
+        context["mode"] = "add"
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, _("The announcement has been saved."))
+            return redirect("announcements")
+
+    context["form"] = form
+
+    return render(request, "core/announcement/form.html", context)
