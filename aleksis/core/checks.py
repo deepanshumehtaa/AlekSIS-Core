@@ -21,7 +21,7 @@ def check_app_configs_base_class(
         if not isinstance(app_config, AppConfig):
             results.append(
                 Warning(
-                    "App config %s does not derive from aleksis.core.util.apps.AppConfig.",
+                    "App config %s does not derive from aleksis.core.util.apps.AppConfig." % app_config.name,
                     hint="Ensure the app uses the correct base class for all registry functionality to work.",
                     obj=app_config,
                     id="aleksis.core.W001",
