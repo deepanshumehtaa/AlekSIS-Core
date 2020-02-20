@@ -166,3 +166,7 @@ class ExtensibleModel(CRUDMixin):
 
     class Meta:
         abstract = True
+
+class PureDjangoModel(object):
+    """ No-op mixin to mark a model as deliberately not using ExtensibleModel """
+    pass

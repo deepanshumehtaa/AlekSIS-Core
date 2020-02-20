@@ -14,7 +14,7 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel
+from .mixins import ExtensibleModel, PureDjangoModel
 from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
 
@@ -346,7 +346,7 @@ class Announcement(ExtensibleModel):
         verbose_name_plural = _("Announcements")
 
 
-class DashboardWidget(PolymorphicModel):
+class DashboardWidget(PolymorphicModel, PureDjangoModel):
     """ Base class for dashboard widgets on the index page
 
     To implement a widget, add a model that subclasses DashboardWidget, sets the template
