@@ -9,7 +9,7 @@ from .util.apps import AppConfig
 @register(Tags.compatibility)
 def check_app_configs_base_class(
     app_configs: Optional[django.apps.registry.Apps] = None, **kwargs
-) -> None:
+) -> list:
     """ Checks whether all apps derive from AlekSIS's base app config """
 
     results = []
