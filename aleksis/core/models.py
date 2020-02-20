@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
@@ -15,6 +15,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel
+from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
 
 from constance import config
@@ -290,7 +291,7 @@ class Announcement(models.Model):
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"),
-        default=lambda: timezone.datetime.now() + timedelta(days=1),
+        default=now_tomorrow,
     )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
