@@ -10,7 +10,7 @@ from .util.apps import AppConfig
 @register(Tags.compatibility)
 def check_app_configs_base_class(
     app_configs: Optional[django.apps.registry.Apps] = None, **kwargs
-) -> None:
+) -> list:
     """ Checks whether all apps derive from AlekSIS's base app config """
 
     results = []
@@ -18,11 +18,11 @@ def check_app_configs_base_class(
     if app_configs is None:
         app_configs = django.apps.apps.get_app_configs()
 
-    for app_config in app_configs:
-        if app_config.name.startswith("aleksis.apps.") and not isinstance(app_config, AppConfig):
+    for app_config in filter(lambda c: c.name.startswith("aleksis."), app_configs):
+        if not isinstance(app_config, AppConfig):
             results.append(
                 Warning(
-                    "App config %s does not derive from aleksis.core.util.apps.AppConfig.",
+                    "App config %s does not derive from aleksis.core.util.apps.AppConfig." % app_config.name,
                     hint="Ensure the app uses the correct base class for all registry functionality to work.",
                     obj=app_config,
                     id="aleksis.core.W001",
