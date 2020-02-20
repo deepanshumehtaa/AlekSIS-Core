@@ -236,15 +236,13 @@ class Group(ExtensibleModel):
         return "%s (%s)" % (self.name, self.short_name)
 
 
-class Activity(models.Model):
+class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -254,7 +252,7 @@ class Activity(models.Model):
         verbose_name_plural = _("Activities")
 
 
-class Notification(models.Model):
+class Notification(ExtensibleModel):
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
 
@@ -264,8 +262,6 @@ class Notification(models.Model):
 
     read = models.BooleanField(default=False, verbose_name=_("Read"))
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -280,7 +276,7 @@ class Notification(models.Model):
         verbose_name_plural = _("Notifications")
 
 
-class Announcement(models.Model):
+class Announcement(ExtensibleModel):
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
     link = models.URLField(blank=True, verbose_name=_("Link"))
