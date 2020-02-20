@@ -330,6 +330,12 @@ class Announcement(ExtensibleModel):
             persons += recipient.persons
         return persons
 
+    def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
+        """ Get all recipients for this announcement with a special content type (provided through model) """
+
+        ct = ContentType.objects.get_for_model(obj)
+        return [r.recipient for r in self.recipients.filter(content_type=ct)]
+
     def __str__(self):
         return self.title
 

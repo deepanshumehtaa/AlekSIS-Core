@@ -293,17 +293,11 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
         announcement = get_object_or_404(Announcement, pk=pk)
         form = AnnouncementForm(
             request.POST or None,
-            instance=announcement,
-            initial={
-                "valid_from_date": announcement.valid_from.date(),
-                "valid_from_time": announcement.valid_from.time(),
-                "valid_until_date": announcement.valid_until.date(),
-                "valid_until_time": announcement.valid_until.time()
-            }
+            instance=announcement
         )
         context["mode"] = "edit"
     else:
-        form = AnnouncementForm(request.POST or None, initial=AnnouncementForm.get_initial())
+        form = AnnouncementForm(request.POST or None)
         context["mode"] = "add"
 
     if request.method == "POST":
@@ -316,3 +310,13 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
     context["form"] = form
 
     return render(request, "core/announcement/form.html", context)
+
+
+@admin_required
+def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == "POST":
+        announcement = get_object_or_404(Announcement, pk=pk)
+        announcement.delete()
+        messages.success(request, _("The announcement has been deleted."))
+
+    return redirect("announcements")

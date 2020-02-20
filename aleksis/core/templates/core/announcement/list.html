@@ -30,16 +30,24 @@
         <td>{{ announcement.valid_until }}</td>
         <td>{{ announcement.recipients.all|join:", " }}</td>
         <td>
-          <a class="btn-flat waves-effect waves-orange orange-text" href="{% url "edit_announcement" announcement.id %}">
+          <a class="btn-flat waves-effect waves-orange orange-text"
+             href="{% url "edit_announcement" announcement.id %}">
             <i class="material-icons left">edit</i>
             {% trans "Edit" %}
           </a>
+          <form action="{% url "delete_announcement" announcement.id %}" method="post">
+            {% csrf_token %}
+            <button class="btn-flat waves-effect waves-re red-text" type="submit">
+              <i class="material-icons left">delete</i>
+              {% trans "Delete" %}
+            </button>
+          </form>
         </td>
       </tr>
     {% empty %}
       <tr>
-        <td colspan="4">
-          <p class="flow-text">{% trans "There are no announcements." %}</p>
+        <td colspan="5">
+          <p class="flow-text center-align">{% trans "There are no announcements." %}</p>
         </td>
       </tr>
     {% endfor %}
