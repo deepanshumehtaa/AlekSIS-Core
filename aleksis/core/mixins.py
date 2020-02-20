@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Callable, Optional
 
 from django.contrib.contenttypes.models import ContentType
@@ -8,9 +9,34 @@ from easyaudit.models import CRUDEvent
 from jsonstore.fields import JSONField, JSONFieldMixin
 
 
-class ExtensibleModel(models.Model):
-    """ Allow injection of fields and code from AlekSIS apps to extend
-    model functionality.
+class CRUDMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    @property
+    def crud_events(self) -> QuerySet:
+        """Get all CRUD events connected to this object from easyaudit."""
+
+        content_type = ContentType.objects.get_for_model(self)
+
+        return CRUDEvent.objects.filter(
+            object_id=self.pk, content_type=content_type
+        ).select_related("user")
+
+
+class ExtensibleModel(CRUDMixin):
+    """ Base model for all objects in AlekSIS apps
+
+    This base model ensures all objects in AlekSIS apps fulfill the
+    following properties:
+
+     * crud_events property to retrieve easyaudit's CRUD event log
+     * created_at and updated_at properties based n CRUD events
+     * Allow injection of fields and code from AlekSIS apps to extend
+       model functionality.
+
+    Injection of fields and code
+    ============================
 
     After all apps have been loaded, the code in the `model_extensions` module
     in every app is executed. All code that shall be injected into a model goes there.
@@ -43,8 +69,48 @@ class ExtensibleModel(models.Model):
         - Dominik George <dominik.george@teckids.org>
     """
 
+    @property
+    def crud_event_create(self) -> Optional[CRUDEvent]:
+        """ Return create event of this object """
+        return self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
+
+    @property
+    def crud_event_update(self) -> Optional[CRUDEvent]:
+        """ Return last event of this object """
+        return self.crud_events.latest("datetime")
+
+    @property
+    def created_at(self) -> Optional[datetime]:
+        """ Determine creation timestamp from CRUD log """
+
+        if self.crud_event_create:
+            return self.crud_event_create.datetime
+
+    @property
+    def updated_at(self) -> Optional[datetime]:
+        """ Determine last timestamp from CRUD log """
+
+        if self.crud_event_update:
+            return self.crud_event_update.datetime
+
     extended_data = JSONField(default=dict, editable=False)
-    
+
+    @property
+    def created_by(self) -> Optional[models.Model]:
+        """ Determine user who created this object from CRUD log """
+
+        if self.crud_event_create:
+            return self.crud_event_create.user
+
+    @property
+    def updated_by(self) -> Optional[models.Model]:
+        """ Determine user who last updated this object from CRUD log """
+
+        if self.crud_event_update:
+            return self.crud_event_update.user
+
+    extended_data = JSONField(default=dict, editable=False)
+
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the attribute
@@ -101,17 +167,6 @@ class ExtensibleModel(models.Model):
     class Meta:
         abstract = True
 
-
-class CRUDMixin(models.Model):
-    class Meta:
-        abstract = True
-
-    @property
-    def crud_events(self) -> QuerySet:
-        """Get all CRUD events connected to this object from easyaudit."""
-
-        content_type = ContentType.objects.get_for_model(self)
-
-        return CRUDEvent.objects.filter(
-            object_id=self.pk, content_type=content_type
-        ).select_related("user")
+class PureDjangoModel(object):
+    """ No-op mixin to mark a model as deliberately not using ExtensibleModel """
+    pass
