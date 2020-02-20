@@ -230,7 +230,7 @@ class Group(ExtensibleModel):
 
     @property
     def announcement_recipients(self):
-        return list(self.members) + list(self.owners)
+        return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
@@ -280,6 +280,10 @@ class Notification(models.Model):
         verbose_name_plural = _("Notifications")
 
 
+def now_plus_one_day():
+    return timezone.datetime.now() + timedelta(days=1)
+
+
 class Announcement(models.Model):
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
@@ -290,12 +294,8 @@ class Announcement(models.Model):
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"),
-        default=lambda: timezone.datetime.now() + timedelta(days=1),
+        default=now_plus_one_day,
     )
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    recipient_id = models.PositiveIntegerField()
-    recipient = GenericForeignKey("content_type", "recipient_id")
 
     @classmethod
     def relevant_for(cls, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
@@ -310,7 +310,7 @@ class Announcement(models.Model):
             ct = ContentType.objects.get_for_model(obj)
             pks = [obj.pk]
 
-        return cls.objects.filter(content_type=ct, recipient_id__in=pks)
+        return cls.objects.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
 
     @classmethod
     def for_person_at_time(cls, person: Person, when: Optional[datetime] = None) -> List:
@@ -329,10 +329,34 @@ class Announcement(models.Model):
         return announcements_for_person
 
     @property
-    def recipient_persons(self) -> Union[models.QuerySet, Sequence[models.Model]]:
-        """ Return a list of Persons this announcement is relevant for
+    def recipient_persons(self) -> Sequence[Person]:
+        """ Return a list of Persons this announcement is relevant for """
 
-        If the recipient is a Person, return that object. If not, it returns the QUerySet
+        persons = []
+        for recipient in self.recipients.all():
+            persons += recipient.persons
+        return persons
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _("Announcement")
+        verbose_name_plural = _("Announcements")
+
+
+class AnnouncementRecipient(models.Model):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    recipient_id = models.PositiveIntegerField()
+    recipient = GenericForeignKey("content_type", "recipient_id")
+
+    @property
+    def persons(self) -> Sequence[Person]:
+        """ Return a list of Persons selected by this recipient object
+
+        If the recipient is a Person, return that object. If not, it returns the list
         from the announcement_recipients field on the target model.
         """
 
@@ -342,11 +366,11 @@ class Announcement(models.Model):
             return getattr(self.recipient, "announcement_recipients", [])
 
     def __str__(self):
-        return self.title
+        return str(self.recipient)
 
     class Meta:
-        verbose_name = _("Announcement")
-        verbose_name_plural = _("Announcements")
+        verbose_name = _("Announcement recipient")
+        verbose_name_plural = _("Announcement recipients")
 
 
 class DashboardWidget(PolymorphicModel):
