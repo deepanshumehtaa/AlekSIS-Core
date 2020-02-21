@@ -10,6 +10,12 @@ MENUS = {
             "validators": ["menu_generator.validators.is_anonymous"],
         },
         {
+            "name": _("Dashboard"),
+            "url": "index",
+            "icon": "home",
+            "validators": ["menu_generator.validators.is_authenticated"],
+        },
+        {
             "name": _("Account"),
             "url": "#",
             "icon": "person",

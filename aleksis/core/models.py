@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
@@ -14,7 +14,8 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel
+from .mixins import ExtensibleModel, PureDjangoModel
+from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
 
 from constance import config
@@ -236,15 +237,13 @@ class Group(ExtensibleModel):
         return "%s (%s)" % (self.name, self.short_name)
 
 
-class Activity(models.Model):
+class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -254,7 +253,7 @@ class Activity(models.Model):
         verbose_name_plural = _("Activities")
 
 
-class Notification(models.Model):
+class Notification(ExtensibleModel):
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
 
@@ -264,8 +263,6 @@ class Notification(models.Model):
 
     read = models.BooleanField(default=False, verbose_name=_("Read"))
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -280,11 +277,7 @@ class Notification(models.Model):
         verbose_name_plural = _("Notifications")
 
 
-def now_plus_one_day():
-    return timezone.datetime.now() + timedelta(days=1)
-
-
-class Announcement(models.Model):
+class Announcement(ExtensibleModel):
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
     link = models.URLField(blank=True, verbose_name=_("Link"))
@@ -294,7 +287,7 @@ class Announcement(models.Model):
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"),
-        default=now_plus_one_day,
+        default=now_tomorrow,
     )
 
     @classmethod
@@ -373,7 +366,7 @@ class AnnouncementRecipient(models.Model):
         verbose_name_plural = _("Announcement recipients")
 
 
-class DashboardWidget(PolymorphicModel):
+class DashboardWidget(PolymorphicModel, PureDjangoModel):
     """ Base class for dashboard widgets on the index page
 
     To implement a widget, add a model that subclasses DashboardWidget, sets the template

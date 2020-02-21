@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import os
 import pkgutil
 from importlib import import_module
@@ -7,6 +8,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.utils import timezone
 from django.utils.functional import lazy
 
 
@@ -148,3 +150,8 @@ def school_information_processor(request: HttpRequest) -> dict:
     return {
         "SCHOOL": School.get_default,
     }
+
+
+def now_tomorrow() -> datetime:
+    """ Return current time tomorrow """
+    return timezone.datetime.now() + timedelta(days=1)
