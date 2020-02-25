@@ -338,7 +338,7 @@ class Announcement(ExtensibleModel):
         verbose_name_plural = _("Announcements")
 
 
-class AnnouncementRecipient(models.Model):
+class AnnouncementRecipient(ExtensibleModel):
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
