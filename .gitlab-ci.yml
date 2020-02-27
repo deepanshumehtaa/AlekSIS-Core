@@ -59,7 +59,7 @@ pages:
     - cp -r .tox/screenshots/firefox docs/screenshots
   script:
     - tox -e docs -- BUILDDIR=../public/docs
-    - echo $LOCALE
+    - locale
   artifacts:
     paths:
     - public/
