@@ -365,8 +365,8 @@ CONSTANCE_ADDITIONAL_FIELDS = {
 }
 CONSTANCE_CONFIG = {
     "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
-    "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
+    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour")),
+    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour")),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
     "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
