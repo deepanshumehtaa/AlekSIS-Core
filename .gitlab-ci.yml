@@ -38,6 +38,8 @@ test:
       - .tox/screenshots
     reports:
       junit: .tox/junit.xml
+  only:
+    - master
 
 lint:
   stage: test
@@ -52,19 +54,18 @@ build_dist:
   artifacts:
     paths:
       - dist/
+  only:
+    - master
 
 pages:
   stage: deploy
   before_script:
     - cp -r .tox/screenshots/firefox docs/screenshots
   script:
-    - tox -e docs -- BUILDDIR=../public/docs
     - locale
   artifacts:
     paths:
     - public/
-  only:
-    - master
 
 build_docker:
   stage: build
