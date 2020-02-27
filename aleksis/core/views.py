@@ -16,7 +16,7 @@ from .forms import (
     EditTermForm,
     PersonsAccountsFormSet,
 )
-from .models import Activity, Group, Notification, Person, School, DashboardWidget
+from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 
@@ -32,6 +32,9 @@ def index(request: HttpRequest) -> HttpResponse:
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
+
+    announcements = Announcement.for_person_at_time(request.user.person)
+    context["announcements"] = announcements
 
     widgets = DashboardWidget.objects.filter(active=True)
     media = DashboardWidget.get_media(widgets)

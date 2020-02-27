@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from typing import Optional, Iterable, Union, Sequence
+from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -8,12 +8,14 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel
+from .mixins import ExtensibleModel, PureDjangoModel
+from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
 
 from constance import config
@@ -229,21 +231,19 @@ class Group(ExtensibleModel):
 
     @property
     def announcement_recipients(self):
-        return list(self.members) + list(self.owners)
+        return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
 
 
-class Activity(models.Model):
+class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
 
     app = models.CharField(max_length=100, verbose_name=_("Application"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -253,7 +253,7 @@ class Activity(models.Model):
         verbose_name_plural = _("Activities")
 
 
-class Notification(models.Model):
+class Notification(ExtensibleModel):
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
 
@@ -263,8 +263,6 @@ class Notification(models.Model):
 
     read = models.BooleanField(default=False, verbose_name=_("Read"))
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
-
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
 
     def __str__(self):
         return self.title
@@ -279,17 +277,18 @@ class Notification(models.Model):
         verbose_name_plural = _("Notifications")
 
 
-class Announcement(models.Model):
+class Announcement(ExtensibleModel):
     title = models.CharField(max_length=150, verbose_name=_("Title"))
-    description = models.TextField(max_length=500, verbose_name=_("Description"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
     link = models.URLField(blank=True, verbose_name=_("Link"))
 
-    valid_from = models.DateTimeField(verbose_name=_("Date and time from when to show"), default=datetime.now)
-    valid_until = models.DateTimeField(verbose_name=_("Date and time until when to show"), null=True, blank=True)
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    recipient_id = models.PositiveIntegerField()
-    recipient = GenericForeignKey("content_type", "recipient_id")
+    valid_from = models.DateTimeField(
+        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+    )
+    valid_until = models.DateTimeField(
+        verbose_name=_("Date and time until when to show"),
+        default=now_tomorrow,
+    )
 
     @classmethod
     def relevant_for(cls, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
@@ -304,13 +303,53 @@ class Announcement(models.Model):
             ct = ContentType.objects.get_for_model(obj)
             pks = [obj.pk]
 
-        return cls.objects.filter(content_type=ct, recipient_id__in=pks)
+        return cls.objects.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
+
+    @classmethod
+    def for_person_at_time(cls, person: Person, when: Optional[datetime] = None) -> List:
+        """ Get all announcements for one person at a certain time """
+        when = when or timezone.datetime.now()
+
+        # Get announcements by time
+        announcements = cls.objects.filter(valid_from__lte=when, valid_until__gte=when)
+
+        # Filter by person
+        announcements_for_person = []
+        for announcement in announcements:
+            if person in announcement.recipient_persons:
+                announcements_for_person.append(announcement)
+
+        return announcements_for_person
 
     @property
-    def recipient_persons(self) -> Union[models.QuerySet, Sequence[models.Model]]:
-        """ Return a list of Persons this announcement is relevant for
+    def recipient_persons(self) -> Sequence[Person]:
+        """ Return a list of Persons this announcement is relevant for """
 
-        If the recipient is a Person, return that object. If not, it returns the QUerySet
+        persons = []
+        for recipient in self.recipients.all():
+            persons += recipient.persons
+        return persons
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _("Announcement")
+        verbose_name_plural = _("Announcements")
+
+
+class AnnouncementRecipient(ExtensibleModel):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    recipient_id = models.PositiveIntegerField()
+    recipient = GenericForeignKey("content_type", "recipient_id")
+
+    @property
+    def persons(self) -> Sequence[Person]:
+        """ Return a list of Persons selected by this recipient object
+
+        If the recipient is a Person, return that object. If not, it returns the list
         from the announcement_recipients field on the target model.
         """
 
@@ -319,14 +358,15 @@ class Announcement(models.Model):
         else:
             return getattr(self.recipient, "announcement_recipients", [])
 
-    def save(self, **kwargs):
-        if not self.valid_until:
-            self.valid_until = self.valid_from
+    def __str__(self):
+        return str(self.recipient)
 
-        super().save(**kwargs)
+    class Meta:
+        verbose_name = _("Announcement recipient")
+        verbose_name_plural = _("Announcement recipients")
 
 
-class DashboardWidget(PolymorphicModel):
+class DashboardWidget(PolymorphicModel, PureDjangoModel):
     """ Base class for dashboard widgets on the index page
 
     To implement a widget, add a model that subclasses DashboardWidget, sets the template
