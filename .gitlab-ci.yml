@@ -46,6 +46,8 @@ lint:
   script:
     - tox -e lint,security
   allow_failure: true
+  only:
+    - master
 
 build_dist:
   stage: build
