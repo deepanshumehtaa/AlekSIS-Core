@@ -64,7 +64,8 @@ pages:
   before_script:
     - cp -r .tox/screenshots/firefox docs/screenshots
   script:
-    - locale
+    - export LC_ALL=en_GB.utf8
+    - tox -e docs -- BUILDDIR=../public/docs
   artifacts:
     paths:
     - public/
