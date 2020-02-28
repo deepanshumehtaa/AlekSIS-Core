@@ -548,6 +548,14 @@ six = "*"
 
 [[package]]
 category = "main"
+description = "Material Design For Django Administration"
+name = "django-material-admin"
+optional = false
+python-versions = "*"
+version = "1.6.44"
+
+[[package]]
+category = "main"
 description = "A straightforward menu generator for Django"
 name = "django-menu-generator"
 optional = false
@@ -1983,7 +1991,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "064f45a5a73e6526a9f0f809bf1646863e42b277135b92daa0a10605bf1db409"
+content-hash = "ab7040ad12bf67d9fe3b7df039731578dcd433ed720fec499f216160c646adf5"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2189,6 +2197,10 @@ django-maintenance-mode = [
 django-material = [
     {file = "django-material-1.6.3.tar.gz", hash = "sha256:f8758afe1beabc16a3c54f5437c7fea15946b7d068eedd89c97d57a363793950"},
     {file = "django_material-1.6.3-py2.py3-none-any.whl", hash = "sha256:502dc88c2f61f190fdc401666e83b47da00cbda98477af6ed8b7d43944ce6407"},
+]
+django-material-admin = [
+    {file = "django-material-admin-1.6.44.tar.gz", hash = "sha256:45fa8a4ac65d2b2f76927b071d53cb6caa9c13abced37084a0beeb5e5b8e3bf6"},
+    {file = "django_material_admin-1.6.44-py3-none-any.whl", hash = "sha256:690a106a0f27d77920babd0de68be7b79f4397cabb20a5238fa87c7172157696"},
 ]
 django-menu-generator = [
     {file = "django-menu-generator-1.0.4.tar.gz", hash = "sha256:ce71a5055c16933c8aff64fb36c21e5cf8b6d505733aceed1252f8b99369a378"},

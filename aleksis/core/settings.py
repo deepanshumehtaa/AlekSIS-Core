@@ -45,7 +45,8 @@ ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
 # Application definition
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "material.admin",
+    "material.admin.default",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
