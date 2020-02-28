@@ -510,3 +510,12 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+MATERIAL_ADMIN_SITE = {
+    'HEADER':  _('AlekSIS Backend Admin'),
+    'MAIN_BG_COLOR': lazy_config("COLOUR_PRIMARY"),
+    'MAIN_HOVER_COLOR': lazy_config("COLOUR_SECONDARY"),
+    'PROFILE_PICTURE': "img/aleksis-logo.svg",
+    'LOGIN_LOGO': "img/aleksis-logo.svg",
+    'SHOW_THEMES': False,
+}
