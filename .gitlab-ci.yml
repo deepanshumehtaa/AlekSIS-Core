@@ -38,12 +38,16 @@ test:
       - .tox/screenshots
     reports:
       junit: .tox/junit.xml
+  only:
+    - master
 
 lint:
   stage: test
   script:
     - tox -e lint,security
   allow_failure: true
+  only:
+    - master
 
 build_dist:
   stage: build
@@ -69,7 +73,7 @@ pages:
 build_docker:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor:v0.17.0
+    name: gcr.io/kaniko-project/executor:0.17.1
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" >/kaniko/.docker/config.json
