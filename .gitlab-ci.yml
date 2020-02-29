@@ -81,13 +81,13 @@ build_docker:
        --context $CI_PROJECT_DIR
        --dockerfile $CI_PROJECT_DIR/Dockerfile
        --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-       --cache=true
+       --cache=false
        --cleanup
     - /kaniko/executor
        --context $CI_PROJECT_DIR/docker/nginx
        --dockerfile $CI_PROJECT_DIR/docker/nginx/Dockerfile
        --destination $CI_REGISTRY_IMAGE/nginx:$CI_COMMIT_REF_NAME
-       --cache=true
+       --cache=false
        --cleanup
   only:
     - master
