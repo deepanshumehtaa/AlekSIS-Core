@@ -73,7 +73,7 @@ pages:
 build_docker:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor:0.17.1
+    name: gcr.io/kaniko-project/executor:v0.17.1
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" >/kaniko/.docker/config.json
