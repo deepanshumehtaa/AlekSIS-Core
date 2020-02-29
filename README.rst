@@ -1,5 +1,5 @@
-AlekSIS (School Information System) — Core
-==========================================
+AlekSIS — All-libre extensible kit for school information systems
+=================================================================
 
 Warning
 -------
