@@ -24,8 +24,8 @@ django.setup()
 # -- Project information -----------------------------------------------------
 
 project = 'AlekSIS'
-copyright = '2019, 2020, AlekSIS team @ Teckids e.V.'
-author = 'AlekSIS team @ Teckids e.V.'
+copyright = '2019, 2020, AlekSIS team'
+author = 'AlekSIS team'
 
 # The short X.Y version
 version = '2.0'
@@ -138,7 +138,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'AlekSIS.tex', 'AlekSIS Documentation',
-     'AlekSIS team @ Teckids e.V.', 'manual'),
+     'AlekSIS team', 'manual'),
 ]
 
 
