@@ -8,6 +8,10 @@
   color: $primary-color !important;
 }
 
+rect#background {
+  fill: $primary-color !important;
+}
+
 .waves-effect.waves-primary .waves-ripple {
   background-color: lighten($primary-color, 5%);
 }
@@ -64,6 +68,11 @@ header, main, footer {
 
 .brand-logo {
   margin-left: 10px;
+}
+
+#sidenav-logo {
+  height: 70px;
+  width:auto;
 }
 
 @media only screen and (max-width: 993px) {

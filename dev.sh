@@ -53,7 +53,7 @@ case "$1" in
     "gource")
 	for d in . apps/official/*; do
 		gource --output-custom-log - "$d"
-	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-logo.png -
+	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-icon.png -
 	exit
 	;;
 
