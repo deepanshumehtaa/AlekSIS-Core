@@ -66,6 +66,7 @@ django-celery-email = {version="^3.0.0", optional=true}
 django-jsonstore = "^0.4.1"
 django-polymorphic = "^2.1.2"
 django-otp = "0.7.5"
+django-colorfield = "^0.2.1"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

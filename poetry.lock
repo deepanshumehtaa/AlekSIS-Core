@@ -391,6 +391,14 @@ django-js-asset = ">=1.2.2"
 
 [[package]]
 category = "main"
+description = "simple color field for your models with a nice color-picker in the admin-interface."
+name = "django-colorfield"
+optional = false
+python-versions = "*"
+version = "0.2.1"
+
+[[package]]
+category = "main"
 description = "Django live settings with pluggable backends, including Redis."
 name = "django-constance"
 optional = false
@@ -1978,7 +1986,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "9484e75acdde0cb26c243a9408ac2d5b5ea76c92ba925282bfc9db63218cae0c"
+content-hash = "1e88a08a068b90ed69f3436a378a03dcabf458a98913ab58b5fd46f3a85d0650"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2133,6 +2141,10 @@ django-celery-results = [
 django-ckeditor = [
     {file = "django-ckeditor-5.9.0.tar.gz", hash = "sha256:e4d112851a72c5bf8b586e1c674d34084cab16d28f2553ad15cc770d1e9639c7"},
     {file = "django_ckeditor-5.9.0-py2.py3-none-any.whl", hash = "sha256:71c3c7bb46b0cbfb9712ef64af0d2a406eab233f44ecd7c42c24bdfa39ae3bde"},
+]
+django-colorfield = [
+    {file = "django-colorfield-0.2.1.tar.gz", hash = "sha256:2a20722384a1703ff9b91a395de6e2649a8786161f8baff4d21998ba839f9017"},
+    {file = "django_colorfield-0.2.1-py2-none-any.whl", hash = "sha256:c22c9cdae8608432adcde09d6e9e05dd4c498207e1cda0ab8fba0ab3ceb85dcd"},
 ]
 django-constance = [
     {file = "django-constance-2.6.0.tar.gz", hash = "sha256:12d827f9d5552ee39884fb6fb356f231f32b1ab8958acc715e3d1a6ecf913653"},
