@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     "pwa",
     "ckeditor",
     "django_js_reverse",
+    "colorfield",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -362,11 +363,14 @@ CONSTANCE_ADDITIONAL_FIELDS = {
         'widget': 'django.forms.Select',
         "choices":  i18n_day_name_choices_lazy
     }],
+    "colour_field": ["django.forms.CharField", {
+        "widget": "colorfield.widgets.ColorWidget"
+    }],
 }
 CONSTANCE_CONFIG = {
     "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour")),
-    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour")),
+    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
+    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
     "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
