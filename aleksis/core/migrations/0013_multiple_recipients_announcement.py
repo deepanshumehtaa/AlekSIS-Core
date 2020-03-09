@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='announcement',
             name='valid_until',
-            field=models.DateTimeField(default=aleksis.core.models.now_plus_one_day, verbose_name='Date and time until when to show'),
+            field=models.DateTimeField(default=aleksis.core.models.now_tomorrow, verbose_name='Date and time until when to show'),
         ),
         migrations.CreateModel(
             name='AnnouncementRecipient',
