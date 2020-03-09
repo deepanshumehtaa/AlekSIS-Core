@@ -1,10 +1,17 @@
+from datetime import time
+from typing import Optional
+
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
+from material import Layout, Fieldset, Row
 
-from .models import Group, Person, School, SchoolTerm
+from .models import Group, Person, School, SchoolTerm, Announcement, AnnouncementRecipient
 
 
 class PersonAccountForm(forms.ModelForm):
@@ -132,3 +139,105 @@ class EditTermForm(forms.ModelForm):
     class Meta:
         model = SchoolTerm
         fields = ["caption", "date_start", "date_end"]
+
+
+class AnnouncementForm(forms.ModelForm):
+    valid_from = forms.DateTimeField(required=False)
+    valid_until = forms.DateTimeField(required=False)
+
+    valid_from_date = forms.DateField(label=_("Date"))
+    valid_from_time = forms.TimeField(label=_("Time"))
+
+    valid_until_date = forms.DateField(label=_("Date"))
+    valid_until_time = forms.TimeField(label=_("Time"))
+
+    persons = forms.ModelMultipleChoiceField(Person.objects.all(), label=_("Persons"), required=False)
+    groups = forms.ModelMultipleChoiceField(Group.objects.all(), label=_("Groups"), required=False)
+
+    layout = Layout(
+        Fieldset(
+            _("From when until when should the announcement be displayed?"),
+            Row("valid_from_date", "valid_from_time", "valid_until_date", "valid_until_time"),
+        ),
+        Fieldset(_("Who should see the announcement?"), Row("groups", "persons")),
+        Fieldset(_("Write your announcement:"), "title", "description"),
+    )
+
+    def __init__(self, *args, **kwargs):
+        if "instance" not in kwargs:
+            kwargs["initial"] = {
+                "valid_from_date": timezone.datetime.now(),
+                "valid_from_time": time(0, 0),
+                "valid_until_date": timezone.datetime.now(),
+                "valid_until_time": time(23, 59),
+            }
+        else:
+            announcement = kwargs["instance"]
+
+            # Fill special fields from given announcement instance
+            kwargs["initial"] = {
+                "valid_from_date": announcement.valid_from.date(),
+                "valid_from_time": announcement.valid_from.time(),
+                "valid_until_date": announcement.valid_until.date(),
+                "valid_until_time": announcement.valid_until.time(),
+                "groups": announcement.get_recipients_for_model(Group),
+                "persons": announcement.get_recipients_for_model(Person),
+            }
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        data = super().clean()
+
+        # Check date and time
+        from_date = data["valid_from_date"]
+        from_time = data["valid_from_time"]
+        until_date = data["valid_until_date"]
+        until_time = data["valid_until_time"]
+
+        valid_from = timezone.datetime.combine(from_date, from_time)
+        valid_until = timezone.datetime.combine(until_date, until_time)
+
+        if valid_until < timezone.datetime.now():
+            raise ValidationError(
+                _("You are not allowed to create announcements which are only valid in the past.")
+            )
+        elif valid_from > valid_until:
+            raise ValidationError(
+                _("The from date and time must be earlier then the until date and time.")
+            )
+
+        data["valid_from"] = valid_from
+        data["valid_until"] = valid_until
+
+        # Check recipients
+        if "groups" not in data and "persons" not in data:
+            raise ValidationError(_("You need at least one recipient."))
+
+        recipients = []
+        recipients += data.get("groups", [])
+        recipients += data.get("persons", [])
+
+        data["recipients"] = recipients
+
+        return data
+
+    def save(self, _=False):
+        # Save announcement
+        a = self.instance if self.instance is not None else Announcement()
+        a.valid_from = self.cleaned_data["valid_from"]
+        a.valid_until = self.cleaned_data["valid_until"]
+        a.title = self.cleaned_data["title"]
+        a.description = self.cleaned_data["description"]
+        a.save()
+
+        # Save recipients
+        a.recipients.all().delete()
+        for recipient in self.cleaned_data["recipients"]:
+            a.recipients.create(recipient=recipient)
+        a.save()
+
+        return a
+
+    class Meta:
+        model = Announcement
+        exclude = []
