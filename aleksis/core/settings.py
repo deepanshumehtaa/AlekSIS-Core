@@ -380,7 +380,7 @@ CONSTANCE_CONFIG = {
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE",),
+    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
