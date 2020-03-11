@@ -369,7 +369,7 @@ CONSTANCE_ADDITIONAL_FIELDS = {
 }
 CONSTANCE_CONFIG = {
     "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "SITE_DESCRIPTION": (_("AlekSIS is a web-based school information system (SIS) which can be used to manage and/or publish organisational data of educational institutions."), _("Site description")),
+    "SITE_DESCRIPTION": ("The Free School Information System", _("Site description")),
     "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
     "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
@@ -380,7 +380,7 @@ CONSTANCE_CONFIG = {
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE",),
+    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
