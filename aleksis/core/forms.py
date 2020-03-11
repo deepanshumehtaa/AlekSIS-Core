@@ -5,13 +5,63 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.forms.models import ModelFormMetaclass
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from material import Layout, Fieldset, Row
+from material.base import LayoutNode
 
 from .models import Group, Person, School, SchoolTerm, Announcement, AnnouncementRecipient
+
+
+class ExtensibleFormMetaclass(ModelFormMetaclass):
+     def __new__(mcs, name, bases, dct):
+        x = super().__new__(mcs, name, bases, dct)
+
+        if hasattr(x, "layout"):
+            base_layout = x.layout.elements
+        else:
+            base_layout = []
+
+        x.base_layout = base_layout
+        x.layout = Layout(*base_layout)
+
+        return x
+
+
+class ExtensibleForm(forms.ModelForm, metaclass=ExtensibleFormMetaclass):
+    """ Base model for extensible forms
+
+    This mixin adds functionality which allows
+    - apps to add layout nodes to the layout used by django-material
+
+    Add layout nodes
+    ================
+
+    ```
+    from material import Fieldset
+
+    from aleksis.core.forms import ExampleForm
+
+    node = Fieldset("field_name")
+    ExampleForm.add_node_to_layout(node)
+    ```
+
+    """
+
+    @classmethod
+    def add_node_to_layout(cls, node: LayoutNode):
+        """
+        Add a node to `layout` attribute
+
+        :param node: django-material layout node (Fieldset, Row etc.)
+        :type node: LayoutNode
+        """
+
+        cls.base_layout.append(node)
+        cls.layout = Layout(*cls.base_layout)
 
 
 class PersonAccountForm(forms.ModelForm):
