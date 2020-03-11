@@ -191,7 +191,7 @@ class EditTermForm(forms.ModelForm):
         fields = ["caption", "date_start", "date_end"]
 
 
-class AnnouncementForm(forms.ModelForm):
+class AnnouncementForm(ExtensibleForm):
     valid_from = forms.DateTimeField(required=False)
     valid_until = forms.DateTimeField(required=False)
 
