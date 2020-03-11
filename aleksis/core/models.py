@@ -277,21 +277,8 @@ class Notification(ExtensibleModel):
         verbose_name_plural = _("Notifications")
 
 
-class Announcement(ExtensibleModel):
-    title = models.CharField(max_length=150, verbose_name=_("Title"))
-    description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
-    link = models.URLField(blank=True, verbose_name=_("Link"))
-
-    valid_from = models.DateTimeField(
-        verbose_name=_("Date and time from when to show"), default=timezone.now
-    )
-    valid_until = models.DateTimeField(
-        verbose_name=_("Date and time until when to show"),
-        default=now_tomorrow,
-    )
-
-    @classmethod
-    def relevant_for(cls, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
+class AnnouncementQuerySet(models.QuerySet):
+    def relevant_for(self, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
         """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
         or a set of models in a QuerySet.
         """
@@ -303,15 +290,33 @@ class Announcement(ExtensibleModel):
             ct = ContentType.objects.get_for_model(obj)
             pks = [obj.pk]
 
-        return cls.objects.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
+        return self.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
 
-    @classmethod
-    def for_person_at_time(cls, person: Person, when: Optional[datetime] = None) -> List:
-        """ Get all announcements for one person at a certain time """
-        when = when or timezone.now()
+    def at_time(self,when: Optional[datetime] = None ) -> models.QuerySet:
+        """ Get all announcements at a certain time """
+
+        when = when or timezone.datetime.now()
 
         # Get announcements by time
-        announcements = cls.objects.filter(valid_from__lte=when, valid_until__gte=when)
+        announcements = self.filter(valid_from__lte=when, valid_until__gte=when)
+
+        return announcements
+
+    def at_date(self,when: Optional[date] = None) -> models.QuerySet:
+        """ Get all announcements at a certain date """
+
+        when = when or timezone.datetime.now().date()
+
+        # Get announcements by time
+        announcements = self.filter(valid_from__date__lte=when, valid_until__date__gte=when)
+
+        return announcements
+
+    def for_person_at_time(self, person: Person, when: Optional[datetime] = None) -> List:
+        """ Get all announcements for one person at a certain time """
+
+        # Get announcements by time
+        announcements = self.at_time(when)
 
         # Filter by person
         announcements_for_person = []
@@ -320,6 +325,22 @@ class Announcement(ExtensibleModel):
                 announcements_for_person.append(announcement)
 
         return announcements_for_person
+
+
+class Announcement(ExtensibleModel):
+    objects = models.Manager.from_queryset(AnnouncementQuerySet)()
+
+    title = models.CharField(max_length=150, verbose_name=_("Title"))
+    description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
+    link = models.URLField(blank=True, verbose_name=_("Link"))
+
+    valid_from = models.DateTimeField(
+        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+    )
+    valid_until = models.DateTimeField(
+        verbose_name=_("Date and time until when to show"),
+        default=now_tomorrow,
+    )
 
     @property
     def recipient_persons(self) -> Sequence[Person]:
