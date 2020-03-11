@@ -18,6 +18,13 @@
       {% endif %}
 
       <i class="material-icons left">announcement</i>
+
+      {% if show_recipients and announcement.recipients %}
+        <p>
+          {{ announcement.recipients.all|join:", " }}:
+        </p>
+      {% endif %}
+
       <p>
         <strong>{{ announcement.title }}</strong> <br/>
         {{ announcement.description }}
