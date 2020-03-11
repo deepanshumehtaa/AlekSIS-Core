@@ -166,9 +166,9 @@ class AnnouncementForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if "instance" not in kwargs:
             kwargs["initial"] = {
-                "valid_from_date": timezone.datetime.now(),
+                "valid_from_date": timezone.now(),
                 "valid_from_time": time(0, 0),
-                "valid_until_date": timezone.datetime.now(),
+                "valid_until_date": timezone.now(),
                 "valid_until_time": time(23, 59),
             }
         else:
@@ -197,7 +197,7 @@ class AnnouncementForm(forms.ModelForm):
         valid_from = timezone.datetime.combine(from_date, from_time)
         valid_until = timezone.datetime.combine(until_date, until_time)
 
-        if valid_until < timezone.datetime.now():
+        if valid_until < timezone.now():
             raise ValidationError(
                 _("You are not allowed to create announcements which are only valid in the past.")
             )

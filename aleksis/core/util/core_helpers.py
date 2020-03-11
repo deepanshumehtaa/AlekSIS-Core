@@ -154,4 +154,4 @@ def school_information_processor(request: HttpRequest) -> dict:
 
 def now_tomorrow() -> datetime:
     """ Return current time tomorrow """
-    return timezone.datetime.now() + timedelta(days=1)
+    return timezone.now() + timedelta(days=1)

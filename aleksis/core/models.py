@@ -283,7 +283,7 @@ class Announcement(ExtensibleModel):
     link = models.URLField(blank=True, verbose_name=_("Link"))
 
     valid_from = models.DateTimeField(
-        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+        verbose_name=_("Date and time from when to show"), default=timezone.now
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"),
@@ -308,7 +308,7 @@ class Announcement(ExtensibleModel):
     @classmethod
     def for_person_at_time(cls, person: Person, when: Optional[datetime] = None) -> List:
         """ Get all announcements for one person at a certain time """
-        when = when or timezone.datetime.now()
+        when = when or timezone.now()
 
         # Get announcements by time
         announcements = cls.objects.filter(valid_from__lte=when, valid_until__gte=when)
