@@ -174,7 +174,7 @@ class PureDjangoModel(object):
     pass
 
 
-class ExtensibleFormMetaclass(ModelFormMetaclass):
+class _ExtensibleFormMetaclass(ModelFormMetaclass):
     def __new__(mcs, name, bases, dct):
         x = super().__new__(mcs, name, bases, dct)
 
@@ -189,7 +189,7 @@ class ExtensibleFormMetaclass(ModelFormMetaclass):
         return x
 
 
-class ExtensibleForm(ModelForm, metaclass=ExtensibleFormMetaclass):
+class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
     """ Base model for extensible forms
 
     This mixin adds functionality which allows
