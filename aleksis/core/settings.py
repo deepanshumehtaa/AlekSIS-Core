@@ -303,6 +303,7 @@ ANY_JS = {
 
 merge_app_settings("ANY_JS", ANY_JS, True)
 
+SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
