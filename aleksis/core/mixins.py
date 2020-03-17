@@ -4,9 +4,11 @@ from typing import Any, Callable, Optional
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
+from django.forms.models import ModelFormMetaclass, ModelForm
 
 from easyaudit.models import CRUDEvent
 from jsonstore.fields import JSONField, JSONFieldMixin
+from material.base import LayoutNode, Layout
 
 
 class CRUDMixin(models.Model):
@@ -176,3 +178,51 @@ class ExtensibleModel(CRUDMixin):
 class PureDjangoModel(object):
     """ No-op mixin to mark a model as deliberately not using ExtensibleModel """
     pass
+
+
+class _ExtensibleFormMetaclass(ModelFormMetaclass):
+    def __new__(mcs, name, bases, dct):
+        x = super().__new__(mcs, name, bases, dct)
+
+        if hasattr(x, "layout"):
+            base_layout = x.layout.elements
+        else:
+            base_layout = []
+
+        x.base_layout = base_layout
+        x.layout = Layout(*base_layout)
+
+        return x
+
+
+class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
+    """ Base model for extensible forms
+
+    This mixin adds functionality which allows
+    - apps to add layout nodes to the layout used by django-material
+
+    Add layout nodes
+    ================
+
+    ```
+    from material import Fieldset
+
+    from aleksis.core.forms import ExampleForm
+
+    node = Fieldset("field_name")
+    ExampleForm.add_node_to_layout(node)
+    ```
+
+    """
+
+    @classmethod
+    def add_node_to_layout(cls, node: LayoutNode):
+        """
+        Add a node to `layout` attribute
+
+        :param node: django-material layout node (Fieldset, Row etc.)
+        :type node: LayoutNode
+        """
+
+        cls.base_layout.append(node)
+        cls.layout = Layout(*cls.base_layout)
