@@ -11,7 +11,7 @@
             {% endblocktrans %}
           {% else %}
             {% blocktrans with from=announcement.valid_from|naturalday until=announcement.valid_until|naturalday %}
-              Valid for {{ from }} – {{ until }}
+              Valid from {{ from }} until {{ until }}
             {% endblocktrans %}
           {% endif %}
         </em>
