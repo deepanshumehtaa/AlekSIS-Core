@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import time, datetime
 from typing import Optional
 
 from django import forms
@@ -167,9 +167,9 @@ class AnnouncementForm(ExtensibleForm):
     def __init__(self, *args, **kwargs):
         if "instance" not in kwargs:
             kwargs["initial"] = {
-                "valid_from_date": timezone.now(),
+                "valid_from_date": datetime.now(),
                 "valid_from_time": time(0, 0),
-                "valid_until_date": timezone.now(),
+                "valid_until_date": datetime.now(),
                 "valid_until_time": time(23, 59),
             }
         else:
@@ -195,10 +195,10 @@ class AnnouncementForm(ExtensibleForm):
         until_date = data["valid_until_date"]
         until_time = data["valid_until_time"]
 
-        valid_from = timezone.datetime.combine(from_date, from_time)
-        valid_until = timezone.datetime.combine(until_date, until_time)
+        valid_from = datetime.combine(from_date, from_time)
+        valid_until = datetime.combine(until_date, until_time)
 
-        if valid_until < timezone.now():
+        if valid_until < datetime.now():
             raise ValidationError(
                 _("You are not allowed to create announcements which are only valid in the past.")
             )
