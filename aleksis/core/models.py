@@ -312,6 +312,14 @@ class AnnouncementQuerySet(models.QuerySet):
 
         return announcements
 
+    def in_days(self, start: date, stop: date) -> models.QuerySet:
+        """ Get all announcements valid for a set of days """
+
+        # Get announcements
+        announcements = self.filter(valid_from__date__lte=stop, valid_until__date__gte=start)
+
+        return announcements
+
     def for_person(self, person: Person) -> List:
         """ Get all announcements for one person """
 
