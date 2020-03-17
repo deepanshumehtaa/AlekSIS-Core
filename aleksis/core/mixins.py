@@ -144,7 +144,7 @@ class ExtensibleModel(CRUDMixin):
         cls._safe_add(func, func.__name__)
 
     @classmethod
-    def classmethod(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+    def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """ Adds the passed callable as a classmethod. """
 
         cls._safe_add(classmethod(func), func.__name__)
