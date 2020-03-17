@@ -34,7 +34,7 @@ def index(request: HttpRequest) -> HttpResponse:
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.for_person_at_time(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(request.user.person)
     context["announcements"] = announcements
 
     widgets = DashboardWidget.objects.filter(active=True)

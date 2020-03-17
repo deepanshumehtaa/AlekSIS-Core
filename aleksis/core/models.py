@@ -312,15 +312,12 @@ class AnnouncementQuerySet(models.QuerySet):
 
         return announcements
 
-    def for_person_at_time(self, person: Person, when: Optional[datetime] = None) -> List:
-        """ Get all announcements for one person at a certain time """
-
-        # Get announcements by time
-        announcements = self.at_time(when)
+    def for_person(self, person: Person) -> List:
+        """ Get all announcements for one person """
 
         # Filter by person
         announcements_for_person = []
-        for announcement in announcements:
+        for announcement in self:
             if person in announcement.recipient_persons:
                 announcements_for_person.append(announcement)
 
