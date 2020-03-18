@@ -144,6 +144,12 @@ class ExtensibleModel(CRUDMixin):
         cls._safe_add(func, func.__name__)
 
     @classmethod
+    def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+        """ Adds the passed callable as a classmethod. """
+
+        cls._safe_add(classmethod(func), func.__name__)
+
+    @classmethod
     def field(cls, **kwargs) -> None:
         """ Adds the passed jsonstore field. Must be one of the fields in
         django-jsonstore.
