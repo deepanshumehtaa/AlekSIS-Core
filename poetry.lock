@@ -320,17 +320,6 @@ python-ldap = ">=3.1"
 
 [[package]]
 category = "main"
-description = "Bootstrap support for Django projects"
-name = "django-bootstrap4"
-optional = false
-python-versions = "*"
-version = "1.1.1"
-
-[package.dependencies]
-beautifulsoup4 = "*"
-
-[[package]]
-category = "main"
 description = "Bulk update using one query over Django ORM."
 name = "django-bulk-update"
 optional = false
@@ -2117,10 +2106,6 @@ django-appconf = [
 django-auth-ldap = [
     {file = "django-auth-ldap-2.1.0.tar.gz", hash = "sha256:5f48232c85ddfa33e3573153e6080526ac2eef5e7ec9cf42b5c4ba3c62afb96d"},
     {file = "django_auth_ldap-2.1.0-py3-none-any.whl", hash = "sha256:4d68d21058bd57a316a9e1fcd7a36d0f25d054d4d9d9ec85f766a4991176b454"},
-]
-django-bootstrap4 = [
-    {file = "django-bootstrap4-1.1.1.tar.gz", hash = "sha256:39f97cbce85eb66f6d76be2029bae171bd3863d0c6932b1c2dae7f299c569b90"},
-    {file = "django_bootstrap4-1.1.1-py3-none-any.whl", hash = "sha256:0fcd84f8414a58b43df0b331c00c8b2f1786ae28f75f419b4d33b06fca43e0d1"},
 ]
 django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
