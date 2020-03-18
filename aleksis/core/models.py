@@ -302,7 +302,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
         return announcements
 
-    def at_date(self,when: Optional[date] = None) -> models.QuerySet:
+    def on_date(self, when: Optional[date] = None) -> models.QuerySet:
         """ Get all announcements at a certain date """
 
         when = when or timezone.datetime.now().date()
@@ -312,7 +312,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
         return announcements
 
-    def in_days(self, start: date, stop: date) -> models.QuerySet:
+    def within_days(self, start: date, stop: date) -> models.QuerySet:
         """ Get all announcements valid for a set of days """
 
         # Get announcements
