@@ -1,5 +1,7 @@
 FROM python:3.8-buster
 
+# Allow extras
+ARG extras="" 
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -34,6 +36,7 @@ RUN set -e; \
     eatmydata pip install poetry; \
     poetry config virtualenvs.create false; \
     eatmydata poetry install; \
+    if [ "$extras" != "" ] ; then eatmydata poetry install --extras "$extras"; fi; \
     eatmydata pip install gunicorn django-compressor
 
 # Install official apps
