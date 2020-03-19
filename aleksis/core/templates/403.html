@@ -14,18 +14,14 @@
      administrators:
      {% endblocktrans %}
     </p>
-    <div class="card-caction">
+    <ul>
      {% for admin in ADMINS %}
       <li>
        {{ admin.0 }}
-       &lt;
-       <a href="mailto:{{ admin.1 }}">
-        {{ admin.1 }}
-       </a>
-       &gt;
+       &lt;<a class="blue-text text-lighten-2" href="mailto:{{ admin.1 }}">{{ admin.1 }}</a>&gt;
       </li>
      {% endfor %}
-    </div>
+    </ul>
    </div>
   </div>
  </div>
