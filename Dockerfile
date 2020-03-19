@@ -25,7 +25,14 @@ RUN apt-get -y update && \
 	libpq-dev \
 	libssl-dev \
 	netcat-openbsd \
-	yarnpkg
+	yarnpkg; \
+    if [ "$extras" != "" ] ; then eatmydata apt-get install -y --no-install-recommends \
+        libldap2-dev \
+        libsasl2-dev \
+        ldap-utils \
+        lcov \
+        valgrind \
+    ; fi; 
 
 # Install core
 WORKDIR /usr/src/app
