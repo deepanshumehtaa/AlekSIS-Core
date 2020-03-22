@@ -143,12 +143,13 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
     return os.path.join(upload_to, new_filename)
 
 
-def school_information_processor(request: HttpRequest) -> dict:
-    """ Provides default School object in all templates """
+def custom_information_processor(request: HttpRequest) -> dict:
+    """ Provides custom information in all templates """
 
-    from ..models import School
+    from ..models import School, CustomMenu
     return {
         "SCHOOL": School.get_default,
+        "FOOTER_MENU": CustomMenu.get_default("footer"),
     }
 
 

@@ -9,6 +9,7 @@ from .models import (
     Notification,
     Announcement,
     AnnouncementRecipient,
+    CustomMenuItem,
 )
 
 admin.site.register(Person)
@@ -17,6 +18,7 @@ admin.site.register(School)
 admin.site.register(SchoolTerm)
 admin.site.register(Activity)
 admin.site.register(Notification)
+admin.site.register(CustomMenuItem)
 
 
 class AnnouncementRecipientInline(admin.StackedInline):
