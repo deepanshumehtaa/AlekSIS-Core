@@ -265,7 +265,7 @@ class Notification(ExtensibleModel):
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     def save(self, **kwargs):
         send_notification(self)
