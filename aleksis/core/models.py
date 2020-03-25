@@ -2,7 +2,6 @@ from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -15,9 +14,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
-from .model_helper import ICONS
 from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
+from .util.model_helpers import ICONS
 
 from constance import config
 
