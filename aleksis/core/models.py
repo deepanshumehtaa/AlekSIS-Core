@@ -229,6 +229,15 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
+    import_ref = models.CharField(
+        verbose_name=_("Reference ID of import source"),
+        max_length=200,
+        blank=True,
+        null=True,
+        editable=False,
+        unique=True,
+    )
+
     @property
     def announcement_recipients(self):
         return list(self.members.all()) + list(self.owners.all())
