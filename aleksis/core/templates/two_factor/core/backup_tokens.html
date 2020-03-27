@@ -1,6 +1,10 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
+{% block browser_title %}
+  {% trans "Backup Tokens" %}
+{% endblock %}
+
 {% block content %}
   <h4>{% block title %}{% trans "Backup Tokens" %}{% endblock %}</h4>
 
