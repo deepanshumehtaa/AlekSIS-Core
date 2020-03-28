@@ -1,9 +1,12 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.contrib.auth.signals import user_logged_in
+from django.http import HttpRequest
 
 from .signals import clean_scss
 from .util.apps import AppConfig
+from .util.core_helpers import has_person
 
 
 class CoreConfig(AppConfig):
@@ -29,3 +32,10 @@ class CoreConfig(AppConfig):
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
             name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )
+
+    def user_logged_in(
+        self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
+    ) -> None:
+        if has_person(user):
+            # Save the associated person to pick up defaults
+            user.person.save()
