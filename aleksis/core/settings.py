@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "django_otp.plugins.otp_static",
     "django_otp",
     "otp_yubikey",
+    "names",
     "aleksis.core",
     "impersonate",
     "two_factor",

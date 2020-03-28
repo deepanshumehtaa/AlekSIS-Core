@@ -67,6 +67,7 @@ django-polymorphic = "^2.1.2"
 django-otp = "0.7.5"
 django-colorfield = "^0.2.1"
 django-bleach = "^0.6.1"
+django-names = "^1.0.5"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
