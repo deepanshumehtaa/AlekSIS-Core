@@ -2,7 +2,6 @@ from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -17,6 +16,7 @@ from polymorphic.models import PolymorphicModel
 from .mixins import ExtensibleModel, PureDjangoModel
 from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
+from .util.model_helpers import ICONS
 
 from constance import config
 
@@ -485,3 +485,44 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     class Meta:
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class CustomMenu(ExtensibleModel):
+    id = models.CharField(max_length=100, verbose_name=_("Menu ID"), primary_key=True)
+    name = models.CharField(max_length=150, verbose_name=_("Menu name"))
+
+    def __str__(self):
+        return self.name if self.name != "" else self.id
+
+    @classmethod
+    def maintain_default_data(cls):
+        menus = ["footer"]
+        for menu in menus:
+            cls.get_default(menu)
+
+    @classmethod
+    def get_default(cls, name):
+        menu, _ = cls.objects.get_or_create(id=name, defaults={"name": name})
+        return menu
+
+    class Meta:
+        verbose_name = _("Custom menu")
+        verbose_name_plural = _("Custom menus")
+
+
+class CustomMenuItem(ExtensibleModel):
+    menu = models.ForeignKey(
+        CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
+    )
+    name = models.CharField(max_length=150, verbose_name=_("Name"))
+    url = models.URLField(verbose_name=_("Link"))
+    icon = models.CharField(
+        max_length=50, blank=True, null=True, choices=ICONS, verbose_name=_("Icon")
+    )
+
+    def __str__(self):
+        return "[{}] {}".format(self.menu, self.name)
+
+    class Meta:
+        verbose_name = _("Custom menu item")
+        verbose_name_plural = _("Custom menu items")

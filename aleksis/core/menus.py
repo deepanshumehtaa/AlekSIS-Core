@@ -147,9 +147,6 @@ MENUS = {
             ],
         },
     ],
-    "FOOTER_MENU_CORE": [
-        {"name": _("Website"), "url": "https://aleksis.edugit.io/"},
-    ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [
         {"name": _("Edit school information"), "url": "edit_school_information", },
