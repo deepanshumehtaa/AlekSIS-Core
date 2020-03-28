@@ -7,9 +7,9 @@ class PersonAnonymizer(BaseAnonymizer):
     model = Person
 
     attributes = [
-        ("first_name", faker.first_name),
-        ("last_name", faker.last_name),
-        ("additional_name", ""),
+        ("first", faker.first_name),
+        ("last", faker.last_name),
+        ("middle", ""),
         ("short_name", lambda **kwargs: faker.pystr(min_chars=3, max_chars=5, **kwargs)),
         ("street", faker.street_name),
         ("housenumber", faker.building_number),

@@ -5,10 +5,10 @@
 {% load i18n static cropping %}
 {% load render_table from django_tables2 %}
 
-{% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
+{% block browser_title %}{{ person.first }} {{ person.last }}{% endblock %}
 
 {% block content %}
-  <h4>{{ person.first_name }} {{ person.last_name }}</h4>
+  <h4>{{ person.first }} {{ person.last }}</h4>
   <p>
     <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
       <i class="material-icons left">edit</i>
@@ -21,10 +21,10 @@
     <div class="col s12 m4">
       {% if person.photo %}
         <img class="person-img" src="{% cropped_thumbnail person 'photo_cropping' max_size='300x400' %}"
-             alt="{{ person.first_name }} {{ person.last_name }}"/>
+             alt="{{ person.first }} {{ person.last }}"/>
       {% else %}
         <img class="person-img" src="{% static 'img/fallback.png' %}"
-             alt="{{ person.first_name }} {{ person.last_name }}"/>
+             alt="{{ person.first }} {{ person.last }}"/>
       {% endif %}
     </div>
     <div class="col s12 m8">
@@ -36,9 +36,9 @@
           <td>
             <i class="material-icons small">person</i>
           </td>
-          <td>{{ person.first_name }}</td>
-          <td>{{ person.additional_name }}</td>
-          <td>{{ person.last_name }}</td>
+          <td>{{ person.first }}</td>
+          <td>{{ person.middle }}</td>
+          <td>{{ person.last }}</td>
         </tr>
         <tr>
           <td>

@@ -91,7 +91,7 @@ class Person(ExtensibleModel, NameModelMixin):
     """
 
     class Meta:
-        ordering = ["last_name", "first_name"]
+        ordering = ["first", "last"]
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
 
@@ -173,8 +173,8 @@ class Person(ExtensibleModel, NameModelMixin):
     def save(self, *args, **kwargs):
         # Synchronise user fields to linked User object to keep it up to date
         if self.user:
-            self.user.first_name = self.first_name
-            self.user.last_name = self.last_name
+            self.user.first_name = self.first
+            self.user.last_name = self.last
             self.user.email = self.email
             self.user.save()
 

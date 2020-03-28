@@ -18,15 +18,15 @@ from .models import Group, Person, School, SchoolTerm, Announcement, Announcemen
 class PersonAccountForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ["last_name", "first_name", "user"]
+        fields = ["last", "first", "user"]
         widgets = {"user": Select2Widget}
 
     new_user = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["first_name"].disabled = True
-        self.fields["last_name"].disabled = True
+        self.fields["first"].disabled = True
+        self.fields["last"].disabled = True
 
     def clean(self) -> None:
         User = get_user_model()
@@ -43,8 +43,8 @@ class PersonAccountForm(forms.ModelForm):
                 new_user_obj = User.objects.create_user(
                     self.cleaned_data["new_user"],
                     self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
+                    first=self.instance.first,
+                    last=self.instance.last,
                 )
 
                 self.cleaned_data["user"] = new_user_obj
@@ -61,9 +61,9 @@ class EditPersonForm(forms.ModelForm):
         fields = [
             "user",
             "is_active",
-            "first_name",
-            "last_name",
-            "additional_name",
+            "first",
+            "last",
+            "middle",
             "short_name",
             "street",
             "housenumber",
@@ -98,8 +98,8 @@ class EditPersonForm(forms.ModelForm):
                 new_user_obj = User.objects.create_user(
                     self.cleaned_data["new_user"],
                     self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
+                    first=self.instance.first,
+                    last=self.instance.last,
                 )
 
                 self.cleaned_data["user"] = new_user_obj
@@ -112,15 +112,15 @@ class EditGroupForm(forms.ModelForm):
         widgets = {
             "members": ModelSelect2MultipleWidget(
                 search_fields=[
-                    "first_name__icontains",
-                    "last_name__icontains",
+                    "first__icontains",
+                    "last__icontains",
                     "short_name__icontains",
                 ]
             ),
             "owners": ModelSelect2MultipleWidget(
                 search_fields=[
-                    "first_name__icontains",
-                    "last_name__icontains",
+                    "first__icontains",
+                    "last__icontains",
                     "short_name__icontains",
                 ]
             ),
