@@ -170,6 +170,18 @@ class Person(ExtensibleModel, NameModelMixin):
         else:
             return f"{self.first_name} {self.last_name}"
 
+    @property
+    def first_name(self) -> str:
+        return self.name.first
+
+    @property
+    def last_name(self) -> str:
+        return self.name.last
+
+    @property
+    def middle_name(self) -> str:
+        return self.name.middle
+
     def save(self, *args, **kwargs):
         # Synchronise user fields to linked User object to keep it up to date
         if self.user:
