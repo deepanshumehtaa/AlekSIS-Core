@@ -164,23 +164,11 @@ class Person(ExtensibleModel, NameModelMixin):
     @property
     def adressing_name(self) -> str:
         if config.ADRESSING_NAME_FORMAT == "dutch":
-            return f"{self.last_name} {self.first_name}"
+            return f"{self.last} {self.first}"
         elif config.ADRESSING_NAME_FORMAT == "english":
-            return f"{self.last_name}, {self.first_name}"
+            return f"{self.last}, {self.first}"
         else:
-            return f"{self.first_name} {self.last_name}"
-
-    @property
-    def first_name(self) -> str:
-        return self.name.first
-
-    @property
-    def last_name(self) -> str:
-        return self.name.last
-
-    @property
-    def middle_name(self) -> str:
-        return self.name.middle
+            return f"{self.first} {self.last}"
 
     def save(self, *args, **kwargs):
         # Synchronise user fields to linked User object to keep it up to date
