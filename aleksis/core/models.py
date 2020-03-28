@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
+from names.mixins import NameModelMixin
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .util.core_helpers import now_tomorrow
@@ -84,7 +85,7 @@ class SchoolTerm(ExtensibleModel):
         verbose_name_plural = _("School terms")
 
 
-class Person(ExtensibleModel):
+class Person(ExtensibleModel, NameModelMixin):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -100,12 +101,6 @@ class Person(ExtensibleModel):
         get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person"
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
-
-    first_name = models.CharField(verbose_name=_("First name"), max_length=30)
-    last_name = models.CharField(verbose_name=_("Last name"), max_length=30)
-    additional_name = models.CharField(
-        verbose_name=_("Additional name(s)"), max_length=30, blank=True
-    )
 
     short_name = models.CharField(
         verbose_name=_("Short name"), max_length=5, blank=True, null=True, unique=True
@@ -164,7 +159,7 @@ class Person(ExtensibleModel):
 
     @property
     def full_name(self) -> str:
-        return f"{self.last_name}, {self.first_name}"
+        return self.full
 
     @property
     def adressing_name(self) -> str:
