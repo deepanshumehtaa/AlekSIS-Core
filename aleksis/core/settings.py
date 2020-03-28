@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "django_js_reverse",
     "colorfield",
+    "django_bleach",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -516,3 +517,22 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'div']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+
+# Which CSS properties are allowed in 'style' attributes (assuming
+# style is an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+    'font-family', 'font-weight', 'text-decoration', 'font-variant'
+]
+
+# Strip unknown tags if True, replace with HTML escaped characters if
+# False
+BLEACH_STRIP_TAGS = True
+
+# Strip comments, or leave them in.
+BLEACH_STRIP_COMMENTS = True
