@@ -166,7 +166,7 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", True):
+if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
