@@ -380,6 +380,7 @@ CONSTANCE_CONFIG = {
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
+    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
@@ -387,6 +388,7 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
+    "Account settings": ("PRIMARY_GROUP_PATTERN",),
 }
 
 merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
