@@ -101,11 +101,7 @@ class Person(ExtensibleModel):
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
-    first_name = models.CharField(verbose_name=_("First name"), max_length=30)
-    last_name = models.CharField(verbose_name=_("Last name"), max_length=30)
-    additional_name = models.CharField(
-        verbose_name=_("Additional name(s)"), max_length=30, blank=True
-    )
+    name = NameField(on_delete=models.CASCADE)
 
     short_name = models.CharField(
         verbose_name=_("Short name"), max_length=5, blank=True, null=True, unique=True
@@ -164,7 +160,7 @@ class Person(ExtensibleModel):
 
     @property
     def full_name(self) -> str:
-        return f"{self.last_name}, {self.first_name}"
+        return self.name.full
 
     @property
     def adressing_name(self) -> str:
@@ -174,6 +170,18 @@ class Person(ExtensibleModel):
             return f"{self.last_name}, {self.first_name}"
         else:
             return f"{self.first_name} {self.last_name}"
+
+    @property
+    def first_name(self) -> str:
+        return self.name.first
+
+    @property
+    def last_name(self) -> str:
+        return self.name.last
+
+    @property
+    def middle_name(self) -> str:
+        return self.name.middle
 
     def save(self, *args, **kwargs):
         # Synchronise user fields to linked User object to keep it up to date
