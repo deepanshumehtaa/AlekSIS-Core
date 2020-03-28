@@ -176,14 +176,15 @@ class Person(ExtensibleModel):
             return f"{self.first_name} {self.last_name}"
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
         # Synchronise user fields to linked User object to keep it up to date
         if self.user:
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
             self.user.email = self.email
             self.user.save()
+
+        self.auto_select_primary_group()
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.full_name
@@ -203,6 +204,21 @@ class Person(ExtensibleModel):
             # Ensure this admin user has a person linked to it
             person = Person(user=admin)
             person.save()
+
+    def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
+        """ Auto-select the primary group among the groups the person is member of
+
+        Uses either the pattern passed as argument, or the pattern configured system-wide.
+
+        Does not do anything if either no pattern is defined or the user already has
+        a primary group, unless force is True.
+        """
+
+        pattern = pattern or config.PRIMARY_GROUP_PATTERN
+
+        if pattern:
+            if force or not self.primary_group:
+                self.primary_group = self.member_of.filter(name__regex=pattern).first()
 
 
 class Group(ExtensibleModel):
