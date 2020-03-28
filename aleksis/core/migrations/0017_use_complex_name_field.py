@@ -2,6 +2,14 @@
 
 from django.db import migrations, models
 
+def rewrite_names(apps, schema_editor)
+    db_alias = schema_editor.connection.alias
+
+    Person = apps.get_model("core", "Person")
+
+    Person.objects.using(db_alias).update(
+        first=models.F("first_name"), middle=models.F("additional_name"), last=models.F("last_name")
+    )
 
 class Migration(migrations.Migration):
 
@@ -13,18 +21,6 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name='person',
             options={'ordering': ['first', 'last'], 'verbose_name': 'Person', 'verbose_name_plural': 'Persons'},
-        ),
-        migrations.RemoveField(
-            model_name='person',
-            name='additional_name',
-        ),
-        migrations.RemoveField(
-            model_name='person',
-            name='first_name',
-        ),
-        migrations.RemoveField(
-            model_name='person',
-            name='last_name',
         ),
         migrations.AddField(
             model_name='person',
@@ -62,14 +58,19 @@ class Migration(migrations.Migration):
             name='title',
             field=models.CharField(blank=True, max_length=100, verbose_name='Title'),
         ),
-        migrations.AlterField(
-            model_name='notification',
-            name='sender',
-            field=models.CharField(max_length=100, verbose_name='Sender'),
+        migrations.RunPython(
+            rewrite_names
         ),
-        migrations.AlterField(
-            model_name='notification',
-            name='sent',
-            field=models.BooleanField(default=False, verbose_name='Sent'),
+        migrations.RemoveField(
+            model_name='person',
+            name='additional_name',
+        ),
+        migrations.RemoveField(
+            model_name='person',
+            name='first_name',
+        ),
+        migrations.RemoveField(
+            model_name='person',
+            name='last_name',
         ),
     ]
