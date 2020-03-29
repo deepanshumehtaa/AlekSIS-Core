@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0014_accouncement_recipients'),
+        ('core', '0015_add_import_ref_to_group'),
     ]
 
     operations = [
