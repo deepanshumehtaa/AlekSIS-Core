@@ -232,7 +232,7 @@ class Group(ExtensibleModel):
         verbose_name_plural = _("Groups")
 
     name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=16, unique=True, blank=True, null=True)
+    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=30, unique=True, blank=True, null=True)
 
     members = models.ManyToManyField("Person", related_name="member_of", blank=True)
     owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
