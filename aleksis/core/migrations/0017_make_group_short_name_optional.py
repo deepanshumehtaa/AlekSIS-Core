@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0015_add_import_ref_to_group'),
+        ('core', '0016_custom_menus'),
     ]
 
     operations = [
