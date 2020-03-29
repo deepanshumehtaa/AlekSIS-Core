@@ -545,6 +545,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': "verbose"
         },
     },
     'formatters': {
@@ -555,6 +556,5 @@ LOGGING = {
     'root': {
         'handlers': ['console'],
         'level': _settings.get("logging.level", "WARNING"),
-        'formatter': "verbose"
     },
 }
