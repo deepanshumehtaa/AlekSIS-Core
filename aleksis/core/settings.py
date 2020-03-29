@@ -547,8 +547,14 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
     },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        }
+    },
     'root': {
         'handlers': ['console'],
         'level': _settings.get("logging.level", "WARNING"),
+        'formatter': "verbose"
     },
 }
