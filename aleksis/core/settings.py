@@ -538,3 +538,17 @@ BLEACH_STRIP_TAGS = True
 
 # Strip comments, or leave them in.
 BLEACH_STRIP_COMMENTS = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': _settings.get("logging.level", "WARNING"),
+    },
+}
