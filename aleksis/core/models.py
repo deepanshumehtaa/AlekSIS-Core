@@ -127,15 +127,6 @@ class Person(ExtensibleModel):
     photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
     photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
 
-    import_ref = models.CharField(
-        verbose_name=_("Reference ID of import source"),
-        max_length=64,
-        blank=True,
-        null=True,
-        editable=False,
-        unique=True,
-    )
-
     guardians = models.ManyToManyField(
         "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
     )
@@ -243,15 +234,6 @@ class Group(ExtensibleModel):
         symmetrical=False,
         verbose_name=_("Parent groups"),
         blank=True,
-    )
-
-    import_ref = models.CharField(
-        verbose_name=_("Reference ID of import source"),
-        max_length=200,
-        blank=True,
-        null=True,
-        editable=False,
-        unique=True,
     )
 
     @property
