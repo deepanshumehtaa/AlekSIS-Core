@@ -46,6 +46,12 @@ MENUS = {
                         lambda request: "two_factor" in settings.INSTALLED_APPS,
                     ],
                 },
+                {
+                    "name": _("Me"),
+                    "url": "person",
+                    "icon": "insert_emoticon",
+                    "validators": ["menu_generator.validators.is_authenticated"],
+                },
             ],
         },
         {
