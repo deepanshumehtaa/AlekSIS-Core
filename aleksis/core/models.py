@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
@@ -133,6 +134,9 @@ class Person(ExtensibleModel):
 
     primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
 
+    def get_absolute_url(self) -> str:
+        return reverse("person_by_id", args=[self.id])
+
     @property
     def primary_group_short_name(self) -> Optional[str]:
         """ Returns the short_name field of the primary
@@ -236,6 +240,9 @@ class Group(ExtensibleModel):
         verbose_name=_("Parent groups"),
         blank=True,
     )
+
+    def get_absolute_url(self) -> str:
+        return reverse("group_by_id", args=[self.id])
 
     @property
     def announcement_recipients(self):
