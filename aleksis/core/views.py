@@ -66,12 +66,15 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def person(request: HttpRequest, id_: int) -> HttpResponse:
+def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     # Get person and check access
     try:
-        person = Person.objects.get(pk=id_)
+        if id_ is None:
+            person = request.user.person
+        else:
+            person = Person.objects.get(pk=id_)
     except Person.DoesNotExist as e:
         # Turn not-found object into a 404 error
         raise Http404 from e
