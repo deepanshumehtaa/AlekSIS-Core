@@ -95,6 +95,8 @@ class Person(ExtensibleModel):
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
 
+    icon_ = "person"
+
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
@@ -226,6 +228,8 @@ class Group(ExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
+
+    icon_ = "group"
 
     name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)

@@ -32,6 +32,8 @@
   {# Include jQuery to provide $(document).ready #}
   {% include_js "jQuery" %}
 
+  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -70,10 +72,12 @@
       </a>
     </li>
     <li class="search">
-      <div class="search-wrapper">
-        <input id="search" placeholder="{% trans "Search" %}">
-        <i class="material-icons">search</i>
-      </div>
+      <form method="post" action="#" class="autocomplete">
+        <div class="search-wrapper">
+          <input id="search" name="q" placeholder="{% trans "Search" %}">
+          <i class="material-icons">search</i>
+        </div>
+      </form>
     </li>
     <li class="no-padding">
       {% include "core/sidenav.html" %}

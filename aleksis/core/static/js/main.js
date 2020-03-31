@@ -64,4 +64,8 @@ $(document).ready( function () {
             "paging": false
         });
     });
+
+    // Initialise auto-completion for search bar
+    window.autocomplete = new Autocomplete({});
+    window.autocomplete.setup();
 });

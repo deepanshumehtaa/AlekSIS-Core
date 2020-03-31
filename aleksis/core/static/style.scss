@@ -168,7 +168,7 @@ li.active > a > .sidenav-badge {
   box-shadow: none;
 }
 
-.sidenav li.search .search-wrapper i.material-icons {
+.sidenav li.search .search-wrapper > i.material-icons {
   position: absolute;
   top: 21px;
   right: 10px;
@@ -532,3 +532,12 @@ main .alert p:first-child, main .alert div:first-child {
   width: 100%;
 }
 
+div#search-results {
+  position: absolute;
+  width: 100%;
+}
+
+.search-result-icon {
+  position: absolute;
+  right: 10px;
+}
