@@ -28,10 +28,10 @@ class School(ExtensibleModel):
     currently logged-in user.
     """
 
-    name = models.CharField(verbose_name=_("Name"), max_length=30)
+    name = models.CharField(verbose_name=_("Name"), max_length=255)
     name_official = models.CharField(
         verbose_name=_("Official name"),
-        max_length=200,
+        max_length=255,
         help_text=_("Official name of the school, e.g. as given by supervisory authority"),
     )
 
@@ -57,7 +57,7 @@ class SchoolTerm(ExtensibleModel):
     be linked to.
     """
 
-    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=30)
+    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=255)
 
     date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
     date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
@@ -101,20 +101,20 @@ class Person(ExtensibleModel):
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
-    first_name = models.CharField(verbose_name=_("First name"), max_length=30)
-    last_name = models.CharField(verbose_name=_("Last name"), max_length=30)
+    first_name = models.CharField(verbose_name=_("First name"), max_length=255)
+    last_name = models.CharField(verbose_name=_("Last name"), max_length=255)
     additional_name = models.CharField(
-        verbose_name=_("Additional name(s)"), max_length=30, blank=True
+        verbose_name=_("Additional name(s)"), max_length=255, blank=True
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=5, blank=True, null=True, unique=True
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True
     )
 
-    street = models.CharField(verbose_name=_("Street"), max_length=30, blank=True)
-    housenumber = models.CharField(verbose_name=_("Street number"), max_length=10, blank=True)
-    postal_code = models.CharField(verbose_name=_("Postal code"), max_length=5, blank=True)
-    place = models.CharField(verbose_name=_("Place"), max_length=30, blank=True)
+    street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
+    housenumber = models.CharField(verbose_name=_("Street number"), max_length=255, blank=True)
+    postal_code = models.CharField(verbose_name=_("Postal code"), max_length=255, blank=True)
+    place = models.CharField(verbose_name=_("Place"), max_length=255, blank=True)
 
     phone_number = PhoneNumberField(verbose_name=_("Home phone"), blank=True)
     mobile_number = PhoneNumberField(verbose_name=_("Mobile phone"), blank=True)
@@ -222,8 +222,8 @@ class Group(ExtensibleModel):
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
 
-    name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=30, unique=True, blank=True, null=True)
+    name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
+    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
 
     members = models.ManyToManyField("Person", related_name="member_of", blank=True)
     owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
