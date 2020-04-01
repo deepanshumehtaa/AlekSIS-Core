@@ -561,6 +561,7 @@ LOGGING = {
 }
 
 HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
+
 if HAYSTACK_BACKEND_SHORT == "simple":
     HAYSTACK_CONNECTIONS = {
         'default': {
@@ -581,3 +582,9 @@ elif HAYSTACK_BACKEND_SHORT == "whoosh":
             'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
         },
     }
+
+if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
+    INSTALLED_APPS.append("celery_haystack")
+    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+else:
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
