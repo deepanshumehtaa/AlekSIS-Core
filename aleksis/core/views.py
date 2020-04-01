@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
 from django_tables2 import RequestConfig
+from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 
 from .decorators import admin_required, person_required
@@ -328,7 +329,7 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     query = request.GET.get('q', '')
     limit = int(request.GET.get('limit', '5'))
 
-    results = SearchQuerySet().autocomplete(text=query)[:limit]
+    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
