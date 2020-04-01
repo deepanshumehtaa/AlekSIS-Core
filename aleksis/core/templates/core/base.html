@@ -72,7 +72,7 @@
       </a>
     </li>
     <li class="search">
-      <form method="post" action="#" class="autocomplete">
+      <form method="get" action="{% url "haystack_search" %}" class="autocomplete">
         <div class="search-wrapper">
           <input id="search" name="q" placeholder="{% trans "Search" %}">
           <i class="material-icons">search</i>
