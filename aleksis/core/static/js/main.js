@@ -64,4 +64,16 @@ $(document).ready( function () {
             "paging": false
         });
     });
+
+    // Initialize text collapsibles [MAT, own work]
+    $(".text-collapsible").addClass("closed").removeClass("opened");
+
+    $(".text-collapsible .open-icon").click(function (e) {
+        var el = $(e.target).parent();
+        el.addClass("opened").removeClass("closed");
+    });
+    $(".text-collapsible .close-icon").click(function (e) {
+        var el = $(e.target).parent();
+        el.addClass("closed").removeClass("opened");
+    });
 });
