@@ -55,7 +55,25 @@ PersonsAccountsFormSet = forms.modelformset_factory(
 )
 
 
-class EditPersonForm(forms.ModelForm):
+class EditPersonForm(ExtensibleForm):
+    layout = Layout(
+        Fieldset(
+            _("Base data"),
+            "short_name",
+            Row("user", "primary_group"),
+            "is_active",
+            Row("first_name", "additional_name", "last_name"),
+        ),
+        Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
+        Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
+        Fieldset(
+            _("Advanced personal data"),
+            Row("sex", "date_of_birth"),
+            Row("photo", "photo_cropping"),
+            "guardians",
+        ),
+    )
+
     class Meta:
         model = Person
         fields = [
@@ -76,6 +94,8 @@ class EditPersonForm(forms.ModelForm):
             "sex",
             "photo",
             "photo_cropping",
+            "guardians",
+            "primary_group",
         ]
         widgets = {"user": Select2Widget}
 
@@ -105,10 +125,15 @@ class EditPersonForm(forms.ModelForm):
                 self.cleaned_data["user"] = new_user_obj
 
 
-class EditGroupForm(forms.ModelForm):
+class EditGroupForm(ExtensibleForm):
+    layout = Layout(
+        Fieldset(_("Common data"), "name", "short_name"),
+        Fieldset(_("Persons"), "members", "owners", "parent_groups"),
+    )
+
     class Meta:
         model = Group
-        fields = ["name", "short_name", "members", "owners", "parent_groups"]
+        exclude = []
         widgets = {
             "members": ModelSelect2MultipleWidget(
                 search_fields=[
@@ -130,13 +155,20 @@ class EditGroupForm(forms.ModelForm):
         }
 
 
-class EditSchoolForm(forms.ModelForm):
+class EditSchoolForm(ExtensibleForm):
+    layout = Layout(
+        Fieldset(_("School name"), "name", "name_official"),
+        Fieldset(_("School logo"), Row("logo", "logo_cropping")),
+    )
+
     class Meta:
         model = School
         fields = ["name", "name_official", "logo", "logo_cropping"]
 
 
-class EditTermForm(forms.ModelForm):
+class EditTermForm(ExtensibleForm):
+    layout = Layout("caption", Row("date_start", "date_end"))
+
     class Meta:
         model = SchoolTerm
         fields = ["caption", "date_start", "date_end"]
@@ -152,7 +184,9 @@ class AnnouncementForm(ExtensibleForm):
     valid_until_date = forms.DateField(label=_("Date"))
     valid_until_time = forms.TimeField(label=_("Time"))
 
-    persons = forms.ModelMultipleChoiceField(Person.objects.all(), label=_("Persons"), required=False)
+    persons = forms.ModelMultipleChoiceField(
+        Person.objects.all(), label=_("Persons"), required=False
+    )
     groups = forms.ModelMultipleChoiceField(Group.objects.all(), label=_("Groups"), required=False)
 
     layout = Layout(

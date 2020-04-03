@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Union
 
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -216,7 +216,7 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
     """
 
     @classmethod
-    def add_node_to_layout(cls, node: LayoutNode):
+    def add_node_to_layout(cls, node: Union[LayoutNode, str]):
         """
         Add a node to `layout` attribute
 
