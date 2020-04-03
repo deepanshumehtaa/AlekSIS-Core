@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-30 09:18+0000\n"
 "PO-Revision-Date: 2020-04-14 18:42+0000\n"
-"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"Last-Translator: Julian <leuckerj@gmail.com>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
 "Language: de_DE\n"
@@ -55,27 +55,31 @@ msgstr "Gruppen"
 
 #: forms.py:160
 msgid "From when until when should the announcement be displayed?"
-msgstr ""
+msgstr "Von wann bis wann soll die Ankündigung angezeigt werden?"
 
 #: forms.py:163
 msgid "Who should see the announcement?"
-msgstr ""
+msgstr "Wer soll die Ankündigung sehen?"
 
 #: forms.py:164
 msgid "Write your announcement:"
-msgstr ""
+msgstr "Schreiben Sie ihre Ankündigung:"
 
 #: forms.py:203
 msgid "You are not allowed to create announcements which are only valid in the past."
 msgstr ""
+"Sie dürfen keine Ankündigungen erstellen, die nur für die Vergangenheit "
+"gültig sind."
 
 #: forms.py:207
 msgid "The from date and time must be earlier then the until date and time."
 msgstr ""
+"Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit "
+"sein."
 
 #: forms.py:215
 msgid "You need at least one recipient."
-msgstr ""
+msgstr "Sie benötigen mindestens einen Empfänger."
 
 #: menus.py:7 templates/registration/login.html:21
 #: templates/two_factor/core/login.html:6
@@ -86,7 +90,7 @@ msgstr "Anmelden"
 
 #: menus.py:13
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: menus.py:19
 msgid "Account"
@@ -111,7 +115,7 @@ msgstr "Admin"
 #: menus.py:61 models.py:395 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
-msgstr ""
+msgstr "Ankündigungen"
 
 #: menus.py:70 templates/core/data_management.html:6
 #: templates/core/data_management.html:7
@@ -133,7 +137,7 @@ msgstr "Schulverwaltung"
 
 #: menus.py:106
 msgid "Backend Admin"
-msgstr ""
+msgstr "Backend-Administration"
 
 #: menus.py:117
 msgid "People"
@@ -311,7 +315,7 @@ msgstr "Beschreibung"
 
 #: models.py:271
 msgid "Application"
-msgstr ""
+msgstr "Anwendung"
 
 #: models.py:277
 msgid "Activity"
@@ -329,23 +333,23 @@ msgstr "Absenden"
 
 #: models.py:287 models.py:365 models.py:518
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: models.py:289
 msgid "Read"
-msgstr ""
+msgstr "Gelesen"
 
 #: models.py:290
 msgid "Sent"
-msgstr ""
+msgstr "Versandt"
 
 #: models.py:301
 msgid "Notification"
-msgstr ""
+msgstr "Benachrichtigung"
 
 #: models.py:302
 msgid "Notifications"
-msgstr ""
+msgstr "Benachrichtigungen"
 
 #: models.py:368
 msgid "Date and time from when to show"
@@ -357,31 +361,31 @@ msgstr ""
 
 #: models.py:394
 msgid "Announcement"
-msgstr ""
+msgstr "Ankündigung"
 
 #: models.py:422
 msgid "Announcement recipient"
-msgstr ""
+msgstr "Empfänger der Ankündigung"
 
 #: models.py:423
 msgid "Announcement recipients"
-msgstr ""
+msgstr "Empfänger der Ankündigung"
 
 #: models.py:473
 msgid "Widget Title"
-msgstr ""
+msgstr "Widget-Titel"
 
 #: models.py:474
 msgid "Activate Widget"
-msgstr ""
+msgstr "Widget aktivieren"
 
 #: models.py:486
 msgid "Dashboard Widget"
-msgstr ""
+msgstr "Dashboard-Widget"
 
 #: models.py:487
 msgid "Dashboard Widgets"
-msgstr ""
+msgstr "Dashboard-Widgets"
 
 #: models.py:491
 msgid "Menu ID"
@@ -389,7 +393,7 @@ msgstr ""
 
 #: models.py:492
 msgid "Menu name"
-msgstr ""
+msgstr "Menü-Name"
 
 #: models.py:509
 msgid "Custom menu"
@@ -401,11 +405,11 @@ msgstr ""
 
 #: models.py:515
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: models.py:520
 msgid "Icon"
-msgstr ""
+msgstr "Icon"
 
 #: models.py:527
 msgid "Custom menu item"
@@ -425,19 +429,19 @@ msgstr "Englisch"
 
 #: settings.py:373
 msgid "Site title"
-msgstr ""
+msgstr "Seitentitel"
 
 #: settings.py:374
 msgid "Site description"
-msgstr ""
+msgstr "Seitenbeschreibung"
 
 #: settings.py:375
 msgid "Primary colour"
-msgstr ""
+msgstr "Primärfarbe"
 
 #: settings.py:376
 msgid "Secondary colour"
-msgstr ""
+msgstr "Akzentfarbe"
 
 #: settings.py:377
 #, fuzzy
@@ -446,22 +450,20 @@ msgid "Mail out name"
 msgstr "Nachname"
 
 #: settings.py:378
-#, fuzzy
-#| msgid "E-mail address"
 msgid "Mail out address"
-msgstr "E-Mail-Adresse"
+msgstr "E-Mail-Ausgangsadresse"
 
 #: settings.py:379
 msgid "Link to privacy policy"
-msgstr ""
+msgstr "Link zur Datenschutzerklärung"
 
 #: settings.py:380
 msgid "Link to imprint"
-msgstr ""
+msgstr "Link zum Impressum"
 
 #: settings.py:381
 msgid "Name format of adresses"
-msgstr ""
+msgstr "Namensformat von Anreden"
 
 #: settings.py:382
 msgid "Channels to allow for notifications"
@@ -469,13 +471,13 @@ msgstr ""
 
 #: settings.py:383
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
-msgstr ""
+msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
 #: templates/403.html:10
-#, fuzzy
-#| msgid "You are not allowed to access the requested page or object."
 msgid "Error (403): You are not allowed to access the requested page or object."
-msgstr "Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das angefragte Objekt zuzugreifen."
+msgstr ""
+"Fehler(403): Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das "
+"angefragte Objekt zuzugreifen."
 
 #: templates/403.html:12
 #, fuzzy
@@ -496,10 +498,10 @@ msgstr ""
 "    "
 
 #: templates/404.html:10
-#, fuzzy
-#| msgid "The requested page or object was not found."
 msgid "Error (404): The requested page or object was not found."
-msgstr "Die angefragte Seite oder das angefragte Objekt wurde nicht gefunden."
+msgstr ""
+"Fehler (404): Die angefragte Seite oder das angefragte Objekt wurde nicht "
+"gefunden."
 
 #: templates/404.html:12
 #, fuzzy
@@ -589,16 +591,16 @@ msgstr ""
 #: templates/core/announcement/form.html:10
 #: templates/core/announcement/form.html:17
 msgid "Edit announcement"
-msgstr ""
+msgstr "Ankündigung bearbeiten"
 
 #: templates/core/announcement/form.html:12
 msgid "Publish announcement"
-msgstr ""
+msgstr "Ankündigung veröffentlichen"
 
 #: templates/core/announcement/form.html:19
 #: templates/core/announcement/list.html:13
 msgid "Publish new announcement"
-msgstr ""
+msgstr "Neue Ankündigung veröffentlichen"
 
 #: templates/core/announcement/form.html:30
 msgid "Save und publish announcement"
@@ -606,15 +608,15 @@ msgstr ""
 
 #: templates/core/announcement/list.html:19
 msgid "Valid from"
-msgstr ""
+msgstr "Gültig von"
 
 #: templates/core/announcement/list.html:20
 msgid "Valid until"
-msgstr ""
+msgstr "Gültig bis"
 
 #: templates/core/announcement/list.html:21
 msgid "Recipients"
-msgstr ""
+msgstr "Empfänger"
 
 #: templates/core/announcement/list.html:22
 msgid "Actions"
@@ -627,7 +629,7 @@ msgstr "Bearbeiten"
 
 #: templates/core/announcement/list.html:42
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: templates/core/announcement/list.html:50
 msgid "There are no announcements."
@@ -659,19 +661,19 @@ msgstr ""
 
 #: templates/core/base.html:54
 msgid "Logged in as"
-msgstr ""
+msgstr "Angemeldet als"
 
 #: templates/core/base.html:146
 msgid "Impress"
-msgstr ""
+msgstr "Impressum"
 
 #: templates/core/base.html:154
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Datenschutzerklärung"
 
 #: templates/core/base_print.html:60
 msgid "Powered by AlekSIS"
-msgstr ""
+msgstr "Betrieben mit AlekSIS"
 
 #: templates/core/edit_group.html:6 templates/core/edit_group.html:7
 msgid "Edit group"
@@ -701,7 +703,7 @@ msgstr "Übergeordnete Gruppen"
 
 #: templates/core/index.html:4
 msgid "Home"
-msgstr ""
+msgstr "Startseite"
 
 #: templates/core/index.html:11
 #, fuzzy
@@ -725,7 +727,7 @@ msgstr ""
 
 #: templates/core/index.html:66
 msgid "Recent notifications"
-msgstr ""
+msgstr "Letzte Benachrichtigungen"
 
 #: templates/core/index.html:82
 #, fuzzy
@@ -760,7 +762,7 @@ msgstr ""
 
 #: templates/core/offline.html:6
 msgid "No internet connection."
-msgstr ""
+msgstr "Keine Internetverbindung."
 
 #: templates/core/offline.html:9
 msgid ""
@@ -809,7 +811,7 @@ msgstr "Neues Konto"
 
 #: templates/core/save_button.html:3
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: templates/core/school_management.html:6
 #: templates/core/school_management.html:7
@@ -973,7 +975,7 @@ msgstr ""
 
 #: templates/two_factor/_wizard_actions.html:6
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: templates/two_factor/_wizard_actions.html:15
 #: templates/two_factor/_wizard_actions.html:20
