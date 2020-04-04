@@ -477,11 +477,11 @@ class CustomMenu(ExtensibleModel):
     def __str__(self):
         return self.name if self.name != "" else self.id
 
-    @classmethod
-    def maintain_default_data(cls):
-        menus = ["footer"]
-        for menu in menus:
-            cls.get_default(menu)
+ #   @classmethod
+#    def maintain_default_data(cls):
+#        menus = ["footer"]
+#        for menu in menus:
+#            cls.get_default(menu)
 
     @classmethod
     def get_default(cls, name):

@@ -1,5 +1,8 @@
 from django.contrib import admin
 
+from guardian.admin import GuardedModelAdmin
+
+
 from .models import (
     Group,
     Person,
@@ -12,7 +15,11 @@ from .models import (
     CustomMenuItem,
 )
 
-admin.site.register(Person)
+class PersonAdmin(GuardedModelAdmin):
+    pass
+
+
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Group)
 admin.site.register(School)
 admin.site.register(SchoolTerm)
