@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "guardian",
+    "rules.apps.AutodiscoverRulesConfig",
     "polymorphic",
     "django_global_request",
     "settings_context_processor",
@@ -558,3 +560,12 @@ LOGGING = {
         'level': _settings.get("logging.level", "WARNING"),
     },
 }
+
+# Rules and permissions
+
+GUARDIAN_RAISE_403 = True
+ANONYMOUS_USER_NAME = None
+
+# Append authentication backends
+AUTHENTICATION_BACKENDS.append("guardian.backends.ObjectPermissionBackend")
+AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
