@@ -22,8 +22,9 @@ Autocomplete.prototype.setup = function () {
     this.query_box = this.form_elem.find('input[name=q]');
 
 
-    $("#search-form").focusout(function () {
-        if ($(this).has(document.activeElement).length === 1) {
+    $("#search-form").focusout(function (e) {
+        if (!$(e.relatedTarget).hasClass("search-item")) {
+            e.preventDefault();
             $("#search-results").remove();
         }
     });
@@ -31,7 +32,7 @@ Autocomplete.prototype.setup = function () {
     // Trigger the "keyup" event if input gets focused
 
     this.query_box.focus(function () {
-        self.query_box.trigger("keyup");
+        self.query_box.trigger("keydown");
     });
 
     // Watch the input box.
