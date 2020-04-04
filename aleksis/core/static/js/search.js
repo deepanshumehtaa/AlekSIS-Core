@@ -73,6 +73,11 @@ Autocomplete.prototype.setup = function () {
             return false;
         }
 
+        if (self.selected_element && e.which === 13) {
+            e.preventDefault();
+            window.location.href = self.selected_element.attr("href");
+        }
+
         if (query.length < self.minimum_length) {
             $("#search-results").remove();
             return true;
@@ -111,6 +116,7 @@ Autocomplete.prototype.show_results = function (data) {
     $('#search-results').remove();
     var results_wrapper = $('<div id="search-results">' + data + '</div>');
     this.query_box.after(results_wrapper);
+    this.selected_element = null;
 };
 
 Autocomplete.prototype.setSelectedResult = function (element) {
