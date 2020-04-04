@@ -11,6 +11,7 @@
   <form method="get">
     {% form form=form %}{% endform %}
     <button type="submit" class="btn waves-effect waves-light green">
+    <i class="material-icons left">search</i>
       {% blocktrans %}Search{% endblocktrans %}
     </button>
   </form>
@@ -18,16 +19,18 @@
    {% if query %}
      <h3>Results</h3>
 
+     <div class="collection">
      {% for result in page.object_list %}
-       <p>
-         <i class="material-icons">{{ result.object.icon_ }}</i>
-         <a href="{{ result.object.get_absolute_url|default:"#" }}">
+         <a href="{{ result.object.get_absolute_url|default:"#" }}" class="collection-item">
+         <i class="material-icons left">{{ result.object.icon_ }}</i>
            {{ result.object }}
          </a>
-       </p>
      {% empty %}
-       {# FIXME Add a note if no results were found #}
+       <li class="collection-item">
+        {% trans "No search results could be found to your search" %}
+       </li>
      {% endfor %}
+     </div>
 
      {% if page.has_other_pages %}
        <ul class="pagination">

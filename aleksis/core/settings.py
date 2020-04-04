@@ -588,3 +588,5 @@ if _settings.get("celery.enabled", False) and _settings.get("search.celery", Tru
     HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
 else:
     HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
