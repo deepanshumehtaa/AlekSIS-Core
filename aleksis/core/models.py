@@ -2,7 +2,6 @@ from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -17,6 +16,7 @@ from polymorphic.models import PolymorphicModel
 from .mixins import ExtensibleModel, PureDjangoModel
 from .util.core_helpers import now_tomorrow
 from .util.notifications import send_notification
+from .util.model_helpers import ICONS
 
 from constance import config
 
@@ -28,10 +28,10 @@ class School(ExtensibleModel):
     currently logged-in user.
     """
 
-    name = models.CharField(verbose_name=_("Name"), max_length=30)
+    name = models.CharField(verbose_name=_("Name"), max_length=255)
     name_official = models.CharField(
         verbose_name=_("Official name"),
-        max_length=200,
+        max_length=255,
         help_text=_("Official name of the school, e.g. as given by supervisory authority"),
     )
 
@@ -57,7 +57,7 @@ class SchoolTerm(ExtensibleModel):
     be linked to.
     """
 
-    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=30)
+    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=255)
 
     date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
     date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
@@ -101,20 +101,20 @@ class Person(ExtensibleModel):
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
-    first_name = models.CharField(verbose_name=_("First name"), max_length=30)
-    last_name = models.CharField(verbose_name=_("Last name"), max_length=30)
+    first_name = models.CharField(verbose_name=_("First name"), max_length=255)
+    last_name = models.CharField(verbose_name=_("Last name"), max_length=255)
     additional_name = models.CharField(
-        verbose_name=_("Additional name(s)"), max_length=30, blank=True
+        verbose_name=_("Additional name(s)"), max_length=255, blank=True
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=5, blank=True, null=True, unique=True
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True
     )
 
-    street = models.CharField(verbose_name=_("Street"), max_length=30, blank=True)
-    housenumber = models.CharField(verbose_name=_("Street number"), max_length=10, blank=True)
-    postal_code = models.CharField(verbose_name=_("Postal code"), max_length=5, blank=True)
-    place = models.CharField(verbose_name=_("Place"), max_length=30, blank=True)
+    street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
+    housenumber = models.CharField(verbose_name=_("Street number"), max_length=255, blank=True)
+    postal_code = models.CharField(verbose_name=_("Postal code"), max_length=255, blank=True)
+    place = models.CharField(verbose_name=_("Place"), max_length=255, blank=True)
 
     phone_number = PhoneNumberField(verbose_name=_("Home phone"), blank=True)
     mobile_number = PhoneNumberField(verbose_name=_("Mobile phone"), blank=True)
@@ -126,15 +126,6 @@ class Person(ExtensibleModel):
 
     photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
     photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
-
-    import_ref = models.CharField(
-        verbose_name=_("Reference ID of import source"),
-        max_length=64,
-        blank=True,
-        null=True,
-        editable=False,
-        unique=True,
-    )
 
     guardians = models.ManyToManyField(
         "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
@@ -185,6 +176,8 @@ class Person(ExtensibleModel):
             self.user.email = self.email
             self.user.save()
 
+        self.auto_select_primary_group()
+
     def __str__(self) -> str:
         return self.full_name
 
@@ -204,6 +197,21 @@ class Person(ExtensibleModel):
             person = Person(user=admin)
             person.save()
 
+    def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
+        """ Auto-select the primary group among the groups the person is member of
+
+        Uses either the pattern passed as argument, or the pattern configured system-wide.
+
+        Does not do anything if either no pattern is defined or the user already has
+        a primary group, unless force is True.
+        """
+
+        pattern = pattern or config.PRIMARY_GROUP_PATTERN
+
+        if pattern:
+            if force or not self.primary_group:
+                self.primary_group = self.member_of.filter(name__regex=pattern).first()
+
 
 class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
@@ -215,8 +223,8 @@ class Group(ExtensibleModel):
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
 
-    name = models.CharField(verbose_name=_("Long name of group"), max_length=60, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=16, unique=True)
+    name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
+    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
 
     members = models.ManyToManyField("Person", related_name="member_of", blank=True)
     owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
@@ -265,7 +273,7 @@ class Notification(ExtensibleModel):
     sent = models.BooleanField(default=False, verbose_name=_("Sent"))
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     def save(self, **kwargs):
         send_notification(self)
@@ -460,3 +468,44 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     class Meta:
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class CustomMenu(ExtensibleModel):
+    id = models.CharField(max_length=100, verbose_name=_("Menu ID"), primary_key=True)
+    name = models.CharField(max_length=150, verbose_name=_("Menu name"))
+
+    def __str__(self):
+        return self.name if self.name != "" else self.id
+
+    @classmethod
+    def maintain_default_data(cls):
+        menus = ["footer"]
+        for menu in menus:
+            cls.get_default(menu)
+
+    @classmethod
+    def get_default(cls, name):
+        menu, _ = cls.objects.get_or_create(id=name, defaults={"name": name})
+        return menu
+
+    class Meta:
+        verbose_name = _("Custom menu")
+        verbose_name_plural = _("Custom menus")
+
+
+class CustomMenuItem(ExtensibleModel):
+    menu = models.ForeignKey(
+        CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
+    )
+    name = models.CharField(max_length=150, verbose_name=_("Name"))
+    url = models.URLField(verbose_name=_("Link"))
+    icon = models.CharField(
+        max_length=50, blank=True, null=True, choices=ICONS, verbose_name=_("Icon")
+    )
+
+    def __str__(self):
+        return "[{}] {}".format(self.menu, self.name)
+
+    class Meta:
+        verbose_name = _("Custom menu item")
+        verbose_name_plural = _("Custom menu items")

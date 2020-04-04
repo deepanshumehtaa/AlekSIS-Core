@@ -2,7 +2,9 @@ from importlib import import_module
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
+from django.http import HttpRequest
 
 from constance.signals import config_updated
 
@@ -26,6 +28,8 @@ class AppConfig(django.apps.AppConfig):
         pre_migrate.connect(self.pre_migrate, sender=self)
         post_migrate.connect(self.post_migrate, sender=self)
         config_updated.connect(self.config_updated)
+        user_logged_in.connect(self.user_logged_in)
+        user_logged_out.connect(self.user_logged_out)
 
         # Getting an app ready means it should look at its config once
         self.config_updated()
@@ -81,6 +85,24 @@ class AppConfig(django.apps.AppConfig):
         By default, asks all models to do maintenance on their default data.
         """
         self._maintain_default_data()
+
+    def user_logged_in(
+        self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
+    ) -> None:
+        """ Called after a user logged in
+
+        By default, it does nothing.
+        """
+        pass
+
+    def user_logged_out(
+        self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
+    ) -> None:
+        """ Called after a user logged out
+
+        By default, it does nothing.
+        """
+        pass
 
     def _maintain_default_data(self):
         if not self.models_module:

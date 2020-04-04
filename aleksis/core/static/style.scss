@@ -368,6 +368,27 @@ main .alert p:first-child, main .alert div:first-child {
   margin-right: -10px;
 }
 
+// Text collapsible
+
+.text-collapsible > .material-icons {
+    font-size: 20px;
+    line-height: 15px;
+    margin-bottom: 2px;
+    margin-left: -1px;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #6d6d6d;
+}
+
+.text-collapsible.opened .a,
+.text-collapsible.opened > .material-icons.open-icon {
+    display: none;
+}
+
+.text-collapsible.closed .b,
+.text-collapsible.closed > .material-icons.close-icon {
+    display: none;
+}
 
 // Helpers
 

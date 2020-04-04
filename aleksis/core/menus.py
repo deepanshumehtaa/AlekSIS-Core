@@ -46,6 +46,12 @@ MENUS = {
                         lambda request: "two_factor" in settings.INSTALLED_APPS,
                     ],
                 },
+                {
+                    "name": _("Me"),
+                    "url": "person",
+                    "icon": "insert_emoticon",
+                    "validators": ["menu_generator.validators.is_authenticated"],
+                },
             ],
         },
         {
@@ -146,9 +152,6 @@ MENUS = {
                 },
             ],
         },
-    ],
-    "FOOTER_MENU_CORE": [
-        {"name": _("Website"), "url": "https://aleksis.edugit.io/"},
     ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [

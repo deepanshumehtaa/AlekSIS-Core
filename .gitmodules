@@ -14,3 +14,6 @@
 	path = apps/official/AlekSIS-App-DashboardFeeds
 	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-DashboardFeeds.git
 	ignore = untracked
+[submodule "apps/official/AlekSIS-App-LDAP"]
+	path = apps/official/AlekSIS-App-LDAP
+	url = https://edugit.org/AlekSIS/official/AlekSIS-App-LDAP

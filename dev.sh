@@ -25,7 +25,7 @@ case "$1" in
     "makemessages")
 	cd "$(dirname "$0")"
 	manage_py=$(realpath manage.py)
-	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR"
+	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR -l la"
 	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -i static $locales"

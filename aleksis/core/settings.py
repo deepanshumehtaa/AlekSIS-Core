@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "django_js_reverse",
     "colorfield",
+    "django_bleach",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -133,7 +134,7 @@ TEMPLATES = [
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
                 "constance.context_processors.config",
-                "aleksis.core.util.core_helpers.school_information_processor",
+                "aleksis.core.util.core_helpers.custom_information_processor",
             ],
         },
     },
@@ -165,7 +166,7 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", True):
+if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
@@ -379,6 +380,7 @@ CONSTANCE_CONFIG = {
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
+    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
@@ -386,9 +388,10 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
+    "Account settings": ("PRIMARY_GROUP_PATTERN",),
 }
 
-merge_app_settings("CONSTANCE_ADDITIONAL_FIELD", CONSTANCE_ADDITIONAL_FIELDS, False)
+merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
 merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
 merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
@@ -515,4 +518,43 @@ CKEDITOR_CONFIGS = {
             'elementspath'
         ]),
     }
+}
+
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'div']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+
+# Which CSS properties are allowed in 'style' attributes (assuming
+# style is an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+    'font-family', 'font-weight', 'text-decoration', 'font-variant'
+]
+
+# Strip unknown tags if True, replace with HTML escaped characters if
+# False
+BLEACH_STRIP_TAGS = True
+
+# Strip comments, or leave them in.
+BLEACH_STRIP_COMMENTS = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': "verbose"
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': _settings.get("logging.level", "WARNING"),
+    },
 }
