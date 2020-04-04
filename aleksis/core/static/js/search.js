@@ -20,28 +20,27 @@ Autocomplete.prototype.setup = function() {
   this.form_elem = $(this.form_selector);
   this.query_box = this.form_elem.find('input[name=q]');
 
-  // Trigger the "keyup" event if input gets focused
-
-  this.query_box.focus(function () {
-    self.query_box.trigger("keyup");
-  });
 
   // Remove search results if input field isn't focused anymore
   $('body').click(function (evt) {
-    if (evt.target.id in ["search", "search-results"])
+    if ($.inArray(evt.target.id, ["search", "search-results"]) >= 0) {
       return;
+    }
 
     //For descendants of search-results being clicked, remove this check if you do not want to put constraint on descendants.
     let distance = $(evt.target).closest('#search-results').length;
-    console.log(distance);
     if (0 < distance && distance <= 2) {
-      console.log("clicked on a search result");
       return;
     }
     //Do processing of click event here for every element except with id search-results
     $('#search-results').remove();
 
-});
+  });
+  // Trigger the "keyup" event if input gets focused
+
+  this.query_box.focus(function () {
+    self.query_box.trigger("keyup");
+  });
 
   // Watch the input box.
   this.query_box.on('keyup', function() {
