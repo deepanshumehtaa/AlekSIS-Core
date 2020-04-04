@@ -22,21 +22,12 @@ Autocomplete.prototype.setup = function () {
     this.query_box = this.form_elem.find('input[name=q]');
 
 
-    // Remove search results if input field isn't focused anymore
-    $('body').click(function (evt) {
-        if ($.inArray(evt.target.id, ["search", "search-results"]) >= 0) {
-            return;
+    $("#search-form").focusout(function () {
+        if ($(this).has(document.activeElement).length === 1) {
+            $("#search-results").remove();
         }
-
-        //For descendants of search-results being clicked, remove this check if you do not want to put constraint on descendants.
-        let distance = $(evt.target).closest('#search-results').length;
-        if (0 < distance && distance <= 2) {
-            return;
-        }
-        //Do processing of click event here for every element except with id search-results
-        $('#search-results').remove();
-
     });
+
     // Trigger the "keyup" event if input gets focused
 
     this.query_box.focus(function () {
@@ -87,11 +78,11 @@ Autocomplete.prototype.setup = function () {
         return true;
     });
 
-    // On selecting a result, remove result box
-    this.form_elem.on('click', '#search-results', function (ev) {
-        $('#search-results').remove();
-        return true;
-    });
+    // // On selecting a result, remove result box
+    // this.form_elem.on('click', '#search-results', function (ev) {
+    //     $('#search-results').remove();
+    //     return true;
+    // });
 
     // Disable browser's own autocomplete
     // We do this here so users without JavaScript can keep it enabled
