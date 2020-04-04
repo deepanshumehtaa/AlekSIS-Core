@@ -8,6 +8,14 @@
   color: $primary-color !important;
 }
 
+.secondary-color {
+  background-color: $secondary-color !important;
+}
+
+.secondary-color-text, .secondary-color-text a {
+  color: $secondary-color !important;
+}
+
 rect#background {
   fill: $primary-color !important;
 }
@@ -173,6 +181,10 @@ li.active > a > .sidenav-badge {
   top: 21px;
   right: 10px;
   cursor: pointer;
+}
+
+a.collection-item.search-item {
+  padding: 20px 10px;
 }
 
 // Sidenav trigger
