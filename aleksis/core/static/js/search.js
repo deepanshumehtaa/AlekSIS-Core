@@ -12,6 +12,7 @@ var Autocomplete = function (options) {
     this.minimum_length = parseInt(options.minimum_length || 3);
     this.form_elem = null;
     this.query_box = null;
+    this.selected_element = null;
 };
 
 Autocomplete.prototype.setup = function () {
@@ -43,15 +44,42 @@ Autocomplete.prototype.setup = function () {
     });
 
     // Watch the input box.
-    this.query_box.on('keyup', function () {
+    this.query_box.keydown(function (e) {
         var query = self.query_box.val();
 
-        if (query.length < self.minimum_length) {
-            $("#search-results").remove();
+        if (e.which === 38) { // Keypress Up
+            if (!self.selected_element) {
+                self.setSelectedResult($("#search-collection").children().last());
+                return false;
+            }
+
+            let prev = self.selected_element.prev();
+            if (prev.length > 0) {
+                self.setSelectedResult(prev);
+            }
             return false;
         }
 
+        if (e.which === 40) { // Keypress Down
+            if (!self.selected_element) {
+                self.setSelectedResult($("#search-collection").children().first());
+                return false;
+            }
+
+            let next = self.selected_element.next();
+            if (next.length > 0) {
+                self.setSelectedResult(next);
+            }
+            return false;
+        }
+
+        if (query.length < self.minimum_length) {
+            $("#search-results").remove();
+            return true;
+        }
+
         self.fetch(query);
+        return true;
     });
 
     // On selecting a result, remove result box
@@ -83,4 +111,13 @@ Autocomplete.prototype.show_results = function (data) {
     $('#search-results').remove();
     var results_wrapper = $('<div id="search-results">' + data + '</div>');
     this.query_box.after(results_wrapper);
+};
+
+Autocomplete.prototype.setSelectedResult = function (element) {
+    if (this.selected_element) {
+        this.selected_element.removeClass("active");
+    }
+    element.addClass("active");
+    this.selected_element = element;
+    console.log("New element: ", element);
 };
