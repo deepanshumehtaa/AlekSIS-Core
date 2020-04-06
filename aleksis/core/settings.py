@@ -188,7 +188,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
-AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
@@ -568,5 +567,4 @@ GUARDIAN_RAISE_403 = True
 ANONYMOUS_USER_NAME = None
 
 # Append authentication backends
-AUTHENTICATION_BACKENDS.append("guardian.backends.ObjectPermissionBackend")
-#AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
+AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
