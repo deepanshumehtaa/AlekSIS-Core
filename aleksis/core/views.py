@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 
 from django_tables2 import RequestConfig
+from guardian.shortcuts import get_objects_for_user
+from rules.contrib.views import permission_required, objectgetter
 
 from .decorators import admin_required, person_required
 from .forms import (
@@ -50,12 +52,14 @@ def offline(request):
     return render(request, "core/offline.html")
 
 
-@login_required
+@permission_required("core.view_persons")
 def persons(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all persons
-    persons = Person.objects.filter(is_active=True)
+    persons = get_objects_for_user(
+        request.user, "core.view_person", Person.objects.filter(is_active=True)
+    )
 
     # Build table
     persons_table = PersonsTable(persons)
@@ -65,24 +69,24 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-@login_required
+def get_person_by_pk(request, id_: Optional[int] = None):
+    if id_:
+        return get_object_or_404(Person, pk=id_)
+    else:
+        return request.user.person
+
+
+@permission_required("core.view_person", fn=get_person_by_pk)
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     # Get person and check access
-    try:
-        if id_ is None:
-            person = request.user.person
-        else:
-            person = Person.objects.get(pk=id_)
-    except Person.DoesNotExist as e:
-        # Turn not-found object into a 404 error
-        raise Http404 from e
+    person = get_person_by_pk(request, id_)
 
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=id_)
+    groups = Group.objects.filter(members=person.pk)
 
     # Build table
     groups_table = GroupsTable(groups)
@@ -158,7 +162,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons_accounts.html", context)
 
 
-@admin_required
+@permission_required("core.change_person", fn=objectgetter(Person, "id_"))
 def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 

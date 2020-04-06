@@ -124,16 +124,15 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
-            "validators": [
-                "menu_generator.validators.is_authenticated",
-                "aleksis.core.util.core_helpers.has_person",
-            ],
+            "validators": [("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")],
             "submenu": [
                 {
                     "name": _("Persons"),
                     "url": "persons",
                     "icon": "person",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_persons")
+                    ],
                 },
                 {
                     "name": _("Groups"),
