@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from guardian.admin import GuardedModelAdmin
-
-
+from .mixins import BaseModelAdmin
 from .models import (
     Group,
     Person,
@@ -15,7 +13,8 @@ from .models import (
     CustomMenuItem,
 )
 
-class PersonAdmin(GuardedModelAdmin):
+
+class PersonAdmin(BaseModelAdmin):
     pass
 
 
@@ -32,7 +31,7 @@ class AnnouncementRecipientInline(admin.StackedInline):
     model = AnnouncementRecipient
 
 
-class AnnouncementAdmin(admin.ModelAdmin):
+class AnnouncementAdmin(BaseModelAdmin):
     inlines = [
         AnnouncementRecipientInline,
     ]
