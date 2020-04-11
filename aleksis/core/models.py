@@ -14,8 +14,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
+from .tasks import send_notification
 from .util.core_helpers import now_tomorrow
-from .util.notifications import send_notification
 from .util.model_helpers import ICONS
 
 from constance import config
@@ -276,7 +276,8 @@ class Notification(ExtensibleModel):
         return str(self.title)
 
     def save(self, **kwargs):
-        send_notification(self)
+        if not self.sent:
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 
