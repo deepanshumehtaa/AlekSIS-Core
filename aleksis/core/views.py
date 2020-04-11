@@ -96,16 +96,15 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/person_full.html", context)
 
 
-@login_required
+def get_group_by_pk(request: HttpRequest, id_: int) -> Group:
+    return get_object_or_404(Group, pk=id_)
+
+
+@permission_required("core.view_group", fn=get_group_by_pk)
 def group(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
-    # Get group and check if it exist
-    try:
-        group = Group.objects.get(pk=id_)
-    except Group.DoesNotExist as e:
-        # Turn not-found object into a 404 error
-        raise Http404 from e
+    group = get_group_by_pk(request, id_)
 
     context["group"] = group
 
@@ -131,12 +130,12 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, "core/group_full.html", context)
 
 
-@login_required
+@permission_required("core.view_groups")
 def groups(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all groups
-    groups = Group.objects.all()
+    groups = get_objects_for_user(request.user, "core.view_group", Group)
 
     # Build table
     groups_table = GroupsTable(groups)

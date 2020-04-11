@@ -138,7 +138,9 @@ MENUS = {
                     "name": _("Groups"),
                     "url": "groups",
                     "icon": "group",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_groups")
+                    ],
                 },
                 {
                     "name": _("Persons and accounts"),

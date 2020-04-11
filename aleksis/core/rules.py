@@ -1,6 +1,6 @@
 from rules import add_perm, always_allow
 
-from aleksis.core.models import Person
+from aleksis.core.models import Person, Group
 from aleksis.core.util.predicates import (
     has_person_predicate,
     has_global_perm,
@@ -30,5 +30,17 @@ change_person_predicate = has_person_predicate & (
 )
 add_perm("core.change_person", change_person_predicate)
 
+# View groups
+view_groups_predicate = has_person_predicate & (
+    has_global_perm("core.view_group") | has_any_object("core.view_group", Group)
+)
+add_perm("core.view_groups", view_groups_predicate)
+
+# View group
+view_group_predicate = has_person_predicate &(
+    has_global_perm("core.view_group") | has_object_perm("core.view_group")
+)
+add_perm("core.view_group", view_group_predicate)
+
 # People menu (persons + objects)
-add_perm("core.view_people_menu", has_person_predicate & (view_persons_predicate))
+add_perm("core.view_people_menu", has_person_predicate & (view_persons_predicate | view_groups_predicate))
