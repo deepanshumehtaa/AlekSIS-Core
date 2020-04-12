@@ -68,7 +68,6 @@ _CHANNELS_MAP = {
 }
 
 
-@celery_optional
 def send_notification(notification: Union[int, "Notification"], resend: bool = False) -> None:
     """ Send a notification through enabled channels.
 
