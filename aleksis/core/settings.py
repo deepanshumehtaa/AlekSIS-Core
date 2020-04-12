@@ -436,7 +436,7 @@ if _settings.get("twilio.sid", None):
 
 if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
-    CELERY_BROKER_URL = "redis://localhost"
+    CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
     CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
