@@ -133,6 +133,8 @@ class Person(ExtensibleModel):
 
     primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
 
+    description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
+
     @property
     def primary_group_short_name(self) -> Optional[str]:
         """ Returns the short_name field of the primary
