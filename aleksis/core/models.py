@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
@@ -563,14 +563,14 @@ class BirthdayWidget(DashboardWidget):
 
         queries = []
         today = timezone.datetime.now().date()
-        for delta in range(0, days):
+        for delta in range(0, self.days):
             d = timezone.now().date() + timedelta(days=delta)
             q = Q(date_of_birth__month=d.month, date_of_birth__day=d.day)
             queries.append(q)
 
         query = reduce(lambda a, b: a | b, queries)
 
-        persons = Person.objects.filter(query).all()
+        persons = Person.objects.filter(query).order_by("date_of_birth__month", "date_of_birth__day", "-date_of_birth__year")
 
         context["persons"] = persons
         return context
