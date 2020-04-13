@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0020_incease_length_of_fields'),
+        ('core', '0021_person_description_field.py'),
     ]
 
     operations = [
