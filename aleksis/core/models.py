@@ -191,6 +191,10 @@ class Person(ExtensibleModel):
             self.user.email = self.email
             self.user.save()
 
+        # Save all related groups once to keep synchronisation with Django
+        for group in self.member_of.join(self.owner_of).all():
+            group.save()
+
         self.auto_select_primary_group()
 
     def __str__(self) -> str:
