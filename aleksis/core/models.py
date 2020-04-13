@@ -565,5 +565,4 @@ class BirthdayWidget(DashboardWidget):
         return persons
 
     class Meta:
-        proxy = True
         verbose_name = _("Birthday widget")
