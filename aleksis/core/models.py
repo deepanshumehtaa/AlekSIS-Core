@@ -192,7 +192,7 @@ class Person(ExtensibleModel):
             self.user.save()
 
         # Save all related groups once to keep synchronisation with Django
-        for group in self.member_of.join(self.owner_of).all():
+        for group in self.member_of.union(self.owner_of).all():
             group.save()
 
         self.auto_select_primary_group()
@@ -270,7 +270,7 @@ class Group(ExtensibleModel):
 
         # Synchronise group to Django group with same name
         dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
-        dj_group.users.set(
+        dj_group.user_set.set(
             list(
                 self.members.values_list("user", flat=True).union(self.owners.values_list("user", flat=True))
             )
