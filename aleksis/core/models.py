@@ -166,6 +166,18 @@ class Person(ExtensibleModel):
         else:
             return f"{self.first_name} {self.last_name}"
 
+    @property
+    def age(self):
+        return self.age_at(timezone.datetime.now().date())
+
+    def age_at(self, today):
+        years = today.year - self.date_of_birth.year
+        if (self.date_of_birth.month > today.month
+            or (self.date_of_birth.month == today.month
+                and self.date_of_birth.day > today.day)):
+            years -= 1
+        return years
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
