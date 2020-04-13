@@ -237,6 +237,8 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
+    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+
     @property
     def announcement_recipients(self):
         return list(self.members.all()) + list(self.owners.all())
@@ -510,3 +512,11 @@ class CustomMenuItem(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
+
+class GroupType(ExtensibleModel):
+    name = models.CharField(verbose_name=_("Title of type"), max_length=50, unique=True)
+    description = models.TextField(verbose_name=_("Description"), unique=True)
+
+    class Meta:
+        verbose_name = _("Group type")
+        verbose_name_plural = _("Group types")
