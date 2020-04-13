@@ -1,12 +1,13 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import os
 import pkgutil
 from importlib import import_module
-from typing import Any, Callable, Sequence, Union
+from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
+from functools import reduce
 
 from django.conf import settings
-from django.db.models import Model
+from django.db.models import Model, Q
 from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
@@ -159,16 +160,18 @@ def now_tomorrow() -> datetime:
     return timezone.now() + timedelta(days=1)
 
 
-def query_date_range(days) -> query:
-    """ Return  """
+def year_agnostic_date_range_query(days: int, field: str, start: Optional[date] = None) -> Q:
+    """ Return a query to filter on a set of days, ignoring the year,
+    e.g. for use in determining birthdays.
+    """
+
+    if start is None:
+        start = timezone.datetime.now().date()
 
     queries = []
-    today = timezone.datetime.now().date()
     for delta in range(0, days):
-        d = timezone.now().date() + timedelta(days=delta)
-        q = Q(date_of_birth__month=d.month, date_of_birth__day=d.day)
-        queries.append(q)
+        day = start + timedelta(days=delta)
+        query = Q(**{field+"__month": day.month, field+"__day": day.day})
+        queries.append(query)
 
-    query = reduce(lambda a, b: a | b, queries)
-
-    return query
+    return reduce(lambda a, b: a | b, queries)

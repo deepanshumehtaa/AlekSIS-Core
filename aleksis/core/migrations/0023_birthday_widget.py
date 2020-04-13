@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='BirthdayWidget',
             fields=[
                 ('dashboardwidget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.DashboardWidget')),
-                ('days', models.IntegerField(default=5, verbose_name='Time span in days')),
+                ('days', models.IntegerField(default=1, verbose_name='Time span in days')),
             ],
             options={
                 'verbose_name': 'Birthday widget',

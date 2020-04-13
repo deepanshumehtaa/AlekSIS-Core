@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
@@ -6,18 +6,17 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import QuerySet, Q
+from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from functools import reduce
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow, query_date_range
+from .util.core_helpers import now_tomorrow, year_agnostic_date_range_query
 from .util.model_helpers import ICONS
 
 from constance import config
@@ -556,12 +555,12 @@ class GroupType(ExtensibleModel):
 class BirthdayWidget(DashboardWidget):
     template = "core/birthday_widget.html"
 
-    days = models.IntegerField(verbose_name=_("Time span in days"), default=5)
+    days = models.IntegerField(verbose_name=_("Time span in days"), default=1)
 
     def get_context(self):
         context = {}
 
-        query = query_date_range(self.days)
+        query = year_agnostic_date_range_query(self.days, "date_of_birth")
 
         persons = Person.objects.filter(query).order_by("date_of_birth__month", "date_of_birth__day", "-date_of_birth__year")
 
