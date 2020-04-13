@@ -551,3 +551,19 @@ class GroupType(ExtensibleModel):
     class Meta:
         verbose_name = _("Group type")
         verbose_name_plural = _("Group types")
+
+class BirthdayWidget(DashboardWidget):
+    template = "core/birthday_widget.html"
+
+    days = models.IntegerField(verbose_name=_("Time span in days"), default=5)
+
+    def get_context(self):
+        request = get_request()
+
+        persons = Person.objects.filter(date_of_birth__range=[timezone.datetime.now().date(), timezone.datetime.now().date() + timedelta(days=days)])
+
+        return persons
+
+    class Meta:
+        proxy = True
+        verbose_name = _("Birthday widget")

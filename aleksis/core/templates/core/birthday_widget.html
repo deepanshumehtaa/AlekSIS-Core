@@ -1,0 +1,16 @@
+{# -*- engine:django -*- #}
+
+{% load i18n static humanize %}
+
+<div class="card ">
+  <div class="card-content">
+    <span class="card-title">{% trans "Upcoming birthdays" %}</span>
+    {% for person in persons %}
+      <div class="card-panel person-card">
+        <span class="title">{{ person.full_name }}</span><br>{{ person.date_of_birth }} ({{ person.age_at(person.date_of_birth) }} {% trans "years" %})
+      </div>
+    {% empty %}
+      <span>{% trans "No birthdays to display" %}</span>
+    {% endfor %}
+  </div>
+</div>
