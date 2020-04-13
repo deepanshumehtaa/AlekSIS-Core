@@ -19,6 +19,7 @@ admin.site.register(SchoolTerm)
 admin.site.register(Activity)
 admin.site.register(Notification)
 admin.site.register(CustomMenuItem)
+admin.site.register(BirthdayWidget)
 
 
 class AnnouncementRecipientInline(admin.StackedInline):
