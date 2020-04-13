@@ -10,6 +10,7 @@ from .models import (
     Announcement,
     AnnouncementRecipient,
     CustomMenuItem,
+    BirthdayWidget,
 )
 
 admin.site.register(Person)
