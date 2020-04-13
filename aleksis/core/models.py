@@ -6,10 +6,11 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.forms.widgets import Media
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from functools import reduce
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
@@ -558,11 +559,21 @@ class BirthdayWidget(DashboardWidget):
     days = models.IntegerField(verbose_name=_("Time span in days"), default=5)
 
     def get_context(self):
-        request = get_request()
+        context = {}
 
-        persons = Person.objects.filter(date_of_birth__range=[timezone.datetime.now().date(), timezone.datetime.now().date() + timedelta(days=days)])
+        queries = []
+        today = timezone.datetime.now().date()
+        for delta in range(0, days):
+            d = timezone.now().date() + timedelta(days=delta)
+            q = Q(date_of_birth__month=d.month, date_of_birth__day=d.day)
+            queries.append(q)
 
-        return persons
+        query = reduce(lambda a, b: a | b, queries)
+
+        persons = Person.objects.filter(query).all()
+
+        context["persons"] = persons
+        return context
 
     class Meta:
         verbose_name = _("Birthday widget")
