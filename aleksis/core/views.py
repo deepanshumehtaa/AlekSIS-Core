@@ -82,7 +82,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=id_)
+    groups = Group.objects.filter(members=person)
 
     # Build table
     groups_table = GroupsTable(groups)
