@@ -2,6 +2,7 @@ from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -190,6 +191,10 @@ class Person(ExtensibleModel):
             self.user.email = self.email
             self.user.save()
 
+        # Save all related groups once to keep synchronisation with Django
+        for group in self.member_of.union(self.owner_of).all():
+            group.save()
+
         self.auto_select_primary_group()
 
     def __str__(self) -> str:
@@ -259,6 +264,18 @@ class Group(ExtensibleModel):
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Synchronise group to Django group with same name
+        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+        dj_group.user_set.set(
+            list(
+                self.members.values_list("user", flat=True).union(self.owners.values_list("user", flat=True))
+            )
+        )
+        dj_group.save()
 
 
 class Activity(ExtensibleModel):
