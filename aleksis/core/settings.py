@@ -5,13 +5,11 @@ from importlib import import_module
 
 from django.apps import apps
 from django.utils.translation import gettext_lazy as _
-from calendarweek.django import i18n_day_name_choices_lazy
 
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
 from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
-from .util.notifications import get_notification_choices_lazy
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -66,9 +64,9 @@ INSTALLED_APPS = [
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
-    "constance",
-    "constance.backends.database",
     "django_any_js",
+    "dynamic_preferences",
+    "dynamic_preferences.users.apps.UserPreferencesConfig",
     "django_yarnpkg",
     "django_tables2",
     "easy_thumbnails",
@@ -142,7 +140,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
-                "constance.context_processors.config",
+                "dynamic_preferences.processors.global_preferences",
                 "aleksis.core.util.core_helpers.custom_information_processor",
             ],
         },
@@ -348,64 +346,9 @@ TEMPLATED_EMAIL_AUTO_PLAIN = True
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
-CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
-CONSTANCE_ADDITIONAL_FIELDS = {
-    "char_field": ["django.forms.CharField", {}],
-    "image_field": ["django.forms.ImageField", {}],
-    "email_field": ["django.forms.EmailField", {}],
-    "url_field": ["django.forms.URLField", {}],
-    "integer_field": ["django.forms.IntegerField", {}],
-    "password_field": ["django.forms.CharField", {
-        'widget': 'django.forms.PasswordInput',
-    }],
-    "adressing-select": ['django.forms.fields.ChoiceField', {
-        'widget': 'django.forms.Select',
-        'choices': ((None, "-----"),
-                    # ("german", _("<first name>") + " " + _("<last name>")),
-                    # ("english", _("<last name>") + ", " + _("<first name>")),
-                    # ("netherlands", _("<last name>") + " " + _("<first name>")),
-                    ("german", "John Doe"),
-                    ("english", "Doe, John"),
-                    ("dutch", "Doe John"),
-                    )
-    }],
-    "notifications-select": ["django.forms.fields.MultipleChoiceField", {
-        "widget": "django.forms.CheckboxSelectMultiple",
-        "choices": get_notification_choices_lazy,
-    }],
-    "weekday_field": ["django.forms.fields.ChoiceField", {
-        'widget': 'django.forms.Select',
-        "choices":  i18n_day_name_choices_lazy
-    }],
-    "colour_field": ["django.forms.CharField", {
-        "widget": "colorfield.widgets.ColorWidget"
-    }],
+DYNAMIC_PREFERENCES = {
+    "REGISTRY_MODULE": "preferences",
 }
-CONSTANCE_CONFIG = {
-    "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "SITE_DESCRIPTION": ("The Free School Information System", _("Site description")),
-    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
-    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
-    "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
-    "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
-    "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
-    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
-    "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
-    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
-}
-CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
-    "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
-    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
-    "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
-    "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
-    "Account settings": ("PRIMARY_GROUP_PATTERN",),
-}
-
-merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
-merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
-merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
