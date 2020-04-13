@@ -17,7 +17,7 @@ from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow
+from .util.core_helpers import now_tomorrow, query_date_range
 from .util.model_helpers import ICONS
 
 from constance import config
@@ -561,14 +561,7 @@ class BirthdayWidget(DashboardWidget):
     def get_context(self):
         context = {}
 
-        queries = []
-        today = timezone.datetime.now().date()
-        for delta in range(0, self.days):
-            d = timezone.now().date() + timedelta(days=delta)
-            q = Q(date_of_birth__month=d.month, date_of_birth__day=d.day)
-            queries.append(q)
-
-        query = reduce(lambda a, b: a | b, queries)
+        query = query_date_range(self.days)
 
         persons = Person.objects.filter(query).order_by("date_of_birth__month", "date_of_birth__day", "-date_of_birth__year")
 

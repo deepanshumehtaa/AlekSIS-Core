@@ -157,3 +157,18 @@ def custom_information_processor(request: HttpRequest) -> dict:
 def now_tomorrow() -> datetime:
     """ Return current time tomorrow """
     return timezone.now() + timedelta(days=1)
+
+
+def query_date_range(days) -> query:
+    """ Return  """
+
+    queries = []
+    today = timezone.datetime.now().date()
+    for delta in range(0, days):
+        d = timezone.now().date() + timedelta(days=delta)
+        q = Q(date_of_birth__month=d.month, date_of_birth__day=d.day)
+        queries.append(q)
+
+    query = reduce(lambda a, b: a | b, queries)
+
+    return query
