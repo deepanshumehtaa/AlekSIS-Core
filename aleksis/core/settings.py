@@ -280,6 +280,7 @@ YARN_INSTALLED_APPS = [
     "materialize-css",
     "material-design-icons-iconfont",
     "select2",
+    "select2-materialize",
     "paper-css",
 ]
 
@@ -300,6 +301,7 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
     "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
+    "select2-materialize": {"css_url": JS_URL + "/select2-materialize/select2-materialize.css", "js_url": JS_URL + "/select2-materialize/index.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
