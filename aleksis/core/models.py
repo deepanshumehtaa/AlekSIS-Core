@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
