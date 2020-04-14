@@ -381,6 +381,8 @@ CONSTANCE_CONFIG = {
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
     "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
+    "ENABLE_GEOLOCATION_OF_PERSONS": (False, _("Enable "), bool),
+    "MAPQUEST_API_KEY": ("", _("MAPQuest api key "), str),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
     "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
@@ -389,6 +391,7 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
     "Account settings": ("PRIMARY_GROUP_PATTERN",),
+    "Geolocation settings": ("ENABLE_GEOLOCATION_OF_PERSONS", "MAPQUEST_API_KEY"),
 }
 
 merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)

@@ -116,6 +116,8 @@ class Person(ExtensibleModel):
     housenumber = models.CharField(verbose_name=_("Street number"), max_length=255, blank=True)
     postal_code = models.CharField(verbose_name=_("Postal code"), max_length=255, blank=True)
     place = models.CharField(verbose_name=_("Place"), max_length=255, blank=True)
+    longtitude = models.FloatField(verbose_name=_("Longtitude"), blank=True, null=True)
+    latitude = models.FloatField(verbose_name=_("Latitude"), blank=True, null=True)
 
     phone_number = PhoneNumberField(verbose_name=_("Home phone"), blank=True)
     mobile_number = PhoneNumberField(verbose_name=_("Mobile phone"), blank=True)
@@ -159,6 +161,10 @@ class Person(ExtensibleModel):
     @property
     def full_name(self) -> str:
         return f"{self.last_name}, {self.first_name}"
+
+    @property
+    def full_address(self) -> str:
+        return f"{self.street} {self.housenumber}, {self.postal_code} {self.place}"
 
     @property
     def adressing_name(self) -> str:

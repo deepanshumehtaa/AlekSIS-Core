@@ -68,6 +68,7 @@ django-otp = "0.7.5"
 django-colorfield = "^0.2.1"
 django-bleach = "^0.6.1"
 django-memoize = "^2.2.1"
+geopy = "^1.21.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
