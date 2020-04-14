@@ -280,6 +280,7 @@ YARN_INSTALLED_APPS = [
     "materialize-css",
     "material-design-icons-iconfont",
     "select2",
+    "select2-materialize",
     "paper-css",
 ]
 
