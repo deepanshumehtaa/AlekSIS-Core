@@ -5,11 +5,14 @@ from importlib import import_module
 from typing import Any, Callable, Sequence, Union
 from uuid import uuid4
 
+from constance import config
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
+from geopy.geocoders import OpenMapQuest
+from geopy.geocoders.base import GeocoderServiceError
 
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
@@ -157,3 +160,22 @@ def custom_information_processor(request: HttpRequest) -> dict:
 def now_tomorrow() -> datetime:
     """ Return current time tomorrow """
     return timezone.now() + timedelta(days=1)
+
+
+def update_geolocation(person) -> None:
+    """ Update coordinates if postal address is given  """
+
+    if config.ENABLE_GEOLOCATION_OF_PERSONS:
+
+        # Get API key from settings
+        nominatim = OpenMapQuest(api_key=getattr(config, "MAPQUEST_API_KEY", None),
+                         user_agent="AlekSIS")
+
+        if person.full_address:
+            try:
+                location = nominatim.geocode(person.full_address)
+            except GeocoderServiceError:
+                location = None
+
+            if location:
+                person.latitude, person.longitude = location.latitude, location.longitude

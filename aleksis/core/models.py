@@ -201,6 +201,10 @@ class Person(ExtensibleModel):
         for group in self.member_of.union(self.owner_of).all():
             group.save()
 
+        # Update geolocation
+        if self.full_address:
+            update_geolocation(self)
+
         self.auto_select_primary_group()
 
     def __str__(self) -> str:
