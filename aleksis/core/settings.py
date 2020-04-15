@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "polymorphic",
     "django_global_request",
+    "dbbackup",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -406,6 +407,16 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+
+DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
+DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
+DBBACKUP_CLEANUP_KEEP = _settings.get("backup.database.keep", 10)
+DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get("backup.media.keep", 10)
+DBBACKUP_GPG_RECIPIENT = _settings.get("backup.gpg_recipient", None)
+DBBACKUP_COMPRESS_DB = _settings.get("backup.database.compress", True)
+DBBACKUP_ENCRYPT_DB = _settings.get("backup.database.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
+DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
