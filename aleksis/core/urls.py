@@ -39,6 +39,8 @@ urlpatterns = [
     path("announcement/create/", views.announcement_form, name="add_announcement"),
     path("announcement/edit/<int:pk>/", views.announcement_form, name="edit_announcement"),
     path("announcement/delete/<int:pk>/", views.delete_announcement, name="delete_announcement"),
+    path("search/searchbar/", views.searchbar_snippets, name="searchbar_snippets"),
+    path("search/", include("haystack.urls")),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),
