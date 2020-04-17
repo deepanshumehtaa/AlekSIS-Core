@@ -265,12 +265,11 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
-<<<<<<< HEAD
+    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+
+
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
-=======
-    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
->>>>>>> master
 
     @property
     def announcement_recipients(self):

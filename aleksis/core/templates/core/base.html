@@ -71,14 +71,16 @@
         </object>
       </a>
     </li>
-    <li class="search">
-      <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
-        <div class="search-wrapper">
-          <input id="search" name="q" placeholder="{% trans "Search" %}">
-          <i class="material-icons">search</i>
-        </div>
-      </form>
-    </li>
+    {% if user.is_authenticated %}
+      <li class="search">
+        <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
+          <div class="search-wrapper">
+            <input id="search" name="q" placeholder="{% trans "Search" %}">
+            <i class="material-icons">search</i>
+          </div>
+        </form>
+      </li>
+    {% endif %}
     <li class="no-padding">
       {% include "core/sidenav.html" %}
     </li>
