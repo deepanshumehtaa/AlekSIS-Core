@@ -80,7 +80,7 @@ header, main, footer {
 
 #sidenav-logo {
   height: 70px;
-  width:auto;
+  width: auto;
 }
 
 @media only screen and (max-width: 993px) {
@@ -150,7 +150,7 @@ li.active > a > .sidenav-badge {
   color: #777;
   margin-top: -1px;
   border-top: 1px solid rgba(0, 0, 0, 0.14);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
 
   -webkit-transition: margin .25s ease;
   transition: margin .25s ease;
@@ -261,6 +261,43 @@ form .row {
   margin-bottom: 0;
 }
 
+label.chips-checkbox {
+  &.active {
+    outline: none;
+    background-color: $chip-selected-color;
+    color: #fff;
+  }
+
+  display: inline-block;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, .6);
+  line-height: 32px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background-color: $chip-bg-color;
+  margin-bottom: $chip-margin;
+  margin-right: $chip-margin;
+
+  > img {
+    float: left;
+    margin: 0 8px 0 -12px;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+  }
+}
+
+input[type="checkbox"].chips-checkbox + span {
+  padding-left: 0;
+
+  &:before {
+    display: none;
+    width: 0;
+  }
+}
+
 // Badges
 
 span.badge.new::after {
@@ -318,7 +355,7 @@ span.badge .material-icons {
 
 /* Table*/
 
-table.striped > tbody > tr:nth-child(odd), table tr.striped, table tbody.striped tr  {
+table.striped > tbody > tr:nth-child(odd), table tr.striped, table tbody.striped tr {
   background-color: rgba(208, 208, 208, 0.5);
 }
 
