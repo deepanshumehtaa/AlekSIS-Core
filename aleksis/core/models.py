@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
@@ -95,6 +96,8 @@ class Person(ExtensibleModel):
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
 
+    icon_ = "person"
+
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
@@ -135,6 +138,10 @@ class Person(ExtensibleModel):
     primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
 
     description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
+
+
+    def get_absolute_url(self) -> str:
+        return reverse("person_by_id", args=[self.id])
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
@@ -242,6 +249,8 @@ class Group(ExtensibleModel):
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
 
+    icon_ = "group"
+
     name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
 
@@ -256,7 +265,12 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
+<<<<<<< HEAD
+    def get_absolute_url(self) -> str:
+        return reverse("group_by_id", args=[self.id])
+=======
     type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+>>>>>>> master
 
     @property
     def announcement_recipients(self):
