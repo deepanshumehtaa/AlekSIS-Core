@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "polymorphic",
     "django_global_request",
     "dbbackup",
+    "letsagree",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -117,6 +118,7 @@ MIDDLEWARE = [
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
+    "letsagree.middleware.LetsAgreeMiddleware",
 ]
 
 ROOT_URLCONF = "aleksis.core.urls"

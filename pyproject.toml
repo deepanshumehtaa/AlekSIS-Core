@@ -69,6 +69,7 @@ django-colorfield = "^0.2.1"
 django-bleach = "^0.6.1"
 django-memoize = "^2.2.1"
 django-dbbackup = "^3.3.0"
+django-letsagree = "^1.1.1"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

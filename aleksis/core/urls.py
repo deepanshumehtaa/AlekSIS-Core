@@ -46,6 +46,7 @@ urlpatterns = [
     path("jsreverse.js", urls_js, name='js_reverse'),
     path("calendarweek_i18n.js", calendarweek.django.i18n_js, name="calendarweek_i18n_js"),
     path('gettext.js', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('letsagree/', include("letsagree.urls")),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
