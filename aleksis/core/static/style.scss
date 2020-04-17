@@ -187,6 +187,17 @@ a.collection-item.search-item {
   padding: 20px 10px;
 }
 
+div#search-results {
+  position: absolute;
+  width: 100%;
+}
+
+.search-result-icon {
+  position: absolute;
+  right: 10px;
+}
+
+
 // Sidenav trigger
 
 header a.sidenav-trigger {
@@ -600,14 +611,4 @@ main .alert p:first-child, main .alert div:first-child {
   display: inline-block;
   overflow: visible;
   width: 100%;
-}
-
-div#search-results {
-  position: absolute;
-  width: 100%;
-}
-
-.search-result-icon {
-  position: absolute;
-  right: 10px;
 }
