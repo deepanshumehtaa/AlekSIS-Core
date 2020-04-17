@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% load i18n material_form %}
+
+{% block browser_title %}{% blocktrans %}Pending Agreements{% endblocktrans %}{% endblock %}
+
+{% block extra_head %}
+  {{ block.super }}
+  {{ form.media }}
+{% endblock %}
+
+{% block content %}
+  <p class="flow-text">{% blocktrans %}Pending Agreements{% endblocktrans %}</p>
+
+  {% if empty_form %}
+    <p>{% trans "There are no pending agreements" %}</p>
+  {% else %}
+    <form method="post">
+      {% csrf_token %}
+
+      {{ form.management_form }}
+
+      {% for item in form %}
+        {% form form=item %}{% endform %}
+      {% endfor %}
+
+      {% trans "Agree" as caption %}
+      {% include "core/save_button.html" with caption=caption icon="done_all" %}
+  </form>
+  {% endif %}
+
+{% endblock %}
