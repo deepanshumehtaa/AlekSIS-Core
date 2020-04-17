@@ -1,7 +1,3 @@
-[submodule "apps/official/AlekSIS-App-Alsijil"]
-	path = apps/official/AlekSIS-App-Alsijil
-	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-Alsijil
-	ignore = untracked
 [submodule "apps/official/AlekSIS-App-Chronos"]
 	path = apps/official/AlekSIS-App-Chronos
 	url = https://edugit.org/AlekSIS/Official/AlekSIS-App-Chronos

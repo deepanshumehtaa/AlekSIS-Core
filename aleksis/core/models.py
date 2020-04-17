@@ -2,6 +2,7 @@ from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -9,14 +10,14 @@ from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
+from .tasks import send_notification
 from .util.core_helpers import now_tomorrow
-from .util.notifications import send_notification
 from .util.model_helpers import ICONS
 
 from constance import config
@@ -136,6 +137,9 @@ class Person(ExtensibleModel):
 
     primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
 
+    description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
+
+
     def get_absolute_url(self) -> str:
         return reverse("person_by_id", args=[self.id])
 
@@ -172,6 +176,18 @@ class Person(ExtensibleModel):
         else:
             return f"{self.first_name} {self.last_name}"
 
+    @property
+    def age(self):
+        return self.age_at(timezone.datetime.now().date())
+
+    def age_at(self, today):
+        years = today.year - self.date_of_birth.year
+        if (self.date_of_birth.month > today.month
+            or (self.date_of_birth.month == today.month
+                and self.date_of_birth.day > today.day)):
+            years -= 1
+        return years
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
@@ -181,6 +197,10 @@ class Person(ExtensibleModel):
             self.user.last_name = self.last_name
             self.user.email = self.email
             self.user.save()
+
+        # Save all related groups once to keep synchronisation with Django
+        for group in self.member_of.union(self.owner_of.all()).all():
+            group.save()
 
         self.auto_select_primary_group()
 
@@ -245,8 +265,12 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
+<<<<<<< HEAD
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
+=======
+    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+>>>>>>> master
 
     @property
     def announcement_recipients(self):
@@ -254,6 +278,20 @@ class Group(ExtensibleModel):
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Synchronise group to Django group with same name
+        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+        dj_group.user_set.set(
+            list(
+                self.members.filter(user__isnull=False).values_list("user", flat=True).union(
+                    self.owners.filter(user__isnull=False).values_list("user", flat=True)
+                )
+            )
+        )
+        dj_group.save()
 
 
 class Activity(ExtensibleModel):
@@ -287,7 +325,8 @@ class Notification(ExtensibleModel):
         return str(self.title)
 
     def save(self, **kwargs):
-        send_notification(self)
+        if not self.sent:
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 
@@ -520,3 +559,11 @@ class CustomMenuItem(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
+
+class GroupType(ExtensibleModel):
+    name = models.CharField(verbose_name=_("Title of type"), max_length=50)
+    description = models.CharField(verbose_name=_("Description"), max_length=500)
+
+    class Meta:
+        verbose_name = _("Group type")
+        verbose_name_plural = _("Group types")

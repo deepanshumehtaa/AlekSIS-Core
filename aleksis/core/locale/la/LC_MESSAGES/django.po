@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-30 09:18+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-04-14 18:42+0000\n"
+"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/"
+"la/>\n"
+"Language: la\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.8\n"
 
 #: forms.py:38 forms.py:93
 msgid "You cannot set a new username when also selecting an existing user."
@@ -36,16 +37,16 @@ msgstr ""
 
 #: forms.py:149 forms.py:152
 msgid "Date"
-msgstr ""
+msgstr "dies"
 
 #: forms.py:150 forms.py:153
 msgid "Time"
-msgstr ""
+msgstr "tempus"
 
 #: forms.py:155 menus.py:127 models.py:95 templates/core/persons.html:8
 #: templates/core/persons.html:9
 msgid "Persons"
-msgstr ""
+msgstr "personae"
 
 #: forms.py:156 menus.py:133 models.py:232 templates/core/groups.html:8
 #: templates/core/groups.html:9 templates/core/person_full.html:79
@@ -62,7 +63,7 @@ msgstr ""
 
 #: forms.py:164
 msgid "Write your announcement:"
-msgstr ""
+msgstr "Scribe nuntium:"
 
 #: forms.py:203
 msgid "You are not allowed to create announcements which are only valid in the past."
@@ -85,7 +86,7 @@ msgstr ""
 
 #: menus.py:13
 msgid "Dashboard"
-msgstr ""
+msgstr "Forum"
 
 #: menus.py:19
 msgid "Account"
@@ -105,22 +106,22 @@ msgstr ""
 
 #: menus.py:52
 msgid "Admin"
-msgstr ""
+msgstr "Administratio"
 
 #: menus.py:61 models.py:395 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
-msgstr ""
+msgstr "Nuntii"
 
 #: menus.py:70 templates/core/data_management.html:6
 #: templates/core/data_management.html:7
 msgid "Data management"
-msgstr ""
+msgstr "Adminstratio datarum"
 
 #: menus.py:79 templates/core/system_status.html:5
 #: templates/core/system_status.html:7
 msgid "System status"
-msgstr ""
+msgstr "Status systemae"
 
 #: menus.py:88
 msgid "Impersonation"
@@ -128,7 +129,7 @@ msgstr ""
 
 #: menus.py:97
 msgid "Manage school"
-msgstr ""
+msgstr "Administra scholam"
 
 #: menus.py:106
 msgid "Backend Admin"
@@ -136,40 +137,40 @@ msgstr ""
 
 #: menus.py:117
 msgid "People"
-msgstr ""
+msgstr "Personae"
 
 #: menus.py:139
 msgid "Persons and accounts"
-msgstr ""
+msgstr "Personae et computi"
 
 #: menus.py:152
 msgid "Edit school information"
-msgstr ""
+msgstr "Muta informationes scolae"
 
 #: menus.py:153 templates/core/edit_schoolterm.html:8
 #: templates/core/edit_schoolterm.html:9
 msgid "Edit school term"
-msgstr ""
+msgstr "Muta anum scolae"
 
 #: models.py:31 models.py:517
 msgid "Name"
-msgstr ""
+msgstr "Nomen"
 
 #: models.py:33
 msgid "Official name"
-msgstr ""
+msgstr "Officialis nomen"
 
 #: models.py:35
 msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr ""
+msgstr "Officialis nomen scolae, e. g."
 
 #: models.py:38
 msgid "School logo"
-msgstr ""
+msgstr "Imago scolae"
 
 #: models.py:51
 msgid "School"
-msgstr ""
+msgstr "Scola"
 
 #: models.py:52
 msgid "Schools"
@@ -189,23 +190,23 @@ msgstr ""
 
 #: models.py:83
 msgid "School term"
-msgstr ""
+msgstr "Anus scolae"
 
 #: models.py:84
 msgid "School terms"
-msgstr ""
+msgstr "ani scolae"
 
 #: models.py:94 templates/core/persons_accounts.html:36
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: models.py:97
 msgid "female"
-msgstr ""
+msgstr "femininum"
 
 #: models.py:97
 msgid "male"
-msgstr ""
+msgstr "maskulinum"
 
 #: models.py:102
 msgid "Is person active?"
@@ -213,47 +214,47 @@ msgstr ""
 
 #: models.py:104
 msgid "First name"
-msgstr ""
+msgstr "Primus nomen"
 
 #: models.py:105
 msgid "Last name"
-msgstr ""
+msgstr "Secondus nomen"
 
 #: models.py:107
 msgid "Additional name(s)"
-msgstr ""
+msgstr "addita nomines"
 
 #: models.py:111
 msgid "Short name"
-msgstr ""
+msgstr "Breve nomen"
 
 #: models.py:114
 msgid "Street"
-msgstr ""
+msgstr "Via"
 
 #: models.py:115
 msgid "Street number"
-msgstr ""
+msgstr "Numerus domini"
 
 #: models.py:116
 msgid "Postal code"
-msgstr ""
+msgstr "Numerus directorius"
 
 #: models.py:117
 msgid "Place"
-msgstr ""
+msgstr "Urbs"
 
 #: models.py:119
 msgid "Home phone"
-msgstr ""
+msgstr "Numerus telephoni domi"
 
 #: models.py:120
 msgid "Mobile phone"
-msgstr ""
+msgstr "Numerus telephoni mobilis"
 
 #: models.py:122
 msgid "E-mail address"
-msgstr ""
+msgstr "Inscriptio electronica"
 
 #: models.py:124
 msgid "Date of birth"

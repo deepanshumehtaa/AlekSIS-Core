@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 MENUS = {
     "NAV_MENU_CORE": [
@@ -45,6 +45,12 @@ MENUS = {
                         "menu_generator.validators.is_authenticated",
                         lambda request: "two_factor" in settings.INSTALLED_APPS,
                     ],
+                },
+                {
+                    "name": _("Me"),
+                    "url": "person",
+                    "icon": "insert_emoticon",
+                    "validators": ["menu_generator.validators.is_authenticated"],
                 },
             ],
         },

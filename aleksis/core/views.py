@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
 from haystack.inputs import AutoQuery
@@ -68,12 +68,15 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def person(request: HttpRequest, id_: int) -> HttpResponse:
+def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     # Get person and check access
     try:
-        person = Person.objects.get(pk=id_)
+        if id_ is None:
+            person = request.user.person
+        else:
+            person = Person.objects.get(pk=id_)
     except Person.DoesNotExist as e:
         # Turn not-found object into a 404 error
         raise Http404 from e
@@ -81,7 +84,7 @@ def person(request: HttpRequest, id_: int) -> HttpResponse:
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=id_)
+    groups = Group.objects.filter(members=person)
 
     # Build table
     groups_table = GroupsTable(groups)
