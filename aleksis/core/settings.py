@@ -122,6 +122,10 @@ MIDDLEWARE = [
     "letsagree.middleware.LetsAgreeMiddleware",
 ]
 
+MIGRATION_MODULES = {
+    'letsagree': 'aleksis.core.migrations.letsagree',
+}
+
 ROOT_URLCONF = "aleksis.core.urls"
 
 TEMPLATES = [
