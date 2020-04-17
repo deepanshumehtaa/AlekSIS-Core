@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "haystack",
     "polymorphic",
     "django_global_request",
     "dbbackup",
@@ -571,3 +572,34 @@ LOGGING = {
         'level': _settings.get("logging.level", "WARNING"),
     },
 }
+
+HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
+
+if HAYSTACK_BACKEND_SHORT == "simple":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "xapian":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'xapian_backend.XapianEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "whoosh":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
+        },
+    }
+
+if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
+    INSTALLED_APPS.append("celery_haystack")
+    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+else:
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10

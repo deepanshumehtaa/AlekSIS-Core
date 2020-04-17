@@ -32,6 +32,8 @@
   {# Include jQuery to provide $(document).ready #}
   {% include_js "jQuery" %}
 
+  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -68,6 +70,14 @@
           <img src="{% static 'img/aleksis-icon.png' %}" alt="AlekSIS icon" />
         </object>
       </a>
+    </li>
+    <li class="search">
+      <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
+        <div class="search-wrapper">
+          <input id="search" name="q" placeholder="{% trans "Search" %}">
+          <i class="material-icons">search</i>
+        </div>
+      </form>
     </li>
     <li class="no-padding">
       {% include "core/sidenav.html" %}
