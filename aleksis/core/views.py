@@ -12,7 +12,7 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from rules.contrib.views import permission_required, objectgetter
 
-from .decorators import admin_required, person_required
+from .decorators import person_required
 from .forms import (
     EditGroupForm,
     EditPersonForm,
@@ -147,7 +147,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups.html", context)
 
 
-@admin_required
+@permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -163,11 +163,15 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons_accounts.html", context)
 
 
-@permission_required("core.change_person", fn=objectgetter(Person, "id_"))
+def get_person_by_id(request: HttpRequest, id_:int):
+    return get_object_or_404(Person, id=id_)
+
+
+@permission_required("core.edit_person", fn=get_person_by_id)
 def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
-    person = get_object_or_404(Person, id=id_)
+    person = get_person_by_id(request, id_)
 
     edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
 
@@ -185,15 +189,22 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, "core/edit_person.html", context)
 
 
-@admin_required
+def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
+    if id_:
+        return get_object_or_404(Group, id=id_)
+    else:
+        return None
+
+
+@permission_required("core.edit_group", fn=get_group_by_id)
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
+    group = get_group_by_id(request, id_)
+
     if id_:
-        group = get_object_or_404(Group, id=id_)
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
-        group = None
         edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == "POST":
@@ -209,26 +220,26 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/edit_group.html", context)
 
 
-@admin_required
+@permission_required("core.manage_data")
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "core/data_management.html", context)
 
 
-@admin_required
+@permission_required("core.view_system_status")
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
 
     return render(request, "core/system_status.html", context)
 
 
-@admin_required
+@permission_required("core.manage_school")
 def school_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "core/school_management.html", context)
 
 
-@admin_required
+@permission_required("core.edit_school_information")
 def edit_school(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -249,7 +260,7 @@ def edit_school(request: HttpRequest) -> HttpResponse:
     return render(request, "core/edit_school.html", context)
 
 
-@admin_required
+@permission_required("core.edit_school_term")
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -282,7 +293,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("index")
 
 
-@admin_required
+@permission_required("core.view_announcements")
 def announcements(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -293,12 +304,18 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
-@admin_required
+def get_announcement_by_pk(request: HttpRequest, id_: Optional[int] = None):
+    if id_:
+        return get_object_or_404(Announcement, pk=id_)
+
+
+@permission_required("core.create_or_edit_announcement", fn=get_announcement_by_pk)
 def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
     context = {}
 
+    announcement = get_announcement_by_pk(request, pk)
+
     if pk:
-        announcement = get_object_or_404(Announcement, pk=pk)
         form = AnnouncementForm(
             request.POST or None,
             instance=announcement
@@ -320,10 +337,10 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
     return render(request, "core/announcement/form.html", context)
 
 
-@admin_required
+@permission_required("core.delete_announcement", fn=get_announcement_by_pk)
 def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
     if request.method == "POST":
-        announcement = get_object_or_404(Announcement, pk=pk)
+        announcement = get_announcement_by_pk(request, pk)
         announcement.delete()
         messages.success(request, _("The announcement has been deleted."))
 

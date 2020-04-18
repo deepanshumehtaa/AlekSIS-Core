@@ -79,7 +79,7 @@ def has_person_predicate(user: User) -> bool:
     return has_person(user)
 
 
-@predicate()
+@predicate
 def is_person(user: User, obj: Model) -> bool:
     """ Predicate which checks if the provided object is the person linked to the user object """
 
