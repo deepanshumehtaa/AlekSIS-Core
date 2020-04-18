@@ -10,6 +10,8 @@ from constance.signals import config_updated
 from license_expression import Licensing, LicenseSymbol
 from spdx_license_list import LICENSES
 
+from .core_helpers import copyright_years
+
 
 class AppConfig(django.apps.AppConfig):
     """ An extended version of DJango's AppConfig container. """
@@ -106,8 +108,22 @@ class AppConfig(django.apps.AppConfig):
         # TODO Try getting from distribution if not set
 
     @classmethod
-    def get_copyright(cls):
-        return getattr(cls, "copyright", tuple())
+    def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
+        copyrights = getattr(cls, "copyright", tuple())
+
+        copyrights_processed = []
+
+        for copyright in copyrights:
+            copyrights_processed.append(
+                (
+                    copyright[0] if isinstance(copyright[0], str) else copyright_years(copyright[0]),
+                    copyright[1],
+                    copyright[2],
+                )
+            )
+
+        return copyrights_processed
+
         # TODO Try getting from distribution if not set
 
     def config_updated(
