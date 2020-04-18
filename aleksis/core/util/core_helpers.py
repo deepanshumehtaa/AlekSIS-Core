@@ -168,26 +168,6 @@ def custom_information_processor(request: HttpRequest) -> dict:
     }
 
 
-def get_app_licence_information() -> List[dict]:
-    """ Get a list of the attribute LICENCE_INFORMATION from every app and the core """
-
-    licence_information = []
-
-    packages = list(get_app_packages())
-    packages.insert(0, "aleksis.core")
-
-    for app in packages:
-        app_mod = import_module(app)
-        try:
-            app_licence_information = app_mod.LICENCE_INFORMATION
-            app_licence_information["copyright_holders"].sort(key=lambda x: x[1].split(" ")[-1])
-            licence_information.append(app_licence_information)
-        except AttributeError:
-            pass
-
-    return licence_information
-
-
 def now_tomorrow() -> datetime:
     """ Return current time tomorrow """
     return timezone.now() + timedelta(days=1)
