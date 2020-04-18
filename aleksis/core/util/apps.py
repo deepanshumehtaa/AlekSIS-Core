@@ -43,20 +43,23 @@ class AppConfig(django.apps.AppConfig):
             # ImportErrors are non-fatal because checks are optional.
             pass
 
-    def get_name(self):
-        return getattr(self, "verbose_name", self.name)
+    @classmethod
+    def get_name(cls):
+        return getattr(cls, "verbose_name", cls.name)
         # TODO Try getting from distribution if not set
 
-    def get_version(self):
+    @classmethod
+    def get_version(cls):
         try:
             from .. import __version__  # noqa
         except ImportError:
             __version__ = None
 
-        return getattr(self, "version", __version__)
+        return getattr(cls, "version", __version__)
 
-    def get_licence(self) -> Tuple:
-        licence = getattr(self, "licence", None)
+    @classmethod
+    def get_licence(cls) -> Tuple:
+        licence = getattr(cls, "licence", None)
 
         default_dict = {
             'isDeprecatedLicenseId': False,
@@ -79,11 +82,13 @@ class AppConfig(django.apps.AppConfig):
         else:
             return ("Unknown", [default_dict])
 
-    def get_urls(self):
-        return getattr(self, "urls", {})
+    @classmethod
+    def get_urls(cls):
+        return getattr(cls, "urls", {})
         # TODO Try getting from distribution if not set
 
-    def get_copyright(self):
+    @classmethod
+    def get_copyright(cls):
         return getattr(self, "copyright", tuple())
         # TODO Try getting from distribution if not set
 
