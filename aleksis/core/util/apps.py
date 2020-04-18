@@ -76,7 +76,13 @@ class AppConfig(django.apps.AppConfig):
             parsed = licensing.parse(licence).simplify()
             readable = parsed.render_as_readable()
 
-            licence_dicts = [LICENSES.get(symbol.key, default_dict) for symbol in parsed.symbols]
+            for symbol in parsed.symbols:
+                licence_dict = LICENSES.get(symbol.key, None)
+
+                if licence_dict is None:
+                    licence_dict = default_dict
+                else:
+                    licence_dict["url"] = "https://spdx.org/licenses/{}.html".format(licence_dict["licenseId"])
 
             return (readable, licence_dicts)
         else:
