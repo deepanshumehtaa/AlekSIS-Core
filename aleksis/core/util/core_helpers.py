@@ -116,11 +116,12 @@ def celery_optional(orig: Callable) -> Callable:
     and it is executed synchronously.
     """
 
+    if hasattr(settings, "CELERY_RESULT_BACKEND"):
+        from ..celery import app  # noqa
+        task = app.task(orig)
+
     def wrapped(*args, **kwargs):
         if hasattr(settings, "CELERY_RESULT_BACKEND"):
-            from ..celery import app  # noqa
-            task = app.task(orig)
-
             task.delay(*args, **kwargs)
         else:
             orig(*args, **kwargs)

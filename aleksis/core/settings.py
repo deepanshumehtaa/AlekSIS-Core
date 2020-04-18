@@ -55,8 +55,10 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
+    "haystack",
     "polymorphic",
     "django_global_request",
+    "dbbackup",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -282,6 +284,7 @@ YARN_INSTALLED_APPS = [
     "materialize-css",
     "material-design-icons-iconfont",
     "select2",
+    "select2-materialize",
     "paper-css",
 ]
 
@@ -302,6 +305,7 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
     "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
+    "select2-materialize": {"css_url": JS_URL + "/select2-materialize/select2-materialize.css", "js_url": JS_URL + "/select2-materialize/index.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -407,6 +411,16 @@ MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
 
+DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
+DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
+DBBACKUP_CLEANUP_KEEP = _settings.get("backup.database.keep", 10)
+DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get("backup.media.keep", 10)
+DBBACKUP_GPG_RECIPIENT = _settings.get("backup.gpg_recipient", None)
+DBBACKUP_COMPRESS_DB = _settings.get("backup.database.compress", True)
+DBBACKUP_ENCRYPT_DB = _settings.get("backup.database.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
+DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/materialize.html"
@@ -438,7 +452,7 @@ if _settings.get("twilio.sid", None):
 
 if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
-    CELERY_BROKER_URL = "redis://localhost"
+    CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
     CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
@@ -568,3 +582,34 @@ ANONYMOUS_USER_NAME = None
 
 # Append authentication backends
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
+
+HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
+
+if HAYSTACK_BACKEND_SHORT == "simple":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "xapian":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'xapian_backend.XapianEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "whoosh":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
+        },
+    }
+
+if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
+    INSTALLED_APPS.append("celery_haystack")
+    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+else:
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10

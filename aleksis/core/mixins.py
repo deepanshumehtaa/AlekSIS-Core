@@ -73,6 +73,13 @@ class ExtensibleModel(CRUDMixin):
         - Dominik George <dominik.george@teckids.org>
     """
 
+    # Defines a material design icon associated with this type of model
+    icon_ = "radio_button_unchecked"
+
+    def get_absolute_url(self) -> str:
+        """ Get the URL o a view representing this model instance """
+        pass
+
     @property
     def crud_event_create(self) -> Optional[CRUDEvent]:
         """ Return create event of this object """

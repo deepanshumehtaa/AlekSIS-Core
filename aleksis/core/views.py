@@ -4,10 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
 from guardian.shortcuts import get_objects_for_user
+from haystack.inputs import AutoQuery
+from haystack.query import SearchQuerySet
 from rules.contrib.views import permission_required, objectgetter
 
 from .decorators import admin_required, person_required
@@ -86,7 +88,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=person.pk)
+    groups = Group.objects.filter(members=person)
 
     # Build table
     groups_table = GroupsTable(groups)
@@ -326,3 +328,14 @@ def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
         messages.success(request, _("The announcement has been deleted."))
 
     return redirect("announcements")
+
+
+@login_required
+def searchbar_snippets(request: HttpRequest) -> HttpResponse:
+    query = request.GET.get('q', '')
+    limit = int(request.GET.get('limit', '5'))
+
+    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
+    context = {"results": results}
+
+    return render(request, "search/searchbar_snippets.html", context)

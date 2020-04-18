@@ -65,6 +65,10 @@ $(document).ready( function () {
         });
     });
 
+    // Initialise auto-completion for search bar
+    window.autocomplete = new Autocomplete({});
+    window.autocomplete.setup();
+
     // Initialize text collapsibles [MAT, own work]
     $(".text-collapsible").addClass("closed").removeClass("opened");
 
