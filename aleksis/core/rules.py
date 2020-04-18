@@ -42,6 +42,12 @@ view_photo_predicate = has_person_predicate & (
 )
 add_perm("core.view_photo", view_photo_predicate)
 
+# View persons groups
+view_groups_predicate = has_person_predicate & (
+    has_global_perm("core.view_person_groups") | has_object_perm("core.view_person_groups") | is_person
+)
+add_perm("core.view_person_groups", view_groups_predicate)
+
 # Change person
 change_person_predicate = has_person_predicate & (
     has_global_perm("core.change_person") | has_object_perm("core.change_person")
