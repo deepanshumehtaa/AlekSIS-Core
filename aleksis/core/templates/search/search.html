@@ -14,7 +14,6 @@
     <input type="text" name="{{ form.q.name }}" id="{{ form.q.id }}" value="{% firstof form.q.value "" %}"
            placeholder="{% trans "Search Term" %}">
 
-    <h6>{{ form.models.label }}</h6>
     <div>
       {% for group, items in form.models|select_options %}
         {% for choice, value, selected in items %}
@@ -28,10 +27,12 @@
       {% endfor %}
     </div>
 
-    <button type="submit" class="btn waves-effect waves-light green">
-      <i class="material-icons left">search</i>
-      {% blocktrans %}Search{% endblocktrans %}
-    </button>
+    <p>
+      <button type="submit" class="btn waves-effect waves-light green">
+        <i class="material-icons left">search</i>
+        {% blocktrans %}Search{% endblocktrans %}
+      </button>
+    </p>
 
     <h5>{% trans "Results" %}</h5>
 
@@ -44,7 +45,9 @@
           </a>
         {% empty %}
           <li class="collection-item">
-            {% trans "No search results could be found to your search" %}
+            <p class="flow-text">
+              {% trans "No search results could be found to your search." %}
+            </p>
           </li>
         {% endfor %}
       </div>
@@ -81,11 +84,13 @@
         </ul>
       {% endif %}
     {% else %}
-      <div class="collection">
+      <ul class="collection">
         <li class="collection-item">
-          {% trans "Please enter a search term above" %}
+          <p class="flow-text">
+            {% trans "Please enter a search term above." %}
+          </p>
         </li>
-      </div>
+      </ul>
     {% endif %}
 
 
