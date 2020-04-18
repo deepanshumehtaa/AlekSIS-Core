@@ -76,6 +76,11 @@ class AppConfig(django.apps.AppConfig):
             parsed = licensing.parse(licence).simplify()
             readable = parsed.render_as_readable()
 
+            flags = {
+                "isFsfLibre": True,
+                "isOsiApproved": True,
+            }
+
             for symbol in parsed.symbols:
                 licence_dict = LICENSES.get(symbol.key, None)
 
@@ -84,7 +89,10 @@ class AppConfig(django.apps.AppConfig):
                 else:
                     licence_dict["url"] = "https://spdx.org/licenses/{}.html".format(licence_dict["licenseId"])
 
-            return (readable, licence_dicts)
+                flags["isFsfLibre"] = flags["isFsfLibre"] and licence_dict["isFsfLibre"]
+                flags["isOsiApproved"] = flags["isOsiApproved"] and licence_dict["isOsiApproved"]
+
+            return (readable, flags, licence_dicts)
         else:
             return ("Unknown", [default_dict])
 
