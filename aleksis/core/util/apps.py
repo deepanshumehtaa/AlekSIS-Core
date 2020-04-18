@@ -86,7 +86,7 @@ class AppConfig(django.apps.AppConfig):
             licence_dicts = []
 
             for symbol in parsed.symbols:
-                licence_dict = LICENSES.get(symbol.key, None)
+                licence_dict = LICENSES.get(symbol.key.rstrip("+"), None)
 
                 if licence_dict is None:
                     licence_dict = default_dict
