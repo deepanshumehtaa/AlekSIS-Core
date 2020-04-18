@@ -1,5 +1,5 @@
 from importlib import import_module
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
