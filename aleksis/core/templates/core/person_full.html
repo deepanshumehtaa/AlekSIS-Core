@@ -2,15 +2,13 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n static cropping guardian_tags rules %}
+{% load i18n static cropping rules %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
 {% block content %}
   <h4>{{ person.first_name }} {{ person.last_name }}</h4>
-
-  {% get_obj_perms request.user for person as "person_perms" %}
 
   {% has_perm 'core.change_person' user person as can_change_person %}
   {% if can_change_person %}
@@ -25,7 +23,8 @@
   <h5>{% blocktrans %}Contact details{% endblocktrans %}</h5>
   <div class="row">
     <div class="col s12 m4">
-      {% if person.photo and "see_photo" in person_perms %}
+      {% has_perm 'core.see_photo' user person as can_see_photo %}
+      {% if person.photo and can_see_photo %}
         <img class="person-img" src="{% cropped_thumbnail person 'photo_cropping' max_size='300x400' %}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
       {% else %}
@@ -52,7 +51,8 @@
           </td>
           <td colspan="3">{{ person.get_sex_display }}</td>
         </tr>
-        {% if "see_address" in person_perms %}
+        {% has_perm 'core.see_address' user person as can_see_address %}
+        {% if can_see_address %}
           <tr>
             <td>
               <i class="material-icons small">home</i>
@@ -61,7 +61,8 @@
             <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
           </tr>
         {% endif %}
-        {% if "see_contact_details" in person_perms %}
+        {% has_perm 'core.see_contact_details' user person as can_see_contact_details %}
+        {% if can_see_contact_details %}
           <tr>
             <td>
               <i class="material-icons small">phone</i>
