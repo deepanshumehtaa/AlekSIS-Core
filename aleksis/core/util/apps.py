@@ -7,6 +7,8 @@ from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
 from constance.signals import config_updated
+from license_expression import Licensing, LicenseSymbol
+from spdx_license_list import LICENSES
 
 
 class AppConfig(django.apps.AppConfig):
@@ -40,6 +42,50 @@ class AppConfig(django.apps.AppConfig):
         except ImportError:
             # ImportErrors are non-fatal because checks are optional.
             pass
+
+    def get_name(self):
+        return getattr(self, "verbose_name", self.name)
+        # TODO Try getting from distribution if not set
+
+    def get_version(self):
+        try:
+            from .. import __version__  # noqa
+        except ImportError:
+            __version__ = None
+
+        return getattr(self, "version", __version__)
+
+    def get_licence(self) -> Tuple:
+        licence = getattr(self, "licence", None)
+
+        default_dict = {
+            'isDeprecatedLicenseId': False,
+            'isFsfLibre': False,
+            'isOsiApproved': False,
+            'licenseId': 'unknown',
+            'name': 'Unknown Licence',
+            'referenceNumber': -1,
+            'url': '',
+        }
+
+        if licence:
+            licensing = Licensing(LICENSES.keys())
+            parsed = licensing.parse(licence).simplify()
+            readable = parsed.render_as_readable()
+
+            licence_dicts = [LICENSES.get(symbol.key, default_dict) for symbol in parsed.symbols]
+
+            return (readable, licence_dicts)
+        else:
+            return ("Unknown", [default_dict])
+
+    def get_urls(self):
+        return getattr(self, "urls", {})
+        # TODO Try getting from distribution if not set
+
+    def get_copyright(self):
+        return getattr(self, "copyright", tuple())
+        # TODO Try getting from distribution if not set
 
     def config_updated(
         self,
