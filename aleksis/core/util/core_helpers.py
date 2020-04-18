@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from itertools import groupby
+from operator import itemgetter
 import os
 import pkgutil
 from importlib import import_module
@@ -11,6 +13,18 @@ from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
 
+
+def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
+    """ Takes a sequence of integegers and produces a string with ranges
+
+    >>> copyright_years([1999, 2000, 2001, 2005, 2007, 2008, 2009])
+    '1999–2001, 2005, 2007–2009'
+    """
+
+    ranges = [list(map(itemgetter(1), group)) for _, group in groupby(enumerate(years), lambda e: e[1]-e[0])]
+    years_strs = [str(range_[0]) if len(range_) == 1 else joiner.join([str(range_[0]), str(range_[-1])]) for range_ in ranges]
+
+    return seperator.join(years_strs)
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
     from debug_toolbar.middleware import show_toolbar  # noqa
