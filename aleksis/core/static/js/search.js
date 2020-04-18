@@ -35,9 +35,20 @@ Autocomplete.prototype.setup = function () {
         self.query_box.trigger("keydown");
     });
 
+    this.query_box.keyup(function () {
+        var query = self.query_box.val();
+
+        if (query.length < self.minimum_length) {
+            $("#search-results").remove();
+            return true;
+        }
+
+        self.fetch(query);
+        return true;
+    });
+
     // Watch the input box.
     this.query_box.keydown(function (e) {
-        var query = self.query_box.val();
 
         if (e.which === 38) { // Keypress Up
             if (!self.selected_element) {
@@ -69,14 +80,6 @@ Autocomplete.prototype.setup = function () {
             e.preventDefault();
             window.location.href = self.selected_element.attr("href");
         }
-
-        if (query.length < self.minimum_length) {
-            $("#search-results").remove();
-            return true;
-        }
-
-        self.fetch(query);
-        return true;
     });
 
     // // On selecting a result, remove result box
