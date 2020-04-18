@@ -103,7 +103,7 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_copyright(cls):
-        return getattr(self, "copyright", tuple())
+        return getattr(cls, "copyright", tuple())
         # TODO Try getting from distribution if not set
 
     def config_updated(
