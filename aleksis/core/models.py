@@ -98,6 +98,7 @@ class Person(ExtensibleModel):
         permissions = (
             ("see_address", _("Can see address")),
             ("see_contact_details", _("Can see contact details")),
+            ("see_photo", _("Can see photo")),
         )
 
     icon_ = "person"
