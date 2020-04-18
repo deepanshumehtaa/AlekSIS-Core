@@ -3,6 +3,10 @@
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
 
+{% block extra_head %}
+  {{ media }}
+{% endblock %}
+
 {% block content %}
   <p class="flow-text">{% blocktrans %}AlekSIS (School Information System){% endblocktrans %}</p>
 
@@ -23,6 +27,8 @@
         </div>
       </div>
     {% endfor %}
+
+    {% include "core/announcements.html" with announcements=announcements %}
 
     <div class="row" id="live_load">
         {% for widget in widgets %}

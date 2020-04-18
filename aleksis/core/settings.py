@@ -52,9 +52,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "haystack",
     "polymorphic",
     "django_global_request",
+    "dbbackup",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -84,6 +88,8 @@ INSTALLED_APPS = [
     "pwa",
     "ckeditor",
     "django_js_reverse",
+    "colorfield",
+    "django_bleach",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -132,7 +138,7 @@ TEMPLATES = [
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
                 "constance.context_processors.config",
-                "aleksis.core.util.core_helpers.school_information_processor",
+                "aleksis.core.util.core_helpers.custom_information_processor",
             ],
         },
     },
@@ -164,7 +170,7 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", True):
+if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
@@ -188,7 +194,7 @@ AUTHENTICATION_BACKENDS = []
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
-    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType  # noqa
+    from django_auth_ldap.config import LDAPSearch, NestedGroupOfNamesType, NestedGroupOfUniqueNamesType, PosixGroupType  # noqa
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -210,9 +216,36 @@ if _settings.get("ldap.uri", None):
     # Mapping of LDAP attributes to Django model fields
     AUTH_LDAP_USER_ATTR_MAP = {
         "first_name": _settings.get("ldap.map.first_name", "givenName"),
-        "last_name": _settings.get("ldap.map.first_name", "sn"),
+        "last_name": _settings.get("ldap.map.last_name", "sn"),
         "email": _settings.get("ldap.map.email", "mail"),
     }
+
+    # Discover flags by LDAP groups
+    if _settings.get("ldap.groups.base", None):
+        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+            _settings.get("ldap.groups.base"),
+            ldap.SCOPE_SUBTREE,
+            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNames")),
+        )
+
+        _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
+        if _group_type == "groupofnames":
+            AUTH_LDAP_GROUP_TYPE = NestedGroupOfNamesType()
+        elif _group_type == "groupofuniquenames":
+            AUTH_LDAP_GROUP_TYPE = NestedGroupOfUniqueNamesType()
+        elif _group_type == "posixgroup":
+            AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+
+        AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+        }
+        for _flag in ["is_active", "is_staff", "is_superuser"]:
+            _dn = _settings.get("ldap.groups.flags.%s" % _flag, None)
+            if _dn:
+                AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
+
+        # Backend admin requires superusers to also be staff members
+        if "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP:
+            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP["is_superuser"]
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
@@ -251,6 +284,7 @@ YARN_INSTALLED_APPS = [
     "materialize-css",
     "material-design-icons-iconfont",
     "select2",
+    "select2-materialize",
     "paper-css",
 ]
 
@@ -271,10 +305,12 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
     "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
+    "select2-materialize": {"css_url": JS_URL + "/select2-materialize/select2-materialize.css", "js_url": JS_URL + "/select2-materialize/index.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
 
+SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
@@ -335,26 +371,33 @@ CONSTANCE_ADDITIONAL_FIELDS = {
         'widget': 'django.forms.Select',
         "choices":  i18n_day_name_choices_lazy
     }],
+    "colour_field": ["django.forms.CharField", {
+        "widget": "colorfield.widgets.ColorWidget"
+    }],
 }
 CONSTANCE_CONFIG = {
     "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "COLOUR_PRIMARY": ("#007bff", _("Primary colour")),
-    "COLOUR_SECONDARY": ("#007bff", _("Secondary colour")),
+    "SITE_DESCRIPTION": ("The Free School Information System", _("Site description")),
+    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
+    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
     "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
     "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
     "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
     "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
     "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
     "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
+    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
 }
 CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE",),
+    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
     "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
     "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
     "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
     "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
+    "Account settings": ("PRIMARY_GROUP_PATTERN",),
 }
 
+merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
 merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
 merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
@@ -367,6 +410,16 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+
+DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
+DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
+DBBACKUP_CLEANUP_KEEP = _settings.get("backup.database.keep", 10)
+DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get("backup.media.keep", 10)
+DBBACKUP_GPG_RECIPIENT = _settings.get("backup.gpg_recipient", None)
+DBBACKUP_COMPRESS_DB = _settings.get("backup.database.compress", True)
+DBBACKUP_ENCRYPT_DB = _settings.get("backup.database.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
+DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
@@ -399,7 +452,7 @@ if _settings.get("twilio.sid", None):
 
 if _settings.get("celery.enabled", False):
     INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
-    CELERY_BROKER_URL = "redis://localhost"
+    CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
     CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
@@ -408,8 +461,8 @@ if _settings.get("celery.enabled", False):
         INSTALLED_APPS += ("djcelery_email",)
         EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-PWA_APP_NAME = "AlekSIS"  # dbsettings
-PWA_APP_DESCRIPTION = "AlekSIS – The free school information system"  # dbsettings
+PWA_APP_NAME = lazy_config("SITE_TITLE")
+PWA_APP_DESCRIPTION = lazy_config("SITE_DESCRIPTION")
 PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
@@ -431,6 +484,8 @@ PWA_APP_SPLASH_SCREEN = [
     }
 ]
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+
+SITE_ID = 1
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -480,3 +535,73 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'div']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+
+# Which CSS properties are allowed in 'style' attributes (assuming
+# style is an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+    'font-family', 'font-weight', 'text-decoration', 'font-variant'
+]
+
+# Strip unknown tags if True, replace with HTML escaped characters if
+# False
+BLEACH_STRIP_TAGS = True
+
+# Strip comments, or leave them in.
+BLEACH_STRIP_COMMENTS = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': "verbose"
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': _settings.get("logging.level", "WARNING"),
+    },
+}
+
+HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
+
+if HAYSTACK_BACKEND_SHORT == "simple":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "xapian":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'xapian_backend.XapianEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
+        },
+    }
+elif HAYSTACK_BACKEND_SHORT == "whoosh":
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
+        },
+    }
+
+if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
+    INSTALLED_APPS.append("celery_haystack")
+    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+else:
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10

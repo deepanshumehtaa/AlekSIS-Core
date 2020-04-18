@@ -1,16 +1,44 @@
-from typing import Any, Callable, Optional
+from datetime import datetime
+from typing import Any, Callable, Optional, Union
 
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import QuerySet
+from django.forms.models import ModelFormMetaclass, ModelForm
 
 from easyaudit.models import CRUDEvent
 from jsonstore.fields import JSONField, JSONFieldMixin
+from material.base import LayoutNode, Layout
 
 
-class ExtensibleModel(models.Model):
-    """ Allow injection of fields and code from AlekSIS apps to extend
-    model functionality.
+class CRUDMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    @property
+    def crud_events(self) -> QuerySet:
+        """Get all CRUD events connected to this object from easyaudit."""
+
+        content_type = ContentType.objects.get_for_model(self)
+
+        return CRUDEvent.objects.filter(
+            object_id=self.pk, content_type=content_type
+        ).select_related("user")
+
+
+class ExtensibleModel(CRUDMixin):
+    """ Base model for all objects in AlekSIS apps
+
+    This base model ensures all objects in AlekSIS apps fulfill the
+    following properties:
+
+     * crud_events property to retrieve easyaudit's CRUD event log
+     * created_at and updated_at properties based n CRUD events
+     * Allow injection of fields and code from AlekSIS apps to extend
+       model functionality.
+
+    Injection of fields and code
+    ============================
 
     After all apps have been loaded, the code in the `model_extensions` module
     in every app is executed. All code that shall be injected into a model goes there.
@@ -43,8 +71,55 @@ class ExtensibleModel(models.Model):
         - Dominik George <dominik.george@teckids.org>
     """
 
+    # Defines a material design icon associated with this type of model
+    icon_ = "radio_button_unchecked"
+
+    def get_absolute_url(self) -> str:
+        """ Get the URL o a view representing this model instance """
+        pass
+
+    @property
+    def crud_event_create(self) -> Optional[CRUDEvent]:
+        """ Return create event of this object """
+        return self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
+
+    @property
+    def crud_event_update(self) -> Optional[CRUDEvent]:
+        """ Return last event of this object """
+        return self.crud_events.latest("datetime")
+
+    @property
+    def created_at(self) -> Optional[datetime]:
+        """ Determine creation timestamp from CRUD log """
+
+        if self.crud_event_create:
+            return self.crud_event_create.datetime
+
+    @property
+    def updated_at(self) -> Optional[datetime]:
+        """ Determine last timestamp from CRUD log """
+
+        if self.crud_event_update:
+            return self.crud_event_update.datetime
+
     extended_data = JSONField(default=dict, editable=False)
-    
+
+    @property
+    def created_by(self) -> Optional[models.Model]:
+        """ Determine user who created this object from CRUD log """
+
+        if self.crud_event_create:
+            return self.crud_event_create.user
+
+    @property
+    def updated_by(self) -> Optional[models.Model]:
+        """ Determine user who last updated this object from CRUD log """
+
+        if self.crud_event_update:
+            return self.crud_event_update.user
+
+    extended_data = JSONField(default=dict, editable=False)
+
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the attribute
@@ -76,6 +151,12 @@ class ExtensibleModel(models.Model):
         cls._safe_add(func, func.__name__)
 
     @classmethod
+    def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+        """ Adds the passed callable as a classmethod. """
+
+        cls._safe_add(classmethod(func), func.__name__)
+
+    @classmethod
     def field(cls, **kwargs) -> None:
         """ Adds the passed jsonstore field. Must be one of the fields in
         django-jsonstore.
@@ -101,17 +182,54 @@ class ExtensibleModel(models.Model):
     class Meta:
         abstract = True
 
+class PureDjangoModel(object):
+    """ No-op mixin to mark a model as deliberately not using ExtensibleModel """
+    pass
 
-class CRUDMixin(models.Model):
-    class Meta:
-        abstract = True
 
-    @property
-    def crud_events(self) -> QuerySet:
-        """Get all CRUD events connected to this object from easyaudit."""
+class _ExtensibleFormMetaclass(ModelFormMetaclass):
+    def __new__(mcs, name, bases, dct):
+        x = super().__new__(mcs, name, bases, dct)
 
-        content_type = ContentType.objects.get_for_model(self)
+        if hasattr(x, "layout"):
+            base_layout = x.layout.elements
+        else:
+            base_layout = []
 
-        return CRUDEvent.objects.filter(
-            object_id=self.pk, content_type=content_type
-        ).select_related("user")
+        x.base_layout = base_layout
+        x.layout = Layout(*base_layout)
+
+        return x
+
+
+class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
+    """ Base model for extensible forms
+
+    This mixin adds functionality which allows
+    - apps to add layout nodes to the layout used by django-material
+
+    Add layout nodes
+    ================
+
+    ```
+    from material import Fieldset
+
+    from aleksis.core.forms import ExampleForm
+
+    node = Fieldset("field_name")
+    ExampleForm.add_node_to_layout(node)
+    ```
+
+    """
+
+    @classmethod
+    def add_node_to_layout(cls, node: Union[LayoutNode, str]):
+        """
+        Add a node to `layout` attribute
+
+        :param node: django-material layout node (Fieldset, Row etc.)
+        :type node: LayoutNode
+        """
+
+        cls.base_layout.append(node)
+        cls.layout = Layout(*cls.base_layout)

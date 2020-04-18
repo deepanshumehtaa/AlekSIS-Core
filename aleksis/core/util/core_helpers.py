@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import os
 import pkgutil
 from importlib import import_module
@@ -7,6 +8,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.utils import timezone
 from django.utils.functional import lazy
 
 
@@ -114,11 +116,12 @@ def celery_optional(orig: Callable) -> Callable:
     and it is executed synchronously.
     """
 
+    if hasattr(settings, "CELERY_RESULT_BACKEND"):
+        from ..celery import app  # noqa
+        task = app.task(orig)
+
     def wrapped(*args, **kwargs):
         if hasattr(settings, "CELERY_RESULT_BACKEND"):
-            from ..celery import app  # noqa
-            task = app.task(orig)
-
             task.delay(*args, **kwargs)
         else:
             orig(*args, **kwargs)
@@ -141,12 +144,13 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
     return os.path.join(upload_to, new_filename)
 
 
-def school_information_processor(request: HttpRequest) -> dict:
-    """ Provides default School object in all templates """
+def custom_information_processor(request: HttpRequest) -> dict:
+    """ Provides custom information in all templates """
 
-    from ..models import School
+    from ..models import School, CustomMenu
     return {
         "SCHOOL": School.get_default,
+        "FOOTER_MENU": CustomMenu.get_default("footer"),
     }
 
 
@@ -168,3 +172,8 @@ def get_app_licence_information() -> List[dict]:
             pass
 
     return licence_information
+
+
+def now_tomorrow() -> datetime:
+    """ Return current time tomorrow """
+    return timezone.now() + timedelta(days=1)

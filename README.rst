@@ -1,5 +1,5 @@
-AlekSIS (School Information System) — Core
-==========================================
+AlekSIS — All-libre extensible kit for school information systems
+=================================================================
 
 Warning
 -------
@@ -50,5 +50,5 @@ full licence text or on the `European Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
-.. _AlekSIS: https://edugit.org/AlekSIS/AlekSIS
+.. _AlekSIS: https://edugit.org/AlekSIS/Official/AlekSIS
 .. _European Union Public Licence: https://eupl.eu/

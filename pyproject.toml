@@ -11,7 +11,7 @@ description = "AlekSIS (School Information System) — Core"
 authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
 license = "EUPL-1.2"
 homepage = "https://aleksis.org/"
-repository = "https://edugit.org/AlekSIS/AlekSIS"
+repository = "https://edugit.org/AlekSIS/Official/AlekSIS"
 documentation = "https://aleksis.edugit.io/AlekSIS/docs/html/"
 classifiers = [
     "Environment :: Web Environment",
@@ -23,7 +23,6 @@ classifiers = [
 python = "^3.7"
 Django = "^3.0"
 django-any-js = "^1.0"
-django-bootstrap4 = "^1.0"
 django-debug-toolbar = "^2.0"
 django-easy-audit = {version ="^1.2rc1", allow-prereleases = true}
 django-middleware-global-request = "^0.1.2"
@@ -50,7 +49,7 @@ requests = "^2.22"
 django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumbers", "Call", "SMS" ] }
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
-django-pwa = {git = "https://github.com/Natureshadow/django-pwa", rev = "67cf917a081df3116968f684ebb28e4c076b2b50" }
+django-pwa = "^1.0.8"
 django-constance = { version = "^2.6.0", extras = ["database"] }
 django_widget_tweaks = "^1.4.5"
 django-filter = "^2.2.0"
@@ -61,14 +60,21 @@ django-js-reverse = "^0.9.1"
 calendarweek = "^0.4.3"
 Celery = {version="^4.4.0", optional=true, extras=["django", "redis"]}
 django-celery-results = {version="^1.1.2", optional=true}
-django-celery-beat = {version="^1.5.0", optional=true}
+django-celery-beat = {version="^2.0.0", optional=true}
 django-celery-email = {version="^3.0.0", optional=true}
 django-jsonstore = "^0.4.1"
 django-polymorphic = "^2.1.2"
+django-otp = "0.7.5"
+django-colorfield = "^0.2.1"
+django-bleach = "^0.6.1"
+django-memoize = "^2.2.1"
+django-haystack = "^3.0"
+celery-haystack = {version="^0.3.1", optional=true}
+django-dbbackup = "^3.3.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
-celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email"]
+celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email", "celery-haystack"]
 
 [tool.poetry.dev-dependencies]
 sphinx = "^2.1"

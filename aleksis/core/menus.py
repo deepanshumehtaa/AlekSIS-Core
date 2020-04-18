@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 MENUS = {
     "NAV_MENU_CORE": [
@@ -8,6 +8,12 @@ MENUS = {
             "url": settings.LOGIN_URL,
             "icon": "lock_open",
             "validators": ["menu_generator.validators.is_anonymous"],
+        },
+        {
+            "name": _("Dashboard"),
+            "url": "index",
+            "icon": "home",
+            "validators": ["menu_generator.validators.is_authenticated"],
         },
         {
             "name": _("Account"),
@@ -40,6 +46,12 @@ MENUS = {
                         lambda request: "two_factor" in settings.INSTALLED_APPS,
                     ],
                 },
+                {
+                    "name": _("Me"),
+                    "url": "person",
+                    "icon": "insert_emoticon",
+                    "validators": ["menu_generator.validators.is_authenticated"],
+                },
             ],
         },
         {
@@ -51,6 +63,15 @@ MENUS = {
                 "menu_generator.validators.is_superuser",
             ],
             "submenu": [
+                {
+                    "name": _("Announcements"),
+                    "url": "announcements",
+                    "icon": "announcement",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "menu_generator.validators.is_superuser",
+                    ],
+                },
                 {
                     "name": _("Data management"),
                     "url": "data_management",
@@ -131,11 +152,6 @@ MENUS = {
                 },
             ],
         },
-    ],
-    "FOOTER_MENU_CORE": [
-        {"name": _("Website"), "url": "https://aleksis.edugit.io/"},
-        {"name": "Teckids e.V.", "url": "https://www.teckids.org/"},
-        {"name": "Katharineum zu Lübeck", "url": "https://katharineum-zu-luebeck.de"}
     ],
     "DATA_MANAGEMENT_MENU": [],
     "SCHOOL_MANAGEMENT_MENU": [

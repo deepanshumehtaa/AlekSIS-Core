@@ -25,7 +25,7 @@ case "$1" in
     "makemessages")
 	cd "$(dirname "$0")"
 	manage_py=$(realpath manage.py)
-	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR"
+	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR -l la"
 	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
 		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -i static $locales"
@@ -53,7 +53,7 @@ case "$1" in
     "gource")
 	for d in . apps/official/*; do
 		gource --output-custom-log - "$d"
-	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-logo.png -
+	done | sort -n | gource --log-format custom --background-image aleksis/core/static/img/aleksis-icon.png -
 	exit
 	;;
 

@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
+from haystack.inputs import AutoQuery
+from haystack.query import SearchQuerySet
 
 from .decorators import admin_required, person_required
 from .forms import (
@@ -16,8 +18,9 @@ from .forms import (
     EditSchoolForm,
     EditTermForm,
     PersonsAccountsFormSet,
+    AnnouncementForm,
 )
-from .models import Activity, Group, Notification, Person, School, DashboardWidget
+from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.core_helpers import get_app_licence_information
@@ -35,7 +38,14 @@ def index(request: HttpRequest) -> HttpResponse:
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    context["widgets"] = DashboardWidget.objects.filter(active=True)
+    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    context["announcements"] = announcements
+
+    widgets = DashboardWidget.objects.filter(active=True)
+    media = DashboardWidget.get_media(widgets)
+
+    context["widgets"] = widgets
+    context["media"] = media
 
     return render(request, "core/index.html", context)
 
@@ -68,12 +78,15 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def person(request: HttpRequest, id_: int) -> HttpResponse:
+def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     # Get person and check access
     try:
-        person = Person.objects.get(pk=id_)
+        if id_ is None:
+            person = request.user.person
+        else:
+            person = Person.objects.get(pk=id_)
     except Person.DoesNotExist as e:
         # Turn not-found object into a 404 error
         raise Http404 from e
@@ -81,7 +94,7 @@ def person(request: HttpRequest, id_: int) -> HttpResponse:
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=id_)
+    groups = Group.objects.filter(members=person)
 
     # Build table
     groups_table = GroupsTable(groups)
@@ -274,3 +287,62 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
         raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
     return redirect("index")
+
+
+@admin_required
+def announcements(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    # Get all persons
+    announcements = Announcement.objects.all()
+    context["announcements"] = announcements
+
+    return render(request, "core/announcement/list.html", context)
+
+
+@admin_required
+def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
+    context = {}
+
+    if pk:
+        announcement = get_object_or_404(Announcement, pk=pk)
+        form = AnnouncementForm(
+            request.POST or None,
+            instance=announcement
+        )
+        context["mode"] = "edit"
+    else:
+        form = AnnouncementForm(request.POST or None)
+        context["mode"] = "add"
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, _("The announcement has been saved."))
+            return redirect("announcements")
+
+    context["form"] = form
+
+    return render(request, "core/announcement/form.html", context)
+
+
+@admin_required
+def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.method == "POST":
+        announcement = get_object_or_404(Announcement, pk=pk)
+        announcement.delete()
+        messages.success(request, _("The announcement has been deleted."))
+
+    return redirect("announcements")
+
+
+@login_required
+def searchbar_snippets(request: HttpRequest) -> HttpResponse:
+    query = request.GET.get('q', '')
+    limit = int(request.GET.get('limit', '5'))
+
+    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
+    context = {"results": results}
+
+    return render(request, "search/searchbar_snippets.html", context)
