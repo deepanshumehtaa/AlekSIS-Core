@@ -95,6 +95,10 @@ class Person(ExtensibleModel):
         ordering = ["last_name", "first_name"]
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
+        permissions = (
+            ("see_address", _("Can see address")),
+            ("see_contact_details", _("Can see contact details")),
+        )
 
     icon_ = "person"
 

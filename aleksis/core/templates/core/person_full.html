@@ -2,13 +2,15 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n static cropping rules %}
+{% load i18n static cropping guardian_tags rules %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
 {% block content %}
   <h4>{{ person.first_name }} {{ person.last_name }}</h4>
+
+  {% get_obj_perms request.user for person as "person_perms" %}
 
   {% has_perm 'core.change_person' user person as can_change_person %}
   {% if can_change_person %}
@@ -50,26 +52,30 @@
           </td>
           <td colspan="3">{{ person.get_sex_display }}</td>
         </tr>
-        <tr>
-          <td>
-            <i class="material-icons small">home</i>
-          </td>
-          <td colspan="2">{{ person.street }} {{ person.housenumber }}</td>
-          <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
-        </tr>
-        <tr>
-          <td>
-            <i class="material-icons small">phone</i>
-          </td>
-          <td>{{ person.phone_number }}</td>
-          <td>{{ person.mobile_number }}</td>
-        </tr>
-        <tr>
-          <td>
-            <i class="material-icons small">email</i>
-          </td>
-          <td colspan="3">{{ person.email }}</td>
-        </tr>
+        {% if "see_address" in person_perms %}
+          <tr>
+            <td>
+              <i class="material-icons small">home</i>
+            </td>
+            <td colspan="2">{{ person.street }} {{ person.housenumber }}</td>
+            <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
+          </tr>
+        {% endif %}
+        {% if "see_contact_details" in person_perms %}
+          <tr>
+            <td>
+              <i class="material-icons small">phone</i>
+            </td>
+            <td>{{ person.phone_number }}</td>
+            <td>{{ person.mobile_number }}</td>
+          </tr>
+          <tr>
+            <td>
+              <i class="material-icons small">email</i>
+            </td>
+            <td colspan="3">{{ person.email }}</td>
+          </tr>
+        {% endif %}
         <tr>
           <td>
             <i class="material-icons small">cake</i>
