@@ -1,5 +1,7 @@
+from importlib import import_module
 from typing import Optional
 
+from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
@@ -22,6 +24,7 @@ from .forms import (
 from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
 from .util import messages
+from .util.apps import AppConfig
 
 
 @person_required
@@ -50,6 +53,14 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def offline(request):
     return render(request, "core/offline.html")
+
+
+def about(request):
+    context = {}
+
+    context["app_configs"] = list(filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs()))
+
+    return render(request, "core/about.html", context)
 
 
 @login_required

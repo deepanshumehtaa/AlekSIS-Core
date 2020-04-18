@@ -13,6 +13,20 @@ class CoreConfig(AppConfig):
     name = "aleksis.core"
     verbose_name = "AlekSIS — The Free School Information System"
 
+    urls = {
+        "Repository": "https://edugit.org/AlekSIS/official/AlekSIS/",
+    }
+    licence = "EUPL-1.2+"
+    copyright = (
+        ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
+        ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
+        ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
+        ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
+        ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
+        ([2019, 2020], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
+    )
+
     def config_updated(self, *args, **kwargs) -> None:
         clean_scss()
 
