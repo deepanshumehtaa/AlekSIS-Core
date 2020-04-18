@@ -96,9 +96,9 @@ class Person(ExtensibleModel):
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
         permissions = (
-            ("see_address", _("Can see address")),
-            ("see_contact_details", _("Can see contact details")),
-            ("see_photo", _("Can see photo")),
+            ("view_address", _("Can view address")),
+            ("view_contact_details", _("Can view contact details")),
+            ("view_photo", _("Can view photo")),
         )
 
     icon_ = "person"
