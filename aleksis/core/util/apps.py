@@ -81,6 +81,8 @@ class AppConfig(django.apps.AppConfig):
                 "isOsiApproved": True,
             }
 
+            licence_dicts = []
+
             for symbol in parsed.symbols:
                 licence_dict = LICENSES.get(symbol.key, None)
 
@@ -91,6 +93,8 @@ class AppConfig(django.apps.AppConfig):
 
                 flags["isFsfLibre"] = flags["isFsfLibre"] and licence_dict["isFsfLibre"]
                 flags["isOsiApproved"] = flags["isOsiApproved"] and licence_dict["isOsiApproved"]
+
+                licence_dicts.append(licence_dict)
 
             return (readable, flags, licence_dicts)
         else:
