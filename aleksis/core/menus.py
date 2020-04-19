@@ -50,7 +50,10 @@ MENUS = {
                     "name": _("Me"),
                     "url": "person",
                     "icon": "insert_emoticon",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
                 },
             ],
         },

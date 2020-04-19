@@ -78,7 +78,7 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-@login_required
+@person_required
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
