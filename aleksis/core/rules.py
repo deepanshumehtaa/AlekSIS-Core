@@ -94,13 +94,13 @@ add_perm("core.manage_data", manage_data_predicate)
 
 # View announcements
 view_announcements_predicate = has_person_predicate & (
-    has_global_perm("core.view_announcements") | has_any_object("core.view_announcements", Announcement)
+    has_global_perm("core.view_announcement") | has_any_object("core.view_announcement", Announcement)
 )
 add_perm("core.view_announcements", view_announcements_predicate)
 
-# Create or edit announcements
+# Create or edit announcement
 create_or_edit_announcement_predicate = has_person_predicate & (
-    has_global_perm("core.create_or_edit_announcement") | has_object_perm("core.create_or_edit_announcement")
+    has_global_perm("core.add_announcement") & (has_global_perm("core.change_announcement") | has_object_perm("core.change_announcement"))
 )
 add_perm("core.create_or_edit_announcement", create_or_edit_announcement_predicate)
 
