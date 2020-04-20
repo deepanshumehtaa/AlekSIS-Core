@@ -100,6 +100,7 @@ class Person(ExtensibleModel):
             ("view_contact_details", _("Can view contact details")),
             ("view_photo", _("Can view photo")),
             ("view_person_groups", _("Can view persons groups")),
+            ("view_personal_details", _("Can view personal details")),
         )
 
     icon_ = "person"

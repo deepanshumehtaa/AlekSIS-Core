@@ -12,6 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='person',
-            options={'ordering': ['last_name', 'first_name'], 'permissions': (('view_address', 'Can view address'), ('view_contact_details', 'Can view contact details'), ('view_photo', 'Can view photo'), ('view_person_groups', 'Can view persons groups')), 'verbose_name': 'Person', 'verbose_name_plural': 'Persons'},
+            options={'ordering': ['last_name', 'first_name'], 'permissions': (('view_address', 'Can view address'), ('view_contact_details', 'Can view contact details'), ('view_photo', 'Can view photo'), ('view_personal_details', 'Can view personal details'), ('view_person_groups', 'Can view persons groups')), 'verbose_name': 'Person', 'verbose_name_plural': 'Persons'},
         ),
     ]

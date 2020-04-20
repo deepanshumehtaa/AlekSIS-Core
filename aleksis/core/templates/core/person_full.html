@@ -77,12 +77,15 @@
             <td colspan="3">{{ person.email }}</td>
           </tr>
         {% endif %}
-        <tr>
-          <td>
-            <i class="material-icons small">cake</i>
-          </td>
-          <td colspan="3">{{ person.date_of_birth|date }}</td>
-        </tr>
+        {% has_perm 'core.view_personal_details' user person as can_view_personal_details %}
+        {% if can_view_personal_details %}
+          <tr>
+            <td>
+              <i class="material-icons small">cake</i>
+            </td>
+            <td colspan="3">{{ person.date_of_birth|date }}</td>
+          </tr>
+        {% endif %}
       </table>
     </div>
   </div>

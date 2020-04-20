@@ -131,3 +131,9 @@ add_perm("core.view_people_menu", has_person & (view_persons_predicate | view_gr
 # View admin menu
 view_admin_menu_predicate = has_person & (manage_data_predicate | manage_school_predicate | impersonate_predicate | view_system_status_predicate | view_announcements_predicate)
 add_perm("core.view_admin_menu", view_admin_menu_predicate)
+
+# View person personal details
+view_personal_details_predicate = has_person & (
+    has_global_perm("core.view_personal_details") | has_object_perm("core.view_personal_details") | is_current_person
+)
+add_perm("core.view_personal_details", view_personal_details_predicate)
