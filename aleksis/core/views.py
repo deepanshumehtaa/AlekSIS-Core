@@ -10,7 +10,7 @@ from django_tables2 import RequestConfig
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
-from rules.contrib.views import permission_required, objectgetter
+from rules.contrib.views import permission_required
 
 from .decorators import person_required
 from .forms import (
