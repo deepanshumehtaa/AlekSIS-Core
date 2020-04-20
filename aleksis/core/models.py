@@ -572,3 +572,14 @@ class GroupType(ExtensibleModel):
     class Meta:
         verbose_name = _("Group type")
         verbose_name_plural = _("Group types")
+
+
+class GlobalPermissions(ExtensibleModel):
+    class Meta:
+        managed = False
+        permissions = (
+            ("view_system_status", _("Can view system status")),
+            ("link_persons_accounts", _("Can link persons to accounts")),
+            ("manage_data", _("Can manage data")),
+            ("impersonate", _("Can impersonate")),
+        )
