@@ -6,7 +6,7 @@ from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
-from aleksis.core.util.core_helpers import has_person
+from aleksis.core.util.core_helpers import has_person as has_person_helper
 
 # 1. Global permissions (view all, add, change all, delete all)
 # 2. Object permissions (view, change, delete)
@@ -73,10 +73,10 @@ def has_any_object(perm: str, klass):
 
 
 @predicate
-def has_person_predicate(user: User) -> bool:
+def has_person(user: User) -> bool:
     """ Predicate which checks whether a user has a linked person """
 
-    return has_person(user)
+    return has_person_helper(user)
 
 
 @predicate
