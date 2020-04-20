@@ -6,7 +6,7 @@ from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
-from aleksis.core.util.core_helpers import has_person as has_person_helper
+from .core_helpers import has_person as has_person_helper
 
 # 1. Global permissions (view all, add, change all, delete all)
 # 2. Object permissions (view, change, delete)

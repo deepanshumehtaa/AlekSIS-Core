@@ -1,7 +1,7 @@
 from rules import add_perm, always_allow
 
-from aleksis.core.models import Person, Group, Announcement
-from aleksis.core.util.predicates import (
+from .models import Person, Group, Announcement
+from .util.predicates import (
     has_person,
     has_global_perm,
     has_any_object,
