@@ -50,7 +50,7 @@ add_perm("core.view_person_groups", view_groups_predicate)
 
 # Edit person
 edit_person_predicate = has_person_predicate & (
-    has_global_perm("core.edit_person") | has_object_perm("core.edit_person")
+    has_global_perm("core.change_person") | has_object_perm("core.change_person")
 )
 add_perm("core.edit_person", edit_person_predicate)
 
@@ -72,12 +72,12 @@ add_perm("core.view_group", view_group_predicate)
 
 # Edit group
 edit_group_predicate = has_person_predicate & (
-    has_global_perm("core.edit_person") | has_object_perm("core.edit_person")
+    has_global_perm("core.change_group") | has_object_perm("core.change_group")
 )
 add_perm("core.edit_group", edit_group_predicate)
 
 # Edit school information
-edit_school_information_predicate = has_person_predicate & has_global_perm("core.edit_school_information")
+edit_school_information_predicate = has_person_predicate & has_global_perm("core.change_school")
 add_perm("core.edit_school_information", edit_school_information_predicate)
 
 # Edit school term
