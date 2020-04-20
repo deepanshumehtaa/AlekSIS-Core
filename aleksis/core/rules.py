@@ -5,7 +5,7 @@ from aleksis.core.util.predicates import (
     has_person_predicate,
     has_global_perm,
     has_any_object,
-    is_person,
+    is_current_person,
     has_object_perm,
 )
 
@@ -27,31 +27,31 @@ add_perm("core.view_persons", view_persons_predicate)
 
 # View person
 view_person_predicate = has_person_predicate & (
-    has_global_perm("core.view_person") | has_object_perm("core.view_person") | is_person
+    has_global_perm("core.view_person") | has_object_perm("core.view_person") | is_current_person
 )
 add_perm("core.view_person", view_person_predicate)
 
 # View person address
 view_address_predicate = has_person_predicate & (
-    has_global_perm("core.view_address") | has_object_perm("core.view_address") | is_person
+    has_global_perm("core.view_address") | has_object_perm("core.view_address") | is_current_person
 )
 add_perm("core.view_address", view_address_predicate)
 
 # View person contact details
 view_contact_details_predicate = has_person_predicate & (
-    has_global_perm("core.view_contact_details") | has_object_perm("core.view_contact_details") | is_person
+    has_global_perm("core.view_contact_details") | has_object_perm("core.view_contact_details") | is_current_person
 )
 add_perm("core.view_contact_details", view_contact_details_predicate)
 
 # View person photo
 view_photo_predicate = has_person_predicate & (
-    has_global_perm("core.view_photo") | has_object_perm("core.view_photo") | is_person
+    has_global_perm("core.view_photo") | has_object_perm("core.view_photo") | is_current_person
 )
 add_perm("core.view_photo", view_photo_predicate)
 
 # View persons groups
 view_groups_predicate = has_person_predicate & (
-    has_global_perm("core.view_person_groups") | has_object_perm("core.view_person_groups") | is_person
+    has_global_perm("core.view_person_groups") | has_object_perm("core.view_person_groups") | is_current_person
 )
 add_perm("core.view_person_groups", view_groups_predicate)
 
