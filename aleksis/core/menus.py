@@ -59,8 +59,7 @@ MENUS = {
             "url": "#",
             "icon": "security",
             "validators": [
-                "menu_generator.validators.is_authenticated",
-                "menu_generator.validators.is_superuser",
+                ("aleksis.core.util.predicates.permission_validator", "core.view_admin_menu"),
             ],
             "submenu": [
                 {
@@ -68,8 +67,7 @@ MENUS = {
                     "url": "announcements",
                     "icon": "announcement",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_announcements"),
                     ],
                 },
                 {
@@ -77,8 +75,7 @@ MENUS = {
                     "url": "data_management",
                     "icon": "view_list",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.manage_data"),
                     ],
                 },
                 {
@@ -86,8 +83,7 @@ MENUS = {
                     "url": "system_status",
                     "icon": "power_settings_new",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_system_status"),
                     ],
                 },
                 {
@@ -95,8 +91,7 @@ MENUS = {
                     "url": "impersonate-list",
                     "icon": "people",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.impersonate"),
                     ],
                 },
                 {
@@ -104,8 +99,7 @@ MENUS = {
                     "url": "school_management",
                     "icon": "school",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.manage_school"),
                     ],
                 },
                 {
