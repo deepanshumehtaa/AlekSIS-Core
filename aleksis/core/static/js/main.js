@@ -66,7 +66,7 @@ $(document).ready( function () {
     });
 
     // Initialise auto-completion for search bar
-    window.autocomplete = new Autocomplete({});
+    window.autocomplete = new Autocomplete({minimum_length: 2});
     window.autocomplete.setup();
 
     // Initialize text collapsibles [MAT, own work]

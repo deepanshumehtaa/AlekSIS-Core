@@ -1,7 +1,9 @@
 import os
 import sys
 from glob import glob
+from importlib import import_module
 
+from django.apps import apps
 from django.utils.translation import gettext_lazy as _
 from calendarweek.django import i18n_day_name_choices_lazy
 
