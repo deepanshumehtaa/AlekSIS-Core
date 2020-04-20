@@ -81,11 +81,11 @@ edit_school_information_predicate = has_person_predicate & has_global_perm("core
 add_perm("core.edit_school_information", edit_school_information_predicate)
 
 # Edit school term
-edit_school_term_predicate = has_person_predicate & has_global_perm("core.edit_school_term")
-add_perm("core.edit_school_term", edit_school_term_predicate)
+edit_schoolterm_predicate = has_person_predicate & has_global_perm("core.change_schoolterm")
+add_perm("core.edit_schoolterm", edit_schoolterm_predicate)
 
 # Manage school
-manage_school_predicate = edit_school_information_predicate | edit_school_term_predicate
+manage_school_predicate = edit_school_information_predicate | edit_schoolterm_predicate
 add_perm("core.manage_school", manage_school_predicate)
 
 # Manage data
