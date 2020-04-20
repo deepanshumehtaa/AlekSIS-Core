@@ -110,9 +110,17 @@ delete_announcement_predicate = has_person_predicate & (
 )
 add_perm("core.delete_announcement", delete_announcement_predicate)
 
-# View people menu (persons + objects)
-add_perm("core.view_people_menu", has_person_predicate & (view_persons_predicate | view_groups_predicate))
+# Use impersonate
+impersonate_predicate = has_person_predicate & has_global_perm("core.impersonate")
+add_perm("core.impersonate", impersonate_predicate)
 
 # View system status
 view_system_status_predicate = has_person_predicate & has_global_perm("core.view_system_status")
 add_perm("core.view_system_status", view_system_status_predicate)
+
+# View people menu (persons + objects)
+add_perm("core.view_people_menu", has_person_predicate & (view_persons_predicate | view_groups_predicate))
+
+# View admin menu
+view_admin_menu_predicate = has_person_predicate & (manage_data_predicate | manage_school_predicate | impersonate_predicate | view_system_status_predicate | view_announcements_predicate)
+add_perm("core.view_admin_menu", view_admin_menu_predicate)
