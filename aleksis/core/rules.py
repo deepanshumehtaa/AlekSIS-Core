@@ -12,6 +12,13 @@ from aleksis.core.util.predicates import (
 
 add_perm("core", always_allow)
 
+# View dashboard
+add_perm("core.view_dashboard", has_person_predicate)
+
+# Use search
+search_predicate = has_person_predicate & has_global_perm("core.search")
+add_perm("core.search", search_predicate)
+
 # View persons
 view_persons_predicate = has_person_predicate & (
     has_global_perm("core.view_person") | has_any_object("core.view_person", Person)
