@@ -260,7 +260,7 @@ def edit_school(request: HttpRequest) -> HttpResponse:
     return render(request, "core/edit_school.html", context)
 
 
-@permission_required("core.edit_school_term")
+@permission_required("core.edit_schoolterm")
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
