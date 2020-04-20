@@ -304,18 +304,18 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
-def get_announcement_by_pk(request: HttpRequest, id_: Optional[int] = None):
-    if id_:
-        return get_object_or_404(Announcement, pk=id_)
+def get_announcement_by_pk(request: HttpRequest, pk: Optional[int] = None):
+    if pk:
+        return get_object_or_404(Announcement, pk=pk)
+    return None
 
 
 @permission_required("core.create_or_edit_announcement", fn=get_announcement_by_pk)
 def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
     context = {}
 
-    announcement = get_announcement_by_pk(request, pk)
-
     if pk:
+        announcement = get_announcement_by_pk(request, pk)
         form = AnnouncementForm(
             request.POST or None,
             instance=announcement
