@@ -113,7 +113,6 @@ MENUS = {
                     "url": "admin:index",
                     "icon": "settings",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
                     ],
                 },
