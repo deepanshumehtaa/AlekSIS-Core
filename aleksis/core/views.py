@@ -358,6 +358,7 @@ def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
     return redirect("announcements")
 
 
+@permission_required("core.search")
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     query = request.GET.get('q', '')
     limit = int(request.GET.get('limit', '5'))
