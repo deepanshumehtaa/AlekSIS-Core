@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Q, QuerySet
+from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
@@ -283,7 +283,7 @@ class Group(ExtensibleModel):
 
         stats['members'] = len(self.members.all())
 
-        ages = [person.age for person in self.members.filter(~Q(date_of_birth = None))]
+        ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
 
         if ages:
             stats['age_avg'] = sum(ages) / len(ages)
