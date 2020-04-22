@@ -2,6 +2,7 @@ from importlib import import_module
 from typing import Optional
 
 from django.apps import apps
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,6 +12,7 @@ from django_tables2 import RequestConfig
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
+from haystack.views import SearchView
 from rules.contrib.views import permission_required
 
 from .forms import (
@@ -364,3 +366,13 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
+
+
+class PermissionSearchView(PermissionRequiredMixin, SearchView):
+    permission_required = "core.search"
+
+    def create_response(self):
+        context = self.get_context()
+        if not self.has_permission():
+            return self.handle_no_permission()
+        return render(self.request, self.template, context)
