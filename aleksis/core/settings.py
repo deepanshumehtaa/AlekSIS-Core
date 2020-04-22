@@ -30,6 +30,8 @@ _settings = LazySettings(
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SILENCED_SYSTEM_CHECKS = []
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = _settings.get("secret_key", "DoNotUseInProduction")
 
@@ -55,6 +57,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "guardian",
+    "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
     "django_global_request",
@@ -574,6 +578,16 @@ LOGGING = {
         'level': _settings.get("logging.level", "WARNING"),
     },
 }
+
+# Rules and permissions
+
+GUARDIAN_RAISE_403 = True
+ANONYMOUS_USER_NAME = None
+
+SILENCED_SYSTEM_CHECKS.append("guardian.W001")
+
+# Append authentication backends
+AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
 HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
 
