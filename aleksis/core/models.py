@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
@@ -274,6 +274,22 @@ class Group(ExtensibleModel):
     @property
     def announcement_recipients(self):
         return list(self.members.all()) + list(self.owners.all())
+
+    @property
+    def get_group_stats(self) -> dict:
+        """ Get stats about a given group """
+        stats = {}
+
+        stats['members'] = len(self.members.all())
+
+        ages = [person.age for person in self.members.filter(~Q(date_of_birth = None))]
+
+        if ages:
+            stats['age_avg'] = sum(ages) / len(ages)
+            stats['age_range_min'] = min(ages)
+            stats['age_range_max'] = max(ages)
+
+        return stats
 
     def __str__(self) -> str:
         return "%s (%s)" % (self.name, self.short_name)
