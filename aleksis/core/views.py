@@ -137,6 +137,9 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
+    # Get statistics
+    context["stats"] = group.get_group_stats
+
     return render(request, "core/group_full.html", context)
 
 

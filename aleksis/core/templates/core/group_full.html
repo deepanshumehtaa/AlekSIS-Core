@@ -16,6 +16,23 @@
     </a>
   </p>
 
+  <h5>{% blocktrans %}Statistics{% endblocktrans %}</h5>
+  <ul>
+    <li>
+     {% trans "Count of members" %}: {{ stats.members }}
+    </li>
+    {% if stats.age_avg %}
+     <li>
+      {% trans "Average age" %}: {{ stats.age_avg|floatformat }}
+     </li>
+    {% endif %}
+    {% if stats.age_range_min %}
+     <li>
+      {% trans "Age range" %}: {{ stats.age_range_min }} {% trans "years to" %} {{ stats.age_range_max }} {% trans "years "%}
+     </li>
+    {% endif %}
+  </ul>
+
   <h5>{% blocktrans %}Owners{% endblocktrans %}</h5>
   {% render_table owners_table %}
 
