@@ -2,7 +2,6 @@ from importlib import import_module
 from typing import Optional
 
 from django.apps import apps
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
