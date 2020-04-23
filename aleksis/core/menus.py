@@ -147,10 +147,26 @@ MENUS = {
                         "menu_generator.validators.is_superuser",
                     ],
                 },
+                {
+                    "name": _("Groups and child groups"),
+                    "url": "groups_child_groups",
+                    "icon": "group_add",
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+                    ],
+                },
             ],
         },
     ],
-    "DATA_MANAGEMENT_MENU": [],
+    "DATA_MANAGEMENT_MENU": [
+        {
+            "name": _("Assign child groups to groups"),
+            "url": "groups_child_groups",
+            "validators": [
+                ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+            ],
+        },
+    ],
     "SCHOOL_MANAGEMENT_MENU": [
         {"name": _("Edit school information"), "url": "edit_school_information", },
         {"name": _("Edit school term"), "url": "edit_school_term", },

@@ -276,3 +276,7 @@ class AnnouncementForm(ExtensibleForm):
     class Meta:
         model = Announcement
         exclude = []
+
+
+class ChildGroupsForm(forms.Form):
+    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
