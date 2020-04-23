@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-30 09:18+0000\n"
-"PO-Revision-Date: 2020-04-14 18:42+0000\n"
-"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"PO-Revision-Date: 2020-04-27 13:03+0000\n"
+"Last-Translator: Julian <leuckerj@gmail.com>\n"
 "Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/"
 "la/>\n"
 "Language: la\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.0.1\n"
 
 #: forms.py:38 forms.py:93
 msgid "You cannot set a new username when also selecting an existing user."
@@ -51,7 +51,7 @@ msgstr "personae"
 #: forms.py:156 menus.py:133 models.py:232 templates/core/groups.html:8
 #: templates/core/groups.html:9 templates/core/person_full.html:79
 msgid "Groups"
-msgstr ""
+msgstr "Greges"
 
 #: forms.py:160
 msgid "From when until when should the announcement be displayed?"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: forms.py:163
 msgid "Who should see the announcement?"
-msgstr ""
+msgstr "Quis nuntium videatne?"
 
 #: forms.py:164
 msgid "Write your announcement:"
@@ -82,7 +82,7 @@ msgstr ""
 #: templates/two_factor/core/login.html:10
 #: templates/two_factor/core/login.html:64
 msgid "Login"
-msgstr ""
+msgstr "nomen profiteri"
 
 #: menus.py:13
 msgid "Dashboard"
@@ -94,11 +94,11 @@ msgstr ""
 
 #: menus.py:26
 msgid "Stop impersonation"
-msgstr ""
+msgstr "Simulandum aliquem finire"
 
 #: menus.py:35 templates/core/base.html:56
 msgid "Logout"
-msgstr ""
+msgstr "nomen retractare"
 
 #: menus.py:41
 msgid "Two factor auth"
@@ -125,7 +125,7 @@ msgstr "Status systemae"
 
 #: menus.py:88
 msgid "Impersonation"
-msgstr ""
+msgstr "Simulare aliquem"
 
 #: menus.py:97
 msgid "Manage school"
@@ -174,7 +174,7 @@ msgstr "Scola"
 
 #: models.py:52
 msgid "Schools"
-msgstr ""
+msgstr "Scholae"
 
 #: models.py:60
 msgid "Visible caption of the term"
@@ -258,15 +258,15 @@ msgstr "Inscriptio electronica"
 
 #: models.py:124
 msgid "Date of birth"
-msgstr ""
+msgstr "Dies natalis"
 
 #: models.py:125
 msgid "Sex"
-msgstr ""
+msgstr "Genus"
 
 #: models.py:127
 msgid "Photo"
-msgstr ""
+msgstr "Photographia"
 
 #: models.py:131 models.py:249
 msgid "Reference ID of import source"
@@ -274,11 +274,11 @@ msgstr ""
 
 #: models.py:140
 msgid "Guardians / Parents"
-msgstr ""
+msgstr "Parentes"
 
 #: models.py:231
 msgid "Group"
-msgstr ""
+msgstr "Grex"
 
 #: models.py:234
 msgid "Long name of group"
@@ -295,11 +295,11 @@ msgstr ""
 #: models.py:268 models.py:285 models.py:363
 #: templates/core/announcement/list.html:18
 msgid "Title"
-msgstr ""
+msgstr "Titulus"
 
 #: models.py:269 models.py:286 models.py:364
 msgid "Description"
-msgstr ""
+msgstr "Descriptio"
 
 #: models.py:271
 msgid "Application"
@@ -315,7 +315,7 @@ msgstr ""
 
 #: models.py:282
 msgid "Sender"
-msgstr ""
+msgstr "Mittens"
 
 #: models.py:287 models.py:365 models.py:518
 msgid "Link"
@@ -331,11 +331,11 @@ msgstr ""
 
 #: models.py:301
 msgid "Notification"
-msgstr ""
+msgstr "Nuntius"
 
 #: models.py:302
 msgid "Notifications"
-msgstr ""
+msgstr "Nuntii"
 
 #: models.py:368
 msgid "Date and time from when to show"
@@ -395,7 +395,7 @@ msgstr ""
 
 #: models.py:520
 msgid "Icon"
-msgstr ""
+msgstr "Nota"
 
 #: models.py:527
 msgid "Custom menu item"
@@ -407,19 +407,19 @@ msgstr ""
 
 #: settings.py:254
 msgid "German"
-msgstr ""
+msgstr "Germanus"
 
 #: settings.py:255
 msgid "English"
-msgstr ""
+msgstr "Britannicus"
 
 #: settings.py:373
 msgid "Site title"
-msgstr ""
+msgstr "Titulus paginae"
 
 #: settings.py:374
 msgid "Site description"
-msgstr ""
+msgstr "Descriptio paginae"
 
 #: settings.py:375
 msgid "Primary colour"
