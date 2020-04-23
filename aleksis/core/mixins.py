@@ -7,8 +7,10 @@ from django.db.models import QuerySet
 from django.forms.models import ModelFormMetaclass, ModelForm
 
 from easyaudit.models import CRUDEvent
+from guardian.admin import GuardedModelAdmin
 from jsonstore.fields import JSONField, JSONFieldMixin
 from material.base import LayoutNode, Layout
+from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
 class CRUDMixin(models.Model):
@@ -233,3 +235,7 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
 
         cls.base_layout.append(node)
         cls.layout = Layout(*cls.base_layout)
+
+
+class BaseModelAdmin(GuardedModelAdmin, ObjectPermissionsModelAdmin):
+    pass

@@ -50,7 +50,10 @@ MENUS = {
                     "name": _("Me"),
                     "url": "person",
                     "icon": "insert_emoticon",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
                 },
             ],
         },
@@ -59,8 +62,7 @@ MENUS = {
             "url": "#",
             "icon": "security",
             "validators": [
-                "menu_generator.validators.is_authenticated",
-                "menu_generator.validators.is_superuser",
+                ("aleksis.core.util.predicates.permission_validator", "core.view_admin_menu"),
             ],
             "submenu": [
                 {
@@ -68,8 +70,7 @@ MENUS = {
                     "url": "announcements",
                     "icon": "announcement",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_announcements"),
                     ],
                 },
                 {
@@ -77,8 +78,7 @@ MENUS = {
                     "url": "data_management",
                     "icon": "view_list",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.manage_data"),
                     ],
                 },
                 {
@@ -86,8 +86,7 @@ MENUS = {
                     "url": "system_status",
                     "icon": "power_settings_new",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_system_status"),
                     ],
                 },
                 {
@@ -95,8 +94,7 @@ MENUS = {
                     "url": "impersonate-list",
                     "icon": "people",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.impersonate"),
                     ],
                 },
                 {
@@ -104,8 +102,7 @@ MENUS = {
                     "url": "school_management",
                     "icon": "school",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.manage_school"),
                     ],
                 },
                 {
@@ -113,7 +110,6 @@ MENUS = {
                     "url": "admin:index",
                     "icon": "settings",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
                         "menu_generator.validators.is_superuser",
                     ],
                 },
@@ -124,22 +120,23 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
-            "validators": [
-                "menu_generator.validators.is_authenticated",
-                "aleksis.core.util.core_helpers.has_person",
-            ],
+            "validators": [("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")],
             "submenu": [
                 {
                     "name": _("Persons"),
                     "url": "persons",
                     "icon": "person",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_persons")
+                    ],
                 },
                 {
                     "name": _("Groups"),
                     "url": "groups",
                     "icon": "group",
-                    "validators": ["menu_generator.validators.is_authenticated"],
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.view_groups")
+                    ],
                 },
                 {
                     "name": _("Persons and accounts"),

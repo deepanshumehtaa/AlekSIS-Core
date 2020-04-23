@@ -1,7 +1,7 @@
 {# -*- engine:django -*- #}
 
 
-{% load i18n menu_generator static sass_tags any_js pwa %}
+{% load i18n menu_generator static sass_tags any_js pwa rules %}
 
 
 <!DOCTYPE html>
@@ -71,7 +71,8 @@
         </object>
       </a>
     </li>
-    {% if user.is_authenticated %}
+    {% has_perm 'core.search' user as search %}
+    {% if search %}
       <li class="search">
         <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
           <div class="search-wrapper">
@@ -146,8 +147,8 @@
   <div class="footer-copyright">
     <div class="container">
       <div class="left">
-        <a class="blue-text text-lighten-4" href="https://aleksis.org/">
-          AlekSIS — The Free School Information System
+        <a class="blue-text text-lighten-4" href="{% url "about_aleksis" %}">
+          {% trans "About AlekSIS — The Free School Information System" %}
         </a>
         © The AlekSIS Team
       </div>

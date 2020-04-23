@@ -1,16 +1,20 @@
+from importlib import import_module
 from typing import Optional
 
-from django.contrib.auth.decorators import login_required
+from django.apps import apps
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
+from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
+from haystack.views import SearchView
+from rules.contrib.views import permission_required
 
-from .decorators import admin_required, person_required
 from .forms import (
     EditGroupForm,
     EditPersonForm,
@@ -22,9 +26,10 @@ from .forms import (
 from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
 from .util import messages
+from .util.apps import AppConfig
 
 
-@person_required
+@permission_required("core.view_dashboard")
 def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -52,12 +57,22 @@ def offline(request):
     return render(request, "core/offline.html")
 
 
-@login_required
+def about(request):
+    context = {}
+
+    context["app_configs"] = list(filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs()))
+
+    return render(request, "core/about.html", context)
+
+
+@permission_required("core.view_persons")
 def persons(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all persons
-    persons = Person.objects.filter(is_active=True)
+    persons = get_objects_for_user(
+        request.user, "core.view_person", Person.objects.filter(is_active=True)
+    )
 
     # Build table
     persons_table = PersonsTable(persons)
@@ -67,19 +82,19 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-@login_required
+def get_person_by_pk(request, id_: Optional[int] = None):
+    if id_:
+        return get_object_or_404(Person, pk=id_)
+    else:
+        return request.user.person
+
+
+@permission_required("core.view_person", fn=get_person_by_pk)
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
     # Get person and check access
-    try:
-        if id_ is None:
-            person = request.user.person
-        else:
-            person = Person.objects.get(pk=id_)
-    except Person.DoesNotExist as e:
-        # Turn not-found object into a 404 error
-        raise Http404 from e
+    person = get_person_by_pk(request, id_)
 
     context["person"] = person
 
@@ -94,16 +109,15 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/person_full.html", context)
 
 
-@login_required
+def get_group_by_pk(request: HttpRequest, id_: int) -> Group:
+    return get_object_or_404(Group, pk=id_)
+
+
+@permission_required("core.view_group", fn=get_group_by_pk)
 def group(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
-    # Get group and check if it exist
-    try:
-        group = Group.objects.get(pk=id_)
-    except Group.DoesNotExist as e:
-        # Turn not-found object into a 404 error
-        raise Http404 from e
+    group = get_group_by_pk(request, id_)
 
     context["group"] = group
 
@@ -129,12 +143,12 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, "core/group_full.html", context)
 
 
-@login_required
+@permission_required("core.view_groups")
 def groups(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Get all groups
-    groups = Group.objects.all()
+    groups = get_objects_for_user(request.user, "core.view_group", Group)
 
     # Build table
     groups_table = GroupsTable(groups)
@@ -144,7 +158,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups.html", context)
 
 
-@admin_required
+@permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -160,11 +174,15 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons_accounts.html", context)
 
 
-@admin_required
+def get_person_by_id(request: HttpRequest, id_:int):
+    return get_object_or_404(Person, id=id_)
+
+
+@permission_required("core.edit_person", fn=get_person_by_id)
 def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
-    person = get_object_or_404(Person, id=id_)
+    person = get_person_by_id(request, id_)
 
     edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
 
@@ -182,15 +200,22 @@ def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, "core/edit_person.html", context)
 
 
-@admin_required
+def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
+    if id_:
+        return get_object_or_404(Group, id=id_)
+    else:
+        return None
+
+
+@permission_required("core.edit_group", fn=get_group_by_id)
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context = {}
 
+    group = get_group_by_id(request, id_)
+
     if id_:
-        group = get_object_or_404(Group, id=id_)
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
-        group = None
         edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == "POST":
@@ -206,26 +231,26 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/edit_group.html", context)
 
 
-@admin_required
+@permission_required("core.manage_data")
 def data_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "core/data_management.html", context)
 
 
-@admin_required
+@permission_required("core.view_system_status")
 def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
 
     return render(request, "core/system_status.html", context)
 
 
-@admin_required
+@permission_required("core.manage_school")
 def school_management(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "core/school_management.html", context)
 
 
-@admin_required
+@permission_required("core.edit_school_information")
 def edit_school(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -246,7 +271,7 @@ def edit_school(request: HttpRequest) -> HttpResponse:
     return render(request, "core/edit_school.html", context)
 
 
-@admin_required
+@permission_required("core.edit_schoolterm")
 def edit_schoolterm(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -279,7 +304,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("index")
 
 
-@admin_required
+@permission_required("core.view_announcements")
 def announcements(request: HttpRequest) -> HttpResponse:
     context = {}
 
@@ -290,12 +315,18 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
-@admin_required
+def get_announcement_by_pk(request: HttpRequest, pk: Optional[int] = None):
+    if pk:
+        return get_object_or_404(Announcement, pk=pk)
+    return None
+
+
+@permission_required("core.create_or_edit_announcement", fn=get_announcement_by_pk)
 def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
     context = {}
 
     if pk:
-        announcement = get_object_or_404(Announcement, pk=pk)
+        announcement = get_announcement_by_pk(request, pk)
         form = AnnouncementForm(
             request.POST or None,
             instance=announcement
@@ -317,17 +348,17 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
     return render(request, "core/announcement/form.html", context)
 
 
-@admin_required
+@permission_required("core.delete_announcement", fn=get_announcement_by_pk)
 def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
     if request.method == "POST":
-        announcement = get_object_or_404(Announcement, pk=pk)
+        announcement = get_announcement_by_pk(request, pk)
         announcement.delete()
         messages.success(request, _("The announcement has been deleted."))
 
     return redirect("announcements")
 
 
-@login_required
+@permission_required("core.search")
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     query = request.GET.get('q', '')
     limit = int(request.GET.get('limit', '5'))
@@ -336,3 +367,13 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
+
+
+class PermissionSearchView(PermissionRequiredMixin, SearchView):
+    permission_required = "core.search"
+
+    def create_response(self):
+        context = self.get_context()
+        if not self.has_permission():
+            return self.handle_no_permission()
+        return render(self.request, self.template, context)

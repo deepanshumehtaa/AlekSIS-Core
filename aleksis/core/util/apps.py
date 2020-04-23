@@ -1,5 +1,5 @@
 from importlib import import_module
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -7,6 +7,10 @@ from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
 from constance.signals import config_updated
+from license_expression import Licensing, LicenseSymbol
+from spdx_license_list import LICENSES
+
+from .core_helpers import copyright_years
 
 
 class AppConfig(django.apps.AppConfig):
@@ -40,6 +44,87 @@ class AppConfig(django.apps.AppConfig):
         except ImportError:
             # ImportErrors are non-fatal because checks are optional.
             pass
+
+    @classmethod
+    def get_name(cls):
+        return getattr(cls, "verbose_name", cls.name)
+        # TODO Try getting from distribution if not set
+
+    @classmethod
+    def get_version(cls):
+        try:
+            from .. import __version__  # noqa
+        except ImportError:
+            __version__ = None
+
+        return getattr(cls, "version", __version__)
+
+    @classmethod
+    def get_licence(cls) -> Tuple:
+        licence = getattr(cls, "licence", None)
+
+        default_dict = {
+            'isDeprecatedLicenseId': False,
+            'isFsfLibre': False,
+            'isOsiApproved': False,
+            'licenseId': 'unknown',
+            'name': 'Unknown Licence',
+            'referenceNumber': -1,
+            'url': '',
+        }
+
+        if licence:
+            licensing = Licensing(LICENSES.keys())
+            parsed = licensing.parse(licence).simplify()
+            readable = parsed.render_as_readable()
+
+            flags = {
+                "isFsfLibre": True,
+                "isOsiApproved": True,
+            }
+
+            licence_dicts = []
+
+            for symbol in parsed.symbols:
+                licence_dict = LICENSES.get(symbol.key.rstrip("+"), None)
+
+                if licence_dict is None:
+                    licence_dict = default_dict
+                else:
+                    licence_dict["url"] = "https://spdx.org/licenses/{}.html".format(licence_dict["licenseId"])
+
+                flags["isFsfLibre"] = flags["isFsfLibre"] and licence_dict["isFsfLibre"]
+                flags["isOsiApproved"] = flags["isOsiApproved"] and licence_dict["isOsiApproved"]
+
+                licence_dicts.append(licence_dict)
+
+            return (readable, flags, licence_dicts)
+        else:
+            return ("Unknown", [default_dict])
+
+    @classmethod
+    def get_urls(cls):
+        return getattr(cls, "urls", {})
+        # TODO Try getting from distribution if not set
+
+    @classmethod
+    def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
+        copyrights = getattr(cls, "copyright", tuple())
+
+        copyrights_processed = []
+
+        for copyright in copyrights:
+            copyrights_processed.append(
+                (
+                    copyright[0] if isinstance(copyright[0], str) else copyright_years(copyright[0]),
+                    copyright[1],
+                    copyright[2],
+                )
+            )
+
+        return copyrights_processed
+
+        # TODO Try getting from distribution if not set
 
     def config_updated(
         self,

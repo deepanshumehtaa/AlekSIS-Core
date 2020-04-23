@@ -9,6 +9,7 @@ from django.views.i18n import JavaScriptCatalog
 import calendarweek.django
 import debug_toolbar
 from django_js_reverse.views import urls_js
+from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
@@ -16,6 +17,7 @@ from . import views
 urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
     path("offline/", views.offline, name="offline"),
+    path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.system_status, name="system_status"),
@@ -40,7 +42,7 @@ urlpatterns = [
     path("announcement/edit/<int:pk>/", views.announcement_form, name="edit_announcement"),
     path("announcement/delete/<int:pk>/", views.delete_announcement, name="delete_announcement"),
     path("search/searchbar/", views.searchbar_snippets, name="searchbar_snippets"),
-    path("search/", include("haystack.urls")),
+    path("search/", views.PermissionSearchView(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path("__i18n__/", include("django.conf.urls.i18n")),

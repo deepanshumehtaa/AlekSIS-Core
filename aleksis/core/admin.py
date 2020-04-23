@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .mixins import BaseModelAdmin
 from .models import (
     Group,
     Person,
@@ -12,7 +13,12 @@ from .models import (
     CustomMenuItem,
 )
 
-admin.site.register(Person)
+
+class PersonAdmin(BaseModelAdmin):
+    pass
+
+
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Group)
 admin.site.register(School)
 admin.site.register(SchoolTerm)
@@ -25,7 +31,7 @@ class AnnouncementRecipientInline(admin.StackedInline):
     model = AnnouncementRecipient
 
 
-class AnnouncementAdmin(admin.ModelAdmin):
+class AnnouncementAdmin(BaseModelAdmin):
     inlines = [
         AnnouncementRecipientInline,
     ]
