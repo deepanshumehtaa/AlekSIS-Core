@@ -14,18 +14,7 @@
     <input type="text" name="{{ form.q.name }}" id="{{ form.q.id }}" value="{% firstof form.q.value "" %}"
            placeholder="{% trans "Search Term" %}">
 
-    <div>
-      {% for group, items in form.models|select_options %}
-        {% for choice, value, selected in items %}
-          <label class="{% if selected %} active{% endif %}">
-            <input type="checkbox"
-                   {% if value == None or value == '' %}disabled{% else %}value="{{ value }}"{% endif %}
-                    {% if selected %} checked="checked"{% endif %} name="{{ form.models.name }}">
-            <span> {{ choice }} </span>
-          </label>
-        {% endfor %}
-      {% endfor %}
-    </div>
+    {% include "components/chips.html" with form_field=form.models %}
 
     <p>
       <button type="submit" class="btn waves-effect waves-light green">
@@ -61,14 +50,20 @@
               </a>
             </li>
           {% else %}
-            <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+            <li class="disabled">
+              <a href="#"><i class="material-icons">chevron_left</i></a>
+            </li>
           {% endif %}
 
           {% for page_num in page.paginator.page_range %}
             {% if page.number == page_num %}
-              <li class="active"><a href="#">{{ page_num }}</a></li>
+              <li class="active">
+                <a href="#">{{ page_num }}</a>
+              </li>
             {% else %}
-              <li class="waves-effect"><a href="?q={{ query }}&amp;page={{ page_num }}">{{ page_num }}</a></li>
+              <li class="waves-effect">
+                <a href="?q={{ query }}&amp;page={{ page_num }}">{{ page_num }}</a>
+              </li>
             {% endif %}
           {% endfor %}
 
@@ -79,7 +74,9 @@
               </a>
             </li>
           {% else %}
-            <li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+            <li class="disabled">
+              <a href="#"><i class="material-icons">chevron_right</i></a>
+            </li>
           {% endif %}
         </ul>
       {% endif %}
@@ -95,19 +92,4 @@
 
 
   </form>
-
-  <script>
-    $(document).ready(function () {
-      $("input[type='checkbox']").each(function () {
-        $(this).addClass("chips-checkbox");
-        $(this).parent("label").addClass("chips-checkbox");
-      });
-
-      $("label.chips-checkbox > span").click(function () {
-        $(this).parent("label.chips-checkbox").toggleClass("active");
-        let input = $(this).next("input[type='checkbox']");
-        input.prop("checked", !input.prop("checked"));
-      });
-    });
-  </script>
 {% endblock %}
