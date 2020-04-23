@@ -4,6 +4,7 @@ from typing import Optional
 from django.apps import apps
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +16,7 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from rules.contrib.views import permission_required
 
+from .filters import GroupFilter
 from .forms import (
     EditGroupForm,
     EditPersonForm,
@@ -22,6 +24,7 @@ from .forms import (
     EditTermForm,
     PersonsAccountsFormSet,
     AnnouncementForm,
+    ChildGroupsForm,
 )
 from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
@@ -172,6 +175,43 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     context["persons_accounts_formset"] = persons_accounts_formset
 
     return render(request, "core/persons_accounts.html", context)
+
+
+@permission_required("core.assign_child_groups_to_groups")
+def groups_child_groups(request: HttpRequest) -> HttpResponse:
+    """ Assign child groups to groups (for matching by MySQL importer) """
+    context = {}
+
+    # Apply filter
+    filter = GroupFilter(request.GET, queryset=Group.objects.all())
+    context["filter"] = filter
+
+    # Paginate
+    paginator = Paginator(filter.qs, 1)
+    page_number = request.POST.get("page", request.POST.get("old_page"))
+
+    if page_number:
+        page = paginator.get_page(page_number)
+        group = page[0]
+
+        if "save" in request.POST:
+            # Save
+            form = ChildGroupsForm(request.POST)
+            form.is_valid()
+
+            if "child_groups" in form.cleaned_data:
+                group.child_groups.set(form.cleaned_data["child_groups"])
+                group.save()
+                messages.success(request, _("The child groups were successfully saved."))
+        else:
+            # Init form
+            form = ChildGroupsForm(initial={"child_groups": group.child_groups.all()})
+
+        context["paginator"] = paginator
+        context["page"] = page
+        context["group"] = group
+        context["form"] = form
+    return render(request, "core/groups_child_groups.html", context)
 
 
 def get_person_by_id(request: HttpRequest, id_:int):

@@ -83,6 +83,10 @@ edit_group_predicate = has_person & (
 )
 add_perm("core.edit_group", edit_group_predicate)
 
+# Assign child groups to groups
+assign_child_groups_to_groups_predicate = has_person & has_global_perm("core.assign_child_groups_to_groups")
+add_perm("core.assign_child_groups_to_groups", assign_child_groups_to_groups_predicate)
+
 # Edit school information
 edit_school_information_predicate = has_person & has_global_perm("core.change_school")
 add_perm("core.edit_school_information", edit_school_information_predicate)
@@ -126,7 +130,7 @@ view_system_status_predicate = has_person & has_global_perm("core.view_system_st
 add_perm("core.view_system_status", view_system_status_predicate)
 
 # View people menu (persons + objects)
-add_perm("core.view_people_menu", has_person & (view_persons_predicate | view_groups_predicate))
+add_perm("core.view_people_menu", has_person & (view_persons_predicate | view_groups_predicate | link_persons_accounts_predicate | assign_child_groups_to_groups_predicate))
 
 # View admin menu
 view_admin_menu_predicate = has_person & (manage_data_predicate | manage_school_predicate | impersonate_predicate | view_system_status_predicate | view_announcements_predicate)
