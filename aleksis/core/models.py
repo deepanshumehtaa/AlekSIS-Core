@@ -23,6 +23,24 @@ from .util.model_helpers import ICONS
 from constance import config
 
 
+FIELD_CHOICES = (
+    ("booleanfield", "BooleanField"),
+    ("charfield", "CharField"),
+    ("datefield", "DateField"),
+    ("datetimefield", "DateTimeField"),
+    ("decimalfield", "DecimalField"),
+    ("emailfield", "EmailField"),
+    ("floatfield", "FloatField"),
+    ("Integerfield", "IntegerField"),
+    ("ipaddressfield", "IPAddressField"),
+    ("genericipaddressfield", "GenericIPAddressField"),
+    ("nullbooleanfield", "NullBooleanField"),
+    ("textfield", "TextField"),
+    ("timefield", "TimeField"),
+    ("urlfield", "URLField"),
+)
+
+
 class School(ExtensibleModel):
     """A school that will have many other objects linked to it.
     AlekSIS has multi-tenant support by linking all objects to a school,
@@ -246,6 +264,15 @@ class Person(ExtensibleModel):
                 self.primary_group = self.member_of.filter(name__regex=pattern).first()
 
 
+class AdditionalField(ExtensibleModel):
+    title = models.CharField(verbose_name=_("Title of field"), max_length=50)
+    field_type = models.CharField(verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50)
+
+    class Meta:
+        verbose_name = _("Addtitional field")
+        verbose_name_plural = _("Addtitional fields")
+
+
 class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
@@ -276,6 +303,7 @@ class Group(ExtensibleModel):
     )
 
     type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+    additional_fields = models.ManyToManyField(AdditionalField, through="PersonGroupThrough")
 
 
     def get_absolute_url(self) -> str:
@@ -301,6 +329,12 @@ class Group(ExtensibleModel):
             )
         )
         dj_group.save()
+
+
+class PersonGroupThrough(ExtensibleModel):
+    field = models.ForeignKey(AdditionalField, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
 
 class Activity(ExtensibleModel):
