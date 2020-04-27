@@ -36,7 +36,7 @@ class AppConfig(django.apps.AppConfig):
         user_logged_out.connect(self.user_logged_out)
 
         # Getting an app ready means it should look at its config once
-        self.config_updated()
+        self.preference_updated(self)
 
         # Register system checks of this app
         try:
@@ -129,7 +129,7 @@ class AppConfig(django.apps.AppConfig):
     def preference_updated(
         self,
         sender: Any,
-        section: Optional[str] = None,,
+        section: Optional[str] = None,
         name: Optional[str] = None,
         old_value: Optional[Any] = None,
         new_value: Optional[Any] = None,

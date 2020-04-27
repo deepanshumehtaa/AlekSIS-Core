@@ -410,9 +410,9 @@ if _settings.get("celery.enabled", False):
         INSTALLED_APPS += ("djcelery_email",)
         EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-PWA_APP_NAME = lazy_config("general", "title")
-PWA_APP_DESCRIPTION = lazy_config("general", "description")
-PWA_APP_THEME_COLOR = lazy_config("theme", "primary")
+PWA_APP_NAME = lazy_preference("general", "title")
+PWA_APP_DESCRIPTION = lazy_preference("general", "description")
+PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"

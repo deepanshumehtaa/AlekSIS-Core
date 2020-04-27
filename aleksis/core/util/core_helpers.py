@@ -13,8 +13,6 @@ from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
 
-from dynamic_preferences.registries import global_preferences_registry
-
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
     """ Takes a sequence of integegers and produces a string with ranges
@@ -95,6 +93,9 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
+        from dynamic_preferences.registries import global_preferences_registry  # noqa
+        global_preferences = global_preferences_registry.manager()
+
         return global_preferences["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour

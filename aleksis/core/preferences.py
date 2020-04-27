@@ -3,11 +3,12 @@ from django.forms import EmailField, URLField
 from django.utils.translation import gettext_lazy as _
 
 from colorfield.widgets import ColorWidget
-from dynamic_preferences.types import BooleanPreference, StringPreference
+from dynamic_preferences.types import BooleanPreference, ChoicePreference, StringPreference
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.registries import global_preferences_registry
 from dynamic_preferences.users.registries import user_preferences_registry
 
+from .util.notifications import get_notification_choices_lazy
 
 general = Section("general")
 theme = Section("theme")
@@ -110,7 +111,8 @@ class AdressingNameFormat(ChoicePreference):
 
 
 @user_preferences_registry.register
-class NotificationChannels(MultipleChoicePreference):
+class NotificationChannels(ChoicePreference):
+    # FIXME should be a MultipleChoicePreference
     section = notification
     name = "channels"
     default = ["email"]

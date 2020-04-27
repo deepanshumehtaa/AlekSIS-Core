@@ -30,7 +30,7 @@ class CoreConfig(AppConfig):
     def preference_updated(
         self,
         sender: Any,
-        section: Optional[str] = None,,
+        section: Optional[str] = None,
         name: Optional[str] = None,
         old_value: Optional[Any] = None,
         new_value: Optional[Any] = None,
