@@ -99,7 +99,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above
-    return lazy(_get_config, str)(key)
+    return lazy(_get_preference, str)(section, name)
 
 
 def is_impersonate(request: HttpRequest) -> bool:
