@@ -88,14 +88,14 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
                     raise TypeError("Only dict and list settings can be merged.")
 
 
-def lazy_config(key: str) -> Callable[[str], Any]:
+def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """ Lazily get a config value from dynamic preferences. Useful to bind preferences
     to other global settings to make them available to third-party apps that are not
     aware of dynamic preferences.
     """
 
-    def _get_config(key: str) -> Any:
-        return global_preferences[key]
+    def _get_preference(section: str, name: str) -> Any:
+        return global_preferences["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above

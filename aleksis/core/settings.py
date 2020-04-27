@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
+from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -410,9 +410,9 @@ if _settings.get("celery.enabled", False):
         INSTALLED_APPS += ("djcelery_email",)
         EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-PWA_APP_NAME = lazy_config("SITE_TITLE")
-PWA_APP_DESCRIPTION = lazy_config("SITE_DESCRIPTION")
-PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
+PWA_APP_NAME = lazy_config("general", "title")
+PWA_APP_DESCRIPTION = lazy_config("general", "description")
+PWA_APP_THEME_COLOR = lazy_config("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
