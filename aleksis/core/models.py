@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
+import reversion
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
@@ -23,6 +24,7 @@ from .util.model_helpers import ICONS
 from constance import config
 
 
+@reversion.register()
 class School(ExtensibleModel):
     """A school that will have many other objects linked to it.
     AlekSIS has multi-tenant support by linking all objects to a school,
@@ -54,6 +56,7 @@ class School(ExtensibleModel):
         verbose_name_plural = _("Schools")
 
 
+@reversion.register()
 class SchoolTerm(ExtensibleModel):
     """ Information about a term (limited time frame) that data can
     be linked to.
@@ -86,6 +89,7 @@ class SchoolTerm(ExtensibleModel):
         verbose_name_plural = _("School terms")
 
 
+@reversion.register()
 class Person(ExtensibleModel):
     """ A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
@@ -246,6 +250,7 @@ class Person(ExtensibleModel):
                 self.primary_group = self.member_of.filter(name__regex=pattern).first()
 
 
+@reversion.register()
 class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
@@ -303,6 +308,7 @@ class Group(ExtensibleModel):
         dj_group.save()
 
 
+@reversion.register()
 class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
 
@@ -319,6 +325,7 @@ class Activity(ExtensibleModel):
         verbose_name_plural = _("Activities")
 
 
+@reversion.register()
 class Notification(ExtensibleModel):
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
@@ -399,6 +406,7 @@ class AnnouncementQuerySet(models.QuerySet):
         return announcements_for_person
 
 
+@reversion.register()
 class Announcement(ExtensibleModel):
     objects = models.Manager.from_queryset(AnnouncementQuerySet)()
 
@@ -437,6 +445,7 @@ class Announcement(ExtensibleModel):
         verbose_name_plural = _("Announcements")
 
 
+@reversion.register()
 class AnnouncementRecipient(ExtensibleModel):
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
 
@@ -465,6 +474,7 @@ class AnnouncementRecipient(ExtensibleModel):
         verbose_name_plural = _("Announcement recipients")
 
 
+@reversion.register()
 class DashboardWidget(PolymorphicModel, PureDjangoModel):
     """ Base class for dashboard widgets on the index page
 
@@ -529,6 +539,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         verbose_name_plural = _("Dashboard Widgets")
 
 
+@reversion.register()
 class CustomMenu(ExtensibleModel):
     id = models.CharField(max_length=100, verbose_name=_("Menu ID"), primary_key=True)
     name = models.CharField(max_length=150, verbose_name=_("Menu name"))
@@ -552,6 +563,7 @@ class CustomMenu(ExtensibleModel):
         verbose_name_plural = _("Custom menus")
 
 
+@reversion.register()
 class CustomMenuItem(ExtensibleModel):
     menu = models.ForeignKey(
         CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
@@ -569,6 +581,8 @@ class CustomMenuItem(ExtensibleModel):
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
 
+
+@reversion.register()
 class GroupType(ExtensibleModel):
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)
@@ -578,6 +592,7 @@ class GroupType(ExtensibleModel):
         verbose_name_plural = _("Group types")
 
 
+@reversion.register()
 class GlobalPermissions(ExtensibleModel):
     class Meta:
         managed = False
