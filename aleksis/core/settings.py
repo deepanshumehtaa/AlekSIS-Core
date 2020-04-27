@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "image_cropping",
     "maintenance_mode",
     "menu_generator",
+    "reversion",
     "phonenumber_field",
     "debug_toolbar",
     "django_select2",

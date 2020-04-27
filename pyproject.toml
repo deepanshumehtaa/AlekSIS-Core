@@ -75,6 +75,7 @@ celery-haystack = {version="^0.3.1", optional=true}
 django-dbbackup = "^3.3.0"
 spdx-license-list = "^0.4.0"
 license-expression = "^1.2"
+django-reversion = "^3.0.7"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
