@@ -6,7 +6,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
-from constance.signals import config_updated
+from dynamic_preferences.signals import preference_updated
 from license_expression import Licensing, LicenseSymbol
 from spdx_license_list import LICENSES
 
@@ -31,7 +31,7 @@ class AppConfig(django.apps.AppConfig):
         # Register default listeners
         pre_migrate.connect(self.pre_migrate, sender=self)
         post_migrate.connect(self.post_migrate, sender=self)
-        config_updated.connect(self.config_updated)
+        preference_updated.connect(self.preference_updated)
         user_logged_in.connect(self.user_logged_in)
         user_logged_out.connect(self.user_logged_out)
 
@@ -126,14 +126,16 @@ class AppConfig(django.apps.AppConfig):
 
         # TODO Try getting from distribution if not set
 
-    def config_updated(
+    def preference_updated(
         self,
-        key: Optional[str] = "",
+        sender: Any,
+        section: Optional[str] = None,,
+        name: Optional[str] = None,
         old_value: Optional[Any] = None,
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
-        """ Called on every app instance if a Constance config chagnes, and once on startup
+        """ Called on every app instance if a dynamic preference changes, and once on startup
 
         By default, it does nothing.
         """

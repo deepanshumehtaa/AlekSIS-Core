@@ -27,8 +27,17 @@ class CoreConfig(AppConfig):
         ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
     )
 
-    def config_updated(self, *args, **kwargs) -> None:
-        clean_scss()
+    def preference_updated(
+        self,
+        sender: Any,
+        section: Optional[str] = None,,
+        name: Optional[str] = None,
+        old_value: Optional[Any] = None,
+        new_value: Optional[Any] = None,
+        **kwargs,
+    ) -> None:
+        if section == "theme":
+            clean_scss()
 
     def post_migrate(
         self,
