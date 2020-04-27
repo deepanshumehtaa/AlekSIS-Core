@@ -10,7 +10,7 @@ from dynamic_preferences.users.registries import user_preferences_registry
 
 
 general = Section("general")
-theme = Section(_("theme")
+theme = Section("theme")
 mail = Section("mail")
 notification = Section("notification")
 footer = Section("footer")
