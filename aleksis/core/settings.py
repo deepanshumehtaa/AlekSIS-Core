@@ -318,7 +318,7 @@ SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
-    "get-config": "aleksis.core.util.sass_helpers.get_config",
+    "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),

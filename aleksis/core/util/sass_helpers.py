@@ -1,7 +1,7 @@
 from django.conf import settings
 
 from colour import web2hex
-from constance import config
+from dynamic_preferences.registries import global_preferences_registry
 from sass import SassColor
 
 
@@ -12,5 +12,6 @@ def get_colour(html_colour: str) -> SassColor:
     return SassColor(r, g, b, 255)
 
 
-def get_config(setting: str) -> str:
-    return getattr(config, setting, "") or getattr(settings, setting, "")
+def get_preference(section: str, name: str) -> str:
+    global_preferences = global_preferences_registry.manager()
+    return global_preferences["%s__%s" % (section, name)]

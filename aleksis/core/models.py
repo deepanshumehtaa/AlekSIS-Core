@@ -20,7 +20,9 @@ from .tasks import send_notification
 from .util.core_helpers import now_tomorrow
 from .util.model_helpers import ICONS
 
-from constance import config
+from dynamic_preferences.registries import global_preferences_registry
+
+global_preferences = global_preferences_registry.manager()
 
 
 class School(ExtensibleModel):
@@ -176,9 +178,9 @@ class Person(ExtensibleModel):
 
     @property
     def adressing_name(self) -> str:
-        if config.ADRESSING_NAME_FORMAT == "dutch":
+        if global_preferences["notification__addressing_name_format"] == "dutch":
             return f"{self.last_name} {self.first_name}"
-        elif config.ADRESSING_NAME_FORMAT == "english":
+        elif global_preferences["notification__addressing_name_format"] == "english":
             return f"{self.last_name}, {self.first_name}"
         else:
             return f"{self.first_name} {self.last_name}"
@@ -239,7 +241,7 @@ class Person(ExtensibleModel):
         a primary group, unless force is True.
         """
 
-        pattern = pattern or config.PRIMARY_GROUP_PATTERN
+        pattern = pattern or global_preferences["account__primary_group_pattern"]
 
         if pattern:
             if force or not self.primary_group:
