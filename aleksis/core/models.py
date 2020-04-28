@@ -255,6 +255,9 @@ class Group(ExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
+        permissions = (
+            ("assign_child_groups_to_groups", _("Can assign child groups to groups")),
+        )
 
     icon_ = "group"
 
