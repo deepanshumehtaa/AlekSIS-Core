@@ -592,7 +592,6 @@ class GroupType(ExtensibleModel):
         verbose_name_plural = _("Group types")
 
 
-@reversion.register()
 class GlobalPermissions(ExtensibleModel):
     class Meta:
         managed = False
