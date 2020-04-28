@@ -569,6 +569,7 @@ class CustomMenuItem(ExtensibleModel):
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
 
+
 class GroupType(ExtensibleModel):
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)

@@ -70,6 +70,7 @@ All three steps can be done with the ``poetry run`` command and
   poetry run ./manage.py collectstatic
   poetry run ./manage.py compilemessages
   poetry run ./manage.py migrate
+  poetry run ./manage.py createinitialrevisions
 
 (You might need database settings for the `migrate` command; see below.)
 

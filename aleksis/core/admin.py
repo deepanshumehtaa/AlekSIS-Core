@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from reversion.admin import VersionAdmin
+
 from .mixins import BaseModelAdmin
 from .models import (
     Group,
@@ -14,24 +16,20 @@ from .models import (
 )
 
 
-class PersonAdmin(BaseModelAdmin):
-    pass
-
-
-admin.site.register(Person, PersonAdmin)
-admin.site.register(Group)
-admin.site.register(School)
-admin.site.register(SchoolTerm)
-admin.site.register(Activity)
-admin.site.register(Notification)
-admin.site.register(CustomMenuItem)
+admin.site.register(Person, VersionAdmin)
+admin.site.register(Group, VersionAdmin)
+admin.site.register(School, VersionAdmin)
+admin.site.register(SchoolTerm, VersionAdmin)
+admin.site.register(Activity, VersionAdmin)
+admin.site.register(Notification, VersionAdmin)
+admin.site.register(CustomMenuItem, VersionAdmin)
 
 
 class AnnouncementRecipientInline(admin.StackedInline):
     model = AnnouncementRecipient
 
 
-class AnnouncementAdmin(BaseModelAdmin):
+class AnnouncementAdmin(BaseModelAdmin, VersionAdmin):
     inlines = [
         AnnouncementRecipientInline,
     ]

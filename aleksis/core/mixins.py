@@ -10,6 +10,7 @@ from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
 from jsonstore.fields import JSONField, JSONFieldMixin
 from material.base import LayoutNode, Layout
+import reversion
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
@@ -28,6 +29,7 @@ class CRUDMixin(models.Model):
         ).select_related("user")
 
 
+@reversion.register()
 class ExtensibleModel(CRUDMixin):
     """ Base model for all objects in AlekSIS apps
 
