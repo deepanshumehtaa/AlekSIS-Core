@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('extended_data', django.contrib.postgres.fields.jsonb.JSONField(default=dict, editable=False)),
             ],
             options={
-                'permissions': (('view_system_status', 'Can view system status'), ('link_persons_accounts', 'Can link persons to accounts'), ('manage_data', 'Can manage data'), ('impersonate', 'Can impersonate')),
+                'permissions': (('view_system_status', 'Can view system status'), ('link_persons_accounts', 'Can link persons to accounts'), ('manage_data', 'Can manage data'), ('impersonate', 'Can impersonate'), ('search', 'Can use search')),
                 'managed': False,
             },
         ),
