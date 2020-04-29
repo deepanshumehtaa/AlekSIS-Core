@@ -72,7 +72,7 @@ class MailOut(StringPreference):
     default = settings.DEFAULT_FROM_EMAIL
     required = False
     verbose_name = _("Mail out address")
-    widget = EmailField
+    field_class = EmailField
 
 
 @global_preferences_registry.register
@@ -82,7 +82,7 @@ class PrivacyURL(StringPreference):
     default = ""
     required = False
     verbose_name = _("Link to privacy policy")
-    widget = URLField
+    field_class = URLField
 
 
 @global_preferences_registry.register
@@ -92,7 +92,7 @@ class ImprintURL(StringPreference):
     default = ""
     required = False
     verbose_name = _("Link to imprint")
-    widget = URLField
+    field_class = URLField
 
 
 @user_preferences_registry.register
