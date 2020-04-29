@@ -571,12 +571,6 @@ class CustomMenu(ExtensibleModel):
         return self.name if self.name != "" else self.id
 
     @classmethod
-    def maintain_default_data(cls):
-        menus = ["footer"]
-        for menu in menus:
-            cls.get_default(menu)
-
-    @classmethod
     def get_default(cls, name):
         menu, _ = cls.objects.get_or_create(id=name, defaults={"name": name})
         return menu
@@ -602,6 +596,7 @@ class CustomMenuItem(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
+
 
 class GroupType(ExtensibleModel):
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)

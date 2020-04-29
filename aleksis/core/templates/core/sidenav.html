@@ -9,7 +9,7 @@
   {% for item in core_menu %}
     {% if not item.submenu %}
       <li class="{% if item.selected %} active {% endif %}">
-        <a href="{{ item.url }}">
+        <a class="truncate" href="{{ item.url }}">
           {% if item.icon_class %}
             <i class="{{ item.icon_class }}"></i>
           {% elif item.icon %}
@@ -21,7 +21,7 @@
     {% endif %}
     {% if item.submenu %}
       <li class="bold {% if item.selected %} active {% endif %}">
-        <a class="collapsible-header waves-effect waves-primary" href="{{ item.url|default:"#" }}">
+        <a class="collapsible-header waves-effect waves-primary truncate" href="{{ item.url|default:"#" }}">
           {% if item.icon_class %}
             <i class="{{ item.icon_class }}"></i>
           {% elif item.icon %}
@@ -33,7 +33,7 @@
           <ul>
             {% for menu in item.submenu %}
               <li class="{% if menu.selected %} active {% endif %}">
-                <a class="" href="{{ menu.url }}">
+                <a class="truncate" href="{{ menu.url }}">
                   {% if menu.icon_class %}
                     <i class="{{ menu.icon_class }}"></i>
                   {% elif menu.icon %}

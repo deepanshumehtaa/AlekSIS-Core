@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "image_cropping",
     "maintenance_mode",
     "menu_generator",
+    "reversion",
     "phonenumber_field",
     "debug_toolbar",
     "django_select2",
@@ -261,6 +262,7 @@ AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 LANGUAGES = [
     ("de", _("German")),
     ("en", _("English")),
+    ("fr", _("French")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
