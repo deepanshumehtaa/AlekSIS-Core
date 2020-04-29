@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import Any, Callable, Optional, Union
 
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.managers import CurrentSiteManager
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.models import ModelFormMetaclass, ModelForm
@@ -77,6 +79,10 @@ class ExtensibleModel(CRUDMixin):
 
     # Defines a material design icon associated with this type of model
     icon_ = "radio_button_unchecked"
+
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    objects = CurrentSiteManager()
+    objects_all_sites = models.Manager()
 
     def get_absolute_url(self) -> str:
         """ Get the URL o a view representing this model instance """
