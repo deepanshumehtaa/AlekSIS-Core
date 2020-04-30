@@ -3,7 +3,7 @@ from django.conf import settings
 from colour import web2hex
 from sass import SassColor
 
-from .util.core_helpers import get_site_preferences
+from .core_helpers import get_site_preferences
 
 def get_colour(html_colour: str) -> SassColor:
     rgb = web2hex(html_colour, force_long=True)[1:]
