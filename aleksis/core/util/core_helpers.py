@@ -8,7 +8,6 @@ from typing import Any, Callable, Sequence, Union, List
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
@@ -89,6 +88,7 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
 def get_site_preferences():
     """ Get the preferences manager of the current site """
 
+    from django.contrib.sites.models import Site  # noqa
     return Site.objects.get_current().preferences
 
 
