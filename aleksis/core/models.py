@@ -5,12 +5,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from dynamic_preferences.models import PerInstancePreferenceModel
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
@@ -23,69 +25,6 @@ from .util.model_helpers import ICONS
 from dynamic_preferences.registries import global_preferences_registry
 
 global_preferences = global_preferences_registry.manager()
-
-
-class School(ExtensibleModel):
-    """A school that will have many other objects linked to it.
-    AlekSIS has multi-tenant support by linking all objects to a school,
-    and limiting all features to objects related to the same school as the
-    currently logged-in user.
-    """
-
-    name = models.CharField(verbose_name=_("Name"), max_length=255)
-    name_official = models.CharField(
-        verbose_name=_("Official name"),
-        max_length=255,
-        help_text=_("Official name of the school, e.g. as given by supervisory authority"),
-    )
-
-    logo = ImageCropField(verbose_name=_("School logo"), blank=True, null=True)
-    logo_cropping = ImageRatioField("logo", "600x600", size_warning=True)
-
-    @classmethod
-    def get_default(cls):
-        return cls.objects.first()
-
-    @property
-    def current_term(self):
-        return SchoolTerm.objects.get(current=True)
-
-    class Meta:
-        ordering = ["name", "name_official"]
-        verbose_name = _("School")
-        verbose_name_plural = _("Schools")
-
-
-class SchoolTerm(ExtensibleModel):
-    """ Information about a term (limited time frame) that data can
-    be linked to.
-    """
-
-    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=255)
-
-    date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
-    date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
-
-    current = models.NullBooleanField(default=None, unique=True)
-
-    def save(self, *args, **kwargs):
-        if self.current is False:
-            self.current = None
-        super().save(*args, **kwargs)
-
-    @classmethod
-    def maintain_default_data(cls):
-        if not cls.objects.filter(current=True).exists():
-            if cls.objects.exists():
-                term = cls.objects.latest('date_start')
-                term.current=True
-                term.save()
-            else:
-                cls.objects.create(date_start=date.today(), current=True)
-
-    class Meta:
-        verbose_name = _("School term")
-        verbose_name_plural = _("School terms")
 
 
 class Person(ExtensibleModel):
@@ -586,3 +525,15 @@ class GlobalPermissions(ExtensibleModel):
             ("impersonate", _("Can impersonate")),
             ("search", _("Can use search")),
         )
+
+
+class SitePreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Site)
+
+
+class PersonPreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Person)
+
+
+class GroupPreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Group)

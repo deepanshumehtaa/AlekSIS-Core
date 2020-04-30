@@ -4,6 +4,9 @@ import django.apps
 from django.contrib.auth.signals import user_logged_in
 from django.http import HttpRequest
 
+from dynamic_preferences.registries import preference_models
+
+from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
 from .signals import clean_scss
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
@@ -26,6 +29,15 @@ class CoreConfig(AppConfig):
         ([2019, 2020], "mirabilos", "thorsten.glaser@teckids.org"),
         ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
     )
+
+    def ready(self):
+        SitePreferenceModel = self.get_model('SitePreferenceModel')
+        PersonPreferenceModel = self.get_model('PersonPreferenceModel')
+        GroupPreferenceModel = self.get_model('GroupPreferenceModel')
+
+        preference_models.register(SitePreferenceModel, site_preferences_registry)
+        preference_models.register(PersonPreferenceModel, person_preferences_registry)
+        preference_models.register(GroupPreferenceModel, group_preferences_registry)
 
     def preference_updated(
         self,

@@ -6,11 +6,13 @@ from colorfield.widgets import ColorWidget
 from dynamic_preferences.types import BooleanPreference, ChoicePreference, StringPreference
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.registries import global_preferences_registry
-from dynamic_preferences.users.registries import user_preferences_registry
 
+from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
+
 general = Section("general")
+school = Section("school")
 theme = Section("theme")
 mail = Section("mail")
 notification = Section("notification")
@@ -18,7 +20,7 @@ footer = Section("footer")
 account = Section("account")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class SiteTitle(StringPreference):
     section = general
     name = "title"
@@ -27,7 +29,7 @@ class SiteTitle(StringPreference):
     verbose_name = _("Site title")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class SiteDescription(StringPreference):
     section = general
     name = "description"
@@ -36,7 +38,7 @@ class SiteDescription(StringPreference):
     verbose_name = _("Site description")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class ColourPrimary(StringPreference):
     section = theme
     name = "primary"
@@ -45,7 +47,7 @@ class ColourPrimary(StringPreference):
     verbose_name = _("Primary colour")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class ColourSecondary(StringPreference):
     section = theme
     name = "secondary"
@@ -54,7 +56,7 @@ class ColourSecondary(StringPreference):
     verbose_name = _("Secondary colour")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class MailOutName(StringPreference):
     section = mail
     name = "name"
@@ -63,7 +65,7 @@ class MailOutName(StringPreference):
     verbose_name = _("Mail out name")
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class MailOut(StringPreference):
     section = mail
     name = "address"
@@ -73,7 +75,7 @@ class MailOut(StringPreference):
     field_class = EmailField
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class PrivacyURL(StringPreference):
     section = footer
     name = "privacy_url"
@@ -83,7 +85,7 @@ class PrivacyURL(StringPreference):
     field_class = URLField
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class ImprintURL(StringPreference):
     section = footer
     name = "imprint_url"
@@ -93,7 +95,7 @@ class ImprintURL(StringPreference):
     field_class = URLField
 
 
-@user_preferences_registry.register
+@person_preferences_registry.register
 class AdressingNameFormat(ChoicePreference):
     section = notification
     name = "addressing_name_format"
@@ -108,7 +110,7 @@ class AdressingNameFormat(ChoicePreference):
               )
 
 
-@user_preferences_registry.register
+@person_preferences_registry.register
 class NotificationChannels(ChoicePreference):
     # FIXME should be a MultipleChoicePreference
     section = notification
@@ -119,10 +121,28 @@ class NotificationChannels(ChoicePreference):
     choices = get_notification_choices_lazy()
 
 
-@global_preferences_registry.register
+@site_preferences_registry.register
 class PrimaryGroupPattern(StringPreference):
     section = account
     name = "primary_group_pattern"
     default = ""
     required = False
     verbose_name = _("Regular expression to match primary group, e.g. '^Class .*'")
+
+
+@site_preferences_registry.register
+class SchoolName(StringPreference):
+    section = school
+    name = "name"
+    default = ""
+    required = False
+    verbose_name = _("Display name of the school")
+
+
+@site_preferences_registry.register
+class SchoolNameOfficial(StringPreference):
+    section = school
+    name = "name_official"
+    default = ""
+    required = False
+    verbose_name = _("Official name of the school, e.g. as given by supervisory authority")

@@ -93,10 +93,11 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
-        from dynamic_preferences.registries import global_preferences_registry  # noqa
-        global_preferences = global_preferences_registry.manager()
+        from ..registries import site_preferences_registry  # noqa
 
-        return global_preferences["%s__%s" % (section, name)]
+        site_preferences = site_preferences_registry.manager()
+
+        return site_preferences["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above
