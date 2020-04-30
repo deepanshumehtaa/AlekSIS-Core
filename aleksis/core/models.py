@@ -291,7 +291,7 @@ class Group(ExtensibleModel):
     name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
 
-    members = models.ManyToManyField("Person", related_name="member_of", blank=True)
+    members = models.ManyToManyField("Person", related_name="member_of", blank=True, through="PersonGroupThrough")
     owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
 
     parent_groups = models.ManyToManyField(
@@ -303,7 +303,7 @@ class Group(ExtensibleModel):
     )
 
     type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
-    additional_fields = models.ManyToManyField(AdditionalField, through="PersonGroupThrough")
+    additional_fields = models.ManyToManyField(AdditionalField)
 
 
     def get_absolute_url(self) -> str:
@@ -332,10 +332,17 @@ class Group(ExtensibleModel):
 
 
 class PersonGroupThrough(ExtensibleModel):
-    field = models.ForeignKey(AdditionalField, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.group.additional_fields:
+            field_class = getattr(jsonstore, field.get_field_type_display())
+            field_name = slugify(field.title).replace("-", "_")
+            field_instance = field_class(verbose_name=field.title)
+            setattr(self, field_name, field_instance)
 
 class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
