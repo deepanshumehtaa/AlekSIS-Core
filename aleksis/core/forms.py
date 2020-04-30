@@ -12,7 +12,7 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from material import Layout, Fieldset, Row
 
 from .mixins import ExtensibleForm
-from .models import Group, Person, School, SchoolTerm, Announcement, AnnouncementRecipient
+from .models import Group, Person, Announcement, AnnouncementRecipient
 
 
 class PersonAccountForm(forms.ModelForm):
@@ -153,25 +153,6 @@ class EditGroupForm(ExtensibleForm):
                 search_fields=["name__icontains", "short_name__icontains"]
             ),
         }
-
-
-class EditSchoolForm(ExtensibleForm):
-    layout = Layout(
-        Fieldset(_("School name"), "name", "name_official"),
-        Fieldset(_("School logo"), Row("logo", "logo_cropping")),
-    )
-
-    class Meta:
-        model = School
-        fields = ["name", "name_official", "logo", "logo_cropping"]
-
-
-class EditTermForm(ExtensibleForm):
-    layout = Layout("caption", Row("date_start", "date_end"))
-
-    class Meta:
-        model = SchoolTerm
-        fields = ["caption", "date_start", "date_end"]
 
 
 class AnnouncementForm(ExtensibleForm):

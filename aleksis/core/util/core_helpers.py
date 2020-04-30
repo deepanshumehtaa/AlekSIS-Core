@@ -165,9 +165,8 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
 def custom_information_processor(request: HttpRequest) -> dict:
     """ Provides custom information in all templates """
 
-    from ..models import School, CustomMenu
+    from ..models import CustomMenu
     return {
-        "SCHOOL": School.get_default,
         "FOOTER_MENU": CustomMenu.get_default("footer"),
     }
 

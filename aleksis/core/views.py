@@ -20,13 +20,11 @@ from .filters import GroupFilter
 from .forms import (
     EditGroupForm,
     EditPersonForm,
-    EditSchoolForm,
-    EditTermForm,
     PersonsAccountsFormSet,
     AnnouncementForm,
     ChildGroupsForm,
 )
-from .models import Activity, Group, Notification, Person, School, DashboardWidget, Announcement
+from .models import Activity, Group, Notification, Person, DashboardWidget, Announcement
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
@@ -282,52 +280,6 @@ def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
 
     return render(request, "core/system_status.html", context)
-
-
-@permission_required("core.manage_school")
-def school_management(request: HttpRequest) -> HttpResponse:
-    context = {}
-    return render(request, "core/school_management.html", context)
-
-
-@permission_required("core.edit_school_information")
-def edit_school(request: HttpRequest) -> HttpResponse:
-    context = {}
-
-    school = School.objects.first()
-    edit_school_form = EditSchoolForm(request.POST or None, request.FILES or None, instance=school)
-
-    context["school"] = school
-
-    if request.method == "POST":
-        if edit_school_form.is_valid():
-            edit_school_form.save(commit=True)
-
-            messages.success(request, _("The school has been saved."))
-            return redirect("index")
-
-    context["edit_school_form"] = edit_school_form
-
-    return render(request, "core/edit_school.html", context)
-
-
-@permission_required("core.edit_schoolterm")
-def edit_schoolterm(request: HttpRequest) -> HttpResponse:
-    context = {}
-
-    term = School.objects.first().current_term
-    edit_term_form = EditTermForm(request.POST or None, instance=term)
-
-    if request.method == "POST":
-        if edit_term_form.is_valid():
-            edit_term_form.save(commit=True)
-
-            messages.success(request, _("The term has been saved."))
-            return redirect("index")
-
-    context["edit_term_form"] = edit_term_form
-
-    return render(request, "core/edit_schoolterm.html", context)
 
 
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
