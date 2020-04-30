@@ -43,7 +43,6 @@ class ColourPrimary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Primary colour")
-    widget = ColorWidget
 
 
 @global_preferences_registry.register
@@ -53,7 +52,6 @@ class ColourSecondary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Secondary colour")
-    widget = ColorWidget
 
 
 @global_preferences_registry.register
@@ -68,7 +66,7 @@ class MailOutName(StringPreference):
 @global_preferences_registry.register
 class MailOut(StringPreference):
     section = mail
-    name = "name"
+    name = "address"
     default = settings.DEFAULT_FROM_EMAIL
     required = False
     verbose_name = _("Mail out address")
@@ -115,10 +113,10 @@ class NotificationChannels(ChoicePreference):
     # FIXME should be a MultipleChoicePreference
     section = notification
     name = "channels"
-    default = ["email"]
+    default = "email"
     required = False
     verbose_name = _("Channels to use for notifications")
-    choices = get_notification_choices_lazy
+    choices = get_notification_choices_lazy()
 
 
 @global_preferences_registry.register

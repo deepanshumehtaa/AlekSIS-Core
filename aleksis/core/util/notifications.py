@@ -38,7 +38,7 @@ def _send_notification_email(notification: "Notification", template: str = "noti
     }
     send_templated_mail(
         template_name=template,
-        from_email=lazy_preference("notification__mail_out"),
+        from_email=lazy_preference("mail", "address"),
         recipient_list=[notification.recipient.email],
         context=context,
     )
@@ -63,7 +63,7 @@ def _send_notification_sms(
 # - Check for availability
 # - Send notification through it
 _CHANNELS_MAP = {
-    "email": (_("E-Mail"), lambda: lazy_preference("notification__mail_out"), _send_notification_email),
+    "email": (_("E-Mail"), lambda: lazy_preference("mail", "address"), _send_notification_email),
     "sms": (_("SMS"), lambda: getattr(settings, "TWILIO_SID", None), _send_notification_sms),
 }
 
@@ -75,7 +75,7 @@ def send_notification(notification: Union[int, "Notification"], resend: bool = F
     previously marked as sent.
     """
 
-    channels = lazy_preference("notification__channels")
+    channels = lazy_preference("notification", "channels")
 
     if isinstance(notification, int):
         Notification = apps.get_model("core", "Notification")
