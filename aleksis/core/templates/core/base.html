@@ -13,7 +13,7 @@
     {% block no_browser_title %}
       {% block browser_title %}{% endblock %} —
     {% endblock %}
-    {{ config.SITE_TITLE }}
+    {{ global_preferences.generel__title }}
   </title>
 
   {# CSS #}
@@ -48,7 +48,7 @@
 
   <!-- Nav bar (logged in as, logout) -->
   <nav>
-    <a class="brand-logo" href="/">{{ config.SITE_TITLE }}</a>
+    <a class="brand-logo" href="/">{{ global_preferences.general__title }}</a>
 
     <div class="nav-wrapper">
       <ul id="nav-mobile" class="right hide-on-med-and-down">
