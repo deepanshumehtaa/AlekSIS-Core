@@ -5,11 +5,12 @@ from django.apps import apps
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
+from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
@@ -23,8 +24,12 @@ from .forms import (
     PersonsAccountsFormSet,
     AnnouncementForm,
     ChildGroupsForm,
+    SitePreferenceForm,
+    PersonPreferenceForm,
+    GroupPreferenceForm,
 )
 from .models import Activity, Group, Notification, Person, DashboardWidget, Announcement
+from .registries import site_preferences_registry, group_preferences_registry, person_preferences_registry
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
@@ -369,3 +374,49 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
         if not self.has_permission():
             return self.handle_no_permission()
         return render(self.request, self.template, context)
+
+
+def preferences(request: HttpRequest, registry_name: str = "person", pk: Optional[int] = None, section: Optional[str] = None) -> HttpResponse:
+    """ View for changing preferences """
+
+    context = {}
+
+    if registry_name == "site":
+        registry = site_preferences_registry
+        instance = request.site
+        form_class = SitePreferenceForm
+
+    elif registry_name == "person":
+        registry = person_preferences_registry
+        if pk:
+            instance = get_object_or_404(Person, pk=pk)
+        else:
+            instance = request.user.person
+        form_class = PersonPreferenceForm
+
+    elif registry_name == "group":
+        registry = group_preferences_registry
+        instance = get_object_or_404(Group, pk=pk)
+        form_class = GroupPreferenceForm
+
+    else:
+        return HttpResponseNotFound()
+
+    form_class = preference_form_builder(form_class, instance=instance, section=section)
+
+    if request.method == "POST":
+        form = form_class(request.POST)
+        if form.is_valid():
+            form.update_preferences()
+            messages.success(request, _("The preferences has been saved successfully."))
+    else:
+        form = form_class()
+
+    context["registry"] = registry
+    context["registry_name"] = registry_name
+    context["section"] = section
+    context["registry_url"] = "preferences_" + registry_name
+    context["form"] = form
+    context["instance"] = instance
+
+    return render(request, "dynamic_preferences/form.html", context)
