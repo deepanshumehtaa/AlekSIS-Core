@@ -8,7 +8,7 @@ from typing import Any, Callable, Sequence, Union, List
 from uuid import uuid4
 
 from django.conf import settings
-from jango.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
