@@ -368,6 +368,7 @@ class Notification(ExtensibleModel):
         return str(self.title)
 
     def save(self, **kwargs):
+        super().save(**kwargs)
         if not self.sent:
             send_notification(self.pk, resend=True)
         self.sent = True
