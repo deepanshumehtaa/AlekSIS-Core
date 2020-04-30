@@ -528,12 +528,12 @@ class GlobalPermissions(ExtensibleModel):
 
 
 class SitePreferenceModel(PerInstancePreferenceModel):
-    instance = models.ForeignKey(Site)
+    instance = models.ForeignKey(Site, on_delete=models.CASCADE)
 
 
 class PersonPreferenceModel(PerInstancePreferenceModel):
-    instance = models.ForeignKey(Person)
+    instance = models.ForeignKey(Person, on_delete=models.CASCADE)
 
 
 class GroupPreferenceModel(PerInstancePreferenceModel):
-    instance = models.ForeignKey(Group)
+    instance = models.ForeignKey(Group, on_delete=models.CASCADE)
