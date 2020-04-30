@@ -8,13 +8,11 @@ from typing import Any, Callable, Sequence, Union, List
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import Site
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
-
-from django_global_request.middleware import get_request
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
     """ Takes a sequence of integegers and produces a string with ranges
@@ -91,7 +89,7 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
 def get_site_preferences():
     """ Get the preferences manager of the current site """
 
-    return get_current_site(get_request()).preferences
+    return Site.objects.get_current().preferences
 
 
 def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
