@@ -8,6 +8,7 @@ from typing import Any, Callable, Sequence, Union, List
 from uuid import uuid4
 
 from django.conf import settings
+from jango.contrib.sites.shortcuts import get_current_site
 from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
@@ -93,11 +94,8 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
-        from ..registries import site_preferences_registry  # noqa
-
-        site_preferences = site_preferences_registry.manager()
-
-        return site_preferences["%s__%s" % (section, name)]
+        site = get_current_site()
+        return site.preferences["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above
