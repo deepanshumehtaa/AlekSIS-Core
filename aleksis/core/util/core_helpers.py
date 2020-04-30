@@ -14,6 +14,7 @@ from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
 
+from django_global_request.middleware import get_request
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
     """ Takes a sequence of integegers and produces a string with ranges
@@ -94,7 +95,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
-        site = get_current_site()
+        site = get_current_site(get_request())
         return site.preferences["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
