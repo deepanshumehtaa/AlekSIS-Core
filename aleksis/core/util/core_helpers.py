@@ -88,6 +88,12 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
                     raise TypeError("Only dict and list settings can be merged.")
 
 
+def get_site_preferences():
+    """ Get the preferences manager of the current site """
+
+    return get_current_site(get_request()).preferences
+
+
 def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """ Lazily get a config value from dynamic preferences. Useful to bind preferences
     to other global settings to make them available to third-party apps that are not
@@ -95,8 +101,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
-        site = get_current_site(get_request())
-        return site.preferences["%s__%s" % (section, name)]
+        return get_site_preferences()["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above

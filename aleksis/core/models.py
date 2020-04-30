@@ -19,12 +19,8 @@ from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow
+from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
-
-from dynamic_preferences.registries import global_preferences_registry
-
-global_preferences = global_preferences_registry.manager()
 
 
 class Person(ExtensibleModel):
@@ -117,9 +113,9 @@ class Person(ExtensibleModel):
 
     @property
     def adressing_name(self) -> str:
-        if global_preferences["notification__addressing_name_format"] == "dutch":
+        if get_site_preferences()["notification__addressing_name_format"] == "dutch":
             return f"{self.last_name} {self.first_name}"
-        elif global_preferences["notification__addressing_name_format"] == "english":
+        elif get_site_preferences()["notification__addressing_name_format"] == "english":
             return f"{self.last_name}, {self.first_name}"
         else:
             return f"{self.first_name} {self.last_name}"
@@ -180,7 +176,7 @@ class Person(ExtensibleModel):
         a primary group, unless force is True.
         """
 
-        pattern = pattern or global_preferences["account__primary_group_pattern"]
+        pattern = pattern or get_site_preferences()["account__primary_group_pattern"]
 
         if pattern:
             if force or not self.primary_group:
