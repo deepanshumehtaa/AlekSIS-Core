@@ -13,5 +13,4 @@ def get_colour(html_colour: str) -> SassColor:
 
 
 def get_preference(section: str, name: str) -> str:
-    site = get_current_site(get_request())
     return get_site_preferences()["%s__%s" % (section, name)]
