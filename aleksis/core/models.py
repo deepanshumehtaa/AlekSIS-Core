@@ -585,21 +585,21 @@ class GlobalPermissions(ExtensibleModel):
         )
 
 
-class SitePreferenceModel(PerInstancePreferenceModel):
+class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
     instance = models.ForeignKey(Site, on_delete=models.CASCADE)
 
     class Meta:
         app_label = "core"
 
 
-class PersonPreferenceModel(PerInstancePreferenceModel):
+class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
     instance = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     class Meta:
         app_label = "core"
 
 
-class GroupPreferenceModel(PerInstancePreferenceModel):
+class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
     instance = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     class Meta:
