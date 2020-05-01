@@ -112,6 +112,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django_global_request.middleware.GlobalRequestMiddleware",
+    "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
