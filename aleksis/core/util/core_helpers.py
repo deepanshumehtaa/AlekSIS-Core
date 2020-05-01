@@ -219,3 +219,10 @@ def get_announcement_by_pk(request: HttpRequest, id_: Optional[int] = None):
         return get_object_or_404(Announcement, pk=pk)
 
     return None
+
+
+def get_notification_by_pk(request: HttpRequest, pk: int):
+    try:
+        return get_object_or_404(Notification, pk=pk)
+    except:
+        return None

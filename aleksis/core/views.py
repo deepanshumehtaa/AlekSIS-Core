@@ -33,7 +33,7 @@ from .registries import site_preferences_registry, group_preferences_registry, p
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import get_announcement_by_pk, get_group_by_pk, get_person_by_pk
+from .util.core_helpers import get_announcement_by_pk, get_group_by_pk, get_person_by_pk, get_notification_by_pk
 
 
 @permission_required("core.view_dashboard")
@@ -299,10 +299,6 @@ def system_status(request: HttpRequest) -> HttpResponse:
     context = {}
 
     return render(request, "core/system_status.html", context)
-
-
-def get_notification_by_pk(request: HttpRequest, pk: int):
-    return get_object_or_404(Notification, pk=pk)
 
 
 @permission_required("core.mark_notification_as_read", fn=get_notification_by_pk)
