@@ -246,6 +246,20 @@ class Person(ExtensibleModel):
                 self.primary_group = self.member_of.filter(name__regex=pattern).first()
 
 
+class DummyPerson(Person):
+    """ A dummy person that is not stored into the database.
+
+    Used to temporarily inject a Person object into a User.
+    """
+
+    class Meta:
+        managed = False
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        pass
+        
+
 class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
