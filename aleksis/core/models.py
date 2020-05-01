@@ -256,6 +256,8 @@ class DummyPerson(Person):
         managed = False
         proxy = True
 
+    is_dummy = True
+
     def save(self, *args, **kwargs):
         pass
         

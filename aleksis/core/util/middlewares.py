@@ -5,7 +5,6 @@ from django.http import HttpRequest, HttpResponse
 from django.util.translation import gettext_lazy as _
 
 from .core_helpers import has_person
-from .messages import warning
 from ..models import DummyPerson
 
 
@@ -26,8 +25,6 @@ class EnsurePersonMiddleware:
                 # Super-users get a dummy person linked
                 dummy_person = DummyPerson(first_name=request.user.first_name, last_name=request.user.last_name)
                 request.user.person = dummy_person
-
-                warning(request, _("A dummy user has been linked to your user account."))
 
         response = self.get_response(request)
         return response
