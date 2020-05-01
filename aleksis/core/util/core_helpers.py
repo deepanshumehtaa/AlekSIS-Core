@@ -119,7 +119,13 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         else:
             return False
 
-    return getattr(obj, "person", None) is not None
+    person = getattr(obj, "person", None)
+    if person is None:
+        return False
+    elif getattr(person, "is_dummy", False):
+        return False
+    else:
+        return True
 
 
 def celery_optional(orig: Callable) -> Callable:

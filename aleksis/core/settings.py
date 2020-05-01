@@ -124,6 +124,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
+    "aleksis.core.util.middlewares.EnsurePersonMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
