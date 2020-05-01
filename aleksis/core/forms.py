@@ -9,10 +9,12 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
+from dynamic_preferences.forms import PreferenceForm
 from material import Layout, Fieldset, Row
 
 from .mixins import ExtensibleForm
-from .models import Group, Person, School, SchoolTerm, Announcement, AnnouncementRecipient
+from .models import Group, Person, Announcement, AnnouncementRecipient
+from .registries import site_preferences_registry, person_preferences_registry, group_preferences_registry
 
 
 class PersonAccountForm(forms.ModelForm):
@@ -155,25 +157,6 @@ class EditGroupForm(ExtensibleForm):
         }
 
 
-class EditSchoolForm(ExtensibleForm):
-    layout = Layout(
-        Fieldset(_("School name"), "name", "name_official"),
-        Fieldset(_("School logo"), Row("logo", "logo_cropping")),
-    )
-
-    class Meta:
-        model = School
-        fields = ["name", "name_official", "logo", "logo_cropping"]
-
-
-class EditTermForm(ExtensibleForm):
-    layout = Layout("caption", Row("date_start", "date_end"))
-
-    class Meta:
-        model = SchoolTerm
-        fields = ["caption", "date_start", "date_end"]
-
-
 class AnnouncementForm(ExtensibleForm):
     valid_from = forms.DateTimeField(required=False)
     valid_until = forms.DateTimeField(required=False)
@@ -280,3 +263,16 @@ class AnnouncementForm(ExtensibleForm):
 
 class ChildGroupsForm(forms.Form):
     child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
+
+
+class SitePreferenceForm(PreferenceForm):
+    registry = site_preferences_registry
+
+
+class PersonPreferenceForm(PreferenceForm):
+    registry = person_preferences_registry
+
+
+class GroupPreferenceForm(PreferenceForm):
+    registry = group_preferences_registry
+

@@ -13,7 +13,7 @@
     {% block no_browser_title %}
       {% block browser_title %}{% endblock %} —
     {% endblock %}
-    {{ config.SITE_TITLE }}
+    {{ request.site.preferences.general__title }}
   </title>
 
   {# CSS #}
@@ -48,7 +48,7 @@
 
   <!-- Nav bar (logged in as, logout) -->
   <nav>
-    <a class="brand-logo" href="/">{{ config.SITE_TITLE }}</a>
+    <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
 
     <div class="nav-wrapper">
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -154,16 +154,16 @@
       </div>
       <div class="right">
         <span id="doit"></span>
-        {% if DB_SETTINGS.footer.impress_url %}
-          <a class="blue-text text-lighten-4" href="{{ DB_SETTINGS.footer.impress_url }}">
+        {% if request.site.preferences.footer__impress_url %}
+          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__impress_url }}">
             {% trans "Impress" %}
           </a>
         {% endif %}
-        {% if DB_SETTINGS.footer.privacy_url and DB_SETTINGS.footer.impress_url %}
+        {% if request.site.preferences.footer__privacy_url and request.site.preferences.footer__impress_url %}
           ·
         {% endif %}
-        {% if DB_SETTINGS.footer.privacy_url %}
-          <a class="blue-text text-lighten-4" href="{{ DB_SETTINGS.footer.privacy_url }}">
+        {% if request.site.preferences.footer__privacy_url %}
+          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__privacy_url }}">
             {% trans "Privacy Policy" %}
           </a>
         {% endif %}

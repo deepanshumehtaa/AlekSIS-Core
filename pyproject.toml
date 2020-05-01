@@ -50,7 +50,7 @@ django-two-factor-auth = { version = "^1.10.0", extras = [ "YubiKey", "phonenumb
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
 django-pwa = "^1.0.8"
-django-constance = { version = "^2.6.0", extras = ["database"] }
+django-dynamic-preferences = {git = "https://github.com/EliotBerriot/django-dynamic-preferences", rev = "develop"}
 django_widget_tweaks = "^1.4.5"
 django-filter = "^2.2.0"
 django-templated-email = "^2.3.0"

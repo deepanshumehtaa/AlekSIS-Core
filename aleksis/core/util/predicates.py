@@ -11,6 +11,7 @@ from .core_helpers import has_person as has_person_helper
 # 1. Global permissions (view all, add, change all, delete all)
 # 2. Object permissions (view, change, delete)
 # 3. Rules
+from ..models import Group
 
 
 def permission_validator(request: HttpRequest, perm: str) -> bool:
@@ -84,3 +85,11 @@ def is_current_person(user: User, obj: Model) -> bool:
     """ Predicate which checks if the provided object is the person linked to the user object """
 
     return user.person == obj
+
+
+@predicate
+def is_group_owner(user: User, group: Group) -> bool:
+    """ Predicate which checks if the user is a owner of the provided group """
+
+    return group.owners.filter(owners=user.person).exists()
+

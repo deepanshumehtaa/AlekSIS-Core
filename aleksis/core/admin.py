@@ -6,8 +6,6 @@ from .mixins import BaseModelAdmin
 from .models import (
     Group,
     Person,
-    School,
-    SchoolTerm,
     Activity,
     Notification,
     Announcement,
@@ -18,8 +16,6 @@ from .models import (
 
 admin.site.register(Person, VersionAdmin)
 admin.site.register(Group, VersionAdmin)
-admin.site.register(School, VersionAdmin)
-admin.site.register(SchoolTerm, VersionAdmin)
 admin.site.register(Activity, VersionAdmin)
 admin.site.register(Notification, VersionAdmin)
 admin.site.register(CustomMenuItem, VersionAdmin)

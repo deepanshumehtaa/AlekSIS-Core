@@ -1,26 +1,28 @@
 from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
+import jsonstore
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from dynamic_preferences.models import PerInstancePreferenceModel
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
 from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow
+from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
-
-from constance import config
 
 
 FIELD_CHOICES = (
@@ -39,69 +41,6 @@ FIELD_CHOICES = (
     ("timefield", "TimeField"),
     ("urlfield", "URLField"),
 )
-
-
-class School(ExtensibleModel):
-    """A school that will have many other objects linked to it.
-    AlekSIS has multi-tenant support by linking all objects to a school,
-    and limiting all features to objects related to the same school as the
-    currently logged-in user.
-    """
-
-    name = models.CharField(verbose_name=_("Name"), max_length=255)
-    name_official = models.CharField(
-        verbose_name=_("Official name"),
-        max_length=255,
-        help_text=_("Official name of the school, e.g. as given by supervisory authority"),
-    )
-
-    logo = ImageCropField(verbose_name=_("School logo"), blank=True, null=True)
-    logo_cropping = ImageRatioField("logo", "600x600", size_warning=True)
-
-    @classmethod
-    def get_default(cls):
-        return cls.objects.first()
-
-    @property
-    def current_term(self):
-        return SchoolTerm.objects.get(current=True)
-
-    class Meta:
-        ordering = ["name", "name_official"]
-        verbose_name = _("School")
-        verbose_name_plural = _("Schools")
-
-
-class SchoolTerm(ExtensibleModel):
-    """ Information about a term (limited time frame) that data can
-    be linked to.
-    """
-
-    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=255)
-
-    date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
-    date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
-
-    current = models.NullBooleanField(default=None, unique=True)
-
-    def save(self, *args, **kwargs):
-        if self.current is False:
-            self.current = None
-        super().save(*args, **kwargs)
-
-    @classmethod
-    def maintain_default_data(cls):
-        if not cls.objects.filter(current=True).exists():
-            if cls.objects.exists():
-                term = cls.objects.latest('date_start')
-                term.current=True
-                term.save()
-            else:
-                cls.objects.create(date_start=date.today(), current=True)
-
-    class Meta:
-        verbose_name = _("School term")
-        verbose_name_plural = _("School terms")
 
 
 class Person(ExtensibleModel):
@@ -194,9 +133,9 @@ class Person(ExtensibleModel):
 
     @property
     def adressing_name(self) -> str:
-        if config.ADRESSING_NAME_FORMAT == "dutch":
+        if get_site_preferences()["notification__addressing_name_format"] == "dutch":
             return f"{self.last_name} {self.first_name}"
-        elif config.ADRESSING_NAME_FORMAT == "english":
+        elif get_site_preferences()["notification__addressing_name_format"] == "english":
             return f"{self.last_name}, {self.first_name}"
         else:
             return f"{self.first_name} {self.last_name}"
@@ -257,11 +196,27 @@ class Person(ExtensibleModel):
         a primary group, unless force is True.
         """
 
-        pattern = pattern or config.PRIMARY_GROUP_PATTERN
+        pattern = pattern or get_site_preferences()["account__primary_group_pattern"]
 
         if pattern:
             if force or not self.primary_group:
                 self.primary_group = self.member_of.filter(name__regex=pattern).first()
+
+
+class DummyPerson(Person):
+    """ A dummy person that is not stored into the database.
+
+    Used to temporarily inject a Person object into a User.
+    """
+
+    class Meta:
+        managed = False
+        proxy = True
+
+    is_dummy = True
+
+    def save(self, *args, **kwargs):
+        pass
 
 
 class AdditionalField(ExtensibleModel):
@@ -624,4 +579,28 @@ class GlobalPermissions(ExtensibleModel):
             ("manage_data", _("Can manage data")),
             ("impersonate", _("Can impersonate")),
             ("search", _("Can use search")),
+            ("change_site_preferences", _("Can change site preferences")),
+            ("change_person_preferences", _("Can change person preferences")),
+            ("change_group_preferences", _("Can change group preferences")),
         )
+
+
+class SitePreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"
+
+
+class PersonPreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"
+
+
+class GroupPreferenceModel(PerInstancePreferenceModel):
+    instance = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"
