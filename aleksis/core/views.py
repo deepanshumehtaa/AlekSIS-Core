@@ -386,6 +386,8 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
         instance = request.site
         form_class = SitePreferenceForm
 
+        if not request.user.has_perm("core.change_site_preferences", instance):
+            raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
         if pk:
@@ -394,11 +396,15 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
             instance = request.user.person
         form_class = PersonPreferenceForm
 
+        if not request.user.has_perm("core.change_person_preferences", instance):
+            raise PermissionDenied()
     elif registry_name == "group":
         registry = group_preferences_registry
         instance = get_object_or_404(Group, pk=pk)
         form_class = GroupPreferenceForm
 
+        if not request.user.has_perm("core.change_group_preferences", instance):
+            raise PermissionDenied()
     else:
         return HttpResponseNotFound()
 
