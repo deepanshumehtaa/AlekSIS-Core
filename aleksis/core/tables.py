@@ -3,6 +3,8 @@ from django_tables2.utils import A
 
 
 class PersonsTable(tables.Table):
+    """ Table to list persons """
+
     class Meta:
         attrs = {"class": "table table-striped table-bordered table-hover table-responsive-xl"}
 
@@ -11,6 +13,8 @@ class PersonsTable(tables.Table):
 
 
 class GroupsTable(tables.Table):
+    """ Table to list groups """
+
     class Meta:
         attrs = {"class": "table table-striped table-bordered table-hover table-responsive-xl"}
 

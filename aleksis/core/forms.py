@@ -18,6 +18,8 @@ from .registries import site_preferences_registry, person_preferences_registry, 
 
 
 class PersonAccountForm(forms.ModelForm):
+    """ Form to assign user accounts to persons in the frontend :"""
+
     class Meta:
         model = Person
         fields = ["last_name", "first_name", "user"]
@@ -27,6 +29,8 @@ class PersonAccountForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        # Fields displayed only for informational purposes
         self.fields["first_name"].disabled = True
         self.fields["last_name"].disabled = True
 
@@ -35,13 +39,16 @@ class PersonAccountForm(forms.ModelForm):
 
         if self.cleaned_data.get("new_user", None):
             if self.cleaned_data.get("user", None):
+                # The user selected both an existing user and provided a name to create a new one
                 self.add_error(
                     "new_user",
                     _("You cannot set a new username when also selecting an existing user."),
                 )
             elif User.objects.filter(username=self.cleaned_data["new_user"]).exists():
+                # The user tried to create a new user with the name of an existing user
                 self.add_error("new_user", _("This username is already in use."))
             else:
+                # Create new User object and assign to form field for existing user
                 new_user_obj = User.objects.create_user(
                     self.cleaned_data["new_user"],
                     self.instance.email,
@@ -52,12 +59,15 @@ class PersonAccountForm(forms.ModelForm):
                 self.cleaned_data["user"] = new_user_obj
 
 
+# Formset for batch-processing of assignments of users to persons
 PersonsAccountsFormSet = forms.modelformset_factory(
     Person, form=PersonAccountForm, max_num=0, extra=0
 )
 
 
 class EditPersonForm(ExtensibleForm):
+    """ Form to edit an existing person object in the frontend """
+
     layout = Layout(
         Fieldset(
             _("Base data"),
@@ -106,28 +116,13 @@ class EditPersonForm(ExtensibleForm):
     )
 
     def clean(self) -> None:
-        User = get_user_model()
-
-        if self.cleaned_data.get("new_user", None):
-            if self.cleaned_data.get("user", None):
-                self.add_error(
-                    "new_user",
-                    _("You cannot set a new username when also selecting an existing user."),
-                )
-            elif User.objects.filter(username=self.cleaned_data["new_user"]).exists():
-                self.add_error("new_user", _("This username is already in use."))
-            else:
-                new_user_obj = User.objects.create_user(
-                    self.cleaned_data["new_user"],
-                    self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
-                )
-
-                self.cleaned_data["user"] = new_user_obj
+        # Use code implemented in dedicated form to verify user selection
+        return PersonAccountForm.clean(self)
 
 
 class EditGroupForm(ExtensibleForm):
+    """ Form to edit an existing group in the frontend """
+
     layout = Layout(
         Fieldset(_("Common data"), "name", "short_name"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
@@ -158,6 +153,8 @@ class EditGroupForm(ExtensibleForm):
 
 
 class AnnouncementForm(ExtensibleForm):
+    """ Form to create or edit an announcement in the frontend """
+
     valid_from = forms.DateTimeField(required=False)
     valid_until = forms.DateTimeField(required=False)
 
@@ -183,6 +180,7 @@ class AnnouncementForm(ExtensibleForm):
 
     def __init__(self, *args, **kwargs):
         if "instance" not in kwargs:
+            # Default to today and whole day for new announcements
             kwargs["initial"] = {
                 "valid_from_date": datetime.now(),
                 "valid_from_time": time(0, 0),
@@ -201,20 +199,17 @@ class AnnouncementForm(ExtensibleForm):
                 "groups": announcement.get_recipients_for_model(Group),
                 "persons": announcement.get_recipients_for_model(Person),
             }
+
         super().__init__(*args, **kwargs)
 
     def clean(self):
         data = super().clean()
 
-        # Check date and time
-        from_date = data["valid_from_date"]
-        from_time = data["valid_from_time"]
-        until_date = data["valid_until_date"]
-        until_time = data["valid_until_time"]
+        # Combine date and time fields into datetime objects
+        valid_from = datetime.combine(data["valid_from_date"], data["valid_from_time"])
+        valid_until = datetime.combine(data["valid_until_date"], data["valid_until_time"])
 
-        valid_from = datetime.combine(from_date, from_time)
-        valid_until = datetime.combine(until_date, until_time)
-
+        # Sanity check validity range
         if valid_until < datetime.now():
             raise ValidationError(
                 _("You are not allowed to create announcements which are only valid in the past.")
@@ -224,37 +219,38 @@ class AnnouncementForm(ExtensibleForm):
                 _("The from date and time must be earlier then the until date and time.")
             )
 
+        # Inject real time data if all went well
         data["valid_from"] = valid_from
         data["valid_until"] = valid_until
 
-        # Check recipients
+        # Ensure at least one group or one person is set as recipient
         if "groups" not in data and "persons" not in data:
             raise ValidationError(_("You need at least one recipient."))
 
-        recipients = []
-        recipients += data.get("groups", [])
-        recipients += data.get("persons", [])
-
-        data["recipients"] = recipients
+        # Unwrap all recipients into single user objects and generate final list
+        data["recipients"] = []
+        data["recipients"] += data.get("groups", [])
+        data["recipients"] += data.get("persons", [])
 
         return data
 
     def save(self, _=False):
-        # Save announcement
-        a = self.instance if self.instance is not None else Announcement()
-        a.valid_from = self.cleaned_data["valid_from"]
-        a.valid_until = self.cleaned_data["valid_until"]
-        a.title = self.cleaned_data["title"]
-        a.description = self.cleaned_data["description"]
-        a.save()
+        # Save announcement, respecting data injected in clean()
+        if self.instance is None:
+            self.instance = Announcement()
+        self.instance.valid_from = self.cleaned_data["valid_from"]
+        self.instance.valid_until = self.cleaned_data["valid_until"]
+        self.instance.title = self.cleaned_data["title"]
+        self.instance.description = self.cleaned_data["description"]
+        self.instance.save()
 
         # Save recipients
-        a.recipients.all().delete()
+        self.instance.recipients.all().delete()
         for recipient in self.cleaned_data["recipients"]:
-            a.recipients.create(recipient=recipient)
-        a.save()
+            self.instance.recipients.create(recipient=recipient)
+        self.instance.save()
 
-        return a
+        return self.instance
 
     class Meta:
         model = Announcement
@@ -262,17 +258,24 @@ class AnnouncementForm(ExtensibleForm):
 
 
 class ChildGroupsForm(forms.Form):
+    """ Inline form for group editing to select child groups """
+
     child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
 
 
 class SitePreferenceForm(PreferenceForm):
+    """ Form to edit site preferences """
+
     registry = site_preferences_registry
 
 
 class PersonPreferenceForm(PreferenceForm):
+    """ Form to edit preferences valid for one person"""
+
     registry = person_preferences_registry
 
 
 class GroupPreferenceForm(PreferenceForm):
-    registry = group_preferences_registry
+    """ Form to edit preferences valid for members of a group"""
 
+    registry = group_preferences_registry

@@ -47,11 +47,14 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_name(cls):
+        """ Get name of application package """
+
         return getattr(cls, "verbose_name", cls.name)
         # TODO Try getting from distribution if not set
 
     @classmethod
     def get_version(cls):
+        """ Get version of application package """
         try:
             from .. import __version__  # noqa
         except ImportError:
@@ -61,6 +64,9 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_licence(cls) -> Tuple:
+        """ Get tuple of licence information of application package """
+
+        # Get string representation of licence in SPDX format
         licence = getattr(cls, "licence", None)
 
         default_dict = {
@@ -72,27 +78,32 @@ class AppConfig(django.apps.AppConfig):
             'referenceNumber': -1,
             'url': '',
         }
-
         if licence:
+            # Parse licence string into object format
             licensing = Licensing(LICENSES.keys())
             parsed = licensing.parse(licence).simplify()
             readable = parsed.render_as_readable()
 
+            # Collect flags about licence combination (drop to False if any licence is False)
             flags = {
                 "isFsfLibre": True,
                 "isOsiApproved": True,
             }
 
+            # Fill information dictionaries with missing data
             licence_dicts = []
-
             for symbol in parsed.symbols:
+                # Get licence base information, stripping the "or later" mark
                 licence_dict = LICENSES.get(symbol.key.rstrip("+"), None)
 
                 if licence_dict is None:
+                    # Fall back to the default dict
                     licence_dict = default_dict
                 else:
+                    # Add missing licence link to SPDX data
                     licence_dict["url"] = "https://spdx.org/licenses/{}.html".format(licence_dict["licenseId"])
 
+                # Drop summed up flags to False if this licence is False
                 flags["isFsfLibre"] = flags["isFsfLibre"] and licence_dict["isFsfLibre"]
                 flags["isOsiApproved"] = flags["isOsiApproved"] and licence_dict["isOsiApproved"]
 
@@ -100,22 +111,27 @@ class AppConfig(django.apps.AppConfig):
 
             return (readable, flags, licence_dicts)
         else:
+            # We could not find a valid licence
             return ("Unknown", [default_dict])
 
     @classmethod
     def get_urls(cls):
+        """ Get list of URLs for this application package """
+
         return getattr(cls, "urls", {})
         # TODO Try getting from distribution if not set
 
     @classmethod
     def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
+        """ Get copyright information tuples for application package """
+
         copyrights = getattr(cls, "copyright", tuple())
 
         copyrights_processed = []
-
         for copyright in copyrights:
             copyrights_processed.append(
                 (
+                    # Sort copyright years and combine year ranges for display
                     copyright[0] if isinstance(copyright[0], str) else copyright_years(copyright[0]),
                     copyright[1],
                     copyright[2],
@@ -123,7 +139,6 @@ class AppConfig(django.apps.AppConfig):
             )
 
         return copyrights_processed
-
         # TODO Try getting from distribution if not set
 
     def preference_updated(

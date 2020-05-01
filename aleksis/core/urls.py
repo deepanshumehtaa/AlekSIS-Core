@@ -89,4 +89,3 @@ for app_config in apps.app_configs.values():
     except ModuleNotFoundError:
         # Ignore exception as app just has no URLs
         pass  # noqa
-

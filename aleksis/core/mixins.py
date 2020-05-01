@@ -16,21 +16,6 @@ import reversion
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
-class CRUDMixin(models.Model):
-    class Meta:
-        abstract = True
-
-    @property
-    def crud_events(self) -> QuerySet:
-        """Get all CRUD events connected to this object from easyaudit."""
-
-        content_type = ContentType.objects.get_for_model(self)
-
-        return CRUDEvent.objects.filter(
-            object_id=self.pk, content_type=content_type
-        ).select_related("user")
-
-
 @reversion.register()
 class ExtensibleModel(CRUDMixin):
     """ Base model for all objects in AlekSIS apps
@@ -87,6 +72,16 @@ class ExtensibleModel(CRUDMixin):
     def get_absolute_url(self) -> str:
         """ Get the URL o a view representing this model instance """
         pass
+
+    @property
+    def crud_events(self) -> QuerySet:
+        """ Get all CRUD events connected to this object from easyaudit """
+
+        content_type = ContentType.objects.get_for_model(self)
+
+        return CRUDEvent.objects.filter(
+            object_id=self.pk, content_type=content_type
+        ).select_related("user")
 
     @property
     def crud_event_create(self) -> Optional[CRUDEvent]:
@@ -201,6 +196,7 @@ class _ExtensibleFormMetaclass(ModelFormMetaclass):
     def __new__(mcs, name, bases, dct):
         x = super().__new__(mcs, name, bases, dct)
 
+        # Enforce a default for the base layout for forms that o not specify one
         if hasattr(x, "layout"):
             base_layout = x.layout.elements
         else:
@@ -246,4 +242,6 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
 
 
 class BaseModelAdmin(GuardedModelAdmin, ObjectPermissionsModelAdmin):
+    """ A base class for ModelAdmin combining django-guardian and rules """
+
     pass

@@ -38,12 +38,11 @@ MENUS = {
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
-                    "name": _("Two factor auth"),
+                    "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
-                        lambda request: "two_factor" in settings.INSTALLED_APPS,
                     ],
                 },
                 {
@@ -107,14 +106,6 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Manage school"),
-                    "url": "school_management",
-                    "icon": "school",
-                    "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.manage_school"),
-                    ],
-                },
-                {
                     "name": _("Configuration"),
                     "url": "preferences_site",
                     "icon": "settings",
@@ -160,8 +151,7 @@ MENUS = {
                     "url": "persons_accounts",
                     "icon": "person_add",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        ("aleksis.core.util.predicates.permission_validator", "core.link_persons_accounts")
                     ],
                 },
                 {
@@ -183,9 +173,5 @@ MENUS = {
                 ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
             ],
         },
-    ],
-    "SCHOOL_MANAGEMENT_MENU": [
-        {"name": _("Edit school information"), "url": "edit_school_information", },
-        {"name": _("Edit school term"), "url": "edit_school_term", },
     ],
 }

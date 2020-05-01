@@ -26,20 +26,18 @@ from .util.model_helpers import ICONS
 
 
 FIELD_CHOICES = (
-    ("booleanfield", "BooleanField"),
-    ("charfield", "CharField"),
-    ("datefield", "DateField"),
-    ("datetimefield", "DateTimeField"),
-    ("decimalfield", "DecimalField"),
-    ("emailfield", "EmailField"),
-    ("floatfield", "FloatField"),
-    ("Integerfield", "IntegerField"),
-    ("ipaddressfield", "IPAddressField"),
-    ("genericipaddressfield", "GenericIPAddressField"),
-    ("nullbooleanfield", "NullBooleanField"),
-    ("textfield", "TextField"),
-    ("timefield", "TimeField"),
-    ("urlfield", "URLField"),
+    ("BooleanField", _("Boolean (Yes/No)")),
+    ("CharField", _("Text (one line)")),
+    ("DateField", _("Date")),
+    ("DateTimeField", _("Date and time")),
+    ("DecimalField", _("Decimal number")),
+    ("EmailField", _("E-mail address")),
+    ("IntegerField", _("Integer")),
+    ("GenericIPAddressField", _("IP address")),
+    ("NullBooleanField", _("Boolean or empty (Yes/No/Neither)")),
+    ("TextField", _("Text (multi-line)")),
+    ("TimeField", _("Time")),
+    ("URLField", _("URL / Link")),
 )
 
 
@@ -129,22 +127,28 @@ class Person(ExtensibleModel):
 
     @property
     def full_name(self) -> str:
+        """ Full name of person in last name, first name order """
+
         return f"{self.last_name}, {self.first_name}"
 
     @property
     def adressing_name(self) -> str:
-        if get_site_preferences()["notification__addressing_name_format"] == "dutch":
-            return f"{self.last_name} {self.first_name}"
-        elif get_site_preferences()["notification__addressing_name_format"] == "english":
+        """ Full name of person in format configured for addressing """
+
+        if get_site_preferences()["notification__addressing_name_format"] == "last_first":
             return f"{self.last_name}, {self.first_name}"
-        else:
+        elif get_site_preferences()["notification__addressing_name_format"] == "first_last":
             return f"{self.first_name} {self.last_name}"
 
     @property
     def age(self):
+        """ Age of the person at current time """
+
         return self.age_at(timezone.datetime.now().date())
 
     def age_at(self, today):
+        """ Age of the person at a given date and time """
+
         years = today.year - self.date_of_birth.year
         if (self.date_of_birth.month > today.month
             or (self.date_of_birth.month == today.month
@@ -166,6 +170,7 @@ class Person(ExtensibleModel):
         for group in self.member_of.union(self.owner_of.all()).all():
             group.save()
 
+        # Select a primary group if none is set
         self.auto_select_primary_group()
 
     def __str__(self) -> str:
@@ -173,7 +178,7 @@ class Person(ExtensibleModel):
 
     @classmethod
     def maintain_default_data(cls):
-        # First, ensure we have an admin user
+        # Ensure we have an admin user
         User = get_user_model()
         if not User.objects.filter(is_superuser=True).exists():
             admin = User.objects.create_superuser(
@@ -182,10 +187,6 @@ class Person(ExtensibleModel):
                 password='admin'
             )
             admin.save()
-
-            # Ensure this admin user has a person linked to it
-            person = Person(user=admin)
-            person.save()
 
     def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
         """ Auto-select the primary group among the groups the person is member of
@@ -216,10 +217,13 @@ class DummyPerson(Person):
     is_dummy = True
 
     def save(self, *args, **kwargs):
+        # Do nothing, not even call Model's save(), so this is never persisted
         pass
 
 
 class AdditionalField(ExtensibleModel):
+    """ An additional field that can be linked to a group """
+
     title = models.CharField(verbose_name=_("Title of field"), max_length=255)
     field_type = models.CharField(verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50)
 
@@ -266,6 +270,8 @@ class Group(ExtensibleModel):
 
     @property
     def announcement_recipients(self):
+        """ Flat list of all members and owners to fulfill announcement API contract """
+
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
@@ -287,6 +293,12 @@ class Group(ExtensibleModel):
 
 
 class PersonGroupThrough(ExtensibleModel):
+    """ Through table for many-to-many relationship of group members.
+
+    It does not have any fields on its own; these are generated upon instantiation
+    by inspecting the additional fields selected for the linked group.
+    """
+
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
@@ -294,12 +306,14 @@ class PersonGroupThrough(ExtensibleModel):
         super().__init__(*args, **kwargs)
 
         for field in self.group.additional_fields:
-            field_class = getattr(jsonstore, field.get_field_type_display())
+            field_class = getattr(jsonstore, field.field_type)
             field_name = slugify(field.title).replace("-", "_")
             field_instance = field_class(verbose_name=field.title)
             setattr(self, field_name, field_instance)
 
 class Activity(ExtensibleModel):
+    """ Activity of a user to trace some actions done in AlekSIS in displayable form """
+
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User"))
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
@@ -316,6 +330,8 @@ class Activity(ExtensibleModel):
 
 
 class Notification(ExtensibleModel):
+    """ Notification to submit to a user """
+
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications", verbose_name=_("Recipient"))
 
@@ -342,6 +358,8 @@ class Notification(ExtensibleModel):
 
 
 class AnnouncementQuerySet(models.QuerySet):
+    """ Queryset for announcements providing time-based utility functions """
+
     def relevant_for(self, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
         """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
         or a set of models in a QuerySet.
@@ -397,6 +415,10 @@ class AnnouncementQuerySet(models.QuerySet):
 
 
 class Announcement(ExtensibleModel):
+    """ Persistent announcement to display to groups or persons in various places during a
+    specific time range.
+    """
+
     objects = models.Manager.from_queryset(AnnouncementQuerySet)()
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
@@ -435,6 +457,13 @@ class Announcement(ExtensibleModel):
 
 
 class AnnouncementRecipient(ExtensibleModel):
+    """ Generalisation of a recipient for an announcement, used to wrap arbitrary
+    objects that can receive announcements.
+
+    Contract: Objects to serve as recipient have a property announcement_recipients
+    returning a flat list of Person objects.
+    """
+
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -513,9 +542,15 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
 
     def get_context(self):
+        """ Get the context dictionary to pass to the widget template """
+
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
     def get_template(self):
+        """ Get the template to render the widget with. Defaults to the template attribute,
+        but can be overridden to allow more complex template generation scenarios.
+        """
+
         return self.template
 
     def __str__(self):
@@ -527,6 +562,8 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
 
 class CustomMenu(ExtensibleModel):
+    """ A custom menu to display in the footer """
+
     name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
 
     def __str__(self):
@@ -534,6 +571,7 @@ class CustomMenu(ExtensibleModel):
 
     @classmethod
     def get_default(cls, name):
+        """ Get a menu by name or create if it does not exist """
         menu, _ = cls.objects.get_or_create(name=name)
         return menu
 
@@ -543,6 +581,8 @@ class CustomMenu(ExtensibleModel):
 
 
 class CustomMenuItem(ExtensibleModel):
+    """ Single item in a custom menu """
+
     menu = models.ForeignKey(
         CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
     )
@@ -561,6 +601,10 @@ class CustomMenuItem(ExtensibleModel):
 
 
 class GroupType(ExtensibleModel):
+    """ Descriptive type of a group; used to tag groups and for apps to distinguish
+    how to display or handle a certain group.
+    """
+
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)
 
@@ -570,6 +614,8 @@ class GroupType(ExtensibleModel):
 
 
 class GlobalPermissions(ExtensibleModel):
+    """ Container for global permissions """
+
     class Meta:
         managed = False
         permissions = (
@@ -585,6 +631,8 @@ class GlobalPermissions(ExtensibleModel):
 
 
 class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """ Preference model to hold pereferences valid for a site """
+
     instance = models.ForeignKey(Site, on_delete=models.CASCADE)
 
     class Meta:
@@ -592,6 +640,8 @@ class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
 
 class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """ Preference model to hold pereferences valid for a person """
+
     instance = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     class Meta:
@@ -599,6 +649,8 @@ class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
 
 class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """ Preference model to hold pereferences valid for members of a group """
+
     instance = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     class Meta:

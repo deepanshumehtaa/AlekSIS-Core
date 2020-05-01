@@ -26,6 +26,12 @@ def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "
     return seperator.join(years_strs)
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
+    """ Helper to determin if Django debug toolbar should be displayed
+
+    Extends the default behaviour by enabling DJDT for superusers independent
+    of source IP.
+    """
+
     from debug_toolbar.middleware import show_toolbar  # noqa
 
     if not settings.DEBUG:
@@ -107,6 +113,8 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
 
 
 def is_impersonate(request: HttpRequest) -> bool:
+    """ Check whether the user was impersonated by an admin """
+
     if hasattr(request, "user"):
         return getattr(request.user, "is_impersonate", False)
     else:
@@ -182,3 +190,32 @@ def custom_information_processor(request: HttpRequest) -> dict:
 def now_tomorrow() -> datetime:
     """ Return current time tomorrow """
     return timezone.now() + timedelta(days=1)
+
+
+def get_person_by_pk(request: HttpRequest, id_: Optional[int] = None):
+    """ Get a person by its ID, defaulting to person in request's user """
+
+    from ..models import Person  # noqa
+
+    if id_:
+        return get_object_or_404(Person, pk=id_)
+    else:
+        return request.user.person
+
+
+def get_group_by_pk(request: HttpRequest, id_: Optional[int] = None) -> Group:
+    """ Get a group by its ID, defaulting to None """
+
+    if id_:
+        return get_object_or_404(Group, id=id_)
+
+    return None
+
+
+def get_announcement_by_pk(request: HttpRequest, id_: Optional[int] = None):
+    """ Get an announcement by its ID; defaulting to None """
+
+    if id_:
+        return get_object_or_404(Announcement, pk=pk)
+
+    return None

@@ -8,9 +8,6 @@ from rules import predicate
 
 from .core_helpers import has_person as has_person_helper
 
-# 1. Global permissions (view all, add, change all, delete all)
-# 2. Object permissions (view, change, delete)
-# 3. Rules
 from ..models import Group
 
 

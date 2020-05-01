@@ -7,9 +7,9 @@ from django.http import HttpRequest
 from dynamic_preferences.registries import preference_models
 
 from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
-from .signals import clean_scss
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
+from .util.sass_helpers import clean_scss
 
 
 class CoreConfig(AppConfig):
@@ -26,8 +26,8 @@ class CoreConfig(AppConfig):
         ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
         ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
         ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
-        ([2019, 2020], "mirabilos", "thorsten.glaser@teckids.org"),
         ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
+        ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
     )
 
     def ready(self):
@@ -51,6 +51,7 @@ class CoreConfig(AppConfig):
         **kwargs,
     ) -> None:
         if section == "theme":
+            # Clean compiled SCSS to invalidate it after theme changes; recreated on request
             clean_scss()
 
     def post_migrate(
@@ -65,7 +66,7 @@ class CoreConfig(AppConfig):
     ) -> None:
         super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
 
-        # Ensure presence of a OTP YubiKey default config
+        # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
             name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )

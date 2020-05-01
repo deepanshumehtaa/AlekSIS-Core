@@ -33,10 +33,13 @@ from .registries import site_preferences_registry, group_preferences_registry, p
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
+from .util.core_helpers import get_announcement_by_pk, get_group_by_pk, get_person_by_pk
 
 
 @permission_required("core.view_dashboard")
 def index(request: HttpRequest) -> HttpResponse:
+    """ Dashboard """
+
     context = {}
 
     activities = request.user.person.activities.all()[:5]
@@ -59,11 +62,15 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "core/index.html", context)
 
 
-def offline(request):
+def offline(request: HttpRequest) -> HttpResponse:
+    """ Offline message for PWA """
+
     return render(request, "core/offline.html")
 
 
-def about(request):
+def about(request: HttpRequest) -> HttpResponse:
+    """ About page listing all apps """
+
     context = {}
 
     context["app_configs"] = list(filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs()))
@@ -73,6 +80,8 @@ def about(request):
 
 @permission_required("core.view_persons")
 def persons(request: HttpRequest) -> HttpResponse:
+    """ List view listing all persons """
+
     context = {}
 
     # Get all persons
@@ -88,20 +97,13 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-def get_person_by_pk(request, id_: Optional[int] = None):
-    if id_:
-        return get_object_or_404(Person, pk=id_)
-    else:
-        return request.user.person
-
-
 @permission_required("core.view_person", fn=get_person_by_pk)
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """ Detail view for one person; defaulting to logged-in person """
+
     context = {}
 
-    # Get person and check access
     person = get_person_by_pk(request, id_)
-
     context["person"] = person
 
     # Get groups where person is member of
@@ -115,16 +117,13 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/person_full.html", context)
 
 
-def get_group_by_pk(request: HttpRequest, id_: int) -> Group:
-    return get_object_or_404(Group, pk=id_)
-
-
 @permission_required("core.view_group", fn=get_group_by_pk)
 def group(request: HttpRequest, id_: int) -> HttpResponse:
+    """ Detail view for one group """
+
     context = {}
 
     group = get_group_by_pk(request, id_)
-
     context["group"] = group
 
     # Get group
@@ -151,6 +150,8 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
 
 @permission_required("core.view_groups")
 def groups(request: HttpRequest) -> HttpResponse:
+    """ List view for listing all groups """
+
     context = {}
 
     # Get all groups
@@ -166,9 +167,14 @@ def groups(request: HttpRequest) -> HttpResponse:
 
 @permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
+    """ View allowing to batch-process linking of users to persons """
+
     context = {}
 
+    # Get all persons
     persons_qs = Person.objects.all()
+
+    # Form set with one form per known person
     persons_accounts_formset = PersonsAccountsFormSet(request.POST or None, queryset=persons_qs)
 
     if request.method == "POST":
@@ -182,7 +188,8 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
 
 @permission_required("core.assign_child_groups_to_groups")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
-    """ Assign child groups to groups (for matching by MySQL importer) """
+    """ View for batch-processing assignment from child groups to groups """
+
     context = {}
 
     # Apply filter
@@ -198,7 +205,6 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
         group = page[0]
 
         if "save" in request.POST:
-            # Save
             form = ChildGroupsForm(request.POST)
             form.is_valid()
 
@@ -214,28 +220,27 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
         context["page"] = page
         context["group"] = group
         context["form"] = form
+
     return render(request, "core/groups_child_groups.html", context)
 
 
-def get_person_by_id(request: HttpRequest, id_:int):
-    return get_object_or_404(Person, id=id_)
+@permission_required("core.edit_person", fn=get_person_by_pk)
+def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """ Edit view for a single person, defaulting to logged-in person """
 
-
-@permission_required("core.edit_person", fn=get_person_by_id)
-def edit_person(request: HttpRequest, id_: int) -> HttpResponse:
     context = {}
 
-    person = get_person_by_id(request, id_)
+    person = get_person_by_pk(request, id_)
+    context["person"] = person
 
     edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
-
-    context["person"] = person
 
     if request.method == "POST":
         if edit_person_form.is_valid():
             edit_person_form.save(commit=True)
-
             messages.success(request, _("The person has been saved."))
+
+            # Redirect to self to ensure post-processed data is displayed
             return redirect("edit_person_by_id", id_=person.id)
 
     context["edit_person_form"] = edit_person_form
@@ -250,15 +255,20 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
         return None
 
 
-@permission_required("core.edit_group", fn=get_group_by_id)
+@permission_required("core.edit_group", fn=get_group_by_pk)
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """ View to edit or create a group """
+
     context = {}
 
-    group = get_group_by_id(request, id_)
+    group = get_group_by_pk(request, id_)
+    context["group"] = group
 
     if id_:
+        # Edit form for existing group
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
+        # Empty form to create a new group
         edit_group_form = EditGroupForm(request.POST or None)
 
     if request.method == "POST":
@@ -266,9 +276,9 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
             edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
+
             return redirect("groups")
 
-    context["group"] = group
     context["edit_group_form"] = edit_group_form
 
     return render(request, "core/edit_group.html", context)
@@ -276,18 +286,24 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
 @permission_required("core.manage_data")
 def data_management(request: HttpRequest) -> HttpResponse:
+    """ View with special menu for data management """
+
     context = {}
     return render(request, "core/data_management.html", context)
 
 
 @permission_required("core.view_system_status")
 def system_status(request: HttpRequest) -> HttpResponse:
+    """ View giving information about the system status """
+
     context = {}
 
     return render(request, "core/system_status.html", context)
 
 
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
+    """ Mark a notification read """
+
     context = {}
 
     notification = get_object_or_404(Notification, pk=id_)
@@ -298,38 +314,40 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     else:
         raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
 
+    # Redirect to dashboard as this is only used from there if JavaScript is unavailable
     return redirect("index")
 
 
 @permission_required("core.view_announcements")
 def announcements(request: HttpRequest) -> HttpResponse:
+    """ List view of announcements """
+
     context = {}
 
-    # Get all persons
+    # Get all announcements
     announcements = Announcement.objects.all()
     context["announcements"] = announcements
 
     return render(request, "core/announcement/list.html", context)
 
 
-def get_announcement_by_pk(request: HttpRequest, pk: Optional[int] = None):
-    if pk:
-        return get_object_or_404(Announcement, pk=pk)
-    return None
-
-
 @permission_required("core.create_or_edit_announcement", fn=get_announcement_by_pk)
 def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
+    """ View to create or edit an announcement """
+
     context = {}
 
-    if pk:
-        announcement = get_announcement_by_pk(request, pk)
+    announcement = get_announcement_by_pk(request, pk)
+
+    if announcement:
+        # Edit form for existing announcement
         form = AnnouncementForm(
             request.POST or None,
             instance=announcement
         )
         context["mode"] = "edit"
     else:
+        # Empty form to create new announcement
         form = AnnouncementForm(request.POST or None)
         context["mode"] = "add"
 
@@ -347,6 +365,8 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
 
 @permission_required("core.delete_announcement", fn=get_announcement_by_pk)
 def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
+    """ View to delete an announcement """
+
     if request.method == "POST":
         announcement = get_announcement_by_pk(request, pk)
         announcement.delete()
@@ -357,6 +377,8 @@ def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
 
 @permission_required("core.search")
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
+    """ View to return HTML snippet with searchbar autocompletion results """
+
     query = request.GET.get('q', '')
     limit = int(request.GET.get('limit', '5'))
 
@@ -367,6 +389,8 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
 
 
 class PermissionSearchView(PermissionRequiredMixin, SearchView):
+    """ Wrapper to apply permission to haystack's search view """
+
     permission_required = "core.search"
 
     def create_response(self):
@@ -381,6 +405,7 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
 
     context = {}
 
+    # Decide which registry to use and check preferences
     if registry_name == "site":
         registry = site_preferences_registry
         instance = request.site
@@ -390,31 +415,30 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
             raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
-        if pk:
-            instance = get_object_or_404(Person, pk=pk)
-        else:
-            instance = request.user.person
+        instance = get_person_by_pk(request, pk)
         form_class = PersonPreferenceForm
 
         if not request.user.has_perm("core.change_person_preferences", instance):
             raise PermissionDenied()
     elif registry_name == "group":
         registry = group_preferences_registry
-        instance = get_object_or_404(Group, pk=pk)
+        instance = get_group_by_pk(request, pk)
         form_class = GroupPreferenceForm
 
         if not request.user.has_perm("core.change_group_preferences", instance):
             raise PermissionDenied()
     else:
+        # Invalid registry name passed from URL
         return HttpResponseNotFound()
 
+    # Build final form from dynamic-preferences
     form_class = preference_form_builder(form_class, instance=instance, section=section)
 
     if request.method == "POST":
         form = form_class(request.POST)
         if form.is_valid():
             form.update_preferences()
-            messages.success(request, _("The preferences has been saved successfully."))
+            messages.success(request, _("The preferences have been saved successfully."))
     else:
         form = form_class()
 
