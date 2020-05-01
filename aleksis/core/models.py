@@ -65,7 +65,7 @@ class Person(ExtensibleModel):
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
-        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person"
+        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person", verbose_name=_("Linked user")
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
@@ -99,7 +99,7 @@ class Person(ExtensibleModel):
         "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
     )
 
-    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
+    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True, verbose_name=_("Primary group"))
 
     description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
 
@@ -220,12 +220,12 @@ class DummyPerson(Person):
 
 
 class AdditionalField(ExtensibleModel):
-    title = models.CharField(verbose_name=_("Title of field"), max_length=50)
+    title = models.CharField(verbose_name=_("Title of field"), max_length=255)
     field_type = models.CharField(verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50)
 
     class Meta:
-        verbose_name = _("Addtitional field")
-        verbose_name_plural = _("Addtitional fields")
+        verbose_name = _("Addtitional field for groups")
+        verbose_name_plural = _("Addtitional fields for groups")
 
 
 class Group(ExtensibleModel):
@@ -243,11 +243,11 @@ class Group(ExtensibleModel):
 
     icon_ = "group"
 
-    name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
+    name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
+    short_name = models.CharField(verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True)
 
-    members = models.ManyToManyField("Person", related_name="member_of", blank=True, through="PersonGroupThrough")
-    owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
+    members = models.ManyToManyField("Person", related_name="member_of", blank=True, through="PersonGroupThrough", verbose_name=_("Members"))
+    owners = models.ManyToManyField("Person", related_name="owner_of", blank=True, verbose_name=_("Owners"))
 
     parent_groups = models.ManyToManyField(
         "self",
@@ -258,7 +258,7 @@ class Group(ExtensibleModel):
     )
 
     type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
-    additional_fields = models.ManyToManyField(AdditionalField)
+    additional_fields = models.ManyToManyField(AdditionalField, verbose_name=_("Additional fields"))
 
 
     def get_absolute_url(self) -> str:
@@ -300,7 +300,7 @@ class PersonGroupThrough(ExtensibleModel):
             setattr(self, field_name, field_instance)
 
 class Activity(ExtensibleModel):
-    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
+    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User"))
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -317,7 +317,7 @@ class Activity(ExtensibleModel):
 
 class Notification(ExtensibleModel):
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
-    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications", verbose_name=_("Recipient"))
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -401,7 +401,7 @@ class Announcement(ExtensibleModel):
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
-    link = models.URLField(blank=True, verbose_name=_("Link"))
+    link = models.URLField(blank=True, verbose_name=_("Link to detailed view"))
 
     valid_from = models.DateTimeField(
         verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
@@ -527,15 +527,14 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
 
 class CustomMenu(ExtensibleModel):
-    id = models.CharField(max_length=100, verbose_name=_("Menu ID"), primary_key=True)
-    name = models.CharField(max_length=150, verbose_name=_("Menu name"))
+    name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
 
     def __str__(self):
         return self.name if self.name != "" else self.id
 
     @classmethod
     def get_default(cls, name):
-        menu, _ = cls.objects.get_or_create(id=name, defaults={"name": name})
+        menu, _ = cls.objects.get_or_create(name=name)
         return menu
 
     class Meta:
