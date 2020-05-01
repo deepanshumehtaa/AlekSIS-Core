@@ -13,7 +13,6 @@ from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
 
-
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
     """ Takes a sequence of integegers and produces a string with ranges
 
@@ -86,18 +85,25 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
                     raise TypeError("Only dict and list settings can be merged.")
 
 
-def lazy_config(key: str) -> Callable[[str], Any]:
-    """ Lazily get a config value from constance. Useful to bind constance
-    configs to other global settings to make them available to third-party
-    apps that are not aware of constance.
+def get_site_preferences():
+    """ Get the preferences manager of the current site """
+
+    from django.contrib.sites.models import Site  # noqa
+    return Site.objects.get_current().preferences
+
+
+def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
+    """ Lazily get a config value from dynamic preferences. Useful to bind preferences
+    to other global settings to make them available to third-party apps that are not
+    aware of dynamic preferences.
     """
 
-    def _get_config(key: str) -> Any:
-        from constance import config  # noqa
-        return getattr(config, key)
+    def _get_preference(section: str, name: str) -> Any:
+        return get_site_preferences()["%s__%s" % (section, name)]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
-    return lazy(_get_config, type(settings.CONSTANCE_CONFIG[key][0]))(key)
+    # FIXME Reintroduce the behaviour described above
+    return lazy(_get_preference, str)(section, name)
 
 
 def is_impersonate(request: HttpRequest) -> bool:
@@ -167,9 +173,8 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
 def custom_information_processor(request: HttpRequest) -> dict:
     """ Provides custom information in all templates """
 
-    from ..models import School, CustomMenu
+    from ..models import CustomMenu
     return {
-        "SCHOOL": School.get_default,
         "FOOTER_MENU": CustomMenu.get_default("footer"),
     }
 

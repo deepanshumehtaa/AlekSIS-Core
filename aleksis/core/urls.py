@@ -21,9 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.system_status, name="system_status"),
-    path("school_management", views.school_management, name="school_management"),
-    path("school/information/edit", views.edit_school, name="edit_school_information"),
-    path("school/term/edit", views.edit_schoolterm, name="edit_school_term"),
     path("", include(tf_urls)),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("persons", views.persons, name="persons"),
@@ -51,6 +48,18 @@ urlpatterns = [
     path("jsreverse.js", urls_js, name='js_reverse'),
     path("calendarweek_i18n.js", calendarweek.django.i18n_js, name="calendarweek_i18n_js"),
     path('gettext.js', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path("preferences/site/", views.preferences, {"registry_name": "site"}, name="preferences_site"),
+    path("preferences/person/", views.preferences, {"registry_name": "person"}, name="preferences_person"),
+    path("preferences/group/", views.preferences, {"registry_name": "group"}, name="preferences_group"),
+    path("preferences/site/<int:pk>/", views.preferences, {"registry_name": "site"}, name="preferences_site"),
+    path("preferences/person/<int:pk>/", views.preferences, {"registry_name": "person"}, name="preferences_person"),
+    path("preferences/group/<int:pk>/", views.preferences, {"registry_name": "group"}, name="preferences_group"),
+    path("preferences/site/<int:pk>/<str:section>/", views.preferences, {"registry_name": "site"}, name="preferences_site" ),
+    path("preferences/person/<int:pk>/<str:section>/", views.preferences, {"registry_name": "person"}, name="preferences_person"),
+    path("preferences/group/<int:pk>/<str:section>/", views.preferences, {"registry_name": "group"}, name="preferences_group"),
+    path("preferences/site/<str:section>/", views.preferences, {"registry_name": "site"}, name="preferences_site"),
+    path("preferences/person/<str:section>/", views.preferences, {"registry_name": "person"}, name="preferences_person"),
+    path("preferences/group/<str:section>/", views.preferences, {"registry_name": "group"}, name="preferences_group"),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

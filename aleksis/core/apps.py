@@ -4,6 +4,9 @@ import django.apps
 from django.contrib.auth.signals import user_logged_in
 from django.http import HttpRequest
 
+from dynamic_preferences.registries import preference_models
+
+from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
 from .signals import clean_scss
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
@@ -27,8 +30,28 @@ class CoreConfig(AppConfig):
         ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
     )
 
-    def config_updated(self, *args, **kwargs) -> None:
-        clean_scss()
+    def ready(self):
+        super().ready()
+
+        SitePreferenceModel = self.get_model('SitePreferenceModel')
+        PersonPreferenceModel = self.get_model('PersonPreferenceModel')
+        GroupPreferenceModel = self.get_model('GroupPreferenceModel')
+
+        preference_models.register(SitePreferenceModel, site_preferences_registry)
+        preference_models.register(PersonPreferenceModel, person_preferences_registry)
+        preference_models.register(GroupPreferenceModel, group_preferences_registry)
+
+    def preference_updated(
+        self,
+        sender: Any,
+        section: Optional[str] = None,
+        name: Optional[str] = None,
+        old_value: Optional[Any] = None,
+        new_value: Optional[Any] = None,
+        **kwargs,
+    ) -> None:
+        if section == "theme":
+            clean_scss()
 
     def post_migrate(
         self,

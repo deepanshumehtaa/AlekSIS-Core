@@ -59,6 +59,9 @@ $(document).ready( function () {
     // Initialize Modals [MAT]
     $('.modal').modal();
 
+    // Intialize Tabs [Materialize]
+    $('.tabs').tabs();
+
     $('table.datatable').each(function (index) {
         $(this).DataTable({
             "paging": false

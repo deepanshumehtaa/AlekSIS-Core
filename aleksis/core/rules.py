@@ -7,6 +7,7 @@ from .util.predicates import (
     has_any_object,
     is_current_person,
     has_object_perm,
+    is_group_owner,
 )
 
 
@@ -141,3 +142,21 @@ view_personal_details_predicate = has_person & (
     has_global_perm("core.view_personal_details") | has_object_perm("core.view_personal_details") | is_current_person
 )
 add_perm("core.view_personal_details", view_personal_details_predicate)
+
+# Change site preferences
+change_site_preferences = has_person & (
+    has_global_perm("core.change_site_preferences") | has_object_perm("core.change_site_preferences")
+)
+add_perm("core.change_site_preferences", change_site_preferences)
+
+# Change person preferences
+change_person_preferences = has_person & (
+    has_global_perm("core.change_person_preferences") | has_object_perm("core.change_person_preferences") | is_current_person
+)
+add_perm("core.change_person_preferences", change_person_preferences)
+
+# Change group preferences
+change_group_preferences = has_person & (
+    has_global_perm("core.change_group_preferences") | has_object_perm("core.change_group_preferences") | is_group_owner
+)
+add_perm("core.change_group_preferences", change_group_preferences)
