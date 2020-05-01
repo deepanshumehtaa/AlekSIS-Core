@@ -70,7 +70,7 @@ django-bleach = "^0.6.1"
 django-guardian = "^2.2.0"
 rules = "^2.2"
 django-cache-memoize = "^0.1.6"
-django-haystack = {version="3.0b1", allows-prereleases = true}
+django-haystack = {version="3.0b1", allow-prereleases = true}
 celery-haystack = {version="^0.3.1", optional=true}
 django-dbbackup = "^3.3.0"
 spdx-license-list = "^0.4.0"
