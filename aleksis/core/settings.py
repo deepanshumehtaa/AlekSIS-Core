@@ -117,7 +117,6 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "aleksis.core.util.middlewares.EnsurePersonMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_otp.middleware.OTPMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
@@ -125,6 +124,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
+    "aleksis.core.util.middlewares.EnsurePersonMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
