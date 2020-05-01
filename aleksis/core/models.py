@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from typing import Optional, Iterable, Union, Sequence, List
 
+import jsonstore
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -11,6 +12,7 @@ from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from dynamic_preferences.models import PerInstancePreferenceModel
 from image_cropping import ImageCropField, ImageRatioField
@@ -21,6 +23,24 @@ from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
+
+
+FIELD_CHOICES = (
+    ("booleanfield", "BooleanField"),
+    ("charfield", "CharField"),
+    ("datefield", "DateField"),
+    ("datetimefield", "DateTimeField"),
+    ("decimalfield", "DecimalField"),
+    ("emailfield", "EmailField"),
+    ("floatfield", "FloatField"),
+    ("Integerfield", "IntegerField"),
+    ("ipaddressfield", "IPAddressField"),
+    ("genericipaddressfield", "GenericIPAddressField"),
+    ("nullbooleanfield", "NullBooleanField"),
+    ("textfield", "TextField"),
+    ("timefield", "TimeField"),
+    ("urlfield", "URLField"),
+)
 
 
 class Person(ExtensibleModel):
@@ -197,7 +217,16 @@ class DummyPerson(Person):
 
     def save(self, *args, **kwargs):
         pass
-        
+
+
+class AdditionalField(ExtensibleModel):
+    title = models.CharField(verbose_name=_("Title of field"), max_length=50)
+    field_type = models.CharField(verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50)
+
+    class Meta:
+        verbose_name = _("Addtitional field")
+        verbose_name_plural = _("Addtitional fields")
+
 
 class Group(ExtensibleModel):
     """Any kind of group of persons in a school, including, but not limited
@@ -217,7 +246,7 @@ class Group(ExtensibleModel):
     name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
     short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
 
-    members = models.ManyToManyField("Person", related_name="member_of", blank=True)
+    members = models.ManyToManyField("Person", related_name="member_of", blank=True, through="PersonGroupThrough")
     owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
 
     parent_groups = models.ManyToManyField(
@@ -229,6 +258,7 @@ class Group(ExtensibleModel):
     )
 
     type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+    additional_fields = models.ManyToManyField(AdditionalField)
 
 
     def get_absolute_url(self) -> str:
@@ -255,6 +285,19 @@ class Group(ExtensibleModel):
         )
         dj_group.save()
 
+
+class PersonGroupThrough(ExtensibleModel):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.group.additional_fields:
+            field_class = getattr(jsonstore, field.get_field_type_display())
+            field_name = slugify(field.title).replace("-", "_")
+            field_instance = field_class(verbose_name=field.title)
+            setattr(self, field_name, field_instance)
 
 class Activity(ExtensibleModel):
     user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
