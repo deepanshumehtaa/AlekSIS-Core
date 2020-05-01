@@ -8,6 +8,7 @@ from .util.predicates import (
     is_current_person,
     has_object_perm,
     is_group_owner,
+    is_notification_recipient,
 )
 
 
@@ -103,6 +104,10 @@ add_perm("core.manage_school", manage_school_predicate)
 # Manage data
 manage_data_predicate = has_person & has_global_perm("core.manage_data")
 add_perm("core.manage_data", manage_data_predicate)
+
+# Mark notification as read
+mark_notification_as_read_predicate = has_person & is_notification_recipient
+add_perm("core.mark_notification_as_read", mark_notification_as_read_predicate)
 
 # View announcements
 view_announcements_predicate = has_person & (

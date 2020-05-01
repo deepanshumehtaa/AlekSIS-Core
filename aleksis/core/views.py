@@ -301,18 +301,20 @@ def system_status(request: HttpRequest) -> HttpResponse:
     return render(request, "core/system_status.html", context)
 
 
+def get_notification_by_pk(request: HttpRequest, pk: int):
+    return get_object_or_404(Notification, pk=pk)
+
+
+@permission_required("core.mark_notification_as_read", fn=get_notification_by_pk)
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     """ Mark a notification read """
 
     context = {}
 
-    notification = get_object_or_404(Notification, pk=id_)
+    notification = get_notification_by_pk(request, id_)
 
-    if notification.recipient.user == request.user:
-        notification.read = True
-        notification.save()
-    else:
-        raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
+    notification.read = True
+    notification.save()
 
     # Redirect to dashboard as this is only used from there if JavaScript is unavailable
     return redirect("index")
