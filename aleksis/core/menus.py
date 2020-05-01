@@ -55,6 +55,15 @@ MENUS = {
                         "aleksis.core.util.core_helpers.has_person",
                     ],
                 },
+                {
+                    "name": _("Preferences"),
+                    "url": "preferences_person",
+                    "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
             ],
         },
         {
@@ -103,6 +112,14 @@ MENUS = {
                     "icon": "school",
                     "validators": [
                         ("aleksis.core.util.predicates.permission_validator", "core.manage_school"),
+                    ],
+                },
+                {
+                    "name": _("Configuration"),
+                    "url": "preferences_site",
+                    "icon": "settings",
+                    "validators": [
+                        ("aleksis.core.util.predicates.permission_validator", "core.change_site_preferences"),
                     ],
                 },
                 {
