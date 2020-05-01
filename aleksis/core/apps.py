@@ -31,6 +31,8 @@ class CoreConfig(AppConfig):
     )
 
     def ready(self):
+        super().ready()
+
         SitePreferenceModel = self.get_model('SitePreferenceModel')
         PersonPreferenceModel = self.get_model('PersonPreferenceModel')
         GroupPreferenceModel = self.get_model('GroupPreferenceModel')
