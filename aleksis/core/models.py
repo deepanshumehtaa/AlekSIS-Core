@@ -257,7 +257,7 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
-    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+    type = models.ForeignKey("GroupType", on_delete=models.SET_NULL, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
     additional_fields = models.ManyToManyField(AdditionalField, verbose_name=_("Additional fields"))
 
 
