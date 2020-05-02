@@ -65,7 +65,7 @@ class ExtensibleModel():
     # Defines a material design icon associated with this type of model
     icon_ = "radio_button_unchecked"
 
-    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, default=Site.objects.get_current, editable=False)
     objects = CurrentSiteManager()
     objects_all_sites = models.Manager()
 
