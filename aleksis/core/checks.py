@@ -11,8 +11,7 @@ from .util.apps import AppConfig
 def check_app_configs_base_class(
     app_configs: Optional[django.apps.registry.Apps] = None, **kwargs
 ) -> list:
-    """ Checks whether all apps derive from AlekSIS's base app config """
-
+    """Checks whether all apps derive from AlekSIS's base app config"""
     results = []
 
     if app_configs is None:
@@ -40,8 +39,7 @@ def check_app_configs_base_class(
 def check_app_models_base_class(
     app_configs: Optional[django.apps.registry.Apps] = None, **kwargs
 ) -> list:
-    """ Checks whether all app models derive from AlekSIS's base ExtensibleModel """
-
+    """Checks whether all app models derive from AlekSIS's base ExtensibleModel"""
     results = []
 
     if app_configs is None:

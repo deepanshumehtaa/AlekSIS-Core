@@ -1,4 +1,4 @@
-""" Utility code for notification system """
+"""Utility code for notification system"""
 
 from typing import Sequence, Union
 
@@ -22,8 +22,7 @@ except ImportError:
 def send_templated_sms(
     template_name: str, from_number: str, recipient_list: Sequence[str], context: dict
 ) -> None:
-    """ Render a plan-text template and send via SMS to all recipients. """
-
+    """Render a plan-text template and send via SMS to all recipients."""
     template = get_template(template_name)
     text = template.render(context)
 
@@ -70,12 +69,11 @@ _CHANNELS_MAP = {
 
 
 def send_notification(notification: Union[int, "Notification"], resend: bool = False) -> None:
-    """ Send a notification through enabled channels.
+    """Send a notification through enabled channels.
 
     If resend is passed as True, the notification is sent even if it was
     previously marked as sent.
     """
-
     channels = lazy_preference("notification", "channels")
 
     if isinstance(notification, int):
@@ -90,13 +88,12 @@ def send_notification(notification: Union[int, "Notification"], resend: bool = F
 
 
 def get_notification_choices() -> list:
-    """ Return all available channels for notifications.
+    """Return all available channels for notifications.
 
     This gathers the channels that are technically available as per the
     system configuration. Which ones are available to users is defined
     by the administrator (by selecting a subset of these choices).
     """
-
     choices = []
     for channel, (name, check, send) in _CHANNELS_MAP.items():
         if check():

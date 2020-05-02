@@ -7,7 +7,7 @@ from .core_helpers import has_person
 
 
 class EnsurePersonMiddleware:
-    """ Middleware that ensures that the logged-in user is linked to a person.
+    """Middleware that ensures that the logged-in user is linked to a person.
 
     It is needed to inject a dummy person to a superuser that would otherwise
     not have an associated person, in order they can get their account set up

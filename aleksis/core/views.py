@@ -41,8 +41,7 @@ from .util.core_helpers import objectgetter_optional
 
 @permission_required("core.view_dashboard")
 def index(request: HttpRequest) -> HttpResponse:
-    """ Dashboard """
-
+    """Dashboard"""
     context = {}
 
     activities = request.user.person.activities.all()[:5]
@@ -66,14 +65,12 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def offline(request: HttpRequest) -> HttpResponse:
-    """ Offline message for PWA """
-
+    """Offline message for PWA"""
     return render(request, "core/offline.html")
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    """ About page listing all apps """
-
+    """About page listing all apps"""
     context = {}
 
     context["app_configs"] = list(
@@ -85,8 +82,7 @@ def about(request: HttpRequest) -> HttpResponse:
 
 @permission_required("core.view_persons")
 def persons(request: HttpRequest) -> HttpResponse:
-    """ List view listing all persons """
-
+    """List view listing all persons"""
     context = {}
 
     # Get all persons
@@ -106,8 +102,7 @@ def persons(request: HttpRequest) -> HttpResponse:
     "core.view_person", fn=objectgetter_optional(Person, "request.user.person", True)
 )
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
-    """ Detail view for one person; defaulting to logged-in person """
-
+    """Detail view for one person; defaulting to logged-in person"""
     context = {}
 
     person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
@@ -126,8 +121,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
 @permission_required("core.view_group", fn=objectgetter_optional(Group, None, False))
 def group(request: HttpRequest, id_: int) -> HttpResponse:
-    """ Detail view for one group """
-
+    """Detail view for one group"""
     context = {}
 
     group = objectgetter_optional(Group, None, False)(request, id_)
@@ -157,8 +151,7 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
 
 @permission_required("core.view_groups")
 def groups(request: HttpRequest) -> HttpResponse:
-    """ List view for listing all groups """
-
+    """List view for listing all groups"""
     context = {}
 
     # Get all groups
@@ -174,8 +167,7 @@ def groups(request: HttpRequest) -> HttpResponse:
 
 @permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
-    """ View allowing to batch-process linking of users to persons """
-
+    """View allowing to batch-process linking of users to persons"""
     context = {}
 
     # Get all persons
@@ -195,8 +187,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
 
 @permission_required("core.assign_child_groups_to_groups")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
-    """ View for batch-processing assignment from child groups to groups """
-
+    """View for batch-processing assignment from child groups to groups"""
     context = {}
 
     # Apply filter
@@ -235,8 +226,7 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     "core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True)
 )
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
-    """ Edit view for a single person, defaulting to logged-in person """
-
+    """Edit view for a single person, defaulting to logged-in person"""
     context = {}
 
     person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
@@ -266,8 +256,7 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
 
 @permission_required("core.edit_group", fn=objectgetter_optional(Group, None, False))
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
-    """ View to edit or create a group """
-
+    """View to edit or create a group"""
     context = {}
 
     group = objectgetter_optional(Group, None, False)(request, id_)
@@ -295,16 +284,14 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
 @permission_required("core.manage_data")
 def data_management(request: HttpRequest) -> HttpResponse:
-    """ View with special menu for data management """
-
+    """View with special menu for data management"""
     context = {}
     return render(request, "core/data_management.html", context)
 
 
 @permission_required("core.view_system_status")
 def system_status(request: HttpRequest) -> HttpResponse:
-    """ View giving information about the system status """
-
+    """View giving information about the system status"""
     context = {}
 
     return render(request, "core/system_status.html", context)
@@ -314,8 +301,7 @@ def system_status(request: HttpRequest) -> HttpResponse:
     "core.mark_notification_as_read", fn=objectgetter_optional(Notification, None, False)
 )
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
-    """ Mark a notification read """
-
+    """Mark a notification read"""
     notification = objectgetter_optional(Notification, None, False)(request, id_)
 
     notification.read = True
@@ -327,8 +313,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
 
 @permission_required("core.view_announcements")
 def announcements(request: HttpRequest) -> HttpResponse:
-    """ List view of announcements """
-
+    """List view of announcements"""
     context = {}
 
     # Get all announcements
@@ -342,8 +327,7 @@ def announcements(request: HttpRequest) -> HttpResponse:
     "core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False)
 )
 def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
-    """ View to create or edit an announcement """
-
+    """View to create or edit an announcement"""
     context = {}
 
     announcement = objectgetter_optional(Announcement, None, False)(request, id_)
@@ -373,8 +357,7 @@ def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpRe
     "core.delete_announcement", fn=objectgetter_optional(Announcement, None, False)
 )
 def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
-    """ View to delete an announcement """
-
+    """View to delete an announcement"""
     if request.method == "POST":
         announcement = objectgetter_optional(Announcement, None, False)(request, id_)
         announcement.delete()
@@ -385,8 +368,7 @@ def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
 
 @permission_required("core.search")
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
-    """ View to return HTML snippet with searchbar autocompletion results """
-
+    """View to return HTML snippet with searchbar autocompletion results"""
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
 
@@ -397,8 +379,7 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
 
 
 class PermissionSearchView(PermissionRequiredMixin, SearchView):
-    """ Wrapper to apply permission to haystack's search view """
-
+    """Wrapper to apply permission to haystack's search view"""
     permission_required = "core.search"
 
     def create_response(self):
@@ -414,8 +395,7 @@ def preferences(
     pk: Optional[int] = None,
     section: Optional[str] = None,
 ) -> HttpResponse:
-    """ View for changing preferences """
-
+    """View for changing preferences"""
     context = {}
 
     # Decide which registry to use and check preferences

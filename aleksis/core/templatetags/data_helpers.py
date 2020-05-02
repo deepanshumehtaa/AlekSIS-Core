@@ -8,7 +8,6 @@ register = template.Library()
 @register.filter
 def get_dict(value: Any, arg: Any) -> Any:
     """Gets an attribute of an object dynamically from a string name"""
-
     if hasattr(value, str(arg)):
         return getattr(value, arg)
     elif hasattr(value, "keys") and arg in value.keys():

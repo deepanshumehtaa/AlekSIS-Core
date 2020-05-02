@@ -42,7 +42,7 @@ FIELD_CHOICES = (
 
 
 class Person(ExtensibleModel):
-    """ A model describing any person related to a school, including, but not
+    """A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
 
@@ -117,34 +117,30 @@ class Person(ExtensibleModel):
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
-        """ Returns the short_name field of the primary
+        """Returns the short_name field of the primary
         group related object.
         """
-
         if self.primary_group:
             return self.primary_group.short_name
 
     @primary_group_short_name.setter
     def primary_group_short_name(self, value: str) -> None:
-        """ Sets the primary group related object by
+        """Sets the primary group related object by
         a short name. It uses the first existing group
         with this short name it can find, creating one
         if it can't find one.
         """
-
         group, created = Group.objects.get_or_create(short_name=value, defaults={"name": value})
         self.primary_group = group
 
     @property
     def full_name(self) -> str:
-        """ Full name of person in last name, first name order """
-
+        """Full name of person in last name, first name order"""
         return f"{self.last_name}, {self.first_name}"
 
     @property
     def adressing_name(self) -> str:
-        """ Full name of person in format configured for addressing """
-
+        """Full name of person in format configured for addressing"""
         if get_site_preferences()["notification__addressing_name_format"] == "last_first":
             return f"{self.last_name}, {self.first_name}"
         elif get_site_preferences()["notification__addressing_name_format"] == "first_last":
@@ -152,13 +148,11 @@ class Person(ExtensibleModel):
 
     @property
     def age(self):
-        """ Age of the person at current time """
-
+        """Age of the person at current time"""
         return self.age_at(timezone.datetime.now().date())
 
     def age_at(self, today):
-        """ Age of the person at a given date and time """
-
+        """Age of the person at a given date and time"""
         years = today.year - self.date_of_birth.year
         if self.date_of_birth.month > today.month or (
             self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
@@ -197,14 +191,13 @@ class Person(ExtensibleModel):
             admin.save()
 
     def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
-        """ Auto-select the primary group among the groups the person is member of
+        """Auto-select the primary group among the groups the person is member of
 
         Uses either the pattern passed as argument, or the pattern configured system-wide.
 
         Does not do anything if either no pattern is defined or the user already has
         a primary group, unless force is True.
         """
-
         pattern = pattern or get_site_preferences()["account__primary_group_pattern"]
 
         if pattern:
@@ -213,7 +206,7 @@ class Person(ExtensibleModel):
 
 
 class DummyPerson(Person):
-    """ A dummy person that is not stored into the database.
+    """A dummy person that is not stored into the database.
 
     Used to temporarily inject a Person object into a User.
     """
@@ -230,7 +223,7 @@ class DummyPerson(Person):
 
 
 class AdditionalField(ExtensibleModel):
-    """ An additional field that can be linked to a group """
+    """An additional field that can be linked to a group"""
 
     title = models.CharField(verbose_name=_("Title of field"), max_length=255)
     field_type = models.CharField(
@@ -294,8 +287,7 @@ class Group(ExtensibleModel):
 
     @property
     def announcement_recipients(self):
-        """ Flat list of all members and owners to fulfill announcement API contract """
-
+        """Flat list of all members and owners to fulfill announcement API contract"""
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
@@ -317,7 +309,7 @@ class Group(ExtensibleModel):
 
 
 class PersonGroupThrough(ExtensibleModel):
-    """ Through table for many-to-many relationship of group members.
+    """Through table for many-to-many relationship of group members.
 
     It does not have any fields on its own; these are generated upon instantiation
     by inspecting the additional fields selected for the linked group.
@@ -337,7 +329,7 @@ class PersonGroupThrough(ExtensibleModel):
 
 
 class Activity(ExtensibleModel):
-    """ Activity of a user to trace some actions done in AlekSIS in displayable form """
+    """Activity of a user to trace some actions done in AlekSIS in displayable form"""
 
     user = models.ForeignKey(
         "Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User")
@@ -357,7 +349,7 @@ class Activity(ExtensibleModel):
 
 
 class Notification(ExtensibleModel):
-    """ Notification to submit to a user """
+    """Notification to submit to a user"""
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
     recipient = models.ForeignKey(
@@ -390,13 +382,12 @@ class Notification(ExtensibleModel):
 
 
 class AnnouncementQuerySet(models.QuerySet):
-    """ Queryset for announcements providing time-based utility functions """
+    """Queryset for announcements providing time-based utility functions"""
 
     def relevant_for(self, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
-        """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
+        """Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
         or a set of models in a QuerySet.
         """
-
         if isinstance(obj, models.QuerySet):
             ct = ContentType.objects.get_for_model(obj.model)
             pks = list(obj.values_list("pk", flat=True))
@@ -407,8 +398,7 @@ class AnnouncementQuerySet(models.QuerySet):
         return self.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
 
     def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
-        """ Get all announcements at a certain time """
-
+        """Get all announcements at a certain time"""
         when = when or timezone.datetime.now()
 
         # Get announcements by time
@@ -417,8 +407,7 @@ class AnnouncementQuerySet(models.QuerySet):
         return announcements
 
     def on_date(self, when: Optional[date] = None) -> models.QuerySet:
-        """ Get all announcements at a certain date """
-
+        """Get all announcements at a certain date"""
         when = when or timezone.datetime.now().date()
 
         # Get announcements by time
@@ -427,16 +416,14 @@ class AnnouncementQuerySet(models.QuerySet):
         return announcements
 
     def within_days(self, start: date, stop: date) -> models.QuerySet:
-        """ Get all announcements valid for a set of days """
-
+        """Get all announcements valid for a set of days"""
         # Get announcements
         announcements = self.filter(valid_from__date__lte=stop, valid_until__date__gte=start)
 
         return announcements
 
     def for_person(self, person: Person) -> List:
-        """ Get all announcements for one person """
-
+        """Get all announcements for one person"""
         # Filter by person
         announcements_for_person = []
         for announcement in self:
@@ -447,7 +434,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
 
 class Announcement(ExtensibleModel):
-    """ Persistent announcement to display to groups or persons in various places during a
+    """Persistent announcement to display to groups or persons in various places during a
     specific time range.
     """
 
@@ -466,18 +453,16 @@ class Announcement(ExtensibleModel):
 
     @property
     def recipient_persons(self) -> Sequence[Person]:
-        """ Return a list of Persons this announcement is relevant for """
-
+        """Return a list of Persons this announcement is relevant for"""
         persons = []
         for recipient in self.recipients.all():
             persons += recipient.persons
         return persons
 
     def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
-        """ Get all recipients for this announcement
+        """Get all recipients for this announcement
         with a special content type (provided through model)
         """
-
         ct = ContentType.objects.get_for_model(obj)
         return [r.recipient for r in self.recipients.filter(content_type=ct)]
 
@@ -490,7 +475,7 @@ class Announcement(ExtensibleModel):
 
 
 class AnnouncementRecipient(ExtensibleModel):
-    """ Generalisation of a recipient for an announcement, used to wrap arbitrary
+    """Generalisation of a recipient for an announcement, used to wrap arbitrary
     objects that can receive announcements.
 
     Contract: Objects to serve as recipient have a property announcement_recipients
@@ -507,12 +492,11 @@ class AnnouncementRecipient(ExtensibleModel):
 
     @property
     def persons(self) -> Sequence[Person]:
-        """ Return a list of Persons selected by this recipient object
+        """Return a list of Persons selected by this recipient object
 
         If the recipient is a Person, return that object. If not, it returns the list
         from the announcement_recipients field on the target model.
         """
-
         if isinstance(self.recipient, Person):
             return [self.recipient]
         else:
@@ -527,7 +511,7 @@ class AnnouncementRecipient(ExtensibleModel):
 
 
 class DashboardWidget(PolymorphicModel, PureDjangoModel):
-    """ Base class for dashboard widgets on the index page
+    """Base class for dashboard widgets on the index page
 
     To implement a widget, add a model that subclasses DashboardWidget, sets the template
     and implements the get_context method to return a dictionary to be passed as context
@@ -564,8 +548,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
-        """ Return all media required to render the selected widgets. """
-
+        """Return all media required to render the selected widgets."""
         media = Media()
         for widget in widgets:
             media = media + widget.media
@@ -578,15 +561,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
 
     def get_context(self):
-        """ Get the context dictionary to pass to the widget template """
-
+        """Get the context dictionary to pass to the widget template"""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
     def get_template(self):
-        """ Get the template to render the widget with. Defaults to the template attribute,
+        """Get the template to render the widget with. Defaults to the template attribute,
         but can be overridden to allow more complex template generation scenarios.
         """
-
         return self.template
 
     def __str__(self):
@@ -598,7 +579,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
 
 class CustomMenu(ExtensibleModel):
-    """ A custom menu to display in the footer """
+    """A custom menu to display in the footer"""
 
     name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
 
@@ -607,7 +588,7 @@ class CustomMenu(ExtensibleModel):
 
     @classmethod
     def get_default(cls, name):
-        """ Get a menu by name or create if it does not exist """
+        """Get a menu by name or create if it does not exist"""
         menu, _ = cls.objects.get_or_create(name=name)
         return menu
 
@@ -617,7 +598,7 @@ class CustomMenu(ExtensibleModel):
 
 
 class CustomMenuItem(ExtensibleModel):
-    """ Single item in a custom menu """
+    """Single item in a custom menu"""
 
     menu = models.ForeignKey(
         CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
@@ -637,7 +618,7 @@ class CustomMenuItem(ExtensibleModel):
 
 
 class GroupType(ExtensibleModel):
-    """ Descriptive type of a group; used to tag groups and for apps to distinguish
+    """Descriptive type of a group; used to tag groups and for apps to distinguish
     how to display or handle a certain group.
     """
 
@@ -650,7 +631,7 @@ class GroupType(ExtensibleModel):
 
 
 class GlobalPermissions(ExtensibleModel):
-    """ Container for global permissions """
+    """Container for global permissions"""
 
     class Meta:
         managed = False
@@ -667,7 +648,7 @@ class GlobalPermissions(ExtensibleModel):
 
 
 class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
-    """ Preference model to hold pereferences valid for a site """
+    """Preference model to hold pereferences valid for a site"""
 
     instance = models.ForeignKey(Site, on_delete=models.CASCADE)
 
@@ -676,7 +657,7 @@ class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
 
 class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
-    """ Preference model to hold pereferences valid for a person """
+    """Preference model to hold pereferences valid for a person"""
 
     instance = models.ForeignKey(Person, on_delete=models.CASCADE)
 
@@ -685,7 +666,7 @@ class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
 
 class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
-    """ Preference model to hold pereferences valid for members of a group """
+    """Preference model to hold pereferences valid for members of a group"""
 
     instance = models.ForeignKey(Group, on_delete=models.CASCADE)
 
