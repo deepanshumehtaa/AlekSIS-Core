@@ -3,6 +3,7 @@ from typing import Any, List, Optional, Tuple
 import django.apps
 from django.contrib.auth.signals import user_logged_in
 from django.http import HttpRequest
+from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.registries import preference_models
 
@@ -51,8 +52,16 @@ class CoreConfig(AppConfig):
         **kwargs,
     ) -> None:
         if section == "theme":
-            # Clean compiled SCSS to invalidate it after theme changes; recreated on request
-            clean_scss()
+            if name  in ("primary", "secondary"):
+                clean_scss()
+            elif name in ("favicon", "pwa_icon"):
+                from favicon.models import Favicon  # noqa
+
+                Favicon.on_site.update_or_create(title=name,
+                                                 defaults={
+                                                     "isFavicon": name == "favicon",
+                                                     "faviconImage": new_value,
+                                                 })
 
     def post_migrate(
         self,

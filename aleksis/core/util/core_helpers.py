@@ -4,7 +4,9 @@ from operator import itemgetter
 import os
 import pkgutil
 from importlib import import_module
-from typing import Any, Callable, Sequence, Union, List, Optional
+
+from typing import Any, Callable, List, Optional, Sequence, Union
+
 from uuid import uuid4
 
 from django.conf import settings
@@ -110,6 +112,22 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above
     return lazy(_get_preference, str)(section, name)
+
+
+def lazy_get_favicon_url(title: str, size: int, rel: str, default: Optional[str] = None) -> Callable[[str, str], Any]:
+    """ Lazily get the URL to a favicon image """
+
+    def _get_favicon_url(size: int, rel: str) -> Any:
+        from favicon.models import Favicon  # noqa
+
+        try:
+            favicon = Favicon.on_site.get(title=title)
+        except Favicon.DoesNotExist:
+            return default
+        else:
+            return favicon.get_favicon(size, rel).faviconImage.url
+
+    return lazy(_get_favicon_url, str)(size, rel)
 
 
 def is_impersonate(request: HttpRequest) -> bool:

@@ -66,9 +66,7 @@
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li class="logo">
       <a id="logo-container" href="/" class="brand-logo">
-        <object type="image/svg+xml" data="{% static 'img/aleksis-icon.svg' %}" class="aleksis-logo-svg" id="sidenav-logo">
-          <img src="{% static 'img/aleksis-icon.png' %}" alt="AlekSIS icon" />
-        </object>
+        <img src="{{ request.site.preferences.theme__logo.url }}" alt="{{ request.site.preferences.general__title }} – Logo">
       </a>
     </li>
     {% has_perm 'core.search' user as search %}

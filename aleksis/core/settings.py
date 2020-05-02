@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings
+from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, lazy_get_favicon_url
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     "django_js_reverse",
     "colorfield",
     "django_bleach",
+    "favicon",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -116,7 +117,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_otp.middleware.OTPMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -420,21 +421,29 @@ PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
 PWA_APP_ICONS = [  # three icons to upload dbsettings
-    {"src": STATIC_URL + "/icons/android_192.png", "sizes": "192x192"},
-    {"src": STATIC_URL + "/icons/android_512.png", "sizes": "512x512"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="android",
+                                 default=STATIC_URL + "icons/android_192.png"), "sizes": "192x192"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=512, rel="android",
+                                 default=STATIC_URL + "icons/android_512.png"), "sizes": "512x512"},
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": STATIC_URL + "/icons/apple_76.png", "sizes": "76x76"},
-    {"src": STATIC_URL + "/icons/apple_114.png", "sizes": "114x114"},
-    {"src": STATIC_URL + "/icons/apple_152.png", "sizes": "152x152"},
-    {"src": STATIC_URL + "/icons/apple_180.png", "sizes": "180x180"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
+                                 default=STATIC_URL + "icons/apple_76.png"), "sizes": "76x76"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
+                                 default=STATIC_URL + "icons/apple_114.png"), "sizes": "114x114"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
+                                 default=STATIC_URL + "icons/apple_152.png"), "sizes": "152x152"},
+    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
+                                 default=STATIC_URL + "icons/apple_180.png"), "sizes": "180x180"},
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        "src": STATIC_URL + "/icons/android_512.png",
+        "src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"),
         "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
     }
 ]
+
+
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
 SITE_ID = 1
