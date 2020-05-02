@@ -498,6 +498,18 @@ beautifulsoup4 = "*"
 
 [[package]]
 category = "main"
+description = "simple Django app which allows you to upload a image and it renders a wide variety for html link tags to display the favicon"
+name = "django-favicon-plus-reloaded"
+optional = false
+python-versions = "*"
+version = "1.0.1"
+
+[package.dependencies]
+django = "*"
+pillow = "*"
+
+[[package]]
+category = "main"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 name = "django-filter"
 optional = false
@@ -690,6 +702,10 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
+
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -2107,7 +2123,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "41561e7290e35b309208a075a7476968d3b7b1eee45154d6c9c51a081500b859"
+content-hash = "3bc7c837a8b8f45e3eef3a5fe9110eead97dac00028816044395aac4dd71e39b"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2293,6 +2309,10 @@ django-dynamic-preferences = []
 django-easy-audit = [
     {file = "django-easy-audit-1.2.2b4.tar.gz", hash = "sha256:eac94b76882c6ad3fdb76d15f4f4ea281dc61e0897e92a457e058b87ed21ff68"},
     {file = "django_easy_audit-1.2.2b4-py3-none-any.whl", hash = "sha256:49ef3beea7bf439b349daa66d5e3d7624a7c9005d3bfd51f54d15dd5dcfaa202"},
+]
+django-favicon-plus-reloaded = [
+    {file = "django-favicon-plus-reloaded-1.0.1.tar.gz", hash = "sha256:ee48b9a86ee20e5285216dc76c69cc6e8bcdcb1ea83c2585785dff7a4eebfc7b"},
+    {file = "django_favicon_plus_reloaded-1.0.1-py3-none-any.whl", hash = "sha256:d796bb994aa648a1d9c8276674a4de4e6af3ef2583dcd4d45495b4d3df85e283"},
 ]
 django-filter = [
     {file = "django-filter-2.2.0.tar.gz", hash = "sha256:c3deb57f0dd7ff94d7dce52a047516822013e2b441bed472b722a317658cfd14"},
