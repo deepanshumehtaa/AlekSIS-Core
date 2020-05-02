@@ -34,7 +34,7 @@ def check_object_permission(user: User, perm: str, obj: Model) -> bool:
 def has_global_perm(perm: str):
     """ Builds predicate which checks whether a user has a global permission """
 
-    name = "has_global_perm:{}".format(perm)
+    name = f"has_global_perm:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:
@@ -46,7 +46,7 @@ def has_global_perm(perm: str):
 def has_object_perm(perm: str):
     """ Builds predicate which checks whether a user has a permission on a object """
 
-    name = "has_global_perm:{}".format(perm)
+    name = f"has_global_perm:{perm}"
 
     @predicate(name)
     def fn(user: User, obj: Model) -> bool:
@@ -60,7 +60,7 @@ def has_object_perm(perm: str):
 def has_any_object(perm: str, klass):
     """ Build predicate which checks whether a user has access to objects with the provided permission """
 
-    name = "has_any_object:{}".format(perm)
+    name = f"has_any_object:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:

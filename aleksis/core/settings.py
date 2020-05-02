@@ -227,10 +227,11 @@ if _settings.get("ldap.uri", None):
 
     # Discover flags by LDAP groups
     if _settings.get("ldap.groups.base", None):
+        group_type = _settings.get("ldap.groups.type", "groupOfNames")
         AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
             _settings.get("ldap.groups.base"),
             ldap.SCOPE_SUBTREE,
-            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNames")),
+            _settings.get("ldap.groups.filter", f"(objectClass={group_type})"),
         )
 
         _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
@@ -244,7 +245,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_USER_FLAGS_BY_GROUP = {
         }
         for _flag in ["is_active", "is_staff", "is_superuser"]:
-            _dn = _settings.get("ldap.groups.flags.%s" % _flag, None)
+            _dn = _settings.get(f"ldap.groups.flags.{_flag}", None)
             if _dn:
                 AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
 

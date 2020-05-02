@@ -54,7 +54,7 @@ def get_app_packages() -> Sequence[str]:
     except ImportError:
         return []
 
-    return ["aleksis.apps.%s" % pkg[1] for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
+    return [f"aleksis.apps.{pkg[1]}" for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
 
 
 def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: bool = False) -> Union[dict, list]:
@@ -81,7 +81,7 @@ def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: b
         for entry in app_setting:
             if entry in original:
                 if not deduplicate:
-                    raise AttributeError("%s already set in original." % entry)
+                    raise AttributeError(f"{entry} already set in original.")
             else:
                 if isinstance(original, list):
                     original.append(entry)
@@ -105,7 +105,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     """
 
     def _get_preference(section: str, name: str) -> Any:
-        return get_site_preferences()["%s__%s" % (section, name)]
+        return get_site_preferences()[f"{section}__{name}"]
 
     # The type is guessed from the default value to improve lazy()'s behaviour
     # FIXME Reintroduce the behaviour described above
@@ -169,7 +169,7 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
     _, ext = os.path.splitext(filename)
 
     # set filename as random string
-    new_filename = '{}.{}'.format(uuid4().hex, ext)
+    new_filename = f"{uuid4().hex}.{ext}"
 
     # Create upload directory if necessary
     os.makedirs(os.path.join(settings.MEDIA_ROOT, upload_to), exist_ok=True)

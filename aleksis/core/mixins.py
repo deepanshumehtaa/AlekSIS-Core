@@ -134,11 +134,11 @@ class ExtensibleModel(CRUDMixin):
             if name.isidentifier():
                 prop_name = name
             else:
-                raise ValueError("%s is not a valid name." % name)
+                raise ValueError(f"{name} is not a valid name.")
 
         # Verify that attribute name does not clash with other names in the class
         if hasattr(cls, prop_name):
-            raise ValueError("%s already used." % prop_name)
+            raise ValueError(f"{prop_name} already used.")
 
         # Let Django's model magic add the attribute if we got here
         cls.add_to_class(name, obj)
@@ -172,7 +172,7 @@ class ExtensibleModel(CRUDMixin):
 
         # Force kwargs to be exactly one argument
         if len(kwargs) != 1:
-            raise TypeError("field() takes 1 keyword argument but %d were given" % len(kwargs))
+            raise TypeError(f"field() takes 1 keyword argument but {len(kwargs)} were given")
         name, field = kwargs.popitem()
 
         # Force the field to be one of the jsonstore fields

@@ -101,7 +101,8 @@ class AppConfig(django.apps.AppConfig):
                     licence_dict = default_dict
                 else:
                     # Add missing licence link to SPDX data
-                    licence_dict["url"] = "https://spdx.org/licenses/{}.html".format(licence_dict["licenseId"])
+                    licence_id = licence_dict["licenseId"]
+                    licence_dict["url"] = f"https://spdx.org/licenses/{licence_id}.html"
 
                 # Drop summed up flags to False if this licence is False
                 flags["isFsfLibre"] = flags["isFsfLibre"] and licence_dict["isFsfLibre"]

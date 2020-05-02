@@ -22,7 +22,7 @@ def get_colour(html_colour: str) -> SassColor:
 def get_preference(section: str, name: str) -> str:
     """ Get a preference from dynamic-preferences """
 
-    return get_site_preferences()["%s__%s" % (section, name)]
+    return get_site_preferences()[f"{section}__{name}"]
 
 
 def clean_scss(*args, **kwargs) -> None:

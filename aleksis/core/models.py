@@ -275,7 +275,7 @@ class Group(ExtensibleModel):
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
-        return "%s (%s)" % (self.name, self.short_name)
+        return f"{self.name} ({self.short_name})"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -593,7 +593,7 @@ class CustomMenuItem(ExtensibleModel):
     )
 
     def __str__(self):
-        return "[{}] {}".format(self.menu, self.name)
+        return f"[{self.menu}] {self.name}"
 
     class Meta:
         verbose_name = _("Custom menu item")

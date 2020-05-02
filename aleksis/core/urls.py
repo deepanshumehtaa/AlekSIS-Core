@@ -85,7 +85,7 @@ for app_config in apps.app_configs.values():
         continue
 
     try:
-        urlpatterns.append(path("app/%s/" % app_config.label, include("%s.urls" % app_config.name)))
+        urlpatterns.append(path(f"app/{app_config.label}/", include(f"{app_config.name}.urls")))
     except ModuleNotFoundError:
         # Ignore exception as app just has no URLs
         pass  # noqa
