@@ -12,7 +12,7 @@ else:
 
 
 class SearchIndex(BaseSearchIndex):
-    """ Base class for search indexes on AlekSIS models
+    """ Base class for search indexes on AlekSIS models.
 
     It provides a default document field caleld text and exects
     the related model in the model attribute.

@@ -10,14 +10,13 @@ from uuid import uuid4
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
-from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 from django.shortcuts import get_object_or_404
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
-    """Takes a sequence of integegers and produces a string with ranges
+    """Takes a sequence of integegers and produces a string with ranges.
 
     >>> copyright_years([1999, 2000, 2001, 2005, 2007, 2008, 2009])
     '1999–2001, 2005, 2007–2009'
@@ -35,7 +34,7 @@ def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "
 
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
-    """Helper to determin if Django debug toolbar should be displayed
+    """Helper to determin if Django debug toolbar should be displayed.
 
     Extends the default behaviour by enabling DJDT for superusers independent
     of source IP.
@@ -67,7 +66,8 @@ def get_app_packages() -> Sequence[str]:
 def merge_app_settings(
     setting: str, original: Union[dict, list], deduplicate: bool = False
 ) -> Union[dict, list]:
-    """Get a named settings constant from all apps and merge it into the original.
+    """
+    Get a named settings constant from all apps and merge it into the original.
     To use this, add a settings.py file to the app, in the same format as Django's
     main settings.py.
 
@@ -100,14 +100,16 @@ def merge_app_settings(
 
 
 def get_site_preferences():
-    """Get the preferences manager of the current site"""
+    """Get the preferences manager of the current site."""
     from django.contrib.sites.models import Site  # noqa
 
     return Site.objects.get_current().preferences
 
 
 def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
-    """Lazily get a config value from dynamic preferences. Useful to bind preferences
+    """Lazily get a config value from dynamic preferences.
+
+    Useful to bind preferences
     to other global settings to make them available to third-party apps that are not
     aware of dynamic preferences.
     """
@@ -122,7 +124,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
 def lazy_get_favicon_url(
     title: str, size: int, rel: str, default: Optional[str] = None
 ) -> Callable[[str, str], Any]:
-    """Lazily get the URL to a favicon image"""
+    """Lazily get the URL to a favicon image."""
     def _get_favicon_url(size: int, rel: str) -> Any:
         from favicon.models import Favicon  # noqa
 
@@ -137,7 +139,7 @@ def lazy_get_favicon_url(
 
 
 def is_impersonate(request: HttpRequest) -> bool:
-    """Check whether the user was impersonated by an admin"""
+    """Check whether the user was impersonated by an admin."""
     if hasattr(request, "user"):
         return getattr(request.user, "is_impersonate", False)
     else:
@@ -145,8 +147,9 @@ def is_impersonate(request: HttpRequest) -> bool:
 
 
 def has_person(obj: Union[HttpRequest, Model]) -> bool:
-    """Check wehether a model object has a person attribute linking it to a Person
-    object. The passed object can also be a HttpRequest object, in which case its
+    """Check wehether a model object has a person attribute linking it to a Person object.
+
+    The passed object can also be a HttpRequest object, in which case its
     associated User object is unwrapped and tested.
     """
     if isinstance(obj, HttpRequest):
@@ -186,7 +189,7 @@ def celery_optional(orig: Callable) -> Callable:
 
 
 def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
-    """Updates path of an uploaded file and renames it to a random UUID in Django FileField"""
+    """Updates path of an uploaded file and renames it to a random UUID in Django FileField."""
     _, ext = os.path.splitext(filename)
 
     # set filename as random string
@@ -200,7 +203,7 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
 
 
 def custom_information_processor(request: HttpRequest) -> dict:
-    """Provides custom information in all templates"""
+    """Provides custom information in all templates."""
     from ..models import CustomMenu
 
     return {
@@ -209,14 +212,14 @@ def custom_information_processor(request: HttpRequest) -> dict:
 
 
 def now_tomorrow() -> datetime:
-    """Return current time tomorrow"""
+    """Return current time tomorrow."""
     return timezone.now() + timedelta(days=1)
 
 
 def objectgetter_optional(
     model: Model, default: Optional[Any] = None, default_eval: bool = False
 ) -> Callable[[HttpRequest, Optional[int]], Model]:
-    """Get an object by pk, defaulting to None"""
+    """Get an object by pk, defaulting to None."""
     def get_object(request: HttpRequest, id_: Optional[int] = None) -> Model:
         if id_ is not None:
             return get_object_or_404(model, pk=id_)

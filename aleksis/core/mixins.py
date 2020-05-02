@@ -18,7 +18,7 @@ from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 @reversion.register()
 class ExtensibleModel():
-    """Base model for all objects in AlekSIS apps
+    """Base model for all objects in AlekSIS apps.
 
     This base model ensures all objects in AlekSIS apps fulfill the
     following properties:
@@ -71,12 +71,12 @@ class ExtensibleModel():
     objects_all_sites = models.Manager()
 
     def get_absolute_url(self) -> str:
-        """Get the URL o a view representing this model instance"""
+        """Get the URL o a view representing this model instance."""
         pass
 
     @property
     def crud_events(self) -> QuerySet:
-        """Get all CRUD events connected to this object from easyaudit"""
+        """Get all CRUD events connected to this object from easyaudit."""
         content_type = ContentType.objects.get_for_model(self)
 
         return CRUDEvent.objects.filter(
@@ -85,23 +85,23 @@ class ExtensibleModel():
 
     @property
     def crud_event_create(self) -> Optional[CRUDEvent]:
-        """Return create event of this object"""
+        """Return create event of this object."""
         return self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
 
     @property
     def crud_event_update(self) -> Optional[CRUDEvent]:
-        """Return last event of this object"""
+        """Return last event of this object."""
         return self.crud_events.latest("datetime")
 
     @property
     def created_at(self) -> Optional[datetime]:
-        """Determine creation timestamp from CRUD log"""
+        """Determine creation timestamp from CRUD log."""
         if self.crud_event_create:
             return self.crud_event_create.datetime
 
     @property
     def updated_at(self) -> Optional[datetime]:
-        """Determine last timestamp from CRUD log"""
+        """Determine last timestamp from CRUD log."""
         if self.crud_event_update:
             return self.crud_event_update.datetime
 
@@ -109,13 +109,13 @@ class ExtensibleModel():
 
     @property
     def created_by(self) -> Optional[models.Model]:
-        """Determine user who created this object from CRUD log"""
+        """Determine user who created this object from CRUD log."""
         if self.crud_event_create:
             return self.crud_event_create.user
 
     @property
     def updated_by(self) -> Optional[models.Model]:
-        """Determine user who last updated this object from CRUD log"""
+        """Determine user who last updated this object from CRUD log."""
         if self.crud_event_update:
             return self.crud_event_update.user
 
@@ -156,8 +156,7 @@ class ExtensibleModel():
 
     @classmethod
     def field(cls, **kwargs) -> None:
-        """Adds the passed jsonstore field. Must be one of the fields in
-        django-jsonstore.
+        """Adds the passed jsonstore field. Must be one of the fields in django-jsonstore.
 
         Accepts exactly one keyword argument, with the name being the desired
         model field name and the value the field instance.
@@ -181,7 +180,7 @@ class ExtensibleModel():
 
 
 class PureDjangoModel(object):
-    """No-op mixin to mark a model as deliberately not using ExtensibleModel"""
+    """No-op mixin to mark a model as deliberately not using ExtensibleModel."""
 
     pass
 
@@ -203,7 +202,7 @@ class _ExtensibleFormMetaclass(ModelFormMetaclass):
 
 
 class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
-    """Base model for extensible forms
+    """Base model for extensible forms.
 
     This mixin adds functionality which allows
     - apps to add layout nodes to the layout used by django-material
@@ -224,8 +223,7 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
 
     @classmethod
     def add_node_to_layout(cls, node: Union[LayoutNode, str]):
-        """
-        Add a node to `layout` attribute
+        """Add a node to `layout` attribute.
 
         :param node: django-material layout node (Fieldset, Row etc.)
         :type node: LayoutNode
@@ -235,6 +233,6 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
 
 
 class BaseModelAdmin(GuardedModelAdmin, ObjectPermissionsModelAdmin):
-    """A base class for ModelAdmin combining django-guardian and rules"""
+    """A base class for ModelAdmin combining django-guardian and rules."""
 
     pass

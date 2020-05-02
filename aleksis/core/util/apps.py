@@ -50,13 +50,13 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_name(cls):
-        """Get name of application package"""
+        """Get name of application package."""
         return getattr(cls, "verbose_name", cls.name)
         # TODO Try getting from distribution if not set
 
     @classmethod
     def get_version(cls):
-        """Get version of application package"""
+        """Get version of application package."""
         try:
             from .. import __version__  # noqa
         except ImportError:
@@ -66,7 +66,7 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_licence(cls) -> Tuple:
-        """Get tuple of licence information of application package"""
+        """Get tuple of licence information of application package."""
         # Get string representation of licence in SPDX format
         licence = getattr(cls, "licence", None)
 
@@ -118,13 +118,13 @@ class AppConfig(django.apps.AppConfig):
 
     @classmethod
     def get_urls(cls):
-        """Get list of URLs for this application package"""
+        """Get list of URLs for this application package."""
         return getattr(cls, "urls", {})
         # TODO Try getting from distribution if not set
 
     @classmethod
     def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
-        """Get copyright information tuples for application package"""
+        """Get copyright information tuples for application package."""
         copyrights = getattr(cls, "copyright", tuple())
 
         copyrights_processed = []
@@ -152,7 +152,7 @@ class AppConfig(django.apps.AppConfig):
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
-        """Called on every app instance if a dynamic preference changes, and once on startup
+        """Called on every app instance if a dynamic preference changes, and once on startup.
 
         By default, it does nothing.
         """
@@ -168,7 +168,7 @@ class AppConfig(django.apps.AppConfig):
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        """Called on every app instance before its models are migrated
+        """Called on every app instance before its models are migrated.
 
         By default, it does nothing.
         """
@@ -184,7 +184,7 @@ class AppConfig(django.apps.AppConfig):
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        """Called on every app instance after its models have been migrated
+        """Called on every app instance after its models have been migrated.
 
         By default, asks all models to do maintenance on their default data.
         """
@@ -193,7 +193,7 @@ class AppConfig(django.apps.AppConfig):
     def user_logged_in(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
     ) -> None:
-        """Called after a user logged in
+        """Called after a user logged in.
 
         By default, it does nothing.
         """
@@ -202,7 +202,7 @@ class AppConfig(django.apps.AppConfig):
     def user_logged_out(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
     ) -> None:
-        """Called after a user logged out
+        """Called after a user logged out.
 
         By default, it does nothing.
         """

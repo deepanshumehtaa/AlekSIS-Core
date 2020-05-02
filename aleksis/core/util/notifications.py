@@ -1,4 +1,4 @@
-"""Utility code for notification system"""
+"""Utility code for notification system."""
 
 from typing import Sequence, Union
 

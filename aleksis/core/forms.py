@@ -19,7 +19,7 @@ from .registries import (
 
 
 class PersonAccountForm(forms.ModelForm):
-    """Form to assign user accounts to persons in the frontend :"""
+    """Form to assign user accounts to persons in the frontend."""
 
     class Meta:
         model = Person
@@ -67,7 +67,7 @@ PersonsAccountsFormSet = forms.modelformset_factory(
 
 
 class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend"""
+    """Form to edit an existing person object in the frontend."""
 
     layout = Layout(
         Fieldset(
@@ -122,7 +122,7 @@ class EditPersonForm(ExtensibleForm):
 
 
 class EditGroupForm(ExtensibleForm):
-    """Form to edit an existing group in the frontend"""
+    """Form to edit an existing group in the frontend."""
 
     layout = Layout(
         Fieldset(_("Common data"), "name", "short_name"),
@@ -154,7 +154,7 @@ class EditGroupForm(ExtensibleForm):
 
 
 class AnnouncementForm(ExtensibleForm):
-    """Form to create or edit an announcement in the frontend"""
+    """Form to create or edit an announcement in the frontend."""
 
     valid_from = forms.DateTimeField(required=False)
     valid_until = forms.DateTimeField(required=False)
@@ -259,24 +259,24 @@ class AnnouncementForm(ExtensibleForm):
 
 
 class ChildGroupsForm(forms.Form):
-    """Inline form for group editing to select child groups"""
+    """Inline form for group editing to select child groups."""
 
     child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
 
 
 class SitePreferenceForm(PreferenceForm):
-    """Form to edit site preferences"""
+    """Form to edit site preferences."""
 
     registry = site_preferences_registry
 
 
 class PersonPreferenceForm(PreferenceForm):
-    """Form to edit preferences valid for one person"""
+    """Form to edit preferences valid for one person."""
 
     registry = person_preferences_registry
 
 
 class GroupPreferenceForm(PreferenceForm):
-    """Form to edit preferences valid for members of a group"""
+    """Form to edit preferences valid for members of a group."""
 
     registry = group_preferences_registry
