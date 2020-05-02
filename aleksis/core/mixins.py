@@ -17,7 +17,7 @@ from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
 @reversion.register()
-class ExtensibleModel():
+class ExtensibleModel:
     """Base model for all objects in AlekSIS apps.
 
     This base model ensures all objects in AlekSIS apps fulfill the
