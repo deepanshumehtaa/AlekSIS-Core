@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.forms import EmailField, URLField
+from django.forms import EmailField, URLField, ImageField
 from django.utils.translation import gettext_lazy as _
 
 from colorfield.widgets import ColorWidget
-from dynamic_preferences.types import BooleanPreference, ChoicePreference, StringPreference
+from dynamic_preferences.types import BooleanPreference, ChoicePreference, StringPreference, FilePreference
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.registries import global_preferences_registry
 
@@ -54,6 +54,30 @@ class ColourSecondary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Secondary colour")
+
+
+@site_preferences_registry.register
+class Logo(FilePreference):
+    section = theme
+    field_class = ImageField
+    name = "logo"
+    verbose_name = _("Logo")
+
+
+@site_preferences_registry.register
+class Favicon(FilePreference):
+    section = theme
+    field_class = ImageField
+    name = "favicon"
+    verbose_name = _("Favicon")
+
+
+@site_preferences_registry.register
+class PWAIcon(FilePreference):
+    section = theme
+    field_class = ImageField
+    name = "pwa_icon"
+    verbose_name = _("PWA-Icon")
 
 
 @site_preferences_registry.register

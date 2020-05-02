@@ -1,4 +1,4 @@
-{% load i18n static pwa %}
+{% load i18n static pwa favtags %}
 
 {# Basic meta #}
 <meta charset="utf-8">
@@ -7,9 +7,7 @@
 <meta name="description" content="{{ request.site.preferences.general__description }}">
 
 {# Favicons #}
-<link href="{% static "icons/favicon_16.png" %}" rel="icon" type="image/png" sizes="16x16">
-<link href="{% static "icons/favicon_32.png" %}" rel="icon" type="image/png" sizes="32x32">
-<link href="{% static "icons/favicon_48.png" %}" rel="icon" type="image/png" sizes="48x48">
+{% place_favicon %}
 
 {# PWA meta #}
 {% progressive_web_app_meta %}

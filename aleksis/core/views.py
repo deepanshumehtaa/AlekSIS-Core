@@ -433,7 +433,7 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
     form_class = preference_form_builder(form_class, instance=instance, section=section)
 
     if request.method == "POST":
-        form = form_class(request.POST)
+        form = form_class(request.POST, request.FILES or None)
         if form.is_valid():
             form.update_preferences()
             messages.success(request, _("The preferences have been saved successfully."))
