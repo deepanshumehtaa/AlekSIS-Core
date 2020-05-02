@@ -9,7 +9,7 @@
     {% for section in registry.section_objects.values %}
       <li class="tab">
         <a class="{% if active_section == section.name %}active{% endif %}"
-           href="{% url registry_url section %}"
+           href="{% url registry_url section.name %}"
            target="_self">
           {{ section.verbose_name }}
         </a>

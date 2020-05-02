@@ -413,14 +413,14 @@ def preferences(request: HttpRequest, registry_name: str = "person", pk: Optiona
             raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
-        instance = get_person_by_pk(request, pk)
+        instance = objectgetter_optional(Person, "request.user.person", True)(request, pk)
         form_class = PersonPreferenceForm
 
         if not request.user.has_perm("core.change_person_preferences", instance):
             raise PermissionDenied()
     elif registry_name == "group":
         registry = group_preferences_registry
-        instance = get_group_by_pk(request, pk)
+        instance = objectgetter_optional(Group)(request, pk)
         form_class = GroupPreferenceForm
 
         if not request.user.has_perm("core.change_group_preferences", instance):
