@@ -5,10 +5,11 @@ from haystack import indexes
 # Not used here, but simplifies imports for apps
 Indexable = indexes.Indexable  # noqa
 
-if settings.HAYSTACK_SIGNAL_PROCESSOR == 'celery_haystack.signals.CelerySignalProcessor':
+if settings.HAYSTACK_SIGNAL_PROCESSOR == "celery_haystack.signals.CelerySignalProcessor":
     from haystack.indexes import SearchIndex as BaseSearchIndex
 else:
     from celery_haystack.indexes import CelerySearchIndex as BaseSearchIndex
+
 
 class SearchIndex(BaseSearchIndex):
     """ Base class for search indexes on AlekSIS models

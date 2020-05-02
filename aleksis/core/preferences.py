@@ -1,15 +1,23 @@
 from django.conf import settings
-from django.forms import EmailField, URLField, ImageField
+from django.forms import EmailField, ImageField, URLField
 from django.utils.translation import gettext_lazy as _
 
 from colorfield.widgets import ColorWidget
-from dynamic_preferences.types import BooleanPreference, ChoicePreference, StringPreference, FilePreference
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.registries import global_preferences_registry
+from dynamic_preferences.types import (
+    BooleanPreference,
+    ChoicePreference,
+    FilePreference,
+    StringPreference,
+)
 
-from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
+from .registries import (
+    group_preferences_registry,
+    person_preferences_registry,
+    site_preferences_registry,
+)
 from .util.notifications import get_notification_choices_lazy
-
 
 general = Section("general")
 school = Section("school")
@@ -127,11 +135,11 @@ class AdressingNameFormat(ChoicePreference):
     required = False
     verbose_name = _("Name format for addressing")
     choices = (
-               (None, "-----"),
-               ("german", "John Doe"),
-               ("english", "Doe, John"),
-               ("dutch", "Doe John"),
-              )
+        (None, "-----"),
+        ("german", "John Doe"),
+        ("english", "Doe, John"),
+        ("dutch", "Doe John"),
+    )
 
 
 @person_preferences_registry.register

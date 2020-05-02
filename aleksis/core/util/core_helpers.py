@@ -1,12 +1,10 @@
-from datetime import datetime, timedelta
-from itertools import groupby
-from operator import itemgetter
 import os
 import pkgutil
+from datetime import datetime, timedelta
 from importlib import import_module
-
+from itertools import groupby
+from operator import itemgetter
 from typing import Any, Callable, List, Optional, Sequence, Union
-
 from uuid import uuid4
 
 from django.conf import settings
@@ -15,6 +13,7 @@ from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
 
+
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
     """ Takes a sequence of integegers and produces a string with ranges
 
@@ -22,10 +21,17 @@ def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "
     '1999–2001, 2005, 2007–2009'
     """
 
-    ranges = [list(map(itemgetter(1), group)) for _, group in groupby(enumerate(years), lambda e: e[1]-e[0])]
-    years_strs = [str(range_[0]) if len(range_) == 1 else joiner.join([str(range_[0]), str(range_[-1])]) for range_ in ranges]
+    ranges = [
+        list(map(itemgetter(1), group))
+        for _, group in groupby(enumerate(years), lambda e: e[1] - e[0])
+    ]
+    years_strs = [
+        str(range_[0]) if len(range_) == 1 else joiner.join([str(range_[0]), str(range_[-1])])
+        for range_ in ranges
+    ]
 
     return seperator.join(years_strs)
+
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
     """ Helper to determin if Django debug toolbar should be displayed
@@ -59,7 +65,9 @@ def get_app_packages() -> Sequence[str]:
     return [f"aleksis.apps.{pkg[1]}" for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
 
 
-def merge_app_settings(setting: str, original: Union[dict, list], deduplicate: bool = False) -> Union[dict, list]:
+def merge_app_settings(
+    setting: str, original: Union[dict, list], deduplicate: bool = False
+) -> Union[dict, list]:
     """ Get a named settings constant from all apps and merge it into the original.
     To use this, add a settings.py file to the app, in the same format as Django's
     main settings.py.
@@ -97,6 +105,7 @@ def get_site_preferences():
     """ Get the preferences manager of the current site """
 
     from django.contrib.sites.models import Site  # noqa
+
     return Site.objects.get_current().preferences
 
 
@@ -114,7 +123,9 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     return lazy(_get_preference, str)(section, name)
 
 
-def lazy_get_favicon_url(title: str, size: int, rel: str, default: Optional[str] = None) -> Callable[[str, str], Any]:
+def lazy_get_favicon_url(
+    title: str, size: int, rel: str, default: Optional[str] = None
+) -> Callable[[str, str], Any]:
     """ Lazily get the URL to a favicon image """
 
     def _get_favicon_url(size: int, rel: str) -> Any:
@@ -170,6 +181,7 @@ def celery_optional(orig: Callable) -> Callable:
 
     if hasattr(settings, "CELERY_RESULT_BACKEND"):
         from ..celery import app  # noqa
+
         task = app.task(orig)
 
     def wrapped(*args, **kwargs):
@@ -200,6 +212,7 @@ def custom_information_processor(request: HttpRequest) -> dict:
     """ Provides custom information in all templates """
 
     from ..models import CustomMenu
+
     return {
         "FOOTER_MENU": CustomMenu.get_default("footer"),
     }
@@ -210,7 +223,9 @@ def now_tomorrow() -> datetime:
     return timezone.now() + timedelta(days=1)
 
 
-def objectgetter_optional(model: Model, default: Optional[Any] = None, default_eval: bool = False) -> Callable[[HttpRequest, Optional[int]], Model]:
+def objectgetter_optional(
+    model: Model, default: Optional[Any] = None, default_eval: bool = False
+) -> Callable[[HttpRequest, Optional[int]], Model]:
     """ Get an object by pk, defaulting to None """
 
     def get_object(request: HttpRequest, id_: Optional[int] = None) -> Model:

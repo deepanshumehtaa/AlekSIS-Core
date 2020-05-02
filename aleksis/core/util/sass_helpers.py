@@ -10,6 +10,7 @@ from sass import SassColor
 
 from .core_helpers import get_site_preferences
 
+
 def get_colour(html_colour: str) -> SassColor:
     """ Get a SASS colour object from an HTML colour string """
 

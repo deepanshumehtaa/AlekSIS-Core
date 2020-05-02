@@ -41,9 +41,7 @@ MENUS = {
                     "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
-                    "validators": [
-                        "menu_generator.validators.is_authenticated",
-                    ],
+                    "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
                     "name": _("Me"),
@@ -78,7 +76,10 @@ MENUS = {
                     "url": "announcements",
                     "icon": "announcement",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_announcements"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_announcements",
+                        ),
                     ],
                 },
                 {
@@ -94,7 +95,10 @@ MENUS = {
                     "url": "system_status",
                     "icon": "power_settings_new",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_system_status"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_system_status",
+                        ),
                     ],
                 },
                 {
@@ -110,16 +114,17 @@ MENUS = {
                     "url": "preferences_site",
                     "icon": "settings",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.change_site_preferences"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.change_site_preferences",
+                        ),
                     ],
                 },
                 {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
                     "icon": "settings",
-                    "validators": [
-                        "menu_generator.validators.is_superuser",
-                    ],
+                    "validators": ["menu_generator.validators.is_superuser",],
                 },
             ],
         },
@@ -128,7 +133,9 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
-            "validators": [("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")],
+            "validators": [
+                ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")
+            ],
             "submenu": [
                 {
                     "name": _("Persons"),
@@ -151,7 +158,10 @@ MENUS = {
                     "url": "persons_accounts",
                     "icon": "person_add",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.link_persons_accounts")
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.link_persons_accounts",
+                        )
                     ],
                 },
                 {
@@ -159,7 +169,10 @@ MENUS = {
                     "url": "groups_child_groups",
                     "icon": "group_add",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.assign_child_groups_to_groups",
+                        )
                     ],
                 },
             ],
@@ -170,7 +183,10 @@ MENUS = {
             "name": _("Assign child groups to groups"),
             "url": "groups_child_groups",
             "validators": [
-                ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+                (
+                    "aleksis.core.util.predicates.permission_validator",
+                    "core.assign_child_groups_to_groups",
+                )
             ],
         },
     ],

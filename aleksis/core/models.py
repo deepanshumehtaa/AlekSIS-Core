@@ -1,7 +1,6 @@
 from datetime import date, datetime
-from typing import Optional, Iterable, Union, Sequence, List
+from typing import Iterable, List, Optional, Sequence, Union
 
-import jsonstore
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -14,6 +13,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+import jsonstore
 from dynamic_preferences.models import PerInstancePreferenceModel
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -23,7 +24,6 @@ from .mixins import ExtensibleModel, PureDjangoModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
-
 
 FIELD_CHOICES = (
     ("BooleanField", _("Boolean (Yes/No)")),
@@ -63,7 +63,12 @@ class Person(ExtensibleModel):
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
-        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person", verbose_name=_("Linked user")
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="person",
+        verbose_name=_("Linked user"),
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
@@ -94,13 +99,18 @@ class Person(ExtensibleModel):
     photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
 
     guardians = models.ManyToManyField(
-        "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
+        "self",
+        verbose_name=_("Guardians / Parents"),
+        symmetrical=False,
+        related_name="children",
+        blank=True,
     )
 
-    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True, verbose_name=_("Primary group"))
+    primary_group = models.ForeignKey(
+        "Group", models.SET_NULL, null=True, blank=True, verbose_name=_("Primary group")
+    )
 
     description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
-
 
     def get_absolute_url(self) -> str:
         return reverse("person_by_id", args=[self.id])
@@ -150,9 +160,9 @@ class Person(ExtensibleModel):
         """ Age of the person at a given date and time """
 
         years = today.year - self.date_of_birth.year
-        if (self.date_of_birth.month > today.month
-            or (self.date_of_birth.month == today.month
-                and self.date_of_birth.day > today.day)):
+        if self.date_of_birth.month > today.month or (
+            self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+        ):
             years -= 1
         return years
 
@@ -182,9 +192,7 @@ class Person(ExtensibleModel):
         User = get_user_model()
         if not User.objects.filter(is_superuser=True).exists():
             admin = User.objects.create_superuser(
-                username='admin',
-                email='root@example.com',
-                password='admin'
+                username="admin", email="root@example.com", password="admin"
             )
             admin.save()
 
@@ -225,7 +233,9 @@ class AdditionalField(ExtensibleModel):
     """ An additional field that can be linked to a group """
 
     title = models.CharField(verbose_name=_("Title of field"), max_length=255)
-    field_type = models.CharField(verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50)
+    field_type = models.CharField(
+        verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50
+    )
 
     class Meta:
         verbose_name = _("Addtitional field for groups")
@@ -241,17 +251,25 @@ class Group(ExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
-        permissions = (
-            ("assign_child_groups_to_groups", _("Can assign child groups to groups")),
-        )
+        permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
 
     icon_ = "group"
 
     name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True)
+    short_name = models.CharField(
+        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True
+    )
 
-    members = models.ManyToManyField("Person", related_name="member_of", blank=True, through="PersonGroupThrough", verbose_name=_("Members"))
-    owners = models.ManyToManyField("Person", related_name="owner_of", blank=True, verbose_name=_("Owners"))
+    members = models.ManyToManyField(
+        "Person",
+        related_name="member_of",
+        blank=True,
+        through="PersonGroupThrough",
+        verbose_name=_("Members"),
+    )
+    owners = models.ManyToManyField(
+        "Person", related_name="owner_of", blank=True, verbose_name=_("Owners")
+    )
 
     parent_groups = models.ManyToManyField(
         "self",
@@ -261,9 +279,15 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
-    type = models.ForeignKey("GroupType", on_delete=models.SET_NULL, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
+    type = models.ForeignKey(
+        "GroupType",
+        on_delete=models.SET_NULL,
+        related_name="type",
+        verbose_name=_("Type of group"),
+        null=True,
+        blank=True,
+    )
     additional_fields = models.ManyToManyField(AdditionalField, verbose_name=_("Additional fields"))
-
 
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
@@ -284,9 +308,9 @@ class Group(ExtensibleModel):
         dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
         dj_group.user_set.set(
             list(
-                self.members.filter(user__isnull=False).values_list("user", flat=True).union(
-                    self.owners.filter(user__isnull=False).values_list("user", flat=True)
-                )
+                self.members.filter(user__isnull=False)
+                .values_list("user", flat=True)
+                .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
             )
         )
         dj_group.save()
@@ -311,10 +335,13 @@ class PersonGroupThrough(ExtensibleModel):
             field_instance = field_class(verbose_name=field.title)
             setattr(self, field_name, field_instance)
 
+
 class Activity(ExtensibleModel):
     """ Activity of a user to trace some actions done in AlekSIS in displayable form """
 
-    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User"))
+    user = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User")
+    )
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -333,7 +360,12 @@ class Notification(ExtensibleModel):
     """ Notification to submit to a user """
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
-    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications", verbose_name=_("Recipient"))
+    recipient = models.ForeignKey(
+        "Person",
+        on_delete=models.CASCADE,
+        related_name="notifications",
+        verbose_name=_("Recipient"),
+    )
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -367,14 +399,14 @@ class AnnouncementQuerySet(models.QuerySet):
 
         if isinstance(obj, models.QuerySet):
             ct = ContentType.objects.get_for_model(obj.model)
-            pks = list(obj.values_list('pk', flat=True))
+            pks = list(obj.values_list("pk", flat=True))
         else:
             ct = ContentType.objects.get_for_model(obj)
             pks = [obj.pk]
 
         return self.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
 
-    def at_time(self,when: Optional[datetime] = None ) -> models.QuerySet:
+    def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
         """ Get all announcements at a certain time """
 
         when = when or timezone.datetime.now()
@@ -429,8 +461,7 @@ class Announcement(ExtensibleModel):
         verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
     )
     valid_until = models.DateTimeField(
-        verbose_name=_("Date and time until when to show"),
-        default=now_tomorrow,
+        verbose_name=_("Date and time until when to show"), default=now_tomorrow,
     )
 
     @property
@@ -464,7 +495,9 @@ class AnnouncementRecipient(ExtensibleModel):
     returning a flat list of Person objects.
     """
 
-    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
+    announcement = models.ForeignKey(
+        Announcement, on_delete=models.CASCADE, related_name="recipients"
+    )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     recipient_id = models.PositiveIntegerField()

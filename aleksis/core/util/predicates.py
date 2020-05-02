@@ -2,13 +2,13 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.db.models import Model
 from django.http import HttpRequest
+
 from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
-from .core_helpers import has_person as has_person_helper
-
 from ..models import Group
+from .core_helpers import has_person as has_person_helper
 
 
 def permission_validator(request: HttpRequest, perm: str) -> bool:

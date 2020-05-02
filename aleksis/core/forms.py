@@ -1,4 +1,4 @@
-from datetime import time, datetime
+from datetime import datetime, time
 from typing import Optional
 
 from django import forms
@@ -10,11 +10,15 @@ from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from material import Layout, Fieldset, Row
+from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm
-from .models import Group, Person, Announcement, AnnouncementRecipient
-from .registries import site_preferences_registry, person_preferences_registry, group_preferences_registry
+from .models import Announcement, AnnouncementRecipient, Group, Person
+from .registries import (
+    group_preferences_registry,
+    person_preferences_registry,
+    site_preferences_registry,
+)
 
 
 class PersonAccountForm(forms.ModelForm):

@@ -10,12 +10,12 @@ from django.utils.translation import gettext_lazy as _
 
 from templated_email import send_templated_mail
 
+from .core_helpers import celery_optional, lazy_preference
+
 try:
     from twilio.rest import Client as TwilioClient
 except ImportError:
     TwilioClient = None
-
-from .core_helpers import celery_optional, lazy_preference
 
 
 def send_templated_sms(

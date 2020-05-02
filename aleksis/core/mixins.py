@@ -6,13 +6,13 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
-from django.forms.models import ModelFormMetaclass, ModelForm
+from django.forms.models import ModelForm, ModelFormMetaclass
 
+import reversion
 from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
 from jsonstore.fields import JSONField, JSONFieldMixin
-from material.base import LayoutNode, Layout
-import reversion
+from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
@@ -187,8 +187,10 @@ class ExtensibleModel(CRUDMixin):
     class Meta:
         abstract = True
 
+
 class PureDjangoModel(object):
     """ No-op mixin to mark a model as deliberately not using ExtensibleModel """
+
     pass
 
 

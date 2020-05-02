@@ -9,7 +9,12 @@ from django.utils.translation import gettext_lazy as _
 from dynaconf import LazySettings
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, lazy_get_favicon_url
+from .util.core_helpers import (
+    get_app_packages,
+    lazy_get_favicon_url,
+    lazy_preference,
+    merge_app_settings,
+)
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -200,7 +205,12 @@ AUTHENTICATION_BACKENDS = []
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
-    from django_auth_ldap.config import LDAPSearch, NestedGroupOfNamesType, NestedGroupOfUniqueNamesType, PosixGroupType  # noqa
+    from django_auth_ldap.config import (
+        LDAPSearch,
+        NestedGroupOfNamesType,
+        NestedGroupOfUniqueNamesType,
+        PosixGroupType,
+    )  # noqa
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -243,16 +253,20 @@ if _settings.get("ldap.uri", None):
         elif _group_type == "posixgroup":
             AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
-        AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-        }
+        AUTH_LDAP_USER_FLAGS_BY_GROUP = {}
         for _flag in ["is_active", "is_staff", "is_superuser"]:
             _dn = _settings.get(f"ldap.groups.flags.{_flag}", None)
             if _dn:
                 AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
 
         # Backend admin requires superusers to also be staff members
-        if "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP:
-            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP["is_superuser"]
+        if (
+            "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP
+            and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP
+        ):
+            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP[
+                "is_superuser"
+            ]
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
@@ -313,7 +327,10 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
     "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
-    "select2-materialize": {"css_url": JS_URL + "/select2-materialize/select2-materialize.css", "js_url": JS_URL + "/select2-materialize/index.js"},
+    "select2-materialize": {
+        "css_url": JS_URL + "/select2-materialize/select2-materialize.css",
+        "js_url": JS_URL + "/select2-materialize/index.js",
+    },
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -344,7 +361,7 @@ if _settings.get("mail.server.host", None):
         EMAIL_HOST_USER = _settings.get("mail.server.user")
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
 
-TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django'
+TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
 
 
@@ -421,24 +438,50 @@ PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
 PWA_APP_ICONS = [  # three icons to upload dbsettings
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="android",
-                                 default=STATIC_URL + "icons/android_192.png"), "sizes": "192x192"},
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=512, rel="android",
-                                 default=STATIC_URL + "icons/android_512.png"), "sizes": "512x512"},
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
+        ),
+        "sizes": "192x192",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=512, rel="android", default=STATIC_URL + "icons/android_512.png"
+        ),
+        "sizes": "512x512",
+    },
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
-                                 default=STATIC_URL + "icons/apple_76.png"), "sizes": "76x76"},
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
-                                 default=STATIC_URL + "icons/apple_114.png"), "sizes": "114x114"},
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
-                                 default=STATIC_URL + "icons/apple_152.png"), "sizes": "152x152"},
-    {"src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple",
-                                 default=STATIC_URL + "icons/apple_180.png"), "sizes": "180x180"},
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_76.png"
+        ),
+        "sizes": "76x76",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_114.png"
+        ),
+        "sizes": "114x114",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_152.png"
+        ),
+        "sizes": "152x152",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
+        ),
+        "sizes": "180x180",
+    },
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        "src": lazy_get_favicon_url(title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"),
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
+        ),
         "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
     }
 ]
@@ -449,65 +492,114 @@ PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 SITE_ID = 1
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
+    "default": {
+        "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
+        "toolbar_Full": [
+            {
+                "name": "document",
+                "items": ["Source", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"],
+            },
+            {
+                "name": "clipboard",
+                "items": [
+                    "Cut",
+                    "Copy",
+                    "Paste",
+                    "PasteText",
+                    "PasteFromWord",
+                    "-",
+                    "Undo",
+                    "Redo",
+                ],
+            },
+            {"name": "editing", "items": ["Find", "Replace", "-", "SelectAll"]},
+            {
+                "name": "insert",
+                "items": [
+                    "Image",
+                    "Table",
+                    "HorizontalRule",
+                    "Smiley",
+                    "SpecialChar",
+                    "PageBreak",
+                    "Iframe",
+                ],
+            },
+            "/",
+            {
+                "name": "basicstyles",
+                "items": [
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "Subscript",
+                    "Superscript",
+                    "-",
+                    "RemoveFormat",
+                ],
+            },
+            {
+                "name": "paragraph",
+                "items": [
+                    "NumberedList",
+                    "BulletedList",
+                    "-",
+                    "Outdent",
+                    "Indent",
+                    "-",
+                    "Blockquote",
+                    "CreateDiv",
+                    "-",
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                    "JustifyBlock",
+                    "-",
+                    "BidiLtr",
+                    "BidiRtl",
+                    "Language",
+                ],
+            },
+            {"name": "links", "items": ["Link", "Unlink", "Anchor"]},
+            "/",
+            {"name": "styles", "items": ["Styles", "Format", "Font", "FontSize"]},
+            {"name": "colors", "items": ["TextColor", "BGColor"]},
+            {"name": "tools", "items": ["Maximize", "ShowBlocks"]},
+            {"name": "about", "items": ["About"]},
+            {"name": "customtools", "items": ["Preview", "Maximize",]},
         ],
-        'toolbar_Full': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'insert',
-             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            {'name': 'customtools', 'items': [
-                'Preview',
-                'Maximize',
-            ]},
-        ],
-        'toolbar': 'Full',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            # 'devtools',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
-        ]),
+        "toolbar": "Full",
+        "tabSpaces": 4,
+        "extraPlugins": ",".join(
+            [
+                "uploadimage",
+                "div",
+                "autolink",
+                "autoembed",
+                "embedsemantic",
+                "autogrow",
+                # 'devtools',
+                "widget",
+                "lineutils",
+                "clipboard",
+                "dialog",
+                "dialogui",
+                "elementspath",
+            ]
+        ),
     }
 }
 
 # Which HTML tags are allowed
-BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'div']
+BLEACH_ALLOWED_TAGS = ["p", "b", "i", "u", "em", "strong", "a", "div"]
 
 # Which HTML attributes are allowed
-BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+BLEACH_ALLOWED_ATTRIBUTES = ["href", "title", "style"]
 
 # Which CSS properties are allowed in 'style' attributes (assuming
 # style is an allowed attribute)
-BLEACH_ALLOWED_STYLES = [
-    'font-family', 'font-weight', 'text-decoration', 'font-variant'
-]
+BLEACH_ALLOWED_STYLES = ["font-family", "font-weight", "text-decoration", "font-variant"]
 
 # Strip unknown tags if True, replace with HTML escaped characters if
 # False
@@ -517,23 +609,11 @@ BLEACH_STRIP_TAGS = True
 BLEACH_STRIP_COMMENTS = True
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': "verbose"
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
-        }
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': _settings.get("logging.level", "WARNING"),
-    },
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
+    "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
 }
 
 # Rules and permissions
@@ -550,29 +630,27 @@ HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
 
 if HAYSTACK_BACKEND_SHORT == "simple":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-        },
+        "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine",},
     }
 elif HAYSTACK_BACKEND_SHORT == "xapian":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'xapian_backend.XapianEngine',
-            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
+        "default": {
+            "ENGINE": "xapian_backend.XapianEngine",
+            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
         },
     }
 elif HAYSTACK_BACKEND_SHORT == "whoosh":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
+        "default": {
+            "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
+            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
         },
     }
 
 if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
     INSTALLED_APPS.append("celery_haystack")
-    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+    HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 else:
-    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+    HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10

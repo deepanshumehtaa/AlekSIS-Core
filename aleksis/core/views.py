@@ -19,17 +19,21 @@ from rules.contrib.views import permission_required
 
 from .filters import GroupFilter
 from .forms import (
-    EditGroupForm,
-    EditPersonForm,
-    PersonsAccountsFormSet,
     AnnouncementForm,
     ChildGroupsForm,
-    SitePreferenceForm,
-    PersonPreferenceForm,
+    EditGroupForm,
+    EditPersonForm,
     GroupPreferenceForm,
+    PersonPreferenceForm,
+    PersonsAccountsFormSet,
+    SitePreferenceForm,
 )
-from .models import Activity, Group, Notification, Person, DashboardWidget, Announcement
-from .registries import site_preferences_registry, group_preferences_registry, person_preferences_registry
+from .models import Activity, Announcement, DashboardWidget, Group, Notification, Person
+from .registries import (
+    group_preferences_registry,
+    person_preferences_registry,
+    site_preferences_registry,
+)
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
@@ -73,7 +77,9 @@ def about(request: HttpRequest) -> HttpResponse:
 
     context = {}
 
-    context["app_configs"] = list(filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs()))
+    context["app_configs"] = list(
+        filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs())
+    )
 
     return render(request, "core/about.html", context)
 
@@ -97,7 +103,9 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-@permission_required("core.view_person", fn=objectgetter_optional(Person, "request.user.person", True))
+@permission_required(
+    "core.view_person", fn=objectgetter_optional(Person, "request.user.person", True)
+)
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ Detail view for one person; defaulting to logged-in person """
 
@@ -224,7 +232,9 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups_child_groups.html", context)
 
 
-@permission_required("core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True))
+@permission_required(
+    "core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True)
+)
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ Edit view for a single person, defaulting to logged-in person """
 
@@ -301,7 +311,9 @@ def system_status(request: HttpRequest) -> HttpResponse:
     return render(request, "core/system_status.html", context)
 
 
-@permission_required("core.mark_notification_as_read", fn=objectgetter_optional(Notification, None, False))
+@permission_required(
+    "core.mark_notification_as_read", fn=objectgetter_optional(Notification, None, False)
+)
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     """ Mark a notification read """
 
@@ -329,7 +341,9 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
-@permission_required("core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False))
+@permission_required(
+    "core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False)
+)
 def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ View to create or edit an announcement """
 
@@ -339,10 +353,7 @@ def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpRe
 
     if announcement:
         # Edit form for existing announcement
-        form = AnnouncementForm(
-            request.POST or None,
-            instance=announcement
-        )
+        form = AnnouncementForm(request.POST or None, instance=announcement)
         context["mode"] = "edit"
     else:
         # Empty form to create new announcement
@@ -361,7 +372,9 @@ def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpRe
     return render(request, "core/announcement/form.html", context)
 
 
-@permission_required("core.delete_announcement", fn=objectgetter_optional(Announcement, None, False))
+@permission_required(
+    "core.delete_announcement", fn=objectgetter_optional(Announcement, None, False)
+)
 def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
     """ View to delete an announcement """
 
@@ -377,8 +390,8 @@ def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     """ View to return HTML snippet with searchbar autocompletion results """
 
-    query = request.GET.get('q', '')
-    limit = int(request.GET.get('limit', '5'))
+    query = request.GET.get("q", "")
+    limit = int(request.GET.get("limit", "5"))
 
     results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
     context = {"results": results}
@@ -398,7 +411,12 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
         return render(self.request, self.template, context)
 
 
-def preferences(request: HttpRequest, registry_name: str = "person", pk: Optional[int] = None, section: Optional[str] = None) -> HttpResponse:
+def preferences(
+    request: HttpRequest,
+    registry_name: str = "person",
+    pk: Optional[int] = None,
+    section: Optional[str] = None,
+) -> HttpResponse:
     """ View for changing preferences """
 
     context = {}

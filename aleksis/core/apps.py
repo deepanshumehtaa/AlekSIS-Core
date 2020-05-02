@@ -7,7 +7,11 @@ from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.registries import preference_models
 
-from .registries import group_preferences_registry, person_preferences_registry, site_preferences_registry
+from .registries import (
+    group_preferences_registry,
+    person_preferences_registry,
+    site_preferences_registry,
+)
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
 from .util.sass_helpers import clean_scss
@@ -34,9 +38,9 @@ class CoreConfig(AppConfig):
     def ready(self):
         super().ready()
 
-        SitePreferenceModel = self.get_model('SitePreferenceModel')
-        PersonPreferenceModel = self.get_model('PersonPreferenceModel')
-        GroupPreferenceModel = self.get_model('GroupPreferenceModel')
+        SitePreferenceModel = self.get_model("SitePreferenceModel")
+        PersonPreferenceModel = self.get_model("PersonPreferenceModel")
+        GroupPreferenceModel = self.get_model("GroupPreferenceModel")
 
         preference_models.register(SitePreferenceModel, site_preferences_registry)
         preference_models.register(PersonPreferenceModel, person_preferences_registry)
@@ -52,16 +56,15 @@ class CoreConfig(AppConfig):
         **kwargs,
     ) -> None:
         if section == "theme":
-            if name  in ("primary", "secondary"):
+            if name in ("primary", "secondary"):
                 clean_scss()
             elif name in ("favicon", "pwa_icon"):
                 from favicon.models import Favicon  # noqa
 
-                Favicon.on_site.update_or_create(title=name,
-                                                 defaults={
-                                                     "isFavicon": name == "favicon",
-                                                     "faviconImage": new_value,
-                                                 })
+                Favicon.on_site.update_or_create(
+                    title=name,
+                    defaults={"isFavicon": name == "favicon", "faviconImage": new_value,},
+                )
 
     def post_migrate(
         self,

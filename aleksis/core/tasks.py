@@ -21,7 +21,9 @@ def backup_data() -> None:
 
     # Assemble command-line options for dbbackup management command
     db_options = "-z " * settings.DBBACKUP_COMPRESS_DB + "-e" * settings.DBBACKUP_ENCRYPT_DB
-    media_options = "-z " * settings.DBBACKUP_COMPRESS_MEDIA + "-e" * settings.DBBACKUP_ENCRYPT_MEDIA
+    media_options = (
+        "-z " * settings.DBBACKUP_COMPRESS_MEDIA + "-e" * settings.DBBACKUP_ENCRYPT_MEDIA
+    )
 
     # Hand off to dbbackup's management commands
     management.call_command("dbbackup", db_options)

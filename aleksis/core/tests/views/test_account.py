@@ -10,7 +10,7 @@ def test_index_not_logged_in(client):
     response = client.get("/")
 
     assert response.status_code == 302
-    assert response['Location'].startswith(reverse(settings.LOGIN_URL))
+    assert response["Location"].startswith(reverse(settings.LOGIN_URL))
 
 
 def test_login_without_person(client, django_user_model):

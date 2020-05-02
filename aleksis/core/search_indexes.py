@@ -1,4 +1,4 @@
-from .models import Person, Group
+from .models import Group, Person
 from .util.search import Indexable, SearchIndex
 
 

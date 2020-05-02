@@ -4,8 +4,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext_lazy as _
 
-from .core_helpers import has_person
 from ..models import DummyPerson
+from .core_helpers import has_person
 
 
 class EnsurePersonMiddleware:
@@ -23,7 +23,9 @@ class EnsurePersonMiddleware:
         if not has_person(request):
             if request.user.is_superuser:
                 # Super-users get a dummy person linked
-                dummy_person = DummyPerson(first_name=request.user.first_name, last_name=request.user.last_name)
+                dummy_person = DummyPerson(
+                    first_name=request.user.first_name, last_name=request.user.last_name
+                )
                 request.user.person = dummy_person
 
         response = self.get_response(request)

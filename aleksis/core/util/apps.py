@@ -1,5 +1,5 @@
 from importlib import import_module
-from typing import Any, List, Optional, Tuple, Sequence
+from typing import Any, List, Optional, Sequence, Tuple
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -7,7 +7,7 @@ from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
 from dynamic_preferences.signals import preference_updated
-from license_expression import Licensing, LicenseSymbol
+from license_expression import LicenseSymbol, Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
@@ -70,13 +70,13 @@ class AppConfig(django.apps.AppConfig):
         licence = getattr(cls, "licence", None)
 
         default_dict = {
-            'isDeprecatedLicenseId': False,
-            'isFsfLibre': False,
-            'isOsiApproved': False,
-            'licenseId': 'unknown',
-            'name': 'Unknown Licence',
-            'referenceNumber': -1,
-            'url': '',
+            "isDeprecatedLicenseId": False,
+            "isFsfLibre": False,
+            "isOsiApproved": False,
+            "licenseId": "unknown",
+            "name": "Unknown Licence",
+            "referenceNumber": -1,
+            "url": "",
         }
         if licence:
             # Parse licence string into object format
@@ -133,7 +133,9 @@ class AppConfig(django.apps.AppConfig):
             copyrights_processed.append(
                 (
                     # Sort copyright years and combine year ranges for display
-                    copyright[0] if isinstance(copyright[0], str) else copyright_years(copyright[0]),
+                    copyright[0]
+                    if isinstance(copyright[0], str)
+                    else copyright_years(copyright[0]),
                     copyright[1],
                     copyright[2],
                 )

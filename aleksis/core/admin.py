@@ -4,15 +4,14 @@ from reversion.admin import VersionAdmin
 
 from .mixins import BaseModelAdmin
 from .models import (
-    Group,
-    Person,
     Activity,
-    Notification,
     Announcement,
     AnnouncementRecipient,
     CustomMenuItem,
+    Group,
+    Notification,
+    Person,
 )
-
 
 admin.site.register(Person, VersionAdmin)
 admin.site.register(Group, VersionAdmin)
