@@ -58,7 +58,9 @@ def has_object_perm(perm: str):
 
 
 def has_any_object(perm: str, klass):
-    """ Build predicate which checks whether a user has access to objects with the provided permission """
+    """ Build predicate which checks whether a user has access
+    to objects with the provided permission
+    """
 
     name = f"has_any_object:{perm}"
 
@@ -93,6 +95,8 @@ def is_group_owner(user: User, group: Group) -> bool:
 
 @predicate
 def is_notification_recipient(user: User, obj: Model) -> bool:
-    """ Predicate which checks whether the recipient of the notification a user wants to mark read is this user """
+    """ Predicate which checks whether the recipient of the
+    notification a user wants to mark read is this user
+    """
 
     return user == obj.recipient.user

@@ -2,15 +2,19 @@ from importlib import import_module
 from typing import Any, List, Optional, Sequence, Tuple
 
 import django.apps
+from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
 from dynamic_preferences.signals import preference_updated
-from license_expression import LicenseSymbol, Licensing
+from license_expression import Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
+
+
+User = get_user_model()
 
 
 class AppConfig(django.apps.AppConfig):

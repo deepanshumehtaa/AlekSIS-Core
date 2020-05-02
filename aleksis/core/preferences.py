@@ -2,18 +2,14 @@ from django.conf import settings
 from django.forms import EmailField, ImageField, URLField
 from django.utils.translation import gettext_lazy as _
 
-from colorfield.widgets import ColorWidget
 from dynamic_preferences.preferences import Section
-from dynamic_preferences.registries import global_preferences_registry
 from dynamic_preferences.types import (
-    BooleanPreference,
     ChoicePreference,
     FilePreference,
     StringPreference,
 )
 
 from .registries import (
-    group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )

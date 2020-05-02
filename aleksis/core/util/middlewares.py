@@ -1,8 +1,6 @@
 from typing import Callable
 
-from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
-from django.utils.translation import gettext_lazy as _
 
 from ..models import DummyPerson
 from .core_helpers import has_person

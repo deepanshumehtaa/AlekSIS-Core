@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from importlib import import_module
 from itertools import groupby
 from operator import itemgetter
-from typing import Any, Callable, List, Optional, Sequence, Union
+from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
 
 from django.conf import settings
@@ -12,6 +12,7 @@ from django.db.models import Model
 from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.functional import lazy
+from django.shortcuts import get_object_or_404
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:

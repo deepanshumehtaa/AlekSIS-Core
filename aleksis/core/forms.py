@@ -1,11 +1,8 @@
 from datetime import datetime, time
-from typing import Optional
 
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
@@ -13,7 +10,7 @@ from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm
-from .models import Announcement, AnnouncementRecipient, Group, Person
+from .models import Announcement, Group, Person
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,

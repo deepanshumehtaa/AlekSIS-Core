@@ -9,7 +9,6 @@ from django.views.i18n import JavaScriptCatalog
 import calendarweek.django
 import debug_toolbar
 from django_js_reverse.views import urls_js
-from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views

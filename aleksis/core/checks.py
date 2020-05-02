@@ -22,8 +22,12 @@ def check_app_configs_base_class(
         if not isinstance(app_config, AppConfig):
             results.append(
                 Warning(
-                    f"App config {app_config.name} does not derive from aleksis.core.util.apps.AppConfig.",
-                    hint="Ensure the app uses the correct base class for all registry functionality to work.",
+                    f"App config {app_config.name} does not derive"
+                    "from aleksis.core.util.apps.AppConfig.",
+                    hint=(
+                        "Ensure the app uses the correct base class for all"
+                        "registry functionality to work."
+                    ),
                     obj=app_config,
                     id="aleksis.core.W001",
                 )
@@ -48,8 +52,13 @@ def check_app_models_base_class(
             if ExtensibleModel not in model.__mro__ and PureDjangoModel not in model.__mro__:
                 results.append(
                     Warning(
-                        f"Model {model._meta.object_name} in app config {app_config.name} does not derive from aleksis.core.mixins.ExtensibleModel.",
-                        hint="Ensure all models in AlekSIS use ExtensibleModel as base. If your deviation is intentional, you can add the PureDjangoModel mixin instead to silence this warning.",
+                        f"Model {model._meta.object_name} in app config {app_config.name} does"
+                        "not derive from aleksis.core.mixins.ExtensibleModel.",
+                        hint=(
+                            "Ensure all models in AlekSIS use ExtensibleModel as base."
+                            "If your deviation is intentional, you can add the PureDjangoModel"
+                            "mixin instead to silence this warning."
+                        ),
                         obj=model,
                         id="aleksis.core.W002",
                     )

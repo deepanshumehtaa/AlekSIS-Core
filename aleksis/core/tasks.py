@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core import management
 
 from .util.core_helpers import celery_optional

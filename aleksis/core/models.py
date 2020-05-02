@@ -474,7 +474,9 @@ class Announcement(ExtensibleModel):
         return persons
 
     def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
-        """ Get all recipients for this announcement with a special content type (provided through model) """
+        """ Get all recipients for this announcement
+        with a special content type (provided through model)
+        """
 
         ct = ContentType.objects.get_for_model(obj)
         return [r.recipient for r in self.recipients.filter(content_type=ct)]
@@ -533,8 +535,9 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     If your widget does not add any database fields, you should mark it as a proxy model.
 
-    You can provide a Media meta class with custom JS and CSS files which will be added to html head.
-    For further information on media definition see https://docs.djangoproject.com/en/3.0/topics/forms/media/
+    You can provide a Media meta class with custom JS and CSS files which
+    will be added to html head.  For further information on media definition
+    see https://docs.djangoproject.com/en/3.0/topics/forms/media/
 
     Example::
 

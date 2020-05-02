@@ -1,4 +1,3 @@
-from importlib import import_module
 from typing import Optional
 
 from django.apps import apps
@@ -28,7 +27,7 @@ from .forms import (
     PersonsAccountsFormSet,
     SitePreferenceForm,
 )
-from .models import Activity, Announcement, DashboardWidget, Group, Notification, Person
+from .models import Announcement, DashboardWidget, Group, Notification, Person
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -317,8 +316,6 @@ def system_status(request: HttpRequest) -> HttpResponse:
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     """ Mark a notification read """
 
-    context = {}
-
     notification = objectgetter_optional(Notification, None, False)(request, id_)
 
     notification.read = True
@@ -431,14 +428,14 @@ def preferences(
             raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
-        instance = get_person_by_pk(request, pk)
+        instance = objectgetter_optional(Person, None, False)(request, pk)
         form_class = PersonPreferenceForm
 
         if not request.user.has_perm("core.change_person_preferences", instance):
             raise PermissionDenied()
     elif registry_name == "group":
         registry = group_preferences_registry
-        instance = get_group_by_pk(request, pk)
+        instance = objectgetter_optional(Group, None, False)(request, pk)
         form_class = GroupPreferenceForm
 
         if not request.user.has_perm("core.change_group_preferences", instance):

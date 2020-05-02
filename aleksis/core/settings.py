@@ -1,9 +1,6 @@
 import os
-import sys
 from glob import glob
-from importlib import import_module
 
-from django.apps import apps
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
@@ -482,7 +479,10 @@ PWA_APP_SPLASH_SCREEN = [
         "src": lazy_get_favicon_url(
             title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
         ),
-        "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
+        "media": (
+            "(device-width: 320px) and (device-height: 568px) and"
+            "(-webkit-device-pixel-ratio: 2)"
+        ),
     }
 ]
 
