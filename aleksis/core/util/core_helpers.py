@@ -10,6 +10,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 from django.shortcuts import get_object_or_404
