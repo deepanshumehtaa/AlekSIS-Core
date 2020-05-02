@@ -33,7 +33,7 @@ from .registries import site_preferences_registry, group_preferences_registry, p
 from .tables import GroupsTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import get_announcement_by_pk, get_group_by_pk, get_person_by_pk
+from .util.core_helpers import objectgetter_optional
 
 
 @permission_required("core.view_dashboard")
@@ -97,13 +97,13 @@ def persons(request: HttpRequest) -> HttpResponse:
     return render(request, "core/persons.html", context)
 
 
-@permission_required("core.view_person", fn=get_person_by_pk)
+@permission_required("core.view_person", fn=objectgetter_optional(Person, "request.user.person", True))
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ Detail view for one person; defaulting to logged-in person """
 
     context = {}
 
-    person = get_person_by_pk(request, id_)
+    person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
     context["person"] = person
 
     # Get groups where person is member of
@@ -117,13 +117,13 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/person_full.html", context)
 
 
-@permission_required("core.view_group", fn=get_group_by_pk)
+@permission_required("core.view_group", fn=objectgetter_optional(Group, None, False))
 def group(request: HttpRequest, id_: int) -> HttpResponse:
     """ Detail view for one group """
 
     context = {}
 
-    group = get_group_by_pk(request, id_)
+    group = objectgetter_optional(Group, None, False)(request, id_)
     context["group"] = group
 
     # Get group
@@ -224,13 +224,13 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups_child_groups.html", context)
 
 
-@permission_required("core.edit_person", fn=get_person_by_pk)
+@permission_required("core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ Edit view for a single person, defaulting to logged-in person """
 
     context = {}
 
-    person = get_person_by_pk(request, id_)
+    person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
     context["person"] = person
 
     edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
@@ -255,13 +255,13 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
         return None
 
 
-@permission_required("core.edit_group", fn=get_group_by_pk)
+@permission_required("core.edit_group", fn=objectgetter_optional(Group, None, False))
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ View to edit or create a group """
 
     context = {}
 
-    group = get_group_by_pk(request, id_)
+    group = objectgetter_optional(Group, None, False)(request, id_)
     context["group"] = group
 
     if id_:
@@ -301,18 +301,16 @@ def system_status(request: HttpRequest) -> HttpResponse:
     return render(request, "core/system_status.html", context)
 
 
+@permission_required("core.mark_notification_as_read", fn=objectgetter_optional(Notification, None, False))
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     """ Mark a notification read """
 
     context = {}
 
-    notification = get_object_or_404(Notification, pk=id_)
+    notification = objectgetter_optional(Notification, None, False)(request, id_)
 
-    if notification.recipient.user == request.user:
-        notification.read = True
-        notification.save()
-    else:
-        raise PermissionDenied(_("You are not allowed to mark notifications from other users as read!"))
+    notification.read = True
+    notification.save()
 
     # Redirect to dashboard as this is only used from there if JavaScript is unavailable
     return redirect("index")
@@ -331,13 +329,13 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
-@permission_required("core.create_or_edit_announcement", fn=get_announcement_by_pk)
-def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpResponse:
+@permission_required("core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False))
+def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """ View to create or edit an announcement """
 
     context = {}
 
-    announcement = get_announcement_by_pk(request, pk)
+    announcement = objectgetter_optional(Announcement, None, False)(request, id_)
 
     if announcement:
         # Edit form for existing announcement
@@ -363,12 +361,12 @@ def announcement_form(request: HttpRequest, pk: Optional[int] = None) -> HttpRes
     return render(request, "core/announcement/form.html", context)
 
 
-@permission_required("core.delete_announcement", fn=get_announcement_by_pk)
-def delete_announcement(request: HttpRequest, pk: int) -> HttpResponse:
+@permission_required("core.delete_announcement", fn=objectgetter_optional(Announcement, None, False))
+def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
     """ View to delete an announcement """
 
     if request.method == "POST":
-        announcement = get_announcement_by_pk(request, pk)
+        announcement = objectgetter_optional(Announcement, None, False)(request, id_)
         announcement.delete()
         messages.success(request, _("The announcement has been deleted."))
 

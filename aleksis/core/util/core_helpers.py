@@ -4,7 +4,7 @@ from operator import itemgetter
 import os
 import pkgutil
 from importlib import import_module
-from typing import Any, Callable, Sequence, Union, List
+from typing import Any, Callable, Sequence, Union, List, Optional
 from uuid import uuid4
 
 from django.conf import settings
@@ -192,30 +192,13 @@ def now_tomorrow() -> datetime:
     return timezone.now() + timedelta(days=1)
 
 
-def get_person_by_pk(request: HttpRequest, id_: Optional[int] = None):
-    """ Get a person by its ID, defaulting to person in request's user """
+def objectgetter_optional(model: Model, default: Optional[Any] = None, default_eval: bool = False) -> Callable[[HttpRequest, Optional[int]], Model]:
+    """ Get an object by pk, defaulting to None """
 
-    from ..models import Person  # noqa
+    def get_object(request: HttpRequest, id_: Optional[int] = None) -> Model:
+        if id_ is not None:
+            return get_object_or_404(model, pk=id_)
+        else:
+            return eval(default) if default_eval else default
 
-    if id_:
-        return get_object_or_404(Person, pk=id_)
-    else:
-        return request.user.person
-
-
-def get_group_by_pk(request: HttpRequest, id_: Optional[int] = None) -> Group:
-    """ Get a group by its ID, defaulting to None """
-
-    if id_:
-        return get_object_or_404(Group, id=id_)
-
-    return None
-
-
-def get_announcement_by_pk(request: HttpRequest, id_: Optional[int] = None):
-    """ Get an announcement by its ID; defaulting to None """
-
-    if id_:
-        return get_object_or_404(Announcement, pk=pk)
-
-    return None
+    return get_object

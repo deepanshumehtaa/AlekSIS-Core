@@ -90,3 +90,9 @@ def is_group_owner(user: User, group: Group) -> bool:
 
     return group.owners.filter(owners=user.person).exists()
 
+
+@predicate
+def is_notification_recipient(user: User, obj: Model) -> bool:
+    """ Predicate which checks whether the recipient of the notification a user wants to mark read is this user """
+
+    return user == obj.recipient.user
