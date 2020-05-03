@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-01 13:06+0000\n"
-"PO-Revision-Date: 2020-04-27 13:03+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"PO-Revision-Date: 2020-05-03 10:24+0000\n"
+"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,21 +29,19 @@ msgstr "Dieser Benutzername wird bereits genutzt."
 
 #: aleksis/core/forms.py:63
 msgid "Base data"
-msgstr ""
+msgstr "Basisdaten"
 
 #: aleksis/core/forms.py:69
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: aleksis/core/forms.py:70
-#, fuzzy
-#| msgid "Contact details"
 msgid "Contact data"
-msgstr "Kontaktdetails"
+msgstr "Kontaktdaten"
 
 #: aleksis/core/forms.py:72
 msgid "Advanced personal data"
-msgstr ""
+msgstr "Zusätzliche persönliche Daten"
 
 #: aleksis/core/forms.py:105
 msgid "New user"
@@ -54,7 +53,7 @@ msgstr "Neues Benutzerkonto erstellen"
 
 #: aleksis/core/forms.py:132
 msgid "Common data"
-msgstr ""
+msgstr "Allgemeine Daten"
 
 #: aleksis/core/forms.py:133 aleksis/core/forms.py:171
 #: aleksis/core/menus.py:143 aleksis/core/models.py:54
@@ -130,15 +129,13 @@ msgid "Two factor auth"
 msgstr "Zwei-Faktor-Authentifizierung"
 
 #: aleksis/core/menus.py:50
-#, fuzzy
-#| msgid "Menu"
 msgid "Me"
-msgstr "Menü"
+msgstr "Mich"
 
 #: aleksis/core/menus.py:59
 #: aleksis/core/templates/dynamic_preferences/form.html:5
 msgid "Preferences"
-msgstr ""
+msgstr "Einstellungen"
 
 #: aleksis/core/menus.py:70
 msgid "Admin"
@@ -158,7 +155,7 @@ msgstr "Datenverwaltung"
 #: aleksis/core/menus.py:94 aleksis/core/templates/core/system_status.html:5
 #: aleksis/core/templates/core/system_status.html:7
 msgid "System status"
-msgstr "System-Status"
+msgstr "Systemstatus"
 
 #: aleksis/core/menus.py:102
 msgid "Impersonation"
@@ -169,10 +166,8 @@ msgid "Manage school"
 msgstr "Schulverwaltung"
 
 #: aleksis/core/menus.py:118
-#, fuzzy
-#| msgid "Notification"
 msgid "Configuration"
-msgstr "Benachrichtigung"
+msgstr "Konfiguration"
 
 #: aleksis/core/menus.py:126
 msgid "Backend Admin"
@@ -188,13 +183,13 @@ msgstr "Personen und Konten"
 
 #: aleksis/core/menus.py:168
 msgid "Groups and child groups"
-msgstr ""
+msgstr "Gruppen und Kindgruppen"
 
 #: aleksis/core/menus.py:180
 #: aleksis/core/templates/core/groups_child_groups.html:7
 #: aleksis/core/templates/core/groups_child_groups.html:9
 msgid "Assign child groups to groups"
-msgstr ""
+msgstr "Kindgruppen zu Gruppen zuordnen"
 
 #: aleksis/core/menus.py:188
 msgid "Edit school information"
@@ -210,30 +205,24 @@ msgid "Person"
 msgstr "Person"
 
 #: aleksis/core/models.py:56
-#, fuzzy
-#| msgid "E-mail address"
 msgid "Can view address"
-msgstr "E-Mail-Adresse"
+msgstr "Kann Adresse sehen"
 
 #: aleksis/core/models.py:57
-#, fuzzy
-#| msgid "Contact details"
 msgid "Can view contact details"
-msgstr "Kontaktdetails"
+msgstr "Kann Kontaktdetails sehen"
 
 #: aleksis/core/models.py:58
 msgid "Can view photo"
-msgstr ""
+msgstr "Kann Foto sehen"
 
 #: aleksis/core/models.py:59
 msgid "Can view persons groups"
-msgstr ""
+msgstr "Kann Gruppen einer Person sehen"
 
 #: aleksis/core/models.py:60
-#, fuzzy
-#| msgid "Contact details"
 msgid "Can view personal details"
-msgstr "Kontaktdetails"
+msgstr "Kann persönliche Daten sehen"
 
 #: aleksis/core/models.py:65
 msgid "female"
@@ -315,25 +304,19 @@ msgstr "Beschreibung"
 
 #: aleksis/core/models.py:223
 msgid "Title of field"
-msgstr ""
+msgstr "Feldtitel"
 
 #: aleksis/core/models.py:224
-#, fuzzy
-#| msgid "Long name of group"
 msgid "Type of field"
-msgstr "Langer Name der Gruppe"
+msgstr "Feldtyp"
 
 #: aleksis/core/models.py:227
-#, fuzzy
-#| msgid "Additional name(s)"
 msgid "Addtitional field"
-msgstr "Zusätzliche Namen"
+msgstr "Zusätzliches Feld"
 
 #: aleksis/core/models.py:228
-#, fuzzy
-#| msgid "Additional name(s)"
 msgid "Addtitional fields"
-msgstr "Zusätzliche Namen"
+msgstr "Zusätzliche Felder"
 
 #: aleksis/core/models.py:238
 msgid "Group"
@@ -341,7 +324,7 @@ msgstr "Gruppe"
 
 #: aleksis/core/models.py:241
 msgid "Can assign child groups to groups"
-msgstr ""
+msgstr "Kann Kindgruppen zu Gruppen zuordnen"
 
 #: aleksis/core/models.py:246
 msgid "Long name of group"
@@ -356,10 +339,8 @@ msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
 #: aleksis/core/models.py:260
-#, fuzzy
-#| msgid "Long name of group"
 msgid "Type of group"
-msgstr "Langer Name der Gruppe"
+msgstr "Gruppentyp"
 
 #: aleksis/core/models.py:305 aleksis/core/models.py:322
 #: aleksis/core/models.py:402
@@ -478,59 +459,47 @@ msgstr "Benutzerdefinierte Menüelemente"
 
 #: aleksis/core/models.py:565
 msgid "Title of type"
-msgstr ""
+msgstr "Titel des Typs"
 
 #: aleksis/core/models.py:569
-#, fuzzy
-#| msgid "Group"
 msgid "Group type"
-msgstr "Gruppe"
+msgstr "Gruppentyp"
 
 #: aleksis/core/models.py:570
-#, fuzzy
-#| msgid "Groups"
 msgid "Group types"
-msgstr "Gruppen"
+msgstr "Gruppentypen"
 
 #: aleksis/core/models.py:577
-#, fuzzy
-#| msgid "System status"
 msgid "Can view system status"
-msgstr "System-Status"
+msgstr "Kann Systemstatus sehen"
 
 #: aleksis/core/models.py:578
-#, fuzzy
-#| msgid "Link persons to accounts"
 msgid "Can link persons to accounts"
-msgstr "Personen mit Benutzerkonten verknüpfen"
+msgstr "Kann Personen mit Benutzerkonten verknüpfen"
 
 #: aleksis/core/models.py:579
-#, fuzzy
-#| msgid "Data management"
 msgid "Can manage data"
-msgstr "Datenverwaltung"
+msgstr "Kann Daten verwalten"
 
 #: aleksis/core/models.py:580
-#, fuzzy
-#| msgid "Stop impersonation"
 msgid "Can impersonate"
-msgstr "Verkleidung beenden"
+msgstr "Kann sich verkleiden"
 
 #: aleksis/core/models.py:581
 msgid "Can use search"
-msgstr ""
+msgstr "Kann Suche benutzen"
 
 #: aleksis/core/models.py:582
 msgid "Can change site preferences"
-msgstr ""
+msgstr "Kann Konfiguration ändern"
 
 #: aleksis/core/models.py:583
 msgid "Can change person preferences"
-msgstr ""
+msgstr "Kann Einstellungen einer Person verändern"
 
 #: aleksis/core/models.py:584
 msgid "Can change group preferences"
-msgstr ""
+msgstr "Kann Einstellungen einer Gruppe verändern"
 
 #: aleksis/core/preferences.py:29
 msgid "Site title"
@@ -565,16 +534,12 @@ msgid "Link to imprint"
 msgstr "Link zum Impressum"
 
 #: aleksis/core/preferences.py:104
-#, fuzzy
-#| msgid "Name format of adresses"
 msgid "Name format for addressing"
-msgstr "Namensformat von Anreden"
+msgstr "Namensformat für Anreden"
 
 #: aleksis/core/preferences.py:120
-#, fuzzy
-#| msgid "Channels to allow for notifications"
 msgid "Channels to use for notifications"
-msgstr "Kanäle, welche für Benachrichtigungen erlaubt sind"
+msgstr "Aktivierte Benachrichtungskanäle"
 
 #: aleksis/core/preferences.py:130
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
@@ -582,7 +547,7 @@ msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
 #: aleksis/core/preferences.py:139
 msgid "Display name of the school"
-msgstr ""
+msgstr "Sichtbarer Name der Schule"
 
 #: aleksis/core/preferences.py:148
 msgid "Official name of the school, e.g. as given by supervisory authority"
@@ -598,7 +563,7 @@ msgstr "Englisch"
 
 #: aleksis/core/settings.py:265
 msgid "French"
-msgstr ""
+msgstr "Französisch"
 
 #: aleksis/core/templates/403.html:10
 msgid "Error (403): You are not allowed to access the requested page or object."
@@ -677,13 +642,11 @@ msgstr ""
 #: aleksis/core/templates/core/about.html:6
 #: aleksis/core/templates/core/about.html:15
 msgid "About AlekSIS"
-msgstr ""
+msgstr "Über AlekSIS"
 
 #: aleksis/core/templates/core/about.html:7
-#, fuzzy
-#| msgid "AlekSIS (School Information System)"
 msgid "AlekSIS – The Free School Information System"
-msgstr "AlekSIS (Schulinformationssystem)"
+msgstr "AlekSIS – The Free School Information System"
 
 #: aleksis/core/templates/core/about.html:17
 #, fuzzy
@@ -704,20 +667,16 @@ msgstr ""
 "      "
 
 #: aleksis/core/templates/core/about.html:25
-#, fuzzy
-#| msgid "Powered by AlekSIS"
 msgid "Website of AlekSIS"
-msgstr "Betrieben mit AlekSIS"
+msgstr "Website von AlekSIS"
 
 #: aleksis/core/templates/core/about.html:26
 msgid "Source code"
-msgstr ""
+msgstr "Quellcode"
 
 #: aleksis/core/templates/core/about.html:35
-#, fuzzy
-#| msgid "More information →"
 msgid "Licence information"
-msgstr "Mehr Informationen →"
+msgstr "Lizenzinformationen"
 
 #: aleksis/core/templates/core/about.html:37
 msgid ""
