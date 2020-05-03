@@ -108,7 +108,6 @@ class ExtensibleModel(models.Model):
             return self.crud_event_update.datetime
 
     extended_data = JSONField(default=dict, editable=False)
-    _extended_data_fields = []
 
     @property
     def created_by(self) -> Optional[models.Model]:
@@ -177,7 +176,6 @@ class ExtensibleModel(models.Model):
         field.json_field_name = "extended_data"
 
         cls._safe_add(field, name)
-        cls._extended_data_fields.append(field)
 
     @classmethod
     def syncable_fields(cls) -> List[models.Field]:
@@ -185,7 +183,7 @@ class ExtensibleModel(models.Model):
 
         return [
             field
-            for field in list(cls._meta.fields) + cls._extended_data_fields
+            for field in cls._meta.fields
             if (field.editable and not field.auto_created and not field.is_relation)
         ]
 
@@ -198,10 +196,10 @@ class ExtensibleModel(models.Model):
         )
 
     @classmethod
-    def syncable_fields_choices_lazy(cls) -> callable[[], Tuple[Tuple[str, str]]]:
+    def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
         """ Collect all fields that can be synced on a model """
 
-        return lazy(cls.syncable_field_choices, tuple)
+        return lazy(cls.syncable_fields_choices, tuple)
 
     class Meta:
         abstract = True
