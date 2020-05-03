@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-01 13:06+0000\n"
+"POT-Creation-Date: 2020-05-03 10:36+0000\n"
 "PO-Revision-Date: 2020-05-03 10:33+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
@@ -19,90 +19,98 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.0.1\n"
 
-#: aleksis/core/forms.py:40 aleksis/core/forms.py:115
+#: aleksis/core/forms.py:46
 msgid "You cannot set a new username when also selecting an existing user."
-msgstr "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen existierenden Benutzer auswählen."
+msgstr ""
+"Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen "
+"existierenden Benutzer auswählen."
 
-#: aleksis/core/forms.py:43 aleksis/core/forms.py:118
+#: aleksis/core/forms.py:50
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
 
-#: aleksis/core/forms.py:63
+#: aleksis/core/forms.py:74
 msgid "Base data"
 msgstr "Basisdaten"
 
-#: aleksis/core/forms.py:69
+#: aleksis/core/forms.py:80
 msgid "Address"
 msgstr "Adresse"
 
-#: aleksis/core/forms.py:70
+#: aleksis/core/forms.py:81
 msgid "Contact data"
 msgstr "Kontaktdaten"
 
-#: aleksis/core/forms.py:72
+#: aleksis/core/forms.py:83
 msgid "Advanced personal data"
 msgstr "Zusätzliche persönliche Daten"
 
-#: aleksis/core/forms.py:105
+#: aleksis/core/forms.py:116
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: aleksis/core/forms.py:105
+#: aleksis/core/forms.py:116
 msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
-#: aleksis/core/forms.py:132
+#: aleksis/core/forms.py:128
 msgid "Common data"
 msgstr "Allgemeine Daten"
 
-#: aleksis/core/forms.py:133 aleksis/core/forms.py:171
-#: aleksis/core/menus.py:143 aleksis/core/models.py:54
+#: aleksis/core/forms.py:129 aleksis/core/forms.py:169
+#: aleksis/core/menus.py:141 aleksis/core/models.py:53
 #: aleksis/core/templates/core/persons.html:8
 #: aleksis/core/templates/core/persons.html:9
 msgid "Persons"
 msgstr "Personen"
 
-#: aleksis/core/forms.py:164 aleksis/core/forms.py:167
+#: aleksis/core/forms.py:162 aleksis/core/forms.py:165
+#: aleksis/core/models.py:31
 msgid "Date"
 msgstr "Datum"
 
-#: aleksis/core/forms.py:165 aleksis/core/forms.py:168
+#: aleksis/core/forms.py:163 aleksis/core/forms.py:166
+#: aleksis/core/models.py:39
 msgid "Time"
 msgstr "Zeit"
 
-#: aleksis/core/forms.py:173 aleksis/core/menus.py:151
-#: aleksis/core/models.py:239 aleksis/core/templates/core/groups.html:8
+#: aleksis/core/forms.py:171 aleksis/core/menus.py:149
+#: aleksis/core/models.py:248 aleksis/core/templates/core/groups.html:8
 #: aleksis/core/templates/core/groups.html:9
 #: aleksis/core/templates/core/person_full.html:106
 msgid "Groups"
 msgstr "Gruppen"
 
-#: aleksis/core/forms.py:177
+#: aleksis/core/forms.py:175
 msgid "From when until when should the announcement be displayed?"
 msgstr "Von wann bis wann soll die Ankündigung angezeigt werden?"
 
-#: aleksis/core/forms.py:180
+#: aleksis/core/forms.py:178
 msgid "Who should see the announcement?"
 msgstr "Wer soll die Ankündigung sehen?"
 
-#: aleksis/core/forms.py:181
+#: aleksis/core/forms.py:179
 msgid "Write your announcement:"
 msgstr "Schreiben Sie ihre Ankündigung:"
 
+#: aleksis/core/forms.py:216
+msgid ""
+"You are not allowed to create announcements which are only valid in the past."
+msgstr ""
+"Sie dürfen keine Ankündigungen erstellen, die nur für die Vergangenheit "
+"gültig sind."
+
 #: aleksis/core/forms.py:220
-msgid "You are not allowed to create announcements which are only valid in the past."
-msgstr "Sie dürfen keine Ankündigungen erstellen, die nur für die Vergangenheit gültig sind."
-
-#: aleksis/core/forms.py:224
 msgid "The from date and time must be earlier then the until date and time."
-msgstr "Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit sein."
+msgstr ""
+"Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit "
+"sein."
 
-#: aleksis/core/forms.py:232
+#: aleksis/core/forms.py:229
 msgid "You need at least one recipient."
 msgstr "Sie benötigen mindestens einen Empfänger."
 
-#: aleksis/core/menus.py:7 aleksis/core/templates/registration/login.html:21
-#: aleksis/core/templates/two_factor/core/login.html:6
+#: aleksis/core/menus.py:7 aleksis/core/templates/two_factor/core/login.html:6
 #: aleksis/core/templates/two_factor/core/login.html:10
 #: aleksis/core/templates/two_factor/core/login.html:73
 msgid "Login"
@@ -120,28 +128,28 @@ msgstr "Konto"
 msgid "Stop impersonation"
 msgstr "Verkleidung beenden"
 
-#: aleksis/core/menus.py:35 aleksis/core/templates/core/base.html:58
+#: aleksis/core/menus.py:35 aleksis/core/templates/core/base.html:56
 msgid "Logout"
 msgstr "Abmelden"
 
 #: aleksis/core/menus.py:41
-msgid "Two factor auth"
-msgstr "Zwei-Faktor-Authentifizierung"
+msgid "2FA"
+msgstr ""
 
-#: aleksis/core/menus.py:50
+#: aleksis/core/menus.py:47
 msgid "Me"
 msgstr "Mich"
 
-#: aleksis/core/menus.py:59
+#: aleksis/core/menus.py:56
 #: aleksis/core/templates/dynamic_preferences/form.html:5
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: aleksis/core/menus.py:70
+#: aleksis/core/menus.py:67
 msgid "Admin"
 msgstr "Admin"
 
-#: aleksis/core/menus.py:78 aleksis/core/models.py:434
+#: aleksis/core/menus.py:75 aleksis/core/models.py:479
 #: aleksis/core/templates/core/announcement/list.html:7
 #: aleksis/core/templates/core/announcement/list.html:8
 msgid "Announcements"
@@ -157,27 +165,23 @@ msgstr "Datenverwaltung"
 msgid "System status"
 msgstr "Systemstatus"
 
-#: aleksis/core/menus.py:102
+#: aleksis/core/menus.py:105
 msgid "Impersonation"
 msgstr "Verkleidung"
 
-#: aleksis/core/menus.py:110
-msgid "Manage school"
-msgstr "Schulverwaltung"
-
-#: aleksis/core/menus.py:118
+#: aleksis/core/menus.py:113
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: aleksis/core/menus.py:126
+#: aleksis/core/menus.py:124
 msgid "Backend Admin"
 msgstr "Backend-Administration"
 
-#: aleksis/core/menus.py:136
+#: aleksis/core/menus.py:132
 msgid "People"
 msgstr "Leute"
 
-#: aleksis/core/menus.py:159
+#: aleksis/core/menus.py:157
 msgid "Persons and accounts"
 msgstr "Personen und Konten"
 
@@ -185,457 +189,592 @@ msgstr "Personen und Konten"
 msgid "Groups and child groups"
 msgstr "Gruppen und Kindgruppen"
 
-#: aleksis/core/menus.py:180
+#: aleksis/core/menus.py:183
 #: aleksis/core/templates/core/groups_child_groups.html:7
 #: aleksis/core/templates/core/groups_child_groups.html:9
 msgid "Assign child groups to groups"
 msgstr "Kindgruppen zu Gruppen zuordnen"
 
-#: aleksis/core/menus.py:188
-msgid "Edit school information"
-msgstr "Schulinformationen bearbeiten"
+#: aleksis/core/models.py:29
+msgid "Boolean (Yes/No)"
+msgstr ""
 
-#: aleksis/core/menus.py:189
-msgid "Edit school term"
-msgstr "Schuljahr bearbeiten"
+#: aleksis/core/models.py:30
+msgid "Text (one line)"
+msgstr ""
 
-#: aleksis/core/models.py:53
+#: aleksis/core/models.py:32
+#, fuzzy
+#| msgid "Save and next"
+msgid "Date and time"
+msgstr "Speichern und weiter"
+
+#: aleksis/core/models.py:33
+msgid "Decimal number"
+msgstr ""
+
+#: aleksis/core/models.py:34 aleksis/core/models.py:94
+msgid "E-mail address"
+msgstr "E-Mail-Adresse"
+
+#: aleksis/core/models.py:35
+msgid "Integer"
+msgstr ""
+
+#: aleksis/core/models.py:36
+#, fuzzy
+#| msgid "Address"
+msgid "IP address"
+msgstr "Adresse"
+
+#: aleksis/core/models.py:37
+msgid "Boolean or empty (Yes/No/Neither)"
+msgstr ""
+
+#: aleksis/core/models.py:38
+msgid "Text (multi-line)"
+msgstr ""
+
+#: aleksis/core/models.py:40
+#, fuzzy
+#| msgid "URL/Link"
+msgid "URL / Link"
+msgstr "URL/Link"
+
+#: aleksis/core/models.py:52
 #: aleksis/core/templates/core/persons_accounts.html:36
 msgid "Person"
 msgstr "Person"
 
-#: aleksis/core/models.py:56
+#: aleksis/core/models.py:55
 msgid "Can view address"
 msgstr "Kann Adresse sehen"
 
-#: aleksis/core/models.py:57
+#: aleksis/core/models.py:56
 msgid "Can view contact details"
 msgstr "Kann Kontaktdetails sehen"
 
-#: aleksis/core/models.py:58
+#: aleksis/core/models.py:57
 msgid "Can view photo"
 msgstr "Kann Foto sehen"
 
-#: aleksis/core/models.py:59
+#: aleksis/core/models.py:58
 msgid "Can view persons groups"
 msgstr "Kann Gruppen einer Person sehen"
 
-#: aleksis/core/models.py:60
+#: aleksis/core/models.py:59
 msgid "Can view personal details"
 msgstr "Kann persönliche Daten sehen"
 
-#: aleksis/core/models.py:65
+#: aleksis/core/models.py:64
 msgid "female"
 msgstr "weiblich"
 
-#: aleksis/core/models.py:65
+#: aleksis/core/models.py:64
 msgid "male"
 msgstr "männlich"
 
-#: aleksis/core/models.py:70
+#: aleksis/core/models.py:72
+#, fuzzy
+#| msgid "New user"
+msgid "Linked user"
+msgstr "Neuer Benutzer"
+
+#: aleksis/core/models.py:74
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: aleksis/core/models.py:72
+#: aleksis/core/models.py:76
 msgid "First name"
 msgstr "Vorname"
 
-#: aleksis/core/models.py:73
+#: aleksis/core/models.py:77
 msgid "Last name"
 msgstr "Nachname"
 
-#: aleksis/core/models.py:75
+#: aleksis/core/models.py:79
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: aleksis/core/models.py:79
+#: aleksis/core/models.py:83 aleksis/core/models.py:255
 msgid "Short name"
 msgstr "Kurzname"
 
-#: aleksis/core/models.py:82
+#: aleksis/core/models.py:86
 msgid "Street"
 msgstr "Straße"
 
-#: aleksis/core/models.py:83
+#: aleksis/core/models.py:87
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: aleksis/core/models.py:84
+#: aleksis/core/models.py:88
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: aleksis/core/models.py:85
+#: aleksis/core/models.py:89
 msgid "Place"
 msgstr "Ort"
 
-#: aleksis/core/models.py:87
+#: aleksis/core/models.py:91
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: aleksis/core/models.py:88
+#: aleksis/core/models.py:92
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: aleksis/core/models.py:90
-msgid "E-mail address"
-msgstr "E-Mail-Adresse"
-
-#: aleksis/core/models.py:92
+#: aleksis/core/models.py:96
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: aleksis/core/models.py:93
+#: aleksis/core/models.py:97
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: aleksis/core/models.py:95
+#: aleksis/core/models.py:99
 msgid "Photo"
 msgstr "Foto"
 
-#: aleksis/core/models.py:99
+#: aleksis/core/models.py:104
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: aleksis/core/models.py:104 aleksis/core/models.py:306
-#: aleksis/core/models.py:323 aleksis/core/models.py:403
-#: aleksis/core/models.py:566
+#: aleksis/core/models.py:111
+#, fuzzy
+#| msgid "Primary colour"
+msgid "Primary group"
+msgstr "Primärfarbe"
+
+#: aleksis/core/models.py:114 aleksis/core/models.py:341
+#: aleksis/core/models.py:365 aleksis/core/models.py:448
+#: aleksis/core/models.py:634
 msgid "Description"
 msgstr "Beschreibung"
 
-#: aleksis/core/models.py:223
+#: aleksis/core/models.py:229
 msgid "Title of field"
 msgstr "Feldtitel"
 
-#: aleksis/core/models.py:224
+#: aleksis/core/models.py:231
 msgid "Type of field"
 msgstr "Feldtyp"
 
-#: aleksis/core/models.py:227
-msgid "Addtitional field"
-msgstr "Zusätzliches Feld"
-
-#: aleksis/core/models.py:228
-msgid "Addtitional fields"
+#: aleksis/core/models.py:235
+#, fuzzy
+#| msgid "Addtitional fields"
+msgid "Addtitional field for groups"
 msgstr "Zusätzliche Felder"
 
-#: aleksis/core/models.py:238
+#: aleksis/core/models.py:236
+#, fuzzy
+#| msgid "Addtitional fields"
+msgid "Addtitional fields for groups"
+msgstr "Zusätzliche Felder"
+
+#: aleksis/core/models.py:247
 msgid "Group"
 msgstr "Gruppe"
 
-#: aleksis/core/models.py:241
+#: aleksis/core/models.py:249
 msgid "Can assign child groups to groups"
 msgstr "Kann Kindgruppen zu Gruppen zuordnen"
 
-#: aleksis/core/models.py:246
-msgid "Long name of group"
+#: aleksis/core/models.py:253
+#, fuzzy
+#| msgid "Long name of group"
+msgid "Long name"
 msgstr "Langer Name der Gruppe"
 
-#: aleksis/core/models.py:247
-msgid "Short name of group"
-msgstr "Kurzer Name der Gruppe"
+#: aleksis/core/models.py:263 aleksis/core/templates/core/group_full.html:37
+msgid "Members"
+msgstr "Mitglieder"
 
-#: aleksis/core/models.py:256
+#: aleksis/core/models.py:266 aleksis/core/templates/core/group_full.html:34
+msgid "Owners"
+msgstr "Leiter/-innen"
+
+#: aleksis/core/models.py:273
 msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
-#: aleksis/core/models.py:260
+#: aleksis/core/models.py:281
 msgid "Type of group"
 msgstr "Gruppentyp"
 
-#: aleksis/core/models.py:305 aleksis/core/models.py:322
-#: aleksis/core/models.py:402
+#: aleksis/core/models.py:285
+#, fuzzy
+#| msgid "Addtitional fields"
+msgid "Additional fields"
+msgstr "Zusätzliche Felder"
+
+#: aleksis/core/models.py:337
+msgid "User"
+msgstr ""
+
+#: aleksis/core/models.py:340 aleksis/core/models.py:364
+#: aleksis/core/models.py:447
 #: aleksis/core/templates/core/announcement/list.html:18
 msgid "Title"
 msgstr "Titel"
 
-#: aleksis/core/models.py:308
+#: aleksis/core/models.py:343
 msgid "Application"
 msgstr "Anwendung"
 
-#: aleksis/core/models.py:314
+#: aleksis/core/models.py:349
 msgid "Activity"
 msgstr "Aktivität"
 
-#: aleksis/core/models.py:315
+#: aleksis/core/models.py:350
 msgid "Activities"
 msgstr "Aktivitäten"
 
-#: aleksis/core/models.py:319
+#: aleksis/core/models.py:356
 msgid "Sender"
 msgstr "Absender"
 
-#: aleksis/core/models.py:324 aleksis/core/models.py:404
-#: aleksis/core/models.py:551
+#: aleksis/core/models.py:361
+#, fuzzy
+#| msgid "Recipients"
+msgid "Recipient"
+msgstr "Empfänger"
+
+#: aleksis/core/models.py:366 aleksis/core/models.py:614
 msgid "Link"
 msgstr "Link"
 
-#: aleksis/core/models.py:326
+#: aleksis/core/models.py:368
 msgid "Read"
 msgstr "Gelesen"
 
-#: aleksis/core/models.py:327
+#: aleksis/core/models.py:369
 msgid "Sent"
 msgstr "Versandt"
 
-#: aleksis/core/models.py:340
+#: aleksis/core/models.py:382
 msgid "Notification"
 msgstr "Benachrichtigung"
 
-#: aleksis/core/models.py:341
+#: aleksis/core/models.py:383
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: aleksis/core/models.py:407
+#: aleksis/core/models.py:449
+msgid "Link to detailed view"
+msgstr ""
+
+#: aleksis/core/models.py:452
 msgid "Date and time from when to show"
 msgstr "Datum und Uhrzeit des Anzeigestarts"
 
-#: aleksis/core/models.py:410
+#: aleksis/core/models.py:455
 msgid "Date and time until when to show"
 msgstr "Anzeigezeitraum"
 
-#: aleksis/core/models.py:433
+#: aleksis/core/models.py:478
 msgid "Announcement"
 msgstr "Ankündigung"
 
-#: aleksis/core/models.py:461
+#: aleksis/core/models.py:515
 msgid "Announcement recipient"
 msgstr "Empfänger der Ankündigung"
 
-#: aleksis/core/models.py:462
+#: aleksis/core/models.py:516
 msgid "Announcement recipients"
 msgstr "Empfänger der Ankündigung"
 
-#: aleksis/core/models.py:512
+#: aleksis/core/models.py:566
 msgid "Widget Title"
 msgstr "Widget-Titel"
 
-#: aleksis/core/models.py:513
+#: aleksis/core/models.py:567
 msgid "Activate Widget"
 msgstr "Widget aktivieren"
 
-#: aleksis/core/models.py:525
+#: aleksis/core/models.py:584
 msgid "Dashboard Widget"
 msgstr "Dashboard-Widget"
 
-#: aleksis/core/models.py:526
+#: aleksis/core/models.py:585
 msgid "Dashboard Widgets"
 msgstr "Dashboard-Widgets"
 
-#: aleksis/core/models.py:530
+#: aleksis/core/models.py:591
 msgid "Menu ID"
 msgstr "Menü-ID"
 
-#: aleksis/core/models.py:531
-msgid "Menu name"
-msgstr "Menü-Name"
-
-#: aleksis/core/models.py:542
+#: aleksis/core/models.py:603
 msgid "Custom menu"
 msgstr "Benutzerdefiniertes Menü"
 
-#: aleksis/core/models.py:543
+#: aleksis/core/models.py:604
 msgid "Custom menus"
 msgstr "Benutzerdefinierte Menüs"
 
-#: aleksis/core/models.py:548
+#: aleksis/core/models.py:611
 msgid "Menu"
 msgstr "Menü"
 
-#: aleksis/core/models.py:550
+#: aleksis/core/models.py:613
 msgid "Name"
 msgstr "Name"
 
-#: aleksis/core/models.py:553
+#: aleksis/core/models.py:616
 msgid "Icon"
 msgstr "Symbol"
 
-#: aleksis/core/models.py:560
+#: aleksis/core/models.py:623
 msgid "Custom menu item"
 msgstr "Benutzerdefiniertes Menüelement"
 
-#: aleksis/core/models.py:561
+#: aleksis/core/models.py:624
 msgid "Custom menu items"
 msgstr "Benutzerdefinierte Menüelemente"
 
-#: aleksis/core/models.py:565
+#: aleksis/core/models.py:633
 msgid "Title of type"
 msgstr "Titel des Typs"
 
-#: aleksis/core/models.py:569
+#: aleksis/core/models.py:637
 msgid "Group type"
 msgstr "Gruppentyp"
 
-#: aleksis/core/models.py:570
+#: aleksis/core/models.py:638
 msgid "Group types"
 msgstr "Gruppentypen"
 
-#: aleksis/core/models.py:577
+#: aleksis/core/models.py:647
 msgid "Can view system status"
 msgstr "Kann Systemstatus sehen"
 
-#: aleksis/core/models.py:578
+#: aleksis/core/models.py:648
 msgid "Can link persons to accounts"
 msgstr "Kann Personen mit Benutzerkonten verknüpfen"
 
-#: aleksis/core/models.py:579
+#: aleksis/core/models.py:649
 msgid "Can manage data"
 msgstr "Kann Daten verwalten"
 
-#: aleksis/core/models.py:580
+#: aleksis/core/models.py:650
 msgid "Can impersonate"
 msgstr "Kann sich verkleiden"
 
-#: aleksis/core/models.py:581
+#: aleksis/core/models.py:651
 msgid "Can use search"
 msgstr "Kann Suche benutzen"
 
-#: aleksis/core/models.py:582
+#: aleksis/core/models.py:652
 msgid "Can change site preferences"
 msgstr "Kann Konfiguration ändern"
 
-#: aleksis/core/models.py:583
+#: aleksis/core/models.py:653
 msgid "Can change person preferences"
 msgstr "Kann Einstellungen einer Person verändern"
 
-#: aleksis/core/models.py:584
+#: aleksis/core/models.py:654
 msgid "Can change group preferences"
 msgstr "Kann Einstellungen einer Gruppe verändern"
 
-#: aleksis/core/preferences.py:29
+#: aleksis/core/preferences.py:33
 msgid "Site title"
 msgstr "Seitentitel"
 
-#: aleksis/core/preferences.py:38
+#: aleksis/core/preferences.py:42
 msgid "Site description"
 msgstr "Seitenbeschreibung"
 
-#: aleksis/core/preferences.py:47
+#: aleksis/core/preferences.py:51
 msgid "Primary colour"
 msgstr "Primärfarbe"
 
-#: aleksis/core/preferences.py:56
+#: aleksis/core/preferences.py:60
 msgid "Secondary colour"
 msgstr "Akzentfarbe"
 
-#: aleksis/core/preferences.py:65
+#: aleksis/core/preferences.py:68
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "Abmelden"
+
+#: aleksis/core/preferences.py:76
+msgid "Favicon"
+msgstr ""
+
+#: aleksis/core/preferences.py:84
+#, fuzzy
+#| msgid "Icon"
+msgid "PWA-Icon"
+msgstr "Symbol"
+
+#: aleksis/core/preferences.py:93
 msgid "Mail out name"
 msgstr "Ausgangsmailname"
 
-#: aleksis/core/preferences.py:74
+#: aleksis/core/preferences.py:102
 msgid "Mail out address"
 msgstr "E-Mail-Ausgangsadresse"
 
-#: aleksis/core/preferences.py:84
+#: aleksis/core/preferences.py:112
 msgid "Link to privacy policy"
 msgstr "Link zur Datenschutzerklärung"
 
-#: aleksis/core/preferences.py:94
+#: aleksis/core/preferences.py:122
 msgid "Link to imprint"
 msgstr "Link zum Impressum"
 
-#: aleksis/core/preferences.py:104
+#: aleksis/core/preferences.py:132
 msgid "Name format for addressing"
 msgstr "Namensformat für Anreden"
 
-#: aleksis/core/preferences.py:120
+#: aleksis/core/preferences.py:148
 msgid "Channels to use for notifications"
 msgstr "Aktivierte Benachrichtungskanäle"
 
-#: aleksis/core/preferences.py:130
+#: aleksis/core/preferences.py:158
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
-#: aleksis/core/preferences.py:139
+#: aleksis/core/preferences.py:167
 msgid "Display name of the school"
 msgstr "Sichtbarer Name der Schule"
 
-#: aleksis/core/preferences.py:148
+#: aleksis/core/preferences.py:176
 msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
+msgstr ""
+"Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: aleksis/core/settings.py:263
+#: aleksis/core/settings.py:276
 msgid "German"
 msgstr "Deutsch"
 
-#: aleksis/core/settings.py:264
+#: aleksis/core/settings.py:277
 msgid "English"
 msgstr "Englisch"
 
-#: aleksis/core/settings.py:265
+#: aleksis/core/settings.py:278
 msgid "French"
 msgstr "Französisch"
 
-#: aleksis/core/templates/403.html:10
-msgid "Error (403): You are not allowed to access the requested page or object."
-msgstr "Fehler(403): Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das angefragte Objekt zuzugreifen."
+#: aleksis/core/templates/403.html:10 aleksis/core/templates/404.html:10
+#: aleksis/core/templates/500.html:10
+msgid "Error"
+msgstr ""
 
-#: aleksis/core/templates/403.html:12
+#: aleksis/core/templates/403.html:10
+#, fuzzy
+#| msgid ""
+#| "Error (403): You are not allowed to access the requested page or object."
+msgid ""
+"You are not allowed to access the requested page or\n"
+"          object."
+msgstr ""
+"Fehler(403): Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das "
+"angefragte Objekt zuzugreifen."
+
+#: aleksis/core/templates/403.html:13 aleksis/core/templates/404.html:17
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      If you think this is an error in AlekSIS, please contact your site\n"
+#| "      administrators:\n"
+#| "     "
 msgid ""
 "\n"
-"      If you think this is an error in AlekSIS, please contact your site\n"
-"     administrators:\n"
-"     "
+"            If you think this is an error in AlekSIS, please contact your "
+"site\n"
+"            administrators:\n"
+"          "
 msgstr ""
 "\n"
-"      Wenn Sie der Meinung sind, dass es sich um einen Fehler in AlekSIS handelt, kontaktieren Sie bitte einen Ihrer\n"
+"      Wenn Sie der Meinung sind, dass es sich um einen Fehler in AlekSIS "
+"handelt, kontaktieren Sie bitte einen Ihrer\n"
 "     Systemadministratoren:\n"
 "     "
 
 #: aleksis/core/templates/404.html:10
-msgid "Error (404): The requested page or object was not found."
-msgstr "Fehler (404): Die angefragte Seite oder das angefragte Objekt wurde nicht gefunden."
+#, fuzzy
+#| msgid "Error (404): The requested page or object was not found."
+msgid ""
+"The requested page or object was not\n"
+"          found."
+msgstr ""
+"Fehler (404): Die angefragte Seite oder das angefragte Objekt wurde nicht "
+"gefunden."
 
-#: aleksis/core/templates/404.html:12
+#: aleksis/core/templates/404.html:13
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      If you were redirected by a link on an external page,\n"
+#| "      it is possible that that link was outdated.\n"
+#| "     "
 msgid ""
 "\n"
-"      If you were redirected by a link on an external page,\n"
-"      it is possible that that link was outdated.\n"
-"     "
+"            If you were redirected by a link on an external page,\n"
+"            it is possible that that link was outdated.\n"
+"          "
 msgstr ""
 "\n"
-"      Wenn Sie über einen Link auf einer externen Seite hierher gelangt sind,\n"
+"      Wenn Sie über einen Link auf einer externen Seite hierher gelangt "
+"sind,\n"
 "      ist es möglich, dass dieser veraltet war.\n"
 "     "
 
-#: aleksis/core/templates/404.html:16
-msgid ""
-"\n"
-"      If you think this is an error in AlekSIS, please contact your site\n"
-"      administrators:\n"
-"     "
-msgstr ""
-"\n"
-"      Wenn Sie der Meinung sind, dass es sich um einen Fehler in AlekSIS handelt, kontaktieren Sie bitte einen Ihrer\n"
-"     Systemadministratoren:\n"
-"     "
-
 #: aleksis/core/templates/500.html:10
-msgid "Error (500): An unexpected error has occured.."
+#, fuzzy
+#| msgid "Error (500): An unexpected error has occured.."
+msgid ""
+"An unexpected error has\n"
+"          occured."
 msgstr "Error (500): Ein unerwarteter Fehler ist aufgetreten.."
 
-#: aleksis/core/templates/500.html:12
+#: aleksis/core/templates/500.html:13
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      Your site administrators will automatically be notified about this\n"
+#| "     error.\n"
+#| "     "
 msgid ""
 "\n"
-"      Your site administrators will automatically be notified about this\n"
-"     error.\n"
-"     "
+"            Your site administrators will automatically be notified about "
+"this\n"
+"            error. You can also contact them directly:\n"
+"          "
 msgstr ""
 "\n"
-"      Ihre Administratoren werden automatisch über diesen Fehler informiert.\n"
+"      Ihre Administratoren werden automatisch über diesen Fehler "
+"informiert.\n"
 "     "
 
 #: aleksis/core/templates/503.html:10
-msgid "The maintenance mode is currently enabled. Please try again later."
-msgstr "Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später erneut."
+#, fuzzy
+#| msgid "The maintenance mode is currently enabled. Please try again later."
+msgid ""
+"The maintenance mode is currently enabled. Please try again\n"
+"          later."
+msgstr ""
+"Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
+"erneut."
 
-#: aleksis/core/templates/503.html:12
+#: aleksis/core/templates/503.html:13
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      This page is currently unavailable. If this error stays, contact "
+#| "your site administrators:\n"
+#| "     "
 msgid ""
 "\n"
-"      This page is currently unavailable. If this error stays, contact your site administrators:\n"
-"     "
+"            This page is currently unavailable. If this error persists, "
+"contact your site administrators:\n"
+"          "
 msgstr ""
 "\n"
-"      Diese Seite ist aktuell nicht erreichbar. Wenn dieser Fehler bestehen bleibt, kontaktieren Sie bitte einen Ihrer\n"
+"      Diese Seite ist aktuell nicht erreichbar. Wenn dieser Fehler bestehen "
+"bleibt, kontaktieren Sie bitte einen Ihrer\n"
 "     Systemadministratoren:\n"
 "     "
 
@@ -652,18 +791,24 @@ msgstr "AlekSIS – The Free School Information System"
 #, fuzzy
 #| msgid ""
 #| "\n"
-#| "        AlekSIS is a web-based school information system (SIS) which can be used to\n"
-#| "        manage and/or publish organisational data of educational institutions.\n"
+#| "        AlekSIS is a web-based school information system (SIS) which can "
+#| "be used to\n"
+#| "        manage and/or publish organisational data of educational "
+#| "institutions.\n"
 #| "      "
 msgid ""
 "\n"
-"              This platform is powered by AlekSIS, a web-based school information system (SIS) which can be used\n"
-"              to manage and/or publish organisational subjects of educational institutions. AlekSIS is free software and\n"
-"              can be used by everyone.\n"
+"              This platform is powered by AlekSIS, a web-based school "
+"information system (SIS) which can be used\n"
+"              to manage and/or publish organisational artifacts of "
+"educational institutions. AlekSIS is free software and\n"
+"              can be used by anyone.\n"
 "            "
 msgstr ""
 "\n"
-"        AlekSIS ist ein webbasiertes Schul-Informations-System (SIS), das verwendet werden kann, um organisatorische Daten von Bildungseinrichten zu verwalten oder zu publizieren.\n"
+"        AlekSIS ist ein webbasiertes Schul-Informations-System (SIS), das "
+"verwendet werden kann, um organisatorische Daten von Bildungseinrichten zu "
+"verwalten oder zu publizieren.\n"
 "      "
 
 #: aleksis/core/templates/core/about.html:25
@@ -679,10 +824,21 @@ msgid "Licence information"
 msgstr "Lizenzinformationen"
 
 #: aleksis/core/templates/core/about.html:37
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "              The core and the official apps of AlekSIS are licenced "
+#| "under the EUPL, version 1.2 or later. For licence\n"
+#| "              information from third-party apps, if installed, see "
+#| "directly at the respective components below. The\n"
+#| "              licences are marked like this:\n"
+#| "            "
 msgid ""
 "\n"
-"              The core and the official apps of AlekSIS are licenced under the EUPL, version 1.2 or later. For licence\n"
-"              information from third-party apps, if installed, see directly at the respective components below. The\n"
+"              The core and the official apps of AlekSIS are licenced under "
+"the EUPL, version 1.2 or later. For licence\n"
+"              information from third-party apps, if installed, refer to the "
+"respective components below. The\n"
 "              licences are marked like this:\n"
 "            "
 msgstr ""
@@ -803,29 +959,29 @@ msgstr ""
 "              Gültig von %(from)s – %(until)s\n"
 "            "
 
-#: aleksis/core/templates/core/base.html:56
+#: aleksis/core/templates/core/base.html:54
 msgid "Logged in as"
 msgstr "Angemeldet als"
 
-#: aleksis/core/templates/core/base.html:79
+#: aleksis/core/templates/core/base.html:76
 #: aleksis/core/templates/search/search.html:7
 #: aleksis/core/templates/search/search.html:22
 msgid "Search"
 msgstr "Suchen"
 
-#: aleksis/core/templates/core/base.html:151
+#: aleksis/core/templates/core/base.html:148
 msgid "About AlekSIS — The Free School Information System"
 msgstr "Über AlekSIS — The Free School Information System"
 
-#: aleksis/core/templates/core/base.html:159
+#: aleksis/core/templates/core/base.html:156
 msgid "Impress"
 msgstr "Impressum"
 
-#: aleksis/core/templates/core/base.html:167
+#: aleksis/core/templates/core/base.html:164
 msgid "Privacy Policy"
 msgstr "Datenschutzerklärung"
 
-#: aleksis/core/templates/core/base_print.html:60
+#: aleksis/core/templates/core/base_print.html:62
 msgid "Powered by AlekSIS"
 msgstr "Betrieben mit AlekSIS"
 
@@ -844,23 +1000,23 @@ msgstr "Person editieren"
 msgid "Change preferences"
 msgstr "Einstellungen ändern"
 
-#: aleksis/core/templates/core/group_full.html:34
-msgid "Owners"
-msgstr "Leiter/-innen"
-
-#: aleksis/core/templates/core/group_full.html:37
-msgid "Members"
-msgstr "Mitglieder"
-
 #: aleksis/core/templates/core/groups.html:14
 msgid "Create group"
 msgstr "Gruppe erstellen"
 
 #: aleksis/core/templates/core/groups_child_groups.html:18
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "          You can use this to assign child groups to groups. Please use "
+#| "the filters below to select groups you want to\n"
+#| "          change and click at \"Next\".\n"
+#| "        "
 msgid ""
 "\n"
-"          You can use this to assign child groups to groups. Please use the filters below to select groups you want to\n"
-"          change and click at \"Next\".\n"
+"          You can use this to assign child groups to groups. Please use the "
+"filters below to select groups you want to\n"
+"          change and click \"Next\".\n"
 "        "
 msgstr ""
 "\n"
@@ -900,11 +1056,16 @@ msgid "Current group:"
 msgstr "Aktuelle Gruppe:"
 
 #: aleksis/core/templates/core/groups_child_groups.html:78
+msgid "Please be careful!"
+msgstr ""
+
+#: aleksis/core/templates/core/groups_child_groups.html:79
 msgid ""
 "\n"
-"            <strong>Please be careful!</strong><br/>\n"
-"            If you click on \"Back\" or \"Next\" the current group assignments are not saved.\n"
-"            If you click on save, you will overwrite all existing child group relations for this group with what you\n"
+"            If you click \"Back\" or \"Next\" the current group assignments "
+"are not saved.\n"
+"            If you click \"Save\", you will overwrite all existing child "
+"group relations for this group with what you\n"
 "            selected on this page.\n"
 "          "
 msgstr ""
@@ -937,27 +1098,23 @@ msgstr "Speichern und weiter"
 msgid "Home"
 msgstr "Startseite"
 
-#: aleksis/core/templates/core/index.html:11
-msgid "AlekSIS (School Information System)"
-msgstr "AlekSIS (Schulinformationssystem)"
-
-#: aleksis/core/templates/core/index.html:43
+#: aleksis/core/templates/core/index.html:42
 msgid "Last activities"
 msgstr "Letzte Aktivitäten"
 
-#: aleksis/core/templates/core/index.html:61
+#: aleksis/core/templates/core/index.html:60
 msgid "No activities available yet."
 msgstr "Aktuell keine Aktivitäten verfügbar."
 
-#: aleksis/core/templates/core/index.html:66
+#: aleksis/core/templates/core/index.html:65
 msgid "Recent notifications"
 msgstr "Letzte Benachrichtigungen"
 
-#: aleksis/core/templates/core/index.html:82
+#: aleksis/core/templates/core/index.html:81
 msgid "More information →"
 msgstr "Mehr Informationen →"
 
-#: aleksis/core/templates/core/index.html:89
+#: aleksis/core/templates/core/index.html:88
 msgid "No notifications available yet."
 msgstr "Aktuell keine Benachrichtigungen verfügbar."
 
@@ -971,13 +1128,16 @@ msgstr "Aktuell keine Benachrichtigungen verfügbar."
 #| "        "
 msgid ""
 "\n"
-"            Your administrator account is not linked to any person. Therefore,\n"
+"            Your administrator account is not linked to any person. "
+"Therefore,\n"
 "            a dummy person has been linked to your account.\n"
 "          "
 msgstr ""
 "\n"
-"          Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das bedeutet, dass Sie\n"
-"        keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie sich an\n"
+"          Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das "
+"bedeutet, dass Sie\n"
+"        keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie "
+"sich an\n"
 "        die Verwaltenden von AlekSIS an Ihrer Schule.\n"
 "        "
 
@@ -997,24 +1157,12 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"          Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das bedeutet, dass Sie\n"
-"        keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie sich an\n"
+"          Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das "
+"bedeutet, dass Sie\n"
+"        keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie "
+"sich an\n"
 "        die Verwaltenden von AlekSIS an Ihrer Schule.\n"
 "        "
-
-#: aleksis/core/templates/core/offline.html:6
-msgid "No internet connection."
-msgstr "Keine Internetverbindung."
-
-#: aleksis/core/templates/core/offline.html:9
-msgid ""
-"\n"
-"        There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi or mobile data is turned on and try again. If you think you are connected, please contact the system administrators:\n"
-"      "
-msgstr ""
-"\n"
-"        Es ist ein Fehler beim Aufrufen der Seite aufgetreten. Eventuell haben Sie keine Internetverbindung. Bitte prüfen Sie, ob WLAN oder mobile Daten aktiv sind, und probieren Sie es erneut. Wenn Sie der Meinung sind, dass Sie mit dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer Systemadministratoren:\n"
-"      "
 
 #: aleksis/core/templates/core/person_full.html:34
 msgid "Contact details"
@@ -1029,14 +1177,17 @@ msgstr "Personen mit Benutzerkonten verknüpfen"
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
-"        dropdowns to select existing accounts; use the text fields to create new\n"
+"        dropdowns to select existing accounts; use the text fields to create "
+"new\n"
 "        accounts on-the-fly. The latter will create a new account with the\n"
 "        entered username and copy all other details from the person.\n"
 "      "
 msgstr ""
 "\n"
-"        Sie können dieses Formular nutzen, um Benutzerkonten Personen zuzuweisen. Nutzen Sie das\n"
-"    Auswahlfeld um ein existierendes Benutzerkonto auszuwählen; nutzen Sie das Textfeld, um einen neuen Benutzer zu\n"
+"        Sie können dieses Formular nutzen, um Benutzerkonten Personen "
+"zuzuweisen. Nutzen Sie das\n"
+"    Auswahlfeld um ein existierendes Benutzerkonto auszuwählen; nutzen Sie "
+"das Textfeld, um einen neuen Benutzer zu\n"
 "    erstellen. Letzteres erstellt ein neues Benutzerkonto mit dem\n"
 "    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
 "      "
@@ -1065,11 +1216,13 @@ msgstr "Wartungsmodus aktiviert"
 #: aleksis/core/templates/core/system_status.html:23
 msgid ""
 "\n"
-"                Only admin and visitors from internal IPs can access thesite.\n"
+"                Only admin and visitors from internal IPs can access "
+"thesite.\n"
 "              "
 msgstr ""
 "\n"
-"                Nur Administratoren und Besucher von internen IP-Adressen können die Seite aufrufen.\n"
+"                Nur Administratoren und Besucher von internen IP-Adressen "
+"können die Seite aufrufen.\n"
 "              "
 
 #: aleksis/core/templates/core/system_status.html:34
@@ -1087,11 +1240,13 @@ msgstr "Debug-Modus aktiviert"
 #: aleksis/core/templates/core/system_status.html:47
 msgid ""
 "\n"
-"                The web server throws back debug information on errors. Do not use in production!\n"
+"                The web server throws back debug information on errors. Do "
+"not use in production!\n"
 "              "
 msgstr ""
 "\n"
-"                Der Server gibt Debug-Informationen bei Fehlern zurück. Nicht im Produktivbetrieb nutzen!\n"
+"                Der Server gibt Debug-Informationen bei Fehlern zurück. "
+"Nicht im Produktivbetrieb nutzen!\n"
 "              "
 
 #: aleksis/core/templates/core/system_status.html:54
@@ -1101,11 +1256,13 @@ msgstr "Debug-Modus deaktivert"
 #: aleksis/core/templates/core/system_status.html:56
 msgid ""
 "\n"
-"                Debug mode is disabled. Default error pages are displayed on errors.\n"
+"                Debug mode is disabled. Default error pages are displayed on "
+"errors.\n"
 "              "
 msgstr ""
 "\n"
-"                Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden bei Fehlern angezeigt.\n"
+"                Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden "
+"bei Fehlern angezeigt.\n"
 "              "
 
 #: aleksis/core/templates/dynamic_preferences/form.html:9
@@ -1133,103 +1290,39 @@ msgstr ""
 msgid "Impersonate user"
 msgstr "Als Benutzer verkleiden"
 
-#: aleksis/core/templates/martor/editor.html:27
-msgid "Uploading... please wait..."
-msgstr "Lädt hoch… bitte warten…"
-
-#: aleksis/core/templates/martor/editor.html:36
-msgid "Nothing to preview"
-msgstr "Keine Vorschau"
-
-#: aleksis/core/templates/martor/emoji.html:4
-msgid "Select Emoji to Insert"
-msgstr "Wählen Sie ein Emoji zum Einfügen aus"
-
-#: aleksis/core/templates/martor/emoji.html:8
-msgid "Preparing emojis..."
-msgstr "Bereite Emoji vor…"
-
-#: aleksis/core/templates/martor/guide.html:8
-msgid "Markdown Guide"
-msgstr "Markdown-Anleitung"
-
-#: aleksis/core/templates/martor/guide.html:9
-#, python-format
+#: aleksis/core/templates/offline.html:6
+#, fuzzy
+#| msgid "No internet connection."
 msgid ""
-"This site is powered by Markdown. For full\n"
-"            documentation,\n"
-"            <a href=\"%(doc_url)s\" target=\"_blank\">click here</a>"
+"No internet\n"
+"    connection."
+msgstr "Keine Internetverbindung."
+
+#: aleksis/core/templates/offline.html:10
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "        There was an error accessing this page. You probably don't have "
+#| "an internet connection. Check to see if your WiFi or mobile data is "
+#| "turned on and try again. If you think you are connected, please contact "
+#| "the system administrators:\n"
+#| "      "
+msgid ""
+"\n"
+"      There was an error accessing this page. You probably don't have an "
+"internet connection. Check to see if your WiFi\n"
+"      or mobile data is turned on and try again. If you think you are "
+"connected, please contact the system\n"
+"      administrators:\n"
+"    "
 msgstr ""
-"Diese Seite wird mit Markdown betrieben. Für komplette\n"
-"            Dokumentation,\n"
-"            <a href=\"%(doc_url)s\" target=\"_blank\">hier klicken</a>"
-
-#: aleksis/core/templates/martor/guide.html:15
-#: aleksis/core/templates/martor/toolbar.html:42
-msgid "Code"
-msgstr "Code"
-
-#: aleksis/core/templates/martor/guide.html:16
-msgid "Or"
-msgstr "oder"
-
-#: aleksis/core/templates/martor/guide.html:19
-msgid "... to Get"
-msgstr ""
-
-#: aleksis/core/templates/martor/toolbar.html:3
-msgid "Bold"
-msgstr "Fett"
-
-#: aleksis/core/templates/martor/toolbar.html:6
-msgid "Italic"
-msgstr "kursiv"
-
-#: aleksis/core/templates/martor/toolbar.html:10
-msgid "Horizontal Line"
-msgstr "horizontale Linie"
-
-#: aleksis/core/templates/martor/toolbar.html:15
-msgid "Heading"
-msgstr "Überschrift"
-
-#: aleksis/core/templates/martor/toolbar.html:20
-#: aleksis/core/templates/martor/toolbar.html:23
-#: aleksis/core/templates/martor/toolbar.html:26
-msgid "H"
-msgstr "H"
-
-#: aleksis/core/templates/martor/toolbar.html:31
-msgid "Pre or Code"
-msgstr "Pre oder Code"
-
-#: aleksis/core/templates/martor/toolbar.html:38
-msgid "Pre"
-msgstr "Pre"
-
-#: aleksis/core/templates/martor/toolbar.html:48
-msgid "Quote"
-msgstr "Zitat"
-
-#: aleksis/core/templates/martor/toolbar.html:52
-msgid "Unordered List"
-msgstr "Unsortierte Liste"
-
-#: aleksis/core/templates/martor/toolbar.html:56
-msgid "Ordered List"
-msgstr "Sortierte Liste"
-
-#: aleksis/core/templates/martor/toolbar.html:60
-msgid "URL/Link"
-msgstr "URL/Link"
-
-#: aleksis/core/templates/martor/toolbar.html:82
-msgid "Full Screen"
-msgstr "Vollbild"
-
-#: aleksis/core/templates/martor/toolbar.html:86
-msgid "Markdown Guide (Help)"
-msgstr "Markdown-Anleitung (Hilfe)"
+"\n"
+"        Es ist ein Fehler beim Aufrufen der Seite aufgetreten. Eventuell "
+"haben Sie keine Internetverbindung. Bitte prüfen Sie, ob WLAN oder mobile "
+"Daten aktiv sind, und probieren Sie es erneut. Wenn Sie der Meinung sind, "
+"dass Sie mit dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer "
+"Systemadministratoren:\n"
+"      "
 
 #: aleksis/core/templates/search/search.html:8
 msgid "Global Search"
@@ -1273,16 +1366,21 @@ msgid ""
 "\n"
 "        Backup tokens can be used when your primary and backup\n"
 "        phone numbers aren't available. The backup tokens below can be used\n"
-"        for login verification. If you've used up all your backup tokens, you\n"
-"        can generate a new set of backup tokens. Only the backup tokens shown\n"
+"        for login verification. If you've used up all your backup tokens, "
+"you\n"
+"        can generate a new set of backup tokens. Only the backup tokens "
+"shown\n"
 "        below will be valid.\n"
 "      "
 msgstr ""
 "\n"
 "        Backup-Token können genutzt werden, wenn Ihre primären und Backup-\n"
-"        Telefonnummern nicht verfügbar sind. Die Backup-Tokens unten können für\n"
-"        die Anmeldungsverifizierung genutzt werden. Wenn Sie alle Backup-Tokens genutzt haben,\n"
-"        müssen Sie neue generieren. Nur gültige Backup-Tokens werden angezeigt.\n"
+"        Telefonnummern nicht verfügbar sind. Die Backup-Tokens unten können "
+"für\n"
+"        die Anmeldungsverifizierung genutzt werden. Wenn Sie alle Backup-"
+"Tokens genutzt haben,\n"
+"        müssen Sie neue generieren. Nur gültige Backup-Tokens werden "
+"angezeigt.\n"
 "      "
 
 #: aleksis/core/templates/two_factor/core/backup_tokens.html:33
@@ -1308,7 +1406,8 @@ msgid "Generate Tokens"
 msgstr "Tokens generieren"
 
 #: aleksis/core/templates/two_factor/core/login.html:16
-msgid "You have no permission to view this page. Please login with an other account."
+msgid ""
+"You have no permission to view this page. Please login with an other account."
 msgstr ""
 
 #: aleksis/core/templates/two_factor/core/login.html:25
@@ -1336,7 +1435,8 @@ msgid ""
 "We sent you a text message, please enter the tokens we\n"
 "              sent."
 msgstr ""
-"Wir haben Ihnen eine Textnachricht geschickt. Bitte geben Sie die Tokens ein,\n"
+"Wir haben Ihnen eine Textnachricht geschickt. Bitte geben Sie die Tokens "
+"ein,\n"
 "            die wir Ihnen geschickt haben."
 
 #: aleksis/core/templates/two_factor/core/login.html:34
@@ -1354,7 +1454,8 @@ msgstr ""
 #: aleksis/core/templates/two_factor/core/login.html:38
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
-"            These tokens have been generated for you to print and keep safe. Please\n"
+"            These tokens have been generated for you to print and keep safe. "
+"Please\n"
 "            enter one of these backup tokens to login to your account."
 msgstr ""
 
@@ -1377,11 +1478,13 @@ msgstr "Zugriff verwehrt"
 #: aleksis/core/templates/two_factor/core/otp_required.html:10
 msgid ""
 "The page you requested, enforces users to verify using\n"
-"          two-factor authentication for security reasons. You need to enable these\n"
+"          two-factor authentication for security reasons. You need to enable "
+"these\n"
 "          security features in order to access this page."
 msgstr ""
 "Die von Ihnen gewünschte Seite erfordert aus Sicherheitsgründen\n"
-"          eine Verifizierung durch Zwei-Faktor-Authentifizierung. Sie müssen diese\n"
+"          eine Verifizierung durch Zwei-Faktor-Authentifizierung. Sie müssen "
+"diese\n"
 "          Sicherheitsfunktion aktivieren, um diese Seite aufzurufen."
 
 #: aleksis/core/templates/two_factor/core/otp_required.html:14
@@ -1460,7 +1563,8 @@ msgstr ""
 #: aleksis/core/templates/two_factor/core/setup.html:50
 msgid ""
 "\n"
-"            We are calling your phone right now, please enter the digits you hear.\n"
+"            We are calling your phone right now, please enter the digits you "
+"hear.\n"
 "          "
 msgstr ""
 
@@ -1471,15 +1575,19 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Wir haben Ihnen per SMS einen Token geschickt, bitte geben Sie diesen ein.\n"
+"            Wir haben Ihnen per SMS einen Token geschickt, bitte geben Sie "
+"diesen ein.\n"
 "          "
 
 #: aleksis/core/templates/two_factor/core/setup.html:63
 msgid ""
 "\n"
-"          We've encountered an issue with the selected authentication method. Please\n"
-"          go back and verify that you entered your information correctly, try\n"
-"          again, or use a different authentication method instead. If the issue\n"
+"          We've encountered an issue with the selected authentication "
+"method. Please\n"
+"          go back and verify that you entered your information correctly, "
+"try\n"
+"          again, or use a different authentication method instead. If the "
+"issue\n"
 "          persists, contact the site administrator.\n"
 "        "
 msgstr ""
@@ -1501,11 +1609,13 @@ msgstr "Zwei-Faktor-Authentifizierung erfolgreich aktiviert"
 #: aleksis/core/templates/two_factor/core/setup_complete.html:14
 msgid ""
 "\n"
-"        Congratulations, you've successfully enabled two-factor authentication.\n"
+"        Congratulations, you've successfully enabled two-factor "
+"authentication.\n"
 "      "
 msgstr ""
 "\n"
-"        Gratulation, Sie haben die Zwei-Faktor-Authentifizierung erfolgreich aktiviert.\n"
+"        Gratulation, Sie haben die Zwei-Faktor-Authentifizierung erfolgreich "
+"aktiviert.\n"
 "      "
 
 #: aleksis/core/templates/two_factor/core/setup_complete.html:24
@@ -1522,7 +1632,8 @@ msgstr "Backup-Codes generieren"
 msgid ""
 "\n"
 "          However, it might happen that you don't have access to\n"
-"          your primary token device. To enable account recovery, generate backup codes\n"
+"          your primary token device. To enable account recovery, generate "
+"backup codes\n"
 "          or add a phone number.\n"
 "        "
 msgstr ""
@@ -1540,8 +1651,12 @@ msgid "Disable Two-Factor Authentication"
 msgstr "Zwei-Faktor-Authentifizierung deaktiveren"
 
 #: aleksis/core/templates/two_factor/profile/disable.html:12
-msgid "You are about to disable two-factor authentication. This weakens your account security, are you sure?"
-msgstr "Sie sind dabei, Zwei-Faktor-Authentifizierung zu deaktivieren. Das verschlechtert Ihre Kontosicherheit. Sind Sie sicher?"
+msgid ""
+"You are about to disable two-factor authentication. This weakens your "
+"account security, are you sure?"
+msgstr ""
+"Sie sind dabei, Zwei-Faktor-Authentifizierung zu deaktivieren. Das "
+"verschlechtert Ihre Kontosicherheit. Sind Sie sicher?"
 
 #: aleksis/core/templates/two_factor/profile/disable.html:26
 msgid "Disable"
@@ -1625,45 +1740,148 @@ msgid ""
 "      "
 msgstr ""
 
-#: aleksis/core/util/notifications.py:66
+#: aleksis/core/util/notifications.py:65
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: aleksis/core/util/notifications.py:67
+#: aleksis/core/util/notifications.py:66
 msgid "SMS"
 msgstr "SMS"
 
-#: aleksis/core/views.py:208
+#: aleksis/core/views.py:212
 #, fuzzy
 #| msgid "The group has been saved."
 msgid "The child groups were successfully saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#: aleksis/core/views.py:238
+#: aleksis/core/views.py:240
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: aleksis/core/views.py:268
+#: aleksis/core/views.py:276
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#: aleksis/core/views.py:299
-msgid "You are not allowed to mark notifications from other users as read!"
-msgstr "Es ist Ihnen nicht erlaubt, Benachrichtigungen von anderen Benutzern als gelesen zu markieren!"
-
-#: aleksis/core/views.py:340
+#: aleksis/core/views.py:348
 msgid "The announcement has been saved."
 msgstr "Die Ankündigung wurde gespeichert."
 
-#: aleksis/core/views.py:353
+#: aleksis/core/views.py:364
 msgid "The announcement has been deleted."
 msgstr "Ankündigung wurde gelöscht."
 
-#: aleksis/core/views.py:417
+#: aleksis/core/views.py:434
 #, fuzzy
 #| msgid "The person has been saved."
-msgid "The preferences has been saved successfully."
+msgid "The preferences have been saved successfully."
 msgstr "Die Person wurde gespeichert."
+
+#~ msgid "Two factor auth"
+#~ msgstr "Zwei-Faktor-Authentifizierung"
+
+#~ msgid "Manage school"
+#~ msgstr "Schulverwaltung"
+
+#~ msgid "Edit school information"
+#~ msgstr "Schulinformationen bearbeiten"
+
+#~ msgid "Edit school term"
+#~ msgstr "Schuljahr bearbeiten"
+
+#~ msgid "Addtitional field"
+#~ msgstr "Zusätzliches Feld"
+
+#~ msgid "Short name of group"
+#~ msgstr "Kurzer Name der Gruppe"
+
+#~ msgid "Menu name"
+#~ msgstr "Menü-Name"
+
+#~ msgid ""
+#~ "\n"
+#~ "      If you think this is an error in AlekSIS, please contact your site\n"
+#~ "     administrators:\n"
+#~ "     "
+#~ msgstr ""
+#~ "\n"
+#~ "      Wenn Sie der Meinung sind, dass es sich um einen Fehler in AlekSIS "
+#~ "handelt, kontaktieren Sie bitte einen Ihrer\n"
+#~ "     Systemadministratoren:\n"
+#~ "     "
+
+#~ msgid "AlekSIS (School Information System)"
+#~ msgstr "AlekSIS (Schulinformationssystem)"
+
+#~ msgid "Uploading... please wait..."
+#~ msgstr "Lädt hoch… bitte warten…"
+
+#~ msgid "Nothing to preview"
+#~ msgstr "Keine Vorschau"
+
+#~ msgid "Select Emoji to Insert"
+#~ msgstr "Wählen Sie ein Emoji zum Einfügen aus"
+
+#~ msgid "Preparing emojis..."
+#~ msgstr "Bereite Emoji vor…"
+
+#~ msgid "Markdown Guide"
+#~ msgstr "Markdown-Anleitung"
+
+#~ msgid ""
+#~ "This site is powered by Markdown. For full\n"
+#~ "            documentation,\n"
+#~ "            <a href=\"%(doc_url)s\" target=\"_blank\">click here</a>"
+#~ msgstr ""
+#~ "Diese Seite wird mit Markdown betrieben. Für komplette\n"
+#~ "            Dokumentation,\n"
+#~ "            <a href=\"%(doc_url)s\" target=\"_blank\">hier klicken</a>"
+
+#~ msgid "Code"
+#~ msgstr "Code"
+
+#~ msgid "Or"
+#~ msgstr "oder"
+
+#~ msgid "Bold"
+#~ msgstr "Fett"
+
+#~ msgid "Italic"
+#~ msgstr "kursiv"
+
+#~ msgid "Horizontal Line"
+#~ msgstr "horizontale Linie"
+
+#~ msgid "Heading"
+#~ msgstr "Überschrift"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "Pre or Code"
+#~ msgstr "Pre oder Code"
+
+#~ msgid "Pre"
+#~ msgstr "Pre"
+
+#~ msgid "Quote"
+#~ msgstr "Zitat"
+
+#~ msgid "Unordered List"
+#~ msgstr "Unsortierte Liste"
+
+#~ msgid "Ordered List"
+#~ msgstr "Sortierte Liste"
+
+#~ msgid "Full Screen"
+#~ msgstr "Vollbild"
+
+#~ msgid "Markdown Guide (Help)"
+#~ msgstr "Markdown-Anleitung (Hilfe)"
+
+#~ msgid "You are not allowed to mark notifications from other users as read!"
+#~ msgstr ""
+#~ "Es ist Ihnen nicht erlaubt, Benachrichtigungen von anderen Benutzern als "
+#~ "gelesen zu markieren!"
 
 #, fuzzy
 #~| msgid "School management"
@@ -1742,7 +1960,8 @@ msgstr "Die Person wurde gespeichert."
 #~ "    "
 #~ msgstr ""
 #~ "\n"
-#~ "     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später erneut.\n"
+#~ "     Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es "
+#~ "später erneut.\n"
 #~ "    "
 
 #~ msgid "Details"
