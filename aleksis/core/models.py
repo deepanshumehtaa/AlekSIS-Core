@@ -326,7 +326,7 @@ class PersonGroupThrough(ExtensibleModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for field in self.group.additional_fields:
+        for field in self.group.additional_fields.all():
             field_class = getattr(jsonstore, field.field_type)
             field_name = slugify(field.title).replace("-", "_")
             field_instance = field_class(verbose_name=field.title)
