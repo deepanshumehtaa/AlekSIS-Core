@@ -155,9 +155,11 @@ class PrimaryGroupField(ChoicePreference):
     section = account
     name = "primary_group_field"
     default = "name"
-    choices = Person.syncable_fields_choices_lazy()
     required = False
     verbose_name = _("Field on person to match primary group against")
+
+    def get_choices(self):
+        return Person.syncable_fields_choices()
 
 
 @site_preferences_registry.register
