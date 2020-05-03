@@ -273,8 +273,8 @@ AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGES = [
-    ("de", _("German")),
     ("en", _("English")),
+    ("de", _("German")),
     ("fr", _("French")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
