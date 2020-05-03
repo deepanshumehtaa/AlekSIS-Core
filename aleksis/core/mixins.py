@@ -18,11 +18,13 @@ from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
 class ExtensibleModelVersioning(type):
-    """ Meta class to add django-reversion decorator. """
+    """Meta class to add django-reversion decorator."""
 
     def __new__(mcls, name, bases, attrs):
-        return reversion.register(super().__new__, (name, bases, attrs))
-
+        if not mcls["Meta"].abstract:
+            return reversion.register(super().__new__, (name, bases, attrs))
+        else:
+            return 
 
 class ExtensibleModel(models.Model, metaclass=ExtensibleModelVersioning):
     """Base model for all objects in AlekSIS apps.
