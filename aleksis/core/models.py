@@ -38,7 +38,6 @@ FIELD_CHOICES = (
     ("TextField", _("Text (multi-line)")),
     ("TimeField", _("Time")),
     ("URLField", _("URL / Link")),
-
 )
 
 
@@ -619,9 +618,7 @@ class CustomMenuItem(ExtensibleModel):
     )
     name = models.CharField(max_length=150, verbose_name=_("Name"))
     url = models.URLField(verbose_name=_("Link"))
-    icon = models.CharField(
-        max_length=50, blank=True, choices=ICONS, verbose_name=_("Icon")
-    )
+    icon = models.CharField(max_length=50, blank=True, choices=ICONS, verbose_name=_("Icon"))
 
     def __str__(self):
         return f"[{self.menu}] {self.name}"
