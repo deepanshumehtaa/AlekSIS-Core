@@ -16,7 +16,7 @@ from django.utils.functional import lazy
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
-    """Takes a sequence of integegers and produces a string with ranges.
+    """Take a sequence of integegers and produces a string with ranges.
 
     >>> copyright_years([1999, 2000, 2001, 2005, 2007, 2008, 2009])
     '1999–2001, 2005, 2007–2009'
@@ -34,7 +34,7 @@ def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "
 
 
 def dt_show_toolbar(request: HttpRequest) -> bool:
-    """Helper to determin if Django debug toolbar should be displayed.
+    """Add a helper to determin if Django debug toolbar should be displayed.
 
     Extends the default behaviour by enabling DJDT for superusers independent
     of source IP.
@@ -66,7 +66,8 @@ def get_app_packages() -> Sequence[str]:
 def merge_app_settings(
     setting: str, original: Union[dict, list], deduplicate: bool = False
 ) -> Union[dict, list]:
-    """
+    """Merge app settings.
+
     Get a named settings constant from all apps and merge it into the original.
     To use this, add a settings.py file to the app, in the same format as Django's
     main settings.py.
@@ -170,7 +171,7 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
 
 
 def celery_optional(orig: Callable) -> Callable:
-    """Decorator that makes Celery optional for a function.
+    """Add a decorator that makes Celery optional for a function.
 
     If Celery is configured and available, it wraps the function in a Task
     and calls its delay method when invoked; if not, it leaves it untouched
@@ -191,7 +192,7 @@ def celery_optional(orig: Callable) -> Callable:
 
 
 def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
-    """Updates path of an uploaded file and renames it to a random UUID in Django FileField."""
+    """Update path of an uploaded file and renames it to a random UUID in Django FileField."""
     _, ext = os.path.splitext(filename)
 
     # set filename as random string
@@ -205,7 +206,7 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
 
 
 def custom_information_processor(request: HttpRequest) -> dict:
-    """Provides custom information in all templates."""
+    """Provide custom information in all templates."""
     from ..models import CustomMenu
 
     return {

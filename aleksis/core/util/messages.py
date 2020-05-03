@@ -8,7 +8,9 @@ from django.http import HttpRequest
 def add_message(
     request: Optional[HttpRequest], level: int, message: str, **kwargs
 ) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add a message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to DEBUG level.
@@ -20,7 +22,9 @@ def add_message(
 
 
 def debug(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add a debug message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to DEBUG level.
@@ -29,7 +33,9 @@ def debug(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[An
 
 
 def info(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add a info message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to INFO level.
@@ -38,7 +44,9 @@ def info(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any
 
 
 def success(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add a success message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to SUCCESS level.
@@ -47,7 +55,9 @@ def success(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[
 
 
 def warning(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add a warning message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to WARNING level.
@@ -56,7 +66,9 @@ def warning(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[
 
 
 def error(request: Optional[HttpRequest], message: str, **kwargs) -> Optional[Any]:
-    """ Add a message to either Django's message framework, if called from a web request,
+    """Add an error message.
+
+    Add a message to either Django's message framework, if called from a web request,
     or to the default logger.
 
     Default to ERROR level.

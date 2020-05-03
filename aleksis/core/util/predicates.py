@@ -13,24 +13,24 @@ from .core_helpers import has_person as has_person_helper
 
 
 def permission_validator(request: HttpRequest, perm: str) -> bool:
-    """Checks whether the request user has a permission."""
+    """Check whether the request user has a permission."""
     if request.user:
         return request.user.has_perm(perm)
     return False
 
 
 def check_global_permission(user: User, perm: str) -> bool:
-    """Checks whether a user has a global permission."""
+    """Check whether a user has a global permission."""
     return ModelBackend().has_perm(user, perm)
 
 
 def check_object_permission(user: User, perm: str, obj: Model) -> bool:
-    """Checks whether a user has a permission on a object."""
+    """Check whether a user has a permission on a object."""
     return ObjectPermissionBackend().has_perm(user, perm, obj)
 
 
 def has_global_perm(perm: str):
-    """Builds predicate which checks whether a user has a global permission."""
+    """Build predicate which checks whether a user has a global permission."""
     name = f"has_global_perm:{perm}"
 
     @predicate(name)
@@ -41,7 +41,7 @@ def has_global_perm(perm: str):
 
 
 def has_object_perm(perm: str):
-    """Builds predicate which checks whether a user has a permission on a object."""
+    """Build predicate which checks whether a user has a permission on a object."""
     name = f"has_global_perm:{perm}"
 
     @predicate(name)
@@ -54,8 +54,10 @@ def has_object_perm(perm: str):
 
 
 def has_any_object(perm: str, klass):
-    """
-    Build predicate which checks whether a user has access to objects with the provided permission.
+    """Check if has any object.
+
+    Build predicate which checks whether a user has access
+    to objects with the provided permission.
     """
     name = f"has_any_object:{perm}"
 
@@ -98,7 +100,8 @@ def is_group_owner(user: User, group: Group) -> bool:
 
 @predicate
 def is_notification_recipient(user: User, obj: Model) -> bool:
-    """
+    """Check if is a notification recipient.
+
     Predicate which checks whether the recipient of the
     notification a user wants to mark read is this user.
     """

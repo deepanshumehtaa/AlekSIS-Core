@@ -38,11 +38,13 @@ FIELD_CHOICES = (
     ("TextField", _("Text (multi-line)")),
     ("TimeField", _("Time")),
     ("URLField", _("URL / Link")),
+
 )
 
 
 class Person(ExtensibleModel):
-    """
+    """Person model.
+
     A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
@@ -80,7 +82,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True
+        verbose_name=_("Short name"), max_length=255, blank=True, unique=True
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -111,21 +113,21 @@ class Person(ExtensibleModel):
         "Group", models.SET_NULL, null=True, blank=True, verbose_name=_("Primary group")
     )
 
-    description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
+    description = models.TextField(verbose_name=_("Description"), blank=True)
 
     def get_absolute_url(self) -> str:
         return reverse("person_by_id", args=[self.id])
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
-        """Returns the short_name field of the primary group related object."""
+        """Return the short_name field of the primary group related object."""
         if self.primary_group:
             return self.primary_group.short_name
 
     @primary_group_short_name.setter
     def primary_group_short_name(self, value: str) -> None:
         """
-        Sets the primary group related object by a short name.
+        Set the primary group related object by a short name.
 
         It uses the first existing group
         with this short name it can find, creating one
@@ -237,7 +239,8 @@ class AdditionalField(ExtensibleModel):
 
 
 class Group(ExtensibleModel):
-    """
+    """Group model.
+
     Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
@@ -252,7 +255,7 @@ class Group(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True
+        verbose_name=_("Short name"), max_length=255, unique=True, blank=True
     )
 
     members = models.ManyToManyField(
@@ -387,7 +390,8 @@ class AnnouncementQuerySet(models.QuerySet):
     """Queryset for announcements providing time-based utility functions."""
 
     def relevant_for(self, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
-        """
+        """Get all relevant announcements.
+
         Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
         or a set of models in a QuerySet.
         """
@@ -437,7 +441,8 @@ class AnnouncementQuerySet(models.QuerySet):
 
 
 class Announcement(ExtensibleModel):
-    """
+    """Announcement model.
+
     Persistent announcement to display to groups or persons in various places during a
     specific time range.
     """
@@ -464,7 +469,7 @@ class Announcement(ExtensibleModel):
         return persons
 
     def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
-        """
+        """Get all recipients.
         Get all recipients for this announcement
         with a special content type (provided through model)
         """
@@ -480,7 +485,8 @@ class Announcement(ExtensibleModel):
 
 
 class AnnouncementRecipient(ExtensibleModel):
-    """
+    """Announcement recipient model.
+
     Generalisation of a recipient for an announcement, used to wrap arbitrary
     objects that can receive announcements.
 
@@ -564,14 +570,15 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
-    active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
+    active = models.BooleanField(verbose_name=_("Activate Widget"))
 
     def get_context(self):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
     def get_template(self):
-        """
+        """Get template.
+
         Get the template to render the widget with. Defaults to the template attribute,
         but can be overridden to allow more complex template generation scenarios.
         """
@@ -613,7 +620,7 @@ class CustomMenuItem(ExtensibleModel):
     name = models.CharField(max_length=150, verbose_name=_("Name"))
     url = models.URLField(verbose_name=_("Link"))
     icon = models.CharField(
-        max_length=50, blank=True, null=True, choices=ICONS, verbose_name=_("Icon")
+        max_length=50, blank=True, choices=ICONS, verbose_name=_("Icon")
     )
 
     def __str__(self):
@@ -625,7 +632,8 @@ class CustomMenuItem(ExtensibleModel):
 
 
 class GroupType(ExtensibleModel):
-    """
+    """Group type model.
+
     Descriptive type of a group; used to tag groups and for apps to distinguish
     how to display or handle a certain group.
     """

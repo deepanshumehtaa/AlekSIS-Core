@@ -2,6 +2,7 @@ from importlib import import_module
 from typing import Any, List, Optional, Sequence, Tuple
 
 import django.apps
+from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
@@ -11,6 +12,9 @@ from license_expression import Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
+
+
+User = get_user_model()
 
 
 class AppConfig(django.apps.AppConfig):
@@ -149,7 +153,7 @@ class AppConfig(django.apps.AppConfig):
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
-        """Called on every app instance if a dynamic preference changes, and once on startup.
+        """Call on every app instance if a dynamic preference changes, and once on startup.
 
         By default, it does nothing.
         """
@@ -165,7 +169,7 @@ class AppConfig(django.apps.AppConfig):
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        """Called on every app instance before its models are migrated.
+        """Call on every app instance before its models are migrated.
 
         By default, it does nothing.
         """
@@ -181,7 +185,7 @@ class AppConfig(django.apps.AppConfig):
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        """Called on every app instance after its models have been migrated.
+        """Call on every app instance after its models have been migrated.
 
         By default, asks all models to do maintenance on their default data.
         """
@@ -190,7 +194,7 @@ class AppConfig(django.apps.AppConfig):
     def user_logged_in(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
     ) -> None:
-        """Called after a user logged in.
+        """Call after a user logged in.
 
         By default, it does nothing.
         """
@@ -199,7 +203,7 @@ class AppConfig(django.apps.AppConfig):
     def user_logged_out(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
     ) -> None:
-        """Called after a user logged out.
+        """Call after a user logged out.
 
         By default, it does nothing.
         """

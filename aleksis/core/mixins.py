@@ -142,22 +142,22 @@ class ExtensibleModel(models.Model):
 
     @classmethod
     def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
-        """Adds the passed callable as a property."""
+        """Add the passed callable as a property."""
         cls._safe_add(property(func), func.__name__)
 
     @classmethod
     def method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
-        """Adds the passed callable as a method."""
+        """Add the passed callable as a method."""
         cls._safe_add(func, func.__name__)
 
     @classmethod
     def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
-        """Adds the passed callable as a classmethod."""
+        """Add the passed callable as a classmethod."""
         cls._safe_add(classmethod(func), func.__name__)
 
     @classmethod
     def field(cls, **kwargs) -> None:
-        """Adds the passed jsonstore field. Must be one of the fields in django-jsonstore.
+        """Add the passed jsonstore field. Must be one of the fields in django-jsonstore.
 
         Accepts exactly one keyword argument, with the name being the desired
         model field name and the value the field instance.
