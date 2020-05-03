@@ -31,11 +31,11 @@
     {% include "core/announcements.html" with announcements=announcements %}
 
     <div class="row" id="live_load">
-        {% for widget in widgets %}
-          <div class="col s12 m12 l6 xl4">
-              {% include_widget widget %}
-          </div>
-        {% endfor %}
+      {% for widget in widgets %}
+        <div class="col s12 m12 l6 xl4">
+          {% include_widget widget %}
+        </div>
+      {% endfor %}
     </div>
 
     <div class="row">

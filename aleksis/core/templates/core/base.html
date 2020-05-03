@@ -27,7 +27,8 @@
   {# Passing the locale is not necessary for the scripts to work, but prevents caching issues #}
   {% get_current_language as LANGUAGE_CODE %}
   <script src="{% url "javascript-catalog" %}?locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
-  <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
+  <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}"
+          type="text/javascript"></script>
 
   {# Include jQuery to provide $(document).ready #}
   {% include_js "jQuery" %}
@@ -66,7 +67,8 @@
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li class="logo">
       <a id="logo-container" href="/" class="brand-logo">
-        <img src="{{ request.site.preferences.theme__logo.url }}" alt="{{ request.site.preferences.general__title }} – Logo">
+        <img src="{{ request.site.preferences.theme__logo.url }}"
+             alt="{{ request.site.preferences.general__title }} – Logo">
       </a>
     </li>
     {% has_perm 'core.search' user as search %}
