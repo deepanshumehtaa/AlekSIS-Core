@@ -184,7 +184,7 @@ class ExtensibleModel(models.Model):
 
         return [
             field
-            for field in cls._meta.fields + cls._extended_data_fields
+            for field in list(cls._meta.fields) + cls._extended_data_fields
             if (field.editable and not field.auto_created and not field.is_relation)
         ]
 
