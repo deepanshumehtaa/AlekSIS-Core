@@ -434,7 +434,7 @@ PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = [  # three icons to upload dbsettings
+PWA_APP_ICONS = [
     {
         "src": lazy_get_favicon_url(
             title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
