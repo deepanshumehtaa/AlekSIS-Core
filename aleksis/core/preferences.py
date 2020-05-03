@@ -121,14 +121,12 @@ class ImprintURL(StringPreference):
 class AdressingNameFormat(ChoicePreference):
     section = notification
     name = "addressing_name_format"
-    default = "german"
+    default = "first_last"
     required = False
     verbose_name = _("Name format for addressing")
     choices = (
-        (None, "-----"),
-        ("german", "John Doe"),
-        ("english", "Doe, John"),
-        ("dutch", "Doe John"),
+        ("first_last", "John Doe"),
+        ("last_fist", "Doe, John"),
     )
 
 
