@@ -15,7 +15,6 @@ from .util.apps import AppConfig
 from .util.core_helpers import has_person
 from .util.sass_helpers import clean_scss
 
-
 User = get_user_model()
 
 
