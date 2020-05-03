@@ -1,6 +1,7 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 
 from dynamic_preferences.registries import preference_models
@@ -15,6 +16,9 @@ from .util.core_helpers import has_person
 from .util.sass_helpers import clean_scss
 
 
+User = get_user_model()
+
+
 class CoreConfig(AppConfig):
     name = "aleksis.core"
     verbose_name = "AlekSIS — The Free School Information System"
@@ -23,7 +27,7 @@ class CoreConfig(AppConfig):
         "Repository": "https://edugit.org/AlekSIS/official/AlekSIS/",
     }
     licence = "EUPL-1.2+"
-    copyright = (
+    copyright_info = (
         ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
         ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
         ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),

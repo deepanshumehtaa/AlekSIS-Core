@@ -1,3 +1,4 @@
+from ast import literal_eval
 import os
 import pkgutil
 from datetime import datetime, timedelta
@@ -228,6 +229,6 @@ def objectgetter_optional(
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return eval(default) if default_eval else default
+            return literal_eval(default) if default_eval else default
 
     return get_object

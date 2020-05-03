@@ -125,10 +125,10 @@ class AppConfig(django.apps.AppConfig):
     @classmethod
     def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
         """Get copyright information tuples for application package."""
-        copyrights = getattr(cls, "copyright", tuple())
+        copyrights = getattr(cls, "copyright_info", tuple())
 
         copyrights_processed = []
-        for copyright in copyrights:
+        for copyright_info in copyrights:
             copyrights_processed.append(
                 (
                     # Sort copyright years and combine year ranges for display

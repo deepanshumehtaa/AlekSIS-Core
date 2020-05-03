@@ -191,11 +191,11 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     context = {}
 
     # Apply filter
-    filter = GroupFilter(request.GET, queryset=Group.objects.all())
-    context["filter"] = filter
+    filter_ = GroupFilter(request.GET, queryset=Group.objects.all())
+    context["filter"] = filter_
 
     # Paginate
-    paginator = Paginator(filter.qs, 1)
+    paginator = Paginator(filter_.qs, 1)
     page_number = request.POST.get("page", request.POST.get("old_page"))
 
     if page_number:

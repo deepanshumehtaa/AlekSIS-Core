@@ -276,7 +276,7 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
-    type = models.ForeignKey(
+    group_type = models.ForeignKey(
         "GroupType",
         on_delete=models.SET_NULL,
         related_name="type",
@@ -469,6 +469,7 @@ class Announcement(ExtensibleModel):
 
     def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
         """Get all recipients.
+
         Get all recipients for this announcement
         with a special content type (provided through model)
         """

@@ -16,7 +16,7 @@ from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
-@reversion.register()
+@reversion.register
 class ExtensibleModel(models.Model):
     """Base model for all objects in AlekSIS apps.
 
@@ -141,7 +141,7 @@ class ExtensibleModel(models.Model):
         cls.add_to_class(name, obj)
 
     @classmethod
-    def property(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
+    def property_(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a property."""
         cls._safe_add(property(func), func.__name__)
 
