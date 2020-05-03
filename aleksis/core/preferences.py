@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import ChoicePreference, FilePreference, StringPreference
 
+from .models import Person
 from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
@@ -149,6 +150,16 @@ class PrimaryGroupPattern(StringPreference):
     default = ""
     required = False
     verbose_name = _("Regular expression to match primary group, e.g. '^Class .*'")
+
+
+@site_preferences_registry.register
+class PrimaryGroupField(ChoicePreference):
+    section = account
+    name = "primary_group_field"
+    default = "name"
+    choices = Person.syncable_fields_choices()
+    required = False
+    verbose_name = _("Field on person to match primary group against")
 
 
 @site_preferences_registry.register

@@ -191,7 +191,9 @@ class Person(ExtensibleModel):
             )
             admin.save()
 
-    def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
+    def auto_select_primary_group(
+        self, pattern: Optional[str] = None, field: Optional[str] = None, force: bool = False
+    ) -> None:
         """Auto-select the primary group among the groups the person is member of.
 
         Uses either the pattern passed as argument, or the pattern configured system-wide.
@@ -200,10 +202,11 @@ class Person(ExtensibleModel):
         a primary group, unless force is True.
         """
         pattern = pattern or get_site_preferences()["account__primary_group_pattern"]
+        field = field or get_site_preferences()["account__primary_group_field"]
 
         if pattern:
             if force or not self.primary_group:
-                self.primary_group = self.member_of.filter(name__regex=pattern).first()
+                self.primary_group = self.member_of.filter(**{f"{field}__regex": pattern}).first()
 
 
 class DummyPerson(Person):

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
@@ -175,6 +175,17 @@ class ExtensibleModel(models.Model):
         field.json_field_name = "extended_data"
 
         cls._safe_add(field, name)
+
+    def syncable_fields(self) -> List[models.Field]:
+        """ Collect all fields that can be synced on a model """
+
+        return [field for field in self._meta.fields if (
+            field.editable and not field.auto_created and not field.is_relation)]
+
+    def syncable_fields_choices(self) -> Tuple[Tuple[str, str]]:
+        """ Collect all fields that can be synced on a model """
+
+        return tuple([(field.name, field.verbose_name) for field in self.syncable_fields()])
 
     class Meta:
         abstract = True
