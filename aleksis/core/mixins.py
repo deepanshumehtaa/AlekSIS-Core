@@ -176,16 +176,18 @@ class ExtensibleModel(models.Model):
 
         cls._safe_add(field, name)
 
-    def syncable_fields(self) -> List[models.Field]:
+    @classmethod
+    def syncable_fields(cls) -> List[models.Field]:
         """ Collect all fields that can be synced on a model """
 
-        return [field for field in self._meta.fields if (
+        return [field for field in cls._meta.fields if (
             field.editable and not field.auto_created and not field.is_relation)]
 
-    def syncable_fields_choices(self) -> Tuple[Tuple[str, str]]:
+    @classmethod
+    def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
         """ Collect all fields that can be synced on a model """
 
-        return tuple([(field.name, field.verbose_name) for field in self.syncable_fields()])
+        return tuple([(field.name, field.verbose_name) for field in cls.syncable_fields()])
 
     class Meta:
         abstract = True
