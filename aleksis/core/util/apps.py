@@ -13,7 +13,6 @@ from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
 
-
 User = get_user_model()
 
 
