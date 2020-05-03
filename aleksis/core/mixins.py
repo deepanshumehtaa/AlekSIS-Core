@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.models import ModelForm, ModelFormMetaclass
+from django.utils.functional import lazy
 
 import reversion
 from easyaudit.models import CRUDEvent
@@ -195,6 +196,12 @@ class ExtensibleModel(models.Model):
         return tuple(
             [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
         )
+
+    @classmethod
+    def syncable_fields_choices_lazy(cls) -> callable[[], Tuple[Tuple[str, str]]]:
+        """ Collect all fields that can be synced on a model """
+
+        return lazy(cls.syncable_field_choices, tuple)
 
     class Meta:
         abstract = True

@@ -157,7 +157,7 @@ class PrimaryGroupField(ChoicePreference):
     section = account
     name = "primary_group_field"
     default = "name"
-    choices = Person.syncable_fields_choices()
+    choices = Person.syncable_fields_choices_lazy()
     required = False
     verbose_name = _("Field on person to match primary group against")
 
