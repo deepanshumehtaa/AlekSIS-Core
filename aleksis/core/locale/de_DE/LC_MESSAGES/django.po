@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-01 13:06+0000\n"
-"PO-Revision-Date: 2020-05-03 10:24+0000\n"
+"PO-Revision-Date: 2020-05-03 10:33+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
@@ -686,39 +686,40 @@ msgid ""
 "              licences are marked like this:\n"
 "            "
 msgstr ""
+"\n"
+"              Der Core und die offiziellen Apps von AlekSIS sind unter der "
+"EUPL, Version 1.2 oder später, lizenziert. Für Lizenzinformationen\n"
+"zu Apps von Drittanbietern, wenn installiert, siehe direkt bei der "
+"jeweiligen App weiter unten auf dieser Seite. Die Lizenzen\n"
+"sind wie folgt markiert:\n"
+"            "
 
 #: aleksis/core/templates/core/about.html:45
 msgid "Free/Open Source Licence"
-msgstr ""
+msgstr "Freie/Open Source Lizenz"
 
 #: aleksis/core/templates/core/about.html:46
 msgid "Other Licence"
-msgstr ""
+msgstr "Andere Lizenz"
 
 #: aleksis/core/templates/core/about.html:50
 msgid "Full licence text"
-msgstr ""
+msgstr "Kompletter Lizenztext"
 
 #: aleksis/core/templates/core/about.html:51
-#, fuzzy
-#| msgid "More information →"
 msgid "More information about the EUPL"
-msgstr "Mehr Informationen →"
+msgstr "Weitere Informationen über die EUPL"
 
 #: aleksis/core/templates/core/about.html:90
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "              Valid for %(from)s\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "                    This app is licenced under %(licence)s.\n"
 "                  "
 msgstr ""
 "\n"
-"              Gültig für %(from)s\n"
-"            "
+"                    Diese App ist unter %(licence)s lizenziert.\n"
+"                  "
 
 #: aleksis/core/templates/core/announcement/form.html:10
 #: aleksis/core/templates/core/announcement/form.html:17
@@ -810,13 +811,11 @@ msgstr "Angemeldet als"
 #: aleksis/core/templates/search/search.html:7
 #: aleksis/core/templates/search/search.html:22
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #: aleksis/core/templates/core/base.html:151
-#, fuzzy
-#| msgid "AlekSIS (School Information System)"
 msgid "About AlekSIS — The Free School Information System"
-msgstr "AlekSIS (Schulinformationssystem)"
+msgstr "Über AlekSIS — The Free School Information System"
 
 #: aleksis/core/templates/core/base.html:159
 msgid "Impress"
@@ -843,7 +842,7 @@ msgstr "Person editieren"
 #: aleksis/core/templates/core/group_full.html:28
 #: aleksis/core/templates/core/person_full.html:28
 msgid "Change preferences"
-msgstr ""
+msgstr "Einstellungen ändern"
 
 #: aleksis/core/templates/core/group_full.html:34
 msgid "Owners"
@@ -864,43 +863,41 @@ msgid ""
 "          change and click at \"Next\".\n"
 "        "
 msgstr ""
+"\n"
+"          Sie können diese Seite verwenden, um Kindgruppen zu Gruppen "
+"zuzuordnen. Bitte nutzen Sie die folgenden Filter, um die Gruppen "
+"auszuwählen, die Sie ändern möchten und klicken auf \"Weiter\".\n"
+"        "
 
 #: aleksis/core/templates/core/groups_child_groups.html:31
 msgid "Update selection"
-msgstr ""
+msgstr "Auswahl aktualisieren"
 
 #: aleksis/core/templates/core/groups_child_groups.html:35
 msgid "Clear all filters"
-msgstr ""
+msgstr "Alle Filter leeren"
 
 #: aleksis/core/templates/core/groups_child_groups.html:39
 msgid "Currently selected groups"
-msgstr ""
+msgstr "Aktuell ausgewählte Gruppen"
 
 #: aleksis/core/templates/core/groups_child_groups.html:52
 msgid "Start assigning child groups for this groups"
-msgstr ""
+msgstr "Zuordnung von Kindgruppen zu Gruppen starten"
 
 #: aleksis/core/templates/core/groups_child_groups.html:61
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "          There is no group with this id.\n"
-#| "        "
 msgid ""
 "\n"
 "            Please select some groups in order to go on with assigning.\n"
 "          "
 msgstr ""
 "\n"
-"          Es existiert keine Gruppe mit dieser ID.\n"
-"        "
+"            Bitte wählen Sie Gruppen aus, um Gruppen zuzuordnen.\n"
+"          "
 
 #: aleksis/core/templates/core/groups_child_groups.html:72
-#, fuzzy
-#| msgid "Create group"
 msgid "Current group:"
-msgstr "Gruppe erstellen"
+msgstr "Aktuelle Gruppe:"
 
 #: aleksis/core/templates/core/groups_child_groups.html:78
 msgid ""
@@ -934,7 +931,7 @@ msgstr "Speichern"
 #: aleksis/core/templates/core/groups_child_groups.html:112
 #: aleksis/core/templates/core/groups_child_groups.html:147
 msgid "Save and next"
-msgstr ""
+msgstr "Speichern und weiter"
 
 #: aleksis/core/templates/core/index.html:4
 msgid "Home"
