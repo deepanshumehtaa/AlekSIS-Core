@@ -2,14 +2,13 @@
 {% load i18n static dashboard %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
+{% block page_title %}{{ request.site.preferences.general__title }}{% endblock %}
 
 {% block extra_head %}
   {{ media }}
 {% endblock %}
 
 {% block content %}
-  <p class="flow-text">{% blocktrans %}AlekSIS (School Information System){% endblocktrans %}</p>
-
   {% if user.is_authenticated %}
     {% for notification in unread_notifications %}
       <div class="alert primary scale-transition">

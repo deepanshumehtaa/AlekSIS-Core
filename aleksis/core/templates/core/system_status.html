@@ -14,7 +14,7 @@
       {# Maintenance mode #}
       <div class="row">
         {% if maintenance_mode %}
-          <a class="btn btn-flat btn-flat-medium right waves-effect waves-red no-padding"
+          <a class="btn-flat btn-flat-medium right waves-effect waves-red no-padding"
              href="{% url 'maintenance_mode_off' %}"><i
                   class="material-icons small red-text center">power_settings_new</i></a>
           <div>
@@ -27,7 +27,7 @@
           </div>
           <span class="badge badge-danger mdi mdi-power"><a href="{% url 'maintenance_mode_off' %}"></a></span>
         {% else %}
-          <a class="btn btn-flat btn-flat-medium right waves-effect waves-green no-padding"
+          <a class="btn-flat btn-flat-medium right waves-effect waves-green no-padding"
              href="{% url 'maintenance_mode_on' %}"><i
                   class="material-icons small green-text center">power_settings_new</i></a>
           <div>

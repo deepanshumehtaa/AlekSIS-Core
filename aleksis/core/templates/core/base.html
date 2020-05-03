@@ -1,11 +1,11 @@
 {# -*- engine:django -*- #}
 
-
 {% load i18n menu_generator static sass_tags any_js pwa rules %}
+{% get_current_language as LANGUAGE_CODE %}
 
 
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
   {% include "core/meta.html" %}
 
@@ -25,15 +25,12 @@
 
   {# Add i18n names for calendar (for use in datepicker) #}
   {# Passing the locale is not necessary for the scripts to work, but prevents caching issues #}
-  {% get_current_language as LANGUAGE_CODE %}
   <script src="{% url "javascript-catalog" %}?locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
   <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}"
           type="text/javascript"></script>
 
-  {# Include jQuery to provide $(document).ready #}
+  {# Include jQuery early to provide $(document).ready #}
   {% include_js "jQuery" %}
-
-  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 
   {% block extra_head %}{% endblock %}
 </head>
@@ -174,6 +171,7 @@
 
 
 {% include_js "materialize" %}
+<script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

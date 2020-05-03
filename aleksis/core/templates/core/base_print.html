@@ -1,7 +1,9 @@
 {% load static i18n any_js sass_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
 
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
   {% include "core/meta.html" %}
 
