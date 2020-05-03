@@ -2,7 +2,6 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.http import HttpRequest
-from django.shortcuts import get_user_model
 
 from dynamic_preferences.registries import preference_models
 
@@ -14,9 +13,6 @@ from .registries import (
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
 from .util.sass_helpers import clean_scss
-
-
-User = get_user_model()
 
 
 class CoreConfig(AppConfig):

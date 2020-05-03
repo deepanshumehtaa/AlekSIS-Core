@@ -10,7 +10,6 @@ from django.utils.translation import gettext_lazy as _
 
 from templated_email import send_templated_mail
 
-from .models import Notification
 from .core_helpers import lazy_preference
 
 try:
