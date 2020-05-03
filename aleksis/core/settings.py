@@ -480,8 +480,7 @@ PWA_APP_SPLASH_SCREEN = [
             title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
         ),
         "media": (
-            "(device-width: 320px) and (device-height: 568px) and"
-            "(-webkit-device-pixel-ratio: 2)"
+            "(device-width: 320px) and (device-height: 568px) and" "(-webkit-device-pixel-ratio: 2)"
         ),
     }
 ]

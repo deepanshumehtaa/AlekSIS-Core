@@ -3,16 +3,9 @@ from django.forms import EmailField, ImageField, URLField
 from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.preferences import Section
-from dynamic_preferences.types import (
-    ChoicePreference,
-    FilePreference,
-    StringPreference,
-)
+from dynamic_preferences.types import ChoicePreference, FilePreference, StringPreference
 
-from .registries import (
-    person_preferences_registry,
-    site_preferences_registry,
-)
+from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
 general = Section("general")
@@ -127,14 +120,12 @@ class ImprintURL(StringPreference):
 class AdressingNameFormat(ChoicePreference):
     section = notification
     name = "addressing_name_format"
-    default = "german"
+    default = "first_last"
     required = False
     verbose_name = _("Name format for addressing")
     choices = (
-        (None, "-----"),
-        ("german", "John Doe"),
-        ("english", "Doe, John"),
-        ("dutch", "Doe John"),
+        ("first_last", "John Doe"),
+        ("last_fist", "Doe, John"),
     )
 
 
