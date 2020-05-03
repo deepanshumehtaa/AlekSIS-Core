@@ -15,6 +15,7 @@ from .core_helpers import copyright_years
 
 class AppConfig(django.apps.AppConfig):
     """An extended version of DJango's AppConfig container."""
+
     def ready(self):
         super().ready()
 

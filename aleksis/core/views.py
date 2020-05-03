@@ -380,6 +380,7 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
 
 class PermissionSearchView(PermissionRequiredMixin, SearchView):
     """Wrapper to apply permission to haystack's search view."""
+
     permission_required = "core.search"
 
     def create_response(self):

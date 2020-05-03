@@ -10,9 +10,9 @@ from uuid import uuid4
 from django.conf import settings
 from django.db.models import Model
 from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
-from django.shortcuts import get_object_or_404
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
@@ -113,6 +113,7 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     to other global settings to make them available to third-party apps that are not
     aware of dynamic preferences.
     """
+
     def _get_preference(section: str, name: str) -> Any:
         return get_site_preferences()[f"{section}__{name}"]
 
@@ -125,6 +126,7 @@ def lazy_get_favicon_url(
     title: str, size: int, rel: str, default: Optional[str] = None
 ) -> Callable[[str, str], Any]:
     """Lazily get the URL to a favicon image."""
+
     def _get_favicon_url(size: int, rel: str) -> Any:
         from favicon.models import Favicon  # noqa
 
@@ -220,6 +222,7 @@ def objectgetter_optional(
     model: Model, default: Optional[Any] = None, default_eval: bool = False
 ) -> Callable[[HttpRequest, Optional[int]], Model]:
     """Get an object by pk, defaulting to None."""
+
     def get_object(request: HttpRequest, id_: Optional[int] = None) -> Model:
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
