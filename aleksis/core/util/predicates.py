@@ -8,6 +8,7 @@ from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
+from .core_helpers import get_site_preferences
 from .core_helpers import has_person as has_person_helper
 
 
@@ -62,6 +63,19 @@ def has_any_object(perm: str, klass):
     def fn(user: User) -> bool:
         objs = get_objects_for_user(user, perm, klass)
         return len(objs) > 0
+
+    return fn
+
+
+def check_site_preference(section: str, pref: str):
+    """Builds predicate which checks the boolean value of a given site preference"""
+    name = f"check_site_preference:{section}__{pref}"
+
+    @predicate(name)
+    def fn() -> bool:
+        if isinstance(get_site_preferences()[f"{section}__{pref}"], bool):
+            return get_site_preferences()[f"{section}__{pref}"]
+        return False
 
     return fn
 
