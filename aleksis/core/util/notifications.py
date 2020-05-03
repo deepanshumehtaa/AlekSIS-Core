@@ -77,10 +77,10 @@ def send_notification(notification: Union[int, "Notification"], resend: bool = F
     channels = lazy_preference("notification", "channels")
 
     if isinstance(notification, int):
-        Notification = apps.get_model("core", "Notification")
-        notification = Notification.objects.get(pk=notification)
+        notification = apps.get_model("core", "Notification")
+        notification_ = notification.objects.get(pk=notification)
 
-    if resend or not notification.sent:
+    if resend or not notification_.sent:
         for channel in channels:
             name, check, send = _CHANNELS_MAP[channel]
             if check():

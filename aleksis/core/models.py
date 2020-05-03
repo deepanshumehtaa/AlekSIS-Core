@@ -185,8 +185,8 @@ class Person(ExtensibleModel):
     @classmethod
     def maintain_default_data(cls):
         # Ensure we have an admin user
-        User = get_user_model()
-        if not User.objects.filter(is_superuser=True).exists():
+        user = get_user_model()
+        if not user.objects.filter(is_superuser=True).exists():
             admin = User.objects.create_superuser(
                 username="admin", email="root@example.com", password="admin"
             )

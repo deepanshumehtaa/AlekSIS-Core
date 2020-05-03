@@ -187,7 +187,7 @@ class PureDjangoModel(object):
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
-    def __new__(mcs, name, bases, dct):
+    def __new__(cls, mcs, name, bases, dct):
         x = super().__new__(mcs, name, bases, dct)
 
         # Enforce a default for the base layout for forms that o not specify one

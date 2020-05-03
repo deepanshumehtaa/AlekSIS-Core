@@ -1,7 +1,6 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
-from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 
 from dynamic_preferences.registries import preference_models
@@ -14,8 +13,6 @@ from .registries import (
 from .util.apps import AppConfig
 from .util.core_helpers import has_person
 from .util.sass_helpers import clean_scss
-
-User = get_user_model()
 
 
 class CoreConfig(AppConfig):
@@ -39,13 +36,13 @@ class CoreConfig(AppConfig):
     def ready(self):
         super().ready()
 
-        SitePreferenceModel = self.get_model("SitePreferenceModel")
-        PersonPreferenceModel = self.get_model("PersonPreferenceModel")
-        GroupPreferenceModel = self.get_model("GroupPreferenceModel")
+        sitepreferencemodel = self.get_model("SitePreferenceModel")
+        personpreferencemodel = self.get_model("PersonPreferenceModel")
+        grouppreferencemodel = self.get_model("GroupPreferenceModel")
 
-        preference_models.register(SitePreferenceModel, site_preferences_registry)
-        preference_models.register(PersonPreferenceModel, person_preferences_registry)
-        preference_models.register(GroupPreferenceModel, group_preferences_registry)
+        preference_models.register(sitepreferencemodel, site_preferences_registry)
+        preference_models.register(personpreferencemodel, person_preferences_registry)
+        preference_models.register(grouppreferencemodel, group_preferences_registry)
 
     def preference_updated(
         self,
