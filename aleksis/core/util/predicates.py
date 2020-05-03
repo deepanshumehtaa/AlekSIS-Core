@@ -73,9 +73,7 @@ def is_site_preference_set(section: str, pref: str):
 
     @predicate(name)
     def fn() -> bool:
-        if isinstance(get_site_preferences()[f"{section}__{pref}"], bool):
-            return get_site_preferences()[f"{section}__{pref}"]
-        return False
+        return bool(get_site_preferences()[f"{section}__{pref}"])
 
     return fn
 
