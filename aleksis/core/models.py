@@ -117,7 +117,7 @@ class Person(ExtensibleModel):
     def get_absolute_url(self) -> str:
         return reverse("person_by_id", args=[self.id])
 
-    @property_
+    @property
     def primary_group_short_name(self) -> Optional[str]:
         """Return the short_name field of the primary group related object."""
         if self.primary_group:
@@ -135,12 +135,12 @@ class Person(ExtensibleModel):
         group, created = Group.objects.get_or_create(short_name=value, defaults={"name": value})
         self.primary_group = group
 
-    @property_
+    @property
     def full_name(self) -> str:
         """Full name of person in last name, first name order."""
         return f"{self.last_name}, {self.first_name}"
 
-    @property_
+    @property
     def adressing_name(self) -> str:
         """Full name of person in format configured for addressing."""
         if get_site_preferences()["notification__addressing_name_format"] == "last_first":
@@ -148,7 +148,7 @@ class Person(ExtensibleModel):
         elif get_site_preferences()["notification__addressing_name_format"] == "first_last":
             return f"{self.first_name} {self.last_name}"
 
-    @property_
+    @property
     def age(self):
         """Age of the person at current time."""
         return self.age_at(timezone.datetime.now().date())
@@ -289,7 +289,7 @@ class Group(ExtensibleModel):
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
 
-    @property_
+    @property
     def announcement_recipients(self):
         """Flat list of all members and owners to fulfill announcement API contract."""
         return list(self.members.all()) + list(self.owners.all())
@@ -459,7 +459,7 @@ class Announcement(ExtensibleModel):
         verbose_name=_("Date and time until when to show"), default=now_tomorrow,
     )
 
-    @property_
+    @property
     def recipient_persons(self) -> Sequence[Person]:
         """Return a list of Persons this announcement is relevant for."""
         persons = []
@@ -490,7 +490,7 @@ class AnnouncementRecipient(ExtensibleModel):
     Generalisation of a recipient for an announcement, used to wrap arbitrary
     objects that can receive announcements.
 
-    Contract: Objects to serve as recipient have a property_ announcement_recipients
+    Contract: Objects to serve as recipient have a property announcement_recipients
     returning a flat list of Person objects.
     """
 
@@ -502,7 +502,7 @@ class AnnouncementRecipient(ExtensibleModel):
     recipient_id = models.PositiveIntegerField()
     recipient = GenericForeignKey("content_type", "recipient_id")
 
-    @property_
+    @property
     def persons(self) -> Sequence[Person]:
         """Return a list of Persons selected by this recipient object.
 
