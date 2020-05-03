@@ -11,17 +11,10 @@
           later.{% endblocktrans %}</span>
         <p>
           {% blocktrans %}
-            This page is currently unavailable. If this error stays, contact your site administrators:
+            This page is currently unavailable. If this error persists, contact your site administrators:
           {% endblocktrans %}
         </p>
-        <ul>
-          {% for admin in ADMINS %}
-            <li>
-              {{ admin.0 }}
-              &lt;<a class="blue-text text-lighten-2" href="mailto:{{ admin.1 }}">{{ admin.1 }}</a>&gt;
-            </li>
-          {% endfor %}
-        </ul>
+        {% include "core/admins_list.html" %}
       </div>
     </div>
   </div>

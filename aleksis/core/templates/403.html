@@ -7,7 +7,7 @@
     <div class="card red">
       <div class="card white-text">
         <i class="material-icons small">error_outline</i>
-        <span class="card-title">{% blocktrans %}Error (403): You are not allowed to access the requested page or
+        <span class="card-title">{% trans "Error" %} (403): {% blocktrans %}You are not allowed to access the requested page or
           object.{% endblocktrans %}</span>
         <p>
           {% blocktrans %}
@@ -15,14 +15,7 @@
             administrators:
           {% endblocktrans %}
         </p>
-        <ul>
-          {% for admin in ADMINS %}
-            <li>
-              {{ admin.0 }}
-              &lt;<a class="blue-text text-lighten-2" href="mailto:{{ admin.1 }}">{{ admin.1 }}</a>&gt;
-            </li>
-          {% endfor %}
-        </ul>
+        {% include "core/admins_list.html" %}
       </div>
     </div>
   </div>
