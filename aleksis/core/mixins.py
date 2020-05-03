@@ -17,8 +17,14 @@ from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
-@reversion.register
-class ExtensibleModel(models.Model):
+class ExtensibleModelVersioning(type):
+    """ Meta class to add django-reversion decorator. """
+
+    def __new__(mcls, name, bases, attrs):
+        return reversion.register(super().__new__, (name, bases, attrs))
+
+
+class ExtensibleModel(models.Model, metaclass=ExtensibleModelVersioning):
     """Base model for all objects in AlekSIS apps.
 
     This base model ensures all objects in AlekSIS apps fulfill the
