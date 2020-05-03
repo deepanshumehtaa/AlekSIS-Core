@@ -68,7 +68,7 @@ def has_any_object(perm: str, klass):
 
 
 def is_site_preference_set(section: str, pref: str):
-    """Builds predicate which checks the boolean value of a given site preference"""
+    """Check the boolean value of a given site preference."""
     name = f"check_site_preference:{section}__{pref}"
 
     @predicate(name)
