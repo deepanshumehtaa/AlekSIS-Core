@@ -4,26 +4,32 @@ AlekSIS — All-libre extensible kit for school information systems
 Warning
 -------
 
-**This is a preview version of AlekSIS. Do not use with sensitive data. Especially, do not grant access to students yet.**
-
+**This is an alpha version of AlekSIS, the free school information system.
+The AlekSIS team is looking for schools who want to help shape the 2.0
+final release and supports interested schools in operating AlekSIS.**
 
 What AlekSIS is
 ----------------
 
-AlekSIS is a web-based school information system (SIS) which can be used to
+`AlekSIS`_ is a web-based school information system (SIS) which can be used to
 manage and/or publish organisational subjects of educational institutions.
 
-It was originally developed together with Städt. Leibniz-Gymnasium Remscheid
-as a proprietary product. Five years after the school stole the original
-code base, as a complete re-implementation as well-designed, free and open
-source software, BiscuIT-ng was started. In the meantime, students from the
-Katharineum in Lübeck implemented School-Apps with the same goals and tools.
-In 2020, BiscuIT-ng and School-Apps were combined into AlekSIS.
+Formerly two separate projects (BiscuIT and SchoolApps), developed by
+`Teckids e.V.`_ and a team of students at `Katharineum zu Lübeck`_, they
+were merged into the AlekSIS project in 2020.
 
 AlekSIS is a platform based on Django, that provides central funstions
 and data structures that can be used by apps that are developed and provided
-seperately. The core can interact closely with the Debian Edu / Skolelinux
-system.
+seperately. The AlekSIS team also maintains a set of official apps which
+make AlekSIS a fully-featured software solutions for the information
+management needs of schools.
+
+By design, the platform can be used by schools to write their own apps for
+specific needs they face, also in coding classes. Students are empowered to
+create real-world applications that bring direct value to their environment.
+
+AlekSIS is part of the `schul-frei`_ project as a component in sustainable
+educational networks.
 
 Core features
 --------------
@@ -50,5 +56,7 @@ full licence text or on the `European Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
-.. _AlekSIS: https://edugit.org/AlekSIS/Official/AlekSIS
+.. _AlekSIS: https://aleksis.org/
+.. _Teckids e.V.: https://www.teckids.org/
+.. _Katharineum zu Lübeck: https://www.katharineum.de/
 .. _European Union Public Licence: https://eupl.eu/
