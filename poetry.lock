@@ -515,7 +515,7 @@ description = "simple Django app which allows you to upload a image and it rende
 name = "django-favicon-plus-reloaded"
 optional = false
 python-versions = "*"
-version = "1.0.3"
+version = "1.0.4"
 
 [package.dependencies]
 django = "*"
@@ -714,10 +714,6 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
-
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -2136,7 +2132,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "87813ab4f21b0c03f2150f7569c65fd6c8a29297d0585db468fcbcddb2e15a58"
+content-hash = "5217d3a75e13e6ba00c92314356383199f8969114b8f8540b64270192a7cd563"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2327,8 +2323,8 @@ django-easy-audit = [
     {file = "django_easy_audit-1.2.2b4-py3-none-any.whl", hash = "sha256:49ef3beea7bf439b349daa66d5e3d7624a7c9005d3bfd51f54d15dd5dcfaa202"},
 ]
 django-favicon-plus-reloaded = [
-    {file = "django-favicon-plus-reloaded-1.0.3.tar.gz", hash = "sha256:fdb198bb24437bee74c8e6ba659d29dff7a5b86348779de31ddbe99bdc5eb3f8"},
-    {file = "django_favicon_plus_reloaded-1.0.3-py3-none-any.whl", hash = "sha256:f56f7b5e146ebbf98456f567b442c1d7b5d5ff50ee34c7ea8d6f8584ffdb8556"},
+    {file = "django-favicon-plus-reloaded-1.0.4.tar.gz", hash = "sha256:90c761c636a338e6e9fb1d086649d82095085f92cff816c9cf074607f28c85a5"},
+    {file = "django_favicon_plus_reloaded-1.0.4-py3-none-any.whl", hash = "sha256:26e4316d41328a61ced52c7fc0ead795f0eb194d6a30311c34a9833c6fe30a7c"},
 ]
 django-filter = [
     {file = "django-filter-2.2.0.tar.gz", hash = "sha256:c3deb57f0dd7ff94d7dce52a047516822013e2b441bed472b722a317658cfd14"},
