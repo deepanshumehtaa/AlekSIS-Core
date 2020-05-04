@@ -1067,7 +1067,7 @@ description = "flake8 plugin that integrates isort ."
 name = "flake8-isort"
 optional = false
 python-versions = "*"
-version = "2.9.1"
+version = "3.0.0"
 
 [package.dependencies]
 flake8 = ">=3.2.1"
@@ -2121,7 +2121,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "695de9d129a07795fcf274b5fb05cf0bed7fb1fd6c9ec8d677135cc57fb13bc9"
+content-hash = "aef8b55262721c431617df4f0dc48bccc5f67da80496f678002b796b175ad47f"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2479,8 +2479,8 @@ flake8-fixme = [
     {file = "flake8_fixme-1.1.1-py2.py3-none-any.whl", hash = "sha256:226a6f2ef916730899f29ac140bed5d4a17e5aba79f00a0e3ae1eff1997cb1ac"},
 ]
 flake8-isort = [
-    {file = "flake8-isort-2.9.1.tar.gz", hash = "sha256:0d34b266080e1748412b203a1690792245011706b1858c203476b43460bf3652"},
-    {file = "flake8_isort-2.9.1-py2.py3-none-any.whl", hash = "sha256:a77df28778a1ac6ac4153339ebd9d252935f3ed4379872d4f8b84986296d8cc3"},
+    {file = "flake8-isort-3.0.0.tar.gz", hash = "sha256:3ce227b5c5342b6d63937d3863e8de8783ae21863cb035cf992cdb0ba5990aa3"},
+    {file = "flake8_isort-3.0.0-py2.py3-none-any.whl", hash = "sha256:f5322a85cea89998e0df954162fd35a1f1e5b5eb4fc0c79b5975aa2799106baa"},
 ]
 flake8-mypy = [
     {file = "flake8-mypy-17.8.0.tar.gz", hash = "sha256:47120db63aff631ee1f84bac6fe8e64731dc66da3efc1c51f85e15ade4a3ba18"},
