@@ -13,7 +13,7 @@ maintainers = ["Jonathan Weth <wethjo@katharineum.de>", "Dominik George <dominik
 license = "EUPL-1.2-or-later"
 homepage = "https://aleksis.org/"
 repository = "https://edugit.org/AlekSIS/official/AlekSIS"
-documentation = "https://aleksis.edugit.io/AlekSIS/docs/html/"
+documentation = "https://aleksis.org/AlekSIS/docs/html/"
 keywords = ["SIS", "education", "school", "digitisation", "school apps"]
 classifiers = [
     "Development Status :: 3 - Alpha",
