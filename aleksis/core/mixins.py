@@ -17,7 +17,7 @@ from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
-class _ExtensibleModelBase(models.ModelBase):
+class _ExtensibleModelBase(models.base.ModelBase):
     """Ensure predefined behaviour on model creation.
 
     This metaclass serves the following purposes:
@@ -26,11 +26,13 @@ class _ExtensibleModelBase(models.ModelBase):
     """
 
     def __new__(mcls, name, bases, attrs):
-        mcls = super().__new__(name, bases, attrs)
+        mcls = super().__new__(mcls, name, bases, attrs)
 
         if "Meta" not in attrs or not attrs["Meta"].abstract:
             # Register all non-abstract models with django-reversion
-            mcls = reversion.register(super().__new__(name, bases, attrs))
+            mcls = reversion.register(mcls)
+
+        return mcls
 
 
 class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
@@ -227,8 +229,8 @@ class PureDjangoModel(object):
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
-    def __new__(cls, mcs, name, bases, dct):
-        x = super().__new__(mcs, name, bases, dct)
+    def __new__(cls, name, bases, dct):
+        x = super().__new__(cls, name, bases, dct)
 
         # Enforce a default for the base layout for forms that o not specify one
         if hasattr(x, "layout"):
