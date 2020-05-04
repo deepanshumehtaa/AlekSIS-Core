@@ -154,6 +154,15 @@ class Person(ExtensibleModel):
         return f"\"{self.addressing_name}\" <{self.email}>"
 
     @property
+    def mail_sender_via(self) -> str:
+        """E-mail sender for via addresses, in "Name via Site <email>" format."""
+
+        site_mail = get_site_preferences()["mail__address"]
+        site_name = get_site_preferences()["general__title"]
+
+        return f"\"{self.addressing_name} via {site_name}\" <{site_mail}>"
+
+    @property
     def age(self):
         """Age of the person at current time."""
         return self.age_at(timezone.datetime.now().date())
