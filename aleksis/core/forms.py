@@ -36,7 +36,7 @@ class PersonAccountForm(forms.ModelForm):
         self.fields["last_name"].disabled = True
 
     def clean(self) -> None:
-        User = get_user_model()
+        user = get_user_model()
 
         if self.cleaned_data.get("new_user", None):
             if self.cleaned_data.get("user", None):
@@ -45,12 +45,12 @@ class PersonAccountForm(forms.ModelForm):
                     "new_user",
                     _("You cannot set a new username when also selecting an existing user."),
                 )
-            elif User.objects.filter(username=self.cleaned_data["new_user"]).exists():
+            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
                 # The user tried to create a new user with the name of an existing user
                 self.add_error("new_user", _("This username is already in use."))
             else:
                 # Create new User object and assign to form field for existing user
-                new_user_obj = User.objects.create_user(
+                new_user_obj = user.objects.create_user(
                     self.cleaned_data["new_user"],
                     self.instance.email,
                     first_name=self.instance.first_name,

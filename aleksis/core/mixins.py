@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.models import ModelForm, ModelFormMetaclass
+from django.utils.functional import lazy
 
 import reversion
 from easyaudit.models import CRUDEvent
@@ -176,6 +177,30 @@ class ExtensibleModel(models.Model):
 
         cls._safe_add(field, name)
 
+    @classmethod
+    def syncable_fields(cls) -> List[models.Field]:
+        """ Collect all fields that can be synced on a model """
+
+        return [
+            field
+            for field in cls._meta.fields
+            if (field.editable and not field.auto_created and not field.is_relation)
+        ]
+
+    @classmethod
+    def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
+        """ Collect all fields that can be synced on a model """
+
+        return tuple(
+            [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
+        )
+
+    @classmethod
+    def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
+        """ Collect all fields that can be synced on a model """
+
+        return lazy(cls.syncable_fields_choices, tuple)
+
     class Meta:
         abstract = True
 
@@ -187,7 +212,7 @@ class PureDjangoModel(object):
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
-    def __new__(mcs, name, bases, dct):
+    def __new__(cls, mcs, name, bases, dct):
         x = super().__new__(mcs, name, bases, dct)
 
         # Enforce a default for the base layout for forms that o not specify one

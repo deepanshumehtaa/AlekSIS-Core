@@ -4,7 +4,7 @@ from glob import glob
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import Settings as thumbnail_settings
+from easy_thumbnails.conf import settings as thumbnail_settings
 
 from .util.core_helpers import (
     get_app_packages,
