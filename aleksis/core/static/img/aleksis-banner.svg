@@ -10,13 +10,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="300mm"
-   height="260mm"
-   viewBox="0 0 300 260"
+   width="293.99948mm"
+   height="96.732994mm"
+   viewBox="0 0 293.99948 96.732994"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="aleksis-banner-shirt.svg">
+   sodipodi:docname="aleksis-banner.svg">
   <defs
      id="defs2">
     <linearGradient
@@ -130,40 +130,44 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.69999999"
-     inkscape:cx="292.89994"
-     inkscape:cy="535.58084"
+     inkscape:cx="281.56136"
+     inkscape:cy="-70.164043"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="1920"
-     inkscape:window-y="27"
+     inkscape:window-height="962"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
      inkscape:window-maximized="1"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <sodipodi:guide
-       position="235.19718,210.07385"
+       position="232.19718,49.803852"
        orientation="1,0"
        id="guide2367"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="44.63401,153.94725"
+       position="41.63401,-6.3227481"
        orientation="1,0"
        id="guide2369"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="115.86134,243.34891"
+       position="112.86134,83.078911"
        orientation="0,1"
        id="guide2405"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="109.44687,196.97765"
+       position="106.44687,36.707652"
        orientation="0,1"
        id="guide2407"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="90.943818,196.97766"
+       position="87.943818,36.707662"
        orientation="1,0"
        id="guide2691"
        inkscape:locked="false" />
@@ -184,7 +188,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-37)">
+     transform="translate(-3,-39.997002)">
     <g
        id="g938"
        transform="matrix(1.5379515,0,0,1.5379515,-65.338762,-42.304096)">
