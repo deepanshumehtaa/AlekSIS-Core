@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Any, Callable, List, Optional, Tuple, Union
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
@@ -84,7 +85,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     icon_ = "radio_button_unchecked"
 
     site = models.ForeignKey(
-        Site, on_delete=models.CASCADE, default=Site.objects.get_current, editable=False
+        Site, on_delete=models.CASCADE, default=settings.SITE_ID, editable=False
     )
     objects = CurrentSiteManager()
     objects_all_sites = models.Manager()
