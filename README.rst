@@ -96,8 +96,8 @@ https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 .. _Katharineum zu Lübeck: https://www.katharineum.de/
 .. _European Union Public Licence: https://eupl.eu/
 .. _schul-frei: https://schul-frei.org/
-.. _AlekSIS-App-Chronos: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Chronos
-.. _AlekSIS-App-DashboardFeeds: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-DashboardFeeds
-.. _AlekSIS-App-Hjelp: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Hjelp
-.. _AlekSIS-App-LDAP: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-LDAP
-.. _AlekSIS-App-Untis: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Untis
+.. _AlekSIS-App-Chronos: https://edugit.org/AlekSIS/official/AlekSIS-App-Chronos
+.. _AlekSIS-App-DashboardFeeds: https://edugit.org/AlekSIS/official/AlekSIS-App-DashboardFeeds
+.. _AlekSIS-App-Hjelp: https://edugit.org/AlekSIS/official/AlekSIS-App-Hjelp
+.. _AlekSIS-App-LDAP: https://edugit.org/AlekSIS/official/AlekSIS-App-LDAP
+.. _AlekSIS-App-Untis: https://edugit.org/AlekSIS/official/AlekSIS-App-Untis
