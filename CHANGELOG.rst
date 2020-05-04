@@ -7,40 +7,36 @@ Changelog
 New features
 ~~~~~~~~~~~~
 
-* Add frontend-ased announcement management
+* Frontend-ased announcement management
 * Auto-create Person on User creation
-* Generel LDAP import/export interface
-* Select primary group if unset
-* Support multiple recipient object for one announcement
-* Mich-Seite
-* Add support for defining group types
+* Select primary group by pattern if unset
+* Shortcut to personal information page
+* Support for defining group types
 * Add description to Person
-* Add age_at method and age property
+* age_at method and age property to Person
 * Synchronise AlekSIS groups with Django groups
-* Add celery worker celery-beat worker and celery broker to docker-compose.yml
-* Re-add django-dbbackup
+* Add celery worker, celery-beat worker and celery broker to docker-compose setup
 * Global search
-* Add license information page
+* License information page
 * Roles and permissions
 * User preferences
 * Additional fields for people per group
 * Support global permission flags by LDAP group
-* Remove legacy multi-tenant support
-* Generalise announcements
-* Allow custom menu entries (e.g. in footer)
+* Persistent announcements
+* Custom menu entries (e.g. in footer)
 * New logo for AlekSIS
-* Two factor authentication with Yubikey or OTP
+* Two factor authentication with Yubikey, OTP or SMS
+* Devs: Add ExtensibleModel to allow apps to add fields, properties
+* Devs: Support multiple recipient object for one announcement
 
 Minor changes
 ~~~~~~~~~~~~~
 
-* Add some CSS helper classes for colours
-* Show announcements on dashboard
-* Mandate use of AlekSIS base model
 * Make short_name for group optional
-* Drop import_ref field(s)
 * Generalised live loading of widgets for dashboard
-* Turn into installable web app
+* Devs: Add some CSS helper classes for colours
+* Devs: Mandate use of AlekSIS base model
+* Devs: Drop import_ref field(s); apps shold now define their own reference fields
 
 Bug fixes
 ~~~~~~~~~
@@ -48,7 +44,7 @@ Bug fixes
 * DateTimeField Announcement.valid_from received a naive datetime
 * Enable SASS processor in production
 * Fix too short fields
-* Load select2 externally
+* Load select2 locally
 
 `2.0a1`_
 --------
@@ -60,8 +56,8 @@ New features
 * Dashboard
 * Notifications via SMS (Twilio), Email or on the dashboard
 * Admin interface
+* Turn into installable, progressive web app
 * Devs: Background Tasks with Celery
-* Turn into installable PWA
 
 Minor changes
 ~~~~~~~~~~~~~
