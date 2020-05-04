@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-03 15:05+0200\n"
+"POT-Creation-Date: 2020-05-04 15:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Common data"
 msgstr ""
 
-#: forms.py:129 forms.py:169 menus.py:141 models.py:53
+#: forms.py:129 forms.py:169 menus.py:141 models.py:54
 #: templates/core/persons.html:8 templates/core/persons.html:9
 msgid "Persons"
 msgstr ""
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: forms.py:171 menus.py:149 models.py:248 templates/core/groups.html:8
+#: forms.py:171 menus.py:149 models.py:253 templates/core/groups.html:8
 #: templates/core/groups.html:9 templates/core/person_full.html:106
 msgid "Groups"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: menus.py:75 models.py:479 templates/core/announcement/list.html:7
+#: menus.py:75 models.py:487 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
 msgstr ""
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Decimal number"
 msgstr ""
 
-#: models.py:34 models.py:94
+#: models.py:34 models.py:95
 msgid "E-mail address"
 msgstr ""
 
@@ -218,384 +218,388 @@ msgstr ""
 msgid "URL / Link"
 msgstr ""
 
-#: models.py:52 templates/core/persons_accounts.html:36
+#: models.py:53 templates/core/persons_accounts.html:36
 msgid "Person"
 msgstr ""
 
-#: models.py:55
+#: models.py:56
 msgid "Can view address"
 msgstr ""
 
-#: models.py:56
+#: models.py:57
 msgid "Can view contact details"
 msgstr ""
 
-#: models.py:57
+#: models.py:58
 msgid "Can view photo"
 msgstr ""
 
-#: models.py:58
+#: models.py:59
 msgid "Can view persons groups"
 msgstr ""
 
-#: models.py:59
+#: models.py:60
 msgid "Can view personal details"
 msgstr ""
 
-#: models.py:64
+#: models.py:65
 msgid "female"
 msgstr ""
 
-#: models.py:64
+#: models.py:65
 msgid "male"
 msgstr ""
 
-#: models.py:72
+#: models.py:73
 msgid "Linked user"
 msgstr ""
 
-#: models.py:74
+#: models.py:75
 msgid "Is person active?"
 msgstr ""
 
-#: models.py:76
+#: models.py:77
 msgid "First name"
 msgstr ""
 
-#: models.py:77
+#: models.py:78
 msgid "Last name"
 msgstr ""
 
-#: models.py:79
+#: models.py:80
 msgid "Additional name(s)"
 msgstr ""
 
-#: models.py:83 models.py:255
+#: models.py:84 models.py:260
 msgid "Short name"
 msgstr ""
 
-#: models.py:86
+#: models.py:87
 msgid "Street"
 msgstr ""
 
-#: models.py:87
+#: models.py:88
 msgid "Street number"
 msgstr ""
 
-#: models.py:88
+#: models.py:89
 msgid "Postal code"
 msgstr ""
 
-#: models.py:89
+#: models.py:90
 msgid "Place"
 msgstr ""
 
-#: models.py:91
+#: models.py:92
 msgid "Home phone"
 msgstr ""
 
-#: models.py:92
+#: models.py:93
 msgid "Mobile phone"
 msgstr ""
 
-#: models.py:96
+#: models.py:97
 msgid "Date of birth"
 msgstr ""
 
-#: models.py:97
+#: models.py:98
 msgid "Sex"
 msgstr ""
 
-#: models.py:99
+#: models.py:100
 msgid "Photo"
 msgstr ""
 
-#: models.py:104
+#: models.py:105
 msgid "Guardians / Parents"
 msgstr ""
 
-#: models.py:111
+#: models.py:112
 msgid "Primary group"
 msgstr ""
 
-#: models.py:114 models.py:341 models.py:365 models.py:448 models.py:634
+#: models.py:115 models.py:346 models.py:370 models.py:455 models.py:643
 msgid "Description"
 msgstr ""
 
-#: models.py:229
+#: models.py:233
 msgid "Title of field"
 msgstr ""
 
-#: models.py:231
+#: models.py:235
 msgid "Type of field"
 msgstr ""
 
-#: models.py:235
+#: models.py:239
 msgid "Addtitional field for groups"
 msgstr ""
 
-#: models.py:236
+#: models.py:240
 msgid "Addtitional fields for groups"
 msgstr ""
 
-#: models.py:247
+#: models.py:252
 msgid "Group"
 msgstr ""
 
-#: models.py:249
+#: models.py:254
 msgid "Can assign child groups to groups"
 msgstr ""
 
-#: models.py:253
+#: models.py:258
 msgid "Long name"
 msgstr ""
 
-#: models.py:263 templates/core/group_full.html:37
+#: models.py:268 templates/core/group_full.html:37
 msgid "Members"
 msgstr ""
 
-#: models.py:266 templates/core/group_full.html:34
+#: models.py:271 templates/core/group_full.html:34
 msgid "Owners"
 msgstr ""
 
-#: models.py:273
+#: models.py:278
 msgid "Parent groups"
 msgstr ""
 
-#: models.py:281
+#: models.py:286
 msgid "Type of group"
 msgstr ""
 
-#: models.py:285
+#: models.py:290
 msgid "Additional fields"
 msgstr ""
 
-#: models.py:337
+#: models.py:342
 msgid "User"
 msgstr ""
 
-#: models.py:340 models.py:364 models.py:447
+#: models.py:345 models.py:369 models.py:454
 #: templates/core/announcement/list.html:18
 msgid "Title"
 msgstr ""
 
-#: models.py:343
+#: models.py:348
 msgid "Application"
 msgstr ""
 
-#: models.py:349
+#: models.py:354
 msgid "Activity"
 msgstr ""
 
-#: models.py:350
+#: models.py:355
 msgid "Activities"
 msgstr ""
 
-#: models.py:356
+#: models.py:361
 msgid "Sender"
 msgstr ""
 
-#: models.py:361
+#: models.py:366
 msgid "Recipient"
 msgstr ""
 
-#: models.py:366 models.py:614
+#: models.py:371 models.py:624
 msgid "Link"
 msgstr ""
 
-#: models.py:368
+#: models.py:373
 msgid "Read"
 msgstr ""
 
-#: models.py:369
+#: models.py:374
 msgid "Sent"
 msgstr ""
 
-#: models.py:382
+#: models.py:387
 msgid "Notification"
 msgstr ""
 
-#: models.py:383
+#: models.py:388
 msgid "Notifications"
 msgstr ""
 
-#: models.py:449
+#: models.py:456
 msgid "Link to detailed view"
 msgstr ""
 
-#: models.py:452
+#: models.py:459
 msgid "Date and time from when to show"
 msgstr ""
 
-#: models.py:455
+#: models.py:462
 msgid "Date and time until when to show"
 msgstr ""
 
-#: models.py:478
+#: models.py:486
 msgid "Announcement"
 msgstr ""
 
-#: models.py:515
+#: models.py:524
 msgid "Announcement recipient"
 msgstr ""
 
-#: models.py:516
+#: models.py:525
 msgid "Announcement recipients"
 msgstr ""
 
-#: models.py:566
+#: models.py:575
 msgid "Widget Title"
 msgstr ""
 
-#: models.py:567
+#: models.py:576
 msgid "Activate Widget"
 msgstr ""
 
-#: models.py:584
+#: models.py:594
 msgid "Dashboard Widget"
 msgstr ""
 
-#: models.py:585
+#: models.py:595
 msgid "Dashboard Widgets"
 msgstr ""
 
-#: models.py:591
+#: models.py:601
 msgid "Menu ID"
 msgstr ""
 
-#: models.py:603
+#: models.py:613
 msgid "Custom menu"
 msgstr ""
 
-#: models.py:604
+#: models.py:614
 msgid "Custom menus"
 msgstr ""
 
-#: models.py:611
+#: models.py:621
 msgid "Menu"
 msgstr ""
 
-#: models.py:613
+#: models.py:623
 msgid "Name"
 msgstr ""
 
-#: models.py:616
+#: models.py:625
 msgid "Icon"
 msgstr ""
 
-#: models.py:623
+#: models.py:631
 msgid "Custom menu item"
 msgstr ""
 
-#: models.py:624
+#: models.py:632
 msgid "Custom menu items"
 msgstr ""
 
-#: models.py:633
+#: models.py:642
 msgid "Title of type"
 msgstr ""
 
-#: models.py:637
+#: models.py:646
 msgid "Group type"
 msgstr ""
 
-#: models.py:638
+#: models.py:647
 msgid "Group types"
 msgstr ""
 
-#: models.py:647
+#: models.py:656
 msgid "Can view system status"
 msgstr ""
 
-#: models.py:648
+#: models.py:657
 msgid "Can link persons to accounts"
 msgstr ""
 
-#: models.py:649
+#: models.py:658
 msgid "Can manage data"
 msgstr ""
 
-#: models.py:650
+#: models.py:659
 msgid "Can impersonate"
 msgstr ""
 
-#: models.py:651
+#: models.py:660
 msgid "Can use search"
 msgstr ""
 
-#: models.py:652
+#: models.py:661
 msgid "Can change site preferences"
 msgstr ""
 
-#: models.py:653
+#: models.py:662
 msgid "Can change person preferences"
 msgstr ""
 
-#: models.py:654
+#: models.py:663
 msgid "Can change group preferences"
 msgstr ""
 
-#: preferences.py:26
+#: preferences.py:27
 msgid "Site title"
 msgstr ""
 
-#: preferences.py:35
+#: preferences.py:36
 msgid "Site description"
 msgstr ""
 
-#: preferences.py:44
+#: preferences.py:45
 msgid "Primary colour"
 msgstr ""
 
-#: preferences.py:53
+#: preferences.py:54
 msgid "Secondary colour"
 msgstr ""
 
-#: preferences.py:61
+#: preferences.py:62
 msgid "Logo"
 msgstr ""
 
-#: preferences.py:69
+#: preferences.py:70
 msgid "Favicon"
 msgstr ""
 
-#: preferences.py:77
+#: preferences.py:78
 msgid "PWA-Icon"
 msgstr ""
 
-#: preferences.py:86
+#: preferences.py:87
 msgid "Mail out name"
 msgstr ""
 
-#: preferences.py:95
+#: preferences.py:96
 msgid "Mail out address"
 msgstr ""
 
-#: preferences.py:105
+#: preferences.py:106
 msgid "Link to privacy policy"
 msgstr ""
 
-#: preferences.py:115
+#: preferences.py:116
 msgid "Link to imprint"
 msgstr ""
 
-#: preferences.py:125
+#: preferences.py:126
 msgid "Name format for addressing"
 msgstr ""
 
-#: preferences.py:141
+#: preferences.py:140
 msgid "Channels to use for notifications"
 msgstr ""
 
-#: preferences.py:151
+#: preferences.py:150
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr ""
 
-#: preferences.py:160
+#: preferences.py:159
+msgid "Field on person to match primary group against"
+msgstr ""
+
+#: preferences.py:171
 msgid "Display name of the school"
 msgstr ""
 
-#: preferences.py:169
+#: preferences.py:180
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 
