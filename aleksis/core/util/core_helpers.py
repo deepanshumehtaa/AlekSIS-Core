@@ -1,6 +1,5 @@
 import os
 import pkgutil
-from ast import literal_eval
 from datetime import datetime, timedelta
 from importlib import import_module
 from itertools import groupby
@@ -229,6 +228,6 @@ def objectgetter_optional(
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return literal_eval(default) if default_eval else default
+            return eval(default) if default_eval else default
 
     return get_object
