@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-04 15:39+0200\n"
-"PO-Revision-Date: 2020-05-03 14:32+0000\n"
-"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"PO-Revision-Date: 2020-05-04 15:09+0000\n"
+"Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
 "Language: de_DE\n"
@@ -132,7 +132,7 @@ msgstr "2FA"
 
 #: menus.py:47
 msgid "Me"
-msgstr "Mich"
+msgstr "Ich"
 
 #: menus.py:56 templates/dynamic_preferences/form.html:5
 msgid "Preferences"
@@ -489,7 +489,7 @@ msgstr "Name"
 
 #: models.py:625
 msgid "Icon"
-msgstr "Symbol"
+msgstr "Icon"
 
 #: models.py:631
 msgid "Custom menu item"
@@ -600,10 +600,8 @@ msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
 #: preferences.py:159
-#, fuzzy
-#| msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgid "Field on person to match primary group against"
-msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
+msgstr "Feld um Primärgruppen zu finden"
 
 #: preferences.py:171
 msgid "Display name of the school"
@@ -635,8 +633,8 @@ msgid ""
 "You are not allowed to access the requested page or\n"
 "          object."
 msgstr ""
-"Fehler(403): Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das "
-"angefragte Objekt zuzugreifen."
+"Es ist Ihnen nicht erlaubt, auf die angefragte Seite oder das angefragte\n"
+"             Objekt zuzugreifen."
 
 #: templates/403.html:13 templates/404.html:17
 msgid ""
@@ -656,7 +654,9 @@ msgstr ""
 msgid ""
 "The requested page or object was not\n"
 "          found."
-msgstr "Die angefragte Seite oder das angefragte Objekt wurde nicht gefunden."
+msgstr ""
+"Die angefragte Seite oder das angefragte Objekt wurde nicht\n"
+"            gefunden."
 
 #: templates/404.html:13
 msgid ""
@@ -675,7 +675,9 @@ msgstr ""
 msgid ""
 "An unexpected error has\n"
 "          occured."
-msgstr "Ein unerwarteter Fehler ist aufgetreten.."
+msgstr ""
+"Ein unerwarteter Fehler ist\n"
+"            aufgetreten."
 
 #: templates/500.html:13
 msgid ""
@@ -696,8 +698,8 @@ msgid ""
 "The maintenance mode is currently enabled. Please try again\n"
 "          later."
 msgstr ""
-"Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es später "
-"erneut."
+"Der Wartungsmodus ist aktuell aktiviert. Bitte versuchen Sie es\n"
+"            später erneut."
 
 #: templates/503.html:13
 msgid ""
@@ -708,8 +710,7 @@ msgid ""
 msgstr ""
 "\n"
 "            Diese Seite ist aktuell nicht erreichbar. Wenn dieser Fehler "
-"bestehen bleibt, kontaktieren Sie bitte einen Ihrer\n"
-"     Systemadministratoren:\n"
+"bestehen bleibt, kontaktieren Sie bitte einen Ihrer Systemadministratoren:\n"
 "          "
 
 #: templates/core/about.html:6 templates/core/about.html:15
@@ -927,7 +928,8 @@ msgstr ""
 "\n"
 "          Sie können diese Seite verwenden, um Kindgruppen zu Gruppen "
 "zuzuordnen. Bitte nutzen Sie die folgenden Filter, um die Gruppen "
-"auszuwählen, die Sie ändern möchten und klicken auf \"Weiter\".\n"
+"auszuwählen, die Sie \n"
+"          ändern möchten und klicken auf \"Weiter\".\n"
 "        "
 
 #: templates/core/groups_child_groups.html:31
@@ -1040,7 +1042,8 @@ msgid ""
 msgstr ""
 "\n"
 "            Ihr Administratorenkonto ist mit keiner Person verknüpft. "
-"Deshalb wurde Ihr Konto mit einer Dummyperson verknüpft.\n"
+"Deshalb\n"
+"            wurde Ihr Konto mit einer Dummyperson verknüpft.\n"
 "          "
 
 #: templates/core/no_person.html:19
@@ -1189,7 +1192,9 @@ msgstr "Als Benutzer verkleiden"
 msgid ""
 "No internet\n"
 "    connection."
-msgstr "Keine Internetverbindung."
+msgstr ""
+"Keine\n"
+"    Internetverbindung."
 
 #: templates/offline.html:10
 msgid ""
@@ -1204,9 +1209,10 @@ msgstr ""
 "\n"
 "      Es ist ein Fehler beim Aufrufen der Seite aufgetreten. Eventuell haben "
 "Sie keine Internetverbindung. Bitte prüfen Sie, ob WLAN oder mobile Daten "
-"aktiv sind, und probieren Sie es erneut. Wenn Sie der Meinung sind, dass Sie "
-"mit dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer "
-"Systemadministratoren:\n"
+"aktiv sind, \n"
+"      und probieren Sie es erneut. Wenn Sie der Meinung sind, dass Sie mit "
+"dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer \n"
+"      Systemadministratoren:\n"
 "    "
 
 #: templates/search/search.html:8
@@ -1227,7 +1233,7 @@ msgstr "Es konnten keine Suchergebnisse zu Ihrem Suchausdruck gefunden werden."
 
 #: templates/search/search.html:87
 msgid "Please enter a search term above."
-msgstr "Bitte geben Sie einen Suchausdruck ein"
+msgstr "Bitte geben Sie einen Suchausdruck ein."
 
 #: templates/templated_email/notification.email:3
 msgid "New notification for"
@@ -1485,8 +1491,8 @@ msgid ""
 msgstr ""
 "\n"
 "        Bitte geben Sie die Telefonnummer des Gerätes an,\n"
-" an die die SMS-Nachrichten geschickt werden sollen.\n"
-"Diese Nummer wird im nächsten Schritt überprüft.\n"
+"        an die die SMS-Nachrichten geschickt werden sollen. Diese Nummer "
+"wird im nächsten Schritt überprüft.\n"
 "      "
 
 #: templates/two_factor/core/setup.html:41
