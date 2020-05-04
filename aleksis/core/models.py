@@ -81,7 +81,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, unique=True
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True # noqa
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -257,7 +257,7 @@ class Group(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, unique=True, blank=True
+        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True # noqa
     )
 
     members = models.ManyToManyField(
