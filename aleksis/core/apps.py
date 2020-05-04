@@ -2,6 +2,7 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.http import HttpRequest
+from django.core.files.uploadedfile import TemporaryUploadedFile
 
 from dynamic_preferences.registries import preference_models
 
@@ -59,10 +60,15 @@ class CoreConfig(AppConfig):
             elif name in ("favicon", "pwa_icon"):
                 from favicon.models import Favicon  # noqa
 
-                Favicon.on_site.update_or_create(
-                    title=name,
-                    defaults={"isFavicon": name == "favicon", "faviconImage": new_value,},
-                )
+                is_favicon = name == "favicon"
+
+                if new_value:
+                    Favicon.on_site.update_or_create(
+                        title=name,
+                        defaults={"isFavicon": name == "favicon", "faviconImage": new_value, },
+                    )
+                else:
+                    Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()
 
     def post_migrate(
         self,
