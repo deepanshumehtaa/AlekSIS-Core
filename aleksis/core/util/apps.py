@@ -129,11 +129,11 @@ class AppConfig(django.apps.AppConfig):
             copyrights_processed.append(
                 (
                     # Sort copyright years and combine year ranges for display
-                    copyright[0]
-                    if isinstance(copyright[0], str)
-                    else copyright_years(copyright[0]),
-                    copyright[1],
-                    copyright[2],
+                    copyright_info[0]
+                    if isinstance(copyright_info[0], str)
+                    else copyright_years(copyright_info[0]),
+                    copyright_info[1],
+                    copyright_info[2],
                 )
             )
 
