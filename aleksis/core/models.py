@@ -149,6 +149,11 @@ class Person(ExtensibleModel):
             return f"{self.first_name} {self.last_name}"
 
     @property
+    def mail_sender(self) -> str:
+        """E-mail sender in "Name <email>" format."""
+        return f"\"{self.addressing_name}\" <{self.email}>"
+
+    @property
     def age(self):
         """Age of the person at current time."""
         return self.age_at(timezone.datetime.now().date())
