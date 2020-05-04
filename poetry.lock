@@ -441,7 +441,7 @@ description = "simple color field for your models with a nice color-picker in th
 name = "django-colorfield"
 optional = false
 python-versions = "*"
-version = "0.2.2"
+version = "0.3.0"
 
 [[package]]
 category = "main"
@@ -485,6 +485,7 @@ six = "*"
 reference = "7bee176d6a832c200d255bcd1e9d12c85cb1d4f8"
 type = "git"
 url = "https://github.com/hansegucker/django-dynamic-preferences"
+
 [[package]]
 category = "main"
 description = "Yet another Django audit log app, hopefully the simplest one."
@@ -502,7 +503,7 @@ description = "simple Django app which allows you to upload a image and it rende
 name = "django-favicon-plus-reloaded"
 optional = false
 python-versions = "*"
-version = "1.0.1"
+version = "1.0.3"
 
 [package.dependencies]
 django = "*"
@@ -2119,7 +2120,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "9ba47427abccbcd5c0720899f3dd7bbe03ed06893cfa00e5824362a3e6c82551"
+content-hash = "6353771d93da028b331ddc1665de5136574a7d01b8498fa8d72f5a212da6228d"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2291,8 +2292,8 @@ django-ckeditor = [
     {file = "django_ckeditor-5.9.0-py2.py3-none-any.whl", hash = "sha256:71c3c7bb46b0cbfb9712ef64af0d2a406eab233f44ecd7c42c24bdfa39ae3bde"},
 ]
 django-colorfield = [
-    {file = "django-colorfield-0.2.2.tar.gz", hash = "sha256:49cfce71365de88130e65ced8f2c5c4826b31e9ab0c5f0e721ff13a830b5be76"},
-    {file = "django_colorfield-0.2.2-py2-none-any.whl", hash = "sha256:ecb8af68f35028e35f973ddb687c2dcae86d028c6da1b72580c0d3fae915d3b7"},
+    {file = "django-colorfield-0.3.0.tar.gz", hash = "sha256:808fd1783be0331dc15f0d4e98d18e3b31257b4837ac89594b94f87170d6c6ce"},
+    {file = "django_colorfield-0.3.0-py2-none-any.whl", hash = "sha256:7bec0c7a8b3b170bf232f78ed23d2545ddc9c43cb2f45704ccdd57b948b29d8c"},
 ]
 django-dbbackup = [
     {file = "django-dbbackup-3.3.0.tar.gz", hash = "sha256:bb109735cae98b64ad084e5b461b7aca2d7b39992f10c9ed9435e3ebb6fb76c8"},
@@ -2307,8 +2308,8 @@ django-easy-audit = [
     {file = "django_easy_audit-1.2.2b4-py3-none-any.whl", hash = "sha256:49ef3beea7bf439b349daa66d5e3d7624a7c9005d3bfd51f54d15dd5dcfaa202"},
 ]
 django-favicon-plus-reloaded = [
-    {file = "django-favicon-plus-reloaded-1.0.1.tar.gz", hash = "sha256:ee48b9a86ee20e5285216dc76c69cc6e8bcdcb1ea83c2585785dff7a4eebfc7b"},
-    {file = "django_favicon_plus_reloaded-1.0.1-py3-none-any.whl", hash = "sha256:d796bb994aa648a1d9c8276674a4de4e6af3ef2583dcd4d45495b4d3df85e283"},
+    {file = "django-favicon-plus-reloaded-1.0.3.tar.gz", hash = "sha256:fdb198bb24437bee74c8e6ba659d29dff7a5b86348779de31ddbe99bdc5eb3f8"},
+    {file = "django_favicon_plus_reloaded-1.0.3-py3-none-any.whl", hash = "sha256:f56f7b5e146ebbf98456f567b442c1d7b5d5ff50ee34c7ea8d6f8584ffdb8556"},
 ]
 django-filter = [
     {file = "django-filter-2.2.0.tar.gz", hash = "sha256:c3deb57f0dd7ff94d7dce52a047516822013e2b441bed472b722a317658cfd14"},
@@ -2467,6 +2468,8 @@ flake8-builtins = [
 ]
 flake8-django = [
     {file = "flake8-django-0.0.4.tar.gz", hash = "sha256:7329ec2e2b8b194e8109639c534359014c79df4d50b14f4b85b8395edc5d6760"},
+    {file = "flake8_django-0.0.4-py3.5.egg", hash = "sha256:ca66462724acbcf241d29edec201dac40c05cc27ae118b5abb8d74066681402f"},
+    {file = "flake8_django-0.0.4-py3.7.egg", hash = "sha256:29721a4976f784921b140752234447af1192c4e4f989d0db4e2d9f7f7915fa86"},
 ]
 flake8-docstrings = [
     {file = "flake8-docstrings-1.5.0.tar.gz", hash = "sha256:3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717"},
