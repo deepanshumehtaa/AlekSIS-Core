@@ -409,7 +409,7 @@ def preferences(
             raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
-        instance = objectgetter_optional(Person, None, False)(request, pk)
+        instance = objectgetter_optional(Person, "request.user.person", True)(request, pk)
         form_class = PersonPreferenceForm
 
         if not request.user.has_perm("core.change_person_preferences", instance):
