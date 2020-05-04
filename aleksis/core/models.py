@@ -187,7 +187,7 @@ class Person(ExtensibleModel):
         # Ensure we have an admin user
         user = get_user_model()
         if not user.objects.filter(is_superuser=True).exists():
-            admin = User.objects.create_superuser(
+            admin = user.objects.create_superuser(
                 username="admin", email="root@example.com", password="admin"
             )
             admin.save()
