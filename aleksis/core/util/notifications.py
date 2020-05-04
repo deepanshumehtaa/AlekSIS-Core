@@ -33,7 +33,7 @@ def send_templated_sms(
 def _send_notification_email(notification: "Notification", template: str = "notification") -> None:
     context = {
         "notification": notification,
-        "notification_user": notification.recipient.adressing_name,
+        "notification_user": notification.recipient.addressing_name,
     }
     send_templated_mail(
         template_name=template,
@@ -48,7 +48,7 @@ def _send_notification_sms(
 ) -> None:
     context = {
         "notification": notification,
-        "notification_user": notification.recipient.adressing_name,
+        "notification_user": notification.recipient.addressing_name,
     }
     send_templated_sms(
         template_name=template,

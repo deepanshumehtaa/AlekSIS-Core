@@ -63,8 +63,9 @@
   <!-- Main nav (sidenav) -->
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li class="logo">
+      {% static "img/aleksis-banner.svg" as aleksis_banner %}
       <a id="logo-container" href="/" class="brand-logo">
-        <img src="{{ request.site.preferences.theme__logo.url }}"
+        <img src="{% firstof request.site.preferences.theme__logo.url aleksis_banner %}"
              alt="{{ request.site.preferences.general__title }} – Logo">
       </a>
     </li>
