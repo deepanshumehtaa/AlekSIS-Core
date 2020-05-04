@@ -17,16 +17,23 @@ from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
 
-class ExtensibleModelVersioning(type):
-    """Meta class to add django-reversion decorator."""
+class _ExtensibleModelBase(models.ModelBase):
+    """Ensure predefined behaviour on model creation.
+
+    This metaclass serves the following purposes:
+
+     - Register all AlekSIS models with django-reverseion
+    """
 
     def __new__(mcls, name, bases, attrs):
-        if not mcls["Meta"].abstract:
-            return reversion.register(super().__new__, (name, bases, attrs))
-        else:
-            return 
+        mcls = super().__new__(name, bases, attrs)
 
-class ExtensibleModel(models.Model, metaclass=ExtensibleModelVersioning):
+        if "Meta" not in attrs or not attrs["Meta"].abstract:
+            # Register all non-abstract models with django-reversion
+            mcls = reversion.register(super().__new__(name, bases, attrs))
+
+
+class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     """Base model for all objects in AlekSIS apps.
 
     This base model ensures all objects in AlekSIS apps fulfill the
