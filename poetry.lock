@@ -1036,7 +1036,7 @@ description = "Plugin to catch bad style specific to Django Projects"
 name = "flake8-django"
 optional = false
 python-versions = "*"
-version = "0.0.4"
+version = "1.0.0"
 
 [package.dependencies]
 flake8 = "*"
@@ -2468,9 +2468,7 @@ flake8-builtins = [
     {file = "flake8_builtins-1.5.2-py2.py3-none-any.whl", hash = "sha256:a0296d23da92a6f2494243b9f2039bfdb73f34aba20054c1b70b2a60c84745bb"},
 ]
 flake8-django = [
-    {file = "flake8-django-0.0.4.tar.gz", hash = "sha256:7329ec2e2b8b194e8109639c534359014c79df4d50b14f4b85b8395edc5d6760"},
-    {file = "flake8_django-0.0.4-py3.5.egg", hash = "sha256:ca66462724acbcf241d29edec201dac40c05cc27ae118b5abb8d74066681402f"},
-    {file = "flake8_django-0.0.4-py3.7.egg", hash = "sha256:29721a4976f784921b140752234447af1192c4e4f989d0db4e2d9f7f7915fa86"},
+    {file = "flake8-django-1.0.0.tar.gz", hash = "sha256:2c9e4b8bdcad3084d3a335a0e305cbf66cd9a2af937d66c50c859c1f966036b2"},
 ]
 flake8-docstrings = [
     {file = "flake8-docstrings-1.5.0.tar.gz", hash = "sha256:3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717"},
