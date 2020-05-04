@@ -56,19 +56,19 @@ Core features
 Official apps
 -------------
 
++--------------------------------------+-----------------------------+
 | App name                             | Purpose                     |
-| ------------------------------------ | ----------------------------|
-| [Chronos][AlekSIS-App-Chronos]       | Manage time tables          |
-| [Untis][AlekSIS-App-DashboardFeeds]  | RSS/Atom feed on dashboard  |
-| [Chronos][AlekSIS-App-Hjelp]         | Aiding for users            |
-| [LDAP][AlekSIS-App-LDAP]             | LDAP interface              |
-| [Untis][AlekSIS-App-Untis]           | Untis interface             |
-
-[AlekSIS-App-Chronos]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Chronos
-[AlekSIS-App-DashboardFeeds]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-DashboardFeeds
-[AlekSIS-App-Hjelp]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Hjelp
-[AlekSIS-App-LDAP]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-LDAP
-[AlekSIS-App-Untis]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Untis
++======================================+=============================+
+| `AlekSIS-App-Chronos`_               | Manage time tables          |
++--------------------------------------+-----------------------------+
+| `AlekSIS-App-DashboardFeeds`_        | RSS/Atom feed on dashboard  |
++--------------------------------------+-----------------------------+
+| `AlekSIS-App-Hjelp`_                 | Aiding for users            |
++--------------------------------------+-----------------------------+
+| `AlekSIS-App-LDAP`_                  | LDAP interface              |
++--------------------------------------+-----------------------------+
+| `AlekSIS-App-Untis`_                 | Untis interface             |
++--------------------------------------+-----------------------------+
 
 
 Licence
@@ -96,3 +96,8 @@ https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 .. _Katharineum zu Lübeck: https://www.katharineum.de/
 .. _European Union Public Licence: https://eupl.eu/
 .. _schul-frei: https://schul-frei.org/
+.. _AlekSIS-App-Chronos: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Chronos
+.. _AlekSIS-App-DashboardFeeds: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-DashboardFeeds
+.. _AlekSIS-App-Hjelp: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Hjelp
+.. _AlekSIS-App-LDAP: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-LDAP
+.. _AlekSIS-App-Untis: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Untis
