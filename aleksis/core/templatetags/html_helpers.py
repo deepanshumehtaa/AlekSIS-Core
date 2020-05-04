@@ -11,7 +11,6 @@ def add_class_to_el(value: str, arg: str) -> str:
 
     Example: {{ mymodel.myhtmlfield|add_class_to_el:"ul,browser-default"
     """
-
     el, cls = arg.split(",")
     soup = BeautifulSoup(value, "html.parser")
 

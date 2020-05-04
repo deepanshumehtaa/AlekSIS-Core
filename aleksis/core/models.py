@@ -1,3 +1,5 @@
+# flake8: noqa: DJ01
+
 from datetime import date, datetime
 from typing import Iterable, List, Optional, Sequence, Union
 
@@ -81,7 +83,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True # noqa
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True  # noqa
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -151,16 +153,15 @@ class Person(ExtensibleModel):
     @property
     def mail_sender(self) -> str:
         """E-mail sender in "Name <email>" format."""
-        return f"\"{self.addressing_name}\" <{self.email}>"
+        return f'"{self.addressing_name}" <{self.email}>'
 
     @property
     def mail_sender_via(self) -> str:
         """E-mail sender for via addresses, in "Name via Site <email>" format."""
-
         site_mail = get_site_preferences()["mail__address"]
         site_name = get_site_preferences()["general__title"]
 
-        return f"\"{self.addressing_name} via {site_name}\" <{site_mail}>"
+        return f'"{self.addressing_name} via {site_name}" <{site_mail}>'
 
     @property
     def age(self):
@@ -271,7 +272,7 @@ class Group(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True # noqa
+        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True  # noqa
     )
 
     members = models.ManyToManyField(
