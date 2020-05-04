@@ -196,8 +196,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     @classmethod
     def syncable_fields(cls) -> List[models.Field]:
-        """ Collect all fields that can be synced on a model """
-
+        """Collect all fields that can be synced on a model."""
         return [
             field
             for field in cls._meta.fields
@@ -206,17 +205,18 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     @classmethod
     def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
-        """ Collect all fields that can be synced on a model """
-
+        """Collect all fields that can be synced on a model."""
         return tuple(
             [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
         )
 
     @classmethod
     def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
-        """ Collect all fields that can be synced on a model """
-
+        """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
+
+    def __str__(self) -> str:
+        return f"{self.__class__.meta.name} {self.pk}"
 
     class Meta:
         abstract = True
