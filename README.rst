@@ -34,7 +34,42 @@ educational networks.
 Core features
 --------------
 
-TBA.
+* For users:
+
+ * Custom menu entries (e.g. in footer)
+ * Global preferences
+ * Group types
+ * Manage announcements
+ * Manage groups
+ * Manage persons
+ * Notifications via SMS email or dashboard
+ * Rules and permissions for users, objects and pages
+ * Two factor authentication via Yubikey, OTP or SMS
+ * User preferences
+
+* For admins
+
+ * Asynchronous tasks with celery
+ * Authentication via LDAP
+ * Automatic backup of database, static and media files
+
+Official apps
+-------------
+
+| App name                             | Purpose                     |
+| ------------------------------------ | ----------------------------|
+| [Chronos][AlekSIS-App-Chronos]       | Manage time tables          |
+| [Untis][AlekSIS-App-DashboardFeeds]  | RSS/Atom feed on dashboard  |
+| [Chronos][AlekSIS-App-Hjelp]         | Aiding for users            |
+| [LDAP][AlekSIS-App-LDAP]             | LDAP interface              |
+| [Untis][AlekSIS-App-Untis]           | Untis interface             |
+
+[AlekSIS-App-Chronos]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Chronos
+[AlekSIS-App-DashboardFeeds]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-DashboardFeeds
+[AlekSIS-App-Hjelp]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Hjelp
+[AlekSIS-App-LDAP]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-LDAP
+[AlekSIS-App-Untis]: https://edugit.org/Teckids/AlekSIS/official/AlekSIS-App-Untis
+
 
 Licence
 -------
@@ -46,8 +81,8 @@ Licence
   Copyright © 2018, 2019, 2020 Julian Leucker <leuckeju@katharineum.de>
   Copyright © 2018, 2019, 2020 Hangzhi Yu <yuha@katharineum.de>
   Copyright © 2019, 2020 Dominik George <dominik.george@teckids.org>
-  Copyright © 2019, 2020 mirabilos <thorsten.glaser@teckids.org>
   Copyright © 2019, 2020 Tom Teichler <tom.teichler@teckids.org>
+  Copyright © 2019 mirabilos <thorsten.glaser@teckids.org>
 
   Licenced under the EUPL, version 1.2 or later
 
@@ -60,3 +95,4 @@ https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 .. _Teckids e.V.: https://www.teckids.org/
 .. _Katharineum zu Lübeck: https://www.katharineum.de/
 .. _European Union Public Licence: https://eupl.eu/
+.. _schul-frei: https://schul-frei.org/
