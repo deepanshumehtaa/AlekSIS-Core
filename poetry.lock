@@ -222,10 +222,11 @@ description = "An app for integrating Celery with Haystack."
 name = "celery-haystack"
 optional = true
 python-versions = "*"
-version = "0.3.1"
+version = "0.7.2"
 
 [package.dependencies]
-django-appconf = ">=0.2.1"
+django-appconf = ">=0.4.1"
+django-celery-transactions = ">=0.1.2"
 
 [[package]]
 category = "main"
@@ -426,6 +427,18 @@ celery = ">=4.4,<5.0"
 
 [[package]]
 category = "main"
+description = "Django transaction support for Celery tasks."
+name = "django-celery-transactions"
+optional = true
+python-versions = "*"
+version = "0.3.6"
+
+[package.dependencies]
+Django = ">=1.2.4"
+celery = ">=2.2.7"
+
+[[package]]
+category = "main"
 description = "Django admin CKEditor integration."
 name = "django-ckeditor"
 optional = false
@@ -485,7 +498,6 @@ six = "*"
 reference = "7bee176d6a832c200d255bcd1e9d12c85cb1d4f8"
 type = "git"
 url = "https://github.com/hansegucker/django-dynamic-preferences"
-
 [[package]]
 category = "main"
 description = "Yet another Django audit log app, hopefully the simplest one."
@@ -702,6 +714,10 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
+
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -2120,7 +2136,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "08a5c2dd2f9c67d2148f46157d7ca0b2694aa9e4fe719c5a313a02a14852ee7f"
+content-hash = "87813ab4f21b0c03f2150f7569c65fd6c8a29297d0585db468fcbcddb2e15a58"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2186,7 +2202,7 @@ celery = [
     {file = "celery-4.4.2.tar.gz", hash = "sha256:108a0bf9018a871620936c33a3ee9f6336a89f8ef0a0f567a9001f4aa361415f"},
 ]
 celery-haystack = [
-    {file = "celery-haystack-0.3.1.tar.gz", hash = "sha256:49992712e67b1f39afd294dca6ba2820f2d262b3137ad14cb0c57a05fa218725"},
+    {file = "celery-haystack-0.7.2.tar.gz", hash = "sha256:5ee3dfb9d5c1b0cf13b5a8e38cf3cbbde9009fe4470042f3087485743b6971fb"},
 ]
 certifi = [
     {file = "certifi-2020.4.5.1-py2.py3-none-any.whl", hash = "sha256:1d987a998c75633c40847cc966fcf5904906c920a7f17ef374f5aa4282abd304"},
@@ -2286,6 +2302,9 @@ django-celery-email = [
 django-celery-results = [
     {file = "django_celery_results-1.2.1-py2.py3-none-any.whl", hash = "sha256:a29ab580f0e38c66c39f51cc426bbdbb2a391b8cc0867df9dea748db2c961db2"},
     {file = "django_celery_results-1.2.1.tar.gz", hash = "sha256:e390f70cc43bbc2cd7c8e4607dc29ab6211a2ab968f93677583f0160921f670c"},
+]
+django-celery-transactions = [
+    {file = "django-celery-transactions-0.3.6.tar.gz", hash = "sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33"},
 ]
 django-ckeditor = [
     {file = "django-ckeditor-5.9.0.tar.gz", hash = "sha256:e4d112851a72c5bf8b586e1c674d34084cab16d28f2553ad15cc770d1e9639c7"},

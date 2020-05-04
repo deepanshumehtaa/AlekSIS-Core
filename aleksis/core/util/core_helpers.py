@@ -228,6 +228,6 @@ def objectgetter_optional(
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return eval(default) if default_eval else default
+            return eval(default) if default_eval else default  # noqa:S307
 
     return get_object

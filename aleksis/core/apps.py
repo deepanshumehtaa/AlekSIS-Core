@@ -2,7 +2,6 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.http import HttpRequest
-from django.core.files.uploadedfile import TemporaryUploadedFile
 
 from dynamic_preferences.registries import preference_models
 
@@ -65,7 +64,7 @@ class CoreConfig(AppConfig):
                 if new_value:
                     Favicon.on_site.update_or_create(
                         title=name,
-                        defaults={"isFavicon": name == "favicon", "faviconImage": new_value, },
+                        defaults={"isFavicon": name == "favicon", "faviconImage": new_value,},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()

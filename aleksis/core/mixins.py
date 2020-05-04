@@ -1,3 +1,5 @@
+# flake8: noqa: DJ12
+
 from datetime import datetime
 from typing import Any, Callable, List, Optional, Tuple, Union
 

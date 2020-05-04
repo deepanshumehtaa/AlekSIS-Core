@@ -6,9 +6,9 @@ from haystack import indexes
 Indexable = indexes.Indexable  # noqa
 
 if settings.HAYSTACK_SIGNAL_PROCESSOR == "celery_haystack.signals.CelerySignalProcessor":
-    from haystack.indexes import SearchIndex as BaseSearchIndex
-else:
     from celery_haystack.indexes import CelerySearchIndex as BaseSearchIndex
+else:
+    from haystack.indexes import SearchIndex as BaseSearchIndex
 
 
 class SearchIndex(BaseSearchIndex):
