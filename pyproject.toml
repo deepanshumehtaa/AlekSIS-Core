@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS"
-version = "2.0a1"
+version = "2.0a2"
 packages = [
     { include = "aleksis" }
 ]
@@ -9,14 +9,22 @@ include = ["CHANGELOG.rst", "CODE_OF_CONDUCT.rst", "CONTRIBUTING.rst", "LICENCE.
 
 description = "AlekSIS (School Information System) — Core"
 authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
-license = "EUPL-1.2"
+maintainers = ["Jonathan Weth <wethjo@katharineum.de>", "Dominik George <dominik.george@teckids.org>"]
+license = "EUPL-1.2-or-later"
 homepage = "https://aleksis.org/"
-repository = "https://edugit.org/AlekSIS/Official/AlekSIS"
-documentation = "https://aleksis.edugit.io/AlekSIS/docs/html/"
+repository = "https://edugit.org/AlekSIS/official/AlekSIS"
+documentation = "https://aleksis.org/AlekSIS/docs/html/"
+keywords = ["SIS", "education", "school", "digitisation", "school apps"]
 classifiers = [
+    "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
+    "Framework :: Django :: 3.0",
+    "Intended Audience :: Developers",
     "Intended Audience :: Education",
-    "Topic :: Education"
+    "Topic :: Education",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Typing :: Typed",
 ]
 
 [tool.poetry.dependencies]
