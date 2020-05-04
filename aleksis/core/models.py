@@ -141,11 +141,11 @@ class Person(ExtensibleModel):
         return f"{self.last_name}, {self.first_name}"
 
     @property
-    def adressing_name(self) -> str:
+    def addressing_name(self) -> str:
         """Full name of person in format configured for addressing."""
-        if get_site_preferences()["notification__addressing_name_format"] == "last_first":
+        if self.preferences["notification__addressing_name_format"] == "last_first":
             return f"{self.last_name}, {self.first_name}"
-        elif get_site_preferences()["notification__addressing_name_format"] == "first_last":
+        elif self.preferences["notification__addressing_name_format"] == "first_last":
             return f"{self.first_name} {self.last_name}"
 
     @property
