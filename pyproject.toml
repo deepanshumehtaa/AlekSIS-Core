@@ -85,6 +85,8 @@ spdx-license-list = "^0.4.0"
 license-expression = "^1.2"
 django-reversion = "^3.0.7"
 django-favicon-plus-reloaded = "^1.0.4"
+django-health-check = "^3.12.1"
+psutil = "^5.7.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

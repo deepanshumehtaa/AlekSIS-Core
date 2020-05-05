@@ -63,6 +63,11 @@ INSTALLED_APPS = [
     "polymorphic",
     "django_global_request",
     "dbbackup",
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.psutil",
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
@@ -648,6 +653,7 @@ elif HAYSTACK_BACKEND_SHORT == "whoosh":
 
 if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
     INSTALLED_APPS.append("celery_haystack")
+    INSTALLED_APPS.append("health_check.contrib.celery")
     HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 else:
     HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
@@ -655,3 +661,8 @@ else:
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
 DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+HEALTH_CHECK = {
+    "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
+    "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
+}

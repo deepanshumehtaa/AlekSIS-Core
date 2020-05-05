@@ -9,6 +9,7 @@ from django.views.i18n import JavaScriptCatalog
 import calendarweek.django
 import debug_toolbar
 from django_js_reverse.views import urls_js
+from health_check.urls import urlpatterns as health_urls
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
@@ -119,6 +120,7 @@ urlpatterns = [
         {"registry_name": "group"},
         name="preferences_group",
     ),
+    path("health/", include(health_urls)),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
