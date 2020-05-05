@@ -235,9 +235,9 @@ if _settings.get("ldap.uri", None):
 
     # Mapping of LDAP attributes to Django model fields
     AUTH_LDAP_USER_ATTR_MAP = {
-        "first_name": _settings.get("ldap.map.first_name", "givenName"),
-        "last_name": _settings.get("ldap.map.last_name", "sn"),
-        "email": _settings.get("ldap.map.email", "mail"),
+        "first_name": _settings.get("ldap.users.map.first_name", "givenName"),
+        "last_name": _settings.get("ldap.users.map.last_name", "sn"),
+        "email": _settings.get("ldap.users.map.email", "mail"),
     }
 
     # Discover flags by LDAP groups
