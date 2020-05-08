@@ -66,6 +66,12 @@ edit_person_predicate = has_person & (
 )
 add_perm("core.edit_person", edit_person_predicate)
 
+# Delete person
+delete_person_predicate = has_person & (
+    has_global_perm("core.delete_person") | has_object_perm("core.delete_person")
+)
+add_perm("core.delete_person", delete_person_predicate)
+
 # Link persons with accounts
 link_persons_accounts_predicate = has_person & has_global_perm("core.link_persons_accounts")
 add_perm("core.link_persons_accounts", link_persons_accounts_predicate)
@@ -87,6 +93,12 @@ edit_group_predicate = has_person & (
     has_global_perm("core.change_group") | has_object_perm("core.change_group")
 )
 add_perm("core.edit_group", edit_group_predicate)
+
+# Delete group
+delete_group_predicate = has_person & (
+    has_global_perm("core.delete_group") | has_object_perm("core.delete_group")
+)
+add_perm("core.delete_group", delete_group_predicate)
 
 # Assign child groups to groups
 assign_child_groups_to_groups_predicate = has_person & has_global_perm(

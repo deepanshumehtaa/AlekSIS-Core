@@ -222,17 +222,20 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups_child_groups.html", context)
 
 
-@permission_required(
-    "core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True)
-)
+@permission_required("core.edit_person", fn=objectgetter_optional(Person, None, False))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
 
-    person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
+    person = objectgetter_optional(Person, None, False)(request, id_)
     context["person"] = person
 
-    edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
+    if id_:
+        # Edit form for existing group
+        edit_person_form = EditGroupForm(request.POST or None, instance=person)
+    else:
+        # Empty form to create a new group
+        edit_person_form = EditPersonForm(request.POST or None)
 
     if request.method == "POST":
         if edit_person_form.is_valid():
@@ -444,3 +447,25 @@ def preferences(
     context["instance"] = instance
 
     return render(request, "dynamic_preferences/form.html", context)
+
+
+@permission_required("core.delete_person", fn=objectgetter_optional(Person, None, False))
+def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an person."""
+    if request.method == "POST":
+        person = objectgetter_optional(Person, None, False)(request, id_)
+        person.delete()
+        messages.success(request, _("The person has been deleted."))
+
+    return redirect("persons")
+
+
+@permission_required("core.delete_group", fn=objectgetter_optional(Group, None, False))
+def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an group."""
+    if request.method == "POST":
+        group = objectgetter_optional(Group, None, False)(request, id_)
+        group.delete()
+        messages.success(request, _("The group has been deleted."))
+
+    return redirect("groups")
