@@ -1125,6 +1125,17 @@ restructuredtext_lint = "*"
 
 [[package]]
 category = "dev"
+description = "Spellcheck variables, comments and docstrings"
+name = "flake8-spellcheck"
+optional = false
+python-versions = "*"
+version = "0.12.1"
+
+[package.dependencies]
+flake8 = ">3.0.0"
+
+[[package]]
+category = "dev"
 description = "Git Object Database"
 name = "gitdb"
 optional = false
@@ -2128,7 +2139,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "8123606bea67a68e0df620d9760ab06f724c70eea16a651be634a832a3fb3fe2"
+content-hash = "2040593dc69c99ddb3537eba0e002477064fb0f979e79fb6d8b65deb0fd474b5"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2505,6 +2516,9 @@ flake8-polyfill = [
 ]
 flake8-rst-docstrings = [
     {file = "flake8-rst-docstrings-0.0.13.tar.gz", hash = "sha256:b1b619d81d879b874533973ac04ee5d823fdbe8c9f3701bfe802bb41813997b4"},
+]
+flake8-spellcheck = [
+    {file = "flake8-spellcheck-0.12.1.tar.gz", hash = "sha256:dc336b51714d86dce45e42a4004c89159244bae200052beb0b0412107048ec64"},
 ]
 gitdb = [
     {file = "gitdb-4.0.5-py3-none-any.whl", hash = "sha256:91f36bfb1ab7949b3b40e23736db18231bf7593edada2ba5c3a174a7b23657ac"},
