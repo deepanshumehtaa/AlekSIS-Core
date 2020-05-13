@@ -1,6 +1,6 @@
 from rules import add_perm, always_allow
 
-from .models import Announcement, Group, Person
+from .models import AdditionalField, Announcement, Group, Person
 from .util.predicates import (
     has_any_object,
     has_global_perm,
@@ -194,3 +194,24 @@ change_group_preferences = has_person & (
     | is_group_owner
 )
 add_perm("core.change_group_preferences", change_group_preferences)
+
+# Edit additional field
+edit_additional_field_predicate = has_person & (
+    has_global_perm("core.change_additional_field")
+    | has_object_perm("core.change_additional_field")
+)
+add_perm("core.edit_additional_field", edit_additional_field_predicate)
+
+# Delete additional field
+delete_additional_field_predicate = has_person & (
+    has_global_perm("core.delete_additional_field")
+    | has_object_perm("core.delete_additional_field")
+)
+add_perm("core.delete_additional_field", delete_additional_field_predicate)
+
+# View additional fields
+view_additional_field_predicate = has_person & (
+    has_global_perm("core.view_additionalfield")
+    | has_any_object("core.view_additionalfield", AdditionalField)
+)
+add_perm("core.view_additionalfield", view_additional_field_predicate)
