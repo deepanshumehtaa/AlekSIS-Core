@@ -1,6 +1,6 @@
 from rules import add_perm, always_allow
 
-from .models import Announcement, Group, Person
+from .models import Announcement, Group, GroupType, Person
 from .util.predicates import (
     has_any_object,
     has_global_perm,
@@ -194,3 +194,21 @@ change_group_preferences = has_person & (
     | is_group_owner
 )
 add_perm("core.change_group_preferences", change_group_preferences)
+
+# Edit group type
+edit_group_type_predicate = has_person & (
+    has_global_perm("core.change_group_type") | has_object_perm("core.change_group_type")
+)
+add_perm("core.edit_group_type", edit_group_type_predicate)
+
+# Delete group type
+delete_group_type_predicate = has_person & (
+    has_global_perm("core.delete_group_type") | has_object_perm("core.delete_group_type")
+)
+add_perm("core.delete_group_type", delete_group_type_predicate)
+
+# View group types
+view_group_type_predicate = has_person & (
+    has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
+)
+add_perm("core.view_grouptype", view_group_type_predicate)

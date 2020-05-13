@@ -154,6 +154,17 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("Group types"),
+                    "url": "group_types",
+                    "icon": "category",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_group_type",
+                        )
+                    ],
+                },
+                {
                     "name": _("Persons and accounts"),
                     "url": "persons_accounts",
                     "icon": "person_add",
