@@ -10,6 +10,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   FF_NETWORK_PER_BUILD: "true"
   STORAGE_DRIVER: "vfs"
+  BUILDAH_ISOLATION: "chroot"
 
 cache:
   key:
