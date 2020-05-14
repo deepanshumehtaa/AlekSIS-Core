@@ -74,13 +74,13 @@ build_docker:
     name: debian:bullseye-slim
   before_script:
     - apt update
-    - apt install buildah -y
+    - apt install buildah sudo -y
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - buildah bud -f $CI_PROJECT_DIR/Dockerfile -t $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME $CI_PROJECT_DIR
-    - buildah bud -f $CI_PROJECT_DIR/docker/nginx/Dockerfile -t $CI_REGISTRY_IMAGE/nginx:CI_COMMIT_REF_NAME $CI_PROJECT_DIR/docker/nginx
-    - buildah push $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME
-    - buildah push $CI_REGISTRY_IMAGE/nginx:CI_COMMIT_REF_NAME
+    - echo "$CI_REGISTRY_PASSWORD" | sudo buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - sudo buildah bud -f $CI_PROJECT_DIR/Dockerfile -t $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME $CI_PROJECT_DIR
+    - sudo buildah bud -f $CI_PROJECT_DIR/docker/nginx/Dockerfile -t $CI_REGISTRY_IMAGE/nginx:CI_COMMIT_REF_NAME $CI_PROJECT_DIR/docker/nginx
+    - sudo buildah push $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME
+    - sudo buildah push $CI_REGISTRY_IMAGE/nginx:CI_COMMIT_REF_NAME
 #  only:
 #    - master
 #    - tags
