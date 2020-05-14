@@ -70,25 +70,20 @@ pages:
 build_docker:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor:v0.22.0
+    name: tomkukral/buildah
     entrypoint: [""]
   script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" >/kaniko/.docker/config.json
-    - /kaniko/executor
-       --context $CI_PROJECT_DIR
-       --dockerfile $CI_PROJECT_DIR/Dockerfile
-       --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-       --cache=true
-       --cleanup
-    - /kaniko/executor
-       --context $CI_PROJECT_DIR/docker/nginx
-       --dockerfile $CI_PROJECT_DIR/docker/nginx/Dockerfile
-       --destination $CI_REGISTRY_IMAGE/nginx:$CI_COMMIT_REF_NAME
-       --cache=true
-       --cleanup
-  only:
-    - master
-    - tags
+    - export STORAGE_DRIVER=vfs
+    - export BUILDAH_FORMAT=docker
+    - export REGISTRY_AUTH_FILE=${HOME}/auth.json
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - buildah bud -f builds/${IMAGE_NAME} -t ${IMAGE_NAME} .
+    - CONTAINER_ID=$(buildah from ${IMAGE_NAME})
+    - buildah commit --squash $CONTAINER_ID $FQ_IMAGE_NAME
+    - buildah push ${FQ_IMAGE_NAME}
+#  only:
+#    - master
+#    - tags
 
 deploy_demo-master:
   stage: deploy
