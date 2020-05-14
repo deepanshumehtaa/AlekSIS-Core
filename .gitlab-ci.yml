@@ -71,16 +71,11 @@ build_docker:
   stage: build
   image:
     name: tomkukral/buildah
-    entrypoint: [""]
   script:
     - export STORAGE_DRIVER=vfs
-    - export BUILDAH_FORMAT=docker
-    - export REGISTRY_AUTH_FILE=${HOME}/auth.json
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - buildah bud -f builds/${IMAGE_NAME} -t ${IMAGE_NAME} .
-    - CONTAINER_ID=$(buildah from ${IMAGE_NAME})
-    - buildah commit --squash $CONTAINER_ID $FQ_IMAGE_NAME
-    - buildah push ${FQ_IMAGE_NAME}
+    - buildah bud -f Dockerfile -t $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME $CI_PROJECT_DIR
+    - buildah push  $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME
 #  only:
 #    - master
 #    - tags
