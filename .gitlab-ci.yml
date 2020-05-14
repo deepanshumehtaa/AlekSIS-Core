@@ -73,6 +73,7 @@ build_docker:
   image:
     name: debian:bullseye-slim
   before_script:
+    - apt update
     - apt install buildah -y
   script:
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
