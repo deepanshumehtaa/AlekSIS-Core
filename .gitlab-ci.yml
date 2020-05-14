@@ -9,6 +9,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   FF_NETWORK_PER_BUILD: "true"
+  STORAGE_DRIVER: "vfs"
 
 cache:
   key:
@@ -70,9 +71,10 @@ pages:
 build_docker:
   stage: build
   image:
-    name: tomkukral/buildah
+    name: debian:bullseye-slim
+  before_script:
+    - apt install buildah -y
   script:
-    - export STORAGE_DRIVER=vfs
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - buildah bud -f $CI_PROJECT_DIR/Dockerfile -t $CI_REGISTRY_IMAGE:CI_COMMIT_REF_NAME $CI_PROJECT_DIR
     - buildah bud -f $CI_PROJECT_DIR/docker/nginx/Dockerfile -t $CI_REGISTRY_IMAGE/nginx:CI_COMMIT_REF_NAME $CI_PROJECT_DIR/docker/nginx
