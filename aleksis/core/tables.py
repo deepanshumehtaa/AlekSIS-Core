@@ -28,7 +28,7 @@ class GroupTypesTable(tables.Table):
     """Table to list group types."""
 
     class Meta:
-        attrs = {"class": "responsie-table centered highlight striped"}
+        attrs = {"class": "responsive-table highlight"}
 
     name = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
     description = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
