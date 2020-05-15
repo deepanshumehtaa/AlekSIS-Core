@@ -218,9 +218,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
 
-    def __str__(self) -> str:
-        return f"{self.__class__.meta.name} {self.pk}"
-
     class Meta:
         abstract = True
 
