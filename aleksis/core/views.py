@@ -447,7 +447,7 @@ def preferences(
     return render(request, "dynamic_preferences/form.html", context)
 
 
-@permission_required("core.edit_group_type", fn=objectgetter_optional(GroupType, None, False))
+@permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
 def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group_type."""
     context = {}
@@ -491,7 +491,7 @@ def group_types(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group_types.html", context)
 
 
-@permission_required("core.delete_group_type", fn=objectgetter_optional(GroupType, None, False))
+@permission_required("core.delete_grouptype", fn=objectgetter_optional(GroupType, None, False))
 def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group_type."""
     group_type = objectgetter_optional(GroupType, None, False)(request, id_)

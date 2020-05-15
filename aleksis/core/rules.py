@@ -196,16 +196,23 @@ change_group_preferences = has_person & (
 add_perm("core.change_group_preferences", change_group_preferences)
 
 # Edit group type
-edit_group_type_predicate = has_person & (
-    has_global_perm("core.change_group_type") | has_object_perm("core.change_group_type")
+change_group_type_predicate = has_person & (
+    has_global_perm("core.change_grouptype") | has_object_perm("core.change_grouptype")
 )
-add_perm("core.edit_group_type", edit_group_type_predicate)
+add_perm("core.edit_grouptype", change_group_type_predicate)
+
+# Create group type
+create_group_type_predicate = has_person & (
+    has_global_perm("core.create_grouptype") | has_object_perm("core.change_grouptype")
+)
+add_perm("core.create_grouptype", create_group_type_predicate)
+
 
 # Delete group type
 delete_group_type_predicate = has_person & (
-    has_global_perm("core.delete_group_type") | has_object_perm("core.delete_group_type")
+    has_global_perm("core.delete_grouptype") | has_object_perm("core.delete_grouptype")
 )
-add_perm("core.delete_group_type", delete_group_type_predicate)
+add_perm("core.delete_grouptype", delete_group_type_predicate)
 
 # View group types
 view_group_type_predicate = has_person & (
