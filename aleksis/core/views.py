@@ -466,7 +466,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
         if edit_group_type_form.is_valid():
             edit_group_type_form.save(commit=True)
 
-            messages.success(request, _("The group_type has been saved."))
+            messages.success(request, _("The group type has been saved."))
 
             return redirect("group_types")
 
