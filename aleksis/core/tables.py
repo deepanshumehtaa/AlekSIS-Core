@@ -28,7 +28,7 @@ class AdditionalFieldsTable(tables.Table):
     """Table to list group types."""
 
     class Meta:
-        attrs = {"class": "table table-striped table-bordered table-hover table-responsive-xl"}
+        attrs = {"class": "responsive-table hightlight"}
 
     title = tables.LinkColumn("edit_additional_field_by_id", args=[A("id")])
     delete = tables.LinkColumn(
