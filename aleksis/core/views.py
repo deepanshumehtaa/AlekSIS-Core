@@ -448,7 +448,7 @@ def preferences(
 
 
 @permission_required(
-    "core.edit_additional_field", fn=objectgetter_optional(AdditionalField, None, False)
+    "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
 )
 def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a additional_field."""
@@ -463,8 +463,11 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
             request.POST or None, instance=additional_field
         )
     else:
-        # Empty form to create a new additional_field
-        edit_additional_field_form = EditAdditionalFieldForm(request.POST or None)
+        if request.user.has_perm("core.create_additionalfield"):
+            # Empty form to create a new additional_field
+            edit_additional_field_form = EditAdditionalFieldForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_additional_field_form.is_valid():
@@ -498,7 +501,7 @@ def additional_fields(request: HttpRequest) -> HttpResponse:
 
 
 @permission_required(
-    "core.delete_additional_field", fn=objectgetter_optional(AdditionalField, None, False)
+    "core.delete_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
 )
 def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an additional_field."""

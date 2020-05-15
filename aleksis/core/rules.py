@@ -196,22 +196,30 @@ change_group_preferences = has_person & (
 add_perm("core.change_group_preferences", change_group_preferences)
 
 # Edit additional field
-edit_additional_field_predicate = has_person & (
-    has_global_perm("core.change_additional_field")
-    | has_object_perm("core.change_additional_field")
+change_additionalfield_predicate = has_person & (
+    has_global_perm("core.change_additionalfield")
+    | has_object_perm("core.change_additionalfield")
 )
-add_perm("core.edit_additional_field", edit_additional_field_predicate)
+add_perm("core.change_additionalfield", change_additionalfield_predicate)
+
+# Edit additional field
+create_additionalfield_predicate = has_person & (
+    has_global_perm("core.create_additionalfield")
+    | has_object_perm("core.create_additionalfield")
+)
+add_perm("core.create_additionalfield", create_additionalfield_predicate)
+
 
 # Delete additional field
-delete_additional_field_predicate = has_person & (
-    has_global_perm("core.delete_additional_field")
-    | has_object_perm("core.delete_additional_field")
+delete_additionalfield_predicate = has_person & (
+    has_global_perm("core.delete_additionalfield")
+    | has_object_perm("core.delete_additionalfield")
 )
-add_perm("core.delete_additional_field", delete_additional_field_predicate)
+add_perm("core.delete_additionalfield", delete_additionalfield_predicate)
 
 # View additional fields
-view_additional_field_predicate = has_person & (
+view_additionalfield_predicate = has_person & (
     has_global_perm("core.view_additionalfield")
     | has_any_object("core.view_additionalfield", AdditionalField)
 )
-add_perm("core.view_additionalfield", view_additional_field_predicate)
+add_perm("core.view_additionalfield", view_additionalfield_predicate)
