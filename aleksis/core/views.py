@@ -504,7 +504,7 @@ def additional_fields(request: HttpRequest) -> HttpResponse:
     "core.delete_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
 )
 def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
-    """View to delete an additional_field."""
+    """View to delete an additional field."""
     additional_field = objectgetter_optional(AdditionalField, None, False)(request, id_)
     additional_field.delete()
     messages.success(request, _("The additional field has been deleted."))
