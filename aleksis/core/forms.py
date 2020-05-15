@@ -285,7 +285,7 @@ class GroupPreferenceForm(PreferenceForm):
 
 
 class EditAdditionalFieldForm(forms.ModelForm):
-    """Form to manage group types."""
+    """Form to manage additional fields."""
 
     class Meta:
         model = AdditionalField
