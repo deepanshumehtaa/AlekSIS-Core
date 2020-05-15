@@ -34,3 +34,16 @@ class AdditionalFieldsTable(tables.Table):
     delete = tables.LinkColumn(
         "delete_additional_field_by_id", args=[A("id")], verbose_name=_("Delete"), text=_("Delete")
     )
+
+
+class GroupTypesTable(tables.Table):
+    """Table to list group types."""
+
+    class Meta:
+        attrs = {"class": "responsive-table highlight"}
+
+    name = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
+    description = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
+    delete = tables.LinkColumn(
+        "delete_group_type_by_id", args=[A("id")], verbose_name=_("Delete"), text=_("Delete")
+    )

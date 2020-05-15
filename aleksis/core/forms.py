@@ -10,7 +10,7 @@ from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm
-from .models import AdditionalField, Announcement, Group, Person
+from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -125,7 +125,7 @@ class EditGroupForm(ExtensibleForm):
     """Form to edit an existing group in the frontend."""
 
     layout = Layout(
-        Fieldset(_("Common data"), "name", "short_name"),
+        Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
         Fieldset(_("Additional data"), "additional_fields"),
     )
@@ -289,4 +289,12 @@ class EditAdditionalFieldForm(forms.ModelForm):
 
     class Meta:
         model = AdditionalField
+        exclude = []
+
+
+class EditGroupTypeForm(forms.ModelForm):
+    """Form to manage group types."""
+
+    class Meta:
+        model = GroupType
         exclude = []

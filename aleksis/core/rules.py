@@ -1,6 +1,6 @@
 from rules import add_perm, always_allow
 
-from .models import AdditionalField, Announcement, Group, Person
+from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
     has_any_object,
     has_global_perm,
@@ -195,25 +195,23 @@ change_group_preferences = has_person & (
 )
 add_perm("core.change_group_preferences", change_group_preferences)
 
+
 # Edit additional field
 change_additional_field_predicate = has_person & (
-    has_global_perm("core.change_additionalfield")
-    | has_object_perm("core.change_additionalfield")
+    has_global_perm("core.change_additionalfield") | has_object_perm("core.change_additionalfield")
 )
 add_perm("core.change_additionalfield", change_additional_field_predicate)
 
 # Edit additional field
 create_additional_field_predicate = has_person & (
-    has_global_perm("core.create_additionalfield")
-    | has_object_perm("core.create_additionalfield")
+    has_global_perm("core.create_additionalfield") | has_object_perm("core.create_additionalfield")
 )
 add_perm("core.create_additionalfield", create_additional_field_predicate)
 
 
 # Delete additional field
 delete_additional_field_predicate = has_person & (
-    has_global_perm("core.delete_additionalfield")
-    | has_object_perm("core.delete_additionalfield")
+    has_global_perm("core.delete_additionalfield") | has_object_perm("core.delete_additionalfield")
 )
 add_perm("core.delete_additionalfield", delete_additional_field_predicate)
 
@@ -223,3 +221,28 @@ view_additional_field_predicate = has_person & (
     | has_any_object("core.view_additionalfield", AdditionalField)
 )
 add_perm("core.view_additionalfield", view_additional_field_predicate)
+
+# Edit group type
+change_group_type_predicate = has_person & (
+    has_global_perm("core.change_grouptype") | has_object_perm("core.change_grouptype")
+)
+add_perm("core.edit_grouptype", change_group_type_predicate)
+
+# Create group type
+create_group_type_predicate = has_person & (
+    has_global_perm("core.create_grouptype") | has_object_perm("core.change_grouptype")
+)
+add_perm("core.create_grouptype", create_group_type_predicate)
+
+
+# Delete group type
+delete_group_type_predicate = has_person & (
+    has_global_perm("core.delete_grouptype") | has_object_perm("core.delete_grouptype")
+)
+add_perm("core.delete_grouptype", delete_group_type_predicate)
+
+# View group types
+view_group_type_predicate = has_person & (
+    has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
+)
+add_perm("core.view_grouptype", view_group_type_predicate)

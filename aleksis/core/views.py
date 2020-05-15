@@ -22,19 +22,28 @@ from .forms import (
     ChildGroupsForm,
     EditAdditionalFieldForm,
     EditGroupForm,
+    EditGroupTypeForm,
     EditPersonForm,
     GroupPreferenceForm,
     PersonPreferenceForm,
     PersonsAccountsFormSet,
     SitePreferenceForm,
 )
-from .models import AdditionalField, Announcement, DashboardWidget, Group, Notification, Person
+from .models import (
+    AdditionalField,
+    Announcement,
+    DashboardWidget,
+    Group,
+    GroupType,
+    Notification,
+    Person,
+)
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import AdditionalFieldsTable, GroupsTable, PersonsTable
+from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -510,3 +519,57 @@ def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The additional field has been deleted."))
 
     return redirect("additional_fields")
+
+
+@permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
+def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """View to edit or create a group_type."""
+    context = {}
+
+    group_type = objectgetter_optional(GroupType, None, False)(request, id_)
+    context["group_type"] = group_type
+
+    if id_:
+        # Edit form for existing group_type
+        edit_group_type_form = EditGroupTypeForm(request.POST or None, instance=group_type)
+    else:
+        # Empty form to create a new group_type
+        edit_group_type_form = EditGroupTypeForm(request.POST or None)
+
+    if request.method == "POST":
+        if edit_group_type_form.is_valid():
+            edit_group_type_form.save(commit=True)
+
+            messages.success(request, _("The group type has been saved."))
+
+            return redirect("group_types")
+
+    context["edit_group_type_form"] = edit_group_type_form
+
+    return render(request, "core/edit_group_type.html", context)
+
+
+@permission_required("core.view_grouptype")
+def group_types(request: HttpRequest) -> HttpResponse:
+    """List view for listing all group types."""
+    context = {}
+
+    # Get all group types
+    group_types = get_objects_for_user(request.user, "core.view_grouptype", GroupType)
+
+    # Build table
+    group_types_table = GroupTypesTable(group_types)
+    RequestConfig(request).configure(group_types_table)
+    context["group_types_table"] = group_types_table
+
+    return render(request, "core/group_types.html", context)
+
+
+@permission_required("core.delete_grouptype", fn=objectgetter_optional(GroupType, None, False))
+def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an group_type."""
+    group_type = objectgetter_optional(GroupType, None, False)(request, id_)
+    group_type.delete()
+    messages.success(request, _("The group type has been deleted."))
+
+    return redirect("group_types")
