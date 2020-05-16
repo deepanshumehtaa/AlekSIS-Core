@@ -14,7 +14,7 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% form form=edit_person_form %}{% endform %}
-    {% include "core/save_button.html" %}
+    {% include "core/partials/save_button.html" %}
   </form>
 
 {% endblock %}
