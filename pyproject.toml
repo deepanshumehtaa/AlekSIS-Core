@@ -79,7 +79,7 @@ django-guardian = "^2.2.0"
 rules = "^2.2"
 django-cache-memoize = "^0.1.6"
 django-haystack = {version="3.0b1", allow-prereleases = true}
-celery-haystack = {version="^0.7.0", optional=true}
+celery-haystack = {version="^0.10.0", optional=true}
 django-dbbackup = "^3.3.0"
 spdx-license-list = "^0.4.0"
 license-expression = "^1.2"
