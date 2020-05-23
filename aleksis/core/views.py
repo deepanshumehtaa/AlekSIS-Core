@@ -299,11 +299,12 @@ def system_status(request: HttpRequest) -> HttpResponse:
     if "django_celery_results" in settings.INSTALLED_APPS:
         from django_celery_results.models import TaskResult # noqa
         from celery.task.control import inspect # noqa
-        job_list = list(inspect().registered_tasks().values())[0]
-        results = []
-        for job in job_list:
-            results.append(TaskResult.objects.filter(task_name=job).last())
-        context["tasks"] = results
+        if inspect().registered_tasks():
+            job_list = list(inspect().registered_tasks().values())[0]
+            results = []
+            for job in job_list:
+                results.append(TaskResult.objects.filter(task_name=job).last())
+            context["tasks"] = results
 
     return render(request, "core/system_status.html", context)
 
