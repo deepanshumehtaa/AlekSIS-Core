@@ -698,10 +698,6 @@ version = "3.0.1"
 Django = ">=1.11.3"
 babel = "*"
 
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
-
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
@@ -1792,7 +1788,7 @@ description = "A simple tool/library for working with SPDX license definitions."
 name = "spdx-license-list"
 optional = false
 python-versions = "*"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 category = "dev"
@@ -2114,7 +2110,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "4ed9748bdca432a11eca81cfeccd2c141b3d3d895c8382a70bc79c622fd023d6"
+content-hash = "453a8ba6fb0bbfd5d53860e558c6f9299f6fbca6682338850fec4da5983d7458"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2889,8 +2885,8 @@ soupsieve = [
     {file = "soupsieve-1.9.6.tar.gz", hash = "sha256:7985bacc98c34923a439967c1a602dc4f1e15f923b6fcf02344184f86cc7efaa"},
 ]
 spdx-license-list = [
-    {file = "spdx_license_list-0.4.0-py3-none-any.whl", hash = "sha256:e5c2d1efc4067ff83609a200c731db6c656fdfd26144ac8b50755d6c72515453"},
-    {file = "spdx_license_list-0.4.0.tar.gz", hash = "sha256:f8b5eeda2a1c88d8ce15f6324d5a6128a462932a2e55b032f017ac9a0e61f1c7"},
+    {file = "spdx_license_list-0.5.0-py3-none-any.whl", hash = "sha256:65c9f598dee3249d529300eb08800f8bf3d0d902868669146ada65192ecd0507"},
+    {file = "spdx_license_list-0.5.0.tar.gz", hash = "sha256:40cd53ff16401bab7059e6d1ef61839196b12079929a2763a50145d3b6949bc1"},
 ]
 sphinx = [
     {file = "Sphinx-3.0.3-py3-none-any.whl", hash = "sha256:f5505d74cf9592f3b997380f9bdb2d2d0320ed74dd69691e3ee0644b956b8d83"},

@@ -81,7 +81,7 @@ django-cache-memoize = "^0.1.6"
 django-haystack = {version="3.0b1", allow-prereleases = true}
 celery-haystack = {version="^0.10.0", optional=true}
 django-dbbackup = "^3.3.0"
-spdx-license-list = "^0.4.0"
+spdx-license-list = "^0.5.0"
 license-expression = "^1.2"
 django-reversion = "^3.0.7"
 django-favicon-plus-reloaded = "^1.0.4"
