@@ -39,4 +39,4 @@ def test_logout(client, django_user_model):
     response = client.get(reverse("logout"), follow=True)
 
     assert response.status_code == 200
-    assert "Enter your credentials." in response.content.decode("utf-8")
+    assert "Please login to see this page." in response.content.decode("utf-8")
