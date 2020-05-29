@@ -89,32 +89,32 @@
                     {% if task.status == "PENDING" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny orange-text">hourglass_empty</i>
+                        <i class="material-icons orange-text">hourglass_empty</i>
                       </a>
                     {% elif task.status == "STARTED" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny orange-text">directions_run</i>
+                        <i class="material-icons orange-text">directions_run</i>
                       </a>
                     {% elif task.status == "SUCCESS" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny green-text">done</i>
+                        <i class="material-icons green-text">done</i>
                       </a>
                     {% elif task.status == "FAILURE" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny red-text">error</i>
+                        <i class="material-icons red-text">error</i>
                       </a>
                     {% elif task.status == "RETRY" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny orange-text">hourglass_full</i>
+                        <i class="material-icons orange-text">hourglass_full</i>
                       </a>
                     {% elif task.status == "REVOKED" %}
                       <a class="tooltipped" data-position="top"
                       data-tooltip="{{ task.status }}">
-                        <i class="material-icons tiny red-text">clear</i>
+                        <i class="material-icons red-text">clear</i>
                       </a>
                     {% endif %}
                   </td>
