@@ -1,6 +1,7 @@
 from typing import Optional
 
 from django.apps import apps
+from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -294,6 +295,16 @@ def data_management(request: HttpRequest) -> HttpResponse:
 def system_status(request: HttpRequest) -> HttpResponse:
     """View giving information about the system status."""
     context = {}
+
+    if "django_celery_results" in settings.INSTALLED_APPS:
+        from django_celery_results.models import TaskResult # noqa
+        from celery.task.control import inspect # noqa
+        if inspect().registered_tasks():
+            job_list = list(inspect().registered_tasks().values())[0]
+            results = []
+            for job in job_list:
+                results.append(TaskResult.objects.filter(task_name=job).last())
+            context["tasks"] = results
 
     return render(request, "core/system_status.html", context)
 
