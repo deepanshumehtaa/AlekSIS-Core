@@ -665,7 +665,7 @@ description = "A pluggable framework for adding two-factor authentication to Dja
 name = "django-otp"
 optional = false
 python-versions = "*"
-version = "0.9.0"
+version = "0.9.1"
 
 [package.dependencies]
 django = ">=1.11"
@@ -697,10 +697,6 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
-
-[package.dependencies.phonenumbers]
-optional = true
-version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -1003,10 +999,10 @@ description = "flake8 plugin to call black as a code style validator"
 name = "flake8-black"
 optional = false
 python-versions = "*"
-version = "0.1.2"
+version = "0.2.0"
 
 [package.dependencies]
-black = ">=19.3b0"
+black = "*"
 flake8 = ">=3.0.0"
 
 [[package]]
@@ -1792,7 +1788,7 @@ description = "A simple tool/library for working with SPDX license definitions."
 name = "spdx-license-list"
 optional = false
 python-versions = "*"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 category = "dev"
@@ -2114,7 +2110,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "4ed9748bdca432a11eca81cfeccd2c141b3d3d895c8382a70bc79c622fd023d6"
+content-hash = "3e85d3bfff56719272c13ad591ca4ccd7a2b72324a33c2192be383536b66b5f8"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2365,8 +2361,8 @@ django-middleware-global-request = [
     {file = "django-middleware-global-request-0.1.2.tar.gz", hash = "sha256:f6490759bc9f7dbde4001709554e29ca715daf847f2222914b4e47117dca9313"},
 ]
 django-otp = [
-    {file = "django-otp-0.9.0.tar.gz", hash = "sha256:f5faa95a3e85391e70e433205509fa070ed25646f15fcafd2cd2fbd987c33262"},
-    {file = "django_otp-0.9.0-py3-none-any.whl", hash = "sha256:334e2a0ece7e5d9de3263e17bd3b6aee2809d1f8d70555408d5bf8f0c33b13fb"},
+    {file = "django-otp-0.9.1.tar.gz", hash = "sha256:f456639addace8b6d1eb77f9edaada1a53dbb4d6f3c19f17c476c4e3e4beb73f"},
+    {file = "django_otp-0.9.1-py3-none-any.whl", hash = "sha256:0c67cf6f4bd6fca84027879ace9049309213b6ac81f88e954376a6b5535d96c4"},
 ]
 django-otp-yubikey = [
     {file = "django-otp-yubikey-0.5.2.tar.gz", hash = "sha256:f0b1881562fb42ee9f12c28d284cbdb90d1f0383f2d53a595373b080a19bc261"},
@@ -2454,7 +2450,7 @@ flake8-bandit = [
     {file = "flake8_bandit-2.1.2.tar.gz", hash = "sha256:687fc8da2e4a239b206af2e54a90093572a60d0954f3054e23690739b0b0de3b"},
 ]
 flake8-black = [
-    {file = "flake8-black-0.1.2.tar.gz", hash = "sha256:b79d8d868bd42dc2c1f27469b92a984ecab3579ad285a8708ea5f19bf6c1f3a2"},
+    {file = "flake8-black-0.2.0.tar.gz", hash = "sha256:10e7ff9f81f637a9471684e5624d6a32b11cba362b38df4e20fc8f761184440b"},
 ]
 flake8-builtins = [
     {file = "flake8-builtins-1.5.3.tar.gz", hash = "sha256:09998853b2405e98e61d2ff3027c47033adbdc17f9fe44ca58443d876eb00f3b"},
@@ -2889,8 +2885,8 @@ soupsieve = [
     {file = "soupsieve-1.9.6.tar.gz", hash = "sha256:7985bacc98c34923a439967c1a602dc4f1e15f923b6fcf02344184f86cc7efaa"},
 ]
 spdx-license-list = [
-    {file = "spdx_license_list-0.4.0-py3-none-any.whl", hash = "sha256:e5c2d1efc4067ff83609a200c731db6c656fdfd26144ac8b50755d6c72515453"},
-    {file = "spdx_license_list-0.4.0.tar.gz", hash = "sha256:f8b5eeda2a1c88d8ce15f6324d5a6128a462932a2e55b032f017ac9a0e61f1c7"},
+    {file = "spdx_license_list-0.5.0-py3-none-any.whl", hash = "sha256:65c9f598dee3249d529300eb08800f8bf3d0d902868669146ada65192ecd0507"},
+    {file = "spdx_license_list-0.5.0.tar.gz", hash = "sha256:40cd53ff16401bab7059e6d1ef61839196b12079929a2763a50145d3b6949bc1"},
 ]
 sphinx = [
     {file = "Sphinx-3.0.3-py3-none-any.whl", hash = "sha256:f5505d74cf9592f3b997380f9bdb2d2d0320ed74dd69691e3ee0644b956b8d83"},
