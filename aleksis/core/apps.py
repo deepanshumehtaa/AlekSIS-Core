@@ -2,6 +2,7 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.http import HttpRequest
+from django.utils.module_loading import autodiscover_modules
 
 from dynamic_preferences.registries import preference_models
 
@@ -35,6 +36,9 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         super().ready()
+
+        # Autodiscover various modules defined by AlekSIS
+        autodiscover_modules("model_extensions", "checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")

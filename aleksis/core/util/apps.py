@@ -19,15 +19,6 @@ class AppConfig(django.apps.AppConfig):
     def ready(self):
         super().ready()
 
-        # Run model extension code
-        try:
-            import_module(
-                ".".join(self.__class__.__module__.split(".")[:-1] + ["model_extensions"])
-            )
-        except ImportError:
-            # ImportErrors are non-fatal because model extensions are optional.
-            pass
-
         # Register default listeners
         pre_migrate.connect(self.pre_migrate, sender=self)
         post_migrate.connect(self.post_migrate, sender=self)
@@ -37,13 +28,6 @@ class AppConfig(django.apps.AppConfig):
 
         # Getting an app ready means it should look at its config once
         self.preference_updated(self)
-
-        # Register system checks of this app
-        try:
-            import_module(".".join(self.__class__.__module__.split(".")[:-1] + ["checks"]))
-        except ImportError:
-            # ImportErrors are non-fatal because checks are optional.
-            pass
 
     @classmethod
     def get_name(cls):
