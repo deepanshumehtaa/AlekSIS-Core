@@ -49,7 +49,7 @@
         {% if changed_fields %}
           <ul>
             {% for field, change in changed_fields.items %}
-              {% verbose_name "homework" "assignment" field as verbose_name %}
+              {% verbose_name event.content_type.app_label event.content_type.model field as verbose_name %}
               <li>
                 {{ verbose_name }}: <s>{{ change.0 }}</s> → {{ change.1 }}
               </li>
