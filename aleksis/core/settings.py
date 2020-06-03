@@ -294,6 +294,7 @@ LANGUAGES = [
     ("en", _("English")),
     ("de", _("German")),
     ("fr", _("French")),
+    ("nb", _("Norsk (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
