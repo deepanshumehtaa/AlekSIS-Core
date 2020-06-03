@@ -2113,7 +2113,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "3e85d3bfff56719272c13ad591ca4ccd7a2b72324a33c2192be383536b66b5f8"
+content-hash = "ff1ab179a3c2839b872d89640aff40836475facee5dc94e4ea96f90cde91d51d"
 python-versions = "^3.7"
 
 [metadata.files]
