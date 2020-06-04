@@ -73,13 +73,13 @@ def send_notification(notification: Union[int, "Notification"], resend: bool = F
     If resend is passed as True, the notification is sent even if it was
     previously marked as sent.
     """
-    channels = lazy_preference("notification", "channels")
-
     if isinstance(notification, int):
-        notification = apps.get_model("core", "Notification")
-        notification_ = notification.objects.get(pk=notification)
+        Notification = apps.get_model("core", "Notification")
+        notification = Notification.objects.get(pk=notification)
 
-    if resend or not notification_.sent:
+    channels = [notification.recipient.preferences["notification__channels"]]
+
+    if resend or not notification.sent:
         for channel in channels:
             name, check, send = _CHANNELS_MAP[channel]
             if check():

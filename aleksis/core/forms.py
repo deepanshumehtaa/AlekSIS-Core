@@ -127,6 +127,7 @@ class EditGroupForm(ExtensibleForm):
     layout = Layout(
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
+        Fieldset(_("Additional fields"), "additional_fields"),
     )
 
     class Meta:
