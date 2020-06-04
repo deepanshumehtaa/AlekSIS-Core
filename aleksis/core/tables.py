@@ -32,7 +32,11 @@ class AdditionalFieldsTable(tables.Table):
 
     title = tables.LinkColumn("edit_additional_field_by_id", args=[A("id")])
     delete = tables.LinkColumn(
-        "delete_additional_field_by_id", args=[A("id")], verbose_name=_("Delete"), text=_("Delete")
+        "delete_additional_field_by_id",
+        args=[A("id")],
+        verbose_name=_("Delete"),
+        text=_("Delete"),
+        attrs={"a": {"class": "btn-flat waves-effect waves-red"}},
     )
 
 
