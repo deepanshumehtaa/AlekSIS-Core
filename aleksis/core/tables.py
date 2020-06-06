@@ -43,6 +43,22 @@ class GroupsTable(tables.Table):
     school_year = tables.Column()
 
 
+class AdditionalFieldsTable(tables.Table):
+    """Table to list group types."""
+
+    class Meta:
+        attrs = {"class": "responsive-table hightlight"}
+
+    title = tables.LinkColumn("edit_additional_field_by_id", args=[A("id")])
+    delete = tables.LinkColumn(
+        "delete_additional_field_by_id",
+        args=[A("id")],
+        verbose_name=_("Delete"),
+        text=_("Delete"),
+        attrs={"a": {"class": "btn-flat waves-effect waves-red"}},
+    )
+
+
 class GroupTypesTable(tables.Table):
     """Table to list group types."""
 

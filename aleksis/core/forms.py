@@ -10,7 +10,7 @@ from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolYearRelatedExtensibleForm
-from .models import Announcement, Group, GroupType, Person, SchoolYear
+from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolYear
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -128,7 +128,7 @@ class EditGroupForm(SchoolYearRelatedExtensibleForm):
         Fieldset(_("School year"), "school_year"),
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
-        Fieldset(_("Additional fields"), "additional_fields"),
+        Fieldset(_("Additional data"), "additional_fields"),
     )
 
     class Meta:
@@ -152,6 +152,7 @@ class EditGroupForm(SchoolYearRelatedExtensibleForm):
             "parent_groups": ModelSelect2MultipleWidget(
                 search_fields=["name__icontains", "short_name__icontains"]
             ),
+            "additional_fields": ModelSelect2MultipleWidget(search_fields=["title__icontains",]),
         }
 
 
@@ -286,6 +287,14 @@ class GroupPreferenceForm(PreferenceForm):
     """Form to edit preferences valid for members of a group."""
 
     registry = group_preferences_registry
+
+
+class EditAdditionalFieldForm(forms.ModelForm):
+    """Form to manage additional fields."""
+
+    class Meta:
+        model = AdditionalField
+        exclude = []
 
 
 class EditGroupTypeForm(forms.ModelForm):

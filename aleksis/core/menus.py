@@ -197,6 +197,17 @@ MENUS = {
                         )
                     ],
                 },
+                {
+                    "name": _("Additional fields"),
+                    "url": "additional_fields",
+                    "icon": "style",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_additionalfield",
+                        )
+                    ],
+                },
             ],
         },
     ],

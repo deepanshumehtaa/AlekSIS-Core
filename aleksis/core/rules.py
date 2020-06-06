@@ -1,6 +1,6 @@
 from rules import add_perm, always_allow
 
-from .models import Announcement, Group, GroupType, Person
+from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
     has_any_object,
     has_global_perm,
@@ -194,6 +194,33 @@ change_group_preferences = has_person & (
     | is_group_owner
 )
 add_perm("core.change_group_preferences", change_group_preferences)
+
+
+# Edit additional field
+change_additional_field_predicate = has_person & (
+    has_global_perm("core.change_additionalfield") | has_object_perm("core.change_additionalfield")
+)
+add_perm("core.change_additionalfield", change_additional_field_predicate)
+
+# Edit additional field
+create_additional_field_predicate = has_person & (
+    has_global_perm("core.create_additionalfield") | has_object_perm("core.create_additionalfield")
+)
+add_perm("core.create_additionalfield", create_additional_field_predicate)
+
+
+# Delete additional field
+delete_additional_field_predicate = has_person & (
+    has_global_perm("core.delete_additionalfield") | has_object_perm("core.delete_additionalfield")
+)
+add_perm("core.delete_additionalfield", delete_additional_field_predicate)
+
+# View additional fields
+view_additional_field_predicate = has_person & (
+    has_global_perm("core.view_additionalfield")
+    | has_any_object("core.view_additionalfield", AdditionalField)
+)
+add_perm("core.view_additionalfield", view_additional_field_predicate)
 
 # Edit group type
 change_group_type_predicate = has_person & (

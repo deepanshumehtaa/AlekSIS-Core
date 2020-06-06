@@ -21,6 +21,7 @@ from .filters import GroupFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
+    EditAdditionalFieldForm,
     EditGroupForm,
     EditGroupTypeForm,
     EditPersonForm,
@@ -32,6 +33,7 @@ from .forms import (
 )
 from .mixins import AdvancedCreateView, AdvancedEditView
 from .models import (
+    AdditionalField,
     Announcement,
     DashboardWidget,
     Group,
@@ -45,7 +47,7 @@ from .registries import (
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import GroupsTable, GroupTypesTable, PersonsTable, SchoolYearTable
+from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable, SchoolYearTable
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -497,6 +499,71 @@ def preferences(
     context["instance"] = instance
 
     return render(request, "dynamic_preferences/form.html", context)
+
+
+@permission_required(
+    "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+)
+def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """View to edit or create a additional_field."""
+    context = {}
+
+    additional_field = objectgetter_optional(AdditionalField, None, False)(request, id_)
+    context["additional_field"] = additional_field
+
+    if id_:
+        # Edit form for existing additional_field
+        edit_additional_field_form = EditAdditionalFieldForm(
+            request.POST or None, instance=additional_field
+        )
+    else:
+        if request.user.has_perm("core.create_additionalfield"):
+            # Empty form to create a new additional_field
+            edit_additional_field_form = EditAdditionalFieldForm(request.POST or None)
+        else:
+            raise PermissionDenied()
+
+    if request.method == "POST":
+        if edit_additional_field_form.is_valid():
+            edit_additional_field_form.save(commit=True)
+
+            messages.success(request, _("The additional_field has been saved."))
+
+            return redirect("additional_fields")
+
+    context["edit_additional_field_form"] = edit_additional_field_form
+
+    return render(request, "core/edit_additional_field.html", context)
+
+
+@permission_required("core.view_additionalfield")
+def additional_fields(request: HttpRequest) -> HttpResponse:
+    """List view for listing all additional fields."""
+    context = {}
+
+    # Get all additional fields
+    additional_fields = get_objects_for_user(
+        request.user, "core.view_additionalfield", AdditionalField
+    )
+
+    # Build table
+    additional_fields_table = AdditionalFieldsTable(additional_fields)
+    RequestConfig(request).configure(additional_fields_table)
+    context["additional_fields_table"] = additional_fields_table
+
+    return render(request, "core/additional_fields.html", context)
+
+
+@permission_required(
+    "core.delete_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+)
+def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an additional field."""
+    additional_field = objectgetter_optional(AdditionalField, None, False)(request, id_)
+    additional_field.delete()
+    messages.success(request, _("The additional field has been deleted."))
+
+    return redirect("additional_fields")
 
 
 @permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
