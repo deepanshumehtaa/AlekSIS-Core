@@ -9,8 +9,8 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
-from .mixins import ExtensibleForm
-from .models import Announcement, Group, GroupType, Person
+from .mixins import ExtensibleForm, SchoolYearRelatedExtensibleForm
+from .models import Announcement, Group, GroupType, Person, SchoolYear
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -288,4 +288,14 @@ class EditGroupTypeForm(forms.ModelForm):
 
     class Meta:
         model = GroupType
+        exclude = []
+
+
+class SchoolYearForm(ExtensibleForm):
+    """Form for managing school years."""
+
+    layout = Layout("name", Row("date_start", "date_end"))
+
+    class Meta:
+        model = SchoolYear
         exclude = []

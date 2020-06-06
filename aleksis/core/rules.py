@@ -219,3 +219,13 @@ view_group_type_predicate = has_person & (
     has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
 )
 add_perm("core.view_grouptype", view_group_type_predicate)
+
+# School years
+view_school_year_predicate = has_person & has_global_perm("core.view_schoolyear")
+add_perm("core.view_schoolyear", view_school_year_predicate)
+
+create_school_year_predicate = has_person & has_global_perm("core.add_schoolyear")
+add_perm("core.create_schoolyear", create_school_year_predicate)
+
+edit_school_year_predicate = has_person & has_global_perm("core.change_schoolyear")
+add_perm("core.edit_schoolyear", edit_school_year_predicate)

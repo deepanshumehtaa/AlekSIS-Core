@@ -2,20 +2,20 @@ from typing import Optional
 
 from django.apps import apps
 from django.conf import settings
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from django_tables2 import RequestConfig
+from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
-from rules.contrib.views import permission_required
+from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from .filters import GroupFilter
 from .forms import (
@@ -27,15 +27,25 @@ from .forms import (
     GroupPreferenceForm,
     PersonPreferenceForm,
     PersonsAccountsFormSet,
+    SchoolYearForm,
     SitePreferenceForm,
 )
-from .models import Announcement, DashboardWidget, Group, GroupType, Notification, Person
+from .mixins import AdvancedCreateView, AdvancedEditView
+from .models import (
+    Announcement,
+    DashboardWidget,
+    Group,
+    GroupType,
+    Notification,
+    Person,
+    SchoolYear,
+)
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import GroupsTable, GroupTypesTable, PersonsTable
+from .tables import GroupsTable, GroupTypesTable, PersonsTable, SchoolYearTable
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -80,6 +90,37 @@ def about(request: HttpRequest) -> HttpResponse:
     )
 
     return render(request, "core/about.html", context)
+
+
+class SchoolYearListView(SingleTableView, PermissionRequiredMixin):
+    """Table of all school years."""
+
+    model = SchoolYear
+    table_class = SchoolYearTable
+    permission_required = "core.view_schoolyear"
+    template_name = "core/school_year/list.html"
+
+
+class SchoolYearCreateView(AdvancedCreateView, PermissionRequiredMixin):
+    """Create view for school years."""
+
+    model = SchoolYear
+    form_class = SchoolYearForm
+    permission_required = "core.add_schoolyear"
+    template_name = "core/school_year/create.html"
+    success_url = reverse_lazy("school_years")
+    success_message = _("The school year has been created.")
+
+
+class SchoolYearEditView(AdvancedEditView, PermissionRequiredMixin):
+    """Edit view for school years."""
+
+    model = SchoolYear
+    form_class = SchoolYearForm
+    permission_required = "core.edit_schoolyear"
+    template_name = "core/school_year/edit.html"
+    success_url = reverse_lazy("school_years")
+    success_message = _("The school year has been saved.")
 
 
 @permission_required("core.view_persons")

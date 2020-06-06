@@ -4,6 +4,24 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 
+class SchoolYearTable(tables.Table):
+    """Table to list persons."""
+
+    class Meta:
+        attrs = {"class": "responsive-table highlight"}
+
+    name = tables.LinkColumn("edit_school_year", args=[A("id")])
+    date_start = tables.Column()
+    date_end = tables.Column()
+    edit = tables.LinkColumn(
+        "edit_school_year",
+        args=[A("id")],
+        text=_("Edit"),
+        attrs={"a": {"class": "btn-flat waves-effect waves-orange orange-text"}},
+        verbose_name=_("Actions"),
+    )
+
+
 class PersonsTable(tables.Table):
     """Table to list persons."""
 
