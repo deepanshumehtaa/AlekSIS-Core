@@ -40,6 +40,7 @@ class GroupsTable(tables.Table):
 
     name = tables.LinkColumn("group_by_id", args=[A("id")])
     short_name = tables.LinkColumn("group_by_id", args=[A("id")])
+    school_year = tables.Column()
 
 
 class GroupTypesTable(tables.Table):

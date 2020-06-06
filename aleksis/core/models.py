@@ -305,7 +305,7 @@ class AdditionalField(ExtensibleModel):
         verbose_name_plural = _("Addtitional fields for groups")
 
 
-class Group(ExtensibleModel):
+class Group(SchoolYearRelatedExtensibleModel):
     """Group model.
 
     Any kind of group of persons in a school, including, but not limited
@@ -317,10 +317,16 @@ class Group(ExtensibleModel):
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
         permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
+        constraints = [
+            models.UniqueConstraint(fields=["school_year", "name"], name="unique_school_year_name"),
+            models.UniqueConstraint(
+                fields=["school_year", "short_name"], name="unique_school_year_short_name"
+            ),
+        ]
 
     icon_ = "group"
 
-    name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
+    name = models.CharField(verbose_name=_("Long name"), max_length=255)
     short_name = models.CharField(
         verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
     )
@@ -363,7 +369,10 @@ class Group(ExtensibleModel):
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
-        return f"{self.name} ({self.short_name})"
+        if self.school_year:
+            return f"{self.name} ({self.short_name}) ({self.school_year})"
+        else:
+            return f"{self.name} ({self.short_name})"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

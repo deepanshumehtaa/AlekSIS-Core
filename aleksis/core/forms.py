@@ -121,10 +121,11 @@ class EditPersonForm(ExtensibleForm):
         return PersonAccountForm.clean(self)
 
 
-class EditGroupForm(ExtensibleForm):
+class EditGroupForm(SchoolYearRelatedExtensibleForm):
     """Form to edit an existing group in the frontend."""
 
     layout = Layout(
+        Fieldset(_("School year"), "school_year"),
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
         Fieldset(_("Additional fields"), "additional_fields"),
@@ -169,7 +170,9 @@ class AnnouncementForm(ExtensibleForm):
     persons = forms.ModelMultipleChoiceField(
         Person.objects.all(), label=_("Persons"), required=False
     )
-    groups = forms.ModelMultipleChoiceField(Group.objects.all(), label=_("Groups"), required=False)
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.for_current_school_year_or_all(), label=_("Groups"), required=False
+    )
 
     layout = Layout(
         Fieldset(
@@ -203,6 +206,8 @@ class AnnouncementForm(ExtensibleForm):
             }
 
         super().__init__(*args, **kwargs)
+
+        self.fields["groups"].queryset = Group.objects.for_current_school_year_or_all()
 
     def clean(self):
         data = super().clean()
