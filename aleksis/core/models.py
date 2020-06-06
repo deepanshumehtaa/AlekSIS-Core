@@ -8,11 +8,13 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.decorators import classproperty
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -22,7 +24,8 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel, PureDjangoModel
+from .managers import CurrentSiteManagerWithoutMigrations, SchoolYearQuerySet
+from .mixins import ExtensibleModel, PureDjangoModel, SchoolYearRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -41,6 +44,53 @@ FIELD_CHOICES = (
     ("TimeField", _("Time")),
     ("URLField", _("URL / Link")),
 )
+
+
+class SchoolYear(ExtensibleModel):
+    """School year model.
+
+    This is used to manage start and end times of a school year and link data to it.
+    """
+
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolYearQuerySet)()
+
+    name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
+
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
+
+    @classmethod
+    def get_current(cls, day: Optional[date] = None):
+        if not day:
+            day = timezone.now().date()
+        try:
+            return cls.objects.on_day(day).first()
+        except SchoolYear.DoesNotExist:
+            return None
+
+    @classproperty
+    def current(cls):
+        return cls.get_current()
+
+    def clean(self):
+        """Ensure there is only one school year of each point of time."""
+        if self.date_end < self.date_start:
+            raise ValidationError(_("The start date must be earlier than the end date."))
+
+        qs = SchoolYear.objects.within_dates(self.date_start, self.date_end)
+        if self.pk:
+            qs.exclude(pk=self.pk)
+        if qs.exists():
+            raise ValidationError(
+                _("There is already a school year for this time or a part of this time.")
+            )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("School year")
+        verbose_name_plural = _("School years")
 
 
 class Person(ExtensibleModel):
@@ -272,7 +322,7 @@ class Group(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True  # noqa
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
     )
 
     members = models.ManyToManyField(
