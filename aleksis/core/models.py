@@ -73,7 +73,7 @@ class SchoolYear(ExtensibleModel):
         return cls.get_current()
 
     def clean(self):
-        """Ensure there is only one school year of each point of time."""
+        """Ensure there is only one school year at each point of time."""
         if self.date_end < self.date_start:
             raise ValidationError(_("The start date must be earlier than the end date."))
 
