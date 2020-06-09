@@ -12,6 +12,7 @@ from django_js_reverse.views import urls_js
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
+from .util.core_helpers import is_celery_enabled
 
 urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
@@ -157,6 +158,9 @@ if hasattr(settings, "TWILIO_ACCOUNT_SID"):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
 
     urlpatterns += [path("", include(tf_twilio_urls))]
+
+if is_celery_enabled():
+    urlpatterns.append(path("celery_progress/", include("celery_progress.urls")))
 
 # Serve javascript-common if in development
 if settings.DEBUG:
