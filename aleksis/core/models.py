@@ -704,3 +704,23 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
     class Meta:
         app_label = "core"
+
+
+class OAuth2Token(models.Model, PureDjangoModel):
+    """Model to store OAuth2 token."""
+
+    name = models.CharField(max_length=40, verbose_name=_("Name of token"))
+    token_type = models.CharField(max_length=40, verbose_name=_("Type of token"))
+    access_token = models.CharField(max_length=200, verbose_name=_("Access token"))
+    refresh_token = models.CharField(max_length=200, verbose_name=_("Refresh token"))
+    expires_at = models.PositiveIntegerField(verbose_name=_("Expires at"))
+    user = models.ForeignKey(get_user_model(), verbose_name=_("User"), on_delete=models.CASCADE)
+
+    def to_token(self):
+        """Return object as dictionary as used by authlib."""
+        return dict(
+            access_token=self.access_token,
+            token_type=self.token_type,
+            refresh_token=self.refresh_token,
+            expires_at=self.expires_at,
+        )
