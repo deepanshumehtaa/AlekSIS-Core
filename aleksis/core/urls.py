@@ -158,6 +158,11 @@ if hasattr(settings, "TWILIO_ACCOUNT_SID"):
 
     urlpatterns += [path("", include(tf_twilio_urls))]
 
+# Add OAuth2 login view if enabled
+if hasattr(settings, "AUTHLIB_OAUTH_CLIENTS"):
+    urlpatterns += [path("oauth2/login", views.oauth_login, name="oauth_login")]
+    urlpatterns += [path("oauth2/authorize", views.oauth_authorize, name="oauth_authorize")]
+
 # Serve javascript-common if in development
 if settings.DEBUG:
     urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))

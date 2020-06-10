@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from django_tables2 import RequestConfig
@@ -584,3 +585,33 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The group type has been deleted."))
 
     return redirect("group_types")
+
+
+def oauth_login(request: HttpRequest) -> HttpResponse:
+    """Redirect to OAuth2 provider."""
+    # Build url and redirect
+    from authlib.integrations.django_client import OAuth  # noqa
+    oauth = OAuth()
+
+    oauth.register("default")
+    redirect_uri = request.build_absolute_uri(reverse("oauth_authorize"))
+    return oauth.default.authorize_redirect(request, redirect_uri)
+
+
+def oauth_authorize(request: HttpRequest) -> HttpResponse:
+    """Get token from oauth provider."""
+    from authlib.integrations.django_client import OAuth  # noqa
+
+    oauth = OAuth()
+
+    oauth.register("default")
+    token = oauth.default.authorize_access_token(request)
+
+    # Get email address from OAuth provider, find user and login
+    resp = oauth.default.get("user", token=token)
+    user = get_user_model().objects.get(email=resp["user"]["email"])
+    if user:
+        login(request, user)
+        return redirect("index")
+    else:
+        raise PermissionDenied("No user found for OAuth user.")

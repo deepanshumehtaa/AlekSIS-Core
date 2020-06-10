@@ -656,3 +656,22 @@ else:
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
 DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+
+if _settings.get("auth.oauth2.enabled", False):
+    AUTHLIB_OAUTH_CLIENTS = {
+        "default": {
+            "client_id": _settings.get("auth.oauth2.id", ""),
+            "client_secret": _settings.get("auth.oauth2.secret", ""),
+            "request_token_url": _settings.get("auth.oauth2.token_url", ""),
+#            "request_token_params": _settings.get("auth.oauth2.token_params", None),
+            "access_token_url": _settings.get("auth.oauth2.access_url", ""),
+#            "access_token_params": _settings.get("auth.oauth2.access_params", None),
+#            "refresh_token_url": _settings.get("auth.oauth2.refresh)_token_url", None),
+            "authorize_url": _settings.get("auth.oauth2.authorize_url", ""),
+#            "api_base_url": _settings.get("auth.oauth2.api_url", ""),
+#            "client_kwargs": _settings.get("auth.oauth2.kwargs", None)
+        }
+    }
+
+    LOGIN_URL = "oauth_login"
