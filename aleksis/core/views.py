@@ -499,7 +499,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
 
     context["edit_additional_field_form"] = edit_additional_field_form
 
-    return render(request, "core/additionalfield/edit.html", context)
+    return render(request, "core/additional_field/edit.html", context)
 
 
 @permission_required("core.view_additionalfield")
@@ -517,7 +517,7 @@ def additional_fields(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(additional_fields_table)
     context["additional_fields_table"] = additional_fields_table
 
-    return render(request, "core/additionalfield/list.html", context)
+    return render(request, "core/additional_field/list.html", context)
 
 
 @permission_required(
@@ -557,7 +557,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
 
     context["edit_group_type_form"] = edit_group_type_form
 
-    return render(request, "core/grouptype/edit.html", context)
+    return render(request, "core/group_type/edit.html", context)
 
 
 @permission_required("core.view_grouptype")
@@ -573,7 +573,7 @@ def group_types(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(group_types_table)
     context["group_types_table"] = group_types_table
 
-    return render(request, "core/grouptype/list.html", context)
+    return render(request, "core/group_type/list.html", context)
 
 
 @permission_required("core.delete_grouptype", fn=objectgetter_optional(GroupType, None, False))
