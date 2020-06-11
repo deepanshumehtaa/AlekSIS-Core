@@ -343,3 +343,9 @@ def objectgetter_optional(
             return eval(default) if default_eval else default  # noqa:S307
 
     return get_object
+
+
+def handle_uploaded_file(f, filename: str):
+    with open(filename, "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
