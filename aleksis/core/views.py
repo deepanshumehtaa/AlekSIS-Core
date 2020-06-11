@@ -499,7 +499,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
 
     context["edit_additional_field_form"] = edit_additional_field_form
 
-    return render(request, "core/edit_additional_field.html", context)
+    return render(request, "core/additionalfield/edit.html", context)
 
 
 @permission_required("core.view_additionalfield")
@@ -517,7 +517,7 @@ def additional_fields(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(additional_fields_table)
     context["additional_fields_table"] = additional_fields_table
 
-    return render(request, "core/additional_fields.html", context)
+    return render(request, "core/additionalfield/list.html", context)
 
 
 @permission_required(
