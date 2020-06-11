@@ -233,12 +233,12 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/groups_child_groups.html", context)
 
 
-@permission_required("core.edit_person", fn=objectgetter_optional(Person, None, False))
+@permission_required("core.edit_person", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
 
-    person = objectgetter_optional(Person, None, False)(request, id_)
+    person = objectgetter_optional(Person)(request, id_)
     context["person"] = person
 
     if id_:
@@ -470,22 +470,22 @@ def preferences(
     return render(request, "dynamic_preferences/form.html", context)
 
 
-@permission_required("core.delete_person", fn=objectgetter_optional(Person, None, False))
+@permission_required("core.delete_person", fn=objectgetter_optional(Person))
 def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an person."""
     if request.method == "POST":
-        person = objectgetter_optional(Person, None, False)(request, id_)
+        person = objectgetter_optional(Person)(request, id_)
         person.delete()
         messages.success(request, _("The person has been deleted."))
 
     return redirect("persons")
 
 
-@permission_required("core.delete_group", fn=objectgetter_optional(Group, None, False))
+@permission_required("core.delete_group", fn=objectgetter_optional(Group))
 def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group."""
     if request.method == "POST":
-        group = objectgetter_optional(Group, None, False)(request, id_)
+        group = objectgetter_optional(Group)(request, id_)
         group.delete()
         messages.success(request, _("The group has been deleted."))
 

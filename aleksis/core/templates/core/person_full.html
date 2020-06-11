@@ -24,7 +24,7 @@
       {% endif %}
 
       {% if can_delete_person %}
-        <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light">
+        <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light red">
           <i class="material-icons left">delete</i>
           {% trans "Delete" %}
         </a>
