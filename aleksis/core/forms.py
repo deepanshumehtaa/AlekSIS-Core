@@ -172,7 +172,7 @@ class AnnouncementForm(ExtensibleForm):
         Person.objects.all(), label=_("Persons"), required=False
     )
     groups = forms.ModelMultipleChoiceField(
-        queryset=Group.objects.for_current_school_year_or_all(), label=_("Groups"), required=False
+        queryset=None, label=_("Groups"), required=False
     )
 
     layout = Layout(
