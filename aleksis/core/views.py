@@ -282,11 +282,11 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
     if request.method == "POST":
         if edit_group_form.is_valid():
-            edit_group_form.save(commit=True)
+            group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
 
-            return redirect("groups")
+            return redirect("group_by_id", group.pk)
 
     context["edit_group_form"] = edit_group_form
 
