@@ -223,7 +223,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         id_field = to_field_type()
         self.field(**{id_field_name: id_field})
 
-        @property
         def _virtual_fk(self) -> Optional[models.Model]:
             id_field_val = getattr(self, id_field_name)
             if id_field_val:
@@ -237,6 +236,10 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             else:
                 return None
 
+        # Add property to wrap get/set on foreign mdoel instance
+        cls.property(_virtual_fk, field_name)
+        _virtual_fk = getattr(cls, field_name)
+
         @_virtual_fk.setter
         def _virtual_fk(self, value: Optional[Model] = None) -> None:
             if value is None:
@@ -245,13 +248,9 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 id_field_val = getattr(value, to_field)
             setattr(self, id_field_name, id_field_val)
 
-        # Add property to wrap get/set on foreign mdoel instance
-        cls._safe_add(_virtual_fk, field_name)
-
         # Add related property on foreign model instance if it provides such an interface
         if hasattr(to, "_safe_add"):
 
-            @property
             def _virtual_related(self) -> Optional[models.Model]:
                 id_field_val = getattr(self, to_field)
                 try:
@@ -260,7 +259,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                     # Nothing references us
                     return None
 
-            to._safe_add(_virtual_related, related_name)
+            to.property(_virtual_related, related_name)
 
     @classmethod
     def syncable_fields(cls) -> List[models.Field]:
