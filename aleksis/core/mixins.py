@@ -15,7 +15,7 @@ from django.utils.functional import lazy
 import reversion
 from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
-from jsonstore.fields import JSONField, JSONFieldMixin
+from jsonstore.fields import IntegerField, JSONField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
@@ -196,6 +196,71 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         field.json_field_name = "extended_data"
 
         cls._safe_add(field, name)
+
+    @classmethod
+    def foreignn_key(
+        cls,
+        field_name: str,
+        to: models.Model,
+        to_field: str = "pk",
+        to_field_type: JSONFieldMixin = IntegerField,
+        related_name: Optional[str] = None,
+    ) -> None:
+        """Add a virtual ForeignKey.
+
+        This works by storing the primary key (or any field passed in the to_field argument)
+        and adding a property that queries the desired model.
+
+        If the foreign model also is an ExtensibleModel, a reverse mapping is also added under
+        the related_name passed as argument, or this model's default related name.
+        """
+
+        id_field_name = f"{field_name}_id"
+        if related_name is None:
+            related_name = cls.Meta.default_related_name
+
+        # Add field to hold key to foreign model
+        id_field = to_field_type()
+        self.field(**{id_field_name: id_field})
+
+        @property
+        def _virtual_fk(self) -> Optional[models.Model]:
+            id_field_val = getattr(self, id_field_name)
+            if id_field_val:
+                try:
+                    return to.objects.get(**{to_field: id_field_val})
+                except to.DoesNotExist:
+                    # We found a stale foreign key
+                    setattr(self, id_field_name, None)
+                    self.save()
+                    return None
+            else:
+                return None
+
+        @_virtual_fk.setter
+        def _virtual_fk(self, value: Optional[Model] = None) -> None:
+            if value is None:
+                id_field_val = None
+            else:
+                id_field_val = getattr(value, to_field)
+            setattr(self, id_field_name, id_field_val)
+
+        # Add property to wrap get/set on foreign mdoel instance
+        cls._safe_add(_virtual_fk, field_name)
+
+        # Add related property on foreign model instance if it provides such an interface
+        if hasattr(to, "_safe_add"):
+
+            @property
+            def _virtual_related(self) -> Optional[models.Model]:
+                id_field_val = getattr(self, to_field)
+                try:
+                    return cls.objects.get(**{id_field_name: id_field_val})
+                except cls.DoesNotExist:
+                    # Nothing references us
+                    return None
+
+            to._safe_add(_virtual_related, related_name)
 
     @classmethod
     def syncable_fields(cls) -> List[models.Field]:
