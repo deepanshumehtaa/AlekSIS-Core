@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-  {% include "core/meta.html" %}
+  {% include "core/partials/meta.html" %}
 
   <title>
     {% block no_browser_title %}
@@ -81,14 +81,14 @@
       </li>
     {% endif %}
     <li class="no-padding">
-      {% include "core/sidenav.html" %}
+      {% include "core/partials/sidenav.html" %}
     </li>
   </ul>
 </header>
 
 
 <main role="main">
-  {% include 'core/no_person.html' %}
+  {% include 'core/partials/no_person.html' %}
 
   {% if messages %}
     {% for message in messages %}
@@ -127,7 +127,7 @@
       </div>
       <div class="col xl15 l6 offset-xl01 s12 no-pad-right">
         <ul class="no-margin right">
-          {% include "core/footer-menu.html" %}
+          {% include "core/partials/footer-menu.html" %}
         </ul>
       </div>
     </div>
@@ -136,7 +136,7 @@
         {% include 'core/language_form.html' %}
       </div>
       <ul class="no-margin footer-ul">
-        {% include "core/footer-menu.html" %}
+        {% include "core/partials/footer-menu.html" %}
       </ul>
     </div>
   </div>

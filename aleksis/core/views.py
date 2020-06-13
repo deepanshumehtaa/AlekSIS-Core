@@ -21,6 +21,7 @@ from .filters import GroupFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
+    EditAdditionalFieldForm,
     EditGroupForm,
     EditGroupTypeForm,
     EditPersonForm,
@@ -29,13 +30,21 @@ from .forms import (
     PersonsAccountsFormSet,
     SitePreferenceForm,
 )
-from .models import Announcement, DashboardWidget, Group, GroupType, Notification, Person
+from .models import (
+    AdditionalField,
+    Announcement,
+    DashboardWidget,
+    Group,
+    GroupType,
+    Notification,
+    Person,
+)
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import GroupsTable, GroupTypesTable, PersonsTable
+from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -68,7 +77,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def offline(request: HttpRequest) -> HttpResponse:
     """Offline message for PWA."""
-    return render(request, "core/offline.html")
+    return render(request, "core/pages/offline.html")
 
 
 def about(request: HttpRequest) -> HttpResponse:
@@ -79,7 +88,7 @@ def about(request: HttpRequest) -> HttpResponse:
         filter(lambda a: isinstance(a, AppConfig), apps.get_app_configs())
     )
 
-    return render(request, "core/about.html", context)
+    return render(request, "core/pages/about.html", context)
 
 
 @permission_required("core.view_persons")
@@ -97,7 +106,7 @@ def persons(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(persons_table)
     context["persons_table"] = persons_table
 
-    return render(request, "core/persons.html", context)
+    return render(request, "core/person/list.html", context)
 
 
 @permission_required(
@@ -118,7 +127,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
-    return render(request, "core/person_full.html", context)
+    return render(request, "core/person/full.html", context)
 
 
 @permission_required("core.view_group", fn=objectgetter_optional(Group, None, False))
@@ -148,7 +157,7 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
-    return render(request, "core/group_full.html", context)
+    return render(request, "core/group/full.html", context)
 
 
 @permission_required("core.view_groups")
@@ -164,7 +173,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
-    return render(request, "core/groups.html", context)
+    return render(request, "core/group/list.html", context)
 
 
 @permission_required("core.link_persons_accounts")
@@ -184,7 +193,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
 
     context["persons_accounts_formset"] = persons_accounts_formset
 
-    return render(request, "core/persons_accounts.html", context)
+    return render(request, "core/person/accounts.html", context)
 
 
 @permission_required("core.assign_child_groups_to_groups")
@@ -221,7 +230,7 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
         context["group"] = group
         context["form"] = form
 
-    return render(request, "core/groups_child_groups.html", context)
+    return render(request, "core/group/child_groups.html", context)
 
 
 @permission_required(
@@ -246,7 +255,7 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     context["edit_person_form"] = edit_person_form
 
-    return render(request, "core/edit_person.html", context)
+    return render(request, "core/person/edit.html", context)
 
 
 def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
@@ -273,22 +282,22 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
     if request.method == "POST":
         if edit_group_form.is_valid():
-            edit_group_form.save(commit=True)
+            group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
 
-            return redirect("groups")
+            return redirect("group_by_id", group.pk)
 
     context["edit_group_form"] = edit_group_form
 
-    return render(request, "core/edit_group.html", context)
+    return render(request, "core/group/edit.html", context)
 
 
 @permission_required("core.manage_data")
 def data_management(request: HttpRequest) -> HttpResponse:
     """View with special menu for data management."""
     context = {}
-    return render(request, "core/data_management.html", context)
+    return render(request, "core/management/data_management.html", context)
 
 
 @permission_required("core.view_system_status")
@@ -306,7 +315,7 @@ def system_status(request: HttpRequest) -> HttpResponse:
                 results.append(TaskResult.objects.filter(task_name=job).last())
             context["tasks"] = results
 
-    return render(request, "core/system_status.html", context)
+    return render(request, "core/pages/system_status.html", context)
 
 
 @permission_required(
@@ -458,6 +467,71 @@ def preferences(
     return render(request, "dynamic_preferences/form.html", context)
 
 
+@permission_required(
+    "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+)
+def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """View to edit or create a additional_field."""
+    context = {}
+
+    additional_field = objectgetter_optional(AdditionalField, None, False)(request, id_)
+    context["additional_field"] = additional_field
+
+    if id_:
+        # Edit form for existing additional_field
+        edit_additional_field_form = EditAdditionalFieldForm(
+            request.POST or None, instance=additional_field
+        )
+    else:
+        if request.user.has_perm("core.create_additionalfield"):
+            # Empty form to create a new additional_field
+            edit_additional_field_form = EditAdditionalFieldForm(request.POST or None)
+        else:
+            raise PermissionDenied()
+
+    if request.method == "POST":
+        if edit_additional_field_form.is_valid():
+            edit_additional_field_form.save(commit=True)
+
+            messages.success(request, _("The additional_field has been saved."))
+
+            return redirect("additional_fields")
+
+    context["edit_additional_field_form"] = edit_additional_field_form
+
+    return render(request, "core/additional_field/edit.html", context)
+
+
+@permission_required("core.view_additionalfield")
+def additional_fields(request: HttpRequest) -> HttpResponse:
+    """List view for listing all additional fields."""
+    context = {}
+
+    # Get all additional fields
+    additional_fields = get_objects_for_user(
+        request.user, "core.view_additionalfield", AdditionalField
+    )
+
+    # Build table
+    additional_fields_table = AdditionalFieldsTable(additional_fields)
+    RequestConfig(request).configure(additional_fields_table)
+    context["additional_fields_table"] = additional_fields_table
+
+    return render(request, "core/additional_field/list.html", context)
+
+
+@permission_required(
+    "core.delete_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+)
+def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an additional field."""
+    additional_field = objectgetter_optional(AdditionalField, None, False)(request, id_)
+    additional_field.delete()
+    messages.success(request, _("The additional field has been deleted."))
+
+    return redirect("additional_fields")
+
+
 @permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
 def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group_type."""
@@ -483,7 +557,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
 
     context["edit_group_type_form"] = edit_group_type_form
 
-    return render(request, "core/edit_group_type.html", context)
+    return render(request, "core/group_type/edit.html", context)
 
 
 @permission_required("core.view_grouptype")
@@ -499,7 +573,7 @@ def group_types(request: HttpRequest) -> HttpResponse:
     RequestConfig(request).configure(group_types_table)
     context["group_types_table"] = group_types_table
 
-    return render(request, "core/group_types.html", context)
+    return render(request, "core/group_type/list.html", context)
 
 
 @permission_required("core.delete_grouptype", fn=objectgetter_optional(GroupType, None, False))
