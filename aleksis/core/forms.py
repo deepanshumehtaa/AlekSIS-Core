@@ -9,8 +9,8 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
-from .mixins import ExtensibleForm, SchoolYearRelatedExtensibleForm
-from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolYear
+from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
+from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolTerm
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -121,11 +121,11 @@ class EditPersonForm(ExtensibleForm):
         return PersonAccountForm.clean(self)
 
 
-class EditGroupForm(SchoolYearRelatedExtensibleForm):
+class EditGroupForm(SchoolTermRelatedExtensibleForm):
     """Form to edit an existing group in the frontend."""
 
     layout = Layout(
-        Fieldset(_("School year"), "school_year"),
+        Fieldset(_("School term"), "school_term"),
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
         Fieldset(_("Additional data"), "additional_fields"),
@@ -208,7 +208,7 @@ class AnnouncementForm(ExtensibleForm):
 
         super().__init__(*args, **kwargs)
 
-        self.fields["groups"].queryset = Group.objects.for_current_school_year_or_all()
+        self.fields["groups"].queryset = Group.objects.for_current_school_term_or_all()
 
     def clean(self):
         data = super().clean()
@@ -305,11 +305,11 @@ class EditGroupTypeForm(forms.ModelForm):
         exclude = []
 
 
-class SchoolYearForm(ExtensibleForm):
+class SchoolTermForm(ExtensibleForm):
     """Form for managing school years."""
 
     layout = Layout("name", Row("date_start", "date_end"))
 
     class Meta:
-        model = SchoolYear
+        model = SchoolTerm
         exclude = []

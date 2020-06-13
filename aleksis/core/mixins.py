@@ -25,7 +25,7 @@ from jsonstore.fields import JSONField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
-from aleksis.core.managers import CurrentSiteManagerWithoutMigrations, SchoolYearRelatedQuerySet
+from aleksis.core.managers import CurrentSiteManagerWithoutMigrations, SchoolTermRelatedQuerySet
 
 
 class _ExtensibleModelBase(models.base.ModelBase):
@@ -307,16 +307,16 @@ class AdvancedEditView(UpdateView, SuccessMessageMixin):
     pass
 
 
-class SchoolYearRelatedExtensibleModel(ExtensibleModel):
-    """Add relation to school year."""
+class SchoolTermRelatedExtensibleModel(ExtensibleModel):
+    """Add relation to school term."""
 
-    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolYearRelatedQuerySet)()
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermRelatedQuerySet)()
 
-    school_year = models.ForeignKey(
-        "core.SchoolYear",
+    school_term = models.ForeignKey(
+        "core.SchoolTerm",
         on_delete=models.CASCADE,
         related_name="+",
-        verbose_name=_("Linked school year"),
+        verbose_name=_("Linked school term"),
         blank=True,
         null=True,
     )
@@ -325,18 +325,18 @@ class SchoolYearRelatedExtensibleModel(ExtensibleModel):
         abstract = True
 
 
-class SchoolYearRelatedExtensibleForm(ExtensibleForm):
-    """Extensible form for school year related data.
+class SchoolTermRelatedExtensibleForm(ExtensibleForm):
+    """Extensible form for school term related data.
 
     .. warning::
-        This doesn't automatically include the field `school_year` in `fields` or `layout`,
+        This doesn't automatically include the field `school_term` in `fields` or `layout`,
         it just sets an initial value.
     """
 
     def __init__(self, *args, **kwargs):
-        from aleksis.core.models import SchoolYear  # noqa
+        from aleksis.core.models import SchoolTerm  # noqa
 
         if "instance" not in kwargs:
-            kwargs["initial"] = {"school_year": SchoolYear.current}
+            kwargs["initial"] = {"school_term": SchoolTerm.current}
 
         super().__init__(*args, **kwargs)

@@ -24,8 +24,8 @@ from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .managers import CurrentSiteManagerWithoutMigrations, SchoolYearQuerySet
-from .mixins import ExtensibleModel, PureDjangoModel, SchoolYearRelatedExtensibleModel
+from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -46,13 +46,13 @@ FIELD_CHOICES = (
 )
 
 
-class SchoolYear(ExtensibleModel):
-    """School year model.
+class SchoolTerm(ExtensibleModel):
+    """School term model.
 
-    This is used to manage start and end times of a school year and link data to it.
+    This is used to manage start and end times of a school term and link data to it.
     """
 
-    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolYearQuerySet)()
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermQuerySet)()
 
     name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
 
@@ -65,7 +65,7 @@ class SchoolYear(ExtensibleModel):
             day = timezone.now().date()
         try:
             return cls.objects.on_day(day).first()
-        except SchoolYear.DoesNotExist:
+        except SchoolTerm.DoesNotExist:
             return None
 
     @classproperty
@@ -73,24 +73,24 @@ class SchoolYear(ExtensibleModel):
         return cls.get_current()
 
     def clean(self):
-        """Ensure there is only one school year at each point of time."""
+        """Ensure there is only one school term at each point of time."""
         if self.date_end < self.date_start:
             raise ValidationError(_("The start date must be earlier than the end date."))
 
-        qs = SchoolYear.objects.within_dates(self.date_start, self.date_end)
+        qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
         if self.pk:
             qs.exclude(pk=self.pk)
         if qs.exists():
             raise ValidationError(
-                _("There is already a school year for this time or a part of this time.")
+                _("There is already a school term for this time or a part of this time.")
             )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _("School year")
-        verbose_name_plural = _("School years")
+        verbose_name = _("School term")
+        verbose_name_plural = _("School terms")
 
 
 class Person(ExtensibleModel):
@@ -305,7 +305,7 @@ class AdditionalField(ExtensibleModel):
         verbose_name_plural = _("Addtitional fields for groups")
 
 
-class Group(SchoolYearRelatedExtensibleModel):
+class Group(SchoolTermRelatedExtensibleModel):
     """Group model.
 
     Any kind of group of persons in a school, including, but not limited
@@ -318,9 +318,9 @@ class Group(SchoolYearRelatedExtensibleModel):
         verbose_name_plural = _("Groups")
         permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
         constraints = [
-            models.UniqueConstraint(fields=["school_year", "name"], name="unique_school_year_name"),
+            models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
             models.UniqueConstraint(
-                fields=["school_year", "short_name"], name="unique_school_year_short_name"
+                fields=["school_term", "short_name"], name="unique_school_term_short_name"
             ),
         ]
 
@@ -369,8 +369,8 @@ class Group(SchoolYearRelatedExtensibleModel):
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
-        if self.school_year:
-            return f"{self.name} ({self.short_name}) ({self.school_year})"
+        if self.school_term:
+            return f"{self.name} ({self.short_name}) ({self.school_term})"
         else:
             return f"{self.name} ({self.short_name})"
 

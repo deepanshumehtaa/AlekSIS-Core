@@ -28,7 +28,7 @@ from .forms import (
     GroupPreferenceForm,
     PersonPreferenceForm,
     PersonsAccountsFormSet,
-    SchoolYearForm,
+    SchoolTermForm,
     SitePreferenceForm,
 )
 from .mixins import AdvancedCreateView, AdvancedEditView
@@ -40,14 +40,14 @@ from .models import (
     GroupType,
     Notification,
     Person,
-    SchoolYear,
+    SchoolTerm,
 )
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable, SchoolYearTable
+from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable, SchoolTermTable
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -94,35 +94,35 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, "core/about.html", context)
 
 
-class SchoolYearListView(SingleTableView, PermissionRequiredMixin):
-    """Table of all school years."""
+class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
+    """Table of all school terms."""
 
-    model = SchoolYear
-    table_class = SchoolYearTable
-    permission_required = "core.view_schoolyear"
-    template_name = "core/school_year/list.html"
-
-
-class SchoolYearCreateView(AdvancedCreateView, PermissionRequiredMixin):
-    """Create view for school years."""
-
-    model = SchoolYear
-    form_class = SchoolYearForm
-    permission_required = "core.add_schoolyear"
-    template_name = "core/school_year/create.html"
-    success_url = reverse_lazy("school_years")
-    success_message = _("The school year has been created.")
+    model = SchoolTerm
+    table_class = SchoolTermTable
+    permission_required = "core.view_schoolterm"
+    template_name = "core/school_term/list.html"
 
 
-class SchoolYearEditView(AdvancedEditView, PermissionRequiredMixin):
-    """Edit view for school years."""
+class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
+    """Create view for school terms."""
 
-    model = SchoolYear
-    form_class = SchoolYearForm
-    permission_required = "core.edit_schoolyear"
-    template_name = "core/school_year/edit.html"
-    success_url = reverse_lazy("school_years")
-    success_message = _("The school year has been saved.")
+    model = SchoolTerm
+    form_class = SchoolTermForm
+    permission_required = "core.add_schoolterm"
+    template_name = "core/school_term/create.html"
+    success_url = reverse_lazy("school_terms")
+    success_message = _("The school term has been created.")
+
+
+class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
+    """Edit view for school terms."""
+
+    model = SchoolTerm
+    form_class = SchoolTermForm
+    permission_required = "core.edit_schoolterm"
+    template_name = "core/school_term/edit.html"
+    success_url = reverse_lazy("school_terms")
+    success_message = _("The school term has been saved.")
 
 
 @permission_required("core.view_persons")

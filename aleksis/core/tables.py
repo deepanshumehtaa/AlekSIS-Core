@@ -4,17 +4,17 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 
-class SchoolYearTable(tables.Table):
+class SchoolTermTable(tables.Table):
     """Table to list persons."""
 
     class Meta:
         attrs = {"class": "responsive-table highlight"}
 
-    name = tables.LinkColumn("edit_school_year", args=[A("id")])
+    name = tables.LinkColumn("edit_school_term", args=[A("id")])
     date_start = tables.Column()
     date_end = tables.Column()
     edit = tables.LinkColumn(
-        "edit_school_year",
+        "edit_school_term",
         args=[A("id")],
         text=_("Edit"),
         attrs={"a": {"class": "btn-flat waves-effect waves-orange orange-text"}},
@@ -40,7 +40,7 @@ class GroupsTable(tables.Table):
 
     name = tables.LinkColumn("group_by_id", args=[A("id")])
     short_name = tables.LinkColumn("group_by_id", args=[A("id")])
-    school_year = tables.Column()
+    school_term = tables.Column()
 
 
 class AdditionalFieldsTable(tables.Table):

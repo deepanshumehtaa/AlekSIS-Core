@@ -32,50 +32,50 @@ class DateRangeQuerySetMixin:
         return self.within_dates(day, day)
 
 
-class SchoolYearQuerySet(QuerySet, DateRangeQuerySetMixin):
-    """Custom query set for school years."""
+class SchoolTermQuerySet(QuerySet, DateRangeQuerySetMixin):
+    """Custom query set for school terms."""
 
 
-class SchoolYearRelatedQuerySet(QuerySet):
-    """Custom query set for all models related to school years."""
+class SchoolTermRelatedQuerySet(QuerySet):
+    """Custom query set for all models related to school terms."""
 
-    def within_dates(self, start: date, end: date) -> "SchoolYearRelatedQuerySet":
+    def within_dates(self, start: date, end: date) -> "SchoolTermRelatedQuerySet":
         """Filter for all objects within a date range."""
-        return self.filter(school_year__date_start__lte=end, school_year__date_end__gte=start)
+        return self.filter(school_term__date_start__lte=end, school_term__date_end__gte=start)
 
-    def in_week(self, wanted_week: CalendarWeek) -> "SchoolYearRelatedQuerySet":
+    def in_week(self, wanted_week: CalendarWeek) -> "SchoolTermRelatedQuerySet":
         """Filter for all objects within a calendar week."""
         return self.within_dates(wanted_week[0], wanted_week[6])
 
-    def on_day(self, day: date) -> "SchoolYearRelatedQuerySet":
+    def on_day(self, day: date) -> "SchoolTermRelatedQuerySet":
         """Filter for all objects on a certain day."""
         return self.within_dates(day, day)
 
-    def for_school_year(self, school_year: "SchoolYear") -> "SchoolYearRelatedQuerySet":
-        return self.filter(school_year=school_year)
+    def for_school_term(self, school_term: "SchoolTerm") -> "SchoolTermRelatedQuerySet":
+        return self.filter(school_term=school_term)
 
-    def for_current_school_year_or_all(self) -> "SchoolYearRelatedQuerySet":
-        """Get all objects related to current school year.
+    def for_current_school_term_or_all(self) -> "SchoolTermRelatedQuerySet":
+        """Get all objects related to current school term.
 
-        If there is no current school year, it will return all objects.
+        If there is no current school term, it will return all objects.
         """
-        from aleksis.core.models import SchoolYear
+        from aleksis.core.models import SchoolTerm
 
-        current_school_year = SchoolYear.current
-        if current_school_year:
-            return self.for_school_year(current_school_year)
+        current_school_term = SchoolTerm.current
+        if current_school_term:
+            return self.for_school_term(current_school_term)
         else:
             return self
 
-    def for_current_school_year_or_none(self) -> Union["SchoolYearRelatedQuerySet", None]:
-        """Get all objects related to current school year.
+    def for_current_school_term_or_none(self) -> Union["SchoolTermRelatedQuerySet", None]:
+        """Get all objects related to current school term.
 
-        If there is no current school year, it will return `None`.
+        If there is no current school term, it will return `None`.
         """
-        from aleksis.core.models import SchoolYear
+        from aleksis.core.models import SchoolTerm
 
-        current_school_year = SchoolYear.current
-        if current_school_year:
-            return self.for_school_year(current_school_year)
+        current_school_term = SchoolTerm.current
+        if current_school_term:
+            return self.for_school_term(current_school_term)
         else:
             return None
