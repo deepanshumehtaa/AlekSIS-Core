@@ -28,7 +28,7 @@ Install native dependencies
 
 Some system libraries are required to install AlekSIS::
 
-  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg
+  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext
 
 
 Get Poetry

@@ -99,6 +99,12 @@ def is_group_owner(user: User, group: Group) -> bool:
 
 
 @predicate
+def is_group_member(user: User, group: Group) -> bool:
+    """Predicate which checks if the user is a member of the provided group."""
+    return user.person in group.members.all()
+
+
+@predicate
 def is_notification_recipient(user: User, obj: Model) -> bool:
     """Check if is a notification recipient.
 

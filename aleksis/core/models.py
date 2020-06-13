@@ -302,7 +302,9 @@ class Group(ExtensibleModel):
         null=True,
         blank=True,
     )
-    additional_fields = models.ManyToManyField(AdditionalField, verbose_name=_("Additional fields"))
+    additional_fields = models.ManyToManyField(
+        AdditionalField, verbose_name=_("Additional fields"), blank=True
+    )
 
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
