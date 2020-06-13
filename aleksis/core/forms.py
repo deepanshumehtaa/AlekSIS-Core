@@ -171,9 +171,7 @@ class AnnouncementForm(ExtensibleForm):
     persons = forms.ModelMultipleChoiceField(
         Person.objects.all(), label=_("Persons"), required=False
     )
-    groups = forms.ModelMultipleChoiceField(
-        queryset=None, label=_("Groups"), required=False
-    )
+    groups = forms.ModelMultipleChoiceField(queryset=None, label=_("Groups"), required=False)
 
     layout = Layout(
         Fieldset(

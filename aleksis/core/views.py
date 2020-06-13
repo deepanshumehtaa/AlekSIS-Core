@@ -47,7 +47,13 @@ from .registries import (
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable, SchoolTermTable
+from .tables import (
+    AdditionalFieldsTable,
+    GroupsTable,
+    GroupTypesTable,
+    PersonsTable,
+    SchoolTermTable,
+)
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
