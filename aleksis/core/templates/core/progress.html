@@ -13,13 +13,24 @@
   <div class="container">
     <div class="row">
       <div class="progress center">
-        <div class="determinate" style="width: 0;" id="progress-bar"></div>
+        <div class="indeterminate" style="width: 0;" id="progress-bar"></div>
       </div>
       <h6 class="center">
         {{ progress.title }}
       </h6>
     </div>
     <div class="row">
+      <noscript>
+        <div class="alert warning">
+          <p>
+            <i class="material-icons left">warning</i>
+            {% blocktrans %}
+              Without activated JavaScript the progress status can't be updated.
+            {% endblocktrans %}
+          </p>
+        </div>
+      </noscript>
+    
       <div id="messages"></div>
 
       <div id="result-box" style="display: none;">
