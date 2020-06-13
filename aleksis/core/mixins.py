@@ -164,17 +164,17 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     @classmethod
     def property_(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a property."""
-        cls._safe_add(property(func), func.__name__)
+        cls._safe_add(property(func), name or func.__name__)
 
     @classmethod
     def method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a method."""
-        cls._safe_add(func, func.__name__)
+        cls._safe_add(func, name or func.__name__)
 
     @classmethod
     def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a classmethod."""
-        cls._safe_add(classmethod(func), func.__name__)
+        cls._safe_add(classmethod(func), name or func.__name__)
 
     @classmethod
     def field(cls, **kwargs) -> None:
