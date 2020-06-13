@@ -15,6 +15,7 @@ from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
+from health_check.views import MainView
 from rules.contrib.views import permission_required
 
 from .filters import GroupFilter
@@ -300,22 +301,28 @@ def data_management(request: HttpRequest) -> HttpResponse:
     return render(request, "core/management/data_management.html", context)
 
 
-@permission_required("core.view_system_status")
-def system_status(request: HttpRequest) -> HttpResponse:
+class SystemStatus(MainView, PermissionRequiredMixin):
     """View giving information about the system status."""
+
+    template_name = "core/pages/system_status.html"
+    permission_required = "core.view_system_status"
     context = {}
 
-    if "django_celery_results" in settings.INSTALLED_APPS:
-        from django_celery_results.models import TaskResult # noqa
-        from celery.task.control import inspect # noqa
-        if inspect().registered_tasks():
-            job_list = list(inspect().registered_tasks().values())[0]
-            results = []
-            for job in job_list:
-                results.append(TaskResult.objects.filter(task_name=job).last())
-            context["tasks"] = results
+    def get(self, request, *args, **kwargs):
+        status_code = 500 if self.errors else 200
 
-    return render(request, "core/pages/system_status.html", context)
+        if "django_celery_results" in settings.INSTALLED_APPS:
+            from django_celery_results.models import TaskResult  # noqa
+            from celery.task.control import inspect  # noqa
+
+            if inspect().registered_tasks():
+                job_list = list(inspect().registered_tasks().values())[0]
+                results = []
+                for job in job_list:
+                    results.append(TaskResult.objects.filter(task_name=job).last())
+
+        context = {"plugins": self.plugins, "status_code": status_code}
+        return self.render_to_response(context, status=status_code)
 
 
 @permission_required(
