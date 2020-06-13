@@ -40,6 +40,25 @@
     </p>
   {% endif %}
 
+  <table>
+    <tr>
+      <th>
+        <i class="material-icons center" title="{% trans "Group type" %}">category</i>
+      </th>
+      <td>
+        {{ group.group_type }}
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <i class="material-icons center" title="{% trans "Parent groups" %}">vertical_align_top</i>
+      </th>
+      <td>
+        {{ group.parent_groups.all|join:", " }}
+      </td>
+    </tr>
+  </table>
+
   <h5>{% blocktrans %}Owners{% endblocktrans %}</h5>
   {% render_table owners_table %}
 
