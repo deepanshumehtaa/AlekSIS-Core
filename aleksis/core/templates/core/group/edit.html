@@ -11,7 +11,7 @@
   <form method="post">
     {% csrf_token %}
     {% form form=edit_group_form %}{% endform %}
-    {% include "core/save_button.html" %}
+    {% include "core/partials/save_button.html" %}
   </form>
 
 {% endblock %}
