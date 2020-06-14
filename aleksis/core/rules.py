@@ -258,3 +258,15 @@ view_group_type_predicate = has_person & (
     has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
 )
 add_perm("core.view_grouptype", view_group_type_predicate)
+
+# Create person
+create_person_predicate = has_person & (
+    has_global_perm("core.create_person") | has_object_perm("core.create_person")
+)
+add_perm("core.create_person", create_person_predicate)
+
+# Create group
+create_group_predicate = has_group & (
+    has_global_perm("core.create_group") | has_object_perm("core.create_group")
+)
+add_perm("core.create_group", create_group_predicate)

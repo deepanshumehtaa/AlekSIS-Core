@@ -247,7 +247,10 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
         edit_person_form = EditGroupForm(request.POST or None, instance=person)
     else:
         # Empty form to create a new group
-        edit_person_form = EditPersonForm(request.POST or None)
+        if request.user.has_perm("core.create_person"):
+            edit_person_form = EditPersonForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_person_form.is_valid():
@@ -283,7 +286,10 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
         # Empty form to create a new group
-        edit_group_form = EditGroupForm(request.POST or None)
+        if request.user.has_perm("core.create_group"):
+            edit_group_form = EditGroupForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_group_form.is_valid():
