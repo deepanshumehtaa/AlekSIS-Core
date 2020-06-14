@@ -83,9 +83,9 @@
               <td>
                 <a class="tooltipped" data-position="top" data-tooltip="{{ plugin.pretty_status }}">
                 {% if plugin.status %}
-                  <i class="material-icons green-text" aria-hidden="true">check</i>
+                  <i class="material-icons green-text" aria-hidden="true" title="{{ plugin.pretty_status }}">check</i>
                 {% else %}
-                  <i class="material-icons red-text" aria-hidden="true">warning</i>
+                  <i class="material-icons red-text" aria-hidden="true" title="{{ plugin.pretty_status }}">warning</i>
                 {% endif %}
                 </a>
               </td>
