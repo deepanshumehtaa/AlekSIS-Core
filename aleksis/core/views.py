@@ -9,6 +9,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 
+import reversion
 from django_tables2 import RequestConfig
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -250,7 +251,8 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if request.method == "POST":
         if edit_person_form.is_valid():
-            edit_person_form.save(commit=True)
+            with reversion.create_revision():
+                edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
             # Redirect to self to ensure post-processed data is displayed
@@ -285,7 +287,8 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
 
     if request.method == "POST":
         if edit_group_form.is_valid():
-            group = edit_group_form.save(commit=True)
+            with reversion.create_revision():
+                group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
 
@@ -473,10 +476,13 @@ def preferences(
 @permission_required("core.delete_person", fn=objectgetter_optional(Person))
 def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an person."""
-    if request.method == "POST":
-        person = objectgetter_optional(Person)(request, id_)
-        person.delete()
-        messages.success(request, _("The person has been deleted."))
+    person = objectgetter_optional(Person)(request, id_)
+
+    with reversion.create_revision():
+        person.save()
+
+    person.delete()
+    messages.success(request, _("The person has been deleted."))
 
     return redirect("persons")
 
@@ -484,10 +490,12 @@ def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
 @permission_required("core.delete_group", fn=objectgetter_optional(Group))
 def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group."""
-    if request.method == "POST":
-        group = objectgetter_optional(Group)(request, id_)
-        group.delete()
-        messages.success(request, _("The group has been deleted."))
+    group = objectgetter_optional(Group)(request, id_)
+    with reversion.create_revision():
+        group.save()
+
+    group.delete()
+    messages.success(request, _("The group has been deleted."))
 
     return redirect("groups")
 
