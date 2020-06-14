@@ -424,7 +424,7 @@ if _settings.get("twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
+    INSTALLED_APPS += ("django_celery_beat", "django_celery_results", "health_check.contrib.celery")
     CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
@@ -654,7 +654,6 @@ elif HAYSTACK_BACKEND_SHORT == "whoosh":
 
 if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
     INSTALLED_APPS.append("celery_haystack")
-    INSTALLED_APPS.append("health_check.contrib.celery")
     HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 else:
     HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
