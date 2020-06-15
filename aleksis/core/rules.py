@@ -266,7 +266,7 @@ create_person_predicate = has_person & (
 add_perm("core.create_person", create_person_predicate)
 
 # Create group
-create_group_predicate = has_group & (
+create_group_predicate = has_person & (
     has_global_perm("core.create_group") | has_object_perm("core.create_group")
 )
 add_perm("core.create_group", create_group_predicate)
