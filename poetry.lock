@@ -229,6 +229,19 @@ django-appconf = ">=0.4.1"
 
 [[package]]
 category = "main"
+description = "Drop in, configurable, dependency-free progress bars for your Django/Celery applications."
+name = "celery-progress"
+optional = false
+python-versions = "*"
+version = "0.0.10"
+
+[package.extras]
+rabbitmq = ["channels-rabbitmq"]
+redis = ["channels-redis"]
+websockets = ["channels"]
+
+[[package]]
+category = "main"
 description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
 optional = false
@@ -2113,7 +2126,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "3e85d3bfff56719272c13ad591ca4ccd7a2b72324a33c2192be383536b66b5f8"
+content-hash = "fdfd0718f4783fd1fc46e9cf0523af67c03a67ca133224a27fdbdad251d9eaa3"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2181,6 +2194,10 @@ celery = [
 celery-haystack = [
     {file = "celery-haystack-0.10.tar.gz", hash = "sha256:b6e2a3c70071bef0838ca1a7d9f14fae6c2ecf385704092e59b82147a1ee552e"},
     {file = "celery_haystack-0.10-py2.py3-none-any.whl", hash = "sha256:ec1f39050661e033f554de99cb9393c2e94427667ff5401f16393b2a68f888fc"},
+]
+celery-progress = [
+    {file = "celery-progress-0.0.10.tar.gz", hash = "sha256:3f7b35e1e6c79eec38f5647b024aa74193d0a41d5b47ecbb85b66f9ca68d5261"},
+    {file = "celery_progress-0.0.10-py3-none-any.whl", hash = "sha256:90941bf3aaeac9333d554a2191fa6cd81ef323472329ace0dd77344ac6aab092"},
 ]
 certifi = [
     {file = "certifi-2020.4.5.1-py2.py3-none-any.whl", hash = "sha256:1d987a998c75633c40847cc966fcf5904906c920a7f17ef374f5aa4282abd304"},
