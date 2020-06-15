@@ -109,6 +109,20 @@
     {% endif %}
   </div>
 
+  {% if person.children.all and can_view_personal_details %}
+    <div class="col s12 m12">
+      <h5>{% trans "Children" %}</h5>
+      {% include "core/person/collection.html" with persons=person.children.all %}
+    </div>
+  {% endif %}
+
+  {% if person.guardians.all and can_view_personal_details %}
+    <div class="col s12 m12">
+      <h5>{% trans "Guardians / Parents" %}</h5>
+      {% include "core/person/collection.html" with persons=person.guardians.all %}
+    </div>
+  {% endif %}
+
   {% has_perm 'core.view_person_groups' user person as can_view_groups %}
   {% if can_view_groups %}
     <h5>{% blocktrans %}Groups{% endblocktrans %}</h5>
