@@ -293,7 +293,6 @@ class SuccessMessageMixin(ModelFormMixin):
     success_message: Optional[str] = None
 
     def form_valid(self, form: BaseForm) -> HttpResponse:
-        print("Hi")
         if self.success_message:
             messages.success(self.request, self.success_message)
         return super().form_valid(form)
