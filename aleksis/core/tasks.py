@@ -4,12 +4,12 @@ from constance import config
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+import django.apps
 from django.conf import settings
 from django.core import management
 
 from .util.core_helpers import celery_optional, year_agnostic_date_range_query
 from .util.notifications import send_notification as _send_notification
-from .models import Notification, Person
 
 
 @celery_optional
@@ -24,6 +24,9 @@ def send_notification(notification: int, resend: bool = False) -> None:
 
 @celery_optional
 def birthday_announcement():
+    Person = apps.get_model("core", "Person")
+    Notification = apps.get_model("core", "Notification")
+
     if config.ENABLE_BIRTHDAY_ANNOUNCEMENT:
         subscribers = Person.objects.all()
     else:

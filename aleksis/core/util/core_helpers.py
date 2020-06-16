@@ -2,7 +2,7 @@ import os
 import pkgutil
 import time
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from importlib import import_module
 from itertools import groupby
 from operator import itemgetter

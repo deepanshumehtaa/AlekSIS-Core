@@ -27,7 +27,7 @@ from polymorphic.models import PolymorphicModel
 from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
 from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow, year_agnostic_date_range_query
+from .util.core_helpers import now_tomorrow, year_agnostic_date_range_query, get_site_preferences
 from .util.model_helpers import ICONS
 
 FIELD_CHOICES = (
@@ -724,7 +724,7 @@ class GroupType(ExtensibleModel):
 
 
 class BirthdayWidget(DashboardWidget):
-    template = "core/birthday_widget.html"
+    template = "core/birthday_widget/widget.html"
 
     days = models.IntegerField(verbose_name=_("Time span in days"), default=1)
 

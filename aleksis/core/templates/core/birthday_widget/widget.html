@@ -7,7 +7,7 @@
     <span class="card-title">{% trans "Upcoming birthdays" %}</span>
     {% for person in persons %}
       <div class="card-panel person-card">
-        <span class="title">{{ person.full_name }}</span><br>{{ person.date_of_birth }}
+        <span class="title"><a href="{% url "person_by_id" person.id %}">{{ person.full_name }}</a></span><br>{{ person.date_of_birth }}
       </div>
     {% empty %}
       <span>{% trans "No birthdays to display" %}</span>
