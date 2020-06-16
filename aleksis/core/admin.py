@@ -1,33 +1,34 @@
+# noqa
+
 from django.contrib import admin
 
+from reversion.admin import VersionAdmin
+
+from .mixins import BaseModelAdmin
 from .models import (
-    Group,
-    Person,
-    School,
-    SchoolTerm,
     Activity,
-    Notification,
     Announcement,
     AnnouncementRecipient,
     CustomMenuItem,
     BirthdayWidget,
+    Group,
+    Notification,
+    Person,
 )
 
-admin.site.register(Person)
-admin.site.register(Group)
-admin.site.register(School)
-admin.site.register(SchoolTerm)
-admin.site.register(Activity)
-admin.site.register(Notification)
-admin.site.register(CustomMenuItem)
-admin.site.register(BirthdayWidget)
+admin.site.register(Person, VersionAdmin)
+admin.site.register(Group, VersionAdmin)
+admin.site.register(Activity, VersionAdmin)
+admin.site.register(Notification, VersionAdmin)
+admin.site.register(CustomMenuItem, VersionAdmin)
+admin.site.register(BirthdayWidget, VersionAdmin)
 
 
 class AnnouncementRecipientInline(admin.StackedInline):
     model = AnnouncementRecipient
 
 
-class AnnouncementAdmin(admin.ModelAdmin):
+class AnnouncementAdmin(BaseModelAdmin, VersionAdmin):
     inlines = [
         AnnouncementRecipientInline,
     ]

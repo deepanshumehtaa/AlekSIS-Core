@@ -10,7 +10,7 @@ def test_index_not_logged_in(client):
     response = client.get("/")
 
     assert response.status_code == 302
-    assert response['Location'].startswith(reverse(settings.LOGIN_URL))
+    assert response["Location"].startswith(reverse(settings.LOGIN_URL))
 
 
 def test_login_without_person(client, django_user_model):
@@ -39,4 +39,4 @@ def test_logout(client, django_user_model):
     response = client.get(reverse("logout"), follow=True)
 
     assert response.status_code == 200
-    assert "Enter your credentials." in response.content.decode("utf-8")
+    assert "Please login to see this page." in response.content.decode("utf-8")

@@ -64,6 +64,8 @@ docs/_build/
 # Generated files
 aleksis/node_modules/
 aleksis/static/
+aleksis/whoosh_index/
+aleksis/xapian_index/
 
 .coverage
 .mypy_cache/
@@ -72,3 +74,8 @@ htmlcov/
 maintenance_mode_state.txt
 media/
 package-lock.json
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
