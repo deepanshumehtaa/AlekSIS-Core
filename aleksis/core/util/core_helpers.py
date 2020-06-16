@@ -1,5 +1,6 @@
 import os
 import pkgutil
+import time
 from datetime import datetime, timedelta
 from importlib import import_module
 from itertools import groupby
@@ -13,6 +14,10 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
+
+from django_global_request.middleware import get_request
+
+from aleksis.core.util import messages
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
@@ -170,6 +175,11 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         return True
 
 
+def is_celery_enabled():
+    """Check whether celery support is enabled."""
+    return hasattr(settings, "CELERY_RESULT_BACKEND")
+
+
 def celery_optional(orig: Callable) -> Callable:
     """Add a decorator that makes Celery optional for a function.
 
@@ -177,16 +187,118 @@ def celery_optional(orig: Callable) -> Callable:
     and calls its delay method when invoked; if not, it leaves it untouched
     and it is executed synchronously.
     """
-    if hasattr(settings, "CELERY_RESULT_BACKEND"):
+    if is_celery_enabled():
         from ..celery import app  # noqa
 
         task = app.task(orig)
 
     def wrapped(*args, **kwargs):
-        if hasattr(settings, "CELERY_RESULT_BACKEND"):
+        if is_celery_enabled():
             task.delay(*args, **kwargs)
         else:
             orig(*args, **kwargs)
+
+    return wrapped
+
+
+class DummyRecorder:
+    def set_progress(self, *args, **kwargs):
+        pass
+
+    def add_message(self, level: int, message: str, **kwargs) -> Optional[Any]:
+        request = get_request()
+        return messages.add_message(request, level, message, **kwargs)
+
+
+def celery_optional_progress(orig: Callable) -> Callable:
+    """Add a decorator that makes Celery with progress bar support optional for a function.
+
+    If Celery is configured and available, it wraps the function in a Task
+    and calls its delay method when invoked; if not, it leaves it untouched
+    and it is executed synchronously.
+
+    Additionally, it adds a recorder class as first argument
+    (`ProgressRecorder` if Celery is enabled, else `DummyRecoder`).
+
+    This recorder provides the functions `set_progress` and `add_message`
+    which can be used to track the status of the task.
+    For further information, see the respective recorder classes.
+
+    How to use
+    ----------
+    1. Write a function and include tracking methods
+
+    ::
+
+        from django.contrib import messages
+
+        from aleksis.core.util.core_helpers import celery_optional_progress
+
+        @celery_optional_progress
+        def do_something(recorder: Union[ProgressRecorder, DummyRecorder], foo, bar, baz=None):
+            # ...
+            recorder.total = len(list_with_data)
+
+            for i, item in list_with_data:
+                # ...
+                recorder.set_progress(i + 1)
+                # ...
+
+            recorder.add_message(messages.SUCCESS, "All data were imported successfully.")
+
+    2. Track process in view:
+
+    ::
+
+        def my_view(request):
+            context = {}
+            # ...
+            result = do_something(foo, bar, baz=baz)
+
+            if result:
+                context = {
+                    "title": _("Progress: Import data"),
+                    "back_url": reverse("index"),
+                    "progress": {
+                        "task_id": result.task_id,
+                        "title": _("Import objects …"),
+                        "success": _("The import was done successfully."),
+                        "error": _("There was a problem while importing data."),
+                    },
+                }
+
+                # Render progress view
+                return render(request, "core/progress.html", context)
+
+            # Render other view if Celery isn't enabled
+            return render(request, "my-app/other-view.html", context)
+    """
+
+    def recorder_func(self, *args, **kwargs):
+        if is_celery_enabled():
+            from .celery_progress import ProgressRecorder  # noqa
+
+            recorder = ProgressRecorder(self)
+        else:
+            recorder = DummyRecorder()
+        orig(recorder, *args, **kwargs)
+
+        # Needed to ensure that all messages are displayed by frontend
+        time.sleep(0.7)
+
+    var_name = f"{orig.__module__}.{orig.__name__}"
+
+    if is_celery_enabled():
+        from ..celery import app  # noqa
+
+        task = app.task(recorder_func, bind=True, name=var_name)
+
+    def wrapped(*args, **kwargs):
+        if is_celery_enabled():
+            return task.delay(*args, **kwargs)
+        else:
+            recorder_func(None, *args, **kwargs)
+            return None
 
     return wrapped
 
@@ -231,3 +343,9 @@ def objectgetter_optional(
             return eval(default) if default_eval else default  # noqa:S307
 
     return get_object
+
+
+def handle_uploaded_file(f, filename: str):
+    with open(filename, "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)

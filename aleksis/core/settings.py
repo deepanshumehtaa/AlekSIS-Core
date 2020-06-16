@@ -424,7 +424,12 @@ if _settings.get("twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat", "django_celery_results", "health_check.contrib.celery")
+    INSTALLED_APPS += (
+        "django_celery_beat",
+        "django_celery_results",
+        "celery_progress",
+        "health_check.contrib.celery",
+    )
     CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"

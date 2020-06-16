@@ -31,10 +31,10 @@ description = "ASGI specs, helper code, and adapters"
 name = "asgiref"
 optional = false
 python-versions = ">=3.5"
-version = "3.2.7"
+version = "3.2.8"
 
 [package.extras]
-tests = ["pytest (>=4.3.0,<4.4.0)", "pytest-asyncio (>=0.10.0,<0.11.0)"]
+tests = ["pytest", "pytest-asyncio"]
 
 [[package]]
 category = "dev"
@@ -227,6 +227,19 @@ version = "0.10"
 
 [package.dependencies]
 django-appconf = ">=0.4.1"
+
+[[package]]
+category = "main"
+description = "Drop in, configurable, dependency-free progress bars for your Django/Celery applications."
+name = "celery-progress"
+optional = false
+python-versions = "*"
+version = "0.0.10"
+
+[package.extras]
+rabbitmq = ["channels-rabbitmq"]
+redis = ["channels-redis"]
+websockets = ["channels"]
 
 [[package]]
 category = "main"
@@ -709,6 +722,10 @@ version = "3.0.1"
 [package.dependencies]
 Django = ">=1.11.3"
 babel = "*"
+
+[package.dependencies.phonenumbers]
+optional = true
+version = ">=7.0.2"
 
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
@@ -1293,7 +1310,7 @@ description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
 python-versions = ">=3.5"
-version = "8.3.0"
+version = "8.4.0"
 
 [[package]]
 category = "dev"
@@ -1361,10 +1378,10 @@ description = "PostgreSQL interface library"
 name = "pg8000"
 optional = false
 python-versions = ">=3.5"
-version = "1.15.2"
+version = "1.15.3"
 
 [package.dependencies]
-scramp = "1.1.1"
+scramp = "1.2.0"
 
 [[package]]
 category = "main"
@@ -1423,7 +1440,7 @@ description = "library with cross-python path, ini-parsing, io, code, log facili
 name = "py"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.8.1"
+version = "1.8.2"
 
 [[package]]
 category = "main"
@@ -1771,7 +1788,7 @@ description = "An implementation of the SCRAM protocol."
 name = "scramp"
 optional = false
 python-versions = ">=3.5"
-version = "1.1.1"
+version = "1.2.0"
 
 [[package]]
 category = "dev"
@@ -1830,7 +1847,7 @@ description = "Python documentation generator"
 name = "sphinx"
 optional = false
 python-versions = ">=3.5"
-version = "3.1.0"
+version = "3.1.1"
 
 [package.dependencies]
 Jinja2 = ">=2.3"
@@ -2143,7 +2160,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "03267dcc6e0cb5d52ba8f152d8eb370b7c3c060650dbb11843f61c3dafc26401"
+content-hash = "c6e41b0779be08ae7f643169504696ca0f6812408755a3acc9c1b0dc95752561"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2160,8 +2177,8 @@ appdirs = [
     {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
 ]
 asgiref = [
-    {file = "asgiref-3.2.7-py2.py3-none-any.whl", hash = "sha256:9ca8b952a0a9afa61d30aa6d3d9b570bb3fd6bafcf7ec9e6bed43b936133db1c"},
-    {file = "asgiref-3.2.7.tar.gz", hash = "sha256:8036f90603c54e93521e5777b2b9a39ba1bad05773fcf2d208f0299d1df58ce5"},
+    {file = "asgiref-3.2.8-py3-none-any.whl", hash = "sha256:783254c9ec6f914f671919bbcef4346d4e57866bd7ed988ae79f881bbc0a9be8"},
+    {file = "asgiref-3.2.8.tar.gz", hash = "sha256:a46c83b7d46212ec937e9ddb571cda2b1384b3d02f7edde9372e2778d1782d38"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -2211,6 +2228,10 @@ celery = [
 celery-haystack = [
     {file = "celery-haystack-0.10.tar.gz", hash = "sha256:b6e2a3c70071bef0838ca1a7d9f14fae6c2ecf385704092e59b82147a1ee552e"},
     {file = "celery_haystack-0.10-py2.py3-none-any.whl", hash = "sha256:ec1f39050661e033f554de99cb9393c2e94427667ff5401f16393b2a68f888fc"},
+]
+celery-progress = [
+    {file = "celery-progress-0.0.10.tar.gz", hash = "sha256:3f7b35e1e6c79eec38f5647b024aa74193d0a41d5b47ecbb85b66f9ca68d5261"},
+    {file = "celery_progress-0.0.10-py3-none-any.whl", hash = "sha256:90941bf3aaeac9333d554a2191fa6cd81ef323472329ace0dd77344ac6aab092"},
 ]
 certifi = [
     {file = "certifi-2020.4.5.2-py2.py3-none-any.whl", hash = "sha256:9cd41137dc19af6a5e03b630eefe7d1f458d964d406342dd3edf625839b944cc"},
@@ -2616,8 +2637,8 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 more-itertools = [
-    {file = "more-itertools-8.3.0.tar.gz", hash = "sha256:558bb897a2232f5e4f8e2399089e35aecb746e1f9191b6584a151647e89267be"},
-    {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
+    {file = "more-itertools-8.4.0.tar.gz", hash = "sha256:68c70cc7167bdf5c7c9d8f6954a7837089c6a36bf565383919bb595efb8a17e5"},
+    {file = "more_itertools-8.4.0-py3-none-any.whl", hash = "sha256:b78134b2063dd214000685165d81c154522c3ee0a1c0d4d113c80361c234c5a2"},
 ]
 mypy = [
     {file = "mypy-0.770-cp35-cp35m-macosx_10_6_x86_64.whl", hash = "sha256:a34b577cdf6313bf24755f7a0e3f3c326d5c1f4fe7422d1d06498eb25ad0c600"},
@@ -2655,8 +2676,8 @@ persisting-theory = [
     {file = "persisting-theory-0.2.1.tar.gz", hash = "sha256:00ff7dcc8f481ff75c770ca5797d968e8725b6df1f77fe0cf7d20fa1e5790c0a"},
 ]
 pg8000 = [
-    {file = "pg8000-1.15.2-py3-none-any.whl", hash = "sha256:2bfdd03c2623302af655ef089a958ff329b2035c9d9aea406b5e4dac9c007524"},
-    {file = "pg8000-1.15.2.tar.gz", hash = "sha256:eb42ba62fbc048c91d5cf1ac729e0ea4ee329cc526bddafed4e7a8aa6b57fbbb"},
+    {file = "pg8000-1.15.3-py3-none-any.whl", hash = "sha256:79d2e761343e582dec6698cf7c06d49c33255cbafba29ff298dd4690fffb7d80"},
+    {file = "pg8000-1.15.3.tar.gz", hash = "sha256:af97353076b8e5d271d91c64c8ca806e2157d11b7862c90ff6f0e23be0fc217d"},
 ]
 phonenumbers = [
     {file = "phonenumbers-8.12.5-py2.py3-none-any.whl", hash = "sha256:67199749bbc5cb7c3a09f623e29f23dc294df6582968841f1ca2acbc06faafc1"},
@@ -2720,8 +2741,8 @@ psycopg2 = [
     {file = "psycopg2-2.8.5.tar.gz", hash = "sha256:f7d46240f7a1ae1dd95aab38bd74f7428d46531f69219954266d669da60c0818"},
 ]
 py = [
-    {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
-    {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
+    {file = "py-1.8.2-py2.py3-none-any.whl", hash = "sha256:a673fa23d7000440cc885c17dbd34fafcb7d7a6e230b29f6766400de36a33c44"},
+    {file = "py-1.8.2.tar.gz", hash = "sha256:f3b3a4c36512a4c4f024041ab51866f11761cc169670204b235f6b20523d4e6b"},
 ]
 pyasn1 = [
     {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
@@ -2913,8 +2934,8 @@ safety = [
     {file = "safety-1.9.0.tar.gz", hash = "sha256:23bf20690d4400edc795836b0c983c2b4cbbb922233108ff925b7dd7750f00c9"},
 ]
 scramp = [
-    {file = "scramp-1.1.1-py3-none-any.whl", hash = "sha256:a2c740624642de84f77327da8f56b2f030c5afd10deccaedbb8eb6108a66dfc1"},
-    {file = "scramp-1.1.1.tar.gz", hash = "sha256:b57eb0ae2f9240b15b5d0dab2ea8e40b43eef13ac66d3f627a79ef85a6da0927"},
+    {file = "scramp-1.2.0-py3-none-any.whl", hash = "sha256:74815c25aad1fe0b5fb994e96c3de63e8695164358a80138352aaadfa4760350"},
+    {file = "scramp-1.2.0.tar.gz", hash = "sha256:d6865ed1d135ddb124a619d7cd3a5b505f69a7c92e248024dd7e48bc77752af5"},
 ]
 selenium = [
     {file = "selenium-3.141.0-py2.py3-none-any.whl", hash = "sha256:2d7131d7bc5a5b99a2d9b04aaf2612c411b03b8ca1b1ee8d3de5845a9be2cb3c"},
@@ -2941,8 +2962,8 @@ spdx-license-list = [
     {file = "spdx_license_list-0.5.0.tar.gz", hash = "sha256:40cd53ff16401bab7059e6d1ef61839196b12079929a2763a50145d3b6949bc1"},
 ]
 sphinx = [
-    {file = "Sphinx-3.1.0-py3-none-any.whl", hash = "sha256:7d3d5087e39ab5a031b75588e9859f011de70e213cd0080ccbc28079fb0786d1"},
-    {file = "Sphinx-3.1.0.tar.gz", hash = "sha256:1c445320a3310baa5ccb8d957267ef4a0fc930dc1234db5098b3d7af14fbb242"},
+    {file = "Sphinx-3.1.1-py3-none-any.whl", hash = "sha256:97c9e3bcce2f61d9f5edf131299ee9d1219630598d9f9a8791459a4d9e815be5"},
+    {file = "Sphinx-3.1.1.tar.gz", hash = "sha256:74fbead182a611ce1444f50218a1c5fc70b6cc547f64948f5182fb30a2a20258"},
 ]
 sphinx-autodoc-typehints = [
     {file = "sphinx-autodoc-typehints-1.10.3.tar.gz", hash = "sha256:a6b3180167479aca2c4d1ed3b5cb044a70a76cccd6b38662d39288ebd9f0dff0"},

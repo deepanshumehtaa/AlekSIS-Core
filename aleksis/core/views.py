@@ -2,21 +2,21 @@ from typing import Optional
 
 from django.apps import apps
 from django.conf import settings
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from django_tables2 import RequestConfig
+from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
-from rules.contrib.views import permission_required
+from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from .filters import GroupFilter
 from .forms import (
@@ -29,8 +29,10 @@ from .forms import (
     GroupPreferenceForm,
     PersonPreferenceForm,
     PersonsAccountsFormSet,
+    SchoolTermForm,
     SitePreferenceForm,
 )
+from .mixins import AdvancedCreateView, AdvancedEditView
 from .models import (
     AdditionalField,
     Announcement,
@@ -39,13 +41,20 @@ from .models import (
     GroupType,
     Notification,
     Person,
+    SchoolTerm,
 )
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
     site_preferences_registry,
 )
-from .tables import AdditionalFieldsTable, GroupsTable, GroupTypesTable, PersonsTable
+from .tables import (
+    AdditionalFieldsTable,
+    GroupsTable,
+    GroupTypesTable,
+    PersonsTable,
+    SchoolTermTable,
+)
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
@@ -90,6 +99,37 @@ def about(request: HttpRequest) -> HttpResponse:
     )
 
     return render(request, "core/pages/about.html", context)
+
+
+class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
+    """Table of all school terms."""
+
+    model = SchoolTerm
+    table_class = SchoolTermTable
+    permission_required = "core.view_schoolterm"
+    template_name = "core/school_term/list.html"
+
+
+class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
+    """Create view for school terms."""
+
+    model = SchoolTerm
+    form_class = SchoolTermForm
+    permission_required = "core.add_schoolterm"
+    template_name = "core/school_term/create.html"
+    success_url = reverse_lazy("school_terms")
+    success_message = _("The school term has been created.")
+
+
+class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
+    """Edit view for school terms."""
+
+    model = SchoolTerm
+    form_class = SchoolTermForm
+    permission_required = "core.edit_schoolterm"
+    template_name = "core/school_term/edit.html"
+    success_url = reverse_lazy("school_terms")
+    success_message = _("The school term has been saved.")
 
 
 @permission_required("core.view_persons")
