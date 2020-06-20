@@ -208,4 +208,3 @@ class AppConfig(django.apps.AppConfig):
                         content_type=ct,
                         defaults={"name": verbose_name},
                     )
-                        
