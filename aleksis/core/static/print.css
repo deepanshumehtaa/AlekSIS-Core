@@ -71,6 +71,18 @@ header .row, header .col {
     width: auto;
 }
 
+.page-break {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    border-top: 1px dashed;
+    color: darkgrey;
+    page-break-after: always;
+}
+
 @media print {
     .header-space {
         height: 35mm;
@@ -92,5 +104,9 @@ header .row, header .col {
     footer {
         position: fixed;
         bottom: 0;
+    }
+
+    .page-break {
+        border: white;
     }
 }
