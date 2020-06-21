@@ -38,7 +38,13 @@ header, main, footer {
     height: 0;
 }
 
-.print-layout-table td {
+.print-layout-table, .print-layout-td {
+    width: 190mm;
+    max-width: 190mm;
+    min-width: 190mm;
+}
+
+.print-layout-td {
     padding: 0;
 }
 
