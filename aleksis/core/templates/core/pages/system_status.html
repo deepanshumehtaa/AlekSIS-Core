@@ -63,6 +63,43 @@
     </div>
   </div>
 
+  {# Health checks #}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title"> {% blocktrans %}System health checks{% endblocktrans %}</span>
+
+      <table>
+        <thead>
+          <tr>
+
+            <th colspan="2">{% trans "Service" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Time taken" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plugin in plugins %}
+            <tr>
+              <td>
+                <a class="tooltipped" data-position="top" data-tooltip="{{ plugin.pretty_status }}">
+                {% if plugin.status %}
+                  <i class="material-icons green-text" aria-hidden="true" title="{{ plugin.pretty_status }}">check</i>
+                {% else %}
+                  <i class="material-icons red-text" aria-hidden="true" title="{{ plugin.pretty_status }}">warning</i>
+                {% endif %}
+                </a>
+              </td>
+              <td>{{ plugin.identifier }}</td>
+              <td>
+                {{ plugin.pretty_status }}
+              </td>
+              <td>{{ plugin.time_taken|floatformat:4 }} {% trans "seconds" %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   {% if tasks %}
     <div class="card">
