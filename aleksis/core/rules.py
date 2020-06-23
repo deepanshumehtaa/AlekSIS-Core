@@ -110,14 +110,6 @@ add_perm("core.assign_child_groups_to_groups", assign_child_groups_to_groups_pre
 edit_school_information_predicate = has_person & has_global_perm("core.change_school")
 add_perm("core.edit_school_information", edit_school_information_predicate)
 
-# Edit school term
-edit_schoolterm_predicate = has_person & has_global_perm("core.change_schoolterm")
-add_perm("core.edit_schoolterm", edit_schoolterm_predicate)
-
-# Manage school
-manage_school_predicate = edit_school_information_predicate | edit_schoolterm_predicate
-add_perm("core.manage_school", manage_school_predicate)
-
 # Manage data
 manage_data_predicate = has_person & has_global_perm("core.manage_data")
 add_perm("core.manage_data", manage_data_predicate)
@@ -165,16 +157,6 @@ add_perm(
         | assign_child_groups_to_groups_predicate
     ),
 )
-
-# View admin menu
-view_admin_menu_predicate = has_person & (
-    manage_data_predicate
-    | manage_school_predicate
-    | impersonate_predicate
-    | view_system_status_predicate
-    | view_announcements_predicate
-)
-add_perm("core.view_admin_menu", view_admin_menu_predicate)
 
 # View person personal details
 view_personal_details_predicate = has_person & (
@@ -270,3 +252,23 @@ create_group_predicate = has_person & (
     has_global_perm("core.create_group") | has_object_perm("core.create_group")
 )
 add_perm("core.create_group", create_group_predicate)
+
+# School years
+view_school_term_predicate = has_person & has_global_perm("core.view_schoolterm")
+add_perm("core.view_schoolterm", view_school_term_predicate)
+
+create_school_term_predicate = has_person & has_global_perm("core.add_schoolterm")
+add_perm("core.create_schoolterm", create_school_term_predicate)
+
+edit_school_term_predicate = has_person & has_global_perm("core.change_schoolterm")
+add_perm("core.edit_schoolterm", edit_school_term_predicate)
+
+# View admin menu
+view_admin_menu_predicate = has_person & (
+    manage_data_predicate
+    | view_school_term_predicate
+    | impersonate_predicate
+    | view_system_status_predicate
+    | view_announcements_predicate
+)
+add_perm("core.view_admin_menu", view_admin_menu_predicate)

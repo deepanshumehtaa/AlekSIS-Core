@@ -12,6 +12,7 @@ from django_js_reverse.views import urls_js
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
+from .util.core_helpers import is_celery_enabled
 
 urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
@@ -21,6 +22,9 @@ urlpatterns = [
     path("status/", views.system_status, name="system_status"),
     path("", include(tf_urls)),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
+    path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
+    path("school_terms/<int:pk>/", views.SchoolTermEditView.as_view(), name="edit_school_term"),
     path("persons", views.persons, name="persons"),
     path("persons/accounts", views.persons_accounts, name="persons_accounts"),
     path("person", views.person, name="person"),
@@ -160,6 +164,9 @@ if hasattr(settings, "TWILIO_ACCOUNT_SID"):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
 
     urlpatterns += [path("", include(tf_twilio_urls))]
+
+if is_celery_enabled():
+    urlpatterns.append(path("celery_progress/", include("celery_progress.urls")))
 
 # Serve javascript-common if in development
 if settings.DEBUG:
