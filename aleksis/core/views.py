@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+import reversion
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -274,21 +275,28 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/child_groups.html", context)
 
 
-@permission_required(
-    "core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True)
-)
+@permission_required("core.edit_person", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
 
-    person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
+    person = objectgetter_optional(Person)(request, id_)
     context["person"] = person
 
-    edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
+    if id_:
+        # Edit form for existing group
+        edit_person_form = EditGroupForm(request.POST or None, instance=person)
+    else:
+        # Empty form to create a new group
+        if request.user.has_perm("core.create_person"):
+            edit_person_form = EditPersonForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_person_form.is_valid():
-            edit_person_form.save(commit=True)
+            with reversion.create_revision():
+                edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
             # Redirect to self to ensure post-processed data is displayed
@@ -319,11 +327,15 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
         # Empty form to create a new group
-        edit_group_form = EditGroupForm(request.POST or None)
+        if request.user.has_perm("core.create_group"):
+            edit_group_form = EditGroupForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_group_form.is_valid():
-            group = edit_group_form.save(commit=True)
+            with reversion.create_revision():
+                group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
 
@@ -512,6 +524,33 @@ def preferences(
     context["instance"] = instance
 
     return render(request, "dynamic_preferences/form.html", context)
+
+
+@permission_required("core.delete_person", fn=objectgetter_optional(Person))
+def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an person."""
+    person = objectgetter_optional(Person)(request, id_)
+
+    with reversion.create_revision():
+        person.save()
+
+    person.delete()
+    messages.success(request, _("The person has been deleted."))
+
+    return redirect("persons")
+
+
+@permission_required("core.delete_group", fn=objectgetter_optional(Group))
+def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an group."""
+    group = objectgetter_optional(Group)(request, id_)
+    with reversion.create_revision():
+        group.save()
+
+    group.delete()
+    messages.success(request, _("The group has been deleted."))
+
+    return redirect("groups")
 
 
 @permission_required(

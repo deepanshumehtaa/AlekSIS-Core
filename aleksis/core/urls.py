@@ -29,8 +29,10 @@ urlpatterns = [
     path("persons", views.persons, name="persons"),
     path("persons/accounts", views.persons_accounts, name="persons_accounts"),
     path("person", views.person, name="person"),
+    path("person/create", views.edit_person, name="create_person"),
     path("person/<int:id_>", views.person, name="person_by_id"),
     path("person/<int:id_>/edit", views.edit_person, name="edit_person_by_id"),
+    path("person/<int:id_>/delete", views.delete_person, name="delete_person_by_id"),
     path("groups", views.groups, name="groups"),
     path("groups/additional_fields", views.additional_fields, name="additional_fields"),
     path("groups/child_groups/", views.groups_child_groups, name="groups_child_groups"),
@@ -52,6 +54,7 @@ urlpatterns = [
     path("group/create", views.edit_group, name="create_group"),
     path("group/<int:id_>", views.group, name="group_by_id"),
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
+    path("group/<int:id_>/delete", views.delete_group, name="delete_group_by_id"),
     path("", views.index, name="index"),
     path(
         "notifications/mark-read/<int:id_>",
