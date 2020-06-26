@@ -9,6 +9,7 @@ from django.views.i18n import JavaScriptCatalog
 import calendarweek.django
 import debug_toolbar
 from django_js_reverse.views import urls_js
+from health_check.urls import urlpatterns as health_urls
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
@@ -19,7 +20,7 @@ urlpatterns = [
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
-    path("status/", views.system_status, name="system_status"),
+    path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
@@ -147,6 +148,7 @@ urlpatterns = [
         {"registry_name": "group"},
         name="preferences_group",
     ),
+    path("health/", include(health_urls)),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

@@ -85,6 +85,11 @@ INSTALLED_APPS = [
     "django_otp",
     "otp_yubikey",
     "aleksis.core",
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.psutil",
     "dynamic_preferences",
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
@@ -419,7 +424,12 @@ if _settings.get("twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat", "django_celery_results", "celery_progress")
+    INSTALLED_APPS += (
+        "django_celery_beat",
+        "django_celery_results",
+        "celery_progress",
+        "health_check.contrib.celery",
+    )
     CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
@@ -656,3 +666,8 @@ else:
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
 DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+HEALTH_CHECK = {
+    "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
+    "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
+}
