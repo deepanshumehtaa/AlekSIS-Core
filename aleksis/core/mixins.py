@@ -43,6 +43,8 @@ class _ExtensibleModelBase(models.base.ModelBase):
             # Register all non-abstract models with django-reversion
             mcls = reversion.register(mcls)
 
+            mcls.extra_permissions = []
+
         return mcls
 
 
@@ -100,6 +102,8 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     objects = CurrentSiteManager()
     objects_all_sites = models.Manager()
 
+    extra_permissions = []
+    
     def get_absolute_url(self) -> str:
         """Get the URL o a view representing this model instance."""
         pass
@@ -225,6 +229,11 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
+
+    @classmethod
+    def add_permission(cls, name: str, verbose_name: str):
+        """Dynamically add a new permission to a model."""
+        cls.extra_permissions.append((name, verbose_name))
 
     class Meta:
         abstract = True

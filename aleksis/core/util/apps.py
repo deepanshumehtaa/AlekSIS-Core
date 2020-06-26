@@ -189,6 +189,9 @@ class AppConfig(django.apps.AppConfig):
         pass
 
     def _maintain_default_data(self):
+        from django.contrib.auth.models import Permission
+        from django.contrib.contenttypes.models import ContentType
+
         if not self.models_module:
             # This app does not have any models, so bail out early
             return
@@ -197,3 +200,11 @@ class AppConfig(django.apps.AppConfig):
             if hasattr(model, "maintain_default_data"):
                 # Method implemented by each model object; can be left out
                 model.maintain_default_data()
+            if hasattr(model, "extra_permissions"):
+                ct = ContentType.objects.get_for_model(model)
+                for perm, verbose_name in model.extra_permissions:
+                    Permission.objects.get_or_create(
+                        codename=perm,
+                        content_type=ct,
+                        defaults={"name": verbose_name},
+                    )
