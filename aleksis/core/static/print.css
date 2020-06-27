@@ -38,7 +38,13 @@ header, main, footer {
     height: 0;
 }
 
-.print-layout-table td {
+.print-layout-table, .print-layout-td {
+    width: 190mm;
+    max-width: 190mm;
+    min-width: 190mm;
+}
+
+.print-layout-td {
     padding: 0;
 }
 
@@ -65,6 +71,18 @@ header .row, header .col {
     width: auto;
 }
 
+.page-break {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    border-top: 1px dashed;
+    color: darkgrey;
+    page-break-after: always;
+}
+
 @media print {
     .header-space {
         height: 35mm;
@@ -86,5 +104,9 @@ header .row, header .col {
     footer {
         position: fixed;
         bottom: 0;
+    }
+
+    .page-break {
+        border: white;
     }
 }
