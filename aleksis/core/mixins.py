@@ -263,13 +263,9 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         # Add related property on foreign model instance if it provides such an interface
         if hasattr(to, "_safe_add"):
 
-            def _virtual_related(self) -> Optional[models.Model]:
+            def _virtual_related(self) -> models.QuerySet:
                 id_field_val = getattr(self, to_field)
-                try:
-                    return cls.objects.get(**{id_field_name: id_field_val})
-                except cls.DoesNotExist:
-                    # Nothing references us
-                    return None
+                return cls.objects.filter(**{id_field_name: id_field_val})
 
             to.property(_virtual_related, related_name)
 
