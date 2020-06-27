@@ -12,13 +12,21 @@
 
   {% has_perm 'core.edit_person' user person as can_change_person %}
   {% has_perm 'core.change_person_preferences' user person as can_change_person_preferences %}
+  {% has_perm 'core.delete_person' user person as can_delete_person %}
 
-  {% if can_change_person or can_change_person_preferences %}
+  {% if can_change_person or can_change_person_preferences or can_delete_person %}
     <p>
       {% if can_change_person %}
         <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
           <i class="material-icons left">edit</i>
           {% trans "Edit" %}
+        </a>
+      {% endif %}
+
+      {% if can_delete_person %}
+        <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light red">
+          <i class="material-icons left">delete</i>
+          {% trans "Delete" %}
         </a>
       {% endif %}
 
@@ -44,7 +52,7 @@
       {% endif %}
     </div>
     <div class="col s12 m8">
-      <table class="table table-responsive-xl table-border table-striped">
+      <table class="responsive-table highlight">
         <tr>
           <td rowspan="6">
 
@@ -108,6 +116,20 @@
       </div>
     {% endif %}
   </div>
+
+  {% if person.children.all and can_view_personal_details %}
+    <div class="col s12 m12">
+      <h5>{% trans "Children" %}</h5>
+      {% include "core/person/collection.html" with persons=person.children.all %}
+    </div>
+  {% endif %}
+
+  {% if person.guardians.all and can_view_personal_details %}
+    <div class="col s12 m12">
+      <h5>{% trans "Guardians / Parents" %}</h5>
+      {% include "core/person/collection.html" with persons=person.guardians.all %}
+    </div>
+  {% endif %}
 
   {% has_perm 'core.view_person_groups' user person as can_view_groups %}
   {% if can_view_groups %}

@@ -22,7 +22,7 @@
     <form action="" enctype="multipart/form-data" method="post">
       {% csrf_token %}
       {% form form=form %}{% endform %}
-      {% include "core/save_button.html" with caption=_("Save preferences") %}
+      {% include "core/partials/save_button.html" with caption=_("Save preferences") %}
     </form>
   </div>
 {% endblock %}

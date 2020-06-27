@@ -74,3 +74,8 @@ htmlcov/
 maintenance_mode_state.txt
 media/
 package-lock.json
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
