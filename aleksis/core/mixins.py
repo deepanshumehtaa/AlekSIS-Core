@@ -210,7 +210,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         cls._safe_add(field, name)
 
     @classmethod
-    def foreignn_key(
+    def foreign_key(
         cls,
         field_name: str,
         to: models.Model,
