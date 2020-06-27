@@ -9,8 +9,8 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
-from .mixins import ExtensibleForm
-from .models import Announcement, Group, GroupType, Person
+from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
+from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolTerm
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -121,13 +121,14 @@ class EditPersonForm(ExtensibleForm):
         return PersonAccountForm.clean(self)
 
 
-class EditGroupForm(ExtensibleForm):
+class EditGroupForm(SchoolTermRelatedExtensibleForm):
     """Form to edit an existing group in the frontend."""
 
     layout = Layout(
+        Fieldset(_("School term"), "school_term"),
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
-        Fieldset(_("Additional fields"), "additional_fields"),
+        Fieldset(_("Additional data"), "additional_fields"),
     )
 
     class Meta:
@@ -151,6 +152,7 @@ class EditGroupForm(ExtensibleForm):
             "parent_groups": ModelSelect2MultipleWidget(
                 search_fields=["name__icontains", "short_name__icontains"]
             ),
+            "additional_fields": ModelSelect2MultipleWidget(search_fields=["title__icontains",]),
         }
 
 
@@ -169,7 +171,7 @@ class AnnouncementForm(ExtensibleForm):
     persons = forms.ModelMultipleChoiceField(
         Person.objects.all(), label=_("Persons"), required=False
     )
-    groups = forms.ModelMultipleChoiceField(Group.objects.all(), label=_("Groups"), required=False)
+    groups = forms.ModelMultipleChoiceField(queryset=None, label=_("Groups"), required=False)
 
     layout = Layout(
         Fieldset(
@@ -203,6 +205,8 @@ class AnnouncementForm(ExtensibleForm):
             }
 
         super().__init__(*args, **kwargs)
+
+        self.fields["groups"].queryset = Group.objects.for_current_school_term_or_all()
 
     def clean(self):
         data = super().clean()
@@ -283,9 +287,27 @@ class GroupPreferenceForm(PreferenceForm):
     registry = group_preferences_registry
 
 
+class EditAdditionalFieldForm(forms.ModelForm):
+    """Form to manage additional fields."""
+
+    class Meta:
+        model = AdditionalField
+        exclude = []
+
+
 class EditGroupTypeForm(forms.ModelForm):
     """Form to manage group types."""
 
     class Meta:
         model = GroupType
+        exclude = []
+
+
+class SchoolTermForm(ExtensibleForm):
+    """Form for managing school years."""
+
+    layout = Layout("name", Row("date_start", "date_end"))
+
+    class Meta:
+        model = SchoolTerm
         exclude = []
