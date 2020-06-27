@@ -233,8 +233,9 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
         # Add field to hold key to foreign model
         id_field = to_field_type()
-        self.field(**{id_field_name: id_field})
+        cls.field(**{id_field_name: id_field})
 
+        @property
         def _virtual_fk(self) -> Optional[models.Model]:
             id_field_val = getattr(self, id_field_name)
             if id_field_val:
@@ -248,17 +249,16 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             else:
                 return None
 
-        # Add property to wrap get/set on foreign model instance
-        cls.property(_virtual_fk, field_name)
-        _virtual_fk = getattr(cls, field_name)
-
         @_virtual_fk.setter
-        def _virtual_fk(self, value: Optional[Model] = None) -> None:
+        def _virtual_fk(self, value: Optional[models.Model] = None) -> None:
             if value is None:
                 id_field_val = None
             else:
                 id_field_val = getattr(value, to_field)
             setattr(self, id_field_name, id_field_val)
+
+        # Add property to wrap get/set on foreign model instance
+        cls._safe_add(_virtual_fk, field_name)
 
         # Add related property on foreign model instance if it provides such an interface
         if hasattr(to, "_safe_add"):
@@ -267,7 +267,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 id_field_val = getattr(self, to_field)
                 return cls.objects.filter(**{id_field_name: id_field_val})
 
-            to.property(_virtual_related, related_name)
+            to.property_(_virtual_related, related_name)
 
     @classmethod
     def syncable_fields(cls) -> List[models.Field]:
