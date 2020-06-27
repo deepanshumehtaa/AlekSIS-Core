@@ -103,7 +103,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     objects_all_sites = models.Manager()
 
     extra_permissions = []
-    
+
     def get_absolute_url(self) -> str:
         """Get the URL o a view representing this model instance."""
         pass
@@ -248,7 +248,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             else:
                 return None
 
-        # Add property to wrap get/set on foreign mdoel instance
+        # Add property to wrap get/set on foreign model instance
         cls.property(_virtual_fk, field_name)
         _virtual_fk = getattr(cls, field_name)
 
