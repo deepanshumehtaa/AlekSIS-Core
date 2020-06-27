@@ -300,6 +300,9 @@ class AdditionalField(ExtensibleModel):
         verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50
     )
 
+    def __str__(self) -> str:
+        return self.title
+
     class Meta:
         verbose_name = _("Addtitional field for groups")
         verbose_name_plural = _("Addtitional fields for groups")
@@ -717,6 +720,9 @@ class GroupType(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)
+
+    def __str__(self) -> str:
+        return self.name
 
     class Meta:
         verbose_name = _("Group type")
