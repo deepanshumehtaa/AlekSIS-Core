@@ -9,13 +9,15 @@ from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
 
 from django.conf import settings
-from django.db.models import Model
+from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 
 from django_global_request.middleware import get_request
+
+from cache_memoize import cache_memoize
 
 from aleksis.core.util import messages
 
@@ -349,3 +351,16 @@ def handle_uploaded_file(f, filename: str):
     with open(filename, "wb+") as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+
+@cache_memoize(3600)
+def queryset_rules_filter(request: HttpRequest, queryset: QuerySet, perm: str) -> QuerySet:
+    """Filter queryset by user and permission."""
+
+    wanted_objects = set()
+    if hasattr(request, "user"):
+        for obj in queryset:
+            if request.user.has_perm(perm, obj):
+                wanted_objects.add(obj.pk)
+
+    return queryset.filter(pk__in = wanted_objects)
