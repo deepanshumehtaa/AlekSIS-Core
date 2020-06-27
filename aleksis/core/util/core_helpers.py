@@ -354,13 +354,18 @@ def handle_uploaded_file(f, filename: str):
 
 
 @cache_memoize(3600)
-def queryset_rules_filter(request: HttpRequest, queryset: QuerySet, perm: str) -> QuerySet:
+def queryset_rules_filter(obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str) -> QuerySet:
     """Filter queryset by user and permission."""
 
     wanted_objects = set()
-    if hasattr(request, "user"):
-        for obj in queryset:
-            if request.user.has_perm(perm, obj):
-                wanted_objects.add(obj.pk)
+    if isinstance(obj, HttpRequest):
+        if hasattr(obj, "user"):
+            for item in queryset:
+                if obj.user.has_perm(perm, item):
+                    wanted_objects.add(item.pk)
+    else:
+        for item in queryset:
+            if obj.has_perm(perm, item):
+                wanted_objects.add(item.pk)
 
     return queryset.filter(pk__in = wanted_objects)
