@@ -354,7 +354,9 @@ def handle_uploaded_file(f, filename: str):
 
 
 @cache_memoize(3600)
-def queryset_rules_filter(obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str) -> QuerySet:
+def queryset_rules_filter(
+    obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str
+) -> QuerySet:
     """Filter queryset by user and permission."""
 
     wanted_objects = set()
@@ -365,4 +367,4 @@ def queryset_rules_filter(obj: Union[HttpRequest, Model], queryset: QuerySet, pe
         if obj.has_perm(perm, item):
             wanted_objects.add(item.pk)
 
-    return queryset.filter(pk__in = wanted_objects)
+    return queryset.filter(pk__in=wanted_objects)

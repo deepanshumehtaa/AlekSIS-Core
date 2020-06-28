@@ -63,7 +63,10 @@ def has_any_object(perm: str, klass):
 
     @predicate(name)
     def fn(user: User) -> bool:
-        return get_objects_for_user(user, perm, klass).exists() or queryset_rules_filter(user, klass.objects.all(), perm).exists()
+        return (
+            get_objects_for_user(user, perm, klass).exists()
+            or queryset_rules_filter(user, klass.objects.all(), perm).exists()
+        )
 
     return fn
 
