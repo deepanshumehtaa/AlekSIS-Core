@@ -28,5 +28,7 @@ existing file or add a new one)::
   [default.ldap]
   uri = "ldaps://ldap.myschool.edu"
   bind = { dn = "cn=reader,dc=myschool,dc=edu", password = "secret" }
-  users = { base = "ou=people,dc=myschool,dc=edu", filter = "(uid=%(user)s)" }
+
+  [default.ldap.users]
+  search = { base = "ou=people,dc=myschool,dc=edu", filter = "(uid=%(user)s)" }
   map = { first_name = "givenName", last_name = "sn", email = "mail" }

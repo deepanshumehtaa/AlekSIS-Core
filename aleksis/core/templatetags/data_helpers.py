@@ -1,14 +1,15 @@
-from typing import Any
+import json
+from typing import Any, Optional, Union
 
 from django import template
+from django.contrib.contenttypes.models import ContentType
 
 register = template.Library()
 
 
 @register.filter
 def get_dict(value: Any, arg: Any) -> Any:
-    """Gets an attribute of an object dynamically from a string name"""
-
+    """Get an attribute of an object dynamically from a string name."""
     if hasattr(value, str(arg)):
         return getattr(value, arg)
     elif hasattr(value, "keys") and arg in value.keys():
@@ -17,3 +18,24 @@ def get_dict(value: Any, arg: Any) -> Any:
         return value[int(arg)]
     else:
         return None
+
+
+@register.simple_tag
+def verbose_name(app_label: str, model: str, field: Optional[str] = None) -> str:
+    """Get a verbose name of a model or a field by app label and model name."""
+    ct = ContentType.objects.get(app_label=app_label, model=model).model_class()
+
+    if field:
+        # Field
+        return ct._meta.get_field(field).verbose_name.title()
+    else:
+        # Whole model
+        return ct._meta.verbose_name.title()
+
+
+@register.simple_tag
+def parse_json(value: Optional[str] = None) -> Union[dict, None]:
+    """Template tag for parsing JSON from a string."""
+    if not value:
+        return None
+    return json.loads(value)
