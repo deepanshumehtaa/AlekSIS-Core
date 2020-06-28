@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 09:18+0000\n"
-"PO-Revision-Date: 2020-04-14 18:42+0000\n"
-"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"POT-Creation-Date: 2020-05-04 15:39+0200\n"
+"PO-Revision-Date: 2020-04-27 13:03+0000\n"
+"Last-Translator: Julian <leuckerj@gmail.com>\n"
 "Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/"
 "la/>\n"
 "Language: la\n"
@@ -17,72 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.0.1\n"
 
-#: forms.py:38 forms.py:93
+#: forms.py:46
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 
-#: forms.py:41 forms.py:96
+#: forms.py:50
 msgid "This username is already in use."
 msgstr ""
 
+#: forms.py:74
+msgid "Base data"
+msgstr ""
+
+#: forms.py:80
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Address"
+msgstr "Inscriptio electronica"
+
+#: forms.py:81
+msgid "Contact data"
+msgstr ""
+
 #: forms.py:83
+msgid "Advanced personal data"
+msgstr ""
+
+#: forms.py:116
 msgid "New user"
 msgstr ""
 
-#: forms.py:83
+#: forms.py:116
+#, fuzzy
+#| msgid "Persons and accounts"
 msgid "Create a new account"
-msgstr ""
+msgstr "Personae et computi"
 
-#: forms.py:149 forms.py:152
-msgid "Date"
-msgstr "dies"
+#: forms.py:128
+#, fuzzy
+#| msgid "Data management"
+msgid "Common data"
+msgstr "Adminstratio datarum"
 
-#: forms.py:150 forms.py:153
-msgid "Time"
-msgstr "tempus"
-
-#: forms.py:155 menus.py:127 models.py:95 templates/core/persons.html:8
-#: templates/core/persons.html:9
+#: forms.py:129 forms.py:169 menus.py:141 models.py:54
+#: templates/core/persons.html:8 templates/core/persons.html:9
 msgid "Persons"
 msgstr "personae"
 
-#: forms.py:156 menus.py:133 models.py:232 templates/core/groups.html:8
-#: templates/core/groups.html:9 templates/core/person_full.html:79
-msgid "Groups"
-msgstr ""
+#: forms.py:162 forms.py:165 models.py:31
+msgid "Date"
+msgstr "dies"
 
-#: forms.py:160
+#: forms.py:163 forms.py:166 models.py:39
+msgid "Time"
+msgstr "tempus"
+
+#: forms.py:171 menus.py:149 models.py:253 templates/core/groups.html:8
+#: templates/core/groups.html:9 templates/core/person_full.html:106
+msgid "Groups"
+msgstr "Greges"
+
+#: forms.py:175
 msgid "From when until when should the announcement be displayed?"
 msgstr ""
 
-#: forms.py:163
+#: forms.py:178
 msgid "Who should see the announcement?"
-msgstr ""
+msgstr "Quis nuntium videatne?"
 
-#: forms.py:164
+#: forms.py:179
 msgid "Write your announcement:"
 msgstr "Scribe nuntium:"
 
-#: forms.py:203
-msgid "You are not allowed to create announcements which are only valid in the past."
+#: forms.py:216
+msgid ""
+"You are not allowed to create announcements which are only valid in the past."
 msgstr ""
 
-#: forms.py:207
+#: forms.py:220
 msgid "The from date and time must be earlier then the until date and time."
 msgstr ""
 
-#: forms.py:215
+#: forms.py:229
 msgid "You need at least one recipient."
 msgstr ""
 
-#: menus.py:7 templates/registration/login.html:21
-#: templates/two_factor/core/login.html:6
+#: menus.py:7 templates/two_factor/core/login.html:6
 #: templates/two_factor/core/login.html:10
-#: templates/two_factor/core/login.html:64
+#: templates/two_factor/core/login.html:73
 msgid "Login"
-msgstr ""
+msgstr "nomen profiteri"
 
 #: menus.py:13
 msgid "Dashboard"
@@ -94,441 +120,724 @@ msgstr ""
 
 #: menus.py:26
 msgid "Stop impersonation"
-msgstr ""
+msgstr "Simulandum aliquem finire"
 
 #: menus.py:35 templates/core/base.html:56
 msgid "Logout"
-msgstr ""
+msgstr "nomen retractare"
 
 #: menus.py:41
-msgid "Two factor auth"
+msgid "2FA"
 msgstr ""
 
-#: menus.py:52
+#: menus.py:47
+msgid "Me"
+msgstr ""
+
+#: menus.py:56 templates/dynamic_preferences/form.html:5
+msgid "Preferences"
+msgstr ""
+
+#: menus.py:67
 msgid "Admin"
 msgstr "Administratio"
 
-#: menus.py:61 models.py:395 templates/core/announcement/list.html:7
+#: menus.py:75 models.py:487 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
 msgstr "Nuntii"
 
-#: menus.py:70 templates/core/data_management.html:6
+#: menus.py:86 templates/core/data_management.html:6
 #: templates/core/data_management.html:7
 msgid "Data management"
 msgstr "Adminstratio datarum"
 
-#: menus.py:79 templates/core/system_status.html:5
+#: menus.py:94 templates/core/system_status.html:5
 #: templates/core/system_status.html:7
 msgid "System status"
 msgstr "Status systemae"
 
-#: menus.py:88
+#: menus.py:105
 msgid "Impersonation"
-msgstr ""
+msgstr "Simulare aliquem"
 
-#: menus.py:97
-msgid "Manage school"
-msgstr "Administra scholam"
+#: menus.py:113
+#, fuzzy
+#| msgid "Notification"
+msgid "Configuration"
+msgstr "Nuntius"
 
-#: menus.py:106
+#: menus.py:124
 msgid "Backend Admin"
 msgstr ""
 
-#: menus.py:117
+#: menus.py:132
 msgid "People"
 msgstr "Personae"
 
-#: menus.py:139
+#: menus.py:157
 msgid "Persons and accounts"
 msgstr "Personae et computi"
 
-#: menus.py:152
-msgid "Edit school information"
-msgstr "Muta informationes scolae"
+#: menus.py:168
+msgid "Groups and child groups"
+msgstr ""
 
-#: menus.py:153 templates/core/edit_schoolterm.html:8
-#: templates/core/edit_schoolterm.html:9
-msgid "Edit school term"
-msgstr "Muta anum scolae"
+#: menus.py:183 templates/core/groups_child_groups.html:7
+#: templates/core/groups_child_groups.html:9
+msgid "Assign child groups to groups"
+msgstr ""
 
-#: models.py:31 models.py:517
-msgid "Name"
-msgstr "Nomen"
+#: models.py:29
+msgid "Boolean (Yes/No)"
+msgstr ""
+
+#: models.py:30
+msgid "Text (one line)"
+msgstr ""
+
+#: models.py:32
+msgid "Date and time"
+msgstr ""
 
 #: models.py:33
-msgid "Official name"
-msgstr "Officialis nomen"
-
-#: models.py:35
-msgid "Official name of the school, e.g. as given by supervisory authority"
-msgstr "Officialis nomen scolae, e. g."
-
-#: models.py:38
-msgid "School logo"
-msgstr "Imago scolae"
-
-#: models.py:51
-msgid "School"
-msgstr "Scola"
-
-#: models.py:52
-msgid "Schools"
+msgid "Decimal number"
 msgstr ""
 
-#: models.py:60
-msgid "Visible caption of the term"
-msgstr ""
-
-#: models.py:62
-msgid "Effective start date of term"
-msgstr ""
-
-#: models.py:63
-msgid "Effective end date of term"
-msgstr ""
-
-#: models.py:83
-msgid "School term"
-msgstr "Anus scolae"
-
-#: models.py:84
-msgid "School terms"
-msgstr "ani scolae"
-
-#: models.py:94 templates/core/persons_accounts.html:36
-msgid "Person"
-msgstr "Persona"
-
-#: models.py:97
-msgid "female"
-msgstr "femininum"
-
-#: models.py:97
-msgid "male"
-msgstr "maskulinum"
-
-#: models.py:102
-msgid "Is person active?"
-msgstr ""
-
-#: models.py:104
-msgid "First name"
-msgstr "Primus nomen"
-
-#: models.py:105
-msgid "Last name"
-msgstr "Secondus nomen"
-
-#: models.py:107
-msgid "Additional name(s)"
-msgstr "addita nomines"
-
-#: models.py:111
-msgid "Short name"
-msgstr "Breve nomen"
-
-#: models.py:114
-msgid "Street"
-msgstr "Via"
-
-#: models.py:115
-msgid "Street number"
-msgstr "Numerus domini"
-
-#: models.py:116
-msgid "Postal code"
-msgstr "Numerus directorius"
-
-#: models.py:117
-msgid "Place"
-msgstr "Urbs"
-
-#: models.py:119
-msgid "Home phone"
-msgstr "Numerus telephoni domi"
-
-#: models.py:120
-msgid "Mobile phone"
-msgstr "Numerus telephoni mobilis"
-
-#: models.py:122
+#: models.py:34 models.py:95
 msgid "E-mail address"
 msgstr "Inscriptio electronica"
 
-#: models.py:124
+#: models.py:35
+msgid "Integer"
+msgstr ""
+
+#: models.py:36
+#, fuzzy
+#| msgid "E-mail address"
+msgid "IP address"
+msgstr "Inscriptio electronica"
+
+#: models.py:37
+msgid "Boolean or empty (Yes/No/Neither)"
+msgstr ""
+
+#: models.py:38
+msgid "Text (multi-line)"
+msgstr ""
+
+#: models.py:40
+msgid "URL / Link"
+msgstr ""
+
+#: models.py:53 templates/core/persons_accounts.html:36
+msgid "Person"
+msgstr "Persona"
+
+#: models.py:56
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view address"
+msgstr "Inscriptio electronica"
+
+#: models.py:57
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view contact details"
+msgstr "Inscriptio electronica"
+
+#: models.py:58
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view photo"
+msgstr "Inscriptio electronica"
+
+#: models.py:59
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "Can view persons groups"
+msgstr "Personae et computi"
+
+#: models.py:60
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can view personal details"
+msgstr "Simulandum aliquem finire"
+
+#: models.py:65
+msgid "female"
+msgstr "femininum"
+
+#: models.py:65
+msgid "male"
+msgstr "maskulinum"
+
+#: models.py:73
+msgid "Linked user"
+msgstr ""
+
+#: models.py:75
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Is person active?"
+msgstr "Simulare aliquem"
+
+#: models.py:77
+msgid "First name"
+msgstr "Primus nomen"
+
+#: models.py:78
+msgid "Last name"
+msgstr "Secondus nomen"
+
+#: models.py:80
+msgid "Additional name(s)"
+msgstr "addita nomines"
+
+#: models.py:84 models.py:260
+msgid "Short name"
+msgstr "Breve nomen"
+
+#: models.py:87
+msgid "Street"
+msgstr "Via"
+
+#: models.py:88
+msgid "Street number"
+msgstr "Numerus domini"
+
+#: models.py:89
+msgid "Postal code"
+msgstr "Numerus directorius"
+
+#: models.py:90
+msgid "Place"
+msgstr "Urbs"
+
+#: models.py:92
+msgid "Home phone"
+msgstr "Numerus telephoni domi"
+
+#: models.py:93
+msgid "Mobile phone"
+msgstr "Numerus telephoni mobilis"
+
+#: models.py:97
 msgid "Date of birth"
-msgstr ""
+msgstr "Dies natalis"
 
-#: models.py:125
+#: models.py:98
 msgid "Sex"
-msgstr ""
+msgstr "Genus"
 
-#: models.py:127
+#: models.py:100
 msgid "Photo"
-msgstr ""
+msgstr "Photographia"
 
-#: models.py:131 models.py:249
-msgid "Reference ID of import source"
-msgstr ""
-
-#: models.py:140
+#: models.py:105
 msgid "Guardians / Parents"
+msgstr "Parentes"
+
+#: models.py:112
+msgid "Primary group"
 msgstr ""
 
-#: models.py:231
-msgid "Group"
-msgstr ""
+#: models.py:115 models.py:346 models.py:370 models.py:455 models.py:643
+msgid "Description"
+msgstr "Descriptio"
 
-#: models.py:234
-msgid "Long name of group"
+#: models.py:233
+msgid "Title of field"
 msgstr ""
 
 #: models.py:235
-msgid "Short name of group"
+msgid "Type of field"
 msgstr ""
 
-#: models.py:244
-msgid "Parent groups"
+#: models.py:239
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Addtitional field for groups"
+msgstr "addita nomines"
+
+#: models.py:240
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Addtitional fields for groups"
+msgstr "addita nomines"
+
+#: models.py:252
+msgid "Group"
+msgstr "Grex"
+
+#: models.py:254
+msgid "Can assign child groups to groups"
 msgstr ""
 
-#: models.py:268 models.py:285 models.py:363
-#: templates/core/announcement/list.html:18
-msgid "Title"
+#: models.py:258
+#, fuzzy
+#| msgid "Last name"
+msgid "Long name"
+msgstr "Secondus nomen"
+
+#: models.py:268 templates/core/group_full.html:37
+msgid "Members"
 msgstr ""
 
-#: models.py:269 models.py:286 models.py:364
-msgid "Description"
-msgstr ""
-
-#: models.py:271
-msgid "Application"
-msgstr ""
-
-#: models.py:277
-msgid "Activity"
+#: models.py:271 templates/core/group_full.html:34
+msgid "Owners"
 msgstr ""
 
 #: models.py:278
-msgid "Activities"
+msgid "Parent groups"
 msgstr ""
 
-#: models.py:282
-msgid "Sender"
-msgstr ""
-
-#: models.py:287 models.py:365 models.py:518
-msgid "Link"
-msgstr ""
-
-#: models.py:289
-msgid "Read"
+#: models.py:286
+msgid "Type of group"
 msgstr ""
 
 #: models.py:290
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Additional fields"
+msgstr "addita nomines"
+
+#: models.py:342
+msgid "User"
+msgstr ""
+
+#: models.py:345 models.py:369 models.py:454
+#: templates/core/announcement/list.html:18
+msgid "Title"
+msgstr "Titulus"
+
+#: models.py:348
+msgid "Application"
+msgstr ""
+
+#: models.py:354
+msgid "Activity"
+msgstr ""
+
+#: models.py:355
+msgid "Activities"
+msgstr ""
+
+#: models.py:361
+msgid "Sender"
+msgstr "Mittens"
+
+#: models.py:366
+msgid "Recipient"
+msgstr ""
+
+#: models.py:371 models.py:624
+msgid "Link"
+msgstr ""
+
+#: models.py:373
+msgid "Read"
+msgstr ""
+
+#: models.py:374
 msgid "Sent"
 msgstr ""
 
-#: models.py:301
+#: models.py:387
+#, fuzzy
+#| msgid "Notifications"
 msgid "Notification"
-msgstr ""
+msgstr "Nuntii"
 
-#: models.py:302
+#: models.py:388
 msgid "Notifications"
+msgstr "Nuntii"
+
+#: models.py:456
+msgid "Link to detailed view"
 msgstr ""
 
-#: models.py:368
+#: models.py:459
 msgid "Date and time from when to show"
 msgstr ""
 
-#: models.py:371
+#: models.py:462
 msgid "Date and time until when to show"
 msgstr ""
 
-#: models.py:394
+#: models.py:486
+#, fuzzy
+#| msgid "Announcements"
 msgid "Announcement"
-msgstr ""
+msgstr "Nuntii"
 
-#: models.py:422
+#: models.py:524
+#, fuzzy
+#| msgid "Announcements"
 msgid "Announcement recipient"
-msgstr ""
+msgstr "Nuntii"
 
-#: models.py:423
+#: models.py:525
+#, fuzzy
+#| msgid "Announcements"
 msgid "Announcement recipients"
-msgstr ""
+msgstr "Nuntii"
 
-#: models.py:473
+#: models.py:575
+#, fuzzy
+#| msgid "Site title"
 msgid "Widget Title"
-msgstr ""
+msgstr "Titulus paginae"
 
-#: models.py:474
+#: models.py:576
 msgid "Activate Widget"
 msgstr ""
 
-#: models.py:486
+#: models.py:594
+#, fuzzy
+#| msgid "Dashboard"
 msgid "Dashboard Widget"
-msgstr ""
+msgstr "Forum"
 
-#: models.py:487
+#: models.py:595
+#, fuzzy
+#| msgid "Dashboard"
 msgid "Dashboard Widgets"
-msgstr ""
+msgstr "Forum"
 
-#: models.py:491
+#: models.py:601
 msgid "Menu ID"
 msgstr ""
 
-#: models.py:492
-msgid "Menu name"
-msgstr ""
-
-#: models.py:509
+#: models.py:613
 msgid "Custom menu"
 msgstr ""
 
-#: models.py:510
+#: models.py:614
 msgid "Custom menus"
 msgstr ""
 
-#: models.py:515
+#: models.py:621
 msgid "Menu"
 msgstr ""
 
-#: models.py:520
-msgid "Icon"
-msgstr ""
+#: models.py:623
+msgid "Name"
+msgstr "Nomen"
 
-#: models.py:527
+#: models.py:625
+msgid "Icon"
+msgstr "Nota"
+
+#: models.py:631
 msgid "Custom menu item"
 msgstr ""
 
-#: models.py:528
+#: models.py:632
 msgid "Custom menu items"
 msgstr ""
 
-#: settings.py:254
-msgid "German"
+#: models.py:642
+msgid "Title of type"
 msgstr ""
 
-#: settings.py:255
-msgid "English"
+#: models.py:646
+#, fuzzy
+#| msgid "Group"
+msgid "Group type"
+msgstr "Grex"
+
+#: models.py:647
+#, fuzzy
+#| msgid "Groups"
+msgid "Group types"
+msgstr "Greges"
+
+#: models.py:656
+#, fuzzy
+#| msgid "System status"
+msgid "Can view system status"
+msgstr "Status systemae"
+
+#: models.py:657
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "Can link persons to accounts"
+msgstr "Personae et computi"
+
+#: models.py:658
+#, fuzzy
+#| msgid "Data management"
+msgid "Can manage data"
+msgstr "Adminstratio datarum"
+
+#: models.py:659
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can impersonate"
+msgstr "Simulandum aliquem finire"
+
+#: models.py:660
+msgid "Can use search"
 msgstr ""
 
-#: settings.py:373
+#: models.py:661
+msgid "Can change site preferences"
+msgstr ""
+
+#: models.py:662
+msgid "Can change person preferences"
+msgstr ""
+
+#: models.py:663
+msgid "Can change group preferences"
+msgstr ""
+
+#: preferences.py:27
 msgid "Site title"
-msgstr ""
+msgstr "Titulus paginae"
 
-#: settings.py:374
+#: preferences.py:36
 msgid "Site description"
-msgstr ""
+msgstr "Descriptio paginae"
 
-#: settings.py:375
+#: preferences.py:45
 msgid "Primary colour"
 msgstr ""
 
-#: settings.py:376
+#: preferences.py:54
 msgid "Secondary colour"
 msgstr ""
 
-#: settings.py:377
+#: preferences.py:62
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "nomen retractare"
+
+#: preferences.py:70
+msgid "Favicon"
+msgstr ""
+
+#: preferences.py:78
+#, fuzzy
+#| msgid "Icon"
+msgid "PWA-Icon"
+msgstr "Nota"
+
+#: preferences.py:87
+#, fuzzy
+#| msgid "Last name"
 msgid "Mail out name"
-msgstr ""
+msgstr "Secondus nomen"
 
-#: settings.py:378
+#: preferences.py:96
+#, fuzzy
+#| msgid "E-mail address"
 msgid "Mail out address"
-msgstr ""
+msgstr "Inscriptio electronica"
 
-#: settings.py:379
+#: preferences.py:106
 msgid "Link to privacy policy"
 msgstr ""
 
-#: settings.py:380
+#: preferences.py:116
 msgid "Link to imprint"
 msgstr ""
 
-#: settings.py:381
-msgid "Name format of adresses"
+#: preferences.py:126
+msgid "Name format for addressing"
 msgstr ""
 
-#: settings.py:382
-msgid "Channels to allow for notifications"
+#: preferences.py:140
+msgid "Channels to use for notifications"
 msgstr ""
 
-#: settings.py:383
+#: preferences.py:150
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr ""
 
-#: templates/403.html:10
-msgid "Error (403): You are not allowed to access the requested page or object."
+#: preferences.py:159
+msgid "Field on person to match primary group against"
 msgstr ""
 
-#: templates/403.html:12
+#: preferences.py:171
+msgid "Display name of the school"
+msgstr ""
+
+#: preferences.py:180
+msgid "Official name of the school, e.g. as given by supervisory authority"
+msgstr "Officialis nomen scolae, e. g."
+
+#: settings.py:276
+msgid "English"
+msgstr "Britannicus"
+
+#: settings.py:277
+msgid "German"
+msgstr "Germanus"
+
+#: settings.py:278
+msgid "French"
+msgstr ""
+
+#: templates/403.html:10 templates/404.html:10 templates/500.html:10
+msgid "Error"
+msgstr ""
+
+#: templates/403.html:10
+msgid ""
+"You are not allowed to access the requested page or\n"
+"          object."
+msgstr ""
+
+#: templates/403.html:13 templates/404.html:17
 msgid ""
 "\n"
-"      If you think this is an error in AlekSIS, please contact your site\n"
-"     administrators:\n"
-"     "
+"            If you think this is an error in AlekSIS, please contact your "
+"site\n"
+"            administrators:\n"
+"          "
 msgstr ""
 
 #: templates/404.html:10
-msgid "Error (404): The requested page or object was not found."
+msgid ""
+"The requested page or object was not\n"
+"          found."
 msgstr ""
 
-#: templates/404.html:12
+#: templates/404.html:13
 msgid ""
 "\n"
-"      If you were redirected by a link on an external page,\n"
-"      it is possible that that link was outdated.\n"
-"     "
-msgstr ""
-
-#: templates/404.html:16
-msgid ""
-"\n"
-"      If you think this is an error in AlekSIS, please contact your site\n"
-"      administrators:\n"
-"     "
+"            If you were redirected by a link on an external page,\n"
+"            it is possible that that link was outdated.\n"
+"          "
 msgstr ""
 
 #: templates/500.html:10
-msgid "Error (500): An unexpected error has occured.."
+msgid ""
+"An unexpected error has\n"
+"          occured."
 msgstr ""
 
-#: templates/500.html:12
+#: templates/500.html:13
 msgid ""
 "\n"
-"      Your site administrators will automatically be notified about this\n"
-"     error.\n"
-"     "
+"            Your site administrators will automatically be notified about "
+"this\n"
+"            error. You can also contact them directly:\n"
+"          "
 msgstr ""
 
 #: templates/503.html:10
-msgid "The maintenance mode is currently enabled. Please try again later."
+msgid ""
+"The maintenance mode is currently enabled. Please try again\n"
+"          later."
 msgstr ""
 
-#: templates/503.html:12
+#: templates/503.html:13
 msgid ""
 "\n"
-"      This page is currently unavailable. If this error stays, contact your site administrators:\n"
-"     "
+"            This page is currently unavailable. If this error persists, "
+"contact your site administrators:\n"
+"          "
+msgstr ""
+
+#: templates/core/about.html:6 templates/core/about.html:15
+msgid "About AlekSIS"
+msgstr ""
+
+#: templates/core/about.html:7
+msgid "AlekSIS – The Free School Information System"
+msgstr ""
+
+#: templates/core/about.html:17
+msgid ""
+"\n"
+"              This platform is powered by AlekSIS, a web-based school "
+"information system (SIS) which can be used\n"
+"              to manage and/or publish organisational artifacts of "
+"educational institutions. AlekSIS is free software and\n"
+"              can be used by anyone.\n"
+"            "
+msgstr ""
+
+#: templates/core/about.html:25
+msgid "Website of AlekSIS"
+msgstr ""
+
+#: templates/core/about.html:26
+msgid "Source code"
+msgstr ""
+
+#: templates/core/about.html:35
+#, fuzzy
+#| msgid "Edit school information"
+msgid "Licence information"
+msgstr "Muta informationes scolae"
+
+#: templates/core/about.html:37
+msgid ""
+"\n"
+"              The core and the official apps of AlekSIS are licenced under "
+"the EUPL, version 1.2 or later. For licence\n"
+"              information from third-party apps, if installed, refer to the "
+"respective components below. The\n"
+"              licences are marked like this:\n"
+"            "
+msgstr ""
+
+#: templates/core/about.html:45
+msgid "Free/Open Source Licence"
+msgstr ""
+
+#: templates/core/about.html:46
+msgid "Other Licence"
+msgstr ""
+
+#: templates/core/about.html:50
+msgid "Full licence text"
+msgstr ""
+
+#: templates/core/about.html:51
+#, fuzzy
+#| msgid "Edit school information"
+msgid "More information about the EUPL"
+msgstr "Muta informationes scolae"
+
+#: templates/core/about.html:90
+#, python-format
+msgid ""
+"\n"
+"                    This app is licenced under %(licence)s.\n"
+"                  "
 msgstr ""
 
 #: templates/core/announcement/form.html:10
 #: templates/core/announcement/form.html:17
+#, fuzzy
+#| msgid "Announcements"
 msgid "Edit announcement"
-msgstr ""
+msgstr "Nuntii"
 
 #: templates/core/announcement/form.html:12
+#, fuzzy
+#| msgid "Announcements"
 msgid "Publish announcement"
-msgstr ""
+msgstr "Nuntii"
 
 #: templates/core/announcement/form.html:19
 #: templates/core/announcement/list.html:13
+#, fuzzy
+#| msgid "Who should see the announcement?"
 msgid "Publish new announcement"
-msgstr ""
+msgstr "Quis nuntium videatne?"
 
 #: templates/core/announcement/form.html:30
+#, fuzzy
+#| msgid "Who should see the announcement?"
 msgid "Save und publish announcement"
-msgstr ""
+msgstr "Quis nuntium videatne?"
 
 #: templates/core/announcement/list.html:19
 msgid "Valid from"
@@ -543,11 +852,13 @@ msgid "Recipients"
 msgstr ""
 
 #: templates/core/announcement/list.html:22
+#, fuzzy
+#| msgid "Notifications"
 msgid "Actions"
-msgstr ""
+msgstr "Nuntii"
 
-#: templates/core/announcement/list.html:36 templates/core/group_full.html:15
-#: templates/core/person_full.html:15
+#: templates/core/announcement/list.html:36 templates/core/group_full.html:22
+#: templates/core/person_full.html:21
 msgid "Edit"
 msgstr ""
 
@@ -556,8 +867,10 @@ msgid "Delete"
 msgstr ""
 
 #: templates/core/announcement/list.html:50
+#, fuzzy
+#| msgid "Write your announcement:"
 msgid "There are no announcements."
-msgstr ""
+msgstr "Scribe nuntium:"
 
 #: templates/core/announcements.html:9 templates/core/announcements.html:36
 #, python-format
@@ -587,15 +900,24 @@ msgstr ""
 msgid "Logged in as"
 msgstr ""
 
-#: templates/core/base.html:146
+#: templates/core/base.html:76 templates/search/search.html:7
+#: templates/search/search.html:22
+msgid "Search"
+msgstr ""
+
+#: templates/core/base.html:148
+msgid "About AlekSIS — The Free School Information System"
+msgstr ""
+
+#: templates/core/base.html:156
 msgid "Impress"
 msgstr ""
 
-#: templates/core/base.html:154
+#: templates/core/base.html:164
 msgid "Privacy Policy"
 msgstr ""
 
-#: templates/core/base_print.html:60
+#: templates/core/base_print.html:62
 msgid "Powered by AlekSIS"
 msgstr ""
 
@@ -607,84 +929,152 @@ msgstr ""
 msgid "Edit person"
 msgstr ""
 
-#: templates/core/edit_school.html:8 templates/core/edit_school.html:9
-msgid "Edit school"
-msgstr ""
-
-#: templates/core/group_full.html:19
-msgid "Owners"
-msgstr ""
-
-#: templates/core/group_full.html:22
-msgid "Members"
+#: templates/core/group_full.html:28 templates/core/person_full.html:28
+msgid "Change preferences"
 msgstr ""
 
 #: templates/core/groups.html:14
 msgid "Create group"
 msgstr ""
 
+#: templates/core/groups_child_groups.html:18
+msgid ""
+"\n"
+"          You can use this to assign child groups to groups. Please use the "
+"filters below to select groups you want to\n"
+"          change and click \"Next\".\n"
+"        "
+msgstr ""
+
+#: templates/core/groups_child_groups.html:31
+msgid "Update selection"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:35
+msgid "Clear all filters"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:39
+msgid "Currently selected groups"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:52
+msgid "Start assigning child groups for this groups"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:61
+msgid ""
+"\n"
+"            Please select some groups in order to go on with assigning.\n"
+"          "
+msgstr ""
+
+#: templates/core/groups_child_groups.html:72
+msgid "Current group:"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:78
+msgid "Please be careful!"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:79
+msgid ""
+"\n"
+"            If you click \"Back\" or \"Next\" the current group assignments "
+"are not saved.\n"
+"            If you click \"Save\", you will overwrite all existing child "
+"group relations for this group with what you\n"
+"            selected on this page.\n"
+"          "
+msgstr ""
+
+#: templates/core/groups_child_groups.html:93
+#: templates/core/groups_child_groups.html:128
+#: templates/two_factor/_wizard_actions.html:15
+#: templates/two_factor/_wizard_actions.html:20
+msgid "Back"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:99
+#: templates/core/groups_child_groups.html:134
+#: templates/two_factor/_wizard_actions.html:26
+msgid "Next"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:106
+#: templates/core/groups_child_groups.html:141
+#: templates/core/save_button.html:3
+msgid "Save"
+msgstr ""
+
+#: templates/core/groups_child_groups.html:112
+#: templates/core/groups_child_groups.html:147
+msgid "Save and next"
+msgstr ""
+
 #: templates/core/index.html:4
 msgid "Home"
 msgstr ""
 
-#: templates/core/index.html:11
-msgid "AlekSIS (School Information System)"
-msgstr ""
-
-#: templates/core/index.html:43
+#: templates/core/index.html:42
 msgid "Last activities"
 msgstr ""
 
-#: templates/core/index.html:61
+#: templates/core/index.html:60
 msgid "No activities available yet."
 msgstr ""
 
-#: templates/core/index.html:66
+#: templates/core/index.html:65
+#, fuzzy
+#| msgid "Notifications"
 msgid "Recent notifications"
-msgstr ""
+msgstr "Nuntii"
 
-#: templates/core/index.html:82
+#: templates/core/index.html:81
+#, fuzzy
+#| msgid "Edit school information"
 msgid "More information →"
-msgstr ""
+msgstr "Muta informationes scolae"
 
-#: templates/core/index.html:89
+#: templates/core/index.html:88
 msgid "No notifications available yet."
 msgstr ""
 
-#: templates/core/no_person.html:11
+#: templates/core/no_person.html:12
 msgid ""
 "\n"
-"          Your user account is not linked to a person. This means you\n"
-"          cannot access any school-related information. Please contact\n"
-"          the managers of AlekSIS at your school.\n"
-"        "
+"            Your administrator account is not linked to any person. "
+"Therefore,\n"
+"            a dummy person has been linked to your account.\n"
+"          "
 msgstr ""
 
-#: templates/core/offline.html:6
-msgid "No internet connection."
-msgstr ""
-
-#: templates/core/offline.html:9
+#: templates/core/no_person.html:19
 msgid ""
 "\n"
-"        There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi or mobile data is turned on and try again. If you think you are connected, please contact the system administrators:\n"
-"      "
+"            Your user account is not linked to a person. This means you\n"
+"            cannot access any school-related information. Please contact\n"
+"            the managers of AlekSIS at your school.\n"
+"          "
 msgstr ""
 
-#: templates/core/person_full.html:19
+#: templates/core/person_full.html:34
 msgid "Contact details"
 msgstr ""
 
 #: templates/core/persons_accounts.html:7
 #: templates/core/persons_accounts.html:9
+#, fuzzy
+#| msgid "Persons and accounts"
 msgid "Link persons to accounts"
-msgstr ""
+msgstr "Personae et computi"
 
 #: templates/core/persons_accounts.html:16
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
-"        dropdowns to select existing accounts; use the text fields to create new\n"
+"        dropdowns to select existing accounts; use the text fields to create "
+"new\n"
 "        accounts on-the-fly. The latter will create a new account with the\n"
 "        entered username and copy all other details from the person.\n"
 "      "
@@ -703,18 +1093,11 @@ msgstr ""
 msgid "New account"
 msgstr ""
 
-#: templates/core/save_button.html:3
-msgid "Save"
-msgstr ""
-
-#: templates/core/school_management.html:6
-#: templates/core/school_management.html:7
-msgid "School management"
-msgstr ""
-
 #: templates/core/system_status.html:12
+#, fuzzy
+#| msgid "System status"
 msgid "System checks"
-msgstr ""
+msgstr "Status systemae"
 
 #: templates/core/system_status.html:21
 msgid "Maintenance mode enabled"
@@ -723,7 +1106,8 @@ msgstr ""
 #: templates/core/system_status.html:23
 msgid ""
 "\n"
-"                Only admin and visitors from internal IPs can access thesite.\n"
+"                Only admin and visitors from internal IPs can access "
+"thesite.\n"
 "              "
 msgstr ""
 
@@ -742,7 +1126,8 @@ msgstr ""
 #: templates/core/system_status.html:47
 msgid ""
 "\n"
-"                The web server throws back debug information on errors. Do not use in production!\n"
+"                The web server throws back debug information on errors. Do "
+"not use in production!\n"
 "              "
 msgstr ""
 
@@ -753,105 +1138,103 @@ msgstr ""
 #: templates/core/system_status.html:56
 msgid ""
 "\n"
-"                Debug mode is disabled. Default error pages are displayed on errors.\n"
+"                Debug mode is disabled. Default error pages are displayed on "
+"errors.\n"
 "              "
 msgstr ""
 
+#: templates/dynamic_preferences/form.html:9
+msgid "Site preferences"
+msgstr ""
+
+#: templates/dynamic_preferences/form.html:11
+msgid "My preferences"
+msgstr ""
+
+#: templates/dynamic_preferences/form.html:13
+#, python-format
+msgid "Preferences for %(instance)s"
+msgstr ""
+
+#: templates/dynamic_preferences/form.html:25
+msgid "Save preferences"
+msgstr ""
+
+#: templates/dynamic_preferences/sections.html:7
+msgid "All"
+msgstr ""
+
 #: templates/impersonate/list_users.html:8
+#, fuzzy
+#| msgid "Impersonation"
 msgid "Impersonate user"
+msgstr "Simulare aliquem"
+
+#: templates/offline.html:6
+msgid ""
+"No internet\n"
+"    connection."
 msgstr ""
 
-#: templates/martor/editor.html:27
-msgid "Uploading... please wait..."
+#: templates/offline.html:10
+msgid ""
+"\n"
+"      There was an error accessing this page. You probably don't have an "
+"internet connection. Check to see if your WiFi\n"
+"      or mobile data is turned on and try again. If you think you are "
+"connected, please contact the system\n"
+"      administrators:\n"
+"    "
 msgstr ""
 
-#: templates/martor/editor.html:36
-msgid "Nothing to preview"
+#: templates/search/search.html:8
+msgid "Global Search"
 msgstr ""
 
-#: templates/martor/emoji.html:4
-msgid "Select Emoji to Insert"
+#: templates/search/search.html:15
+msgid "Search Term"
 msgstr ""
 
-#: templates/martor/emoji.html:8
-msgid "Preparing emojis..."
+#: templates/search/search.html:26
+msgid "Results"
 msgstr ""
 
-#: templates/martor/guide.html:8
-msgid "Markdown Guide"
+#: templates/search/search.html:38
+msgid "No search results could be found to your search."
 msgstr ""
 
-#: templates/martor/guide.html:9
+#: templates/search/search.html:87
+msgid "Please enter a search term above."
+msgstr ""
+
+#: templates/templated_email/notification.email:3
+#, fuzzy
+#| msgid "Notification"
+msgid "New notification for"
+msgstr "Nuntius"
+
+#: templates/templated_email/notification.email:7
+msgid "Dear"
+msgstr ""
+
+#: templates/templated_email/notification.email:8
+msgid "we got a new notification for you:"
+msgstr ""
+
+#: templates/templated_email/notification.email:12
+#, fuzzy
+#| msgid "Edit school information"
+msgid "More information"
+msgstr "Muta informationes scolae"
+
+#: templates/templated_email/notification.email:16
 #, python-format
 msgid ""
-"This site is powered by Markdown. For full\n"
-"            documentation,\n"
-"            <a href=\"%(doc_url)s\" target=\"_blank\">click here</a>"
-msgstr ""
-
-#: templates/martor/guide.html:15 templates/martor/toolbar.html:42
-msgid "Code"
-msgstr ""
-
-#: templates/martor/guide.html:16
-msgid "Or"
-msgstr ""
-
-#: templates/martor/guide.html:19
-msgid "... to Get"
-msgstr ""
-
-#: templates/martor/toolbar.html:3
-msgid "Bold"
-msgstr ""
-
-#: templates/martor/toolbar.html:6
-msgid "Italic"
-msgstr ""
-
-#: templates/martor/toolbar.html:10
-msgid "Horizontal Line"
-msgstr ""
-
-#: templates/martor/toolbar.html:15
-msgid "Heading"
-msgstr ""
-
-#: templates/martor/toolbar.html:20 templates/martor/toolbar.html:23
-#: templates/martor/toolbar.html:26
-msgid "H"
-msgstr ""
-
-#: templates/martor/toolbar.html:31
-msgid "Pre or Code"
-msgstr ""
-
-#: templates/martor/toolbar.html:38
-msgid "Pre"
-msgstr ""
-
-#: templates/martor/toolbar.html:48
-msgid "Quote"
-msgstr ""
-
-#: templates/martor/toolbar.html:52
-msgid "Unordered List"
-msgstr ""
-
-#: templates/martor/toolbar.html:56
-msgid "Ordered List"
-msgstr ""
-
-#: templates/martor/toolbar.html:60
-msgid "URL/Link"
-msgstr ""
-
-#: templates/martor/toolbar.html:82
-msgid "Full Screen"
-msgstr ""
-
-#: templates/martor/toolbar.html:86
-msgid "Markdown Guide (Help)"
+"\n"
+"    <p>By %(trans_sender)s at %(trans_created_at)s</p>\n"
+"\n"
+"    <i>Your AlekSIS team</i>\n"
+"    "
 msgstr ""
 
 #: templates/two_factor/_base_focus.html:6
@@ -865,15 +1248,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: templates/two_factor/_wizard_actions.html:15
-#: templates/two_factor/_wizard_actions.html:20
-msgid "Back"
-msgstr ""
-
-#: templates/two_factor/_wizard_actions.html:26
-msgid "Next"
-msgstr ""
-
 #: templates/two_factor/core/backup_tokens.html:5
 #: templates/two_factor/core/backup_tokens.html:9
 #: templates/two_factor/profile/profile.html:46
@@ -885,8 +1259,10 @@ msgid ""
 "\n"
 "        Backup tokens can be used when your primary and backup\n"
 "        phone numbers aren't available. The backup tokens below can be used\n"
-"        for login verification. If you've used up all your backup tokens, you\n"
-"        can generate a new set of backup tokens. Only the backup tokens shown\n"
+"        for login verification. If you've used up all your backup tokens, "
+"you\n"
+"        can generate a new set of backup tokens. Only the backup tokens "
+"shown\n"
 "        below will be valid.\n"
 "      "
 msgstr ""
@@ -910,44 +1286,50 @@ msgstr ""
 msgid "Generate Tokens"
 msgstr ""
 
-#: templates/two_factor/core/login.html:17
-msgid "Enter your credentials."
+#: templates/two_factor/core/login.html:16
+msgid ""
+"You have no permission to view this page. Please login with an other account."
 msgstr ""
 
-#: templates/two_factor/core/login.html:20
+#: templates/two_factor/core/login.html:25
+msgid "Please login to see this page."
+msgstr ""
+
+#: templates/two_factor/core/login.html:28
 msgid ""
 "We are calling your phone right now, please enter the\n"
-"            digits you hear."
+"              digits you hear."
 msgstr ""
 
-#: templates/two_factor/core/login.html:23
+#: templates/two_factor/core/login.html:31
 msgid ""
 "We sent you a text message, please enter the tokens we\n"
-"            sent."
+"              sent."
 msgstr ""
 
-#: templates/two_factor/core/login.html:26
+#: templates/two_factor/core/login.html:34
 msgid ""
 "Please enter the tokens generated by your token\n"
-"            generator."
+"              generator."
 msgstr ""
 
-#: templates/two_factor/core/login.html:30
+#: templates/two_factor/core/login.html:38
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
-"          These tokens have been generated for you to print and keep safe. Please\n"
-"          enter one of these backup tokens to login to your account."
+"            These tokens have been generated for you to print and keep safe. "
+"Please\n"
+"            enter one of these backup tokens to login to your account."
 msgstr ""
 
-#: templates/two_factor/core/login.html:47
+#: templates/two_factor/core/login.html:56
 msgid "Or, alternatively, use one of your backup phones:"
 msgstr ""
 
-#: templates/two_factor/core/login.html:57
+#: templates/two_factor/core/login.html:66
 msgid "As a last resort, you can use a backup token:"
 msgstr ""
 
-#: templates/two_factor/core/login.html:60
+#: templates/two_factor/core/login.html:69
 msgid "Use Backup Token"
 msgstr ""
 
@@ -958,7 +1340,8 @@ msgstr ""
 #: templates/two_factor/core/otp_required.html:10
 msgid ""
 "The page you requested, enforces users to verify using\n"
-"          two-factor authentication for security reasons. You need to enable these\n"
+"          two-factor authentication for security reasons. You need to enable "
+"these\n"
 "          security features in order to access this page."
 msgstr ""
 
@@ -1035,7 +1418,8 @@ msgstr ""
 #: templates/two_factor/core/setup.html:50
 msgid ""
 "\n"
-"            We are calling your phone right now, please enter the digits you hear.\n"
+"            We are calling your phone right now, please enter the digits you "
+"hear.\n"
 "          "
 msgstr ""
 
@@ -1049,9 +1433,12 @@ msgstr ""
 #: templates/two_factor/core/setup.html:63
 msgid ""
 "\n"
-"          We've encountered an issue with the selected authentication method. Please\n"
-"          go back and verify that you entered your information correctly, try\n"
-"          again, or use a different authentication method instead. If the issue\n"
+"          We've encountered an issue with the selected authentication "
+"method. Please\n"
+"          go back and verify that you entered your information correctly, "
+"try\n"
+"          again, or use a different authentication method instead. If the "
+"issue\n"
 "          persists, contact the site administrator.\n"
 "        "
 msgstr ""
@@ -1073,7 +1460,8 @@ msgstr ""
 #: templates/two_factor/core/setup_complete.html:14
 msgid ""
 "\n"
-"        Congratulations, you've successfully enabled two-factor authentication.\n"
+"        Congratulations, you've successfully enabled two-factor "
+"authentication.\n"
 "      "
 msgstr ""
 
@@ -1091,7 +1479,8 @@ msgstr ""
 msgid ""
 "\n"
 "          However, it might happen that you don't have access to\n"
-"          your primary token device. To enable account recovery, generate backup codes\n"
+"          your primary token device. To enable account recovery, generate "
+"backup codes\n"
 "          or add a phone number.\n"
 "        "
 msgstr ""
@@ -1109,7 +1498,9 @@ msgid "Disable Two-Factor Authentication"
 msgstr ""
 
 #: templates/two_factor/profile/disable.html:12
-msgid "You are about to disable two-factor authentication. This weakens your account security, are you sure?"
+msgid ""
+"You are about to disable two-factor authentication. This weakens your "
+"account security, are you sure?"
 msgstr ""
 
 #: templates/two_factor/profile/disable.html:26
@@ -1188,38 +1579,66 @@ msgid ""
 "      "
 msgstr ""
 
-#: util/notifications.py:66
+#: util/notifications.py:65
 msgid "E-Mail"
 msgstr ""
 
-#: util/notifications.py:67
+#: util/notifications.py:66
 msgid "SMS"
 msgstr ""
 
-#: views.py:172
+#: views.py:212
+msgid "The child groups were successfully saved."
+msgstr ""
+
+#: views.py:240
 msgid "The person has been saved."
 msgstr ""
 
-#: views.py:195
+#: views.py:276
 msgid "The group has been saved."
 msgstr ""
 
-#: views.py:236
-msgid "The school has been saved."
-msgstr ""
-
-#: views.py:255
-msgid "The term has been saved."
-msgstr ""
-
-#: views.py:272
-msgid "You are not allowed to mark notifications from other users as read!"
-msgstr ""
-
-#: views.py:307
+#: views.py:348
 msgid "The announcement has been saved."
 msgstr ""
 
-#: views.py:320
+#: views.py:364
 msgid "The announcement has been deleted."
 msgstr ""
+
+#: views.py:435
+msgid "The preferences have been saved successfully."
+msgstr ""
+
+#, fuzzy
+#~| msgid "Short name"
+#~ msgid "School name"
+#~ msgstr "Breve nomen"
+
+#~ msgid "School logo"
+#~ msgstr "Imago scolae"
+
+#~ msgid "Manage school"
+#~ msgstr "Administra scholam"
+
+#~ msgid "Edit school information"
+#~ msgstr "Muta informationes scolae"
+
+#~ msgid "Edit school term"
+#~ msgstr "Muta anum scolae"
+
+#~ msgid "Official name"
+#~ msgstr "Officialis nomen"
+
+#~ msgid "School"
+#~ msgstr "Scola"
+
+#~ msgid "Schools"
+#~ msgstr "Scholae"
+
+#~ msgid "School term"
+#~ msgstr "Anus scolae"
+
+#~ msgid "School terms"
+#~ msgstr "ani scolae"

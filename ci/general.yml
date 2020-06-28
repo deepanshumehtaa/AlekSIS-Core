@@ -1,0 +1,20 @@
+image: registry.edugit.org/teckids/team-sysadmin/docker-images/python-pimped:latest
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  FF_NETWORK_PER_BUILD: "true"
+
+cache:
+  key:
+    files:
+      - poetry.lock
+      - pyproject.toml
+  paths:
+    - .cache/pip
+    - .tox

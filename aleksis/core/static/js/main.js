@@ -45,6 +45,19 @@ $(document).ready( function () {
     // Initialize select [MAT]
     $('select').formSelect();
 
+    // If JS is activated, the language form will be auto-submitted
+    $('.language-field select').change(function () {
+
+        // Ugly bug fix to ensure correct value
+        const selectEl = $("select[name=language]");
+        selectEl.val(selectEl.val());
+
+        $(".language-form").submit();
+    });
+
+    // If auto-submit is activated (see above), the language submit must not be visible
+    $(".language-submit-p").hide();
+
     // Initalize print button
     $("#print").click(function () {
         window.print();
@@ -58,6 +71,9 @@ $(document).ready( function () {
 
     // Initialize Modals [MAT]
     $('.modal').modal();
+
+    // Intialize Tabs [Materialize]
+    $('.tabs').tabs();
 
     $('table.datatable').each(function (index) {
         $(this).DataTable({

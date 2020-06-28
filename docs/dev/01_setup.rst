@@ -28,7 +28,7 @@ Install native dependencies
 
 Some system libraries are required to install AlekSIS::
 
-  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg
+  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext
 
 
 Get Poetry
@@ -70,6 +70,7 @@ All three steps can be done with the ``poetry run`` command and
   poetry run ./manage.py collectstatic
   poetry run ./manage.py compilemessages
   poetry run ./manage.py migrate
+  poetry run ./manage.py createinitialrevisions
 
 (You might need database settings for the `migrate` command; see below.)
 
