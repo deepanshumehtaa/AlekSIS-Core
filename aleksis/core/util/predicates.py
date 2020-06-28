@@ -4,6 +4,7 @@ from django.db.models import Model
 from django.http import HttpRequest
 
 from guardian.backends import ObjectPermissionBackend
+from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
@@ -62,8 +63,7 @@ def has_any_object(perm: str, klass):
 
     @predicate(name)
     def fn(user: User) -> bool:
-        objs = queryset_rules_filter(user, klass.objects.all(), perm)
-        return len(objs) > 0
+        return get_objects_for_user(user, perm, klass).exists() or queryset_rules_filter(user, klass.objects.all(), perm).exists()
 
     return fn
 
