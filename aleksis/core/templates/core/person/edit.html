@@ -4,6 +4,9 @@
 
 {% load material_form i18n %}
 
+{% block extra_head %}
+  {{ edit_person_form.media }}
+{% endblock %}
 
 {% block browser_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
 {% block page_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
