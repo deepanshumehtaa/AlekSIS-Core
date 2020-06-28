@@ -9,3 +9,12 @@ class GroupFilter(FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.form.layout = Layout(Row("name", "short_name"))
+
+
+class PersonFilter(FilterSet):
+    first_name = CharFilter(lookup_expr="icontains")
+    last_name = CharFilter(lookup_expr="icontains")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form.layout = Layout(Row("first_name", "last_name"))
