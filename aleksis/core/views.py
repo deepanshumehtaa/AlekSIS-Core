@@ -299,9 +299,6 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
-            # Redirect to self to ensure post-processed data is displayed
-            return redirect("person_by_id", id_=person.id)
-
     context["edit_person_form"] = edit_person_form
 
     return render(request, "core/person/edit.html", context)
