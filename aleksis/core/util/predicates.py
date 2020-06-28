@@ -4,11 +4,10 @@ from django.db.models import Model
 from django.http import HttpRequest
 
 from guardian.backends import ObjectPermissionBackend
-from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
-from .core_helpers import get_site_preferences
+from .core_helpers import get_site_preferences, queryset_rules_filter
 from .core_helpers import has_person as has_person_helper
 
 
@@ -63,7 +62,7 @@ def has_any_object(perm: str, klass):
 
     @predicate(name)
     def fn(user: User) -> bool:
-        objs = get_objects_for_user(user, perm, klass)
+        objs = queryset_rules_filter(user, klass.objects.all(), perm)
         return len(objs) > 0
 
     return fn
