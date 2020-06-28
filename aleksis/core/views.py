@@ -19,7 +19,7 @@ from haystack.views import SearchView
 from health_check.views import MainView
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
-from .filters import GroupFilter
+from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
@@ -143,8 +143,12 @@ def persons(request: HttpRequest) -> HttpResponse:
         request.user, "core.view_person", Person.objects.filter(is_active=True)
     )
 
+    # Get filter
+    persons_filter = PersonFilter(request.GET, queryset=persons)
+    context["persons_filter"] = persons_filter
+
     # Build table
-    persons_table = PersonsTable(persons)
+    persons_table = PersonsTable(persons_filter.qs)
     RequestConfig(request).configure(persons_table)
     context["persons_table"] = persons_table
 
@@ -164,8 +168,12 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     # Get groups where person is member of
     groups = Group.objects.filter(members=person)
 
+    # Get filter
+    groups_filter = GroupFilter(request.GET, queryset=groups)
+    context["groups_filter"] = groups_filter
+
     # Build table
-    groups_table = GroupsTable(groups)
+    groups_table = GroupsTable(groups_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -186,16 +194,24 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     # Get members
     members = group.members.filter(is_active=True)
 
+    # Get filter
+    members_filter = PersonFilter(request.GET, queryset=members)
+    context["members_filter"] = members_filter
+
     # Build table
-    members_table = PersonsTable(members)
+    members_table = PersonsTable(members_filter.qs)
     RequestConfig(request).configure(members_table)
     context["members_table"] = members_table
 
     # Get owners
     owners = group.owners.filter(is_active=True)
 
+    # Get filter
+    owners_filter = PersonFilter(request.GET, queryset=owners)
+    context["owners_filter"] = owners_filter
+
     # Build table
-    owners_table = PersonsTable(owners)
+    owners_table = PersonsTable(owners_filter.qs)
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
@@ -210,8 +226,12 @@ def groups(request: HttpRequest) -> HttpResponse:
     # Get all groups
     groups = get_objects_for_user(request.user, "core.view_group", Group)
 
+    # Get filter
+    groups_filter = GroupFilter(request.GET, queryset=groups)
+    context["groups_filter"] = groups_filter
+
     # Build table
-    groups_table = GroupsTable(groups)
+    groups_table = GroupsTable(group_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 

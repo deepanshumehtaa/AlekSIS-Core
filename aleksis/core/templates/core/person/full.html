@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n static rules %}
+{% load i18n static rules material_form %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
@@ -134,6 +134,11 @@
   {% has_perm 'core.view_person_groups' user person as can_view_groups %}
   {% if can_view_groups %}
     <h5>{% blocktrans %}Groups{% endblocktrans %}</h5>
+    <form method="get">
+      {% form form=groups_filter.form %}{% endform %}
+      {% trans "Search" as caption %}
+      {% include "core/partials/save_button.html" with caption=caption icon="search" %}
+    </form>
     {% render_table groups_table %}
   {% endif %}
 {% endblock %}
