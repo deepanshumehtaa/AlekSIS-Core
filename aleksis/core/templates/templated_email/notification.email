@@ -2,21 +2,48 @@
 
 {% block subject %} {% trans "New notification for" %} {{ notification_user }} {% endblock %}
 
+{% block plain %}
+    {% blocktrans with notification_user=notification_user %}Dear {{ notification_user }},{% endblocktrans %}
+
+    {% trans "we got a new notification for you:" %}
+
+    {{ notification.title }}
+
+    {{ notification.description }}
+
+    {% if notification.link %}
+        {% trans "More information" %} → {{ notification.link }}
+    {% endif %}
+
+    {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
+        Sent by {{ trans_sender }} at {{ trans_created_at }}
+    {% endblocktrans %}
+
+    {% trans "Your AlekSIS team" %}
+{% endblock %}
+
 {% block html %}
 <main>
-    <p>{% trans "Dear" %} {{ notification_user }}, <br>
-        {% trans "we got a new notification for you:" %}</p>
+    <p>{% blocktrans with notification_user=notification_user %}Dear {{ notification_user }},{% endblocktrans %}</p>
+
+    <p>{% trans "we got a new notification for you:" %}</p>
+
     <blockquote>
+        <h5>{{ notification.title }}</h5>
         <p>{{ notification.description }}</p>
         {% if notification.link %}
             <a href="{{ notification.link }}">{% trans "More information" %} →</a>
         {% endif %}
     </blockquote>
 
-    {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
-    <p>By {{ trans_sender }} at {{ trans_created_at }}</p>
+    <p>
+        {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
+            Sent by {{ trans_sender }} at {{ trans_created_at }}
+        {% endblocktrans %}
+    </p>
 
-    <i>Your AlekSIS team</i>
-    {% endblocktrans %}
+    <p>
+        <i>{% trans "Your AlekSIS team" %}</i>
+    </p>
 </main>
 {% endblock %}

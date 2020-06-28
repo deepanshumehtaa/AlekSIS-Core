@@ -1,9 +1,11 @@
-{% load static i18n any_js sass_tags cropping %}
+{% load static i18n any_js sass_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
 
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-  {% include "core/meta.html" %}
+  {% include "core/partials/meta.html" %}
 
   <title>
     {% block no_browser_title %}
@@ -27,7 +29,7 @@
   <table class="print-layout-table">
     <thead>
     <tr class="no-border">
-      <td>
+      <td class="print-layout-td">
         <div class="header-space">&nbsp;</div>
       </td>
     </tr>
@@ -35,12 +37,14 @@
 
     <tbody>
     <tr class="no-border">
-      <td>
+      <td class="print-layout-td">
         <div class="content">
           <header>
             <div id="print-header" class="row">
               <div class="col s6 logo">
-                <img src="{% cropped_thumbnail SCHOOL 'logo_cropping' max_size="85x85" %}" alt="Logo" id="print-logo"/>
+                {% static "img/aleksis-banner.svg" as aleksis_banner %}
+                <img src="{% firstof request.site.preferences.theme__logo.url aleksis_banner %}" alt="Logo"
+                     id="print-logo"/>
               </div>
               <div class="col s6 right-align">
                 <h5>{% block page_title %}{% endblock %}</h5>
@@ -53,7 +57,7 @@
 
           <footer>
             <div class="left">
-              {{ SCHOOL.name }}
+              {{ request.site.preferences.school__name }}
             </div>
 
             <div class="right">
@@ -67,7 +71,7 @@
 
     <tfoot>
     <tr class="no-border">
-      <td>
+      <td class="print-layout-td">
         <div class="footer-space">&nbsp;</div>
       </td>
     </tr>

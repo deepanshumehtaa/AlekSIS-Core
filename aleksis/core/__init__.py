@@ -1,7 +1,5 @@
 import pkg_resources
 
-from django.utils.translation import gettext_lazy as _
-
 try:
     from .celery import app as celery_app
 except ModuleNotFoundError:

@@ -38,18 +38,24 @@ MENUS = {
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
-                    "name": _("Two factor auth"),
+                    "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
-                    "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        lambda request: "two_factor" in settings.INSTALLED_APPS,
-                    ],
+                    "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
                     "name": _("Me"),
                     "url": "person",
                     "icon": "insert_emoticon",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
+                {
+                    "name": _("Preferences"),
+                    "url": "preferences_person",
+                    "icon": "settings",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -70,7 +76,21 @@ MENUS = {
                     "url": "announcements",
                     "icon": "announcement",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_announcements"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_announcements",
+                        ),
+                    ],
+                },
+                {
+                    "name": _("School terms"),
+                    "url": "school_terms",
+                    "icon": "date_range",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_schoolterm",
+                        ),
                     ],
                 },
                 {
@@ -86,7 +106,10 @@ MENUS = {
                     "url": "system_status",
                     "icon": "power_settings_new",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_system_status"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_system_status",
+                        ),
                     ],
                 },
                 {
@@ -98,20 +121,21 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Manage school"),
-                    "url": "school_management",
-                    "icon": "school",
+                    "name": _("Configuration"),
+                    "url": "preferences_site",
+                    "icon": "settings",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.manage_school"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.change_site_preferences",
+                        ),
                     ],
                 },
                 {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
                     "icon": "settings",
-                    "validators": [
-                        "menu_generator.validators.is_superuser",
-                    ],
+                    "validators": ["menu_generator.validators.is_superuser",],
                 },
             ],
         },
@@ -120,7 +144,9 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
-            "validators": [("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")],
+            "validators": [
+                ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")
+            ],
             "submenu": [
                 {
                     "name": _("Persons"),
@@ -139,12 +165,25 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("Group types"),
+                    "url": "group_types",
+                    "icon": "category",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_group_type",
+                        )
+                    ],
+                },
+                {
                     "name": _("Persons and accounts"),
                     "url": "persons_accounts",
                     "icon": "person_add",
                     "validators": [
-                        "menu_generator.validators.is_authenticated",
-                        "menu_generator.validators.is_superuser",
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.link_persons_accounts",
+                        )
                     ],
                 },
                 {
@@ -152,7 +191,21 @@ MENUS = {
                     "url": "groups_child_groups",
                     "icon": "group_add",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.assign_child_groups_to_groups",
+                        )
+                    ],
+                },
+                {
+                    "name": _("Additional fields"),
+                    "url": "additional_fields",
+                    "icon": "style",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_additionalfield",
+                        )
                     ],
                 },
             ],
@@ -163,12 +216,11 @@ MENUS = {
             "name": _("Assign child groups to groups"),
             "url": "groups_child_groups",
             "validators": [
-                ("aleksis.core.util.predicates.permission_validator", "core.assign_child_groups_to_groups")
+                (
+                    "aleksis.core.util.predicates.permission_validator",
+                    "core.assign_child_groups_to_groups",
+                )
             ],
         },
-    ],
-    "SCHOOL_MANAGEMENT_MENU": [
-        {"name": _("Edit school information"), "url": "edit_school_information", },
-        {"name": _("Edit school term"), "url": "edit_school_term", },
     ],
 }

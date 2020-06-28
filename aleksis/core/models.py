@@ -1,85 +1,92 @@
+# flake8: noqa: DJ01
+
 from datetime import date, datetime
-from typing import Optional, Iterable, Union, Sequence, List
+from typing import Iterable, List, Optional, Sequence, Union
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.decorators import classproperty
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+import jsonstore
+from dynamic_preferences.models import PerInstancePreferenceModel
 from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel, PureDjangoModel
+from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
-from .util.core_helpers import now_tomorrow
+from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
 
-from constance import config
-
-
-class School(ExtensibleModel):
-    """A school that will have many other objects linked to it.
-    AlekSIS has multi-tenant support by linking all objects to a school,
-    and limiting all features to objects related to the same school as the
-    currently logged-in user.
-    """
-
-    name = models.CharField(verbose_name=_("Name"), max_length=255)
-    name_official = models.CharField(
-        verbose_name=_("Official name"),
-        max_length=255,
-        help_text=_("Official name of the school, e.g. as given by supervisory authority"),
-    )
-
-    logo = ImageCropField(verbose_name=_("School logo"), blank=True, null=True)
-    logo_cropping = ImageRatioField("logo", "600x600", size_warning=True)
-
-    @classmethod
-    def get_default(cls):
-        return cls.objects.first()
-
-    @property
-    def current_term(self):
-        return SchoolTerm.objects.get(current=True)
-
-    class Meta:
-        ordering = ["name", "name_official"]
-        verbose_name = _("School")
-        verbose_name_plural = _("Schools")
+FIELD_CHOICES = (
+    ("BooleanField", _("Boolean (Yes/No)")),
+    ("CharField", _("Text (one line)")),
+    ("DateField", _("Date")),
+    ("DateTimeField", _("Date and time")),
+    ("DecimalField", _("Decimal number")),
+    ("EmailField", _("E-mail address")),
+    ("IntegerField", _("Integer")),
+    ("GenericIPAddressField", _("IP address")),
+    ("NullBooleanField", _("Boolean or empty (Yes/No/Neither)")),
+    ("TextField", _("Text (multi-line)")),
+    ("TimeField", _("Time")),
+    ("URLField", _("URL / Link")),
+)
 
 
 class SchoolTerm(ExtensibleModel):
-    """ Information about a term (limited time frame) that data can
-    be linked to.
+    """School term model.
+
+    This is used to manage start and end times of a school term and link data to it.
     """
 
-    caption = models.CharField(verbose_name=_("Visible caption of the term"), max_length=255)
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermQuerySet)()
 
-    date_start = models.DateField(verbose_name=_("Effective start date of term"), null=True)
-    date_end = models.DateField(verbose_name=_("Effective end date of term"), null=True)
+    name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
 
-    current = models.NullBooleanField(default=None, unique=True)
-
-    def save(self, *args, **kwargs):
-        if self.current is False:
-            self.current = None
-        super().save(*args, **kwargs)
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
 
     @classmethod
-    def maintain_default_data(cls):
-        if not cls.objects.filter(current=True).exists():
-            if cls.objects.exists():
-                term = cls.objects.latest('date_start')
-                term.current=True
-                term.save()
-            else:
-                cls.objects.create(date_start=date.today(), current=True)
+    def get_current(cls, day: Optional[date] = None):
+        if not day:
+            day = timezone.now().date()
+        try:
+            return cls.objects.on_day(day).first()
+        except SchoolTerm.DoesNotExist:
+            return None
+
+    @classproperty
+    def current(cls):
+        return cls.get_current()
+
+    def clean(self):
+        """Ensure there is only one school term at each point of time."""
+        if self.date_end < self.date_start:
+            raise ValidationError(_("The start date must be earlier than the end date."))
+
+        qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
+        if self.pk:
+            qs.exclude(pk=self.pk)
+        if qs.exists():
+            raise ValidationError(
+                _("There is already a school term for this time or a part of this time.")
+            )
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = _("School term")
@@ -87,7 +94,9 @@ class SchoolTerm(ExtensibleModel):
 
 
 class Person(ExtensibleModel):
-    """ A model describing any person related to a school, including, but not
+    """Person model.
+
+    A model describing any person related to a school, including, but not
     limited to, students, teachers and guardians (parents).
     """
 
@@ -108,7 +117,12 @@ class Person(ExtensibleModel):
     SEX_CHOICES = [("f", _("female")), ("m", _("male"))]
 
     user = models.OneToOneField(
-        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True, related_name="person"
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="person",
+        verbose_name=_("Linked user"),
     )
     is_active = models.BooleanField(verbose_name=_("Is person active?"), default=True)
 
@@ -119,7 +133,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True  # noqa
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -139,59 +153,77 @@ class Person(ExtensibleModel):
     photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
 
     guardians = models.ManyToManyField(
-        "self", verbose_name=_("Guardians / Parents"), symmetrical=False, related_name="children", blank=True
+        "self",
+        verbose_name=_("Guardians / Parents"),
+        symmetrical=False,
+        related_name="children",
+        blank=True,
     )
 
-    primary_group = models.ForeignKey("Group", models.SET_NULL, null=True, blank=True)
+    primary_group = models.ForeignKey(
+        "Group", models.SET_NULL, null=True, blank=True, verbose_name=_("Primary group")
+    )
 
-    description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
-
+    description = models.TextField(verbose_name=_("Description"), blank=True)
 
     def get_absolute_url(self) -> str:
         return reverse("person_by_id", args=[self.id])
 
     @property
     def primary_group_short_name(self) -> Optional[str]:
-        """ Returns the short_name field of the primary
-        group related object.
-        """
-
+        """Return the short_name field of the primary group related object."""
         if self.primary_group:
             return self.primary_group.short_name
 
     @primary_group_short_name.setter
     def primary_group_short_name(self, value: str) -> None:
-        """ Sets the primary group related object by
-        a short name. It uses the first existing group
+        """
+        Set the primary group related object by a short name.
+
+        It uses the first existing group
         with this short name it can find, creating one
         if it can't find one.
         """
-
         group, created = Group.objects.get_or_create(short_name=value, defaults={"name": value})
         self.primary_group = group
 
     @property
     def full_name(self) -> str:
+        """Full name of person in last name, first name order."""
         return f"{self.last_name}, {self.first_name}"
 
     @property
-    def adressing_name(self) -> str:
-        if config.ADRESSING_NAME_FORMAT == "dutch":
-            return f"{self.last_name} {self.first_name}"
-        elif config.ADRESSING_NAME_FORMAT == "english":
+    def addressing_name(self) -> str:
+        """Full name of person in format configured for addressing."""
+        if self.preferences["notification__addressing_name_format"] == "last_first":
             return f"{self.last_name}, {self.first_name}"
-        else:
+        elif self.preferences["notification__addressing_name_format"] == "first_last":
             return f"{self.first_name} {self.last_name}"
 
     @property
+    def mail_sender(self) -> str:
+        """E-mail sender in "Name <email>" format."""
+        return f'"{self.addressing_name}" <{self.email}>'
+
+    @property
+    def mail_sender_via(self) -> str:
+        """E-mail sender for via addresses, in "Name via Site <email>" format."""
+        site_mail = get_site_preferences()["mail__address"]
+        site_name = get_site_preferences()["general__title"]
+
+        return f'"{self.addressing_name} via {site_name}" <{site_mail}>'
+
+    @property
     def age(self):
+        """Age of the person at current time."""
         return self.age_at(timezone.datetime.now().date())
 
     def age_at(self, today):
+        """Age of the person at a given date and time."""
         years = today.year - self.date_of_birth.year
-        if (self.date_of_birth.month > today.month
-            or (self.date_of_birth.month == today.month
-                and self.date_of_birth.day > today.day)):
+        if self.date_of_birth.month > today.month or (
+            self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+        ):
             years -= 1
         return years
 
@@ -209,6 +241,7 @@ class Person(ExtensibleModel):
         for group in self.member_of.union(self.owner_of.all()).all():
             group.save()
 
+        # Select a primary group if none is set
         self.auto_select_primary_group()
 
     def __str__(self) -> str:
@@ -216,38 +249,69 @@ class Person(ExtensibleModel):
 
     @classmethod
     def maintain_default_data(cls):
-        # First, ensure we have an admin user
-        User = get_user_model()
-        if not User.objects.filter(is_superuser=True).exists():
-            admin = User.objects.create_superuser(
-                username='admin',
-                email='root@example.com',
-                password='admin'
+        # Ensure we have an admin user
+        user = get_user_model()
+        if not user.objects.filter(is_superuser=True).exists():
+            admin = user.objects.create_superuser(
+                username="admin", email="root@example.com", password="admin"
             )
             admin.save()
 
-            # Ensure this admin user has a person linked to it
-            person = Person(user=admin)
-            person.save()
-
-    def auto_select_primary_group(self, pattern: Optional[str] = None, force: bool = False) -> None:
-        """ Auto-select the primary group among the groups the person is member of
+    def auto_select_primary_group(
+        self, pattern: Optional[str] = None, field: Optional[str] = None, force: bool = False
+    ) -> None:
+        """Auto-select the primary group among the groups the person is member of.
 
         Uses either the pattern passed as argument, or the pattern configured system-wide.
 
         Does not do anything if either no pattern is defined or the user already has
         a primary group, unless force is True.
         """
-
-        pattern = pattern or config.PRIMARY_GROUP_PATTERN
+        pattern = pattern or get_site_preferences()["account__primary_group_pattern"]
+        field = field or get_site_preferences()["account__primary_group_field"]
 
         if pattern:
             if force or not self.primary_group:
-                self.primary_group = self.member_of.filter(name__regex=pattern).first()
+                self.primary_group = self.member_of.filter(**{f"{field}__regex": pattern}).first()
 
 
-class Group(ExtensibleModel):
-    """Any kind of group of persons in a school, including, but not limited
+class DummyPerson(Person):
+    """A dummy person that is not stored into the database.
+
+    Used to temporarily inject a Person object into a User.
+    """
+
+    class Meta:
+        managed = False
+        proxy = True
+
+    is_dummy = True
+
+    def save(self, *args, **kwargs):
+        # Do nothing, not even call Model's save(), so this is never persisted
+        pass
+
+
+class AdditionalField(ExtensibleModel):
+    """An additional field that can be linked to a group."""
+
+    title = models.CharField(verbose_name=_("Title of field"), max_length=255)
+    field_type = models.CharField(
+        verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50
+    )
+
+    def __str__(self) -> str:
+        return self.title
+
+    class Meta:
+        verbose_name = _("Addtitional field for groups")
+        verbose_name_plural = _("Addtitional fields for groups")
+
+
+class Group(SchoolTermRelatedExtensibleModel):
+    """Group model.
+
+    Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
 
@@ -255,17 +319,31 @@ class Group(ExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
-        permissions = (
-            ("assign_child_groups_to_groups", _("Can assign child groups to groups")),
-        )
+        permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
+        constraints = [
+            models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
+            models.UniqueConstraint(
+                fields=["school_term", "short_name"], name="unique_school_term_short_name"
+            ),
+        ]
 
     icon_ = "group"
 
-    name = models.CharField(verbose_name=_("Long name of group"), max_length=255, unique=True)
-    short_name = models.CharField(verbose_name=_("Short name of group"), max_length=255, unique=True, blank=True, null=True)
+    name = models.CharField(verbose_name=_("Long name"), max_length=255)
+    short_name = models.CharField(
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
+    )
 
-    members = models.ManyToManyField("Person", related_name="member_of", blank=True)
-    owners = models.ManyToManyField("Person", related_name="owner_of", blank=True)
+    members = models.ManyToManyField(
+        "Person",
+        related_name="member_of",
+        blank=True,
+        through="PersonGroupThrough",
+        verbose_name=_("Members"),
+    )
+    owners = models.ManyToManyField(
+        "Person", related_name="owner_of", blank=True, verbose_name=_("Owners")
+    )
 
     parent_groups = models.ManyToManyField(
         "self",
@@ -275,18 +353,31 @@ class Group(ExtensibleModel):
         blank=True,
     )
 
-    type = models.ForeignKey("GroupType", on_delete=models.CASCADE, related_name="type", verbose_name=_("Type of group"), null=True, blank=True)
-
+    group_type = models.ForeignKey(
+        "GroupType",
+        on_delete=models.SET_NULL,
+        related_name="type",
+        verbose_name=_("Type of group"),
+        null=True,
+        blank=True,
+    )
+    additional_fields = models.ManyToManyField(
+        AdditionalField, verbose_name=_("Additional fields"), blank=True
+    )
 
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
 
     @property
     def announcement_recipients(self):
+        """Flat list of all members and owners to fulfill announcement API contract."""
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
-        return "%s (%s)" % (self.name, self.short_name)
+        if self.school_term:
+            return f"{self.name} ({self.short_name}) ({self.school_term})"
+        else:
+            return f"{self.name} ({self.short_name})"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -295,16 +386,40 @@ class Group(ExtensibleModel):
         dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
         dj_group.user_set.set(
             list(
-                self.members.filter(user__isnull=False).values_list("user", flat=True).union(
-                    self.owners.filter(user__isnull=False).values_list("user", flat=True)
-                )
+                self.members.filter(user__isnull=False)
+                .values_list("user", flat=True)
+                .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
             )
         )
         dj_group.save()
 
 
+class PersonGroupThrough(ExtensibleModel):
+    """Through table for many-to-many relationship of group members.
+
+    It does not have any fields on its own; these are generated upon instantiation
+    by inspecting the additional fields selected for the linked group.
+    """
+
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.group.additional_fields.all():
+            field_class = getattr(jsonstore, field.field_type)
+            field_name = slugify(field.title).replace("-", "_")
+            field_instance = field_class(verbose_name=field.title)
+            setattr(self, field_name, field_instance)
+
+
 class Activity(ExtensibleModel):
-    user = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="activities")
+    """Activity of a user to trace some actions done in AlekSIS in displayable form."""
+
+    user = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="activities", verbose_name=_("User")
+    )
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -320,8 +435,15 @@ class Activity(ExtensibleModel):
 
 
 class Notification(ExtensibleModel):
+    """Notification to submit to a user."""
+
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
-    recipient = models.ForeignKey("Person", on_delete=models.CASCADE, related_name="notifications")
+    recipient = models.ForeignKey(
+        "Person",
+        on_delete=models.CASCADE,
+        related_name="notifications",
+        verbose_name=_("Recipient"),
+    )
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"))
@@ -334,6 +456,7 @@ class Notification(ExtensibleModel):
         return str(self.title)
 
     def save(self, **kwargs):
+        super().save(**kwargs)
         if not self.sent:
             send_notification(self.pk, resend=True)
         self.sent = True
@@ -345,23 +468,25 @@ class Notification(ExtensibleModel):
 
 
 class AnnouncementQuerySet(models.QuerySet):
+    """Queryset for announcements providing time-based utility functions."""
+
     def relevant_for(self, obj: Union[models.Model, models.QuerySet]) -> models.QuerySet:
-        """ Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
+        """Get all relevant announcements.
+
+        Get a QuerySet with all announcements relevant for a certain Model (e.g. a Group)
         or a set of models in a QuerySet.
         """
-
         if isinstance(obj, models.QuerySet):
             ct = ContentType.objects.get_for_model(obj.model)
-            pks = list(obj.values_list('pk', flat=True))
+            pks = list(obj.values_list("pk", flat=True))
         else:
             ct = ContentType.objects.get_for_model(obj)
             pks = [obj.pk]
 
         return self.filter(recipients__content_type=ct, recipients__recipient_id__in=pks)
 
-    def at_time(self,when: Optional[datetime] = None ) -> models.QuerySet:
-        """ Get all announcements at a certain time """
-
+    def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
+        """Get all announcements at a certain time."""
         when = when or timezone.datetime.now()
 
         # Get announcements by time
@@ -370,8 +495,7 @@ class AnnouncementQuerySet(models.QuerySet):
         return announcements
 
     def on_date(self, when: Optional[date] = None) -> models.QuerySet:
-        """ Get all announcements at a certain date """
-
+        """Get all announcements at a certain date."""
         when = when or timezone.datetime.now().date()
 
         # Get announcements by time
@@ -380,16 +504,14 @@ class AnnouncementQuerySet(models.QuerySet):
         return announcements
 
     def within_days(self, start: date, stop: date) -> models.QuerySet:
-        """ Get all announcements valid for a set of days """
-
+        """Get all announcements valid for a set of days."""
         # Get announcements
         announcements = self.filter(valid_from__date__lte=stop, valid_until__date__gte=start)
 
         return announcements
 
     def for_person(self, person: Person) -> List:
-        """ Get all announcements for one person """
-
+        """Get all announcements for one person."""
         # Filter by person
         announcements_for_person = []
         for announcement in self:
@@ -400,32 +522,39 @@ class AnnouncementQuerySet(models.QuerySet):
 
 
 class Announcement(ExtensibleModel):
+    """Announcement model.
+
+    Persistent announcement to display to groups or persons in various places during a
+    specific time range.
+    """
+
     objects = models.Manager.from_queryset(AnnouncementQuerySet)()
 
     title = models.CharField(max_length=150, verbose_name=_("Title"))
     description = models.TextField(max_length=500, verbose_name=_("Description"), blank=True)
-    link = models.URLField(blank=True, verbose_name=_("Link"))
+    link = models.URLField(blank=True, verbose_name=_("Link to detailed view"))
 
     valid_from = models.DateTimeField(
         verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
     )
     valid_until = models.DateTimeField(
-        verbose_name=_("Date and time until when to show"),
-        default=now_tomorrow,
+        verbose_name=_("Date and time until when to show"), default=now_tomorrow,
     )
 
     @property
     def recipient_persons(self) -> Sequence[Person]:
-        """ Return a list of Persons this announcement is relevant for """
-
+        """Return a list of Persons this announcement is relevant for."""
         persons = []
         for recipient in self.recipients.all():
             persons += recipient.persons
         return persons
 
     def get_recipients_for_model(self, obj: Union[models.Model]) -> Sequence[models.Model]:
-        """ Get all recipients for this announcement with a special content type (provided through model) """
+        """Get all recipients.
 
+        Get all recipients for this announcement
+        with a special content type (provided through model)
+        """
         ct = ContentType.objects.get_for_model(obj)
         return [r.recipient for r in self.recipients.filter(content_type=ct)]
 
@@ -438,7 +567,18 @@ class Announcement(ExtensibleModel):
 
 
 class AnnouncementRecipient(ExtensibleModel):
-    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name="recipients")
+    """Announcement recipient model.
+
+    Generalisation of a recipient for an announcement, used to wrap arbitrary
+    objects that can receive announcements.
+
+    Contract: Objects to serve as recipient have a property announcement_recipients
+    returning a flat list of Person objects.
+    """
+
+    announcement = models.ForeignKey(
+        Announcement, on_delete=models.CASCADE, related_name="recipients"
+    )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     recipient_id = models.PositiveIntegerField()
@@ -446,12 +586,11 @@ class AnnouncementRecipient(ExtensibleModel):
 
     @property
     def persons(self) -> Sequence[Person]:
-        """ Return a list of Persons selected by this recipient object
+        """Return a list of Persons selected by this recipient object.
 
         If the recipient is a Person, return that object. If not, it returns the list
         from the announcement_recipients field on the target model.
         """
-
         if isinstance(self.recipient, Person):
             return [self.recipient]
         else:
@@ -466,7 +605,7 @@ class AnnouncementRecipient(ExtensibleModel):
 
 
 class DashboardWidget(PolymorphicModel, PureDjangoModel):
-    """ Base class for dashboard widgets on the index page
+    """Base class for dashboard widgets on the index page.
 
     To implement a widget, add a model that subclasses DashboardWidget, sets the template
     and implements the get_context method to return a dictionary to be passed as context
@@ -474,8 +613,9 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     If your widget does not add any database fields, you should mark it as a proxy model.
 
-    You can provide a Media meta class with custom JS and CSS files which will be added to html head.
-    For further information on media definition see https://docs.djangoproject.com/en/3.0/topics/forms/media/
+    You can provide a Media meta class with custom JS and CSS files which
+    will be added to html head.  For further information on media definition
+    see https://docs.djangoproject.com/en/3.0/topics/forms/media/
 
     Example::
 
@@ -502,8 +642,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
-        """ Return all media required to render the selected widgets. """
-
+        """Return all media required to render the selected widgets."""
         media = Media()
         for widget in widgets:
             media = media + widget.media
@@ -513,12 +652,18 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
-    active = models.BooleanField(blank=True, verbose_name=_("Activate Widget"))
+    active = models.BooleanField(verbose_name=_("Activate Widget"))
 
     def get_context(self):
+        """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
     def get_template(self):
+        """Get template.
+
+        Get the template to render the widget with. Defaults to the template attribute,
+        but can be overridden to allow more complex template generation scenarios.
+        """
         return self.template
 
     def __str__(self):
@@ -530,21 +675,17 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
 
 class CustomMenu(ExtensibleModel):
-    id = models.CharField(max_length=100, verbose_name=_("Menu ID"), primary_key=True)
-    name = models.CharField(max_length=150, verbose_name=_("Menu name"))
+    """A custom menu to display in the footer."""
+
+    name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
 
     def __str__(self):
         return self.name if self.name != "" else self.id
 
     @classmethod
-    def maintain_default_data(cls):
-        menus = ["footer"]
-        for menu in menus:
-            cls.get_default(menu)
-
-    @classmethod
     def get_default(cls, name):
-        menu, _ = cls.objects.get_or_create(id=name, defaults={"name": name})
+        """Get a menu by name or create if it does not exist."""
+        menu, _ = cls.objects.get_or_create(name=name)
         return menu
 
     class Meta:
@@ -553,25 +694,35 @@ class CustomMenu(ExtensibleModel):
 
 
 class CustomMenuItem(ExtensibleModel):
+    """Single item in a custom menu."""
+
     menu = models.ForeignKey(
         CustomMenu, models.CASCADE, verbose_name=_("Menu"), related_name="items"
     )
     name = models.CharField(max_length=150, verbose_name=_("Name"))
     url = models.URLField(verbose_name=_("Link"))
-    icon = models.CharField(
-        max_length=50, blank=True, null=True, choices=ICONS, verbose_name=_("Icon")
-    )
+    icon = models.CharField(max_length=50, blank=True, choices=ICONS, verbose_name=_("Icon"))
 
     def __str__(self):
-        return "[{}] {}".format(self.menu, self.name)
+        return f"[{self.menu}] {self.name}"
 
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
 
+
 class GroupType(ExtensibleModel):
+    """Group type model.
+
+    Descriptive type of a group; used to tag groups and for apps to distinguish
+    how to display or handle a certain group.
+    """
+
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)
+
+    def __str__(self) -> str:
+        return self.name
 
     class Meta:
         verbose_name = _("Group type")
@@ -579,6 +730,8 @@ class GroupType(ExtensibleModel):
 
 
 class GlobalPermissions(ExtensibleModel):
+    """Container for global permissions."""
+
     class Meta:
         managed = False
         permissions = (
@@ -587,4 +740,34 @@ class GlobalPermissions(ExtensibleModel):
             ("manage_data", _("Can manage data")),
             ("impersonate", _("Can impersonate")),
             ("search", _("Can use search")),
+            ("change_site_preferences", _("Can change site preferences")),
+            ("change_person_preferences", _("Can change person preferences")),
+            ("change_group_preferences", _("Can change group preferences")),
         )
+
+
+class SitePreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """Preference model to hold pereferences valid for a site."""
+
+    instance = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"
+
+
+class PersonPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """Preference model to hold pereferences valid for a person."""
+
+    instance = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"
+
+
+class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
+    """Preference model to hold pereferences valid for members of a group."""
+
+    instance = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = "core"

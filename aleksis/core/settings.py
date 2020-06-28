@@ -1,17 +1,17 @@
 import os
-import sys
 from glob import glob
-from importlib import import_module
 
-from django.apps import apps
 from django.utils.translation import gettext_lazy as _
-from calendarweek.django import i18n_day_name_choices_lazy
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import Settings as thumbnail_settings
+from easy_thumbnails.conf import settings as thumbnail_settings
 
-from .util.core_helpers import get_app_packages, lazy_config, merge_app_settings
-from .util.notifications import get_notification_choices_lazy
+from .util.core_helpers import (
+    get_app_packages,
+    lazy_get_favicon_url,
+    lazy_preference,
+    merge_app_settings,
+)
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -66,8 +66,6 @@ INSTALLED_APPS = [
     "settings_context_processor",
     "sass_processor",
     "easyaudit",
-    "constance",
-    "constance.backends.database",
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
@@ -75,6 +73,7 @@ INSTALLED_APPS = [
     "image_cropping",
     "maintenance_mode",
     "menu_generator",
+    "reversion",
     "phonenumber_field",
     "debug_toolbar",
     "django_select2",
@@ -86,6 +85,13 @@ INSTALLED_APPS = [
     "django_otp",
     "otp_yubikey",
     "aleksis.core",
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.psutil",
+    "dynamic_preferences",
+    "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
     "two_factor",
     "letsagree",
@@ -95,6 +101,7 @@ INSTALLED_APPS = [
     "django_js_reverse",
     "colorfield",
     "django_bleach",
+    "favicon",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -114,6 +121,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django_global_request.middleware.GlobalRequestMiddleware",
+    "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -124,6 +132,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
+    "aleksis.core.util.middlewares.EnsurePersonMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
     "letsagree.middleware.LetsAgreeMiddleware",
 ]
@@ -147,7 +156,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
                 "settings_context_processor.context_processors.settings",
-                "constance.context_processors.config",
+                "dynamic_preferences.processors.global_preferences",
                 "aleksis.core.util.core_helpers.custom_information_processor",
             ],
         },
@@ -204,7 +213,13 @@ AUTHENTICATION_BACKENDS = []
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
-    from django_auth_ldap.config import LDAPSearch, NestedGroupOfNamesType, NestedGroupOfUniqueNamesType, PosixGroupType  # noqa
+    from django_auth_ldap.config import (
+        LDAPSearch,
+        LDAPSearchUnion,
+        NestedGroupOfNamesType,
+        NestedGroupOfUniqueNamesType,
+        PosixGroupType,
+    )  # noqa
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -216,26 +231,44 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
+    # The TOML config might contain either one table or an array of tables
+    _AUTH_LDAP_USER_SETTINGS = _settings.get("ldap.users.search")
+    if not isinstance(_AUTH_LDAP_USER_SETTINGS, list):
+        _AUTH_LDAP_USER_SETTINGS = [_AUTH_LDAP_USER_SETTINGS]
+
     # Search attributes to find users by username
-    AUTH_LDAP_USER_SEARCH = LDAPSearch(
-        _settings.get("ldap.users.base"),
-        ldap.SCOPE_SUBTREE,
-        _settings.get("ldap.users.filter", "(uid=%(user)s)"),
+    AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
+        *[
+            LDAPSearch(entry["base"], ldap.SCOPE_SUBTREE, entry.get("filter", "(uid=%(user)s)"),)
+            for entry in _AUTH_LDAP_USER_SETTINGS
+        ]
     )
 
     # Mapping of LDAP attributes to Django model fields
     AUTH_LDAP_USER_ATTR_MAP = {
-        "first_name": _settings.get("ldap.map.first_name", "givenName"),
-        "last_name": _settings.get("ldap.map.last_name", "sn"),
-        "email": _settings.get("ldap.map.email", "mail"),
+        "first_name": _settings.get("ldap.users.map.first_name", "givenName"),
+        "last_name": _settings.get("ldap.users.map.last_name", "sn"),
+        "email": _settings.get("ldap.users.map.email", "mail"),
     }
 
     # Discover flags by LDAP groups
-    if _settings.get("ldap.groups.base", None):
-        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-            _settings.get("ldap.groups.base"),
-            ldap.SCOPE_SUBTREE,
-            _settings.get("ldap.groups.filter", "(objectClass=%s)" % _settings.get("ldap.groups.type", "groupOfNames")),
+    if _settings.get("ldap.groups.search", None):
+        group_type = _settings.get("ldap.groups.type", "groupOfNames")
+
+        # The TOML config might contain either one table or an array of tables
+        _AUTH_LDAP_GROUP_SETTINGS = _settings.get("ldap.groups.search")
+        if not isinstance(_AUTH_LDAP_GROUP_SETTINGS, list):
+            _AUTH_LDAP_GROUP_SETTINGS = [_AUTH_LDAP_GROUP_SETTINGS]
+
+        AUTH_LDAP_GROUP_SEARCH = LDAPSearchUnion(
+            *[
+                LDAPSearch(
+                    entry["base"],
+                    ldap.SCOPE_SUBTREE,
+                    entry.get("filter", f"(objectClass={group_type})"),
+                )
+                for entry in _AUTH_LDAP_GROUP_SETTINGS
+            ]
         )
 
         _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
@@ -246,16 +279,20 @@ if _settings.get("ldap.uri", None):
         elif _group_type == "posixgroup":
             AUTH_LDAP_GROUP_TYPE = PosixGroupType()
 
-        AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-        }
+        AUTH_LDAP_USER_FLAGS_BY_GROUP = {}
         for _flag in ["is_active", "is_staff", "is_superuser"]:
-            _dn = _settings.get("ldap.groups.flags.%s" % _flag, None)
+            _dn = _settings.get(f"ldap.groups.flags.{_flag}", None)
             if _dn:
                 AUTH_LDAP_USER_FLAGS_BY_GROUP[_flag] = _dn
 
         # Backend admin requires superusers to also be staff members
-        if "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP:
-            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP["is_superuser"]
+        if (
+            "is_superuser" in AUTH_LDAP_USER_FLAGS_BY_GROUP
+            and "is_staff" not in AUTH_LDAP_USER_FLAGS_BY_GROUP
+        ):
+            AUTH_LDAP_USER_FLAGS_BY_GROUP["is_staff"] = AUTH_LDAP_USER_FLAGS_BY_GROUP[
+                "is_superuser"
+            ]
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
@@ -265,9 +302,10 @@ AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGES = [
-    ("de", _("German")),
     ("en", _("English")),
+    ("de", _("German")),
     ("fr", _("French")),
+    ("nb", _("Norsk (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
@@ -316,7 +354,10 @@ ANY_JS = {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
     },
     "paper-css": {"css_url": JS_URL + "/paper-css/paper.min.css"},
-    "select2-materialize": {"css_url": JS_URL + "/select2-materialize/select2-materialize.css", "js_url": JS_URL + "/select2-materialize/index.js"},
+    "select2-materialize": {
+        "css_url": JS_URL + "/select2-materialize/select2-materialize.css",
+        "js_url": JS_URL + "/select2-materialize/index.js",
+    },
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -325,7 +366,7 @@ SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-colour": "aleksis.core.util.sass_helpers.get_colour",
-    "get-config": "aleksis.core.util.sass_helpers.get_config",
+    "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
@@ -347,70 +388,15 @@ if _settings.get("mail.server.host", None):
         EMAIL_HOST_USER = _settings.get("mail.server.user")
         EMAIL_HOST_PASSWORD = _settings.get("mail.server.password")
 
-TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django'
+TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
 
 
 TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
-CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
-CONSTANCE_ADDITIONAL_FIELDS = {
-    "char_field": ["django.forms.CharField", {}],
-    "image_field": ["django.forms.ImageField", {}],
-    "email_field": ["django.forms.EmailField", {}],
-    "url_field": ["django.forms.URLField", {}],
-    "integer_field": ["django.forms.IntegerField", {}],
-    "password_field": ["django.forms.CharField", {
-        'widget': 'django.forms.PasswordInput',
-    }],
-    "adressing-select": ['django.forms.fields.ChoiceField', {
-        'widget': 'django.forms.Select',
-        'choices': ((None, "-----"),
-                    # ("german", _("<first name>") + " " + _("<last name>")),
-                    # ("english", _("<last name>") + ", " + _("<first name>")),
-                    # ("netherlands", _("<last name>") + " " + _("<first name>")),
-                    ("german", "John Doe"),
-                    ("english", "Doe, John"),
-                    ("dutch", "Doe John"),
-                    )
-    }],
-    "notifications-select": ["django.forms.fields.MultipleChoiceField", {
-        "widget": "django.forms.CheckboxSelectMultiple",
-        "choices": get_notification_choices_lazy,
-    }],
-    "weekday_field": ["django.forms.fields.ChoiceField", {
-        'widget': 'django.forms.Select',
-        "choices":  i18n_day_name_choices_lazy
-    }],
-    "colour_field": ["django.forms.CharField", {
-        "widget": "colorfield.widgets.ColorWidget"
-    }],
+DYNAMIC_PREFERENCES = {
+    "REGISTRY_MODULE": "preferences",
 }
-CONSTANCE_CONFIG = {
-    "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "SITE_DESCRIPTION": ("The Free School Information System", _("Site description")),
-    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
-    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
-    "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
-    "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
-    "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
-    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
-    "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
-    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
-}
-CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
-    "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
-    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
-    "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
-    "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
-    "Account settings": ("PRIMARY_GROUP_PATTERN",),
-}
-
-merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
-merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
-merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
 
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
@@ -462,7 +448,12 @@ if _settings.get("twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat", "django_celery_results")
+    INSTALLED_APPS += (
+        "django_celery_beat",
+        "django_celery_results",
+        "celery_progress",
+        "health_check.contrib.celery",
+    )
     CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
@@ -472,92 +463,177 @@ if _settings.get("celery.enabled", False):
         INSTALLED_APPS += ("djcelery_email",)
         EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-PWA_APP_NAME = lazy_config("SITE_TITLE")
-PWA_APP_DESCRIPTION = lazy_config("SITE_DESCRIPTION")
-PWA_APP_THEME_COLOR = lazy_config("COLOUR_PRIMARY")
+PWA_APP_NAME = lazy_preference("general", "title")
+PWA_APP_DESCRIPTION = lazy_preference("general", "description")
+PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = [  # three icons to upload dbsettings
-    {"src": STATIC_URL + "/icons/android_192.png", "sizes": "192x192"},
-    {"src": STATIC_URL + "/icons/android_512.png", "sizes": "512x512"},
+PWA_APP_ICONS = [
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
+        ),
+        "sizes": "192x192",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=512, rel="android", default=STATIC_URL + "icons/android_512.png"
+        ),
+        "sizes": "512x512",
+    },
 ]
 PWA_APP_ICONS_APPLE = [
-    {"src": STATIC_URL + "/icons/apple_76.png", "sizes": "76x76"},
-    {"src": STATIC_URL + "/icons/apple_114.png", "sizes": "114x114"},
-    {"src": STATIC_URL + "/icons/apple_152.png", "sizes": "152x152"},
-    {"src": STATIC_URL + "/icons/apple_180.png", "sizes": "180x180"},
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_76.png"
+        ),
+        "sizes": "76x76",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_114.png"
+        ),
+        "sizes": "114x114",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_152.png"
+        ),
+        "sizes": "152x152",
+    },
+    {
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
+        ),
+        "sizes": "180x180",
+    },
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        "src": STATIC_URL + "/icons/android_512.png",
-        "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
+        "src": lazy_get_favicon_url(
+            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
+        ),
+        "media": (
+            "(device-width: 320px) and (device-height: 568px) and" "(-webkit-device-pixel-ratio: 2)"
+        ),
     }
 ]
+
+
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
 SITE_ID = 1
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
+    "default": {
+        "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
+        "toolbar_Full": [
+            {
+                "name": "document",
+                "items": ["Source", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"],
+            },
+            {
+                "name": "clipboard",
+                "items": [
+                    "Cut",
+                    "Copy",
+                    "Paste",
+                    "PasteText",
+                    "PasteFromWord",
+                    "-",
+                    "Undo",
+                    "Redo",
+                ],
+            },
+            {"name": "editing", "items": ["Find", "Replace", "-", "SelectAll"]},
+            {
+                "name": "insert",
+                "items": [
+                    "Image",
+                    "Table",
+                    "HorizontalRule",
+                    "Smiley",
+                    "SpecialChar",
+                    "PageBreak",
+                    "Iframe",
+                ],
+            },
+            "/",
+            {
+                "name": "basicstyles",
+                "items": [
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "Subscript",
+                    "Superscript",
+                    "-",
+                    "RemoveFormat",
+                ],
+            },
+            {
+                "name": "paragraph",
+                "items": [
+                    "NumberedList",
+                    "BulletedList",
+                    "-",
+                    "Outdent",
+                    "Indent",
+                    "-",
+                    "Blockquote",
+                    "CreateDiv",
+                    "-",
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                    "JustifyBlock",
+                    "-",
+                    "BidiLtr",
+                    "BidiRtl",
+                    "Language",
+                ],
+            },
+            {"name": "links", "items": ["Link", "Unlink", "Anchor"]},
+            "/",
+            {"name": "styles", "items": ["Styles", "Format", "Font", "FontSize"]},
+            {"name": "colors", "items": ["TextColor", "BGColor"]},
+            {"name": "tools", "items": ["Maximize", "ShowBlocks"]},
+            {"name": "about", "items": ["About"]},
+            {"name": "customtools", "items": ["Preview", "Maximize",]},
         ],
-        'toolbar_Full': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'insert',
-             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            {'name': 'customtools', 'items': [
-                'Preview',
-                'Maximize',
-            ]},
-        ],
-        'toolbar': 'Full',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            # 'devtools',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
-        ]),
+        "toolbar": "Full",
+        "tabSpaces": 4,
+        "extraPlugins": ",".join(
+            [
+                "uploadimage",
+                "div",
+                "autolink",
+                "autoembed",
+                "embedsemantic",
+                "autogrow",
+                # 'devtools',
+                "widget",
+                "lineutils",
+                "clipboard",
+                "dialog",
+                "dialogui",
+                "elementspath",
+            ]
+        ),
     }
 }
 
 # Which HTML tags are allowed
-BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'div']
+BLEACH_ALLOWED_TAGS = ["p", "b", "i", "u", "em", "strong", "a", "div"]
 
 # Which HTML attributes are allowed
-BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style']
+BLEACH_ALLOWED_ATTRIBUTES = ["href", "title", "style"]
 
 # Which CSS properties are allowed in 'style' attributes (assuming
 # style is an allowed attribute)
-BLEACH_ALLOWED_STYLES = [
-    'font-family', 'font-weight', 'text-decoration', 'font-variant'
-]
+BLEACH_ALLOWED_STYLES = ["font-family", "font-weight", "text-decoration", "font-variant"]
 
 # Strip unknown tags if True, replace with HTML escaped characters if
 # False
@@ -567,23 +643,11 @@ BLEACH_STRIP_TAGS = True
 BLEACH_STRIP_COMMENTS = True
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': "verbose"
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
-        }
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': _settings.get("logging.level", "WARNING"),
-    },
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
+    "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
 }
 
 # Rules and permissions
@@ -600,31 +664,36 @@ HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
 
 if HAYSTACK_BACKEND_SHORT == "simple":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-        },
+        "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine",},
     }
 elif HAYSTACK_BACKEND_SHORT == "xapian":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'xapian_backend.XapianEngine',
-            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
+        "default": {
+            "ENGINE": "xapian_backend.XapianEngine",
+            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
         },
     }
 elif HAYSTACK_BACKEND_SHORT == "whoosh":
     HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-            'PATH': _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
+        "default": {
+            "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
+            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
         },
     }
 
 if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
     INSTALLED_APPS.append("celery_haystack")
-    HAYSTACK_SIGNAL_PROCESSOR = 'celery_haystack.signals.CelerySignalProcessor'
+    HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 else:
-    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+    HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
 LETSAGREE_CACHE = True
+
+DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+HEALTH_CHECK = {
+    "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
+    "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
+}
