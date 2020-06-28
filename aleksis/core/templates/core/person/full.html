@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n static cropping rules %}
+{% load i18n static rules %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
@@ -44,7 +44,7 @@
     <div class="col s12 m4">
       {% has_perm 'core.view_photo' user person as can_view_photo %}
       {% if person.photo and can_view_photo %}
-        <img class="person-img" src="{% cropped_thumbnail person 'photo_cropping' max_size='300x400' %}"
+        <img class="person-img" src="{{ person.photo.url }}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
       {% else %}
         <img class="person-img" src="{% static 'img/fallback.png' %}"

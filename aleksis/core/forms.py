@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from image_cropping import ImageCropWidget
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -83,7 +82,7 @@ class EditPersonForm(ExtensibleForm):
         Fieldset(
             _("Advanced personal data"),
             Row("sex", "date_of_birth"),
-            Row("photo", "photo_cropping"),
+            Row("photo"),
             "guardians",
         ),
     )
@@ -107,13 +106,11 @@ class EditPersonForm(ExtensibleForm):
             "date_of_birth",
             "sex",
             "photo",
-            "photo_cropping",
             "guardians",
             "primary_group",
         ]
         widgets = {
                     "user": Select2Widget,
-                    "photo": ImageCropWidget,
                   }
 
     new_user = forms.CharField(
