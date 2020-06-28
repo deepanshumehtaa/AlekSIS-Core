@@ -283,6 +283,23 @@ class Person(ExtensibleModel):
             if force or not self.primary_group:
                 self.primary_group = self.member_of.filter(**{f"{field}__regex": pattern}).first()
 
+    def update_geolocation(self) -> None:
+    """ Update coordinates if postal address is given  """
+
+    if config.ENABLE_GEOLOCATION_OF_PERSONS:
+
+        # Get API key from settings
+        nominatim = OpenMapQuest(api_key=getattr(config, "MAPQUEST_API_KEY", None),
+                         user_agent="AlekSIS")
+
+        if self.full_address:
+            try:
+                location = nominatim.geocode(self.full_address)
+            except GeocoderServiceError:
+                location = None
+
+            if location:
+                self.latitude, self.longitude = location.latitude, location.longitude
 
 class DummyPerson(Person):
     """A dummy person that is not stored into the database.

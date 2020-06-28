@@ -334,25 +334,6 @@ def now_tomorrow() -> datetime:
     return timezone.now() + timedelta(days=1)
 
 
-def update_geolocation(person) -> None:
-    """ Update coordinates if postal address is given  """
-
-    if config.ENABLE_GEOLOCATION_OF_PERSONS:
-
-        # Get API key from settings
-        nominatim = OpenMapQuest(api_key=getattr(config, "MAPQUEST_API_KEY", None),
-                         user_agent="AlekSIS")
-
-        if person.full_address:
-            try:
-                location = nominatim.geocode(person.full_address)
-            except GeocoderServiceError:
-                location = None
-
-            if location:
-                person.latitude, person.longitude = location.latitude, location.longitude
-
-
 def objectgetter_optional(
     model: Model, default: Optional[Any] = None, default_eval: bool = False
 ) -> Callable[[HttpRequest, Optional[int]], Model]:

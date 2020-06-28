@@ -392,35 +392,6 @@ DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
 }
 
-CONSTANCE_CONFIG = {
-    "SITE_TITLE": ("AlekSIS", _("Site title"), "char_field"),
-    "SITE_DESCRIPTION": ("The Free School Information System", _("Site description")),
-    "COLOUR_PRIMARY": ("#0d5eaf", _("Primary colour"), "colour_field"),
-    "COLOUR_SECONDARY": ("#0d5eaf", _("Secondary colour"), "colour_field"),
-    "MAIL_OUT_NAME": ("AlekSIS", _("Mail out name")),
-    "MAIL_OUT": (DEFAULT_FROM_EMAIL, _("Mail out address"), "email_field"),
-    "PRIVACY_URL": ("", _("Link to privacy policy"), "url_field"),
-    "IMPRINT_URL": ("", _("Link to imprint"), "url_field"),
-    "ADRESSING_NAME_FORMAT": ("german", _("Name format of adresses"), "adressing-select"),
-    "NOTIFICATION_CHANNELS": (["email"], _("Channels to allow for notifications"), "notifications-select"),
-    "PRIMARY_GROUP_PATTERN": ("", _("Regular expression to match primary group, e.g. '^Class .*'"), str),
-    "ENABLE_GEOLOCATION_OF_PERSONS": (False, _("Enable "), bool),
-    "MAPQUEST_API_KEY": ("", _("MAPQuest api key "), str),
-}
-CONSTANCE_CONFIG_FIELDSETS = {
-    "General settings": ("SITE_TITLE", "SITE_DESCRIPTION"),
-    "Theme settings": ("COLOUR_PRIMARY", "COLOUR_SECONDARY"),
-    "Mail settings": ("MAIL_OUT_NAME", "MAIL_OUT"),
-    "Notification settings": ("NOTIFICATION_CHANNELS", "ADRESSING_NAME_FORMAT"),
-    "Footer settings": ("PRIVACY_URL", "IMPRINT_URL"),
-    "Account settings": ("PRIMARY_GROUP_PATTERN",),
-    "Geolocation settings": ("ENABLE_GEOLOCATION_OF_PERSONS", "MAPQUEST_API_KEY"),
-}
-
-merge_app_settings("CONSTANCE_ADDITIONAL_FIELDS", CONSTANCE_ADDITIONAL_FIELDS, False)
-merge_app_settings("CONSTANCE_CONFIG", CONSTANCE_CONFIG, False)
-merge_app_settings("CONSTANCE_CONFIG_FIELDSETS", CONSTANCE_CONFIG_FIELDSETS, False)
-
 MAINTENANCE_MODE = _settings.get("maintenance.enabled", None)
 MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
     "maintenance.ignore_ips", _settings.get("maintenance.internal_ips", [])
