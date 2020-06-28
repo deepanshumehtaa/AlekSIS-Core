@@ -80,10 +80,7 @@ class EditPersonForm(ExtensibleForm):
         Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
         Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
         Fieldset(
-            _("Advanced personal data"),
-            Row("sex", "date_of_birth"),
-            Row("photo", "photo_cropping"),
-            "guardians",
+            _("Advanced personal data"), Row("sex", "date_of_birth"), Row("photo"), "guardians",
         ),
     )
 
@@ -106,11 +103,12 @@ class EditPersonForm(ExtensibleForm):
             "date_of_birth",
             "sex",
             "photo",
-            "photo_cropping",
             "guardians",
             "primary_group",
         ]
-        widgets = {"user": Select2Widget}
+        widgets = {
+            "user": Select2Widget,
+        }
 
     new_user = forms.CharField(
         required=False, label=_("New user"), help_text=_("Create a new account")

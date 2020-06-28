@@ -305,11 +305,11 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if id_:
         # Edit form for existing group
-        edit_person_form = EditPersonForm(request.POST or None, instance=person)
+        edit_person_form = EditPersonForm(request.POST, request.FILES or None, instance=person)
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST or None)
+            edit_person_form = EditPersonForm(request.POST, request.FILES or None)
         else:
             raise PermissionDenied()
 
@@ -318,9 +318,6 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
             with reversion.create_revision():
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
-
-            # Redirect to self to ensure post-processed data is displayed
-            return redirect("edit_person_by_id", id_=person.id)
 
     context["edit_person_form"] = edit_person_form
 
