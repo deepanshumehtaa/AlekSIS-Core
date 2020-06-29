@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n %}
+{% load i18n material_form %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{% blocktrans %}Groups{% endblocktrans %}{% endblock %}
@@ -13,6 +13,12 @@
     <i class="material-icons left">add</i>
     {% trans "Create group" %}
   </a>
+
+  <form method="get">
+    {% form form=groups_filter.form %}{% endform %}
+    {% trans "Search" as caption %}
+    {% include "core/partials/save_button.html" with caption=caption icon="search" %}
+  </form>
 
   {% render_table groups_table %}
 {% endblock %}

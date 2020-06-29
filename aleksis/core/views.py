@@ -9,15 +9,17 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+import reversion
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
+from health_check.views import MainView
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
-from .filters import GroupFilter
+from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
@@ -141,8 +143,12 @@ def persons(request: HttpRequest) -> HttpResponse:
         request.user, "core.view_person", Person.objects.filter(is_active=True)
     )
 
+    # Get filter
+    persons_filter = PersonFilter(request.GET, queryset=persons)
+    context["persons_filter"] = persons_filter
+
     # Build table
-    persons_table = PersonsTable(persons)
+    persons_table = PersonsTable(persons_filter.qs)
     RequestConfig(request).configure(persons_table)
     context["persons_table"] = persons_table
 
@@ -162,8 +168,12 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     # Get groups where person is member of
     groups = Group.objects.filter(members=person)
 
+    # Get filter
+    groups_filter = GroupFilter(request.GET, queryset=groups)
+    context["groups_filter"] = groups_filter
+
     # Build table
-    groups_table = GroupsTable(groups)
+    groups_table = GroupsTable(groups_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -184,16 +194,24 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     # Get members
     members = group.members.filter(is_active=True)
 
+    # Get filter
+    members_filter = PersonFilter(request.GET, queryset=members)
+    context["members_filter"] = members_filter
+
     # Build table
-    members_table = PersonsTable(members)
+    members_table = PersonsTable(members_filter.qs)
     RequestConfig(request).configure(members_table)
     context["members_table"] = members_table
 
     # Get owners
     owners = group.owners.filter(is_active=True)
 
+    # Get filter
+    owners_filter = PersonFilter(request.GET, queryset=owners)
+    context["owners_filter"] = owners_filter
+
     # Build table
-    owners_table = PersonsTable(owners)
+    owners_table = PersonsTable(owners_filter.qs)
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
@@ -208,8 +226,12 @@ def groups(request: HttpRequest) -> HttpResponse:
     # Get all groups
     groups = get_objects_for_user(request.user, "core.view_group", Group)
 
+    # Get filter
+    groups_filter = GroupFilter(request.GET, queryset=groups)
+    context["groups_filter"] = groups_filter
+
     # Build table
-    groups_table = GroupsTable(groups)
+    groups_table = GroupsTable(group_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -273,21 +295,28 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/child_groups.html", context)
 
 
-@permission_required(
-    "core.edit_person", fn=objectgetter_optional(Person, "request.user.person", True)
-)
+@permission_required("core.edit_person", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
 
-    person = objectgetter_optional(Person, "request.user.person", True)(request, id_)
+    person = objectgetter_optional(Person)(request, id_)
     context["person"] = person
 
-    edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
+    if id_:
+        # Edit form for existing group
+        edit_person_form = EditPersonForm(request.POST or None, instance=person)
+    else:
+        # Empty form to create a new group
+        if request.user.has_perm("core.create_person"):
+            edit_person_form = EditPersonForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_person_form.is_valid():
-            edit_person_form.save(commit=True)
+            with reversion.create_revision():
+                edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
             # Redirect to self to ensure post-processed data is displayed
@@ -318,11 +347,15 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
         # Empty form to create a new group
-        edit_group_form = EditGroupForm(request.POST or None)
+        if request.user.has_perm("core.create_group"):
+            edit_group_form = EditGroupForm(request.POST or None)
+        else:
+            raise PermissionDenied()
 
     if request.method == "POST":
         if edit_group_form.is_valid():
-            group = edit_group_form.save(commit=True)
+            with reversion.create_revision():
+                group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
 
@@ -340,22 +373,28 @@ def data_management(request: HttpRequest) -> HttpResponse:
     return render(request, "core/management/data_management.html", context)
 
 
-@permission_required("core.view_system_status")
-def system_status(request: HttpRequest) -> HttpResponse:
+class SystemStatus(MainView, PermissionRequiredMixin):
     """View giving information about the system status."""
+
+    template_name = "core/pages/system_status.html"
+    permission_required = "core.view_system_status"
     context = {}
 
-    if "django_celery_results" in settings.INSTALLED_APPS:
-        from django_celery_results.models import TaskResult # noqa
-        from celery.task.control import inspect # noqa
-        if inspect().registered_tasks():
-            job_list = list(inspect().registered_tasks().values())[0]
-            results = []
-            for job in job_list:
-                results.append(TaskResult.objects.filter(task_name=job).last())
-            context["tasks"] = results
+    def get(self, request, *args, **kwargs):
+        status_code = 500 if self.errors else 200
 
-    return render(request, "core/pages/system_status.html", context)
+        if "django_celery_results" in settings.INSTALLED_APPS:
+            from django_celery_results.models import TaskResult  # noqa
+            from celery.task.control import inspect  # noqa
+
+            if inspect().registered_tasks():
+                job_list = list(inspect().registered_tasks().values())[0]
+                results = []
+                for job in job_list:
+                    results.append(TaskResult.objects.filter(task_name=job).last())
+
+        context = {"plugins": self.plugins, "status_code": status_code}
+        return self.render_to_response(context, status=status_code)
 
 
 @permission_required(
@@ -505,6 +544,33 @@ def preferences(
     context["instance"] = instance
 
     return render(request, "dynamic_preferences/form.html", context)
+
+
+@permission_required("core.delete_person", fn=objectgetter_optional(Person))
+def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an person."""
+    person = objectgetter_optional(Person)(request, id_)
+
+    with reversion.create_revision():
+        person.save()
+
+    person.delete()
+    messages.success(request, _("The person has been deleted."))
+
+    return redirect("persons")
+
+
+@permission_required("core.delete_group", fn=objectgetter_optional(Group))
+def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
+    """View to delete an group."""
+    group = objectgetter_optional(Group)(request, id_)
+    with reversion.create_revision():
+        group.save()
+
+    group.delete()
+    messages.success(request, _("The group has been deleted."))
+
+    return redirect("groups")
 
 
 @permission_required(

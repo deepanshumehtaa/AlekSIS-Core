@@ -66,6 +66,12 @@ edit_person_predicate = has_person & (
 )
 add_perm("core.edit_person", edit_person_predicate)
 
+# Delete person
+delete_person_predicate = has_person & (
+    has_global_perm("core.delete_person") | has_object_perm("core.delete_person")
+)
+add_perm("core.delete_person", delete_person_predicate)
+
 # Link persons with accounts
 link_persons_accounts_predicate = has_person & has_global_perm("core.link_persons_accounts")
 add_perm("core.link_persons_accounts", link_persons_accounts_predicate)
@@ -87,6 +93,12 @@ edit_group_predicate = has_person & (
     has_global_perm("core.change_group") | has_object_perm("core.change_group")
 )
 add_perm("core.edit_group", edit_group_predicate)
+
+# Delete group
+delete_group_predicate = has_person & (
+    has_global_perm("core.delete_group") | has_object_perm("core.delete_group")
+)
+add_perm("core.delete_group", delete_group_predicate)
 
 # Assign child groups to groups
 assign_child_groups_to_groups_predicate = has_person & has_global_perm(
@@ -228,6 +240,18 @@ view_group_type_predicate = has_person & (
     has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
 )
 add_perm("core.view_grouptype", view_group_type_predicate)
+
+# Create person
+create_person_predicate = has_person & (
+    has_global_perm("core.create_person") | has_object_perm("core.create_person")
+)
+add_perm("core.create_person", create_person_predicate)
+
+# Create group
+create_group_predicate = has_person & (
+    has_global_perm("core.create_group") | has_object_perm("core.create_group")
+)
+add_perm("core.create_group", create_group_predicate)
 
 # School years
 view_school_term_predicate = has_person & has_global_perm("core.view_schoolterm")

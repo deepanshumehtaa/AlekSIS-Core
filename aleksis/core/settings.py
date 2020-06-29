@@ -85,6 +85,11 @@ INSTALLED_APPS = [
     "django_otp",
     "otp_yubikey",
     "aleksis.core",
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.psutil",
     "dynamic_preferences",
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
@@ -204,6 +209,7 @@ if _settings.get("ldap.uri", None):
     import ldap  # noqa
     from django_auth_ldap.config import (
         LDAPSearch,
+        LDAPSearchUnion,
         NestedGroupOfNamesType,
         NestedGroupOfUniqueNamesType,
         PosixGroupType,
@@ -219,27 +225,44 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
+    # The TOML config might contain either one table or an array of tables
+    _AUTH_LDAP_USER_SETTINGS = _settings.get("ldap.users.search")
+    if not isinstance(_AUTH_LDAP_USER_SETTINGS, list):
+        _AUTH_LDAP_USER_SETTINGS = [_AUTH_LDAP_USER_SETTINGS]
+
     # Search attributes to find users by username
-    AUTH_LDAP_USER_SEARCH = LDAPSearch(
-        _settings.get("ldap.users.base"),
-        ldap.SCOPE_SUBTREE,
-        _settings.get("ldap.users.filter", "(uid=%(user)s)"),
+    AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
+        *[
+            LDAPSearch(entry["base"], ldap.SCOPE_SUBTREE, entry.get("filter", "(uid=%(user)s)"),)
+            for entry in _AUTH_LDAP_USER_SETTINGS
+        ]
     )
 
     # Mapping of LDAP attributes to Django model fields
     AUTH_LDAP_USER_ATTR_MAP = {
-        "first_name": _settings.get("ldap.map.first_name", "givenName"),
-        "last_name": _settings.get("ldap.map.last_name", "sn"),
-        "email": _settings.get("ldap.map.email", "mail"),
+        "first_name": _settings.get("ldap.users.map.first_name", "givenName"),
+        "last_name": _settings.get("ldap.users.map.last_name", "sn"),
+        "email": _settings.get("ldap.users.map.email", "mail"),
     }
 
     # Discover flags by LDAP groups
-    if _settings.get("ldap.groups.base", None):
+    if _settings.get("ldap.groups.search", None):
         group_type = _settings.get("ldap.groups.type", "groupOfNames")
-        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-            _settings.get("ldap.groups.base"),
-            ldap.SCOPE_SUBTREE,
-            _settings.get("ldap.groups.filter", f"(objectClass={group_type})"),
+
+        # The TOML config might contain either one table or an array of tables
+        _AUTH_LDAP_GROUP_SETTINGS = _settings.get("ldap.groups.search")
+        if not isinstance(_AUTH_LDAP_GROUP_SETTINGS, list):
+            _AUTH_LDAP_GROUP_SETTINGS = [_AUTH_LDAP_GROUP_SETTINGS]
+
+        AUTH_LDAP_GROUP_SEARCH = LDAPSearchUnion(
+            *[
+                LDAPSearch(
+                    entry["base"],
+                    ldap.SCOPE_SUBTREE,
+                    entry.get("filter", f"(objectClass={group_type})"),
+                )
+                for entry in _AUTH_LDAP_GROUP_SETTINGS
+            ]
         )
 
         _group_type = _settings.get("ldap.groups.type", "groupOfNames").lower()
@@ -419,7 +442,12 @@ if _settings.get("twilio.sid", None):
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
 if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += ("django_celery_beat", "django_celery_results", "celery_progress")
+    INSTALLED_APPS += (
+        "django_celery_beat",
+        "django_celery_results",
+        "celery_progress",
+        "health_check.contrib.celery",
+    )
     CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_CACHE_BACKEND = "django-cache"
@@ -656,3 +684,8 @@ else:
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
 DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+HEALTH_CHECK = {
+    "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
+    "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
+}

@@ -2,12 +2,27 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n %}
+{% load i18n rules material_form %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{% blocktrans %}Persons{% endblocktrans %}{% endblock %}
 {% block page_title %}{% blocktrans %}Persons{% endblocktrans %}{% endblock %}
 
 {% block content %}
+  {% has_perm 'core.create_person' user person as can_create_person %}
+
+  {% if can_create_person %}
+    <a class="btn green waves-effect waves-light" href="{% url 'create_person' %}">
+      <i class="material-icons left">add</i>
+      {% trans "Create person" %}
+    </a>
+  {% endif %}
+
+  <form method="get">
+    {% form form=persons_filter.form %}{% endform %}
+    {% trans "Search" as caption %}
+    {% include "core/partials/save_button.html" with caption=caption icon="search" %}
+  </form>
+
   {% render_table persons_table %}
 {% endblock %}
