@@ -45,7 +45,7 @@ dynaconf = {version = "^2.0", extras = ["yaml", "toml", "ini"]}
 django-settings-context-processor = "^0.2"
 django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.14.0"
-django-ipware = "^2.1"
+django-ipware = "^3.0"
 easy-thumbnails = "^2.6"
 django-image-cropping = "^1.2"
 django-impersonate = "^1.4"
