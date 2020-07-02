@@ -613,7 +613,7 @@ description = "A Django utility application that returns client's real IP addres
 name = "django-ipware"
 optional = false
 python-versions = "*"
-version = "2.1.0"
+version = "3.0.0"
 
 [[package]]
 category = "main"
@@ -2156,7 +2156,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "ab4755861d9926350d3e669b36d26ec7c31aa5b68004bb69ecb49eb13419b216"
+content-hash = "41c90454067d2b34cd8d11be7e491b89807a8b1e15e1be1a3f096017cf86cb19"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2387,7 +2387,7 @@ django-impersonate = [
     {file = "django-impersonate-1.5.1.tar.gz", hash = "sha256:7c786ffaa7a5dd430f9277b53a64676c470b684eee5aa52c3b483298860d09b4"},
 ]
 django-ipware = [
-    {file = "django-ipware-2.1.0.tar.gz", hash = "sha256:a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"},
+    {file = "django-ipware-3.0.0.tar.gz", hash = "sha256:161605eb011439550dd3ee496d0e999720b13f01952be25ea9e88982fbe48e83"},
 ]
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
