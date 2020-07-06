@@ -78,7 +78,7 @@ class SchoolTerm(ExtensibleModel):
 
         qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
         if self.pk:
-            qs.exclude(pk=self.pk)
+            qs = qs.exclude(pk=self.pk)
         if qs.exists():
             raise ValidationError(
                 _("There is already a school term for this time or a part of this time.")
