@@ -232,7 +232,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             related_name = cls.Meta.default_related_name
 
         # Add field to hold key to foreign model
-        id_field = to_field_type()
+        id_field = to_field_type(blank=True, null=True)
         cls.field(**{id_field_name: id_field})
 
         @property
