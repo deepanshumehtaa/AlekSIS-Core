@@ -5,7 +5,7 @@ test:
       alias: selenium
   before_script:
     - poetry install
-    - poetry run ./manage.py yarn_install
+    - poetry run ./manage.py yarn install
     - poetry run ./manage.py collectstatic --no-input
     - adduser --disabled-password --gecos "Test User" testuser
     - chown -R testuser .
