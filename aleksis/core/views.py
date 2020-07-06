@@ -231,7 +231,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     context["groups_filter"] = groups_filter
 
     # Build table
-    groups_table = GroupsTable(group_filter.qs)
+    groups_table = GroupsTable(groups_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -305,14 +305,13 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if id_:
         # Edit form for existing group
-        edit_person_form = EditPersonForm(request.POST, request.FILES or None, instance=person)
+        edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST, request.FILES or None)
+            edit_person_form = EditPersonForm(request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
-
     if request.method == "POST":
         if edit_person_form.is_valid():
             with reversion.create_revision():
