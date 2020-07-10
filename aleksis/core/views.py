@@ -293,7 +293,9 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if id_:
         # Edit form for existing group
-        edit_person_form = EditPersonForm(request.POST or None, request.FILES or None, instance=person)
+        edit_person_form = EditPersonForm(
+            request.POST or None, request.FILES or None, instance=person
+        )
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
