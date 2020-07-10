@@ -168,12 +168,8 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     # Get groups where person is member of
     groups = Group.objects.filter(members=person)
 
-    # Get filter
-    groups_filter = GroupFilter(request.GET, queryset=groups)
-    context["groups_filter"] = groups_filter
-
     # Build table
-    groups_table = GroupsTable(groups_filter.qs)
+    groups_table = GroupsTable(groups)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -194,24 +190,16 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     # Get members
     members = group.members.filter(is_active=True)
 
-    # Get filter
-    members_filter = PersonFilter(request.GET, queryset=members)
-    context["members_filter"] = members_filter
-
     # Build table
-    members_table = PersonsTable(members_filter.qs)
+    members_table = PersonsTable(members)
     RequestConfig(request).configure(members_table)
     context["members_table"] = members_table
 
     # Get owners
     owners = group.owners.filter(is_active=True)
 
-    # Get filter
-    owners_filter = PersonFilter(request.GET, queryset=owners)
-    context["owners_filter"] = owners_filter
-
     # Build table
-    owners_table = PersonsTable(owners_filter.qs)
+    owners_table = PersonsTable(owners)
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
