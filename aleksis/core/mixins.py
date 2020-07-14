@@ -376,6 +376,14 @@ class AdvancedEditView(UpdateView, SuccessMessageMixin):
 
 
 class AdvancedDeleteView(DeleteView):
+    """Common confirm view for deleting.
+
+    .. warning ::
+
+        Using this view, objects are deleted permanently after confirming.
+        We recommend to include the mixin :class:`reversion.views.RevisionMixin`
+        from `django-reversion` to enable soft-delete.
+    """
     success_message: Optional[str] = None
 
     def delete(self, request, *args, **kwargs):
