@@ -1,6 +1,7 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.conf import settings
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -12,7 +13,7 @@ from .registries import (
     site_preferences_registry,
 )
 from .util.apps import AppConfig
-from .util.core_helpers import has_person
+from .util.core_helpers import get_site_preferences, has_person, lazy_preference
 from .util.sass_helpers import clean_scss
 
 
@@ -48,6 +49,18 @@ class CoreConfig(AppConfig):
         preference_models.register(personpreferencemodel, person_preferences_registry)
         preference_models.register(grouppreferencemodel, group_preferences_registry)
 
+        self._refresh_authentication_backends()
+
+    def _refresh_authentication_backends(self):
+        """Refresh config list of enabled authentication backends."""
+        from .preferences import AuthenticationBackends  # noqa
+
+        idx = settings.AUTHENTICATION_BACKENDS.index("django.contrib.auth.backends.ModelBackend")
+
+        for backend in get_site_preferences()["auth__backends"]:
+            settings._wrapped.AUTHENTICATION_BACKENDS.insert(idx, backend)
+            idx += 1
+
     def preference_updated(
         self,
         sender: Any,
@@ -57,6 +70,9 @@ class CoreConfig(AppConfig):
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
+        if section == "auth" and name == "backends":
+            self._refresh_authentication_backends()
+
         if section == "theme":
             if name in ("primary", "secondary"):
                 clean_scss()

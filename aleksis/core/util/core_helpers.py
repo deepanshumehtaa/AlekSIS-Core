@@ -323,6 +323,9 @@ def custom_information_processor(request: HttpRequest) -> dict:
 
     return {
         "FOOTER_MENU": CustomMenu.get_default("footer"),
+        "ALTERNATIVE_LOGIN_VIEWS": [
+            a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
+        ],
     }
 
 
