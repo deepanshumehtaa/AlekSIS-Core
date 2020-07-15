@@ -3,7 +3,12 @@ from django.forms import EmailField, ImageField, URLField
 from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.preferences import Section
-from dynamic_preferences.types import ChoicePreference, FilePreference, StringPreference
+from dynamic_preferences.types import (
+    ChoicePreference,
+    FilePreference,
+    MultipleChoicePreference,
+    StringPreference,
+)
 
 from .models import Person
 from .registries import person_preferences_registry, site_preferences_registry
@@ -16,6 +21,7 @@ mail = Section("mail")
 notification = Section("notification")
 footer = Section("footer")
 account = Section("account")
+auth = Section("auth", verbose_name=_("Authentication"))
 
 
 @site_preferences_registry.register
@@ -178,3 +184,12 @@ class SchoolNameOfficial(StringPreference):
     default = ""
     required = False
     verbose_name = _("Official name of the school, e.g. as given by supervisory authority")
+
+
+@site_preferences_registry.register
+class AuthenticationBackends(MultipleChoicePreference):
+    section = auth
+    name = "backends"
+    default = None
+    choices = [(b, b) for b in settings.CUSTOM_AUTHENTICATION_BACKENDS]
+    verbose_name = _("Enabled custom authentication backends")

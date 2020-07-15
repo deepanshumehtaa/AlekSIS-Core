@@ -282,13 +282,14 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-merge_app_settings("AUTHENTICATION_BACKENDS", AUTHENTICATION_BACKENDS)
+CUSTOM_AUTHENTICATION_BACKENDS = []
+merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
 
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
-# Structure of items: URL name, icon name, button title
+# Structure of items: backend, URL name, icon name, button title
 ALTERNATIVE_LOGIN_VIEWS = []
 merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 
@@ -386,7 +387,7 @@ TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
 
 
-TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG", "ALTERNATIVE_LOGIN_VIEWS"]
+TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
