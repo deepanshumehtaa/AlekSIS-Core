@@ -14,7 +14,7 @@ from .util.core_helpers import (
 )
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
-DIRS_FOR_DYNACONF = ["/etc/aleksis"]
+DIRS_FOR_DYNACONF = ["/etc/rwa"]
 
 SETTINGS_FILE_FOR_DYNACONF = []
 for directory in DIRS_FOR_DYNACONF:
