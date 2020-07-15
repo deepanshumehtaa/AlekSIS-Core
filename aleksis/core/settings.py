@@ -288,6 +288,10 @@ merge_app_settings("AUTHENTICATION_BACKENDS", AUTHENTICATION_BACKENDS)
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
+# Structure of items: URL name, icon name, button title
+ALTERNATIVE_LOGIN_VIEWS = []
+merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -382,7 +386,7 @@ TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
 
 
-TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
+TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG", "ALTERNATIVE_LOGIN_VIEWS"]
 
 DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
