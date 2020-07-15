@@ -282,6 +282,8 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
+merge_app_settings("AUTHENTICATION_BACKENDS", AUTHENTICATION_BACKENDS)
+
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
