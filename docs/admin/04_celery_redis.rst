@@ -8,7 +8,7 @@ Celery and Celery beat worker
 
 To run asyncronous Celery tasks, you will need a running Celery and Celery beat worker on your system. You can find instructions to run them via systemd in the `Celery docs`_
 
-Enable celery in AlekSIS Configuration
+Enable celery in AlekSIS configuration
 --------------------------------------
 
 To enable Celery in your AlekSIS instance, add the following to your ``/etc/aleksis/aleksis.toml``::
@@ -34,7 +34,7 @@ After you've installed the redis server, you should start it. If you're using sy
 
 For other operating systems please look into their package index.
 
-Enable redis in AlekSIS Configuration
+Enable redis in AlekSIS configuration
 -------------------------------------
 
 To enable the Celery broker in your AlekSIS instance, add the following to your ``/etc/aleksis/aleksis.toml``::
