@@ -20,6 +20,8 @@ account = Section("account")
 
 @site_preferences_registry.register
 class SiteTitle(StringPreference):
+    """Title of the AlekSIS instance, e.g. schools display name."""
+
     section = general
     name = "title"
     default = "AlekSIS"
@@ -29,6 +31,8 @@ class SiteTitle(StringPreference):
 
 @site_preferences_registry.register
 class SiteDescription(StringPreference):
+    """Site description, e.g. a slogan."""
+
     section = general
     name = "description"
     default = "The Free School Information System"
@@ -38,6 +42,8 @@ class SiteDescription(StringPreference):
 
 @site_preferences_registry.register
 class ColourPrimary(StringPreference):
+    """Primary colour in AlekSIS frontend."""
+
     section = theme
     name = "primary"
     default = "#0d5eaf"
@@ -47,6 +53,8 @@ class ColourPrimary(StringPreference):
 
 @site_preferences_registry.register
 class ColourSecondary(StringPreference):
+    """Secondary colour in AlekSIS frontend."""
+
     section = theme
     name = "secondary"
     default = "#0d5eaf"
@@ -56,6 +64,8 @@ class ColourSecondary(StringPreference):
 
 @site_preferences_registry.register
 class Logo(FilePreference):
+    """Logo of your AlekSIS instance."""
+
     section = theme
     field_class = ImageField
     name = "logo"
@@ -64,6 +74,8 @@ class Logo(FilePreference):
 
 @site_preferences_registry.register
 class Favicon(FilePreference):
+    """Favicon of your AlekSIS instance."""
+
     section = theme
     field_class = ImageField
     name = "favicon"
@@ -72,6 +84,8 @@ class Favicon(FilePreference):
 
 @site_preferences_registry.register
 class PWAIcon(FilePreference):
+    """PWA-Icon"""
+
     section = theme
     field_class = ImageField
     name = "pwa_icon"
@@ -80,6 +94,8 @@ class PWAIcon(FilePreference):
 
 @site_preferences_registry.register
 class MailOutName(StringPreference):
+    """Mail out name"""
+
     section = mail
     name = "name"
     default = "AlekSIS"
@@ -89,6 +105,8 @@ class MailOutName(StringPreference):
 
 @site_preferences_registry.register
 class MailOut(StringPreference):
+    """Mail out address"""
+
     section = mail
     name = "address"
     default = settings.DEFAULT_FROM_EMAIL
@@ -99,6 +117,8 @@ class MailOut(StringPreference):
 
 @site_preferences_registry.register
 class PrivacyURL(StringPreference):
+    """Link to privacy policy"""
+
     section = footer
     name = "privacy_url"
     default = ""
@@ -109,6 +129,8 @@ class PrivacyURL(StringPreference):
 
 @site_preferences_registry.register
 class ImprintURL(StringPreference):
+    """Link to imprint"""
+
     section = footer
     name = "imprint_url"
     default = ""
@@ -119,6 +141,8 @@ class ImprintURL(StringPreference):
 
 @person_preferences_registry.register
 class AdressingNameFormat(ChoicePreference):
+    """User preference for adressing name format."""
+
     section = notification
     name = "addressing_name_format"
     default = "first_last"
@@ -132,6 +156,8 @@ class AdressingNameFormat(ChoicePreference):
 
 @person_preferences_registry.register
 class NotificationChannels(ChoicePreference):
+    """User preference for notification channels."""
+
     # FIXME should be a MultipleChoicePreference
     section = notification
     name = "channels"
@@ -143,6 +169,8 @@ class NotificationChannels(ChoicePreference):
 
 @site_preferences_registry.register
 class PrimaryGroupPattern(StringPreference):
+    """Regular expression to match primary group."""
+
     section = account
     name = "primary_group_pattern"
     default = ""
@@ -152,6 +180,8 @@ class PrimaryGroupPattern(StringPreference):
 
 @site_preferences_registry.register
 class PrimaryGroupField(ChoicePreference):
+    """Field on person to match primary group against."""
+
     section = account
     name = "primary_group_field"
     default = "name"
@@ -164,6 +194,8 @@ class PrimaryGroupField(ChoicePreference):
 
 @site_preferences_registry.register
 class SchoolName(StringPreference):
+    """Display name of the school."""
+
     section = school
     name = "name"
     default = ""
@@ -173,6 +205,8 @@ class SchoolName(StringPreference):
 
 @site_preferences_registry.register
 class SchoolNameOfficial(StringPreference):
+    """Official name of the school, e.g. as given by supervisory authority."""
+
     section = school
     name = "name_official"
     default = ""
