@@ -41,4 +41,3 @@ Search utillity
 ------------------------
 .. automodule:: aleksis.core.util.search
         :members:
-
