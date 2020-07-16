@@ -327,17 +327,16 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
     This mixin adds functionality which allows
     - apps to add layout nodes to the layout used by django-material
 
-    Add layout nodes
-    ================
+    :Add layout nodes:
+    
+    .. code-block:: python
 
-    ```
-    from material import Fieldset
+        from material import Fieldset
 
-    from aleksis.core.forms import ExampleForm
+        from aleksis.core.forms import ExampleForm
 
-    node = Fieldset("field_name")
-    ExampleForm.add_node_to_layout(node)
-    ```
+        node = Fieldset("field_name")
+        ExampleForm.add_node_to_layout(node)
 
     """
 
