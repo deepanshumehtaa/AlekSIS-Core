@@ -1,7 +1,7 @@
 Materialize templates
 ======================
 
-AlekSIS frontend uses with the `MaterializeCSS`_ framework.
+AlekSIS frontend uses the `MaterializeCSS`_ framework and the `django-material`_ library.
 
 Internationalization
 --------------------
@@ -23,6 +23,11 @@ following blocks to your template::
 
     {% block browser_title %}Title{% endblock %}
     {% block page_title %}Headline{% endblock %}
+
+To fully remove page or browser title, use these template tags::
+
+    {% block no_browser_title %}{% endblock %}
+    {% block no_page_title %}{% endblock %}
 
 Forms in templates
 ------------------
@@ -85,3 +90,4 @@ After you've loaded the template tag, you can simply generate the table like thi
 ``persons_table`` is the variable name of the table in your ``context``.
 
 .. _MaterializeCSS: https://materializecss.com/
+.. _django-material: https://pypi.org/project/django-material/
