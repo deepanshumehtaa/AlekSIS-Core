@@ -20,7 +20,6 @@ from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from dynamic_preferences.models import PerInstancePreferenceModel
-from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
@@ -79,7 +78,7 @@ class SchoolTerm(ExtensibleModel):
 
         qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
         if self.pk:
-            qs.exclude(pk=self.pk)
+            qs = qs.exclude(pk=self.pk)
         if qs.exists():
             raise ValidationError(
                 _("There is already a school term for this time or a part of this time.")
@@ -149,8 +148,7 @@ class Person(ExtensibleModel):
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
-    photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
+    photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
 
     guardians = models.ManyToManyField(
         "self",

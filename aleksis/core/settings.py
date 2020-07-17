@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     "django_yarnpkg",
     "django_tables2",
     "easy_thumbnails",
-    "image_cropping",
     "maintenance_mode",
     "menu_generator",
     "reversion",
@@ -157,12 +156,7 @@ TEMPLATES = [
     },
 ]
 
-THUMBNAIL_PROCESSORS = (
-    "image_cropping.thumbnail_processors.crop_corners",
-) + thumbnail_settings.THUMBNAIL_PROCESSORS
-
-# Already included by base template / Bootstrap
-IMAGE_CROPPING_JQUERY_URL = None
+THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 

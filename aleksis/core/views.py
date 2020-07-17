@@ -19,7 +19,7 @@ from haystack.views import SearchView
 from health_check.views import MainView
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
-from .filters import GroupFilter
+from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
@@ -143,8 +143,12 @@ def persons(request: HttpRequest) -> HttpResponse:
         request.user, "core.view_person", Person.objects.filter(is_active=True)
     )
 
+    # Get filter
+    persons_filter = PersonFilter(request.GET, queryset=persons)
+    context["persons_filter"] = persons_filter
+
     # Build table
-    persons_table = PersonsTable(persons)
+    persons_table = PersonsTable(persons_filter.qs)
     RequestConfig(request).configure(persons_table)
     context["persons_table"] = persons_table
 
@@ -210,8 +214,12 @@ def groups(request: HttpRequest) -> HttpResponse:
     # Get all groups
     groups = get_objects_for_user(request.user, "core.view_group", Group)
 
+    # Get filter
+    groups_filter = GroupFilter(request.GET, queryset=groups)
+    context["groups_filter"] = groups_filter
+
     # Build table
-    groups_table = GroupsTable(groups)
+    groups_table = GroupsTable(groups_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -285,22 +293,20 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if id_:
         # Edit form for existing group
-        edit_person_form = EditGroupForm(request.POST or None, instance=person)
+        edit_person_form = EditPersonForm(
+            request.POST or None, request.FILES or None, instance=person
+        )
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST or None)
+            edit_person_form = EditPersonForm(request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
-
     if request.method == "POST":
         if edit_person_form.is_valid():
             with reversion.create_revision():
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
-
-            # Redirect to self to ensure post-processed data is displayed
-            return redirect("edit_person_by_id", id_=person.id)
 
     context["edit_person_form"] = edit_person_form
 
