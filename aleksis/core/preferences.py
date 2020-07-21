@@ -191,5 +191,7 @@ class AuthenticationBackends(MultipleChoicePreference):
     section = auth
     name = "backends"
     default = None
-    choices = [(b, b) for b in settings.CUSTOM_AUTHENTICATION_BACKENDS]
     verbose_name = _("Enabled custom authentication backends")
+
+    def get_choices(self):
+        return [(b, b) for b in settings.CUSTOM_AUTHENTICATION_BACKENDS]

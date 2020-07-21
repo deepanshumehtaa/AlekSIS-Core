@@ -2,6 +2,7 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.conf import settings
+from django.db import ProgrammingError
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -51,15 +52,23 @@ class CoreConfig(AppConfig):
 
         self._refresh_authentication_backends()
 
-    def _refresh_authentication_backends(self):
+    @classmethod
+    def _refresh_authentication_backends(cls):
         """Refresh config list of enabled authentication backends."""
         from .preferences import AuthenticationBackends  # noqa
 
         idx = settings.AUTHENTICATION_BACKENDS.index("django.contrib.auth.backends.ModelBackend")
 
-        for backend in get_site_preferences()["auth__backends"]:
-            settings._wrapped.AUTHENTICATION_BACKENDS.insert(idx, backend)
-            idx += 1
+        try:
+            # Don't set array directly in order to keep object reference
+            settings._wrapped.AUTHENTICATION_BACKENDS.clear()
+            settings._wrapped.AUTHENTICATION_BACKENDS += settings.ORIGINAL_AUTHENTICATION_BACKENDS
+
+            for backend in get_site_preferences()["auth__backends"]:
+                settings._wrapped.AUTHENTICATION_BACKENDS.insert(idx, backend)
+                idx += 1
+        except ProgrammingError:
+            pass
 
     def preference_updated(
         self,

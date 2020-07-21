@@ -690,3 +690,5 @@ HEALTH_CHECK = {
     "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
     "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
 }
+
+ORIGINAL_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS[:]
