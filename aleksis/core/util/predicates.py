@@ -1,5 +1,6 @@
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Model
 from django.http import HttpRequest
 
@@ -57,17 +58,17 @@ def has_any_object(perm: str, klass):
     """Check if has any object.
 
     Build predicate which checks whether a user has access
-    to objects with the provided permission.
+    to objects with the provided permission or rule.
     """
     name = f"has_any_object:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:
-        return (
-            get_objects_for_user(user, perm, klass).exists()
-            or queryset_rules_filter(user, klass.objects.all(), perm).exists()
-        )
-
+        ct_perm = ContentType.objects.get(app_label=perm.split('.', 1)[0], permission__codename=perm.split('.', 1)[1])
+        if ct_perm and ct_perm.model_class() == klass:
+            return get_objects_for_user(user, perm, klass).exists()
+        else:
+            return queryset_rules_filter(user, klass.objects.all(), perm).exists()
     return fn
 
 
