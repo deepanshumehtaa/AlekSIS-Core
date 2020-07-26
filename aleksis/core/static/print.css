@@ -110,3 +110,22 @@ header .row, header .col {
         border: white;
     }
 }
+
+/* Some stuff for tables */
+
+table.small-print, td.small-print, th.small-print {
+    font-size: 10pt;
+}
+
+tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+td, th {
+    padding: 1px;
+}
+
+td.rotate, th.rotate {
+    text-align: center;
+    transform: rotate(-90deg);
+}
