@@ -4,20 +4,28 @@ from datetime import datetime
 from typing import Any, Callable, List, Optional, Tuple, Union
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import QuerySet
+from django.forms.forms import BaseForm
 from django.forms.models import ModelForm, ModelFormMetaclass
+from django.http import HttpResponse
 from django.utils.functional import lazy
+from django.utils.translation import gettext as _
+from django.views.generic import CreateView, UpdateView
+from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
 from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
-from jsonstore.fields import JSONField, JSONFieldMixin
+from jsonstore.fields import IntegerField, JSONField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
+
+from aleksis.core.managers import CurrentSiteManagerWithoutMigrations, SchoolTermRelatedQuerySet
 
 
 class _ExtensibleModelBase(models.base.ModelBase):
@@ -34,6 +42,8 @@ class _ExtensibleModelBase(models.base.ModelBase):
         if "Meta" not in attrs or not attrs["Meta"].abstract:
             # Register all non-abstract models with django-reversion
             mcls = reversion.register(mcls)
+
+            mcls.extra_permissions = []
 
         return mcls
 
@@ -91,6 +101,8 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     )
     objects = CurrentSiteManager()
     objects_all_sites = models.Manager()
+
+    extra_permissions = []
 
     def get_absolute_url(self) -> str:
         """Get the URL o a view representing this model instance."""
@@ -164,17 +176,17 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     @classmethod
     def property_(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a property."""
-        cls._safe_add(property(func), func.__name__)
+        cls._safe_add(property(func), name or func.__name__)
 
     @classmethod
     def method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a method."""
-        cls._safe_add(func, func.__name__)
+        cls._safe_add(func, name or func.__name__)
 
     @classmethod
     def class_method(cls, func: Callable[[], Any], name: Optional[str] = None) -> None:
         """Add the passed callable as a classmethod."""
-        cls._safe_add(classmethod(func), func.__name__)
+        cls._safe_add(classmethod(func), name or func.__name__)
 
     @classmethod
     def field(cls, **kwargs) -> None:
@@ -198,6 +210,66 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         cls._safe_add(field, name)
 
     @classmethod
+    def foreign_key(
+        cls,
+        field_name: str,
+        to: models.Model,
+        to_field: str = "pk",
+        to_field_type: JSONFieldMixin = IntegerField,
+        related_name: Optional[str] = None,
+    ) -> None:
+        """Add a virtual ForeignKey.
+
+        This works by storing the primary key (or any field passed in the to_field argument)
+        and adding a property that queries the desired model.
+
+        If the foreign model also is an ExtensibleModel, a reverse mapping is also added under
+        the related_name passed as argument, or this model's default related name.
+        """
+
+        id_field_name = f"{field_name}_id"
+        if related_name is None:
+            related_name = cls.Meta.default_related_name
+
+        # Add field to hold key to foreign model
+        id_field = to_field_type(blank=True, null=True)
+        cls.field(**{id_field_name: id_field})
+
+        @property
+        def _virtual_fk(self) -> Optional[models.Model]:
+            id_field_val = getattr(self, id_field_name)
+            if id_field_val:
+                try:
+                    return to.objects.get(**{to_field: id_field_val})
+                except to.DoesNotExist:
+                    # We found a stale foreign key
+                    setattr(self, id_field_name, None)
+                    self.save()
+                    return None
+            else:
+                return None
+
+        @_virtual_fk.setter
+        def _virtual_fk(self, value: Optional[models.Model] = None) -> None:
+            if value is None:
+                id_field_val = None
+            else:
+                id_field_val = getattr(value, to_field)
+            setattr(self, id_field_name, id_field_val)
+
+        # Add property to wrap get/set on foreign model instance
+        cls._safe_add(_virtual_fk, field_name)
+
+        # Add related property on foreign model instance if it provides such an interface
+        if hasattr(to, "_safe_add"):
+
+            def _virtual_related(self) -> models.QuerySet:
+                id_field_val = getattr(self, to_field)
+                return cls.objects.filter(**{id_field_name: id_field_val})
+
+            to.property_(_virtual_related, related_name)
+
+    @classmethod
     def syncable_fields(cls) -> List[models.Field]:
         """Collect all fields that can be synced on a model."""
         return [
@@ -217,6 +289,11 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
+
+    @classmethod
+    def add_permission(cls, name: str, verbose_name: str):
+        """Dynamically add a new permission to a model."""
+        cls.extra_permissions.append((name, verbose_name))
 
     class Meta:
         abstract = True
@@ -279,3 +356,73 @@ class BaseModelAdmin(GuardedModelAdmin, ObjectPermissionsModelAdmin):
     """A base class for ModelAdmin combining django-guardian and rules."""
 
     pass
+
+
+class SuccessMessageMixin(ModelFormMixin):
+    success_message: Optional[str] = None
+
+    def form_valid(self, form: BaseForm) -> HttpResponse:
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return super().form_valid(form)
+
+
+class AdvancedCreateView(CreateView, SuccessMessageMixin):
+    pass
+
+
+class AdvancedEditView(UpdateView, SuccessMessageMixin):
+    pass
+
+
+class AdvancedDeleteView(DeleteView):
+    """Common confirm view for deleting.
+
+    .. warning ::
+
+        Using this view, objects are deleted permanently after confirming.
+        We recommend to include the mixin :class:`reversion.views.RevisionMixin`
+        from `django-reversion` to enable soft-delete.
+    """
+    success_message: Optional[str] = None
+
+    def delete(self, request, *args, **kwargs):
+        r = super().delete(request, *args, **kwargs)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return r
+
+
+class SchoolTermRelatedExtensibleModel(ExtensibleModel):
+    """Add relation to school term."""
+
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermRelatedQuerySet)()
+
+    school_term = models.ForeignKey(
+        "core.SchoolTerm",
+        on_delete=models.CASCADE,
+        related_name="+",
+        verbose_name=_("Linked school term"),
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class SchoolTermRelatedExtensibleForm(ExtensibleForm):
+    """Extensible form for school term related data.
+
+    .. warning::
+        This doesn't automatically include the field `school_term` in `fields` or `layout`,
+        it just sets an initial value.
+    """
+
+    def __init__(self, *args, **kwargs):
+        from aleksis.core.models import SchoolTerm  # noqa
+
+        if "instance" not in kwargs:
+            kwargs["initial"] = {"school_term": SchoolTerm.current}
+
+        super().__init__(*args, **kwargs)

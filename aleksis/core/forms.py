@@ -9,8 +9,8 @@ from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
-from .mixins import ExtensibleForm
-from .models import AdditionalField, Announcement, Group, GroupType, Person
+from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
+from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolTerm
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -80,10 +80,7 @@ class EditPersonForm(ExtensibleForm):
         Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
         Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
         Fieldset(
-            _("Advanced personal data"),
-            Row("sex", "date_of_birth"),
-            Row("photo", "photo_cropping"),
-            "guardians",
+            _("Advanced personal data"), Row("sex", "date_of_birth"), Row("photo"), "guardians",
         ),
     )
 
@@ -106,11 +103,12 @@ class EditPersonForm(ExtensibleForm):
             "date_of_birth",
             "sex",
             "photo",
-            "photo_cropping",
             "guardians",
             "primary_group",
         ]
-        widgets = {"user": Select2Widget}
+        widgets = {
+            "user": Select2Widget,
+        }
 
     new_user = forms.CharField(
         required=False, label=_("New user"), help_text=_("Create a new account")
@@ -121,10 +119,11 @@ class EditPersonForm(ExtensibleForm):
         return PersonAccountForm.clean(self)
 
 
-class EditGroupForm(ExtensibleForm):
+class EditGroupForm(SchoolTermRelatedExtensibleForm):
     """Form to edit an existing group in the frontend."""
 
     layout = Layout(
+        Fieldset(_("School term"), "school_term"),
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
         Fieldset(_("Additional data"), "additional_fields"),
@@ -170,7 +169,7 @@ class AnnouncementForm(ExtensibleForm):
     persons = forms.ModelMultipleChoiceField(
         Person.objects.all(), label=_("Persons"), required=False
     )
-    groups = forms.ModelMultipleChoiceField(Group.objects.all(), label=_("Groups"), required=False)
+    groups = forms.ModelMultipleChoiceField(queryset=None, label=_("Groups"), required=False)
 
     layout = Layout(
         Fieldset(
@@ -204,6 +203,8 @@ class AnnouncementForm(ExtensibleForm):
             }
 
         super().__init__(*args, **kwargs)
+
+        self.fields["groups"].queryset = Group.objects.for_current_school_term_or_all()
 
     def clean(self):
         data = super().clean()
@@ -297,4 +298,14 @@ class EditGroupTypeForm(forms.ModelForm):
 
     class Meta:
         model = GroupType
+        exclude = []
+
+
+class SchoolTermForm(ExtensibleForm):
+    """Form for managing school years."""
+
+    layout = Layout("name", Row("date_start", "date_end"))
+
+    class Meta:
+        model = SchoolTerm
         exclude = []

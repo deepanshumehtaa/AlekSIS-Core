@@ -6,7 +6,7 @@
   <div class="container">
     <div class="card red">
       <div class="card-content white-text">
-        <div class="material-icons small">error_outline</div>
+        <div class="material-icons small left">error_outline</div>
         <span class="card-title">{% trans "Error" %} (500): {% blocktrans %}An unexpected error has
           occured.{% endblocktrans %}</span>
         <p>
@@ -15,7 +15,7 @@
             error. You can also contact them directly:
           {% endblocktrans %}
         </p>
-        {% include "core/admins_list.html" %}
+        {% include "core/partials/admins_list.html" %}
       </div>
     </div>
   </div>

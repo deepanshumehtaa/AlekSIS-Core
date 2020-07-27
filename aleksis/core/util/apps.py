@@ -1,4 +1,3 @@
-from importlib import import_module
 from typing import Any, List, Optional, Sequence, Tuple
 
 import django.apps
@@ -19,15 +18,6 @@ class AppConfig(django.apps.AppConfig):
     def ready(self):
         super().ready()
 
-        # Run model extension code
-        try:
-            import_module(
-                ".".join(self.__class__.__module__.split(".")[:-1] + ["model_extensions"])
-            )
-        except ImportError:
-            # ImportErrors are non-fatal because model extensions are optional.
-            pass
-
         # Register default listeners
         pre_migrate.connect(self.pre_migrate, sender=self)
         post_migrate.connect(self.post_migrate, sender=self)
@@ -37,13 +27,6 @@ class AppConfig(django.apps.AppConfig):
 
         # Getting an app ready means it should look at its config once
         self.preference_updated(self)
-
-        # Register system checks of this app
-        try:
-            import_module(".".join(self.__class__.__module__.split(".")[:-1] + ["checks"]))
-        except ImportError:
-            # ImportErrors are non-fatal because checks are optional.
-            pass
 
     @classmethod
     def get_name(cls):
@@ -206,6 +189,9 @@ class AppConfig(django.apps.AppConfig):
         pass
 
     def _maintain_default_data(self):
+        from django.contrib.auth.models import Permission
+        from django.contrib.contenttypes.models import ContentType
+
         if not self.models_module:
             # This app does not have any models, so bail out early
             return
@@ -214,3 +200,9 @@ class AppConfig(django.apps.AppConfig):
             if hasattr(model, "maintain_default_data"):
                 # Method implemented by each model object; can be left out
                 model.maintain_default_data()
+            if hasattr(model, "extra_permissions"):
+                ct = ContentType.objects.get_for_model(model)
+                for perm, verbose_name in model.extra_permissions:
+                    Permission.objects.get_or_create(
+                        codename=perm, content_type=ct, defaults={"name": verbose_name},
+                    )

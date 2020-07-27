@@ -8,21 +8,23 @@ from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.decorators import classproperty
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from dynamic_preferences.models import PerInstancePreferenceModel
-from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .mixins import ExtensibleModel, PureDjangoModel
+from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -41,6 +43,53 @@ FIELD_CHOICES = (
     ("TimeField", _("Time")),
     ("URLField", _("URL / Link")),
 )
+
+
+class SchoolTerm(ExtensibleModel):
+    """School term model.
+
+    This is used to manage start and end times of a school term and link data to it.
+    """
+
+    objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermQuerySet)()
+
+    name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
+
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
+
+    @classmethod
+    def get_current(cls, day: Optional[date] = None):
+        if not day:
+            day = timezone.now().date()
+        try:
+            return cls.objects.on_day(day).first()
+        except SchoolTerm.DoesNotExist:
+            return None
+
+    @classproperty
+    def current(cls):
+        return cls.get_current()
+
+    def clean(self):
+        """Ensure there is only one school term at each point of time."""
+        if self.date_end < self.date_start:
+            raise ValidationError(_("The start date must be earlier than the end date."))
+
+        qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
+        if self.pk:
+            qs = qs.exclude(pk=self.pk)
+        if qs.exists():
+            raise ValidationError(
+                _("There is already a school term for this time or a part of this time.")
+            )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("School term")
+        verbose_name_plural = _("School terms")
 
 
 class Person(ExtensibleModel):
@@ -99,8 +148,7 @@ class Person(ExtensibleModel):
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
-    photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
+    photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
 
     guardians = models.ManyToManyField(
         "self",
@@ -250,12 +298,15 @@ class AdditionalField(ExtensibleModel):
         verbose_name=_("Type of field"), choices=FIELD_CHOICES, max_length=50
     )
 
+    def __str__(self) -> str:
+        return self.title
+
     class Meta:
         verbose_name = _("Addtitional field for groups")
         verbose_name_plural = _("Addtitional fields for groups")
 
 
-class Group(ExtensibleModel):
+class Group(SchoolTermRelatedExtensibleModel):
     """Group model.
 
     Any kind of group of persons in a school, including, but not limited
@@ -267,12 +318,18 @@ class Group(ExtensibleModel):
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
         permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
+        constraints = [
+            models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
+            models.UniqueConstraint(
+                fields=["school_term", "short_name"], name="unique_school_term_short_name"
+            ),
+        ]
 
     icon_ = "group"
 
-    name = models.CharField(verbose_name=_("Long name"), max_length=255, unique=True)
+    name = models.CharField(verbose_name=_("Long name"), max_length=255)
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, unique=True, blank=True, null=True  # noqa
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
     )
 
     members = models.ManyToManyField(
@@ -302,7 +359,9 @@ class Group(ExtensibleModel):
         null=True,
         blank=True,
     )
-    additional_fields = models.ManyToManyField(AdditionalField, verbose_name=_("Additional fields"))
+    additional_fields = models.ManyToManyField(
+        AdditionalField, verbose_name=_("Additional fields"), blank=True
+    )
 
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
@@ -313,7 +372,10 @@ class Group(ExtensibleModel):
         return list(self.members.all()) + list(self.owners.all())
 
     def __str__(self) -> str:
-        return f"{self.name} ({self.short_name})"
+        if self.school_term:
+            return f"{self.name} ({self.short_name}) ({self.school_term})"
+        else:
+            return f"{self.name} ({self.short_name})"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -656,6 +718,9 @@ class GroupType(ExtensibleModel):
 
     name = models.CharField(verbose_name=_("Title of type"), max_length=50)
     description = models.CharField(verbose_name=_("Description"), max_length=500)
+
+    def __str__(self) -> str:
+        return self.name
 
     class Meta:
         verbose_name = _("Group type")

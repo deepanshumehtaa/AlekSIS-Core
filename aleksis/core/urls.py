@@ -9,23 +9,30 @@ from django.views.i18n import JavaScriptCatalog
 import calendarweek.django
 import debug_toolbar
 from django_js_reverse.views import urls_js
+from health_check.urls import urlpatterns as health_urls
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
+from .util.core_helpers import is_celery_enabled
 
 urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
-    path("status/", views.system_status, name="system_status"),
+    path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
+    path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
+    path("school_terms/<int:pk>/", views.SchoolTermEditView.as_view(), name="edit_school_term"),
     path("persons", views.persons, name="persons"),
     path("persons/accounts", views.persons_accounts, name="persons_accounts"),
     path("person", views.person, name="person"),
+    path("person/create", views.edit_person, name="create_person"),
     path("person/<int:id_>", views.person, name="person_by_id"),
     path("person/<int:id_>/edit", views.edit_person, name="edit_person_by_id"),
+    path("person/<int:id_>/delete", views.delete_person, name="delete_person_by_id"),
     path("groups", views.groups, name="groups"),
     path("groups/additional_fields", views.additional_fields, name="additional_fields"),
     path("groups/child_groups/", views.groups_child_groups, name="groups_child_groups"),
@@ -47,6 +54,7 @@ urlpatterns = [
     path("group/create", views.edit_group, name="create_group"),
     path("group/<int:id_>", views.group, name="group_by_id"),
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
+    path("group/<int:id_>/delete", views.delete_group, name="delete_group_by_id"),
     path("", views.index, name="index"),
     path(
         "notifications/mark-read/<int:id_>",
@@ -143,6 +151,7 @@ urlpatterns = [
         {"registry_name": "group"},
         name="preferences_group",
     ),
+    path("health/", include(health_urls)),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
@@ -162,6 +171,10 @@ if hasattr(settings, "TWILIO_ACCOUNT_SID"):
 if hasattr(settings, "AUTHLIB_OAUTH_CLIENTS"):
     urlpatterns += [path("oauth2/login", views.oauth_login, name="oauth_login")]
     urlpatterns += [path("oauth2/authorize", views.oauth_authorize, name="oauth_authorize")]
+
+# Add celery urls
+if is_celery_enabled():
+    urlpatterns.append(path("celery_progress/", include("celery_progress.urls")))
 
 # Serve javascript-common if in development
 if settings.DEBUG:

@@ -83,6 +83,17 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("School terms"),
+                    "url": "school_terms",
+                    "icon": "date_range",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_schoolterm",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Data management"),
                     "url": "data_management",
                     "icon": "view_list",

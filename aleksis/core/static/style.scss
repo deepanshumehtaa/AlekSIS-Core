@@ -258,6 +258,15 @@ ul.footer-ul {
   line-height: 36px;
 }
 
+// Language form in footer
+
+.language-field .select-dropdown {
+  @extend .white-text;
+}
+
+.language-field svg path:first-child {
+  fill: white;
+}
 
 /* Collections */
 
