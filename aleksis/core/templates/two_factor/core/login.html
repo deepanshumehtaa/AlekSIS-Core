@@ -16,14 +16,26 @@
         {% blocktrans %}You have no permission to view this page. Please login with an other account.{% endblocktrans %}
       </p>
     </div>
-  {% else %}
+  {% elif wizard.steps.current == 'auth' %}
     <div class="alert primary">
       <p>
         <i class="material-icons left">info</i>
 
-        {% if wizard.steps.current == 'auth' %}
-          {% blocktrans %}Please login to see this page.{% endblocktrans %}
-        {% elif wizard.steps.current == 'token' %}
+        {% blocktrans %}Please login to see this page.{% endblocktrans %}
+      </p>
+    </div>
+  {% endif %}
+
+  {% if wizard.steps.current == 'auth' and ALTERNATIVE_LOGIN_VIEWS %}
+    <h5>{% trans "Login with username and password" %}</h5>
+  {% endif %}
+
+  {% if not  wizard.steps.current == "auth" %}
+    <div class="alert primary">
+      <p>
+        <i class="material-icons left">info</i>
+
+        {% if wizard.steps.current == 'token' %}
           {% if device.method == 'call' %}
             {% blocktrans %}We are calling your phone right now, please enter the
               digits you hear.{% endblocktrans %}
@@ -70,7 +82,16 @@
       </p>
     {% endif %}
 
-    <button type="submit" class="btn green waves-effect waves-light">{% trans "Login" %}</button>
+    <button type="submit" class="btn green waves-effect waves-light">
+      {% trans "Login" %}
+      <i class="material-icons right">send</i>
+    </button>
 
   </form>
+
+  {% if wizard.steps.current == 'auth' and ALTERNATIVE_LOGIN_VIEWS %}
+    <h5>{% trans "Use alternative login options" %}</h5>
+    {% include "core/partials/alternative_login_options.html" %}
+  {% endif %}
+
 {% endblock %}
