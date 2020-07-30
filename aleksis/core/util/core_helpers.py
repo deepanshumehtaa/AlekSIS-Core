@@ -308,7 +308,7 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
     _, ext = os.path.splitext(filename)
 
     # set filename as random string
-    new_filename = f"{uuid4().hex}.{ext}"
+    new_filename = f"{uuid4().hex}{ext}"
 
     # Create upload directory if necessary
     os.makedirs(os.path.join(settings.MEDIA_ROOT, upload_to), exist_ok=True)
