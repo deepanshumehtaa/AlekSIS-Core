@@ -308,7 +308,7 @@ def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
     _, ext = os.path.splitext(filename)
 
     # set filename as random string
-    new_filename = f"{uuid4().hex}.{ext}"
+    new_filename = f"{uuid4().hex}{ext}"
 
     # Create upload directory if necessary
     os.makedirs(os.path.join(settings.MEDIA_ROOT, upload_to), exist_ok=True)
@@ -323,6 +323,14 @@ def custom_information_processor(request: HttpRequest) -> dict:
 
     return {
         "FOOTER_MENU": CustomMenu.get_default("footer"),
+        "ALTERNATIVE_LOGIN_VIEWS_LIST": [
+            a[0]
+            for a in settings.ALTERNATIVE_LOGIN_VIEWS
+            if a[0] in settings.AUTHENTICATION_BACKENDS
+        ],
+        "ALTERNATIVE_LOGIN_VIEWS": [
+            a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
+        ],
     }
 
 
