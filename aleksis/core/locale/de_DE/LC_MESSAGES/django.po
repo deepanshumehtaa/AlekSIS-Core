@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-02 16:29+0200\n"
-"PO-Revision-Date: 2020-05-04 15:09+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"PO-Revision-Date: 2020-08-02 14:44+0000\n"
+"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,16 +26,12 @@ msgid "Search"
 msgstr "Suchen"
 
 #: filters.py:53
-#, fuzzy
-#| msgid "Search Term"
 msgid "Search by name"
-msgstr "Suchausdruck"
+msgstr "Nach Namen suchen"
 
 #: filters.py:65
-#, fuzzy
-#| msgid "Can view contact details"
 msgid "Search by contact details"
-msgstr "Kann Kontaktdetails sehen"
+msgstr "Nach Kontaktdetails suchen"
 
 #: forms.py:46
 msgid "You cannot set a new username when also selecting an existing user."
@@ -82,10 +79,8 @@ msgid "Persons"
 msgstr "Personen"
 
 #: forms.py:129
-#, fuzzy
-#| msgid "Additional fields"
 msgid "Additional data"
-msgstr "Zusätzliche Felder"
+msgstr "Zusätzliche Datne"
 
 #: forms.py:163 forms.py:166 models.py:35
 msgid "Date"
@@ -222,10 +217,8 @@ msgid "Assign child groups to groups"
 msgstr "Kindgruppen zu Gruppen zuordnen"
 
 #: mixins.py:406
-#, fuzzy
-#| msgid "Edit school term"
 msgid "Linked school term"
-msgstr "Schuljahr bearbeiten"
+msgstr "Zugeordnetes Schuljahr"
 
 #: models.py:33
 msgid "Boolean (Yes/No)"
@@ -272,24 +265,21 @@ msgid "Name"
 msgstr "Name"
 
 #: models.py:58
-#, fuzzy
-#| msgid "Contact data"
 msgid "Start date"
-msgstr "Kontaktdaten"
+msgstr "Startdatum"
 
 #: models.py:59
 msgid "End date"
-msgstr ""
+msgstr "Enddatum"
 
 #: models.py:77
-#, fuzzy
-#| msgid "The from date and time must be earlier then the until date and time."
 msgid "The start date must be earlier than the end date."
-msgstr "Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit sein."
+msgstr "Das Startdatum muss vor dem Enddatum liegen."
 
 #: models.py:84
 msgid "There is already a school term for this time or a part of this time."
 msgstr ""
+"Es gibt bereits ein Schuljahr für diesen Zeitraum oder einen Teilzeitraum."
 
 #: models.py:104 templates/core/person/accounts.html:36
 msgid "Person"
@@ -598,10 +588,8 @@ msgid "Can change group preferences"
 msgstr "Kann Einstellungen einer Gruppe verändern"
 
 #: preferences.py:24
-#, fuzzy
-#| msgid "Application"
 msgid "Authentication"
-msgstr "Anwendung"
+msgstr "Authentifizierung"
 
 #: preferences.py:33
 msgid "Site title"
@@ -672,10 +660,8 @@ msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
 #: preferences.py:194
-#, fuzzy
-#| msgid "Enable Two-Factor Authentication"
 msgid "Enabled custom authentication backends"
-msgstr "Zwei-Faktor-Authentifizierung aktivieren"
+msgstr "Benutzerdefinierte Authentifizierungsbackends aktivieren"
 
 #: settings.py:300
 msgid "English"
@@ -792,16 +778,12 @@ msgstr ""
 
 #: templates/core/additional_field/edit.html:6
 #: templates/core/additional_field/edit.html:7
-#, fuzzy
-#| msgid "Additional fields"
 msgid "Edit additional field"
-msgstr "Zusätzliche Felder"
+msgstr "Zusätzliches Feld bearbeiten"
 
 #: templates/core/additional_field/list.html:14
-#, fuzzy
-#| msgid "Additional fields"
 msgid "Create additional field"
-msgstr "Zusätzliche Felder"
+msgstr "Zusätzliches Feld erstellen"
 
 #: templates/core/announcement/form.html:10
 #: templates/core/announcement/form.html:17
@@ -954,32 +936,24 @@ msgid "Create group"
 msgstr "Gruppe erstellen"
 
 #: templates/core/group/list.html:17
-#, fuzzy
-#| msgid "Edit group"
 msgid "Filter groups"
-msgstr "Gruppe editieren"
+msgstr "Gruppen filtern"
 
 #: templates/core/group/list.html:24 templates/core/person/list.html:28
 msgid "Clear"
-msgstr ""
+msgstr "Zurücksetzen"
 
 #: templates/core/group/list.html:28
-#, fuzzy
-#| msgid "Currently selected groups"
 msgid "Selected groups"
-msgstr "Aktuell ausgewählte Gruppen"
+msgstr "Ausgewählte Gruppen"
 
 #: templates/core/group_type/edit.html:6 templates/core/group_type/edit.html:7
-#, fuzzy
-#| msgid "Edit group"
 msgid "Edit group type"
-msgstr "Gruppe editieren"
+msgstr "Gruppentyp editieren"
 
 #: templates/core/group_type/list.html:14
-#, fuzzy
-#| msgid "Create group"
 msgid "Create group type"
-msgstr "Gruppe erstellen"
+msgstr "Gruppentyp erstellen"
 
 #: templates/core/index.html:4
 msgid "Home"
@@ -1083,7 +1057,7 @@ msgstr ""
 #: templates/core/pages/delete.html:6
 #, python-format
 msgid "Delete %(object_name)s"
-msgstr ""
+msgstr "%(object_name)s löschen"
 
 #: templates/core/pages/delete.html:13
 #, python-format
@@ -1092,6 +1066,9 @@ msgid ""
 "      Do you really want to delete the %(object_name)s \"%(object)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"      Möchten Sie wirklich %(object_name)s \"%(object)s\" löschen?\n"
+"    "
 
 #: templates/core/pages/offline.html:6
 msgid ""
@@ -1121,6 +1098,10 @@ msgid ""
 "              Without activated JavaScript the progress status can't be updated.\n"
 "            "
 msgstr ""
+"\n"
+"              Ohne aktiviertes JavaScript kann der Fortschritt leider nicht "
+"aktualisiert werden.\n"
+"            "
 
 #: templates/core/pages/progress.html:47
 #: templates/two_factor/core/otp_required.html:19
@@ -1182,47 +1163,41 @@ msgstr ""
 "              "
 
 #: templates/core/pages/system_status.html:69
-#, fuzzy
-#| msgid "System checks"
 msgid "System health checks"
 msgstr "Systemprüfungen"
 
 #: templates/core/pages/system_status.html:75
 msgid "Service"
-msgstr ""
+msgstr "Dienst"
 
 #: templates/core/pages/system_status.html:76
 #: templates/core/pages/system_status.html:115
-#, fuzzy
-#| msgid "System status"
 msgid "Status"
-msgstr "Systemstatus"
+msgstr "Status"
 
 #: templates/core/pages/system_status.html:77
 msgid "Time taken"
-msgstr ""
+msgstr "Dauer"
 
 #: templates/core/pages/system_status.html:96
 msgid "seconds"
-msgstr ""
+msgstr "Sekunden"
 
 #: templates/core/pages/system_status.html:107
 msgid "Celery task results"
-msgstr ""
+msgstr "Celery Task-Ergebnisse"
 
 #: templates/core/pages/system_status.html:112
 msgid "Task"
-msgstr ""
+msgstr "Task"
 
 #: templates/core/pages/system_status.html:113
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: templates/core/pages/system_status.html:114
-#, fuzzy
-#| msgid "Date and time"
 msgid "Date done"
-msgstr "Datum und Uhrzeit"
+msgstr "Erledigungszeitpunkt"
 
 #: templates/core/partials/announcements.html:9
 #: templates/core/partials/announcements.html:36
@@ -1259,50 +1234,38 @@ msgstr ""
 "            "
 
 #: templates/core/partials/crud_events.html:10
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "              Valid for %(from)s\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "              Created by %(person)s\n"
 "            "
 msgstr ""
 "\n"
-"              Gültig für %(from)s\n"
+"              Erstellt von %(person)s\n"
 "            "
 
 #: templates/core/partials/crud_events.html:14
 #: templates/core/partials/crud_events.html:22
 #: templates/core/partials/crud_events.html:26
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "              Valid for %(from)s\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "              Updated by %(person)s\n"
 "            "
 msgstr ""
 "\n"
-"              Gültig für %(from)s\n"
+"              Aktualisiert von %(person)s\n"
 "            "
 
 #: templates/core/partials/crud_events.html:18
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "              Valid for %(from)s\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "              Deleted by %(person)s\n"
 "            "
 msgstr ""
 "\n"
-"              Gültig für %(from)s\n"
+"              Gelöscht von %(person)s\n"
 "            "
 
 #: templates/core/partials/language_form.html:16
@@ -1310,10 +1273,8 @@ msgid "Language"
 msgstr "Sprache"
 
 #: templates/core/partials/language_form.html:28
-#, fuzzy
-#| msgid "Language"
 msgid "Select language"
-msgstr "Sprache"
+msgstr "Sprache auswählen"
 
 #: templates/core/partials/no_person.html:12
 msgid ""
@@ -1384,31 +1345,25 @@ msgstr "Kontaktdetails"
 
 #: templates/core/person/full.html:122
 msgid "Children"
-msgstr ""
+msgstr "Kinder"
 
 #: templates/core/person/list.html:17
-#, fuzzy
-#| msgid "Create group"
 msgid "Create person"
-msgstr "Gruppe erstellen"
+msgstr "Person erstellen"
 
 #: templates/core/person/list.html:21
-#, fuzzy
-#| msgid "Edit person"
 msgid "Filter persons"
-msgstr "Person editieren"
+msgstr "Personen filtern"
 
 #: templates/core/person/list.html:32
 msgid "Selected persons"
-msgstr ""
+msgstr "Ausgewählte Personen"
 
 #: templates/core/school_term/create.html:6
 #: templates/core/school_term/create.html:7
 #: templates/core/school_term/list.html:14
-#, fuzzy
-#| msgid "Edit school term"
 msgid "Create school term"
-msgstr "Schuljahr bearbeiten"
+msgstr "Schuljahr erstellen"
 
 #: templates/core/school_term/edit.html:6
 #: templates/core/school_term/edit.html:7
@@ -1466,10 +1421,9 @@ msgstr "Neue Benachrichtigung für"
 
 #: templates/templated_email/notification.email:6
 #: templates/templated_email/notification.email:27
-#, fuzzy, python-format
-#| msgid "Recent notifications"
+#, python-format
 msgid "Dear %(notification_user)s,"
-msgstr "Letzte Benachrichtigungen"
+msgstr "Liebe(r) %(notification_user)s,"
 
 #: templates/templated_email/notification.email:8
 #: templates/templated_email/notification.email:29
@@ -1482,49 +1436,31 @@ msgid "More information"
 msgstr "Mehr Informationen"
 
 #: templates/templated_email/notification.email:18
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    <p>By %(trans_sender)s at %(trans_created_at)s</p>\n"
-#| "\n"
-#| "    <i>Your AlekSIS team</i>\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "        Sent by %(trans_sender)s at %(trans_created_at)s\n"
 "    "
 msgstr ""
 "\n"
-"    <p>Von %(trans_sender)s um %(trans_created_at)s</p>\n"
-"\n"
-"    <i>Ihr AlekSIS-Team</i>\n"
+"        Von %(trans_sender)s um %(trans_created_at)s\n"
 "    "
 
 #: templates/templated_email/notification.email:22
 #: templates/templated_email/notification.email:46
-#, fuzzy
-#| msgid "About AlekSIS"
 msgid "Your AlekSIS team"
-msgstr "Über AlekSIS"
+msgstr "Ihr AlekSIS-Team"
 
 #: templates/templated_email/notification.email:40
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    <p>By %(trans_sender)s at %(trans_created_at)s</p>\n"
-#| "\n"
-#| "    <i>Your AlekSIS team</i>\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "            Sent by %(trans_sender)s at %(trans_created_at)s\n"
 "        "
 msgstr ""
 "\n"
-"    <p>Von %(trans_sender)s um %(trans_created_at)s</p>\n"
-"\n"
-"    <i>Ihr AlekSIS-Team</i>\n"
-"    "
+"            Von %(trans_sender)s um %(trans_created_at)s\n"
+"        "
 
 #: templates/two_factor/_base_focus.html:6
 #: templates/two_factor/core/otp_required.html:22
@@ -1592,7 +1528,7 @@ msgstr "Bitte melden Sie sich an, um diese Seite zu sehen."
 
 #: templates/two_factor/core/login.html:30
 msgid "Login with username and password"
-msgstr ""
+msgstr "Anmeldung mit Nutzername und Passwort"
 
 #: templates/two_factor/core/login.html:40
 msgid ""
@@ -1642,7 +1578,7 @@ msgstr "Backup-Token nutzen"
 
 #: templates/two_factor/core/login.html:93
 msgid "Use alternative login options"
-msgstr ""
+msgstr "Alternative Anmeldemöglichkeiten nutzen"
 
 #: templates/two_factor/core/otp_required.html:9
 msgid "Permission Denied"
@@ -1962,16 +1898,12 @@ msgid "SMS"
 msgstr "SMS"
 
 #: views.py:122
-#, fuzzy
-#| msgid "The school has been saved."
 msgid "The school term has been created."
-msgstr "Die Schule wurde gespeichert."
+msgstr "Das Schuljahr wurde erstellt."
 
 #: views.py:133
-#, fuzzy
-#| msgid "The school has been saved."
 msgid "The school term has been saved."
-msgstr "Die Schule wurde gespeichert."
+msgstr "Das Schuljahr wurde gespeichert."
 
 #: views.py:273
 msgid "The child groups were successfully saved."
@@ -1998,40 +1930,28 @@ msgid "The preferences have been saved successfully."
 msgstr "Die Einstellungen wurde gespeichert."
 
 #: views.py:544
-#, fuzzy
-#| msgid "The person has been saved."
 msgid "The person has been deleted."
-msgstr "Die Person wurde gespeichert."
+msgstr "Die Person wurde gelöscht."
 
 #: views.py:557
-#, fuzzy
-#| msgid "The group has been saved."
 msgid "The group has been deleted."
-msgstr "Die Gruppe wurde gespeichert."
+msgstr "Die Gruppe wurde gelöscht."
 
 #: views.py:588
-#, fuzzy
-#| msgid "The term has been saved."
 msgid "The additional_field has been saved."
-msgstr "Das Schuljahr wurde gespeichert."
+msgstr "Das zusätzliche Feld wurde gespeichert."
 
 #: views.py:622
-#, fuzzy
-#| msgid "The announcement has been deleted."
 msgid "The additional field has been deleted."
-msgstr "Ankündigung wurde gelöscht."
+msgstr "Das zusätzliche Feld wurde gelöscht."
 
 #: views.py:646
-#, fuzzy
-#| msgid "The group has been saved."
 msgid "The group type has been saved."
-msgstr "Die Gruppe wurde gespeichert."
+msgstr "Der Gruppentyp wurde gespeichert."
 
 #: views.py:676
-#, fuzzy
-#| msgid "The group has been saved."
 msgid "The group type has been deleted."
-msgstr "Die Gruppe wurde gespeichert."
+msgstr "Der Gruppentyp wurde gelöscht."
 
 #~ msgid "Dear"
 #~ msgstr "Sehr geehrter"
