@@ -9,7 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -456,7 +456,7 @@ class Notification(ExtensibleModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            send_notification(self.pk, resend=True)
+            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
         self.sent = True
         super().save(**kwargs)
 
