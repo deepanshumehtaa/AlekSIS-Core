@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-02 16:29+0200\n"
-"PO-Revision-Date: 2020-08-02 14:44+0000\n"
+"PO-Revision-Date: 2020-08-02 15:00+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
@@ -1428,7 +1428,7 @@ msgstr "Liebe(r) %(notification_user)s,"
 #: templates/templated_email/notification.email:8
 #: templates/templated_email/notification.email:29
 msgid "we got a new notification for you:"
-msgstr "Wir haben eine neue Benachrichtigung für Sie:"
+msgstr "wir haben eine neue Benachrichtigung für Sie:"
 
 #: templates/templated_email/notification.email:15
 #: templates/templated_email/notification.email:35
@@ -1443,7 +1443,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Von %(trans_sender)s um %(trans_created_at)s\n"
+"        Von %(trans_sender)s am %(trans_created_at)s\n"
 "    "
 
 #: templates/templated_email/notification.email:22
