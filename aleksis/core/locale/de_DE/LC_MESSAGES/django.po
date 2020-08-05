@@ -676,8 +676,8 @@ msgid "French"
 msgstr "Französisch"
 
 #: settings.py:303
-msgid "Norsk (bokmål)"
-msgstr ""
+msgid "Norwegian (bokmål)"
+msgstr "Norwegisch (bokmål)"
 
 #: tables.py:19 templates/core/announcement/list.html:36
 #: templates/core/group/full.html:23 templates/core/person/full.html:22

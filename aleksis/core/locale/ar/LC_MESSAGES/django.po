@@ -674,7 +674,7 @@ msgid "French"
 msgstr ""
 
 #: settings.py:303
-msgid "Norsk (bokmål)"
+msgid "Norwegian (bokmål)"
 msgstr ""
 
 #: tables.py:19 templates/core/announcement/list.html:36
