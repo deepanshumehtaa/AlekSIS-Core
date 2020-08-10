@@ -64,7 +64,10 @@ def has_any_object(perm: str, klass):
 
     @predicate(name)
     def fn(user: User) -> bool:
-        ct_perm = ContentType.objects.get(app_label=perm.split('.', 1)[0], permission__codename=perm.split('.', 1)[1])
+        try:
+            ct_perm = ContentType.objects.get(app_label=perm.split('.', 1)[0], permission__codename=perm.split('.', 1)[1])
+        except ContentType.DoesNotExist:
+            ct_perm = None
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
         else:
