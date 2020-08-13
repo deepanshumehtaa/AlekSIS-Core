@@ -1084,18 +1084,15 @@ description = "flake8 plugin that integrates isort ."
 name = "flake8-isort"
 optional = false
 python-versions = "*"
-version = "3.0.0"
+version = "4.0.0"
 
 [package.dependencies]
-flake8 = ">=3.2.1"
-testfixtures = "*"
-
-[package.dependencies.isort]
-extras = ["pyproject"]
-version = ">=4.3.5"
+flake8 = ">=3.2.1,<4"
+isort = ">=4.3.5,<6"
+testfixtures = ">=6.8.0,<7"
 
 [package.extras]
-test = ["pytest"]
+test = ["pytest (>=4.0.2,<6)", "toml"]
 
 [[package]]
 category = "dev"
@@ -2154,7 +2151,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "c8c6c8720cf5493adfea9b718feb249d200e295d42071f7f2663a37811e707e5"
+content-hash = "76019828f263a5848b086293108ffe885208cfc930cf13d63abcb643166bc270"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -2521,8 +2518,8 @@ flake8-fixme = [
     {file = "flake8_fixme-1.1.1-py2.py3-none-any.whl", hash = "sha256:226a6f2ef916730899f29ac140bed5d4a17e5aba79f00a0e3ae1eff1997cb1ac"},
 ]
 flake8-isort = [
-    {file = "flake8-isort-3.0.0.tar.gz", hash = "sha256:3ce227b5c5342b6d63937d3863e8de8783ae21863cb035cf992cdb0ba5990aa3"},
-    {file = "flake8_isort-3.0.0-py2.py3-none-any.whl", hash = "sha256:f5322a85cea89998e0df954162fd35a1f1e5b5eb4fc0c79b5975aa2799106baa"},
+    {file = "flake8-isort-4.0.0.tar.gz", hash = "sha256:2b91300f4f1926b396c2c90185844eb1a3d5ec39ea6138832d119da0a208f4d9"},
+    {file = "flake8_isort-4.0.0-py2.py3-none-any.whl", hash = "sha256:729cd6ef9ba3659512dee337687c05d79c78e1215fdf921ed67e5fe46cce2f3c"},
 ]
 flake8-mypy = [
     {file = "flake8-mypy-17.8.0.tar.gz", hash = "sha256:47120db63aff631ee1f84bac6fe8e64731dc66da3efc1c51f85e15ade4a3ba18"},
@@ -2704,6 +2701,8 @@ pillow = [
     {file = "Pillow-7.2.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:5e51ee2b8114def244384eda1c82b10e307ad9778dac5c83fb0943775a653cd8"},
     {file = "Pillow-7.2.0-cp38-cp38-win32.whl", hash = "sha256:725aa6cfc66ce2857d585f06e9519a1cc0ef6d13f186ff3447ab6dff0a09bc7f"},
     {file = "Pillow-7.2.0-cp38-cp38-win_amd64.whl", hash = "sha256:a060cf8aa332052df2158e5a119303965be92c3da6f2d93b6878f0ebca80b2f6"},
+    {file = "Pillow-7.2.0-pp36-pypy36_pp73-macosx_10_10_x86_64.whl", hash = "sha256:9c87ef410a58dd54b92424ffd7e28fd2ec65d2f7fc02b76f5e9b2067e355ebf6"},
+    {file = "Pillow-7.2.0-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:e901964262a56d9ea3c2693df68bc9860b8bdda2b04768821e4c44ae797de117"},
     {file = "Pillow-7.2.0-pp36-pypy36_pp73-win32.whl", hash = "sha256:25930fadde8019f374400f7986e8404c8b781ce519da27792cbe46eabec00c4d"},
     {file = "Pillow-7.2.0.tar.gz", hash = "sha256:97f9e7953a77d5a70f49b9a48da7776dc51e9b738151b22dacf101641594a626"},
 ]
