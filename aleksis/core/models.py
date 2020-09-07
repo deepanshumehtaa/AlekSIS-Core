@@ -19,6 +19,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
+from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
@@ -64,6 +65,7 @@ class SchoolTerm(ExtensibleModel):
     date_end = models.DateField(verbose_name=_("End date"))
 
     @classmethod
+    @cache_memoize(3600)
     def get_current(cls, day: Optional[date] = None):
         if not day:
             day = timezone.now().date()
@@ -688,9 +690,10 @@ class CustomMenu(ExtensibleModel):
         return self.name if self.name != "" else self.id
 
     @classmethod
+    @cache_memoize(3600)
     def get_default(cls, name):
         """Get a menu by name or create if it does not exist."""
-        menu, _ = cls.objects.get_or_create(name=name)
+        menu, _ = cls.objects.prefetch_related("items").get_or_create(name=name)
         return menu
 
     class Meta:

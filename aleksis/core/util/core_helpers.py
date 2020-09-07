@@ -135,6 +135,7 @@ def lazy_get_favicon_url(
 ) -> Callable[[str, str], Any]:
     """Lazily get the URL to a favicon image."""
 
+    @cache_memoize(3600)
     def _get_favicon_url(size: int, rel: str) -> Any:
         from favicon.models import Favicon  # noqa
 
