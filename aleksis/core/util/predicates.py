@@ -9,8 +9,9 @@ from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
-from .core_helpers import get_site_preferences, queryset_rules_filter
+from .core_helpers import get_site_preferences
 from .core_helpers import has_person as has_person_helper
+from .core_helpers import queryset_rules_filter
 
 
 def permission_validator(request: HttpRequest, perm: str) -> bool:
@@ -65,13 +66,16 @@ def has_any_object(perm: str, klass):
     @predicate(name)
     def fn(user: User) -> bool:
         try:
-            ct_perm = ContentType.objects.get(app_label=perm.split('.', 1)[0], permission__codename=perm.split('.', 1)[1])
+            ct_perm = ContentType.objects.get(
+                app_label=perm.split(".", 1)[0], permission__codename=perm.split(".", 1)[1]
+            )
         except ContentType.DoesNotExist:
             ct_perm = None
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
         else:
             return queryset_rules_filter(user, klass.objects.all(), perm).exists()
+
     return fn
 
 

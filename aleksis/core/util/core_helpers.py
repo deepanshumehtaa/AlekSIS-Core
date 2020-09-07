@@ -15,9 +15,8 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 
-from django_global_request.middleware import get_request
-
 from cache_memoize import cache_memoize
+from django_global_request.middleware import get_request
 
 from aleksis.core.util import messages
 
