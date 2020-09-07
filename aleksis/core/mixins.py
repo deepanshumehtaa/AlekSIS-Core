@@ -384,6 +384,7 @@ class AdvancedDeleteView(DeleteView):
         We recommend to include the mixin :class:`reversion.views.RevisionMixin`
         from `django-reversion` to enable soft-delete.
     """
+
     success_message: Optional[str] = None
 
     def delete(self, request, *args, **kwargs):
