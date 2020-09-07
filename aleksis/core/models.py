@@ -23,7 +23,12 @@ from dynamic_preferences.models import PerInstancePreferenceModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .managers import (
+    CurrentSiteManagerWithoutMigrations,
+    GroupManager,
+    GroupQuerySet,
+    SchoolTermQuerySet,
+)
 from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
@@ -312,6 +317,8 @@ class Group(SchoolTermRelatedExtensibleModel):
     Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
+
+    objects = GroupManager.from_queryset(GroupQuerySet)()
 
     class Meta:
         ordering = ["short_name", "name"]
