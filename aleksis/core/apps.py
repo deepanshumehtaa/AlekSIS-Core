@@ -14,7 +14,7 @@ from .registries import (
     site_preferences_registry,
 )
 from .util.apps import AppConfig
-from .util.core_helpers import get_site_preferences, has_person, lazy_preference
+from .util.core_helpers import get_site_preferences, has_person
 from .util.sass_helpers import clean_scss
 
 

@@ -365,7 +365,6 @@ def queryset_rules_filter(
     obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str
 ) -> QuerySet:
     """Filter queryset by user and permission."""
-
     wanted_objects = set()
     if isinstance(obj, HttpRequest) and hasattr(obj, "user"):
         obj = obj.user
