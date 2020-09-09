@@ -79,3 +79,15 @@ class SchoolTermRelatedQuerySet(QuerySet):
             return self.for_school_term(current_school_term)
         else:
             return None
+
+
+class GroupManager(CurrentSiteManagerWithoutMigrations):
+    """Manager adding specific methods to groups."""
+
+    def get_queryset(self):
+        """Ensure all related data is loaded as well."""
+        return super().get_queryset().select_related("school_term")
+
+
+class GroupQuerySet(SchoolTermRelatedQuerySet):
+    pass

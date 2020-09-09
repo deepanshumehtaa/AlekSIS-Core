@@ -208,7 +208,7 @@ if _settings.get("ldap.uri", None):
         NestedGroupOfNamesType,
         NestedGroupOfUniqueNamesType,
         PosixGroupType,
-    )  # noqa
+    )
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -413,6 +413,8 @@ DBBACKUP_COMPRESS_DB = _settings.get("backup.database.compress", True)
 DBBACKUP_ENCRYPT_DB = _settings.get("backup.database.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
 DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+DBBACKUP_CLEANUP_DB = _settings.get("backup.database.clean", True)
+DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
