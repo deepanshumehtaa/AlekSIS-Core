@@ -37,7 +37,7 @@ django-middleware-global-request = "^0.1.2"
 django-menu-generator = "^1.0.4"
 django-tables2 = "^2.1"
 Pillow = "^7.0"
-django-phonenumber-field = {version = ">=3.0, <4.0", extras = ["phonenumbers"]}
+django-phonenumber-field = {version = "<5.1", extras = ["phonenumbers"]}
 django-sass-processor = "^0.8"
 libsass = "^0.20.0"
 colour = "^0.1.5"
