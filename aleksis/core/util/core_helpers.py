@@ -15,9 +15,8 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 
-from django_global_request.middleware import get_request
-
 from cache_memoize import cache_memoize
+from django_global_request.middleware import get_request
 
 from aleksis.core.util import messages
 
@@ -135,6 +134,7 @@ def lazy_get_favicon_url(
 ) -> Callable[[str, str], Any]:
     """Lazily get the URL to a favicon image."""
 
+    @cache_memoize(3600)
     def _get_favicon_url(size: int, rel: str) -> Any:
         from favicon.models import Favicon  # noqa
 
@@ -366,7 +366,6 @@ def queryset_rules_filter(
     obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str
 ) -> QuerySet:
     """Filter queryset by user and permission."""
-
     wanted_objects = set()
     if isinstance(obj, HttpRequest) and hasattr(obj, "user"):
         obj = obj.user
