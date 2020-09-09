@@ -233,7 +233,7 @@ description = "Drop in, configurable, dependency-free progress bars for your Dja
 name = "celery-progress"
 optional = false
 python-versions = "*"
-version = "0.0.10"
+version = "0.0.12"
 
 [package.extras]
 rabbitmq = ["channels-rabbitmq"]
@@ -443,7 +443,7 @@ description = "Django admin CKEditor integration."
 name = "django-ckeditor"
 optional = false
 python-versions = "*"
-version = "5.9.0"
+version = "6.0.0"
 
 [package.dependencies]
 django-js-asset = ">=1.2.2"
@@ -2147,7 +2147,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 ldap = ["django-auth-ldap"]
 
 [metadata]
-content-hash = "085814af855400d8b0c8bd4694604a7a50566a34aee668a6a605b7961830944f"
+content-hash = "c914df99dc2cd3722b54f635d716e498ff7da050a867e85b9e85a8e5fae9949e"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -2218,8 +2218,8 @@ celery-haystack = [
     {file = "celery_haystack-0.10-py2.py3-none-any.whl", hash = "sha256:ec1f39050661e033f554de99cb9393c2e94427667ff5401f16393b2a68f888fc"},
 ]
 celery-progress = [
-    {file = "celery-progress-0.0.10.tar.gz", hash = "sha256:3f7b35e1e6c79eec38f5647b024aa74193d0a41d5b47ecbb85b66f9ca68d5261"},
-    {file = "celery_progress-0.0.10-py3-none-any.whl", hash = "sha256:90941bf3aaeac9333d554a2191fa6cd81ef323472329ace0dd77344ac6aab092"},
+    {file = "celery-progress-0.0.12.tar.gz", hash = "sha256:df61d61ac2b29e51b61a2cbd070d28b69f9f538d31e5f4b8076d9721251d6c59"},
+    {file = "celery_progress-0.0.12-py3-none-any.whl", hash = "sha256:b3727b1b65c79ec072513eb42f1903eaec64a75d2f691b5664fa660f2bd319ad"},
 ]
 certifi = [
     {file = "certifi-2020.6.20-py2.py3-none-any.whl", hash = "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"},
@@ -2324,8 +2324,8 @@ django-celery-results = [
     {file = "django_celery_results-1.2.1.tar.gz", hash = "sha256:e390f70cc43bbc2cd7c8e4607dc29ab6211a2ab968f93677583f0160921f670c"},
 ]
 django-ckeditor = [
-    {file = "django-ckeditor-5.9.0.tar.gz", hash = "sha256:e4d112851a72c5bf8b586e1c674d34084cab16d28f2553ad15cc770d1e9639c7"},
-    {file = "django_ckeditor-5.9.0-py2.py3-none-any.whl", hash = "sha256:71c3c7bb46b0cbfb9712ef64af0d2a406eab233f44ecd7c42c24bdfa39ae3bde"},
+    {file = "django-ckeditor-6.0.0.tar.gz", hash = "sha256:29fd1a333cb9741ac2c3fd4e427a5c00115ed33a2389716a09af7656022dcdde"},
+    {file = "django_ckeditor-6.0.0-py2.py3-none-any.whl", hash = "sha256:cc2d377f1bdcd4ca1540caeebe85f7e2cd006198d57328ef6c718d3eaa5a0846"},
 ]
 django-colorfield = [
     {file = "django-colorfield-0.3.2.tar.gz", hash = "sha256:f5dde281f4db8871eb5845aee614b4f1a47e7fd5b20476238793f519cd7bdf41"},
