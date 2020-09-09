@@ -19,11 +19,17 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
+from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .managers import (
+    CurrentSiteManagerWithoutMigrations,
+    GroupManager,
+    GroupQuerySet,
+    SchoolTermQuerySet,
+)
 from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
@@ -59,6 +65,7 @@ class SchoolTerm(ExtensibleModel):
     date_end = models.DateField(verbose_name=_("End date"))
 
     @classmethod
+    @cache_memoize(3600)
     def get_current(cls, day: Optional[date] = None):
         if not day:
             day = timezone.now().date()
@@ -312,6 +319,8 @@ class Group(SchoolTermRelatedExtensibleModel):
     Any kind of group of persons in a school, including, but not limited
     classes, clubs, and the like.
     """
+
+    objects = GroupManager.from_queryset(GroupQuerySet)()
 
     class Meta:
         ordering = ["short_name", "name"]
@@ -681,9 +690,10 @@ class CustomMenu(ExtensibleModel):
         return self.name if self.name != "" else self.id
 
     @classmethod
+    @cache_memoize(3600)
     def get_default(cls, name):
         """Get a menu by name or create if it does not exist."""
-        menu, _ = cls.objects.get_or_create(name=name)
+        menu, _ = cls.objects.prefetch_related("items").get_or_create(name=name)
         return menu
 
     class Meta:

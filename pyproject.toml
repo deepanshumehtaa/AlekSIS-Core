@@ -37,7 +37,7 @@ django-middleware-global-request = "^0.1.2"
 django-menu-generator = "^1.0.4"
 django-tables2 = "^2.1"
 Pillow = "^7.0"
-django-phonenumber-field = {version = ">=3.0, <4.0", extras = ["phonenumbers"]}
+django-phonenumber-field = {version = "<5.1", extras = ["phonenumbers"]}
 django-sass-processor = "^0.8"
 libsass = "^0.20.0"
 colour = "^0.1.5"
@@ -54,7 +54,7 @@ django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
 requests = "^2.22"
-django-two-factor-auth = { version = "^1.11.0", extras = [ "yubikey", "phonenumbers", "call", "sms" ] }
+django-two-factor-auth = { version = "^1.12.1", extras = [ "yubikey", "phonenumbers", "call", "sms" ] }
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
 django-pwa = "^1.0.8"
@@ -63,7 +63,7 @@ django_widget_tweaks = "^1.4.5"
 django-filter = "^2.2.0"
 django-templated-email = "^2.3.0"
 html2text = "^2020.0.0"
-django-ckeditor = "^5.8.0"
+django-ckeditor = "^6.0.0"
 django-js-reverse = "^0.9.1"
 calendarweek = "^0.4.3"
 Celery = {version="^4.4.0", optional=true, extras=["django", "redis"]}
@@ -72,7 +72,6 @@ django-celery-beat = {version="^2.0.0", optional=true}
 django-celery-email = {version="^3.0.0", optional=true}
 django-jsonstore = "^0.4.1"
 django-polymorphic = "^2.1.2"
-django-otp = "1.0.0"
 django-colorfield = "^0.3.0"
 django-bleach = "^0.6.1"
 django-guardian = "^2.2.0"
@@ -87,7 +86,7 @@ django-reversion = "^3.0.7"
 django-favicon-plus-reloaded = "^1.0.4"
 django-health-check = "^3.12.1"
 psutil = "^5.7.0"
-celery-progress = "^0.0.10"
+celery-progress = "^0.0.12"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
