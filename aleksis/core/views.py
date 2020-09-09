@@ -377,7 +377,9 @@ class SystemStatus(MainView, PermissionRequiredMixin):
             if inspect().registered_tasks():
                 job_list = list(inspect().registered_tasks().values())[0]
                 for job in job_list:
-                    task_results.append(TaskResult.objects.filter(task_name=job).order_by("date_done").last())
+                    task_results.append(
+                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                    )
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
