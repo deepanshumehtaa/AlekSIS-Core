@@ -115,7 +115,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
         return CRUDEvent.objects.filter(
             object_id=self.pk, content_type=content_type
-        ).select_related("user")
+        ).select_related("user", "user__person")
 
     @property
     def crud_event_create(self) -> Optional[CRUDEvent]:
