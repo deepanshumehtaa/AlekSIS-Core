@@ -54,7 +54,7 @@ django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
 requests = "^2.22"
-django-two-factor-auth = { version = "^1.11.0", extras = [ "yubikey", "phonenumbers", "call", "sms" ] }
+django-two-factor-auth = { version = "^1.12.1", extras = [ "yubikey", "phonenumbers", "call", "sms" ] }
 django-yarnpkg = "^6.0"
 django-material = "^1.6.0"
 django-pwa = "^1.0.8"
@@ -72,7 +72,6 @@ django-celery-beat = {version="^2.0.0", optional=true}
 django-celery-email = {version="^3.0.0", optional=true}
 django-jsonstore = "^0.4.1"
 django-polymorphic = "^2.1.2"
-django-otp = "1.0.0"
 django-colorfield = "^0.3.0"
 django-bleach = "^0.6.1"
 django-guardian = "^2.2.0"
