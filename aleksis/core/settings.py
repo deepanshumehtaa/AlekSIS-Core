@@ -208,7 +208,7 @@ if _settings.get("ldap.uri", None):
         NestedGroupOfNamesType,
         NestedGroupOfUniqueNamesType,
         PosixGroupType,
-    )  # noqa
+    )
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
