@@ -1,0 +1,16 @@
+pages_staging:
+  stage: deploy
+  when: manual
+  before_script:
+    - cp -r .tox/screenshots/firefox docs/screenshots
+  script:
+    - export LC_ALL=en_GB.utf8
+    - tox -e docs -- BUILDDIR=../public/docs
+  artifacts:
+    paths:
+    - public/
+  environment:
+    name: staging/pages
+    url: https://aleksis.org.staging.teckids.org
+  only:
+    - merge_requests
