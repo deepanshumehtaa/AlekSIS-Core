@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n rules %}
+{% load i18n rules material_form %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{% blocktrans %}Persons{% endblocktrans %}{% endblock %}
@@ -18,5 +18,17 @@
     </a>
   {% endif %}
 
+  <h5>{% trans "Filter persons" %}</h5>
+  <form method="get">
+    {% form form=persons_filter.form %}{% endform %}
+    {% trans "Search" as caption %}
+    {% include "core/partials/save_button.html" with caption=caption icon="search" %}
+    <button type="reset" class="btn red waves-effect waves-light">
+      <i class="material-icons left">clear</i>
+      {% trans "Clear" %}
+    </button>
+  </form>
+
+  <h5>{% trans "Selected persons" %}</h5>
   {% render_table persons_table %}
 {% endblock %}

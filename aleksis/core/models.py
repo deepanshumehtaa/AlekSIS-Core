@@ -9,7 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -19,12 +19,17 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
+from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
-from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from .managers import CurrentSiteManagerWithoutMigrations, SchoolTermQuerySet
+from .managers import (
+    CurrentSiteManagerWithoutMigrations,
+    GroupManager,
+    GroupQuerySet,
+    SchoolTermQuerySet,
+)
 from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
@@ -60,6 +65,7 @@ class SchoolTerm(ExtensibleModel):
     date_end = models.DateField(verbose_name=_("End date"))
 
     @classmethod
+    @cache_memoize(3600)
     def get_current(cls, day: Optional[date] = None):
         if not day:
             day = timezone.now().date()
@@ -79,7 +85,7 @@ class SchoolTerm(ExtensibleModel):
 
         qs = SchoolTerm.objects.within_dates(self.date_start, self.date_end)
         if self.pk:
-            qs.exclude(pk=self.pk)
+            qs = qs.exclude(pk=self.pk)
         if qs.exists():
             raise ValidationError(
                 _("There is already a school term for this time or a part of this time.")
@@ -149,8 +155,7 @@ class Person(ExtensibleModel):
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
-    photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
+    photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
 
     guardians = models.ManyToManyField(
         "self",
@@ -315,6 +320,8 @@ class Group(SchoolTermRelatedExtensibleModel):
     classes, clubs, and the like.
     """
 
+    objects = GroupManager.from_queryset(GroupQuerySet)()
+
     class Meta:
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
@@ -458,7 +465,7 @@ class Notification(ExtensibleModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            send_notification(self.pk, resend=True)
+            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
         self.sent = True
         super().save(**kwargs)
 
@@ -683,9 +690,10 @@ class CustomMenu(ExtensibleModel):
         return self.name if self.name != "" else self.id
 
     @classmethod
+    @cache_memoize(3600)
     def get_default(cls, name):
         """Get a menu by name or create if it does not exist."""
-        menu, _ = cls.objects.get_or_create(name=name)
+        menu, _ = cls.objects.prefetch_related("items").get_or_create(name=name)
         return menu
 
     class Meta:

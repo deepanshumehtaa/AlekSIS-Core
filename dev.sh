@@ -28,7 +28,7 @@ case "$1" in
 	locales="-l ar -l de_DE -l fr -l nb_NO -l tr_TR -l la"
 	for d in aleksis/core apps/official/*/aleksis/apps/*; do
 		echo; echo "Entering $d."
-		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -i static $locales"
+		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -e html,txt,py,email -i static $locales"
 		poetry run sh -c "cd $d; $manage_py makemessages --no-wrap -d djangojs $locales"
 	done
 	exit

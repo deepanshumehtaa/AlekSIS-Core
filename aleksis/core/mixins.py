@@ -16,7 +16,7 @@ from django.http import HttpResponse
 from django.utils.functional import lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
 from easyaudit.models import CRUDEvent
@@ -115,7 +115,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
         return CRUDEvent.objects.filter(
             object_id=self.pk, content_type=content_type
-        ).select_related("user")
+        ).select_related("user", "user__person")
 
     @property
     def crud_event_create(self) -> Optional[CRUDEvent]:
@@ -232,7 +232,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             related_name = cls.Meta.default_related_name
 
         # Add field to hold key to foreign model
-        id_field = to_field_type()
+        id_field = to_field_type(blank=True, null=True)
         cls.field(**{id_field_name: id_field})
 
         @property
@@ -373,6 +373,25 @@ class AdvancedCreateView(CreateView, SuccessMessageMixin):
 
 class AdvancedEditView(UpdateView, SuccessMessageMixin):
     pass
+
+
+class AdvancedDeleteView(DeleteView):
+    """Common confirm view for deleting.
+
+    .. warning ::
+
+        Using this view, objects are deleted permanently after confirming.
+        We recommend to include the mixin :class:`reversion.views.RevisionMixin`
+        from `django-reversion` to enable soft-delete.
+    """
+
+    success_message: Optional[str] = None
+
+    def delete(self, request, *args, **kwargs):
+        r = super().delete(request, *args, **kwargs)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return r
 
 
 class SchoolTermRelatedExtensibleModel(ExtensibleModel):
