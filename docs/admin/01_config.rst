@@ -29,12 +29,15 @@ A configuration file might look like this::
 
   secret_key = "VerySecretKeyForSessionSecurity"
 
+  [http]
   allowed_hosts = [ "aleksis.myschool.example.com", "localhost" ]
 
+  [database]
   name = "aleksis"
   user = "aleksis"
   password = "SuperSecretPassword"
 
+  [caching]
   memcached = { enabled = true, address = "127.0.0.1" }
 
 The `secret_key` setting above defines a single value. The following `http`

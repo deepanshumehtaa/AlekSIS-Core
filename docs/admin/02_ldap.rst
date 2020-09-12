@@ -25,8 +25,10 @@ configuration file. For example, add something like the following to your
 configuration (normally in `/etc/aleksis`; you can either append to an
 existing file or add a new one)::
 
+  [ldap]
   uri = "ldaps://ldap.myschool.edu"
   bind = { dn = "cn=reader,dc=myschool,dc=edu", password = "secret" }
 
+  [ldap.users]
   search = { base = "ou=people,dc=myschool,dc=edu", filter = "(uid=%(user)s)" }
   map = { first_name = "givenName", last_name = "sn", email = "mail" }
