@@ -32,7 +32,6 @@ Configure AlekSIS to use PostgreSQL
 
 Fill in the configuration under `/etc/aleksis/aleksis.toml` (or a file with any other name in this directory)::
 
-  [default.database]
   host = "localhost"
   name = "aleksis"
   username = "aleksis"
