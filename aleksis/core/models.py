@@ -14,7 +14,7 @@ from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.decorators import classproperty
+from django.utils.functional import classproperty
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
