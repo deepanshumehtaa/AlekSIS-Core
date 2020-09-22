@@ -362,6 +362,18 @@ def handle_uploaded_file(f, filename: str):
 
 
 @cache_memoize(3600)
+def get_content_type_by_perm(perm: str) -> Union["ContentType", None]:
+    from django.contrib.contenttypes.models import ContentType  # noqa
+
+    try:
+        return ContentType.objects.get(
+            app_label=perm.split(".", 1)[0], permission__codename=perm.split(".", 1)[1]
+        )
+    except ContentType.DoesNotExist:
+        return None
+
+
+@cache_memoize(3600)
 def queryset_rules_filter(
     obj: Union[HttpRequest, Model], queryset: QuerySet, perm: str
 ) -> QuerySet:
