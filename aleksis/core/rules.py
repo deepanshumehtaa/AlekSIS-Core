@@ -13,6 +13,9 @@ from .util.predicates import (
 
 add_perm("core", always_allow)
 
+# Has person
+add_perm("core.has_person", has_person)
+
 # View dashboard
 add_perm("core.view_dashboard", has_person)
 
