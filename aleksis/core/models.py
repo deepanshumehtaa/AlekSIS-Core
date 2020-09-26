@@ -221,7 +221,7 @@ class Person(ExtensibleModel):
     @property
     def age(self):
         """Age of the person at current time."""
-        return self.age_at(timezone.datetime.now().date())
+        return self.age_at(timezone.now().date())
 
     def age_at(self, today):
         """Age of the person at a given date and time."""
@@ -494,7 +494,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
         """Get all announcements at a certain time."""
-        when = when or timezone.datetime.now()
+        when = when or timezone.now()
 
         # Get announcements by time
         announcements = self.filter(valid_from__lte=when, valid_until__gte=when)
@@ -503,7 +503,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def on_date(self, when: Optional[date] = None) -> models.QuerySet:
         """Get all announcements at a certain date."""
-        when = when or timezone.datetime.now().date()
+        when = when or timezone.now().date()
 
         # Get announcements by time
         announcements = self.filter(valid_from__date__lte=when, valid_until__date__gte=when)
@@ -542,7 +542,7 @@ class Announcement(ExtensibleModel):
     link = models.URLField(blank=True, verbose_name=_("Link to detailed view"))
 
     valid_from = models.DateTimeField(
-        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+        verbose_name=_("Date and time from when to show"), default=timezone.now
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"), default=now_tomorrow,
