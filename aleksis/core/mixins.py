@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import QuerySet, JSONField
 from django.forms.forms import BaseForm
 from django.forms.models import ModelForm, ModelFormMetaclass
 from django.http import HttpResponse
@@ -21,7 +21,7 @@ from django.views.generic.edit import DeleteView, ModelFormMixin
 import reversion
 from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
-from jsonstore.fields import IntegerField, JSONField, JSONFieldMixin
+from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
