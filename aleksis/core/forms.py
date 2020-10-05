@@ -108,6 +108,8 @@ class EditPersonForm(ExtensibleForm):
         ]
         widgets = {
             "user": Select2Widget,
+            "primary_group": Select2Widget,
+            "guardians": Select2Widget,
         }
 
     new_user = forms.CharField(
@@ -167,9 +169,24 @@ class AnnouncementForm(ExtensibleForm):
     valid_until_time = forms.TimeField(label=_("Time"))
 
     persons = forms.ModelMultipleChoiceField(
-        Person.objects.all(), label=_("Persons"), required=False
+        queryset=Person.objects.all(), label=_("Persons"), required=False, widget=ModelSelect2MultipleWidget(
+            search_fields=[
+                "first_name__icontains",
+                "last_name__icontains",
+                "short_name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0},
+        )
     )
-    groups = forms.ModelMultipleChoiceField(queryset=None, label=_("Groups"), required=False)
+    groups = forms.ModelMultipleChoiceField(
+        queryset=None, label=_("Groups"), required=False, widget=ModelSelect2MultipleWidget(
+            search_fields=[
+                "name__icontains",
+                "short_name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0},
+        )
+    )
 
     layout = Layout(
         Fieldset(
@@ -264,7 +281,7 @@ class AnnouncementForm(ExtensibleForm):
 class ChildGroupsForm(forms.Form):
     """Inline form for group editing to select child groups."""
 
-    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
+    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), widget=ModelSelect2MultipleWidget)
 
 
 class SitePreferenceForm(PreferenceForm):
