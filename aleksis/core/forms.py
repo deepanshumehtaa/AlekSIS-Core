@@ -140,19 +140,25 @@ class EditGroupForm(SchoolTermRelatedExtensibleForm):
                     "first_name__icontains",
                     "last_name__icontains",
                     "short_name__icontains",
-                ]
+                ],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "owners": ModelSelect2MultipleWidget(
                 search_fields=[
                     "first_name__icontains",
                     "last_name__icontains",
                     "short_name__icontains",
-                ]
+                ],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "parent_groups": ModelSelect2MultipleWidget(
-                search_fields=["name__icontains", "short_name__icontains"]
+                search_fields=["name__icontains", "short_name__icontains"],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
-            "additional_fields": ModelSelect2MultipleWidget(search_fields=["title__icontains",]),
+            "additional_fields": ModelSelect2MultipleWidget(
+                search_fields=["title__icontains",],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+            ),
         }
 
 
@@ -281,7 +287,14 @@ class AnnouncementForm(ExtensibleForm):
 class ChildGroupsForm(forms.Form):
     """Inline form for group editing to select child groups."""
 
-    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), widget=ModelSelect2MultipleWidget)
+    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), widget=ModelSelect2MultipleWidget(
+            search_fields=[
+                "name__icontains",
+                "short_name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        )
+    )
 
 
 class SitePreferenceForm(PreferenceForm):
