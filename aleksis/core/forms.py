@@ -175,7 +175,7 @@ class AnnouncementForm(ExtensibleForm):
                 "last_name__icontains",
                 "short_name__icontains",
             ],
-            attrs={"data-minimum-input-length": 0},
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
         )
     )
     groups = forms.ModelMultipleChoiceField(
@@ -184,7 +184,7 @@ class AnnouncementForm(ExtensibleForm):
                 "name__icontains",
                 "short_name__icontains",
             ],
-            attrs={"data-minimum-input-length": 0},
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
         )
     )
 
