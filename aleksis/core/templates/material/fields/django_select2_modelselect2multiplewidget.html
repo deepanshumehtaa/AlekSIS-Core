@@ -1,14 +1,13 @@
 {% load l10n material_form material_form_internal %}
-{% part bound_field.field %}<{{ field.widget.component|default:'dmc-select' }}><div class="row">
+{% part bound_field.field %}<{{ field.widget.component|default:'dmc-select' }}>
+  <label>{{ bound_field.label }}</label>
+  <div class="row">
     <div{% attrs bound_field 'group' %}
         id="id_{{ bound_field.html_name }}_container"
         class="input-field col s12{% if field.required %} required{% endif %}{% if bound_field.errors %} has-error{% endif %}"
+        style="margin-top: 0"
     {% endattrs %}>
-        {% part field prefix %}{% endpart %}{% part field label %}
-        <label{% attrs bound_field 'label' %}
-            for="{{ bound_field.id_for_label }}"
-        {% endattrs %}>{{ bound_field.label }}</label>
-        {% endpart %}
+        {% part field prefix %}{% endpart %}
         {% part field control %}
         {{ bound_field }}
         {% endpart %}
