@@ -2,7 +2,14 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n material_form %}
+{% load i18n material_form any_js %}
+
+
+{% block extra_head %}
+    {{ form.media.css }}
+    {% include_css "select2-materialize" %}
+{% endblock %}
+
 
 {% block browser_title %}{% blocktrans %}Assign child groups to groups{% endblocktrans %}{% endblock %}
 {% block page_title %}
@@ -119,7 +126,7 @@
 
       {% csrf_token %}
 
-      {% include "components/chips.html" with form_field=form.child_groups %}
+      {% form form=form %}{% endform %}
 
       <p class="left">
         {% if page.has_previous %}
@@ -151,4 +158,6 @@
       </p>
     </form>
   {% endif %}
+  {% include_js "select2-materialize" %}
+  {{ form.media.js }}
 {% endblock %}
