@@ -22,6 +22,10 @@
           <i class="material-icons left">edit</i>
           {% trans "Edit" %}
         </a>
+        <a href="{% url 'edit_person_photo_by_id' person.id %}" class="btn waves-effect waves-light">
+          <i class="material-icons left">insert_photo</i>
+          {% trans "Edit photo" %}
+        </a>
       {% endif %}
 
       {% if can_delete_person %}

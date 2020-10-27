@@ -32,6 +32,7 @@ urlpatterns = [
     path("person/create", views.edit_person, name="create_person"),
     path("person/<int:id_>", views.person, name="person_by_id"),
     path("person/<int:id_>/edit", views.edit_person, name="edit_person_by_id"),
+    path("person/<int:id_>/photo/edit", views.edit_person_photo, name="edit_person_photo_by_id"),
     path("person/<int:id_>/delete", views.delete_person, name="delete_person_by_id"),
     path("groups", views.groups, name="groups"),
     path("groups/additional_fields", views.additional_fields, name="additional_fields"),

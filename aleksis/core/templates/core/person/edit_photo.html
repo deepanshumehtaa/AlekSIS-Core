@@ -1,0 +1,23 @@
+{# -*- engine:django -*- #}
+
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block extra_head %}
+  {{ photo_form.media }}
+{% endblock %}
+
+{% block browser_title %}{% blocktrans %}Edit photo{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans %}Edit photo{% endblocktrans %}{% endblock %}
+
+
+{% block content %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ photo_form }}
+    {% include "core/partials/save_button.html" %}
+  </form>
+
+{% endblock %}
