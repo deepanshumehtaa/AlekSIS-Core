@@ -678,3 +678,25 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The group type has been deleted."))
 
     return redirect("group_types")
+
+@permission_required("core.edit_person", fn=objectgetter_optional(Person))
+def edit_person_photo(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
+    """Edit view for a single person, defaulting to logged-in person."""
+    context = {}
+
+    person = get_object_or_404(Person, id_)
+    context["person"] = person
+
+    # Edit form for existing group
+    edit_person_photo_form = EditPersonPhotoForm(
+        request.POST or None, request.FILES or None, instance=person
+    )
+    if request.method == "POST":
+        if edit_person_photo_form.is_valid():
+            with reversion.create_revision():
+                edit_person_photo_form.save(commit=True)
+            messages.success(request, _("The person has been saved."))
+
+    context["edit_person_photo_form"] = edit_person_photo_form
+
+    return render(request, "core/person/edit_photo.html", context)

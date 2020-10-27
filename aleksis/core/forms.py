@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
+from image_cropping import ImageCropWidget
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -345,3 +346,13 @@ class SchoolTermForm(ExtensibleForm):
     class Meta:
         model = SchoolTerm
         exclude = []
+
+class EditPersonPhotoForm(ExtensibleForm):
+    """Form to edit a persons photo."""
+
+    class Meta:
+        model = Person
+        fields = ["photo"]
+        widgets = {
+            'photo': ImageCropWidget,
+        }
