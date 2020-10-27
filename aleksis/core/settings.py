@@ -172,6 +172,7 @@ DATABASES = {
         "HOST": _settings.get("database.host", "127.0.0.1"),
         "PORT": _settings.get("database.port", "5432"),
         "ATOMIC_REQUESTS": True,
+        "CONN_MAX_AGE": _settings.get("database.conn_max_age", None),
     }
 }
 
@@ -207,7 +208,7 @@ if _settings.get("ldap.uri", None):
         NestedGroupOfNamesType,
         NestedGroupOfUniqueNamesType,
         PosixGroupType,
-    )  # noqa
+    )
 
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
@@ -282,9 +283,16 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
+CUSTOM_AUTHENTICATION_BACKENDS = []
+merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
+
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
+
+# Structure of items: backend, URL name, icon name, button title
+ALTERNATIVE_LOGIN_VIEWS = []
+merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -293,7 +301,7 @@ LANGUAGES = [
     ("en", _("English")),
     ("de", _("German")),
     ("fr", _("French")),
-    ("nb", _("Norsk (bokmål)")),
+    ("nb", _("Norwegian (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
@@ -405,6 +413,8 @@ DBBACKUP_COMPRESS_DB = _settings.get("backup.database.compress", True)
 DBBACKUP_ENCRYPT_DB = _settings.get("backup.database.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
 DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
+DBBACKUP_CLEANUP_DB = _settings.get("backup.database.clean", True)
+DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
@@ -683,3 +693,5 @@ HEALTH_CHECK = {
     "DISK_USAGE_MAX": _settings.get("health.disk_usage_max_percent", 90),
     "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
 }
+
+ORIGINAL_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS[:]

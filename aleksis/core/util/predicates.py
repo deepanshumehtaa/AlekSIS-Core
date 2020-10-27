@@ -8,8 +8,9 @@ from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
-from .core_helpers import get_site_preferences
+from .core_helpers import get_content_type_by_perm, get_site_preferences
 from .core_helpers import has_person as has_person_helper
+from .core_helpers import queryset_rules_filter
 
 
 def permission_validator(request: HttpRequest, perm: str) -> bool:
@@ -57,14 +58,17 @@ def has_any_object(perm: str, klass):
     """Check if has any object.
 
     Build predicate which checks whether a user has access
-    to objects with the provided permission.
+    to objects with the provided permission or rule.
     """
     name = f"has_any_object:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:
-        objs = get_objects_for_user(user, perm, klass)
-        return len(objs) > 0
+        ct_perm = get_content_type_by_perm(perm)
+        if ct_perm and ct_perm.model_class() == klass:
+            return get_objects_for_user(user, perm, klass).exists()
+        else:
+            return queryset_rules_filter(user, klass.objects.all(), perm).exists()
 
     return fn
 

@@ -27,25 +27,24 @@ configuration by topic.
 
 A configuration file might look like this::
 
-  [default]
   secret_key = "VerySecretKeyForSessionSecurity"
 
-  [default.http]
+  [http]
   allowed_hosts = [ "aleksis.myschool.example.com", "localhost" ]
 
-  [default.database]
+  [database]
   name = "aleksis"
   user = "aleksis"
   password = "SuperSecretPassword"
 
-  [default.caching]
+  [caching]
   memcached = { enabled = true, address = "127.0.0.1" }
 
 The `secret_key` setting above defines a single value. The following `http`
 section defines a table (cf. a dictionary) in one way, and you can see the
 second form of such a table in the `memcached` setting (we could as well
-have defined another section called `[default.caching.memcached]` and placed
-`enabled` and `address` below it as scalars).
+have defined another section and placed `enabled` and `address` below it
+as scalars).
 
 This can be a bit confusing, so this documentation will explain how to
 configure AlekSIS on a per-feature basis.
