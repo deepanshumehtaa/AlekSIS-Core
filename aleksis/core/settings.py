@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
+    "image_cropping",
     "easy_thumbnails",
     "maintenance_mode",
     "menu_generator",
@@ -156,7 +157,9 @@ TEMPLATES = [
     },
 ]
 
-THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
+THUMBNAIL_PROCESSORS = (
+    "image_cropping.thumbnail_processors.crop_corners",
+) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
