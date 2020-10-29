@@ -110,7 +110,7 @@ class EditPersonForm(ExtensibleForm):
             "user": Select2Widget(attrs={"class": "browser-default"}),
             "primary_group": ModelSelect2Widget(
                 search_fields=["name__icontains", "short_name__icontains"],
-                attrs={"data-minimum-input-length": 0, "class": "browser-default"}
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "guardians": ModelSelect2Widget(
                 search_fields=[
@@ -118,7 +118,7 @@ class EditPersonForm(ExtensibleForm):
                     "last_name__icontains",
                     "short_name__icontains",
                 ],
-                attrs={"data-minimum-input-length": 0, "class": "browser-default"}
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
         }
 
@@ -185,23 +185,26 @@ class AnnouncementForm(ExtensibleForm):
     valid_until_time = forms.TimeField(label=_("Time"))
 
     persons = forms.ModelMultipleChoiceField(
-        queryset=Person.objects.all(), label=_("Persons"), required=False, widget=ModelSelect2MultipleWidget(
+        queryset=Person.objects.all(),
+        label=_("Persons"),
+        required=False,
+        widget=ModelSelect2MultipleWidget(
             search_fields=[
                 "first_name__icontains",
                 "last_name__icontains",
                 "short_name__icontains",
             ],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
-        )
+        ),
     )
     groups = forms.ModelMultipleChoiceField(
-        queryset=None, label=_("Groups"), required=False, widget=ModelSelect2MultipleWidget(
-            search_fields=[
-                "name__icontains",
-                "short_name__icontains",
-            ],
+        queryset=None,
+        label=_("Groups"),
+        required=False,
+        widget=ModelSelect2MultipleWidget(
+            search_fields=["name__icontains", "short_name__icontains",],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
-        )
+        ),
     )
 
     layout = Layout(
@@ -297,13 +300,12 @@ class AnnouncementForm(ExtensibleForm):
 class ChildGroupsForm(forms.Form):
     """Inline form for group editing to select child groups."""
 
-    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), widget=ModelSelect2MultipleWidget(
-            search_fields=[
-                "name__icontains",
-                "short_name__icontains",
-            ],
+    child_groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=ModelSelect2MultipleWidget(
+            search_fields=["name__icontains", "short_name__icontains",],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
-        )
+        ),
     )
 
 
