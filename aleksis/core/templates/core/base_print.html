@@ -26,11 +26,7 @@
 <main class="sheet infinite">
   <div style="margin-top: -10mm;"></div>
 
-{% if landscape %}
-  <table>
-{% else %}
   <table class="print-layout-table">
-{% endif %}
     <thead>
     <tr class="no-border">
       <td class="print-layout-td">
@@ -43,11 +39,7 @@
     <tr class="no-border">
       <td class="print-layout-td">
         <div class="content">
-        {% if landscape %}
-          <header style="width: 100%">
-        {% else %}
           <header>
-        {% endif %}
             <div id="print-header" class="row">
               <div class="col s6 logo">
                 {% static "img/aleksis-banner.svg" as aleksis_banner %}
