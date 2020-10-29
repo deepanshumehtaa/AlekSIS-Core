@@ -300,13 +300,7 @@ class AnnouncementForm(ExtensibleForm):
 class ChildGroupsForm(forms.Form):
     """Inline form for group editing to select child groups."""
 
-    child_groups = forms.ModelMultipleChoiceField(
-        queryset=Group.objects.all(),
-        widget=ModelSelect2MultipleWidget(
-            search_fields=["name__icontains", "short_name__icontains",],
-            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
-        ),
-    )
+    child_groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
 
 
 class SitePreferenceForm(PreferenceForm):
