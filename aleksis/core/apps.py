@@ -2,7 +2,7 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.conf import settings
-from django.db import ProgrammingError, OperationalError
+from django.db import OperationalError, ProgrammingError
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
