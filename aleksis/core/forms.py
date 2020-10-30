@@ -112,7 +112,7 @@ class EditPersonForm(ExtensibleForm):
                 search_fields=["name__icontains", "short_name__icontains"],
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
-            "guardians": ModelSelect2Widget(
+            "guardians": ModelSelect2MultipleWidget(
                 search_fields=[
                     "first_name__icontains",
                     "last_name__icontains",
