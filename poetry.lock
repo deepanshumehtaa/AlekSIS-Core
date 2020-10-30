@@ -150,7 +150,7 @@ python-versions = "*"
 
 [[package]]
 name = "calendarweek"
-version = "0.4.6"
+version = "0.4.6.post2"
 description = "Utilities for working with calendar weeks in Python and Django"
 category = "main"
 optional = false
@@ -2152,8 +2152,8 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 calendarweek = [
-    {file = "calendarweek-0.4.6-py3-none-any.whl", hash = "sha256:9629ca569f1535dc2deeb23cf19e6cfda11944ffd153c89002a776f59ff355e7"},
-    {file = "calendarweek-0.4.6.tar.gz", hash = "sha256:29b6792fa88200a5cb75ec3d6ee43c73d48b08079638c2d1dd0965e7b09783a4"},
+    {file = "calendarweek-0.4.6.post2-py3-none-any.whl", hash = "sha256:17c95c15694f8ae44cac182d9023e3793fe61c54bcd36bb1aeed6dc497d62a6c"},
+    {file = "calendarweek-0.4.6.post2.tar.gz", hash = "sha256:8ddb18d32e05d8373c5ec14b9acbe99f40e0ef67aac4d74c992c62c5d6057d03"},
 ]
 celery = [
     {file = "celery-4.4.7-py2.py3-none-any.whl", hash = "sha256:a92e1d56e650781fb747032a3997d16236d037c8199eacd5217d1a72893bca45"},
