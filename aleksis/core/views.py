@@ -27,6 +27,7 @@ from .forms import (
     EditGroupForm,
     EditGroupTypeForm,
     EditPersonForm,
+    EditPersonPhotoForm,
     GroupPreferenceForm,
     PersonPreferenceForm,
     PersonsAccountsFormSet,
@@ -684,7 +685,7 @@ def edit_person_photo(request: HttpRequest, id_: Optional[int] = None) -> HttpRe
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
 
-    person = get_object_or_404(Person, id_)
+    person = get_object_or_404(Person, id=id_)
     context["person"] = person
 
     # Edit form for existing group

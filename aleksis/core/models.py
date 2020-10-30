@@ -21,6 +21,7 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from image_cropping import ImageCropField, ImageRatioField
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
@@ -155,7 +156,8 @@ class Person(ExtensibleModel):
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
+    photo = ImageCropField(verbose_name=_("Photo"), blank=True, null=True)
+    photo_cropping = ImageRatioField("photo", "600x800", size_warning=True)
 
     guardians = models.ManyToManyField(
         "self",

@@ -2,10 +2,11 @@
 
 {% extends "core/base.html" %}
 
-{% load material_form i18n %}
+{% load material_form i18n any_js %}
 
 {% block extra_head %}
   {{ edit_person_form.media }}
+  {% include_css "select2-materialize" %}
 {% endblock %}
 
 {% block browser_title %}{% blocktrans %}Edit person{% endblocktrans %}{% endblock %}
@@ -19,5 +20,7 @@
     {% form form=edit_person_form %}{% endform %}
     {% include "core/partials/save_button.html" %}
   </form>
+  {% include_js "select2-materialize" %}
+  {{ edit_group_form.media.js }}
 
 {% endblock %}

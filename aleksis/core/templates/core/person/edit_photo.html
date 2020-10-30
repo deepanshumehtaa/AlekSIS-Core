@@ -5,7 +5,7 @@
 {% load i18n %}
 
 {% block extra_head %}
-  {{ photo_form.media }}
+  {{ edit_person_photo_form.media }}
 {% endblock %}
 
 {% block browser_title %}{% blocktrans %}Edit photo{% endblocktrans %}{% endblock %}
@@ -16,7 +16,7 @@
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ photo_form }}
+    {{ edit_person_photo_form }}
     {% include "core/partials/save_button.html" %}
   </form>
 
