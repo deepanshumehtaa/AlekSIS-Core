@@ -2,7 +2,7 @@ from typing import Any, List, Optional, Tuple
 
 import django.apps
 from django.conf import settings
-from django.db import ProgrammingError
+from django.db import ProgrammingError, OperationalError
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -67,7 +67,7 @@ class CoreConfig(AppConfig):
             for backend in get_site_preferences()["auth__backends"]:
                 settings._wrapped.AUTHENTICATION_BACKENDS.insert(idx, backend)
                 idx += 1
-        except ProgrammingError:
+        except (ProgrammingError, OperationalError):
             pass
 
     def preference_updated(
