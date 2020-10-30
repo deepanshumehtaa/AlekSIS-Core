@@ -26,11 +26,7 @@
 <main class="sheet infinite">
   <div style="margin-top: -10mm;"></div>
 
-{% if landscape %}
-  <table>
-{% else %}
-  <table class="print-layout-table">
-{% endif %}
+  <table class="{% if landscape %}print-layout-table{% else %}{% endif %}">
     <thead>
     <tr class="no-border">
       <td class="print-layout-td">
