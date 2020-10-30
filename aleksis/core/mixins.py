@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
-from django.db.models import QuerySet, JSONField
+from django.db.models import JSONField, QuerySet
 from django.forms.forms import BaseForm
 from django.forms.models import ModelForm, ModelFormMetaclass
 from django.http import HttpResponse
