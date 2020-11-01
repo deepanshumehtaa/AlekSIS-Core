@@ -168,12 +168,8 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     # Get groups where person is member of
     groups = Group.objects.filter(members=person)
 
-    # Get filter
-    groups_filter = GroupFilter(request.GET, queryset=groups)
-    context["groups_filter"] = groups_filter
-
     # Build table
-    groups_table = GroupsTable(groups_filter.qs)
+    groups_table = GroupsTable(groups)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -194,24 +190,16 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     # Get members
     members = group.members.filter(is_active=True)
 
-    # Get filter
-    members_filter = PersonFilter(request.GET, queryset=members)
-    context["members_filter"] = members_filter
-
     # Build table
-    members_table = PersonsTable(members_filter.qs)
+    members_table = PersonsTable(members)
     RequestConfig(request).configure(members_table)
     context["members_table"] = members_table
 
     # Get owners
     owners = group.owners.filter(is_active=True)
 
-    # Get filter
-    owners_filter = PersonFilter(request.GET, queryset=owners)
-    context["owners_filter"] = owners_filter
-
     # Build table
-    owners_table = PersonsTable(owners_filter.qs)
+    owners_table = PersonsTable(owners)
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
@@ -234,7 +222,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     context["groups_filter"] = groups_filter
 
     # Build table
-    groups_table = GroupsTable(group_filter.qs)
+    groups_table = GroupsTable(groups_filter.qs)
     RequestConfig(request).configure(groups_table)
     context["groups_table"] = groups_table
 
@@ -308,22 +296,20 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
 
     if id_:
         # Edit form for existing group
-        edit_person_form = EditPersonForm(request.POST or None, instance=person)
+        edit_person_form = EditPersonForm(
+            request.POST or None, request.FILES or None, instance=person
+        )
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST or None)
+            edit_person_form = EditPersonForm(request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
-
     if request.method == "POST":
         if edit_person_form.is_valid():
             with reversion.create_revision():
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
-
-            # Redirect to self to ensure post-processed data is displayed
-            return redirect("edit_person_by_id", id_=person.id)
 
     context["edit_person_form"] = edit_person_form
 
@@ -385,6 +371,7 @@ class SystemStatus(MainView, PermissionRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         status_code = 500 if self.errors else 200
+        task_results = []
 
         if "django_celery_results" in settings.INSTALLED_APPS:
             from django_celery_results.models import TaskResult  # noqa
@@ -392,11 +379,12 @@ class SystemStatus(MainView, PermissionRequiredMixin):
 
             if inspect().registered_tasks():
                 job_list = list(inspect().registered_tasks().values())[0]
-                results = []
                 for job in job_list:
-                    results.append(TaskResult.objects.filter(task_name=job).last())
+                    task_results.append(
+                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                    )
 
-        context = {"plugins": self.plugins, "status_code": status_code}
+        context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
 
 

@@ -80,19 +80,9 @@
   {% endif %}
 
   <h5>{% blocktrans %}Owners{% endblocktrans %}</h5>
-  <form method="get">
-    {% form form=owners_filter.form %}{% endform %}
-    {% trans "Search" as caption %}
-    {% include "core/partials/save_button.html" with caption=caption icon="search" %}
-  </form>
   {% render_table owners_table %}
 
   <h5>{% blocktrans %}Members{% endblocktrans %}</h5>
-  <form method="get">
-    {% form form=members_filter.form %}{% endform %}
-    {% trans "Search" as caption %}
-    {% include "core/partials/save_button.html" with caption=caption icon="search" %}
-  </form>
   {% render_table members_table %}
 
 {% endblock %}

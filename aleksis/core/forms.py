@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from django_select2.forms import ModelSelect2MultipleWidget, Select2Widget
+from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
@@ -24,7 +24,7 @@ class PersonAccountForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ["last_name", "first_name", "user"]
-        widgets = {"user": Select2Widget}
+        widgets = {"user": Select2Widget(attrs={"class": "browser-default"})}
 
     new_user = forms.CharField(required=False)
 
@@ -80,10 +80,7 @@ class EditPersonForm(ExtensibleForm):
         Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
         Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
         Fieldset(
-            _("Advanced personal data"),
-            Row("sex", "date_of_birth"),
-            Row("photo", "photo_cropping"),
-            "guardians",
+            _("Advanced personal data"), Row("sex", "date_of_birth"), Row("photo"), "guardians",
         ),
     )
 
@@ -106,11 +103,24 @@ class EditPersonForm(ExtensibleForm):
             "date_of_birth",
             "sex",
             "photo",
-            "photo_cropping",
             "guardians",
             "primary_group",
         ]
-        widgets = {"user": Select2Widget}
+        widgets = {
+            "user": Select2Widget(attrs={"class": "browser-default"}),
+            "primary_group": ModelSelect2Widget(
+                search_fields=["name__icontains", "short_name__icontains"],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+            ),
+            "guardians": ModelSelect2MultipleWidget(
+                search_fields=[
+                    "first_name__icontains",
+                    "last_name__icontains",
+                    "short_name__icontains",
+                ],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+            ),
+        }
 
     new_user = forms.CharField(
         required=False, label=_("New user"), help_text=_("Create a new account")
@@ -140,19 +150,25 @@ class EditGroupForm(SchoolTermRelatedExtensibleForm):
                     "first_name__icontains",
                     "last_name__icontains",
                     "short_name__icontains",
-                ]
+                ],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "owners": ModelSelect2MultipleWidget(
                 search_fields=[
                     "first_name__icontains",
                     "last_name__icontains",
                     "short_name__icontains",
-                ]
+                ],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "parent_groups": ModelSelect2MultipleWidget(
-                search_fields=["name__icontains", "short_name__icontains"]
+                search_fields=["name__icontains", "short_name__icontains"],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
-            "additional_fields": ModelSelect2MultipleWidget(search_fields=["title__icontains",]),
+            "additional_fields": ModelSelect2MultipleWidget(
+                search_fields=["title__icontains",],
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+            ),
         }
 
 
@@ -169,9 +185,27 @@ class AnnouncementForm(ExtensibleForm):
     valid_until_time = forms.TimeField(label=_("Time"))
 
     persons = forms.ModelMultipleChoiceField(
-        Person.objects.all(), label=_("Persons"), required=False
+        queryset=Person.objects.all(),
+        label=_("Persons"),
+        required=False,
+        widget=ModelSelect2MultipleWidget(
+            search_fields=[
+                "first_name__icontains",
+                "last_name__icontains",
+                "short_name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
     )
-    groups = forms.ModelMultipleChoiceField(queryset=None, label=_("Groups"), required=False)
+    groups = forms.ModelMultipleChoiceField(
+        queryset=None,
+        label=_("Groups"),
+        required=False,
+        widget=ModelSelect2MultipleWidget(
+            search_fields=["name__icontains", "short_name__icontains",],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+    )
 
     layout = Layout(
         Fieldset(

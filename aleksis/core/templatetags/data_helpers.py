@@ -3,6 +3,7 @@ from typing import Any, Optional, Union
 
 from django import template
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Model
 
 register = template.Library()
 
@@ -31,6 +32,17 @@ def verbose_name(app_label: str, model: str, field: Optional[str] = None) -> str
     else:
         # Whole model
         return ct._meta.verbose_name.title()
+
+
+@register.simple_tag
+def verbose_name_object(model: Model, field: Optional[str] = None) -> str:
+    """Get a verbose name of a model or a field by a model or an instance of a model."""
+    if field:
+        # Field
+        return model._meta.get_field(field).verbose_name.title()
+    else:
+        # Whole model
+        return model._meta.verbose_name.title()
 
 
 @register.simple_tag

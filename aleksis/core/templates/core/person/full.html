@@ -2,7 +2,7 @@
 
 {% extends "core/base.html" %}
 
-{% load i18n static cropping rules material_form %}
+{% load i18n static rules material_form %}
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
@@ -13,8 +13,9 @@
   {% has_perm 'core.edit_person' user person as can_change_person %}
   {% has_perm 'core.change_person_preferences' user person as can_change_person_preferences %}
   {% has_perm 'core.delete_person' user person as can_delete_person %}
+  {% has_perm "core.impersonate" user person as can_impersonate %}
 
-  {% if can_change_person or can_change_person_preferences or can_delete_person %}
+  {% if can_change_person or can_change_person_preferences or can_delete_person or can_impersonate %}
     <p>
       {% if can_change_person %}
         <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
@@ -36,6 +37,13 @@
           {% trans "Change preferences" %}
         </a>
       {% endif %}
+
+    {% if can_impersonate and person.user %}
+        <a href="{% url "impersonate-start" person.user.id %}" class="btn waves-effect waves-light">
+          <i class="material-icons left">portrait</i>
+          {% trans "Impersonate" %}
+        </a>
+      {% endif %}
     </p>
   {% endif %}
 
@@ -44,7 +52,7 @@
     <div class="col s12 m4">
       {% has_perm 'core.view_photo' user person as can_view_photo %}
       {% if person.photo and can_view_photo %}
-        <img class="person-img" src="{% cropped_thumbnail person 'photo_cropping' max_size='300x400' %}"
+        <img class="person-img" src="{{ person.photo.url }}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
       {% else %}
         <img class="person-img" src="{% static 'img/fallback.png' %}"
@@ -134,11 +142,6 @@
   {% has_perm 'core.view_person_groups' user person as can_view_groups %}
   {% if can_view_groups %}
     <h5>{% blocktrans %}Groups{% endblocktrans %}</h5>
-    <form method="get">
-      {% form form=groups_filter.form %}{% endform %}
-      {% trans "Search" as caption %}
-      {% include "core/partials/save_button.html" with caption=caption icon="search" %}
-    </form>
     {% render_table groups_table %}
   {% endif %}
 {% endblock %}
