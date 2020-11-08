@@ -272,3 +272,9 @@ view_admin_menu_predicate = has_person & (
     | view_announcements_predicate
 )
 rules.add_perm("core.view_admin_menu", view_admin_menu_predicate)
+
+# View group stats
+view_group_stats_predicate = has_person & (
+    has_global_perm("core.view_group_stats") | has_object_perm("core.view_group_stats")
+)
+rules.add_perm("core.view_group_stats", view_group_stats_predicate)
