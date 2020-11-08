@@ -374,8 +374,8 @@ class SystemStatus(MainView, PermissionRequiredMixin):
         task_results = []
 
         if "django_celery_results" in settings.INSTALLED_APPS:
-            from django_celery_results.models import TaskResult  # noqa
             from celery.task.control import inspect  # noqa
+            from django_celery_results.models import TaskResult  # noqa
 
             if inspect().registered_tasks():
                 job_list = list(inspect().registered_tasks().values())[0]
