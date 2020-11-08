@@ -565,6 +565,22 @@ class Announcement(ExtensibleModel):
         ct = ContentType.objects.get_for_model(obj)
         return [r.recipient for r in self.recipients.filter(content_type=ct)]
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+
+            for person in self.recipient_persons:
+                notification = Notification(
+                    sender="AlekSIS",
+                    recipient=person,
+                    title=self.title,
+                    description=self.description,
+                    link=self.link
+                )
+                notification.save()
+        else:
+            super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
