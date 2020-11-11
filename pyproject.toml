@@ -87,6 +87,7 @@ django-favicon-plus-reloaded = "^1.0.4"
 django-health-check = "^3.12.1"
 psutil = "^5.7.0"
 celery-progress = "^0.0.12"
+django-prometheus = "^2.1.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
