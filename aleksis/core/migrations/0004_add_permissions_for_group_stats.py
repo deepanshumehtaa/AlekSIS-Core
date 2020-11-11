@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_school_term'),
+        ('core', '0003_drop_image_cropping'),
     ]
 
     operations = [
