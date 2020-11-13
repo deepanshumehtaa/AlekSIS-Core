@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "reversion",
     "phonenumber_field",
     "debug_toolbar",
+    "django_prometheus",
     "django_select2",
     "hattori",
     "templated_email",
@@ -106,6 +107,7 @@ INSTALLED_APPS = [
     "health_check.cache",
     "health_check.storage",
     "health_check.contrib.psutil",
+    "health_check.contrib.migrations",
     "dynamic_preferences",
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
@@ -131,6 +133,7 @@ STATICFILES_FINDERS = [
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -148,6 +151,7 @@ MIDDLEWARE = [
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "aleksis.core.util.middlewares.EnsurePersonMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
@@ -182,7 +186,7 @@ WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": _settings.get("database.name", "aleksis"),
         "USER": _settings.get("database.username", "aleksis"),
         "PASSWORD": _settings.get("database.password", None),
@@ -198,7 +202,7 @@ merge_app_settings("DATABASES", DATABASES, False)
 if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
             "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
         }
     }
