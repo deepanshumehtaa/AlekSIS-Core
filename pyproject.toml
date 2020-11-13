@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "AlekSIS"
+name = "AlekSIS-Core"
 version = "2.0a3.dev0"
 packages = [
     { include = "aleksis" }
@@ -12,8 +12,8 @@ authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuck
 maintainers = ["Jonathan Weth <wethjo@katharineum.de>", "Dominik George <dominik.george@teckids.org>"]
 license = "EUPL-1.2-or-later"
 homepage = "https://aleksis.org/"
-repository = "https://edugit.org/AlekSIS/official/AlekSIS"
-documentation = "https://aleksis.org/AlekSIS/docs/html/"
+repository = "https://edugit.org/AlekSIS/official/AlekSIS-Core"
+documentation = "https://aleksis.org/AlekSIS-Core/docs/html/"
 keywords = ["SIS", "education", "school", "digitisation", "school apps"]
 classifiers = [
     "Development Status :: 3 - Alpha",
