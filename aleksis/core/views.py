@@ -690,7 +690,7 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
 
 class DataCheckView(ListView):
     model = DataCheckResult
-    template_name = "alsijil/data_check/list.html"
+    template_name = "core/data_check/list.html"
     context_object_name = "results"
 
     def get_queryset(self) -> QuerySet:
