@@ -4,10 +4,12 @@ from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.list import ListView
 
 import reversion
 from django_tables2 import RequestConfig, SingleTableView
@@ -18,6 +20,8 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+
+from aleksis.core.data_checks import check_data
 
 from .filters import GroupFilter, PersonFilter
 from .forms import (
@@ -38,6 +42,7 @@ from .models import (
     AdditionalField,
     Announcement,
     DashboardWidget,
+    DataCheckResult,
     Group,
     GroupType,
     Notification,
@@ -58,7 +63,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.core_helpers import is_celery_enabled, objectgetter_optional
 
 
 @permission_required("core.view_dashboard")
@@ -681,3 +686,44 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The group type has been deleted."))
 
     return redirect("group_types")
+
+
+class DataCheckView(ListView):
+    model = DataCheckResult
+    template_name = "alsijil/data_check/list.html"
+    context_object_name = "results"
+
+    def get_queryset(self) -> QuerySet:
+        return DataCheckResult.objects.filter(solved=False).order_by("check")
+
+
+def run_data_checks(request: HttpRequest) -> HttpResponse:
+    check_data()
+    if is_celery_enabled():
+        messages.success(
+            request,
+            _(
+                "The data check has been started. Please note that it may take "
+                "a while before you are able to fetch the data on this page."
+            ),
+        )
+    else:
+        messages.success(request, _("The data check has been finished."))
+    return redirect("check_data")
+
+
+def solve_data_check_view(request: HttpRequest, id_: int, solve_option: str = "default"):
+    result = get_object_or_404(DataCheckResult, pk=id_)
+    if solve_option in result.related_check.solve_options:
+        solve_option_obj = result.related_check.solve_options[solve_option]
+
+        msg = _(
+            f"The solve option '{solve_option_obj.verbose_name}' has been affected on the object '{result.related_object}' (type: {result.related_object._meta.verbose_name})."
+        )
+
+        result.solve(solve_option)
+
+        messages.success(request, msg)
+        return redirect("check_data")
+    else:
+        return HttpResponseNotFound()

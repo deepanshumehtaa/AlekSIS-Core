@@ -153,6 +153,13 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("data_check/", views.DataCheckView.as_view(), name="check_data",),
+    path("data_check/run/", views.run_data_checks, name="data_check_run",),
+    path(
+        "data_check/<int:id_>/<str:solve_option>/",
+        views.solve_data_check_view,
+        name="data_check_solve",
+    ),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

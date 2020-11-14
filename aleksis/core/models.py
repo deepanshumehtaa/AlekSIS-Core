@@ -24,6 +24,8 @@ from dynamic_preferences.models import PerInstancePreferenceModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
+from aleksis.core.data_checks import DATA_CHECK_REGISTRY, DataCheck
+
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
@@ -226,9 +228,9 @@ class Person(ExtensibleModel):
     def age_at(self, today):
         if self.date_of_birth:
             years = today.year - self.date_of_birth.year
-            if (self.date_of_birth.month > today.month
-                or (self.date_of_birth.month == today.month
-                    and self.date_of_birth.day > today.day)):
+            if self.date_of_birth.month > today.month or (
+                self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+            ):
                 years -= 1
             return years
 
@@ -388,14 +390,14 @@ class Group(SchoolTermRelatedExtensibleModel):
         """ Get stats about a given group """
         stats = {}
 
-        stats['members'] = len(self.members.all())
+        stats["members"] = len(self.members.all())
 
         ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
 
         if ages:
-            stats['age_avg'] = sum(ages) / len(ages)
-            stats['age_range_min'] = min(ages)
-            stats['age_range_max'] = max(ages)
+            stats["age_avg"] = sum(ages) / len(ages)
+            stats["age_range_min"] = min(ages)
+            stats["age_range_max"] = max(ages)
 
         return stats
 
@@ -798,3 +800,29 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
     class Meta:
         app_label = "core"
+
+
+class DataCheckResult(ExtensibleModel):
+    check = models.CharField(
+        max_length=255,
+        verbose_name=_("Related data check task"),
+        choices=DATA_CHECK_REGISTRY.data_checks_choices,
+    )
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.CharField(max_length=255)
+    related_object = GenericForeignKey("content_type", "object_id")
+
+    solved = models.BooleanField(default=False, verbose_name=_("Issue solved"))
+    sent = models.BooleanField(default=False, verbose_name=_("Notification sent"))
+
+    @property
+    def related_check(self) -> DataCheck:
+        return DATA_CHECK_REGISTRY.data_checks_by_name[self.check]
+
+    def solve(self, solve_option: str = "default"):
+        self.related_check.solve(self, solve_option)
+
+    class Meta:
+        verbose_name = _("Data check result")
+        verbose_name_plural = _("Data check results")
