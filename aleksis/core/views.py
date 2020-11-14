@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Dict, Optional
 
 from django.apps import apps
 from django.conf import settings
@@ -21,7 +21,7 @@ from haystack.views import SearchView
 from health_check.views import MainView
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
-from aleksis.core.data_checks import check_data
+from aleksis.core.data_checks import DATA_CHECK_REGISTRY, check_data
 
 from .filters import GroupFilter, PersonFilter
 from .forms import (
@@ -695,6 +695,11 @@ class DataCheckView(ListView):
 
     def get_queryset(self) -> QuerySet:
         return DataCheckResult.objects.filter(solved=False).order_by("check")
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["registered_checks"] = DATA_CHECK_REGISTRY.data_checks
+        return context
 
 
 def run_data_checks(request: HttpRequest) -> HttpResponse:
