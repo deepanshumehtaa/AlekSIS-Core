@@ -67,7 +67,7 @@ def check_data():
         logging.info(f"Run check: {check.verbose_name}")
         check.check_data()
 
-    if get_site_preferences()["alsijil__data_checks_send_emails"]:
+    if get_site_preferences()["general__data_checks_send_emails"]:
         send_emails_for_data_checks()
 
 
@@ -93,9 +93,11 @@ def send_emails_for_data_checks():
             template_name="data_checks",
             from_email=get_site_preferences()["mail__address"],
             recipient_list=[
-                p.email for p in get_site_preferences()["alsijil__data_checks_recipients"]
+                p.email for p in get_site_preferences()["general__data_checks_recipients"]
             ],
             context={"results": results_with_checks},
         )
+
+        logging.info("Sent notification email because of unsent data checks")
 
         results.update(sent=True)

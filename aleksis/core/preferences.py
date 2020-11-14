@@ -5,8 +5,10 @@ from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import (
+    BooleanPreference,
     ChoicePreference,
     FilePreference,
+    ModelMultipleChoicePreference,
     MultipleChoicePreference,
     StringPreference,
 )
@@ -209,3 +211,24 @@ class AvailableLanguages(MultipleChoicePreference):
     verbose_name = _("Available languages")
     field_attribute = {"initial": []}
     choices = settings.LANGUAGES
+
+
+@site_preferences_registry.register
+class DataChecksSendEmails(BooleanPreference):
+    """Enable email sending if data checks detect problems."""
+
+    section = general
+    name = "data_checks_send_emails"
+    default = False
+    verbose_name = _("Send emails if data checks detect problems")
+
+
+@site_preferences_registry.register
+class DataChecksEmailsRecipients(ModelMultipleChoicePreference):
+    """Email recipients for data check problem emails."""
+
+    section = general
+    name = "data_checks_recipients"
+    default = []
+    model = Person
+    verbose_name = _("Email recipients for data checks problem emails")
