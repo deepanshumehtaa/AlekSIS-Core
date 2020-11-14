@@ -40,7 +40,7 @@ class CoreConfig(AppConfig):
         super().ready()
 
         # Autodiscover various modules defined by AlekSIS
-        autodiscover_modules("form_extensions", "model_extensions", "checks")
+        autodiscover_modules("form_extensions", "model_extensions", "checks", "data_checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")
