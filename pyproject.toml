@@ -5,7 +5,7 @@ packages = [
     { include = "aleksis" }
 ]
 readme = "README.rst"
-include = ["CHANGELOG.rst", "LICENCE.rst", "manage.py", "docs/*", "docs/**/*", "tox.ini"]
+include = ["CHANGELOG.rst", "LICENCE.rst", "docs/*", "docs/**/*", "tox.ini"]
 
 description = "AlekSIS (School Information System) — Core"
 authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
