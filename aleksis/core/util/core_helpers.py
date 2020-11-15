@@ -1,11 +1,16 @@
 import os
 import time
 from datetime import datetime, timedelta
-from importlib import import_module, metadata
+from importlib import import_module
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
+
+try:
+    from importlib import metadata
+except ImportError:
+    import importlib_metadata as metadata
 
 from django.conf import settings
 from django.db.models import Model, QuerySet
