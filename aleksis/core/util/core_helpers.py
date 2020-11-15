@@ -76,10 +76,17 @@ def merge_app_settings(
     """
     for app in get_app_packages():
         pkg = ".".join(app.split(".")[:-2])
-        try:
-            mod_settings = import_module(pkg + ".settings")
-        except ImportError:
-            # Import errors are non-fatal. They mean that the app has no settings.py.
+        mod_settings = None
+        while "." in pkg:
+            try:
+                mod_settings = import_module(pkg + ".settings")
+            except ImportError:
+                # Import errors are non-fatal.
+                pkg = ".".join(pkg.split(".")[:-1])
+                continue
+            break
+        if not mod_settings:
+            # The app does not have settings
             continue
 
         app_setting = getattr(mod_settings, setting, None)
