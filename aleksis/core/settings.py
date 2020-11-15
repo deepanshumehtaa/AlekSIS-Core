@@ -370,6 +370,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
 
