@@ -1,8 +1,9 @@
 include:
-    - local: "/ci/general.yml"
-    - local: "/ci/test.yml"
-    - local: "/ci/build_dist.yml"
-    - local: "/ci/build_docker.yml"
-    - local: "/ci/pages.yml"
-    - local: "/ci/deploy_pypi.yml"
-    - local: "/ci/deploy.yml"
+    - project: "AlekSIS/official/AlekSIS"
+      file: /ci/general.yml
+    - project: "AlekSIS/official/AlekSIS"
+      file: /ci/test.yml
+    - project: "AlekSIS/official/AlekSIS"
+      file: /ci/build_dist.yml
+    - project: "AlekSIS/official/AlekSIS"
+      file: /ci/deploy_pypi.yml
