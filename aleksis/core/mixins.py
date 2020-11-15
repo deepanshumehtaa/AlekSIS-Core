@@ -270,7 +270,9 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             to.property_(_virtual_related, related_name)
 
     @classmethod
-    def syncable_fields(cls, recursive: bool = True, exclude_remotes: List = []) -> List[models.Field]:
+    def syncable_fields(
+        cls, recursive: bool = True, exclude_remotes: List = []
+    ) -> List[models.Field]:
         """Collect all fields that can be synced on a model.
 
         If recursive is True, it recurses into related models and generates virtual
@@ -286,7 +288,9 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                     continue
 
                 # Recurse into related model to get its fields as well
-                for subfield in field.related_model.syncable_fields(recursive, exclude_remotes+[cls]):
+                for subfield in field.related_model.syncable_fields(
+                    recursive, exclude_remotes + [cls]
+                ):
                     # generate virtual field names for proxy access
                     name = f"_{field.name}__{subfield.name}"
                     verbose_name = f"{field.verbose_name} -> {subfield.verbose_name}"
@@ -299,6 +303,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                                 return getattr(related, subfield.name)
                             # Related instane does not exist
                             return None
+
                         def setter(self, val):
                             if hasattr(self, field.name):
                                 related = getattr(self, field.name)
@@ -307,10 +312,17 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                                 related = field.related_model()
                                 setattr(related, field.remote_field.name, self)
                             setattr(related, subfield.name, val)
+
                         setattr(cls, name, property(getter, setter))
 
                     # Generate a fake field class with enough API to detect attribute names
-                    fields.append(type("FakeRelatedProxyField", (), {"name": name, "verbose_name": verbose_name}))
+                    fields.append(
+                        type(
+                            "FakeRelatedProxyField",
+                            (),
+                            {"name": name, "verbose_name": verbose_name},
+                        )
+                    )
             elif field.editable and not field.auto_created:
                 fields.append(field)
 
