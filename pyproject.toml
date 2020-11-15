@@ -86,7 +86,7 @@ django-reversion = "^3.0.7"
 django-favicon-plus-reloaded = "^1.0.4"
 django-health-check = "^3.12.1"
 psutil = "^5.7.0"
-celery-progress = "^0.0.12"
+celery-progress = "^0.0.14"
 django-prometheus = "^2.1.0"
 
 [tool.poetry.extras]
