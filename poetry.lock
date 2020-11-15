@@ -619,17 +619,6 @@ python-versions = "*"
 django = ">=1.11"
 
 [[package]]
-name = "django-image-cropping"
-version = "1.5.0"
-description = "A reusable app for cropping images easily and non-destructively in Django"
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-django-appconf = ">=1.0.2"
-
-[[package]]
 name = "django-impersonate"
 version = "1.5.1"
 description = "Django app to allow superusers to impersonate other users."
@@ -988,18 +977,6 @@ redis = ["redis"]
 toml = ["toml"]
 vault = ["hvac"]
 yaml = ["ruamel.yaml"]
-
-[[package]]
-name = "easy-thumbnails"
-version = "2.7"
-description = "Easy thumbnails for Django"
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-django = ">=1.11,<4.0"
-pillow = "*"
 
 [[package]]
 name = "faker"
@@ -2155,7 +2132,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "79b71e0dcde5b91ee94c98bad0bb262d9dc249b776e421640818b90bfa2d442d"
+content-hash = "ad08a984daa918b60656e0ae43f82cf7833097a121f783fdf6ad8d2603fdc60b"
 
 [metadata.files]
 alabaster = [
@@ -2383,10 +2360,6 @@ django-health-check = [
     {file = "django-health-check-3.16.1.tar.gz", hash = "sha256:2cb3944e313e435bdf299288e109f398b6c08b610e09cc90d7f5f6a2bcf469fc"},
     {file = "django_health_check-3.16.1-py2.py3-none-any.whl", hash = "sha256:8b0835f04ebaeb0d12498a5ef47dd22196237c3987ff28bcce9ed28b5a169d5e"},
 ]
-django-image-cropping = [
-    {file = "django-image-cropping-1.5.0.tar.gz", hash = "sha256:59744e8df88db7e46e37b526fc715fdde665d9efa345922745f50411a6dadb3f"},
-    {file = "django_image_cropping-1.5.0-py3-none-any.whl", hash = "sha256:81dbcabb6421c5a1e88fac9d96f336d6109a23dcb8fa6c678329d3688c9973c4"},
-]
 django-impersonate = [
     {file = "django-impersonate-1.5.1.tar.gz", hash = "sha256:7c786ffaa7a5dd430f9277b53a64676c470b684eee5aa52c3b483298860d09b4"},
 ]
@@ -2497,9 +2470,6 @@ dparse = [
 dynaconf = [
     {file = "dynaconf-3.1.2-py2.py3-none-any.whl", hash = "sha256:808adfe964f10695846dbf8dad7632e47fc3bc38860fd1887ed57dddffc4eff2"},
     {file = "dynaconf-3.1.2.tar.gz", hash = "sha256:9b34ab2f811a81755f5eb4beac77a69e1e0887528c7e37fc4bc83fed52dcf502"},
-]
-easy-thumbnails = [
-    {file = "easy-thumbnails-2.7.tar.gz", hash = "sha256:e4e7a0dd4001f56bfd4058428f2c91eafe27d33ef3b8b33ac4e013b159b9ff91"},
 ]
 faker = [
     {file = "Faker-4.14.2-py3-none-any.whl", hash = "sha256:ce1c38823eb0f927567cde5bf2e7c8ca565c7a70316139342050ce2ca74b4026"},

@@ -51,8 +51,6 @@ django-settings-context-processor = "^0.2"
 django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.15.0"
 django-ipware = "^3.0"
-easy-thumbnails = "^2.6"
-django-image-cropping = "^1.2"
 django-impersonate = "^1.4"
 python-memcached = "^1.59"
 django-hattori = "^0.2"
