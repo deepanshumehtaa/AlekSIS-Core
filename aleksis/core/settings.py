@@ -206,10 +206,9 @@ if _settings.get("caching.memcached.enabled", False):
             "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
         }
     }
-    if _settings.get("caching.cachalot.enabled", True):
-        INSTALLED_APPS.append("cachalot")
-        DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
-        CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+    INSTALLED_APPS.append("cachalot")
+    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
