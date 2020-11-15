@@ -270,13 +270,45 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             to.property_(_virtual_related, related_name)
 
     @classmethod
-    def syncable_fields(cls) -> List[models.Field]:
-        """Collect all fields that can be synced on a model."""
-        return [
-            field
-            for field in cls._meta.fields
-            if (field.editable and not field.auto_created and not field.is_relation)
-        ]
+    def syncable_fields(cls, recursive: bool = True) -> List[models.Field]:
+        """Collect all fields that can be synced on a model.
+
+        If recursive is True, it recurses into related models and generates virtual
+        proxy fields to access fields in related models."""
+        fields = []
+        for field in cls._meta.get_fields():
+            if field.is_relation and field.one_to_one and recursive:
+                if ExtensibleModel not in field.related_model.__mro__:
+                    # Related model is not extensible and thus has no syncable fields
+                    continue
+
+                # Recurse into related model to get its fields as well
+                for subfield in field.related_model.syncable_fields():
+                    # generate virtual field names for proxy access
+                    name = f"_{field.name}__{subfield.name}"
+                    verbose_name = f"{field.verbose_name} -> {subfield.verbose_name}"
+
+                    # Add proxy properties to handle access to related model
+                    def getter(self):
+                        if hasattr(self, field.name):
+                            related = getattr(self, field.name)
+                            return getattr(related, subfield.name)
+                        # Related instane does not exist
+                        return None
+                    def setter(self, val):
+                        if hasattr(self, field.name):
+                            related = getattr(self, field.name)
+                        else:
+                            # Auto-create related instance (but do not save)
+                            related = field.related_model()
+                            setattr(related, field.remote_field.name, self)
+                        setattr(related, subfield.name, val)
+                    setattr(cls, name, property(getter, setter))
+
+                    # Generate a fake field class with enough API to detect attribute names
+                    fields.append(type("FakeRelatedProxyField", (), {"name": name, "verbose_name": verbose_name}))
+            elif field.editable and not field.auto_created:
+                fields.append(field)
 
     @classmethod
     def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
