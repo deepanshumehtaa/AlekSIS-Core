@@ -48,6 +48,26 @@ class _ExtensibleModelBase(models.base.ModelBase):
         return mcls
 
 
+def _generate_proxy_property(field, subfield):
+    def getter(self):
+        if hasattr(self, field.name):
+            related = getattr(self, field.name)
+            return getattr(related, subfield.name)
+        # Related instane does not exist
+        return None
+
+    def setter(self, val):
+        if hasattr(self, field.name):
+            related = getattr(self, field.name)
+        else:
+            # Auto-create related instance (but do not save)
+            related = field.related_model()
+            setattr(related, field.remote_field.name, self)
+        setattr(related, subfield.name, val)
+
+    return property(getter, setter)
+
+
 class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     """Base model for all objects in AlekSIS apps.
 
@@ -297,23 +317,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
                     if not hasattr(cls, name):
                         # Add proxy properties to handle access to related model
-                        def getter(self):
-                            if hasattr(self, field.name):
-                                related = getattr(self, field.name)
-                                return getattr(related, subfield.name)
-                            # Related instane does not exist
-                            return None
-
-                        def setter(self, val):
-                            if hasattr(self, field.name):
-                                related = getattr(self, field.name)
-                            else:
-                                # Auto-create related instance (but do not save)
-                                related = field.related_model()
-                                setattr(related, field.remote_field.name, self)
-                            setattr(related, subfield.name, val)
-
-                        setattr(cls, name, property(getter, setter))
+                        setattr(cls, name, _generate_proxy_property(field, subfield))
 
                     # Generate a fake field class with enough API to detect attribute names
                     fields.append(
