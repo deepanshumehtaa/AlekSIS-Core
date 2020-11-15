@@ -48,7 +48,7 @@ class _ExtensibleModelBase(models.base.ModelBase):
         return mcls
 
 
-def _generate_proxy_property(field, subfield):
+def _generate_one_to_one_proxy_property(field, subfield):
     def getter(self):
         if hasattr(self, field.name):
             related = getattr(self, field.name)
@@ -63,6 +63,8 @@ def _generate_proxy_property(field, subfield):
             # Auto-create related instance (but do not save)
             related = field.related_model()
             setattr(related, field.remote_field.name, self)
+            # Ensure the related model is saved later
+            self._save_reverse = getattr(self, "_save_reverse", []) + [related]
         setattr(related, subfield.name, val)
 
     return property(getter, setter)
@@ -317,7 +319,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
                     if not hasattr(cls, name):
                         # Add proxy properties to handle access to related model
-                        setattr(cls, name, _generate_proxy_property(field, subfield))
+                        setattr(cls, name, _generate_one_to_one_proxy_property(field, subfield))
 
                     # Generate a fake field class with enough API to detect attribute names
                     fields.append(
@@ -348,6 +350,16 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     def add_permission(cls, name: str, verbose_name: str):
         """Dynamically add a new permission to a model."""
         cls.extra_permissions.append((name, verbose_name))
+
+    def save(self, *args, **kwargs):
+        """Ensure all functionality of our extensions that needs saving gets it."""
+        # For auto-created remote syncable fields
+        if hasattr(self, "_save_reverse"):
+            for related in self._save_reverse:
+                related.save()
+            del self._save_reverse
+
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
