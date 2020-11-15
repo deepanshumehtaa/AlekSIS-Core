@@ -270,7 +270,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             to.property_(_virtual_related, related_name)
 
     @classmethod
-    def syncable_fields(cls, recursive: bool = True) -> List[models.Field]:
+    def syncable_fields(cls, recursive: bool = True, exclude_remotes: List = []) -> List[models.Field]:
         """Collect all fields that can be synced on a model.
 
         If recursive is True, it recurses into related models and generates virtual
@@ -281,9 +281,12 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 if ExtensibleModel not in field.related_model.__mro__:
                     # Related model is not extensible and thus has no syncable fields
                     continue
+                if field.related_model in exclude_remotes:
+                    # Remote is excluded, probably to avoid recursion
+                    continue
 
                 # Recurse into related model to get its fields as well
-                for subfield in field.related_model.syncable_fields():
+                for subfield in field.related_model.syncable_fields(recursive, exclude_remotes+[cls]):
                     # generate virtual field names for proxy access
                     name = f"_{field.name}__{subfield.name}"
                     verbose_name = f"{field.verbose_name} -> {subfield.verbose_name}"
