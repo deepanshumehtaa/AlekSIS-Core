@@ -288,22 +288,23 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                     name = f"_{field.name}__{subfield.name}"
                     verbose_name = f"{field.verbose_name} -> {subfield.verbose_name}"
 
-                    # Add proxy properties to handle access to related model
-                    def getter(self):
-                        if hasattr(self, field.name):
-                            related = getattr(self, field.name)
-                            return getattr(related, subfield.name)
-                        # Related instane does not exist
-                        return None
-                    def setter(self, val):
-                        if hasattr(self, field.name):
-                            related = getattr(self, field.name)
-                        else:
-                            # Auto-create related instance (but do not save)
-                            related = field.related_model()
-                            setattr(related, field.remote_field.name, self)
-                        setattr(related, subfield.name, val)
-                    setattr(cls, name, property(getter, setter))
+                    if not hasattr(cls, name):
+                        # Add proxy properties to handle access to related model
+                        def getter(self):
+                            if hasattr(self, field.name):
+                                related = getattr(self, field.name)
+                                return getattr(related, subfield.name)
+                            # Related instane does not exist
+                            return None
+                        def setter(self, val):
+                            if hasattr(self, field.name):
+                                related = getattr(self, field.name)
+                            else:
+                                # Auto-create related instance (but do not save)
+                                related = field.related_model()
+                                setattr(related, field.remote_field.name, self)
+                            setattr(related, subfield.name, val)
+                        setattr(cls, name, property(getter, setter))
 
                     # Generate a fake field class with enough API to detect attribute names
                     fields.append(type("FakeRelatedProxyField", (), {"name": name, "verbose_name": verbose_name}))
