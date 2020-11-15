@@ -1,8 +1,7 @@
 import os
-import pkgutil
 import time
 from datetime import datetime, timedelta
-from importlib import import_module
+from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
@@ -59,14 +58,8 @@ def dt_show_toolbar(request: HttpRequest) -> bool:
 
 
 def get_app_packages() -> Sequence[str]:
-    """Find all packages within the aleksis.apps namespace."""
-    # Import error are non-fatal here because probably simply no app is installed.
-    try:
-        import aleksis.apps
-    except ImportError:
-        return []
-
-    return [f"aleksis.apps.{pkg[1]}" for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
+    """Find all registered apps from the setuptools entrypoint."""
+    return [f"{ep.module}.{ep.attr}" for ep in metadata.entry_points()["aleksis.app"]]
 
 
 def merge_app_settings(
@@ -81,7 +74,8 @@ def merge_app_settings(
     Note: Only selected names will be imported frm it to minimise impact of
     potentially malicious apps!
     """
-    for pkg in get_app_packages():
+    for app in get_app_packages():
+        pkg = ".".join(app.split(".")[:-2])
         try:
             mod_settings = import_module(pkg + ".settings")
         except ImportError:
