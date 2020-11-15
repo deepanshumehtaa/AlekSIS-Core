@@ -281,7 +281,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 if ExtensibleModel not in field.related_model.__mro__:
                     # Related model is not extensible and thus has no syncable fields
                     continue
-
                 # Recurse into related model to get its fields as well
                 for subfield in field.related_model.syncable_fields():
                     # generate virtual field names for proxy access
