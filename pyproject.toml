@@ -5,7 +5,7 @@ packages = [
     { include = "aleksis" }
 ]
 readme = "README.rst"
-include = ["CHANGELOG.rst", "CODE_OF_CONDUCT.rst", "CONTRIBUTING.rst", "Dockerfile", "LICENCE.rst", "manage.py", "docker/*", "docker/**/*", "docker-compose.yml", "docs/*", "docs/**/*", "tox.ini"]
+include = ["CHANGELOG.rst", "LICENCE.rst", "docs/*", "docs/**/*", "aleksis/**/*.mo", "tox.ini"]
 
 description = "AlekSIS (School Information System) — Core"
 authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
