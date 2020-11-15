@@ -209,6 +209,8 @@ if _settings.get("caching.memcached.enabled", False):
     INSTALLED_APPS.append("cachalot")
     DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
     CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+    CACHALOT_DATABASES = set(DATABASES.keys())
+    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
