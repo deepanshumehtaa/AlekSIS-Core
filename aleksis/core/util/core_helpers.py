@@ -64,7 +64,7 @@ def dt_show_toolbar(request: HttpRequest) -> bool:
 
 def get_app_packages() -> Sequence[str]:
     """Find all registered apps from the setuptools entrypoint."""
-    return [f"{ep.module}.{ep.attr}" for ep in metadata.entry_points()["aleksis.app"]]
+    return [f"{ep.module}.{ep.attr}" for ep in metadata.entry_points().get("aleksis.app", [])]
 
 
 def merge_app_settings(
