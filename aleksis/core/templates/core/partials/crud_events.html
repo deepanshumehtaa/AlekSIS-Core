@@ -1,7 +1,7 @@
 {% load i18n data_helpers %}
 
 <ul class="collection">
-  {% for version in obj._versions %}
+  {% for version in obj.versions %}
     <li class="collection-item">
       <strong>
         {{ version.0.revision.get_comment }}

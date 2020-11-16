@@ -53,7 +53,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     This base model ensures all objects in AlekSIS apps fulfill the
     following properties:
 
-     * _versions property to retrieve all versions of the model from reversion
+     * `versions` property to retrieve all versions of the model from reversion
      * Allow injection of fields and code from AlekSIS apps to extend
        model functionality.
 
@@ -107,7 +107,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         pass
 
     @property
-    def _versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
+    def versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
         """Get all versions of this object from django-reversion.
 
         Includes diffs to previous version.
