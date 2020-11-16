@@ -41,6 +41,7 @@ MENUS = {
                     "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
+                    "related_urls": ["/two_factor/"],
                     "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
@@ -86,6 +87,7 @@ MENUS = {
                     "name": _("School terms"),
                     "url": "school_terms",
                     "icon": "date_range",
+                    "related_urls": ["/school_term/"]
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -144,6 +146,7 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
+            "related_urls": ["/person/"],
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")
             ],
@@ -152,6 +155,7 @@ MENUS = {
                     "name": _("Persons"),
                     "url": "persons",
                     "icon": "person",
+                    "related_urls": ["/person/"],
                     "validators": [
                         ("aleksis.core.util.predicates.permission_validator", "core.view_persons")
                     ],
@@ -160,6 +164,7 @@ MENUS = {
                     "name": _("Groups"),
                     "url": "groups",
                     "icon": "group",
+                    "related_urls": ["/group/"],
                     "validators": [
                         ("aleksis.core.util.predicates.permission_validator", "core.view_groups")
                     ],
@@ -168,6 +173,7 @@ MENUS = {
                     "name": _("Group types"),
                     "url": "group_types",
                     "icon": "category",
+                    "related_urls": ["/group_type/"],
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -200,6 +206,7 @@ MENUS = {
                 {
                     "name": _("Additional fields"),
                     "url": "additional_fields",
+                    "related_urls": ["/additional_field/"],
                     "icon": "style",
                     "validators": [
                         (
