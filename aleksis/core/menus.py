@@ -87,7 +87,7 @@ MENUS = {
                     "name": _("School terms"),
                     "url": "school_terms",
                     "icon": "date_range",
-                    "related_urls": ["/school_term/"]
+                    "related_urls": ["/school_term/"],
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
