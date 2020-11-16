@@ -4,7 +4,6 @@ from glob import glob
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import settings as thumbnail_settings
 
 from .util.core_helpers import (
     get_app_packages,
@@ -69,7 +68,6 @@ INSTALLED_APPS = [
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
-    "easy_thumbnails",
     "maintenance_mode",
     "menu_generator",
     "reversion",
@@ -159,8 +157,6 @@ TEMPLATES = [
         },
     },
 ]
-
-THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
