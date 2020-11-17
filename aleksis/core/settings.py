@@ -4,7 +4,6 @@ from glob import glob
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import settings as thumbnail_settings
 
 from .util.core_helpers import (
     get_app_packages,
@@ -86,7 +85,6 @@ INSTALLED_APPS = [
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
-    "easy_thumbnails",
     "maintenance_mode",
     "menu_generator",
     "reversion",
@@ -176,8 +174,6 @@ TEMPLATES = [
         },
     },
 ]
-
-THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
@@ -392,6 +388,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
 
@@ -441,6 +438,9 @@ DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
 DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 DBBACKUP_CLEANUP_DB = _settings.get("backup.database.clean", True)
 DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
+DBBACKUP_CONNECTOR_MAPPING = {
+    "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
+}
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 

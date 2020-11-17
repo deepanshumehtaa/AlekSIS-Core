@@ -8,7 +8,6 @@ import django.contrib.postgres.fields.jsonb
 import django.contrib.sites.managers
 from django.db import migrations, models
 import django.db.models.deletion
-import image_cropping.fields
 import phonenumber_field.modelfields
 
 
@@ -125,8 +124,8 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(blank=True, max_length=254, verbose_name='E-mail address')),
                 ('date_of_birth', models.DateField(blank=True, null=True, verbose_name='Date of birth')),
                 ('sex', models.CharField(blank=True, choices=[('f', 'female'), ('m', 'male')], max_length=1, verbose_name='Sex')),
-                ('photo', image_cropping.fields.ImageCropField(blank=True, null=True, upload_to='', verbose_name='Photo')),
-                ('photo_cropping', image_cropping.fields.ImageRatioField('photo', '600x800', adapt_rotation=False, allow_fullsize=False, free_crop=False, help_text=None, hide_image_field=False, size_warning=True, verbose_name='photo cropping')),
+                ('photo', models.CharField(blank=True, max_length=1)),
+                ('photo_cropping', models.CharField(blank=True, max_length=1)),
                 ('description', models.TextField(blank=True, verbose_name='Description')),
                 ('guardians', models.ManyToManyField(blank=True, related_name='children', to='core.Person', verbose_name='Guardians / Parents')),
                 ('primary_group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Group', verbose_name='Primary group')),
