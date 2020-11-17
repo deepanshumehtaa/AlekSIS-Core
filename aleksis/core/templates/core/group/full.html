@@ -14,6 +14,7 @@
   {% has_perm 'core.edit_group' user group as can_change_group %}
   {% has_perm 'core.change_group_preferences' user group as can_change_group_preferences %}
   {% has_perm 'core.delete_group' user group as can_delete_group %}
+  {% has_perm 'core.view_group_stats' user group as can_view_group_stats %}
 
   {% if can_change_group or can_change_group_preferences or can_delete_group %}
     <p>
@@ -58,6 +59,25 @@
       </td>
     </tr>
   </table>
+
+  {% if can_view_group_stats %}
+    <h5>{% blocktrans %}Statistics{% endblocktrans %}</h5>
+    <ul>
+      <li>
+        {% trans "Count of members" %}: {{ stats.members }}
+      </li>
+      {% if stats.age_avg %}
+        <li>
+          {% trans "Average age" %}: {{ stats.age_avg|floatformat }}
+        </li>
+      {% endif %}
+      {% if stats.age_range_min %}
+        <li>
+          {% trans "Age range" %}: {{ stats.age_range_min }} {% trans "years to" %} {{ stats.age_range_max }} {% trans "years "%}
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
 
   <h5>{% blocktrans %}Owners{% endblocktrans %}</h5>
   {% render_table owners_table %}

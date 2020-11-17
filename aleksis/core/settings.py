@@ -4,7 +4,6 @@ from glob import glob
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import settings as thumbnail_settings
 
 from .util.core_helpers import (
     get_app_packages,
@@ -69,12 +68,12 @@ INSTALLED_APPS = [
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
-    "easy_thumbnails",
     "maintenance_mode",
     "menu_generator",
     "reversion",
     "phonenumber_field",
     "debug_toolbar",
+    "django_prometheus",
     "django_select2",
     "hattori",
     "templated_email",
@@ -89,6 +88,7 @@ INSTALLED_APPS = [
     "health_check.cache",
     "health_check.storage",
     "health_check.contrib.psutil",
+    "health_check.contrib.migrations",
     "dynamic_preferences",
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
@@ -114,6 +114,7 @@ STATICFILES_FINDERS = [
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -131,6 +132,7 @@ MIDDLEWARE = [
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "aleksis.core.util.middlewares.EnsurePersonMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
@@ -156,8 +158,6 @@ TEMPLATES = [
     },
 ]
 
-THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
-
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 # Database
@@ -165,7 +165,7 @@ WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": _settings.get("database.name", "aleksis"),
         "USER": _settings.get("database.username", "aleksis"),
         "PASSWORD": _settings.get("database.password", None),
@@ -181,7 +181,7 @@ merge_app_settings("DATABASES", DATABASES, False)
 if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
             "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
         }
     }
@@ -366,6 +366,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
 
@@ -695,3 +696,5 @@ HEALTH_CHECK = {
 }
 
 ORIGINAL_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS[:]
+
+PROMETHEUS_EXPORT_MIGRATIONS = False

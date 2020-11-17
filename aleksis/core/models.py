@@ -221,16 +221,16 @@ class Person(ExtensibleModel):
     @property
     def age(self):
         """Age of the person at current time."""
-        return self.age_at(timezone.datetime.now().date())
+        return self.age_at(timezone.now().date())
 
     def age_at(self, today):
-        """Age of the person at a given date and time."""
-        years = today.year - self.date_of_birth.year
-        if self.date_of_birth.month > today.month or (
-            self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
-        ):
-            years -= 1
-        return years
+        if self.date_of_birth:
+            years = today.year - self.date_of_birth.year
+            if (self.date_of_birth.month > today.month
+                or (self.date_of_birth.month == today.month
+                    and self.date_of_birth.day > today.day)):
+                years -= 1
+            return years
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -326,7 +326,10 @@ class Group(SchoolTermRelatedExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
-        permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
+        permissions = (
+            ("assign_child_groups_to_groups", _("Can assign child groups to groups")),
+            ("view_group_stats", _("Can view statistics about group.")),
+        )
         constraints = [
             models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
             models.UniqueConstraint(
@@ -379,6 +382,22 @@ class Group(SchoolTermRelatedExtensibleModel):
     def announcement_recipients(self):
         """Flat list of all members and owners to fulfill announcement API contract."""
         return list(self.members.all()) + list(self.owners.all())
+
+    @property
+    def get_group_stats(self) -> dict:
+        """ Get stats about a given group """
+        stats = {}
+
+        stats['members'] = len(self.members.all())
+
+        ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
+
+        if ages:
+            stats['age_avg'] = sum(ages) / len(ages)
+            stats['age_range_min'] = min(ages)
+            stats['age_range_max'] = max(ages)
+
+        return stats
 
     def __str__(self) -> str:
         if self.school_term:
@@ -494,7 +513,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
         """Get all announcements at a certain time."""
-        when = when or timezone.datetime.now()
+        when = when or timezone.now()
 
         # Get announcements by time
         announcements = self.filter(valid_from__lte=when, valid_until__gte=when)
@@ -503,7 +522,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def on_date(self, when: Optional[date] = None) -> models.QuerySet:
         """Get all announcements at a certain date."""
-        when = when or timezone.datetime.now().date()
+        when = when or timezone.now().date()
 
         # Get announcements by time
         announcements = self.filter(valid_from__date__lte=when, valid_until__date__gte=when)
@@ -542,7 +561,7 @@ class Announcement(ExtensibleModel):
     link = models.URLField(blank=True, verbose_name=_("Link to detailed view"))
 
     valid_from = models.DateTimeField(
-        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+        verbose_name=_("Date and time from when to show"), default=timezone.now
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"), default=now_tomorrow,
