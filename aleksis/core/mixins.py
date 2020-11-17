@@ -315,7 +315,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 ):
                     # generate virtual field names for proxy access
                     name = f"_{field.name}__{subfield.name}"
-                    verbose_name = f"{field.name} ({field.related_model._meta.verbose_name}) -> {subfield.verbose_name}"
+                    verbose_name = f"{field.name} ({field.related_model._meta.verbose_name}) → {subfield.verbose_name}"
 
                     if not hasattr(cls, name):
                         # Add proxy properties to handle access to related model
