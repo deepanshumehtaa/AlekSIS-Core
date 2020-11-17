@@ -416,6 +416,9 @@ DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
 DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 DBBACKUP_CLEANUP_DB = _settings.get("backup.database.clean", True)
 DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
+DBBACKUP_CONNECTOR_MAPPING = {
+    "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
+}
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
