@@ -226,9 +226,9 @@ class Person(ExtensibleModel):
     def age_at(self, today):
         if self.date_of_birth:
             years = today.year - self.date_of_birth.year
-            if (self.date_of_birth.month > today.month
-                or (self.date_of_birth.month == today.month
-                    and self.date_of_birth.day > today.day)):
+            if self.date_of_birth.month > today.month or (
+                self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+            ):
                 years -= 1
             return years
 
@@ -388,14 +388,14 @@ class Group(SchoolTermRelatedExtensibleModel):
         """ Get stats about a given group """
         stats = {}
 
-        stats['members'] = len(self.members.all())
+        stats["members"] = len(self.members.all())
 
         ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
 
         if ages:
-            stats['age_avg'] = sum(ages) / len(ages)
-            stats['age_range_min'] = min(ages)
-            stats['age_range_max'] = max(ages)
+            stats["age_avg"] = sum(ages) / len(ages)
+            stats["age_range_min"] = min(ages)
+            stats["age_range_max"] = max(ages)
 
         return stats
 
