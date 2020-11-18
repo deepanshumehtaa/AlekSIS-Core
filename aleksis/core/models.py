@@ -823,6 +823,9 @@ class DataCheckResult(ExtensibleModel):
     def solve(self, solve_option: str = "default"):
         self.related_check.solve(self, solve_option)
 
+    def __str__(self):
+        return f"{self.related_object}: {self.related_check.problem_name}"
+
     class Meta:
         verbose_name = _("Data check result")
         verbose_name_plural = _("Data check results")
