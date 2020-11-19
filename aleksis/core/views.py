@@ -734,7 +734,9 @@ class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
             solve_option_obj = result.related_check.solve_options[solve_option]
 
             msg = _(
-                f"The solve option '{solve_option_obj.verbose_name}' has been affected on the object '{result.related_object}' (type: {result.related_object._meta.verbose_name})."
+                f"The solve option '{solve_option_obj.verbose_name}' "
+                f"has been affected on the object '{result.related_object}' "
+                f"(type: {result.related_object._meta.verbose_name})."
             )
 
             result.solve(solve_option)
