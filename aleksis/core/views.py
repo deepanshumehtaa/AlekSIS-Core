@@ -9,6 +9,8 @@ from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import View
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 import reversion
@@ -19,6 +21,7 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
+from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from aleksis.core.data_checks import DATA_CHECK_REGISTRY, check_data
@@ -702,33 +705,41 @@ class DataCheckView(ListView):
         return context
 
 
-def run_data_checks(request: HttpRequest) -> HttpResponse:
-    check_data()
-    if is_celery_enabled():
-        messages.success(
-            request,
-            _(
-                "The data check has been started. Please note that it may take "
-                "a while before you are able to fetch the data on this page."
-            ),
-        )
-    else:
-        messages.success(request, _("The data check has been finished."))
-    return redirect("check_data")
+class RunDataChecks(PermissionRequiredMixin, View):
+    permission_required = "core.run_data_checks"
 
-
-def solve_data_check_view(request: HttpRequest, id_: int, solve_option: str = "default"):
-    result = get_object_or_404(DataCheckResult, pk=id_)
-    if solve_option in result.related_check.solve_options:
-        solve_option_obj = result.related_check.solve_options[solve_option]
-
-        msg = _(
-            f"The solve option '{solve_option_obj.verbose_name}' has been affected on the object '{result.related_object}' (type: {result.related_object._meta.verbose_name})."
-        )
-
-        result.solve(solve_option)
-
-        messages.success(request, msg)
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        check_data()
+        if is_celery_enabled():
+            messages.success(
+                request,
+                _(
+                    "The data check has been started. Please note that it may take "
+                    "a while before you are able to fetch the data on this page."
+                ),
+            )
+        else:
+            messages.success(request, _("The data check has been finished."))
         return redirect("check_data")
-    else:
-        return HttpResponseNotFound()
+
+
+class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
+    queryset = DataCheckResult.objects.all()
+    permission_required = "core.solve_data_check"
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        solve_option = self.kwargs["solve_option"]
+        result = self.get_object()
+        if solve_option in result.related_check.solve_options:
+            solve_option_obj = result.related_check.solve_options[solve_option]
+
+            msg = _(
+                f"The solve option '{solve_option_obj.verbose_name}' has been affected on the object '{result.related_object}' (type: {result.related_object._meta.verbose_name})."
+            )
+
+            result.solve(solve_option)
+
+            messages.success(request, msg)
+            return redirect("check_data")
+        else:
+            return HttpResponseNotFound()
