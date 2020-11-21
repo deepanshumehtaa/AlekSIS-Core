@@ -118,7 +118,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         for i, version in enumerate(versions):
             diff = {}
             if i > 0:
-                prev_version = versions[i-1]
+                prev_version = versions[i - 1]
 
                 for k, val in version.field_dict.items():
                     prev_val = prev_version.field_dict.get(k, None)
