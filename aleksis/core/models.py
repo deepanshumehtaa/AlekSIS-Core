@@ -21,6 +21,7 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
@@ -440,7 +441,7 @@ class PersonGroupThrough(ExtensibleModel):
             setattr(self, field_name, field_instance)
 
 
-class Activity(ExtensibleModel):
+class Activity(ExtensibleModel, TimeStampedModel):
     """Activity of a user to trace some actions done in AlekSIS in displayable form."""
 
     user = models.ForeignKey(
@@ -460,7 +461,7 @@ class Activity(ExtensibleModel):
         verbose_name_plural = _("Activities")
 
 
-class Notification(ExtensibleModel):
+class Notification(ExtensibleModel, TimeStampedModel):
     """Notification to submit to a user."""
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))

@@ -37,7 +37,6 @@ python = "^3.7"
 Django = "^3.0"
 django-any-js = "^1.0"
 django-debug-toolbar = "^2.0"
-django-easy-audit = {version ="^1.2rc1", allow-prereleases = true}
 django-middleware-global-request = "^0.1.2"
 django-menu-generator = "^1.0.4"
 django-tables2 = "^2.1"
@@ -92,6 +91,7 @@ psutil = "^5.7.0"
 celery-progress = "^0.0.14"
 django-prometheus = "^2.1.0"
 importlib-metadata = {version = "^2.0.0", python = "<3.9"}
+django-model-utils = "^4.0.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
