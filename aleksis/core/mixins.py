@@ -345,11 +345,11 @@ class SuccessMessageMixin(ModelFormMixin):
         return super().form_valid(form)
 
 
-class AdvancedCreateView(CreateView, SuccessMessageMixin):
+class AdvancedCreateView(SuccessMessageMixin, CreateView):
     pass
 
 
-class AdvancedEditView(UpdateView, SuccessMessageMixin):
+class AdvancedEditView(SuccessMessageMixin, UpdateView):
     pass
 
 
