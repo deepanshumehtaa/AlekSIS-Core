@@ -443,14 +443,14 @@ django-appconf = "*"
 
 [[package]]
 name = "django-celery-results"
-version = "1.2.1"
+version = "2.0.0"
 description = "Celery result backends for Django."
 category = "main"
 optional = true
 python-versions = "*"
 
 [package.dependencies]
-celery = ">=4.4,<5.0"
+celery = ">=4.4,<6.0"
 
 [[package]]
 name = "django-ckeditor"
@@ -2108,7 +2108,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "358bf6bbfd5c8c49737bf6c71899bda91307802ae3f5c6bf127b8f3a73be4b1e"
+content-hash = "dc3e257ce024a6bdbb28b98ebdf3dc331a250114406cc6af07cf15c9d2546b7e"
 
 [metadata.files]
 alabaster = [
@@ -2277,8 +2277,8 @@ django-celery-email = [
     {file = "django_celery_email-3.0.0-py2.py3-none-any.whl", hash = "sha256:0f72da39cb2ea83c69440566e87f27cd72f68f247f98ce99fb29889fcf329406"},
 ]
 django-celery-results = [
-    {file = "django_celery_results-1.2.1-py2.py3-none-any.whl", hash = "sha256:a29ab580f0e38c66c39f51cc426bbdbb2a391b8cc0867df9dea748db2c961db2"},
-    {file = "django_celery_results-1.2.1.tar.gz", hash = "sha256:e390f70cc43bbc2cd7c8e4607dc29ab6211a2ab968f93677583f0160921f670c"},
+    {file = "django_celery_results-2.0.0-py2.py3-none-any.whl", hash = "sha256:f82280a9a25c44048b9e64ae4d47ade7d522c8221304b0e25388080021b95468"},
+    {file = "django_celery_results-2.0.0.tar.gz", hash = "sha256:754e01f22f70fddee5f2ca95c18f183fccee42ad98f9803577bffa717d45ac5d"},
 ]
 django-ckeditor = [
     {file = "django-ckeditor-6.0.0.tar.gz", hash = "sha256:29fd1a333cb9741ac2c3fd4e427a5c00115ed33a2389716a09af7656022dcdde"},
