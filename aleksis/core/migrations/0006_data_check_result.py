@@ -51,6 +51,10 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
+                "permissions": (
+                    ("run_data_checks", "Can run data checks"),
+                    ("solve_data_problem", "Can solve data check problems"),
+                ),
                 "verbose_name": "Data check result",
                 "verbose_name_plural": "Data check results",
             },

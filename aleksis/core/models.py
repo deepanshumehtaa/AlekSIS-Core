@@ -830,3 +830,7 @@ class DataCheckResult(ExtensibleModel):
     class Meta:
         verbose_name = _("Data check result")
         verbose_name_plural = _("Data check results")
+        permissions = (
+            ("run_data_checks", _("Can run data checks")),
+            ("solve_data_problem", _("Can solve data check problems")),
+        )

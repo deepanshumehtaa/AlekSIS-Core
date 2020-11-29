@@ -696,7 +696,8 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("group_types")
 
 
-class DataCheckView(ListView):
+class DataCheckView(PermissionRequiredMixin, ListView):
+    permission_required = "core.view_datacheckresults"
     model = DataCheckResult
     template_name = "core/data_check/list.html"
     context_object_name = "results"
@@ -730,7 +731,7 @@ class RunDataChecks(PermissionRequiredMixin, View):
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
     queryset = DataCheckResult.objects.all()
-    permission_required = "core.solve_data_check"
+    permission_required = "core.solve_data_problem"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         solve_option = self.kwargs["solve_option"]
