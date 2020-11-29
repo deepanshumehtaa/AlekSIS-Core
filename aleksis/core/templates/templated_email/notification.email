@@ -15,7 +15,7 @@
         {% trans "More information" %} → {{ notification.link }}
     {% endif %}
 
-    {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
+    {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created %}
         Sent by {{ trans_sender }} at {{ trans_created_at }}
     {% endblocktrans %}
 
@@ -37,7 +37,7 @@
     </blockquote>
 
     <p>
-        {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created_at %}
+        {% blocktrans with trans_sender=notification.sender trans_created_at=notification.created %}
             Sent by {{ trans_sender }} at {{ trans_created_at }}
         {% endblocktrans %}
     </p>

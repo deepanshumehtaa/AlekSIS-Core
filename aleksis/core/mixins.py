@@ -19,7 +19,6 @@ from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
-from easyaudit.models import CRUDEvent
 from guardian.admin import GuardedModelAdmin
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
@@ -76,8 +75,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     This base model ensures all objects in AlekSIS apps fulfill the
     following properties:
 
-     * crud_events property to retrieve easyaudit's CRUD event log
-     * created_at and updated_at properties based n CRUD events
+     * `versions` property to retrieve all versions of the model from reversion
      * Allow injection of fields and code from AlekSIS apps to extend
        model functionality.
 
@@ -131,49 +129,29 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         pass
 
     @property
-    def crud_events(self) -> QuerySet:
-        """Get all CRUD events connected to this object from easyaudit."""
-        content_type = ContentType.objects.get_for_model(self)
+    def versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
+        """Get all versions of this object from django-reversion.
 
-        return CRUDEvent.objects.filter(
-            object_id=self.pk, content_type=content_type
-        ).select_related("user", "user__person")
+        Includes diffs to previous version.
+        """
+        versions = reversion.models.Version.objects.get_for_object(self)
 
-    @property
-    def crud_event_create(self) -> Optional[CRUDEvent]:
-        """Return create event of this object."""
-        return self.crud_events.filter(event_type=CRUDEvent.CREATE).latest("datetime")
+        versions_with_changes = []
+        for i, version in enumerate(versions):
+            diff = {}
+            if i > 0:
+                prev_version = versions[i - 1]
 
-    @property
-    def crud_event_update(self) -> Optional[CRUDEvent]:
-        """Return last event of this object."""
-        return self.crud_events.latest("datetime")
+                for k, val in version.field_dict.items():
+                    prev_val = prev_version.field_dict.get(k, None)
+                    if prev_val != val:
+                        diff[k] = (prev_val, val)
 
-    @property
-    def created_at(self) -> Optional[datetime]:
-        """Determine creation timestamp from CRUD log."""
-        if self.crud_event_create:
-            return self.crud_event_create.datetime
+            versions_with_changes.append((version, diff))
 
-    @property
-    def updated_at(self) -> Optional[datetime]:
-        """Determine last timestamp from CRUD log."""
-        if self.crud_event_update:
-            return self.crud_event_update.datetime
+        return versions_with_changes
 
     extended_data = JSONField(default=dict, editable=False)
-
-    @property
-    def created_by(self) -> Optional[models.Model]:
-        """Determine user who created this object from CRUD log."""
-        if self.crud_event_create:
-            return self.crud_event_create.user
-
-    @property
-    def updated_by(self) -> Optional[models.Model]:
-        """Determine user who last updated this object from CRUD log."""
-        if self.crud_event_update:
-            return self.crud_event_update.user
 
     extended_data = JSONField(default=dict, editable=False)
 
