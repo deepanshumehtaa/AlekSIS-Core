@@ -7,6 +7,7 @@ from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
 from dynamic_preferences.registries import preference_models
+from health_check.plugins import plugin_dir
 
 from .registries import (
     group_preferences_registry,
@@ -51,6 +52,10 @@ class CoreConfig(AppConfig):
         preference_models.register(grouppreferencemodel, group_preferences_registry)
 
         self._refresh_authentication_backends()
+
+        from .health_checks import DataChecksHealthCheckBackend
+
+        plugin_dir.register(DataChecksHealthCheckBackend)
 
     @classmethod
     def _refresh_authentication_backends(cls):
