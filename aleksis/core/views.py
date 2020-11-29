@@ -385,11 +385,12 @@ class SystemStatus(MainView, PermissionRequiredMixin):
         task_results = []
 
         if "django_celery_results" in settings.INSTALLED_APPS:
-            from celery.task.control import inspect  # noqa
             from django_celery_results.models import TaskResult  # noqa
 
-            if inspect().registered_tasks():
-                job_list = list(inspect().registered_tasks().values())[0]
+            from .celery import app  # noqa
+
+            if app.control.inspect().registered_tasks():
+                job_list = list(app.control.inspect().registered_tasks().values())[0]
                 for job in job_list:
                     task_results.append(
                         TaskResult.objects.filter(task_name=job).order_by("date_done").last()
