@@ -21,6 +21,7 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
+from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
@@ -316,6 +317,7 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
     if request.method == "POST":
         if edit_person_form.is_valid():
             with reversion.create_revision():
+                set_user(request.user)
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
@@ -352,6 +354,7 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     if request.method == "POST":
         if edit_group_form.is_valid():
             with reversion.create_revision():
+                set_user(request.user)
                 group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
@@ -551,6 +554,7 @@ def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     person = objectgetter_optional(Person)(request, id_)
 
     with reversion.create_revision():
+        set_user(request.user)
         person.save()
 
     person.delete()
@@ -564,6 +568,7 @@ def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group."""
     group = objectgetter_optional(Group)(request, id_)
     with reversion.create_revision():
+        set_user(request.user)
         group.save()
 
     group.delete()
