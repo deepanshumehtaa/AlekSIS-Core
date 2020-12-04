@@ -21,6 +21,7 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
@@ -226,9 +227,9 @@ class Person(ExtensibleModel):
     def age_at(self, today):
         if self.date_of_birth:
             years = today.year - self.date_of_birth.year
-            if (self.date_of_birth.month > today.month
-                or (self.date_of_birth.month == today.month
-                    and self.date_of_birth.day > today.day)):
+            if self.date_of_birth.month > today.month or (
+                self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+            ):
                 years -= 1
             return years
 
@@ -388,14 +389,14 @@ class Group(SchoolTermRelatedExtensibleModel):
         """ Get stats about a given group """
         stats = {}
 
-        stats['members'] = len(self.members.all())
+        stats["members"] = len(self.members.all())
 
         ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
 
         if ages:
-            stats['age_avg'] = sum(ages) / len(ages)
-            stats['age_range_min'] = min(ages)
-            stats['age_range_max'] = max(ages)
+            stats["age_avg"] = sum(ages) / len(ages)
+            stats["age_range_min"] = min(ages)
+            stats["age_range_max"] = max(ages)
 
         return stats
 
@@ -440,7 +441,7 @@ class PersonGroupThrough(ExtensibleModel):
             setattr(self, field_name, field_instance)
 
 
-class Activity(ExtensibleModel):
+class Activity(ExtensibleModel, TimeStampedModel):
     """Activity of a user to trace some actions done in AlekSIS in displayable form."""
 
     user = models.ForeignKey(
@@ -460,7 +461,7 @@ class Activity(ExtensibleModel):
         verbose_name_plural = _("Activities")
 
 
-class Notification(ExtensibleModel):
+class Notification(ExtensibleModel, TimeStampedModel):
     """Notification to submit to a user."""
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))

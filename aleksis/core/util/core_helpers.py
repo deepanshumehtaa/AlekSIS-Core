@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from datetime import datetime, timedelta
 from importlib import import_module
@@ -7,9 +8,9 @@ from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
 
-try:
+if sys.version_info >= (3, 9):
     from importlib import metadata
-except ImportError:
+else:
     import importlib_metadata as metadata
 
 from django.conf import settings
