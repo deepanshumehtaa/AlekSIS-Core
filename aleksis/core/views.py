@@ -7,7 +7,9 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import never_cache
 
 import reversion
 from django_tables2 import RequestConfig, SingleTableView
@@ -112,6 +114,7 @@ class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
     template_name = "core/school_term/list.html"
 
 
+@method_decorator(never_cache, name="dispatch")
 class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
     """Create view for school terms."""
 
@@ -123,6 +126,7 @@ class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
     success_message = _("The school term has been created.")
 
 
+@method_decorator(never_cache, name="dispatch")
 class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
     """Edit view for school terms."""
 
@@ -230,6 +234,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/list.html", context)
 
 
+@never_cache
 @permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
     """View allowing to batch-process linking of users to persons."""
@@ -250,6 +255,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     return render(request, "core/person/accounts.html", context)
 
 
+@never_cache
 @permission_required("core.assign_child_groups_to_groups")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
     """View for batch-processing assignment from child groups to groups."""
@@ -287,6 +293,7 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/child_groups.html", context)
 
 
+@never_cache
 @permission_required("core.edit_person", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
@@ -325,6 +332,7 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
         return None
 
 
+@never_cache
 @permission_required("core.edit_group", fn=objectgetter_optional(Group, None, False))
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group."""
@@ -418,6 +426,7 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
+@never_cache
 @permission_required(
     "core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False)
 )
@@ -485,6 +494,7 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
         return render(self.request, self.template, context)
 
 
+@never_cache
 def preferences(
     request: HttpRequest,
     registry_name: str = "person",
@@ -570,6 +580,7 @@ def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("groups")
 
 
+@never_cache
 @permission_required(
     "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
 )
@@ -635,6 +646,7 @@ def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("additional_fields")
 
 
+@never_cache
 @permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
 def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group_type."""
