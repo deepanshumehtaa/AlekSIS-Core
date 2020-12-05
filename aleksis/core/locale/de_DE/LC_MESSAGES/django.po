@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-02 16:29+0200\n"
-"PO-Revision-Date: 2020-08-02 15:00+0000\n"
+"PO-Revision-Date: 2020-12-19 12:57+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #: filters.py:37 templates/core/base.html:77 templates/core/group/list.html:20
 #: templates/core/person/list.html:24 templates/search/search.html:7
@@ -412,7 +412,7 @@ msgstr "Kann Kindgruppen zu Gruppen zuordnen"
 
 #: models.py:330
 msgid "Long name"
-msgstr "Langer Name"
+msgstr "Langname"
 
 #: models.py:340 templates/core/group/full.html:65
 msgid "Members"
