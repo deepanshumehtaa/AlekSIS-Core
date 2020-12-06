@@ -18,6 +18,7 @@ from .util.core_helpers import is_celery_enabled
 urlpatterns = [
     path("", include("django_prometheus.urls")),
     path("", include("pwa.urls"), name="pwa"),
+    path("offline/", views.offline, name="offline"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
     path("data_management/", views.data_management, name="data_management"),
