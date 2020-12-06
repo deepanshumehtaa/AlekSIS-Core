@@ -31,7 +31,7 @@ self.addEventListener("install", function (event) {
     event.waitUntil(
         caches.open(CACHE).then(function (cache) {
             console.log("[AlekSIS PWA] Caching pages during install.");
-            return cache.addAll(precachePaths);
+            return cache.add(offlineFallbackPage);
         })
     );
 });
