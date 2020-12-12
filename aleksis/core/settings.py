@@ -203,7 +203,7 @@ if _settings.get("caching.memcached.enabled", False):
     INSTALLED_APPS.append("cachalot")
     DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
     CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
-    CACHALOT_DATABASES = set(DATABASES.keys())
+    CACHALOT_DATABASES = set("default")
     SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 # Password validation
