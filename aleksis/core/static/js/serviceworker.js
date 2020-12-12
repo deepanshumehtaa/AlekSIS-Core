@@ -1,18 +1,9 @@
+
 // This is the AlekSIS service worker
 
-const CACHE = "aleksis-cache";
+const CACHE = 'aleksis-cache';
 
-const precacheFiles = [
-    '',
-];
-
-const offlineFallbackPage = '/offline';
-
-const avoidCachingPaths = [
-    '/admin',
-    '/settings',
-    '/accounts/login'
-]; // TODO: More paths are needed
+const offlineFallbackPage = 'offline/';
 
 function pathComparer(requestUrl, pathRegEx) {
     return requestUrl.match(new RegExp(pathRegEx));
@@ -40,10 +31,7 @@ self.addEventListener("install", function (event) {
     event.waitUntil(
         caches.open(CACHE).then(function (cache) {
             console.log("[AlekSIS PWA] Caching pages during install.");
-
-            return cache.addAll(precacheFiles).then(function () {
-                return cache.add(offlineFallbackPage);
-            });
+            return cache.add(offlineFallbackPage);
         })
     );
 });
@@ -95,11 +83,11 @@ function fromCache(event) {
 }
 
 function updateCache(request, response) {
-    if (!comparePaths(request.url, avoidCachingPaths)) {
+    if (response.headers.get('cache-control') && response.headers.get('cache-control').includes('no-cache')) {
+        return Promise.resolve();
+    } else {
         return caches.open(CACHE).then(function (cache) {
             return cache.put(request, response);
         });
     }
-
-    return Promise.resolve();
 }
