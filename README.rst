@@ -1,38 +1,16 @@
-AlekSIS — All-libre extensible kit for school information systems
-=================================================================
+AlekSIS (School Information System) — Core (Core functionality and app framework)
+=================================================================================
 
-Warning
--------
+AlekSIS standard distribution
+-----------------------------
 
-**This is an alpha version of AlekSIS, the free school information system.
-The AlekSIS team is looking for schools who want to help shape the 2.0
-final release and supports interested schools in operating AlekSIS.**
+The AlekSIS standard distribution with information about all official apps
+can be found on `EduGit`_.
 
-What AlekSIS is
-----------------
+Features
+--------
 
-`AlekSIS`_ is a web-based school information system (SIS) which can be used to
-manage and/or publish organisational subjects of educational institutions.
-
-Formerly two separate projects (BiscuIT and SchoolApps), developed by
-`Teckids e.V.`_ and a team of students at `Katharineum zu Lübeck`_, they
-were merged into the AlekSIS project in 2020.
-
-AlekSIS is a platform based on Django, that provides central funstions
-and data structures that can be used by apps that are developed and provided
-seperately. The AlekSIS team also maintains a set of official apps which
-make AlekSIS a fully-featured software solutions for the information
-management needs of schools.
-
-By design, the platform can be used by schools to write their own apps for
-specific needs they face, also in coding classes. Students are empowered to
-create real-world applications that bring direct value to their environment.
-
-AlekSIS is part of the `schul-frei`_ project as a component in sustainable
-educational networks.
-
-Core features
---------------
+The AlekSIS-Core currently provides the following features:
 
 * For users:
 
@@ -52,24 +30,6 @@ Core features
  * Asynchronous tasks with celery
  * Authentication via LDAP
  * Automatic backup of database, static and media files
-
-Official apps
--------------
-
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-| App name                             | Purpose                                                                                     |
-+======================================+=============================================================================================+
-| `AlekSIS-App-Chronos`_               | The Chronos app provides functionality for digital timetables.                              |
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-| `AlekSIS-App-DashboardFeeds`_        | The DashboardFeeds app provides functionality to add RSS or Atom feeds to dashboard         |
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-| `AlekSIS-App-Hjelp`_                 | The Hjelp app provides functionality for aiding users.                                      |
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-| `AlekSIS-App-LDAP`_                  | The LDAP app provides functionality to import users and groups from LDAP                    |
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-| `AlekSIS-App-Untis`_                 | This app provides import and export functions to interact with Untis, a timetable software. |
-+--------------------------------------+---------------------------------------------------------------------------------------------+
-
 
 Licence
 -------
@@ -91,13 +51,6 @@ full licence text or on the `European Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
-.. _AlekSIS: https://aleksis.org/
-.. _Teckids e.V.: https://www.teckids.org/
-.. _Katharineum zu Lübeck: https://www.katharineum.de/
+.. _AlekSIS: https://edugit.org/AlekSIS/Official/AlekSIS
 .. _European Union Public Licence: https://eupl.eu/
-.. _schul-frei: https://schul-frei.org/
-.. _AlekSIS-App-Chronos: https://edugit.org/AlekSIS/official/AlekSIS-App-Chronos
-.. _AlekSIS-App-DashboardFeeds: https://edugit.org/AlekSIS/official/AlekSIS-App-DashboardFeeds
-.. _AlekSIS-App-Hjelp: https://edugit.org/AlekSIS/official/AlekSIS-App-Hjelp
-.. _AlekSIS-App-LDAP: https://edugit.org/AlekSIS/official/AlekSIS-App-LDAP
-.. _AlekSIS-App-Untis: https://edugit.org/AlekSIS/official/AlekSIS-App-Untis
+.. _EduGit: https://edugit.org/AlekSIS/official/AlekSIS
