@@ -44,6 +44,23 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": "aleksis.core.util.core_helpers.dt_show_toolbar",
 }
 
+DEBUG_TOOLBAR_PANELS = [
+    "debug_toolbar.panels.versions.VersionsPanel",
+    "debug_toolbar.panels.timer.TimerPanel",
+    "debug_toolbar.panels.settings.SettingsPanel",
+    "debug_toolbar.panels.headers.HeadersPanel",
+    "debug_toolbar.panels.request.RequestPanel",
+    "debug_toolbar.panels.sql.SQLPanel",
+    "debug_toolbar.panels.cache.CachePanel",
+    "debug_toolbar.panels.staticfiles.StaticFilesPanel",
+    "debug_toolbar.panels.templates.TemplatesPanel",
+    "debug_toolbar.panels.signals.SignalsPanel",
+    "debug_toolbar.panels.logging.LoggingPanel",
+    "debug_toolbar.panels.redirects.RedirectsPanel",
+    "debug_toolbar.panels.profiling.ProfilingPanel",
+]
+
+
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
 # Application definition
@@ -183,6 +200,11 @@ if _settings.get("caching.memcached.enabled", False):
             "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
         }
     }
+    INSTALLED_APPS.append("cachalot")
+    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+    CACHALOT_DATABASES = set(["default"])
+    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
