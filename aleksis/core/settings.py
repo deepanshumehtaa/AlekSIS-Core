@@ -116,7 +116,7 @@ INSTALLED_APPS = [
     "colorfield",
     "django_bleach",
     "favicon",
-    "django_filters"
+    "django_filters",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
