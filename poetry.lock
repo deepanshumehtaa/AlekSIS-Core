@@ -446,6 +446,17 @@ python-versions = "*"
 Django = ">=1.8"
 
 [[package]]
+name = "django-cachalot"
+version = "2.3.3"
+description = "Caches your Django ORM queries and automatically invalidates them."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=2"
+
+[[package]]
 name = "django-cache-memoize"
 version = "0.1.7"
 description = "Django utility for a memoization decorator that uses the Django cache framework."
@@ -2171,7 +2182,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "796fb4bd6779730135a6d2c08f09646dd3f91cdb59dfe2210bdfabd5050f0d2f"
+content-hash = "65a4b7b891965a330e7fec9ed64213579550aac1ac8295aa8c3022a4978d488c"
 
 [metadata.files]
 alabaster = [
@@ -2336,6 +2347,10 @@ django-bleach = [
 django-bulk-update = [
     {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
+]
+django-cachalot = [
+    {file = "django-cachalot-2.3.3.tar.gz", hash = "sha256:ba3a6cabf834139196179c4f6d77409ae9170267ee8ce40e27bbf6c3f6733b2b"},
+    {file = "django_cachalot-2.3.3-py3-none-any.whl", hash = "sha256:55f94e94f7000f5f6bd92188d3d7535cfdef79f2e697e36daf69cba8f435e156"},
 ]
 django-cache-memoize = [
     {file = "django-cache-memoize-0.1.7.tar.gz", hash = "sha256:5e96349b0159aec1eb79257199a1902ea3ed538231ce7b4fee12e563127ca657"},
