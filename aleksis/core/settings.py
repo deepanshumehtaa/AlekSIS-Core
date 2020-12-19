@@ -352,6 +352,7 @@ YARN_INSTALLED_APPS = [
     "select2",
     "select2-materialize",
     "paper-css",
+    "jquery-sortablejs",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
