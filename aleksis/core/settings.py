@@ -376,6 +376,7 @@ ANY_JS = {
         "css_url": JS_URL + "/select2-materialize/select2-materialize.css",
         "js_url": JS_URL + "/select2-materialize/index.js",
     },
+    "sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
