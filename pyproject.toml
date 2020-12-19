@@ -101,6 +101,9 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
 
+[tool.poetry.scripts]
+aleksis-admin = 'aleksis.core.util.manage:aleksis_cmd'
+
 [tool.black]
 line-length = 100
 exclude = "/migrations/"
