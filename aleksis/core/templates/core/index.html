@@ -31,7 +31,7 @@
 
     <div class="row" id="live_load">
       {% for widget in widgets %}
-        <div class="col s12 m12 l6 xl4">
+        <div class="col s{{ widget.size_s }} m{{ widget.size_m }} l{{ widget.size_l }} xl{{ widget.size_xl }}">
           {% include_widget widget %}
         </div>
       {% endfor %}
