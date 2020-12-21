@@ -89,11 +89,6 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "core/index.html", context)
 
 
-def offline(request: HttpRequest) -> HttpResponse:
-    """Offline message for PWA."""
-    return render(request, "core/pages/offline.html")
-
-
 def about(request: HttpRequest) -> HttpResponse:
     """About page listing all apps."""
     context = {}
