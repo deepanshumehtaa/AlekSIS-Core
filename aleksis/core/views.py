@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.generic.base import View
 
 import reversion
 from django_tables2 import RequestConfig, SingleTableView
@@ -28,6 +29,7 @@ from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
+    DashboardWidgetOrderFormSet,
     EditAdditionalFieldForm,
     EditGroupForm,
     EditGroupTypeForm,
@@ -43,6 +45,7 @@ from .models import (
     AdditionalField,
     Announcement,
     DashboardWidget,
+    DashboardWidgetOrder,
     Group,
     GroupType,
     Notification,
@@ -83,7 +86,7 @@ def index(request: HttpRequest) -> HttpResponse:
     announcements = Announcement.objects.at_time().for_person(request.user.person)
     context["announcements"] = announcements
 
-    widgets = DashboardWidget.objects.filter(active=True)
+    widgets = request.user.person.dashboard_widgets
     media = DashboardWidget.get_media(widgets)
 
     context["widgets"] = widgets
@@ -774,3 +777,56 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     template_name = "core/pages/delete.html"
     success_url = reverse_lazy("dashboard_widgets")
     success_message = _("The dashboard widget has been deleted.")
+
+
+class EditDashboardView(View):
+    """View for editing dashboard widget order."""
+
+    def get(self, request):
+        context = {}
+
+        widgets = request.user.person.dashboard_widgets
+        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
+        context["widgets"] = widgets
+        context["not_used_widgets"] = not_used_widgets
+
+        i = 10
+        initial = []
+        for widget in widgets:
+            initial.append({"pk": widget, "order": i})
+            i += 10
+        for widget in not_used_widgets:
+            initial.append({"pk": widget, "order": 0})
+
+        formset = DashboardWidgetOrderFormSet(
+            request.POST or None, initial=initial, prefix="widget_order"
+        )
+
+        context["formset"] = formset
+
+        if request.method == "POST" and formset.is_valid():
+            added_objects = []
+            for form in formset:
+                if not form.cleaned_data["order"]:
+                    continue
+
+                obj, created = DashboardWidgetOrder.objects.update_or_create(
+                    widget=form.cleaned_data["pk"],
+                    person=request.user.person,
+                    defaults={"order": form.cleaned_data["order"]},
+                )
+
+                added_objects.append(obj.pk)
+
+            DashboardWidgetOrder.objects.filter(person=request.user.person).exclude(
+                pk__in=added_objects
+            ).delete()
+
+            messages.success(
+                request, _("Your dashboard configuration has been saved successfully.")
+            )
+            return redirect("index")
+        return render(request, "core/edit_dashboard.html", context=context)
+
+    def post(self, request):
+        return self.get(request)

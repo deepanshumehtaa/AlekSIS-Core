@@ -10,7 +10,15 @@ from dynamic_preferences.forms import PreferenceForm
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
-from .models import AdditionalField, Announcement, Group, GroupType, Person, SchoolTerm
+from .models import (
+    AdditionalField,
+    Announcement,
+    DashboardWidget,
+    Group,
+    GroupType,
+    Person,
+    SchoolTerm,
+)
 from .registries import (
     group_preferences_registry,
     person_preferences_registry,
@@ -345,3 +353,20 @@ class SchoolTermForm(ExtensibleForm):
     class Meta:
         model = SchoolTerm
         exclude = []
+
+
+class DashboardWidgetOrderForm(ExtensibleForm):
+    pk = forms.ModelChoiceField(
+        queryset=DashboardWidget.objects.all(),
+        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+    )
+    order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
+
+    class Meta:
+        model = DashboardWidget
+        fields = []
+
+
+DashboardWidgetOrderFormSet = forms.formset_factory(
+    form=DashboardWidgetOrderForm, max_num=0, extra=0
+)

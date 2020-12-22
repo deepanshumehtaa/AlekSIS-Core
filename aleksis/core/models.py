@@ -234,6 +234,12 @@ class Person(ExtensibleModel):
                 years -= 1
             return years
 
+    @property
+    def dashboard_widgets(self):
+        return [
+            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+        ]
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
@@ -725,6 +731,18 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     class Meta:
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class DashboardWidgetOrder(ExtensibleModel):
+    widget = models.ForeignKey(
+        DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
+    )
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_("Person"))
+    order = models.PositiveIntegerField(verbose_name=_("Order"))
+
+    class Meta:
+        verbose_name = _("Dashboard widget order")
+        verbose_name_plural = _("Dashboard widget orders")
 
 
 class CustomMenu(ExtensibleModel):
