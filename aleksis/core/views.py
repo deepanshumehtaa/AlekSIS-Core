@@ -782,7 +782,7 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
 class EditDashboardView(View):
     """View for editing dashboard widget order."""
 
-    def get(self, request):
+    def get_context_data(self, request):
         context = {}
 
         widgets = request.user.person.dashboard_widgets
@@ -801,10 +801,14 @@ class EditDashboardView(View):
         formset = DashboardWidgetOrderFormSet(
             request.POST or None, initial=initial, prefix="widget_order"
         )
-
         context["formset"] = formset
 
-        if request.method == "POST" and formset.is_valid():
+        return context
+
+    def post(self, request):
+        context = self.get_context_data(request)
+
+        if context["formset"].is_valid():
             added_objects = []
             for form in formset:
                 if not form.cleaned_data["order"]:
@@ -826,7 +830,8 @@ class EditDashboardView(View):
                 request, _("Your dashboard configuration has been saved successfully.")
             )
             return redirect("index")
-        return render(request, "core/edit_dashboard.html", context=context)
 
-    def post(self, request):
-        return self.get(request)
+    def get(self, request):
+        context = self.get_context_data(request)
+
+        return render(request, "core/edit_dashboard.html", context=context)
