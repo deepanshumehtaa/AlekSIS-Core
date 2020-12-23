@@ -70,3 +70,24 @@ class GroupTypesTable(tables.Table):
     delete = tables.LinkColumn(
         "delete_group_type_by_id", args=[A("id")], verbose_name=_("Delete"), text=_("Delete")
     )
+
+
+class DashboardWidgetTable(tables.Table):
+    """Table to list dashboard widgets."""
+
+    class Meta:
+        attrs = {"class": "responsive-table highlight"}
+
+    widget_name = tables.Column(accessor="pk")
+    title = tables.LinkColumn("edit_dashboard_widget", args=[A("id")])
+    active = tables.BooleanColumn(yesno="check,cancel", attrs={"span": {"class": "material-icons"}})
+    delete = tables.LinkColumn(
+        "delete_dashboard_widget",
+        args=[A("id")],
+        text=_("Delete"),
+        attrs={"a": {"class": "btn-flat waves-effect waves-red red-text"}},
+        verbose_name=_("Actions"),
+    )
+
+    def render_widget_name(self, value, record):
+        return record._meta.verbose_name

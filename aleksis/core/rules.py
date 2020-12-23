@@ -278,3 +278,16 @@ view_group_stats_predicate = has_person & (
     has_global_perm("core.view_group_stats") | has_object_perm("core.view_group_stats")
 )
 rules.add_perm("core.view_group_stats", view_group_stats_predicate)
+
+
+view_dashboard_widget_predicate = has_person & has_global_perm("core.view_dashboardwidget")
+rules.add_perm("core.view_dashboardwidget", view_dashboard_widget_predicate)
+
+create_dashboard_widget_predicate = has_person & has_global_perm("core.add_dashboardwidget")
+rules.add_perm("core.create_dashboardwidget", create_dashboard_widget_predicate)
+
+edit_dashboard_widget_predicate = has_person & has_global_perm("core.change_dashboardwidget")
+rules.add_perm("core.edit_dashboardwidget", edit_dashboard_widget_predicate)
+
+delete_dashboard_widget_predicate = has_person & has_global_perm("core.delete_dashboardwidget")
+rules.add_perm("core.delete_dashboardwidget", delete_dashboard_widget_predicate)

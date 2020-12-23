@@ -153,6 +153,22 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("dashboard_widgets/", views.DashboardWidgetListView.as_view(), name="dashboard_widgets"),
+    path(
+        "dashboard_widgets/<int:pk>/edit/",
+        views.DashboardWidgetEditView.as_view(),
+        name="edit_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<int:pk>/delete/",
+        views.DashboardWidgetDeleteView.as_view(),
+        name="delete_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<str:app>/<str:model>/new/",
+        views.DashboardWidgetCreateView.as_view(),
+        name="create_dashboard_widget",
+    ),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

@@ -1,9 +1,11 @@
-from typing import Optional
+from typing import Any, Dict, Optional, Type
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.forms.models import BaseModelForm, modelform_factory
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -36,7 +38,7 @@ from .forms import (
     SchoolTermForm,
     SitePreferenceForm,
 )
-from .mixins import AdvancedCreateView, AdvancedEditView
+from .mixins import AdvancedCreateView, AdvancedDeleteView, AdvancedEditView
 from .models import (
     AdditionalField,
     Announcement,
@@ -54,6 +56,7 @@ from .registries import (
 )
 from .tables import (
     AdditionalFieldsTable,
+    DashboardWidgetTable,
     GroupsTable,
     GroupTypesTable,
     PersonsTable,
@@ -694,3 +697,75 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The group type has been deleted."))
 
     return redirect("group_types")
+
+
+class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
+    """Table of all dashboard widgets."""
+
+    model = DashboardWidget
+    table_class = DashboardWidgetTable
+    permission_required = "core.view_dashboardwidget"
+    template_name = "core/dashboard_widget/list.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["widget_types"] = [
+            (ContentType.objects.get_for_model(m, False), m)
+            for m in DashboardWidget.__subclasses__()
+        ]
+        return context
+
+
+@method_decorator(never_cache, name="dispatch")
+class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
+    """Edit view for dashboard widgets."""
+
+    def get_form_class(self) -> Type[BaseModelForm]:
+        return modelform_factory(self.object.__class__, fields=self.fields)
+
+    model = DashboardWidget
+    fields = "__all__"
+    permission_required = "core.edit_dashboardwidget"
+    template_name = "core/dashboard_widget/edit.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been saved.")
+
+
+@method_decorator(never_cache, name="dispatch")
+class DashboardWidgetCreateView(AdvancedCreateView, PermissionRequiredMixin):
+    """Create view for dashboard widgets."""
+
+    def get_model(self, request, *args, **kwargs):
+        app_label = kwargs.get("app")
+        model = kwargs.get("model")
+        ct = get_object_or_404(ContentType, app_label=app_label, model=model)
+        return ct.model_class()
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["model"] = self.model
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.model = self.get_model(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.model = self.get_model(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
+
+    fields = "__all__"
+    permission_required = "core.add_dashboardwidget"
+    template_name = "core/dashboard_widget/create.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been created.")
+
+
+class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete view for dashboard widgets."""
+
+    model = DashboardWidget
+    permission_required = "core.delete_dashboardwidget"
+    template_name = "core/pages/delete.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been deleted.")
