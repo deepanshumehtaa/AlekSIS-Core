@@ -9,6 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
@@ -680,6 +681,31 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+
+    size_s = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on mobile devices"),
+        help_text=_("<= 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_m = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on tablet devices"),
+        help_text=_("> 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_l = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on desktop devices"),
+        help_text=_("> 992 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=6,
+    )
+    size_xl = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on large desktop devices"),
+        help_text=_("> 1200 px>, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=4,
+    )
 
     def get_context(self):
         """Get the context dictionary to pass to the widget template."""
