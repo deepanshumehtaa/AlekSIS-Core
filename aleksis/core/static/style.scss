@@ -626,3 +626,7 @@ main .alert p:first-child, main .alert div:first-child {
   overflow: visible;
   width: 100%;
 }
+
+.draggable {
+  cursor: grab;
+}

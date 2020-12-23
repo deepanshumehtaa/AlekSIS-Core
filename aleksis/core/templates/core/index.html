@@ -2,13 +2,21 @@
 {% load i18n static dashboard %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
-{% block page_title %}{{ request.site.preferences.general__title }}{% endblock %}
+{% block no_page_title %}{% endblock %}
 
 {% block extra_head %}
   {{ media }}
 {% endblock %}
 
 {% block content %}
+  <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
+    <i class="material-icons left">edit</i>
+    {% trans "Edit dashboard" %}
+  </a>
+  <h4>
+    {{ request.site.preferences.general__title }}
+  </h4>
+
   {% if user.is_authenticated %}
     {% for notification in unread_notifications %}
       <div class="alert primary scale-transition">
@@ -33,6 +41,16 @@
       {% for widget in widgets %}
         <div class="col s{{ widget.size_s }} m{{ widget.size_m }} l{{ widget.size_l }} xl{{ widget.size_xl }}">
           {% include_widget widget %}
+        </div>
+        {% empty %}
+        <div class="col s12 grey-text center">
+          <i class="material-icons medium ">widgets</i>
+          <p class="flow-text">
+            {% blocktrans %}
+              You haven't selected any dashboard widgets. Please click on "Edit dashboard" to add widgets to your
+              personal dashboard.
+            {% endblocktrans %}
+          </p>
         </div>
       {% endfor %}
     </div>

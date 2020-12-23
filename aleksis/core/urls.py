@@ -57,6 +57,7 @@ urlpatterns = [
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
     path("group/<int:id_>/delete", views.delete_group, name="delete_group_by_id"),
     path("", views.index, name="index"),
+    path("dashboard/edit/", views.EditDashboardView.as_view(), name="edit_dashboard"),
     path(
         "notifications/mark-read/<int:id_>",
         views.notification_mark_read,
