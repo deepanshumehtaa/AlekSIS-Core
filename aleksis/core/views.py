@@ -810,7 +810,7 @@ class EditDashboardView(View):
 
         if context["formset"].is_valid():
             added_objects = []
-            for form in formset:
+            for form in context["formset"]:
                 if not form.cleaned_data["order"]:
                     continue
 
