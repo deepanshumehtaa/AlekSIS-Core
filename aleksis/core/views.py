@@ -790,11 +790,11 @@ class EditDashboardView(View):
         context["widgets"] = widgets
         context["not_used_widgets"] = not_used_widgets
 
-        i = 10
+        order = 10
         initial = []
         for widget in widgets:
-            initial.append({"pk": widget, "order": i})
-            i += 10
+            initial.append({"pk": widget, "order": order})
+            order += 10
         for widget in not_used_widgets:
             initial.append({"pk": widget, "order": 0})
 
