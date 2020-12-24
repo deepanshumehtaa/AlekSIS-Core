@@ -5,23 +5,6 @@ const CACHE = 'aleksis-cache';
 
 const offlineFallbackPage = 'offline/';
 
-function pathComparer(requestUrl, pathRegEx) {
-    return requestUrl.match(new RegExp(pathRegEx));
-}
-
-function comparePaths(requestUrl, pathsArray) {
-    if (requestUrl) {
-        for (let index = 0; index < pathsArray.length; index++) {
-            const pathRegEx = pathsArray[index];
-            if (pathComparer(requestUrl, pathRegEx)) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 self.addEventListener("install", function (event) {
     console.log("[AlekSIS PWA] Install Event processing.");
 
