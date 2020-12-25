@@ -92,7 +92,7 @@ class Favicon(FilePreference):
 
 @site_preferences_registry.register
 class PWAIcon(FilePreference):
-    """PWA-Icon"""
+    """PWA-Icon of your AlekSIS instance."""
 
     section = theme
     field_class = ImageField
@@ -102,7 +102,7 @@ class PWAIcon(FilePreference):
 
 @site_preferences_registry.register
 class MailOutName(StringPreference):
-    """Mail out name"""
+    """Mail out name of your AlekSIS instance."""
 
     section = mail
     name = "name"
@@ -113,7 +113,7 @@ class MailOutName(StringPreference):
 
 @site_preferences_registry.register
 class MailOut(StringPreference):
-    """Mail out address"""
+    """Mail out address of your AlekSIS instance."""
 
     section = mail
     name = "address"
@@ -125,7 +125,7 @@ class MailOut(StringPreference):
 
 @site_preferences_registry.register
 class PrivacyURL(StringPreference):
-    """Link to privacy policy"""
+    """Link to privacy policy of your AlekSIS instance."""
 
     section = footer
     name = "privacy_url"
@@ -137,7 +137,7 @@ class PrivacyURL(StringPreference):
 
 @site_preferences_registry.register
 class ImprintURL(StringPreference):
-    """Link to imprint"""
+    """Link to imprint of your AlekSIS instance."""
 
     section = footer
     name = "imprint_url"
@@ -224,6 +224,8 @@ class SchoolNameOfficial(StringPreference):
 
 @site_preferences_registry.register
 class AuthenticationBackends(MultipleChoicePreference):
+    """Authentication backends of your AlekSIS instance."""
+
     section = auth
     name = "backends"
     default = None
@@ -236,6 +238,8 @@ class AuthenticationBackends(MultipleChoicePreference):
 
 @site_preferences_registry.register
 class AvailableLanguages(MultipleChoicePreference):
+    """Available languages  of your AlekSIS instance."""
+
     section = internationalisation
     name = "languages"
     default = [code[0] for code in settings.LANGUAGES]

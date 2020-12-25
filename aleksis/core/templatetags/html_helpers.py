@@ -9,10 +9,10 @@ register = template.Library()
 def add_class_to_el(value: str, arg: str) -> str:
     """Add a CSS class to every occurence of an element type.
 
-    :Example: 
-    
+    :Example:
+
     .. code-block:: jinja2
-    
+
         {{ mymodel.myhtmlfield|add_class_to_el:"ul,browser-default" }}
     """
     el, cls = arg.split(",")

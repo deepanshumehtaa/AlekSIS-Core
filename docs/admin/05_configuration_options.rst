@@ -58,7 +58,7 @@ Example configuration file::
     # Users in group "admins" are superusers
     flags = { is_superuser = "cn=admins,ou=groups,dc=myschool,dc=edu" }
 
-    # Search index, optional 
+    # Search index, optional
     [default.search]
     backend = "whoosh"
     index = "/srv/www/aleksis/data/whoosh_index"

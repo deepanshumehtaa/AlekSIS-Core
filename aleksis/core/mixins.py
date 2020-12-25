@@ -306,7 +306,7 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
     - apps to add layout nodes to the layout used by django-material
 
     :Add layout nodes:
-    
+
     .. code-block:: python
 
         from material import Fieldset
