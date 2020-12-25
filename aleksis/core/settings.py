@@ -4,7 +4,6 @@ from glob import glob
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
-from easy_thumbnails.conf import settings as thumbnail_settings
 
 from .util.core_helpers import (
     get_app_packages,
@@ -45,6 +44,23 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": "aleksis.core.util.core_helpers.dt_show_toolbar",
 }
 
+DEBUG_TOOLBAR_PANELS = [
+    "debug_toolbar.panels.versions.VersionsPanel",
+    "debug_toolbar.panels.timer.TimerPanel",
+    "debug_toolbar.panels.settings.SettingsPanel",
+    "debug_toolbar.panels.headers.HeadersPanel",
+    "debug_toolbar.panels.request.RequestPanel",
+    "debug_toolbar.panels.sql.SQLPanel",
+    "debug_toolbar.panels.cache.CachePanel",
+    "debug_toolbar.panels.staticfiles.StaticFilesPanel",
+    "debug_toolbar.panels.templates.TemplatesPanel",
+    "debug_toolbar.panels.signals.SignalsPanel",
+    "debug_toolbar.panels.logging.LoggingPanel",
+    "debug_toolbar.panels.redirects.RedirectsPanel",
+    "debug_toolbar.panels.profiling.ProfilingPanel",
+]
+
+
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
 # Application definition
@@ -65,16 +81,15 @@ INSTALLED_APPS = [
     "dbbackup",
     "settings_context_processor",
     "sass_processor",
-    "easyaudit",
     "django_any_js",
     "django_yarnpkg",
     "django_tables2",
-    "easy_thumbnails",
     "maintenance_mode",
     "menu_generator",
     "reversion",
     "phonenumber_field",
     "debug_toolbar",
+    "django_prometheus",
     "django_select2",
     "hattori",
     "templated_email",
@@ -89,6 +104,7 @@ INSTALLED_APPS = [
     "health_check.cache",
     "health_check.storage",
     "health_check.contrib.psutil",
+    "health_check.contrib.migrations",
     "dynamic_preferences",
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
@@ -100,6 +116,7 @@ INSTALLED_APPS = [
     "colorfield",
     "django_bleach",
     "favicon",
+    "django_filters",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -114,6 +131,7 @@ STATICFILES_FINDERS = [
 
 MIDDLEWARE = [
     #    'django.middleware.cache.UpdateCacheMiddleware',
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -128,9 +146,9 @@ MIDDLEWARE = [
     "impersonate.middleware.ImpersonateMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "aleksis.core.util.middlewares.EnsurePersonMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
     #    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
@@ -156,8 +174,6 @@ TEMPLATES = [
     },
 ]
 
-THUMBNAIL_PROCESSORS = () + thumbnail_settings.THUMBNAIL_PROCESSORS
-
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 # Database
@@ -165,7 +181,7 @@ WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": _settings.get("database.name", "aleksis"),
         "USER": _settings.get("database.username", "aleksis"),
         "PASSWORD": _settings.get("database.password", None),
@@ -181,10 +197,15 @@ merge_app_settings("DATABASES", DATABASES, False)
 if _settings.get("caching.memcached.enabled", False):
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
             "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
         }
     }
+    INSTALLED_APPS.append("cachalot")
+    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+    CACHALOT_DATABASES = set(["default"])
+    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -331,6 +352,8 @@ YARN_INSTALLED_APPS = [
     "select2",
     "select2-materialize",
     "paper-css",
+    "jquery-sortablejs",
+    "sortablejs",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -354,6 +377,8 @@ ANY_JS = {
         "css_url": JS_URL + "/select2-materialize/select2-materialize.css",
         "js_url": JS_URL + "/select2-materialize/index.js",
     },
+    "sortablejs": {"js_url": JS_URL + "/sortablejs/dist/sortable.umd.js"},
+    "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -366,6 +391,7 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
     _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
+    STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
 
@@ -415,6 +441,9 @@ DBBACKUP_COMPRESS_MEDIA = _settings.get("backup.media.compress", True)
 DBBACKUP_ENCRYPT_MEDIA = _settings.get("backup.media.encrypt", DBBACKUP_GPG_RECIPIENT is not None)
 DBBACKUP_CLEANUP_DB = _settings.get("backup.database.clean", True)
 DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
+DBBACKUP_CONNECTOR_MAPPING = {
+    "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
+}
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
@@ -695,3 +724,5 @@ HEALTH_CHECK = {
 }
 
 ORIGINAL_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS[:]
+
+PROMETHEUS_EXPORT_MIGRATIONS = False

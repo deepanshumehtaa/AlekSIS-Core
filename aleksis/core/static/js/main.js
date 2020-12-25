@@ -1,21 +1,15 @@
-$(document).ready( function () {
-    $("dmc-datetime input").addClass("datepicker");
-    $("[data-form-control='date']").addClass("datepicker");
-    $("[data-form-control='time']").addClass("timepicker");
-
-    // Initialize sidenav [MAT]
-    $(".sidenav").sidenav();
-
+function initDatePicker(sel) {
     // Initialize datepicker [MAT]
-    $('.datepicker').datepicker({
-        format: get_format('SHORT_DATE_FORMAT').toLowerCase().replace('d', 'dd').replace('m', 'mm').replace('y', 'yyyy'),
+    const format = get_format('SHORT_DATE_FORMAT').toLowerCase().replace('d', 'dd').replace('m', 'mm').replace('y', 'yyyy');
+    const el = $(sel).datepicker({
+        format: format,
         // Pull translations from Django helpers
         i18n: {
             months: calendarweek_i18n.month_names,
             monthsShort: calendarweek_i18n.month_abbrs,
             weekdays: calendarweek_i18n.day_names,
             weekdaysShort: calendarweek_i18n.day_abbrs,
-            weekdaysAbbrev: calendarweek_i18n.day_abbrs.map(([v])=> v),
+            weekdaysAbbrev: calendarweek_i18n.day_abbrs.map(([v]) => v),
 
             // Buttons
             today: gettext('Today'),
@@ -27,9 +21,13 @@ $(document).ready( function () {
         firstDay: get_format('FIRST_DAY_OF_WEEK'),
         autoClose: true
     });
+    el.datepicker("setDate", $(sel).val());
+    return el;
+}
 
+function initTimePicker(sel) {
     // Initialize timepicker [MAT]
-    $('.timepicker').timepicker({
+    return $(sel).timepicker({
         twelveHour: false,
         autoClose: true,
         i18n: {
@@ -38,6 +36,21 @@ $(document).ready( function () {
             done: 'OK'
         },
     });
+}
+
+$(document).ready(function () {
+    $("dmc-datetime input").addClass("datepicker");
+    $("[data-form-control='date']").addClass("datepicker");
+    $("[data-form-control='time']").addClass("timepicker");
+
+    // Initialize sidenav [MAT]
+    $(".sidenav").sidenav();
+
+    // Initialize datepicker [MAT]
+    initDatePicker(".datepicker");
+
+    // Initialize timepicker [MAT]
+    initTimePicker(".timepicker");
 
     // Initialize tooltip [MAT]
     $('.tooltipped').tooltip();

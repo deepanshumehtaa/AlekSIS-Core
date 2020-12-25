@@ -25,17 +25,16 @@ configuration file. For example, add something like the following to your
 configuration (normally in ``/etc/aleksis``; you can either append to an
 existing file or add a new one)::
 
-    # Authentication via LDAP, optional
-    [default.ldap]
-    uri = "ldaps://ldap.myschool.edu"
-    bind = { dn = "cn=reader,dc=myschool,dc=edu", password = "secret" }
-    map = { first_name = "givenName", last_name = "sn", email = "mail" }
+  [ldap]
+  uri = "ldaps://ldap.myschool.edu"
+  bind = { dn = "cn=reader,dc=myschool,dc=edu", password = "secret" }
 
-    [default.ldap.users]
-    search = { base = "ou=people,dc=myschool,dc=edu", filter = "(uid=%(user)s)" }
+  [ldap.users]
+  search = { base = "ou=people,dc=myschool,dc=edu", filter = "(uid=%(user)s)" }
+  map = { first_name = "givenName", last_name = "sn", email = "mail" }
 
-    [default.ldap.groups]
-    search = { base = "ou=groups,dc=myschool,dc=edu" }
-    type = "groupOfNames"
-    # Users in group "admins" are superusers
-    flags = { is_superuser = "cn=admins,ou=groups,dc=myschool,dc=edu" }
+  [ldap.groups]
+  search = { base = "ou=groups,dc=myschool,dc=edu" }
+  type = "groupOfNames"
+  # Users in group "admins" are superusers
+  flags = { is_superuser = "cn=admins,ou=groups,dc=myschool,dc=edu" }

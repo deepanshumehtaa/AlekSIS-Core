@@ -16,6 +16,7 @@ from . import views
 from .util.core_helpers import is_celery_enabled
 
 urlpatterns = [
+    path("", include("django_prometheus.urls")),
     path("", include("pwa.urls"), name="pwa"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
@@ -56,6 +57,7 @@ urlpatterns = [
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
     path("group/<int:id_>/delete", views.delete_group, name="delete_group_by_id"),
     path("", views.index, name="index"),
+    path("dashboard/edit/", views.EditDashboardView.as_view(), name="edit_dashboard"),
     path(
         "notifications/mark-read/<int:id_>",
         views.notification_mark_read,
@@ -152,6 +154,22 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("dashboard_widgets/", views.DashboardWidgetListView.as_view(), name="dashboard_widgets"),
+    path(
+        "dashboard_widgets/<int:pk>/edit/",
+        views.DashboardWidgetEditView.as_view(),
+        name="edit_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<int:pk>/delete/",
+        views.DashboardWidgetDeleteView.as_view(),
+        name="delete_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<str:app>/<str:model>/new/",
+        views.DashboardWidgetCreateView.as_view(),
+        name="create_dashboard_widget",
+    ),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

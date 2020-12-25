@@ -70,6 +70,10 @@ header, main, footer {
   }
 }
 
+.materialize-circle {
+  @extend .circle;
+}
+
 /**********/
 /* HEADER */
 /**********/
@@ -621,4 +625,8 @@ main .alert p:first-child, main .alert div:first-child {
   display: inline-block;
   overflow: visible;
   width: 100%;
+}
+
+.draggable {
+  cursor: grab;
 }

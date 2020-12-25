@@ -9,18 +9,20 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.decorators import classproperty
+from django.utils.functional import classproperty
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
@@ -221,16 +223,22 @@ class Person(ExtensibleModel):
     @property
     def age(self):
         """Age of the person at current time."""
-        return self.age_at(timezone.datetime.now().date())
+        return self.age_at(timezone.now().date())
 
     def age_at(self, today):
-        """Age of the person at a given date and time."""
-        years = today.year - self.date_of_birth.year
-        if self.date_of_birth.month > today.month or (
-            self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
-        ):
-            years -= 1
-        return years
+        if self.date_of_birth:
+            years = today.year - self.date_of_birth.year
+            if self.date_of_birth.month > today.month or (
+                self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+            ):
+                years -= 1
+            return years
+
+    @property
+    def dashboard_widgets(self):
+        return [
+            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+        ]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -326,7 +334,10 @@ class Group(SchoolTermRelatedExtensibleModel):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
-        permissions = (("assign_child_groups_to_groups", _("Can assign child groups to groups")),)
+        permissions = (
+            ("assign_child_groups_to_groups", _("Can assign child groups to groups")),
+            ("view_group_stats", _("Can view statistics about group.")),
+        )
         constraints = [
             models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
             models.UniqueConstraint(
@@ -380,6 +391,22 @@ class Group(SchoolTermRelatedExtensibleModel):
         """Flat list of all members and owners to fulfill announcement API contract."""
         return list(self.members.all()) + list(self.owners.all())
 
+    @property
+    def get_group_stats(self) -> dict:
+        """ Get stats about a given group """
+        stats = {}
+
+        stats["members"] = len(self.members.all())
+
+        ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
+
+        if ages:
+            stats["age_avg"] = sum(ages) / len(ages)
+            stats["age_range_min"] = min(ages)
+            stats["age_range_max"] = max(ages)
+
+        return stats
+
     def __str__(self) -> str:
         if self.school_term:
             return f"{self.name} ({self.short_name}) ({self.school_term})"
@@ -421,7 +448,7 @@ class PersonGroupThrough(ExtensibleModel):
             setattr(self, field_name, field_instance)
 
 
-class Activity(ExtensibleModel):
+class Activity(ExtensibleModel, TimeStampedModel):
     """Activity of a user to trace some actions done in AlekSIS in displayable form."""
 
     user = models.ForeignKey(
@@ -441,7 +468,7 @@ class Activity(ExtensibleModel):
         verbose_name_plural = _("Activities")
 
 
-class Notification(ExtensibleModel):
+class Notification(ExtensibleModel, TimeStampedModel):
     """Notification to submit to a user."""
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
@@ -494,7 +521,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def at_time(self, when: Optional[datetime] = None) -> models.QuerySet:
         """Get all announcements at a certain time."""
-        when = when or timezone.datetime.now()
+        when = when or timezone.now()
 
         # Get announcements by time
         announcements = self.filter(valid_from__lte=when, valid_until__gte=when)
@@ -503,7 +530,7 @@ class AnnouncementQuerySet(models.QuerySet):
 
     def on_date(self, when: Optional[date] = None) -> models.QuerySet:
         """Get all announcements at a certain date."""
-        when = when or timezone.datetime.now().date()
+        when = when or timezone.now().date()
 
         # Get announcements by time
         announcements = self.filter(valid_from__date__lte=when, valid_until__date__gte=when)
@@ -542,7 +569,7 @@ class Announcement(ExtensibleModel):
     link = models.URLField(blank=True, verbose_name=_("Link to detailed view"))
 
     valid_from = models.DateTimeField(
-        verbose_name=_("Date and time from when to show"), default=timezone.datetime.now
+        verbose_name=_("Date and time from when to show"), default=timezone.now
     )
     valid_until = models.DateTimeField(
         verbose_name=_("Date and time until when to show"), default=now_tomorrow,
@@ -661,6 +688,31 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
 
+    size_s = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on mobile devices"),
+        help_text=_("<= 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_m = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on tablet devices"),
+        help_text=_("> 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_l = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on desktop devices"),
+        help_text=_("> 992 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=6,
+    )
+    size_xl = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on large desktop devices"),
+        help_text=_("> 1200 px>, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=4,
+    )
+
     def get_context(self):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -679,6 +731,18 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     class Meta:
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class DashboardWidgetOrder(ExtensibleModel):
+    widget = models.ForeignKey(
+        DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
+    )
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_("Person"))
+    order = models.PositiveIntegerField(verbose_name=_("Order"))
+
+    class Meta:
+        verbose_name = _("Dashboard widget order")
+        verbose_name_plural = _("Dashboard widget orders")
 
 
 class CustomMenu(ExtensibleModel):

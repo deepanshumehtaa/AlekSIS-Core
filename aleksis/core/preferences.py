@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.forms import EmailField, ImageField, URLField
+from django.forms.widgets import SelectMultiple
 from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.preferences import Section
@@ -22,6 +23,7 @@ notification = Section("notification")
 footer = Section("footer")
 account = Section("account")
 auth = Section("auth", verbose_name=_("Authentication"))
+internationalisation = Section("internationalisation", verbose_name=_("Internationalisation"))
 
 
 @site_preferences_registry.register
@@ -230,3 +232,14 @@ class AuthenticationBackends(MultipleChoicePreference):
 
     def get_choices(self):
         return [(b, b) for b in settings.CUSTOM_AUTHENTICATION_BACKENDS]
+
+
+@site_preferences_registry.register
+class AvailableLanguages(MultipleChoicePreference):
+    section = internationalisation
+    name = "languages"
+    default = [code[0] for code in settings.LANGUAGES]
+    widget = SelectMultiple
+    verbose_name = _("Available languages")
+    field_attribute = {"initial": []}
+    choices = settings.LANGUAGES

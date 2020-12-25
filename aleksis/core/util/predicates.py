@@ -1,6 +1,5 @@
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.db.models import Model
 from django.http import HttpRequest
 
@@ -9,7 +8,7 @@ from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
 from ..models import Group
-from .core_helpers import get_site_preferences
+from .core_helpers import get_content_type_by_perm, get_site_preferences
 from .core_helpers import has_person as has_person_helper
 from .core_helpers import queryset_rules_filter
 
@@ -65,12 +64,7 @@ def has_any_object(perm: str, klass):
 
     @predicate(name)
     def fn(user: User) -> bool:
-        try:
-            ct_perm = ContentType.objects.get(
-                app_label=perm.split(".", 1)[0], permission__codename=perm.split(".", 1)[1]
-            )
-        except ContentType.DoesNotExist:
-            ct_perm = None
+        ct_perm = get_content_type_by_perm(perm)
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
         else:

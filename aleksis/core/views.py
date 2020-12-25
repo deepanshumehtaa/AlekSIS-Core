@@ -1,13 +1,18 @@
-from typing import Optional
+from typing import Any, Dict, Optional, Type
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.forms.models import BaseModelForm, modelform_factory
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import never_cache
+from django.views.generic.base import View
 
 import reversion
 from django_tables2 import RequestConfig, SingleTableView
@@ -17,12 +22,14 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
+from reversion import set_user
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
     ChildGroupsForm,
+    DashboardWidgetOrderFormSet,
     EditAdditionalFieldForm,
     EditGroupForm,
     EditGroupTypeForm,
@@ -33,11 +40,12 @@ from .forms import (
     SchoolTermForm,
     SitePreferenceForm,
 )
-from .mixins import AdvancedCreateView, AdvancedEditView
+from .mixins import AdvancedCreateView, AdvancedDeleteView, AdvancedEditView
 from .models import (
     AdditionalField,
     Announcement,
     DashboardWidget,
+    DashboardWidgetOrder,
     Group,
     GroupType,
     Notification,
@@ -51,6 +59,7 @@ from .registries import (
 )
 from .tables import (
     AdditionalFieldsTable,
+    DashboardWidgetTable,
     GroupsTable,
     GroupTypesTable,
     PersonsTable,
@@ -77,18 +86,13 @@ def index(request: HttpRequest) -> HttpResponse:
     announcements = Announcement.objects.at_time().for_person(request.user.person)
     context["announcements"] = announcements
 
-    widgets = DashboardWidget.objects.filter(active=True)
+    widgets = request.user.person.dashboard_widgets
     media = DashboardWidget.get_media(widgets)
 
     context["widgets"] = widgets
     context["media"] = media
 
     return render(request, "core/index.html", context)
-
-
-def offline(request: HttpRequest) -> HttpResponse:
-    """Offline message for PWA."""
-    return render(request, "core/pages/offline.html")
 
 
 def about(request: HttpRequest) -> HttpResponse:
@@ -111,6 +115,7 @@ class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
     template_name = "core/school_term/list.html"
 
 
+@method_decorator(never_cache, name="dispatch")
 class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
     """Create view for school terms."""
 
@@ -122,6 +127,7 @@ class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
     success_message = _("The school term has been created.")
 
 
+@method_decorator(never_cache, name="dispatch")
 class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
     """Edit view for school terms."""
 
@@ -203,6 +209,9 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     RequestConfig(request).configure(owners_table)
     context["owners_table"] = owners_table
 
+    # Get statistics
+    context["stats"] = group.get_group_stats
+
     return render(request, "core/group/full.html", context)
 
 
@@ -226,6 +235,7 @@ def groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/list.html", context)
 
 
+@never_cache
 @permission_required("core.link_persons_accounts")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
     """View allowing to batch-process linking of users to persons."""
@@ -246,6 +256,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
     return render(request, "core/person/accounts.html", context)
 
 
+@never_cache
 @permission_required("core.assign_child_groups_to_groups")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
     """View for batch-processing assignment from child groups to groups."""
@@ -283,6 +294,7 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/child_groups.html", context)
 
 
+@never_cache
 @permission_required("core.edit_person", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
@@ -305,6 +317,7 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
     if request.method == "POST":
         if edit_person_form.is_valid():
             with reversion.create_revision():
+                set_user(request.user)
                 edit_person_form.save(commit=True)
             messages.success(request, _("The person has been saved."))
 
@@ -320,6 +333,7 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
         return None
 
 
+@never_cache
 @permission_required("core.edit_group", fn=objectgetter_optional(Group, None, False))
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group."""
@@ -341,6 +355,7 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     if request.method == "POST":
         if edit_group_form.is_valid():
             with reversion.create_revision():
+                set_user(request.user)
                 group = edit_group_form.save(commit=True)
 
             messages.success(request, _("The group has been saved."))
@@ -372,10 +387,11 @@ class SystemStatus(MainView, PermissionRequiredMixin):
 
         if "django_celery_results" in settings.INSTALLED_APPS:
             from django_celery_results.models import TaskResult  # noqa
-            from celery.task.control import inspect  # noqa
 
-            if inspect().registered_tasks():
-                job_list = list(inspect().registered_tasks().values())[0]
+            from .celery import app  # noqa
+
+            if app.control.inspect().registered_tasks():
+                job_list = list(app.control.inspect().registered_tasks().values())[0]
                 for job in job_list:
                     task_results.append(
                         TaskResult.objects.filter(task_name=job).order_by("date_done").last()
@@ -411,6 +427,7 @@ def announcements(request: HttpRequest) -> HttpResponse:
     return render(request, "core/announcement/list.html", context)
 
 
+@never_cache
 @permission_required(
     "core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False)
 )
@@ -478,6 +495,7 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
         return render(self.request, self.template, context)
 
 
+@never_cache
 def preferences(
     request: HttpRequest,
     registry_name: str = "person",
@@ -540,6 +558,7 @@ def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     person = objectgetter_optional(Person)(request, id_)
 
     with reversion.create_revision():
+        set_user(request.user)
         person.save()
 
     person.delete()
@@ -553,6 +572,7 @@ def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group."""
     group = objectgetter_optional(Group)(request, id_)
     with reversion.create_revision():
+        set_user(request.user)
         group.save()
 
     group.delete()
@@ -561,6 +581,7 @@ def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("groups")
 
 
+@never_cache
 @permission_required(
     "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
 )
@@ -626,6 +647,7 @@ def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("additional_fields")
 
 
+@never_cache
 @permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
 def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group_type."""
@@ -678,3 +700,133 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     messages.success(request, _("The group type has been deleted."))
 
     return redirect("group_types")
+
+
+class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
+    """Table of all dashboard widgets."""
+
+    model = DashboardWidget
+    table_class = DashboardWidgetTable
+    permission_required = "core.view_dashboardwidget"
+    template_name = "core/dashboard_widget/list.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["widget_types"] = [
+            (ContentType.objects.get_for_model(m, False), m)
+            for m in DashboardWidget.__subclasses__()
+        ]
+        return context
+
+
+@method_decorator(never_cache, name="dispatch")
+class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
+    """Edit view for dashboard widgets."""
+
+    def get_form_class(self) -> Type[BaseModelForm]:
+        return modelform_factory(self.object.__class__, fields=self.fields)
+
+    model = DashboardWidget
+    fields = "__all__"
+    permission_required = "core.edit_dashboardwidget"
+    template_name = "core/dashboard_widget/edit.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been saved.")
+
+
+@method_decorator(never_cache, name="dispatch")
+class DashboardWidgetCreateView(AdvancedCreateView, PermissionRequiredMixin):
+    """Create view for dashboard widgets."""
+
+    def get_model(self, request, *args, **kwargs):
+        app_label = kwargs.get("app")
+        model = kwargs.get("model")
+        ct = get_object_or_404(ContentType, app_label=app_label, model=model)
+        return ct.model_class()
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["model"] = self.model
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.model = self.get_model(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.model = self.get_model(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
+
+    fields = "__all__"
+    permission_required = "core.add_dashboardwidget"
+    template_name = "core/dashboard_widget/create.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been created.")
+
+
+class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete view for dashboard widgets."""
+
+    model = DashboardWidget
+    permission_required = "core.delete_dashboardwidget"
+    template_name = "core/pages/delete.html"
+    success_url = reverse_lazy("dashboard_widgets")
+    success_message = _("The dashboard widget has been deleted.")
+
+
+class EditDashboardView(View):
+    """View for editing dashboard widget order."""
+
+    def get_context_data(self, request):
+        context = {}
+
+        widgets = request.user.person.dashboard_widgets
+        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
+        context["widgets"] = widgets
+        context["not_used_widgets"] = not_used_widgets
+
+        order = 10
+        initial = []
+        for widget in widgets:
+            initial.append({"pk": widget, "order": order})
+            order += 10
+        for widget in not_used_widgets:
+            initial.append({"pk": widget, "order": 0})
+
+        formset = DashboardWidgetOrderFormSet(
+            request.POST or None, initial=initial, prefix="widget_order"
+        )
+        context["formset"] = formset
+
+        return context
+
+    def post(self, request):
+        context = self.get_context_data(request)
+
+        if context["formset"].is_valid():
+            added_objects = []
+            for form in context["formset"]:
+                if not form.cleaned_data["order"]:
+                    continue
+
+                obj, created = DashboardWidgetOrder.objects.update_or_create(
+                    widget=form.cleaned_data["pk"],
+                    person=request.user.person,
+                    defaults={"order": form.cleaned_data["order"]},
+                )
+
+                added_objects.append(obj.pk)
+
+            DashboardWidgetOrder.objects.filter(person=request.user.person).exclude(
+                pk__in=added_objects
+            ).delete()
+
+            messages.success(
+                request, _("Your dashboard configuration has been saved successfully.")
+            )
+            return redirect("index")
+
+    def get(self, request):
+        context = self.get_context_data(request)
+
+        return render(request, "core/edit_dashboard.html", context=context)

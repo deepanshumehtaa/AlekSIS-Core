@@ -1,5 +1,5 @@
 import os
-import pkgutil
+import sys
 import time
 from datetime import datetime, timedelta
 from importlib import import_module
@@ -7,6 +7,11 @@ from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
+
+if sys.version_info >= (3, 9):
+    from importlib import metadata
+else:
+    import importlib_metadata as metadata
 
 from django.conf import settings
 from django.db.models import Model, QuerySet
@@ -59,14 +64,8 @@ def dt_show_toolbar(request: HttpRequest) -> bool:
 
 
 def get_app_packages() -> Sequence[str]:
-    """Find all packages within the aleksis.apps namespace."""
-    # Import error are non-fatal here because probably simply no app is installed.
-    try:
-        import aleksis.apps
-    except ImportError:
-        return []
-
-    return [f"aleksis.apps.{pkg[1]}" for pkg in pkgutil.iter_modules(aleksis.apps.__path__)]
+    """Find all registered apps from the setuptools entrypoint."""
+    return [f"{ep.module}.{ep.attr}" for ep in metadata.entry_points().get("aleksis.app", [])]
 
 
 def merge_app_settings(
@@ -81,11 +80,19 @@ def merge_app_settings(
     Note: Only selected names will be imported frm it to minimise impact of
     potentially malicious apps!
     """
-    for pkg in get_app_packages():
-        try:
-            mod_settings = import_module(pkg + ".settings")
-        except ImportError:
-            # Import errors are non-fatal. They mean that the app has no settings.py.
+    for app in get_app_packages():
+        pkg = ".".join(app.split(".")[:-2])
+        mod_settings = None
+        while "." in pkg:
+            try:
+                mod_settings = import_module(pkg + ".settings")
+            except ImportError:
+                # Import errors are non-fatal.
+                pkg = ".".join(pkg.split(".")[:-1])
+                continue
+            break
+        if not mod_settings:
+            # The app does not have settings
             continue
 
         app_setting = getattr(mod_settings, setting, None)
@@ -359,6 +366,18 @@ def handle_uploaded_file(f, filename: str):
     with open(filename, "wb+") as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+
+@cache_memoize(3600)
+def get_content_type_by_perm(perm: str) -> Union["ContentType", None]:
+    from django.contrib.contenttypes.models import ContentType  # noqa
+
+    try:
+        return ContentType.objects.get(
+            app_label=perm.split(".", 1)[0], permission__codename=perm.split(".", 1)[1]
+        )
+    except ContentType.DoesNotExist:
+        return None
 
 
 @cache_memoize(3600)
