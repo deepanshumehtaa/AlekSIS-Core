@@ -11,7 +11,7 @@ def add_class_to_el(value: str, arg: str) -> str:
 
     :Example:
 
-    .. code-block:: jinja2
+    .. code-block::
 
         {{ mymodel.myhtmlfield|add_class_to_el:"ul,browser-default" }}
     """
