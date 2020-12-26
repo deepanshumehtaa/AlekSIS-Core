@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.aggregates import Count
 from django.utils.translation import gettext as _
 
@@ -43,6 +44,16 @@ class DataCheck:
     def solve(cls, check_result: "DataCheckResult", solve_option: str = "default"):
         with reversion.create_revision():
             cls.solve_options[solve_option].solve(check_result)
+
+    @classmethod
+    def register_result(cls, instance) -> "DataCheckResult":
+        from aleksis.core.models import DataCheckResult
+
+        ct = ContentType.objects.get_for_model(instance)
+        result = DataCheckResult.objects.get_or_create(
+            check=cls.name, content_type=ct, object_id=instance.id
+        )
+        return result
 
 
 class DataCheckRegistry:
