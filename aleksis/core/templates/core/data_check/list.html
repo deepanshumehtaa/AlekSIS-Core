@@ -64,7 +64,8 @@
               </td>
               <td>
                 {% for option_name, option in result.related_check.solve_options.items %}
-                  <a class="btn waves-effect waves-light" href="{% url "data_check_solve" result.pk option_name %}">
+                  <a class="btn btn-margin waves-effect waves-light"
+                     href="{% url "data_check_solve" result.pk option_name %}">
                     {{ option.verbose_name }}
                   </a>
                 {% endfor %}
