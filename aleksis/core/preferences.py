@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import (
+    BooleanPreference,
     ChoicePreference,
     FilePreference,
     MultipleChoicePreference,
@@ -168,6 +169,24 @@ class PrimaryGroupField(ChoicePreference):
 
     def get_choices(self):
         return Person.syncable_fields_choices()
+
+
+@site_preferences_registry.register
+class AutoCreatePerson(BooleanPreference):
+    section = account
+    name = "auto_create_person"
+    default = False
+    required = False
+    verbose_name = _("Automatically create new persons for new users")
+
+
+@site_preferences_registry.register
+class AutoLinkPerson(BooleanPreference):
+    section = account
+    name = "auto_link_person"
+    default = False
+    required = False
+    verbose_name = _("Automatically link existing persons to new users by their e-mail address")
 
 
 @site_preferences_registry.register
