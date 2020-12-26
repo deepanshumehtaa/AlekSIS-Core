@@ -22,28 +22,25 @@ class EnsurePersonMiddleware:
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
         if not has_person(request):
-            if request.user.is_superuser:
-                # Super-users get a dummy person linked
-                dummy_person = DummyPerson(
-                    first_name=request.user.first_name, last_name=request.user.last_name
+            prefs = get_site_preferences()
+            if prefs.get("account__auto_link_person", False):
+                person, created = Person.objects.get_or_create(
+                    email=request.user.email,
+                    defaults={
+                        "first_name": request.user.first_name,
+                        "last_name": request.user.last_name,
+                    },
                 )
-                request.user.person = dummy_person
-            else:
-                prefs = get_site_preferences()
-
-                if prefs.get("account__auto_link_person", False):
-                    person, created = Person.objects.get_or_create(
-                        email=request.user.email,
-                        defaults={
-                            "first_name": request.user.first_name,
-                            "last_name": request.user.last_name,
-                        },
-                    )
-                    if created and not prefs.get("account__auto_create_person"):
-                        return
-
+                if prefs.get("account__auto_create_person") or not created:
                     person.user = request.user
                     person.save()
+
+        if request.user.is_superuser and not has_person(request):
+            # Super-users get a dummy person linked
+            dummy_person = DummyPerson(
+                first_name=request.user.first_name, last_name=request.user.last_name
+            )
+            request.user.person = dummy_person
 
         response = self.get_response(request)
         return response
