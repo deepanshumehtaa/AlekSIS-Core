@@ -23,7 +23,11 @@ class EnsurePersonMiddleware:
     def __call__(self, request: HttpRequest) -> HttpResponse:
         if not has_person(request):
             prefs = get_site_preferences()
-            if prefs.get("account__auto_link_person", False):
+            if (
+                prefs.get("account__auto_link_person", False)
+                and request.user.first_name
+                and request.user.last_name
+            ):
                 person, created = Person.objects.get_or_create(
                     email=request.user.email,
                     defaults={
