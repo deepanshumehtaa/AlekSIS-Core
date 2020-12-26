@@ -94,6 +94,17 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("Dashboard widgets"),
+                    "url": "dashboard_widgets",
+                    "icon": "dashboard",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_dashboardwidget",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Data management"),
                     "url": "data_management",
                     "icon": "view_list",

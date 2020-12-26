@@ -294,3 +294,15 @@ solve_data_problem_predicate = (
     has_person & view_data_check_results_predicate & has_global_perm("core.solve_data_problem")
 )
 rules.add_perm("core.solve_data_problem", solve_data_problem_predicate)
+
+view_dashboard_widget_predicate = has_person & has_global_perm("core.view_dashboardwidget")
+rules.add_perm("core.view_dashboardwidget", view_dashboard_widget_predicate)
+
+create_dashboard_widget_predicate = has_person & has_global_perm("core.add_dashboardwidget")
+rules.add_perm("core.create_dashboardwidget", create_dashboard_widget_predicate)
+
+edit_dashboard_widget_predicate = has_person & has_global_perm("core.change_dashboardwidget")
+rules.add_perm("core.edit_dashboardwidget", edit_dashboard_widget_predicate)
+
+delete_dashboard_widget_predicate = has_person & has_global_perm("core.delete_dashboardwidget")
+rules.add_perm("core.delete_dashboardwidget", delete_dashboard_widget_predicate)

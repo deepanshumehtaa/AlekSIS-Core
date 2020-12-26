@@ -9,6 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
@@ -234,6 +235,12 @@ class Person(ExtensibleModel):
             ):
                 years -= 1
             return years
+
+    @property
+    def dashboard_widgets(self):
+        return [
+            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+        ]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -683,6 +690,31 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
 
+    size_s = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on mobile devices"),
+        help_text=_("<= 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_m = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on tablet devices"),
+        help_text=_("> 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_l = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on desktop devices"),
+        help_text=_("> 992 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=6,
+    )
+    size_xl = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on large desktop devices"),
+        help_text=_("> 1200 px>, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=4,
+    )
+
     def get_context(self):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -701,6 +733,18 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     class Meta:
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class DashboardWidgetOrder(ExtensibleModel):
+    widget = models.ForeignKey(
+        DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
+    )
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_("Person"))
+    order = models.PositiveIntegerField(verbose_name=_("Order"))
+
+    class Meta:
+        verbose_name = _("Dashboard widget order")
+        verbose_name_plural = _("Dashboard widget orders")
 
 
 class CustomMenu(ExtensibleModel):
