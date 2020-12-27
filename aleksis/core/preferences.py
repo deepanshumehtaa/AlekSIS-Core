@@ -13,7 +13,7 @@ from dynamic_preferences.types import (
     StringPreference,
 )
 
-from .models import Person
+from .models import Group, Person
 from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
@@ -232,3 +232,14 @@ class DataChecksEmailsRecipients(ModelMultipleChoicePreference):
     default = []
     model = Person
     verbose_name = _("Email recipients for data checks problem emails")
+
+
+@site_preferences_registry.register
+class DataChecksEmailsRecipientGroups(ModelMultipleChoicePreference):
+    """Email recipient groups for data check problem emails."""
+
+    section = general
+    name = "data_checks_recipient_groups"
+    default = []
+    model = Group
+    verbose_name = _("Email recipient groups for data checks problem emails")

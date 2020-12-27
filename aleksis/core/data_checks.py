@@ -216,12 +216,19 @@ def send_emails_for_data_checks():
                 (DATA_CHECK_REGISTRY.data_checks_by_name[result["check"]], result["count"])
             )
 
+        recipient_list = [
+            p.mail_sender
+            for p in get_site_preferences()["general__data_checks_recipients"]
+            if p.email
+        ]
+
+        for group in get_site_preferences()["general__data_checks_recipient_groups"]:
+            recipient_list += [p.mail_sender for p in group.announcement_recipients if p.email]
+
         send_templated_mail(
             template_name="data_checks",
             from_email=get_site_preferences()["mail__address"],
-            recipient_list=[
-                p.email for p in get_site_preferences()["general__data_checks_recipients"]
-            ],
+            recipient_list=recipient_list,
             context={"results": results_with_checks},
         )
 
