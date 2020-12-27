@@ -74,7 +74,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import is_celery_enabled, objectgetter_optional
+from .util.core_helpers import objectgetter_optional
 
 
 @permission_required("core.view_dashboard")
