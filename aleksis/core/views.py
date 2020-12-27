@@ -738,7 +738,7 @@ class RunDataChecks(PermissionRequiredMixin, View):
                 ),
             )
         else:
-            messages.success(request, _("The data check has been finished."))
+            messages.success(request, _("The data check has finished."))
         return redirect("check_data")
 
 
@@ -754,7 +754,7 @@ class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
 
             msg = _(
                 f"The solve option '{solve_option_obj.verbose_name}' "
-                f"has been affected on the object '{result.related_object}' "
+                f"has been executed on the object '{result.related_object}' "
                 f"(type: {result.related_object._meta.verbose_name})."
             )
 
