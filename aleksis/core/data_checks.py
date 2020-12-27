@@ -197,6 +197,8 @@ def check_data():
     if get_site_preferences()["general__data_checks_send_emails"]:
         send_emails_for_data_checks()
 
+    return True
+
 
 def send_emails_for_data_checks():
     """Notify one or more recipients about new problems with data.

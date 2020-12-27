@@ -728,8 +728,7 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        check_data()
-        if is_celery_enabled():
+        if not check_data():
             messages.success(
                 request,
                 _(
