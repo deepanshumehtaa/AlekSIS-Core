@@ -5,6 +5,7 @@ from django.db.models.aggregates import Count
 from django.utils.translation import gettext as _
 
 import reversion
+from reversion import set_comment
 from templated_email import send_templated_mail
 
 from .util.core_helpers import celery_optional, get_site_preferences
@@ -150,7 +151,14 @@ class DataCheck:
         :param solve_option: The name of the solve option that should be executed
         """
         with reversion.create_revision():
-            cls.solve_options[solve_option].solve(check_result)
+            solve_option_obj = cls.solve_options[solve_option]
+            set_comment(
+                _(
+                    f"Solve option '{solve_option_obj.verbose_name}' "
+                    f"for data check '{cls.verbose_name}'"
+                )
+            )
+            solve_option_obj.solve(check_result)
 
     @classmethod
     def register_result(cls, instance) -> "DataCheckResult":
