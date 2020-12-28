@@ -1,6 +1,7 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.apps import apps
 from django.conf import settings
 from django.db import OperationalError, ProgrammingError
 from django.http import HttpRequest
@@ -41,7 +42,7 @@ class CoreConfig(AppConfig):
         super().ready()
 
         # Autodiscover various modules defined by AlekSIS
-        autodiscover_modules("form_extensions", "model_extensions", "checks", "data_checks")
+        autodiscover_modules("form_extensions", "model_extensions", "checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")
@@ -53,9 +54,21 @@ class CoreConfig(AppConfig):
 
         self._refresh_authentication_backends()
 
+        self._load_data_checks()
+
         from .health_checks import DataChecksHealthCheckBackend
 
         plugin_dir.register(DataChecksHealthCheckBackend)
+
+    @classmethod
+    def _load_data_checks(cls):
+        """Get all data checks from all loaded models."""
+        from aleksis.core.data_checks import DataCheckRegistry
+
+        data_checks = []
+        for model in apps.get_models():
+            data_checks += getattr(model, "data_checks", [])
+        DataCheckRegistry.data_checks = data_checks
 
     @classmethod
     def _refresh_authentication_backends(cls):

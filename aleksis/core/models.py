@@ -26,7 +26,7 @@ from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DATA_CHECK_REGISTRY, DataCheck
+from aleksis.core.data_checks import DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
@@ -851,7 +851,7 @@ class DataCheckResult(ExtensibleModel):
     check = models.CharField(
         max_length=255,
         verbose_name=_("Related data check task"),
-        choices=DATA_CHECK_REGISTRY.data_checks_choices,
+        choices=DataCheckRegistry.data_checks_choices,
     )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -863,7 +863,7 @@ class DataCheckResult(ExtensibleModel):
 
     @property
     def related_check(self) -> DataCheck:
-        return DATA_CHECK_REGISTRY.data_checks_by_name[self.check]
+        return DataCheckRegistry.data_checks_by_name[self.check]
 
     def solve(self, solve_option: str = "default"):
         self.related_check.solve(self, solve_option)

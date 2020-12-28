@@ -29,7 +29,7 @@ from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 
-from aleksis.core.data_checks import DATA_CHECK_REGISTRY, check_data
+from aleksis.core.data_checks import DataCheckRegistry, check_data
 
 from .filters import GroupFilter, PersonFilter
 from .forms import (
@@ -720,7 +720,7 @@ class DataCheckView(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["registered_checks"] = DATA_CHECK_REGISTRY.data_checks
+        context["registered_checks"] = DataCheckRegistry.data_checks
         return context
 
 

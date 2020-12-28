@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.aggregates import Count
+from django.utils.decorators import classproperty
 from django.utils.translation import gettext as _
 
 import reversion
@@ -47,6 +48,7 @@ class SolveOption:
 
 class IgnoreSolveOption(SolveOption):
     """Mark the object with data issues as solved."""
+
     name = "ignore"
     verbose_name = _("Ignore problem")
 
@@ -70,12 +72,14 @@ class DataCheck:
 
     Example:
 
+    ``data_checks.py``
+    ******************
+
     .. code-block:: python
 
         from aleksis.core.data_checks import DataCheck, DATA_CHECK_REGISTRY
         from django.utils.translation import gettext as _
 
-        @DATA_CHECK_REGISTRY.register
         class ExampleDataCheck(DataCheck):
             name = "example" # has to be unique
             verbose_name = _("Ensure that there are no examples.")
@@ -94,6 +98,19 @@ class DataCheck:
                 for example in wrong_examples:
                     cls.register_result(example)
 
+    ``models.py``
+    *************
+
+    .. code-block:: python
+
+        from .data_checks import ExampleDataCheck
+
+        # ...
+
+        class ExampleModel(Model):
+            data_checks = [ExampleDataCheck]
+
+
     Solve options are used in order to give the data admin typical solutions to this specific issue.
     They are defined by inheriting from SolveOption.
     More information about defining solve options can be find there.
@@ -107,10 +124,9 @@ class DataCheck:
     your code should find all objects with issues and should register
     them in the result database using the class method ``register_result``.
 
-    Data checks have to be registered in the central registry.
-    This can be done by decorating the class with
-    ``@DATA_CHECK_REGISTRY.register`` or adding it later
-    by ``DATA_CHECK_REGISTRY.register(<YourCheck>DataCheck)``.
+    Data checks have to be registered in their corresponding model.
+    This can be done by adding a list ``data_checks``
+    containing the data check classes.
 
     Executing data checks
     ---------------------
@@ -180,33 +196,26 @@ class DataCheck:
 class DataCheckRegistry:
     """Create central registry for all data checks in AlekSIS."""
 
-    def __init__(self):
-        self.data_checks = []
-        self.data_checks_by_name = {}
-        self.data_checks_choices = []
+    data_checks = []
 
-    def register(self, check: DataCheck):
-        """Add a new data check to the registry."""
-        self.data_checks.append(check)
-        self.data_checks_by_name[check.name] = check
-        self.data_checks_choices.append((check.name, check.verbose_name))
-        return check
+    @classproperty
+    def data_checks_by_name(cls):
+        return {check.name: check for check in cls.data_checks}
 
-
-DATA_CHECK_REGISTRY = DataCheckRegistry()
+    @classproperty
+    def data_checks_choices(cls):
+        return [(check.name, check.verbose_name) for check in cls.data_checks]
 
 
 @celery_optional
 def check_data():
     """Execute all registered data checks and send email if activated."""
-    for check in DATA_CHECK_REGISTRY.data_checks:
+    for check in DataCheckRegistry.data_checks:
         logging.info(f"Run check: {check.verbose_name}")
         check.check_data()
 
     if get_site_preferences()["general__data_checks_send_emails"]:
         send_emails_for_data_checks()
-
-    return True
 
 
 def send_emails_for_data_checks():
@@ -224,7 +233,7 @@ def send_emails_for_data_checks():
         results_with_checks = []
         for result in results_by_check:
             results_with_checks.append(
-                (DATA_CHECK_REGISTRY.data_checks_by_name[result["check"]], result["count"])
+                (DataCheckRegistry.data_checks_by_name[result["check"]], result["count"])
             )
 
         recipient_list = [

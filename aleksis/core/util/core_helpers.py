@@ -206,6 +206,7 @@ def celery_optional(orig: Callable) -> Callable:
             task.delay(*args, **kwargs)
         else:
             orig(*args, **kwargs)
+            return True
 
     return wrapped
 
