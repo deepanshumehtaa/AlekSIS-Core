@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-02 16:29+0200\n"
+"POT-Creation-Date: 2020-12-28 21:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/main.js:21
+#: static/js/main.js:15
 msgid "Today"
 msgstr ""
 
-#: static/js/main.js:22
+#: static/js/main.js:16
 msgid "Cancel"
 msgstr ""
 
-#: static/js/main.js:23
+#: static/js/main.js:17
 msgid "OK"
 msgstr ""

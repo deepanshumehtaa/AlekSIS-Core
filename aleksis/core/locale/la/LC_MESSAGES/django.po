@@ -7,17 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-02 16:29+0200\n"
+"POT-Creation-Date: 2020-12-28 21:33+0100\n"
 "PO-Revision-Date: 2020-12-19 12:57+0000\n"
 "Last-Translator: Julian <leuckerj@gmail.com>\n"
-"Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/"
-"la/>\n"
+"Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/la/>\n"
 "Language: la\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
+
+#: data_checks.py:53
+msgid "Ignore problem"
+msgstr ""
+
+#: data_checks.py:174
+#, python-brace-format
+msgid "Solve option '{solve_option_obj.verbose_name}' "
+msgstr ""
 
 #: filters.py:37 templates/core/base.html:77 templates/core/group/list.html:20
 #: templates/core/person/list.html:24 templates/search/search.html:7
@@ -35,99 +43,105 @@ msgstr "Quaerere cum breve nomine"
 msgid "Search by contact details"
 msgstr "Inscriptio electronica"
 
-#: forms.py:46
+#: forms.py:54
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 
-#: forms.py:50
+#: forms.py:58
 msgid "This username is already in use."
 msgstr ""
 
-#: forms.py:74
+#: forms.py:82
 msgid "Base data"
 msgstr ""
 
-#: forms.py:80
+#: forms.py:88
 #, fuzzy
 #| msgid "E-mail address"
 msgid "Address"
 msgstr "Inscriptio electronica"
 
-#: forms.py:81
+#: forms.py:89
 msgid "Contact data"
 msgstr ""
 
-#: forms.py:83
+#: forms.py:91
 msgid "Advanced personal data"
 msgstr ""
 
-#: forms.py:114
+#: forms.py:134
 msgid "New user"
 msgstr ""
 
-#: forms.py:114
+#: forms.py:134
 #, fuzzy
 #| msgid "Persons and accounts"
 msgid "Create a new account"
 msgstr "Personae et computi"
 
-#: forms.py:126 models.py:91
+#: forms.py:146 models.py:102
 msgid "School term"
 msgstr "Anus scolae"
 
-#: forms.py:127
+#: forms.py:147
 #, fuzzy
 #| msgid "Data management"
 msgid "Common data"
 msgstr "Adminstratio datarum"
 
-#: forms.py:128 forms.py:170 menus.py:152 models.py:105
+#: forms.py:148 forms.py:197 menus.py:169 models.py:116
 #: templates/core/person/list.html:8 templates/core/person/list.html:9
 msgid "Persons"
 msgstr "personae"
 
-#: forms.py:129
+#: forms.py:149
 #, fuzzy
 #| msgid "Additional name(s)"
 msgid "Additional data"
 msgstr "addita nomines"
 
-#: forms.py:163 forms.py:166 models.py:35
+#: forms.py:189 forms.py:192 models.py:45
 msgid "Date"
 msgstr "dies"
 
-#: forms.py:164 forms.py:167 models.py:43
+#: forms.py:190 forms.py:193 models.py:53
 msgid "Time"
 msgstr "tempus"
 
-#: forms.py:172 menus.py:160 models.py:319 templates/core/group/list.html:8
-#: templates/core/group/list.html:9 templates/core/person/full.html:136
+#: forms.py:210 menus.py:177 models.py:338 templates/core/group/list.html:8
+#: templates/core/group/list.html:9 templates/core/person/full.html:144
 msgid "Groups"
 msgstr "Greges"
 
-#: forms.py:176
+#: forms.py:220
 msgid "From when until when should the announcement be displayed?"
 msgstr ""
 
-#: forms.py:179
+#: forms.py:223
 msgid "Who should see the announcement?"
 msgstr "Quis nuntium videatne?"
 
-#: forms.py:180
+#: forms.py:224
 msgid "Write your announcement:"
 msgstr "Scribe nuntium:"
 
-#: forms.py:219
+#: forms.py:263
 msgid "You are not allowed to create announcements which are only valid in the past."
 msgstr ""
 
-#: forms.py:223
+#: forms.py:267
 msgid "The from date and time must be earlier then the until date and time."
 msgstr ""
 
-#: forms.py:232
+#: forms.py:276
 msgid "You need at least one recipient."
 msgstr ""
+
+#: health_checks.py:15
+#, fuzzy
+#| msgid "Write your announcement:"
+msgid "There are unresolved data problems."
+msgstr "Scribe nuntium:"
 
 #: menus.py:7 templates/two_factor/core/login.html:6
 #: templates/two_factor/core/login.html:10
@@ -167,603 +181,729 @@ msgstr ""
 msgid "Admin"
 msgstr "Administratio"
 
-#: menus.py:75 models.py:564 templates/core/announcement/list.html:7
+#: menus.py:75 models.py:602 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
 msgstr "Nuntii"
 
-#: menus.py:86 models.py:92 templates/core/school_term/list.html:8
+#: menus.py:86 models.py:103 templates/core/school_term/list.html:8
 #: templates/core/school_term/list.html:9
 msgid "School terms"
 msgstr "ani scolae"
 
-#: menus.py:97 templates/core/management/data_management.html:6
+#: menus.py:97 templates/core/dashboard_widget/list.html:8
+#: templates/core/dashboard_widget/list.html:9
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widgets"
+msgstr "Forum"
+
+#: menus.py:108 templates/core/management/data_management.html:6
 #: templates/core/management/data_management.html:7
 msgid "Data management"
 msgstr "Adminstratio datarum"
 
-#: menus.py:105 templates/core/pages/system_status.html:5
+#: menus.py:116 templates/core/pages/system_status.html:5
 #: templates/core/pages/system_status.html:7
 msgid "System status"
 msgstr "Status systemae"
 
-#: menus.py:116
+#: menus.py:127
 msgid "Impersonation"
 msgstr "Simulare aliquem"
 
-#: menus.py:124
+#: menus.py:135
 #, fuzzy
 #| msgid "Notification"
 msgid "Configuration"
 msgstr "Nuntius"
 
-#: menus.py:135
+#: menus.py:146 templates/core/data_check/list.html:9
+#: templates/core/data_check/list.html:10
+#, fuzzy
+#| msgid "System status"
+msgid "Data checks"
+msgstr "Status systemae"
+
+#: menus.py:152
 msgid "Backend Admin"
 msgstr ""
 
-#: menus.py:143
+#: menus.py:160
 msgid "People"
 msgstr "Personae"
 
-#: menus.py:168 models.py:727 templates/core/group_type/list.html:8
+#: menus.py:185 models.py:803 templates/core/group_type/list.html:8
 #: templates/core/group_type/list.html:9
 #, fuzzy
 #| msgid "Groups"
 msgid "Group types"
 msgstr "Greges"
 
-#: menus.py:179
+#: menus.py:196
 msgid "Persons and accounts"
 msgstr "Personae et computi"
 
-#: menus.py:190
+#: menus.py:207
 msgid "Groups and child groups"
 msgstr ""
 
-#: menus.py:201 models.py:363 templates/core/additional_field/list.html:8
+#: menus.py:218 models.py:385 templates/core/additional_field/list.html:8
 #: templates/core/additional_field/list.html:9
 #, fuzzy
 #| msgid "Additional name(s)"
 msgid "Additional fields"
 msgstr "addita nomines"
 
-#: menus.py:216 templates/core/group/child_groups.html:7
+#: menus.py:233 templates/core/group/child_groups.html:7
 #: templates/core/group/child_groups.html:9
 msgid "Assign child groups to groups"
 msgstr ""
 
-#: mixins.py:406
+#: mixins.py:384
 #, fuzzy
 #| msgid "Edit school term"
 msgid "Linked school term"
 msgstr "Muta anum scolae"
 
-#: models.py:33
+#: models.py:43
 msgid "Boolean (Yes/No)"
 msgstr ""
 
-#: models.py:34
+#: models.py:44
 msgid "Text (one line)"
 msgstr ""
 
-#: models.py:36
+#: models.py:46
 msgid "Date and time"
 msgstr "Dies et hora"
 
-#: models.py:37
+#: models.py:47
 msgid "Decimal number"
 msgstr ""
 
-#: models.py:38 models.py:146
+#: models.py:48 models.py:157
 msgid "E-mail address"
 msgstr "Inscriptio electronica"
 
-#: models.py:39
+#: models.py:49
 msgid "Integer"
 msgstr ""
 
-#: models.py:40
+#: models.py:50
 #, fuzzy
 #| msgid "E-mail address"
 msgid "IP address"
 msgstr "Inscriptio electronica"
 
-#: models.py:41
+#: models.py:51
 msgid "Boolean or empty (Yes/No/Neither)"
 msgstr ""
 
-#: models.py:42
+#: models.py:52
 msgid "Text (multi-line)"
 msgstr ""
 
-#: models.py:44
+#: models.py:54
 msgid "URL / Link"
 msgstr ""
 
-#: models.py:56 models.py:700
+#: models.py:66 models.py:776
 msgid "Name"
 msgstr "Nomen"
 
-#: models.py:58
+#: models.py:68
 msgid "Start date"
 msgstr ""
 
-#: models.py:59
+#: models.py:69
 msgid "End date"
 msgstr ""
 
-#: models.py:77
+#: models.py:88
 msgid "The start date must be earlier than the end date."
 msgstr ""
 
-#: models.py:84
+#: models.py:95
 msgid "There is already a school term for this time or a part of this time."
 msgstr ""
 
-#: models.py:104 templates/core/person/accounts.html:36
+#: models.py:115 models.py:742 templates/core/person/accounts.html:41
 msgid "Person"
 msgstr "Persona"
 
-#: models.py:107
+#: models.py:118
 #, fuzzy
 #| msgid "E-mail address"
 msgid "Can view address"
 msgstr "Inscriptio electronica"
 
-#: models.py:108
+#: models.py:119
 #, fuzzy
 #| msgid "E-mail address"
 msgid "Can view contact details"
 msgstr "Inscriptio electronica"
 
-#: models.py:109
+#: models.py:120
 #, fuzzy
 #| msgid "E-mail address"
 msgid "Can view photo"
 msgstr "Inscriptio electronica"
 
-#: models.py:110
+#: models.py:121
 #, fuzzy
 #| msgid "Persons and accounts"
 msgid "Can view persons groups"
 msgstr "Personae et computi"
 
-#: models.py:111
+#: models.py:122
 #, fuzzy
 #| msgid "Stop impersonation"
 msgid "Can view personal details"
 msgstr "Simulandum aliquem finire"
 
-#: models.py:116
+#: models.py:127
 msgid "female"
 msgstr "femininum"
 
-#: models.py:116
+#: models.py:127
 msgid "male"
 msgstr "maskulinum"
 
-#: models.py:124
+#: models.py:135
 msgid "Linked user"
 msgstr ""
 
-#: models.py:126
+#: models.py:137
 #, fuzzy
 #| msgid "Impersonation"
 msgid "Is person active?"
 msgstr "Simulare aliquem"
 
-#: models.py:128
+#: models.py:139
 msgid "First name"
 msgstr "Primus nomen"
 
-#: models.py:129
+#: models.py:140
 msgid "Last name"
 msgstr "Secondus nomen"
 
-#: models.py:131
+#: models.py:142
 msgid "Additional name(s)"
 msgstr "addita nomines"
 
-#: models.py:135 models.py:332
+#: models.py:146 models.py:354
 msgid "Short name"
 msgstr "Breve nomen"
 
-#: models.py:138
+#: models.py:149
 msgid "Street"
 msgstr "Via"
 
-#: models.py:139
+#: models.py:150
 msgid "Street number"
 msgstr "Numerus domini"
 
-#: models.py:140
+#: models.py:151
 msgid "Postal code"
 msgstr "Numerus directorius"
 
-#: models.py:141
+#: models.py:152
 msgid "Place"
 msgstr "Urbs"
 
-#: models.py:143
+#: models.py:154
 msgid "Home phone"
 msgstr "Numerus telephoni domi"
 
-#: models.py:144
+#: models.py:155
 msgid "Mobile phone"
 msgstr "Numerus telephoni mobilis"
 
-#: models.py:148
+#: models.py:159
 msgid "Date of birth"
 msgstr "Dies natalis"
 
-#: models.py:149
+#: models.py:160
 msgid "Sex"
 msgstr "Genus"
 
-#: models.py:151
+#: models.py:162
 msgid "Photo"
 msgstr "Photographia"
 
-#: models.py:155 templates/core/person/full.html:129
+#: models.py:166 templates/core/person/full.html:137
 msgid "Guardians / Parents"
 msgstr "Parentes"
 
-#: models.py:162
+#: models.py:173
 msgid "Primary group"
 msgstr ""
 
-#: models.py:165 models.py:423 models.py:447 models.py:532 models.py:720
-#: templates/core/person/full.html:112
+#: models.py:176 models.py:461 models.py:485 models.py:570 models.py:796
+#: templates/core/person/full.html:120
 msgid "Description"
 msgstr "Descriptio"
 
-#: models.py:296
+#: models.py:313
 msgid "Title of field"
 msgstr ""
 
-#: models.py:298
+#: models.py:315
 msgid "Type of field"
 msgstr ""
 
-#: models.py:305
+#: models.py:322
 #, fuzzy
 #| msgid "Additional name(s)"
 msgid "Addtitional field for groups"
 msgstr "addita nomines"
 
-#: models.py:306
+#: models.py:323
 #, fuzzy
 #| msgid "Additional name(s)"
 msgid "Addtitional fields for groups"
 msgstr "addita nomines"
 
-#: models.py:318
+#: models.py:337
 msgid "Group"
 msgstr "Grex"
 
-#: models.py:320
+#: models.py:340
 msgid "Can assign child groups to groups"
 msgstr ""
 
-#: models.py:330
+#: models.py:341
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "Can view statistics about group."
+msgstr "Personae et computi"
+
+#: models.py:352
 #, fuzzy
 #| msgid "Last name"
 msgid "Long name"
 msgstr "Secondus nomen"
 
-#: models.py:340 templates/core/group/full.html:65
+#: models.py:362 templates/core/group/full.html:85
 msgid "Members"
 msgstr ""
 
-#: models.py:343 templates/core/group/full.html:62
+#: models.py:365 templates/core/group/full.html:82
 msgid "Owners"
 msgstr ""
 
-#: models.py:350 templates/core/group/full.html:54
+#: models.py:372 templates/core/group/full.html:55
 msgid "Parent groups"
 msgstr ""
 
-#: models.py:358
+#: models.py:380
 msgid "Type of group"
 msgstr ""
 
-#: models.py:419
+#: models.py:457
 msgid "User"
 msgstr ""
 
-#: models.py:422 models.py:446 models.py:531
+#: models.py:460 models.py:484 models.py:569
 #: templates/core/announcement/list.html:18
 msgid "Title"
 msgstr "Titulus"
 
-#: models.py:425
+#: models.py:463
 msgid "Application"
 msgstr ""
 
-#: models.py:431
+#: models.py:469
 msgid "Activity"
 msgstr ""
 
-#: models.py:432
+#: models.py:470
 msgid "Activities"
 msgstr ""
 
-#: models.py:438
+#: models.py:476
 msgid "Sender"
 msgstr "Mittens"
 
-#: models.py:443
+#: models.py:481
 msgid "Recipient"
 msgstr ""
 
-#: models.py:448 models.py:701
+#: models.py:486 models.py:777
 msgid "Link"
 msgstr ""
 
-#: models.py:450
+#: models.py:488
 msgid "Read"
 msgstr ""
 
-#: models.py:451
+#: models.py:489
 msgid "Sent"
 msgstr ""
 
-#: models.py:464
+#: models.py:502
 #, fuzzy
 #| msgid "Notifications"
 msgid "Notification"
 msgstr "Nuntii"
 
-#: models.py:465
+#: models.py:503
 msgid "Notifications"
 msgstr "Nuntii"
 
-#: models.py:533
+#: models.py:571
 msgid "Link to detailed view"
 msgstr ""
 
-#: models.py:536
+#: models.py:574
 msgid "Date and time from when to show"
 msgstr ""
 
-#: models.py:539
+#: models.py:577
 msgid "Date and time until when to show"
 msgstr ""
 
-#: models.py:563
+#: models.py:601
 #, fuzzy
 #| msgid "Announcements"
 msgid "Announcement"
 msgstr "Nuntii"
 
-#: models.py:601
+#: models.py:639
 #, fuzzy
 #| msgid "Announcements"
 msgid "Announcement recipient"
 msgstr "Nuntii"
 
-#: models.py:602
+#: models.py:640
 #, fuzzy
 #| msgid "Announcements"
 msgid "Announcement recipients"
 msgstr "Nuntii"
 
-#: models.py:652
+#: models.py:690
 #, fuzzy
 #| msgid "Site title"
 msgid "Widget Title"
 msgstr "Titulus paginae"
 
-#: models.py:653
+#: models.py:691
 msgid "Activate Widget"
 msgstr ""
 
-#: models.py:671
+#: models.py:694
+msgid "Size on mobile devices"
+msgstr ""
+
+#: models.py:695
+msgid "<= 600 px, 12 columns"
+msgstr ""
+
+#: models.py:700
+msgid "Size on tablet devices"
+msgstr ""
+
+#: models.py:701
+msgid "> 600 px, 12 columns"
+msgstr ""
+
+#: models.py:706
+msgid "Size on desktop devices"
+msgstr ""
+
+#: models.py:707
+msgid "> 992 px, 12 columns"
+msgstr ""
+
+#: models.py:712
+msgid "Size on large desktop devices"
+msgstr ""
+
+#: models.py:713
+msgid "> 1200 px>, 12 columns"
+msgstr ""
+
+#: models.py:734
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard Widget"
 msgstr "Forum"
 
-#: models.py:672
+#: models.py:735
 #, fuzzy
 #| msgid "Dashboard"
 msgid "Dashboard Widgets"
 msgstr "Forum"
 
-#: models.py:678
+#: models.py:740
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget"
+msgstr "Forum"
+
+#: models.py:743
+msgid "Order"
+msgstr ""
+
+#: models.py:746
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget order"
+msgstr "Forum"
+
+#: models.py:747
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget orders"
+msgstr "Forum"
+
+#: models.py:753
 msgid "Menu ID"
 msgstr ""
 
-#: models.py:690
+#: models.py:766
 msgid "Custom menu"
 msgstr ""
 
-#: models.py:691
+#: models.py:767
 msgid "Custom menus"
 msgstr ""
 
-#: models.py:698
+#: models.py:774
 msgid "Menu"
 msgstr ""
 
-#: models.py:702
+#: models.py:778
 msgid "Icon"
 msgstr "Nota"
 
-#: models.py:708
+#: models.py:784
 msgid "Custom menu item"
 msgstr ""
 
-#: models.py:709
+#: models.py:785
 msgid "Custom menu items"
 msgstr ""
 
-#: models.py:719
+#: models.py:795
 msgid "Title of type"
 msgstr ""
 
-#: models.py:726 templates/core/group/full.html:46
+#: models.py:802 templates/core/group/full.html:47
 #, fuzzy
 #| msgid "Group"
 msgid "Group type"
 msgstr "Grex"
 
-#: models.py:736
+#: models.py:812
 #, fuzzy
 #| msgid "System status"
 msgid "Can view system status"
 msgstr "Status systemae"
 
-#: models.py:737
+#: models.py:813
 #, fuzzy
 #| msgid "Persons and accounts"
 msgid "Can link persons to accounts"
 msgstr "Personae et computi"
 
-#: models.py:738
+#: models.py:814
 #, fuzzy
 #| msgid "Data management"
 msgid "Can manage data"
 msgstr "Adminstratio datarum"
 
-#: models.py:739
+#: models.py:815
 #, fuzzy
 #| msgid "Stop impersonation"
 msgid "Can impersonate"
 msgstr "Simulandum aliquem finire"
 
-#: models.py:740
+#: models.py:816
 msgid "Can use search"
 msgstr ""
 
-#: models.py:741
+#: models.py:817
 msgid "Can change site preferences"
 msgstr ""
 
-#: models.py:742
+#: models.py:818
 msgid "Can change person preferences"
 msgstr ""
 
-#: models.py:743
+#: models.py:819
 msgid "Can change group preferences"
 msgstr ""
 
-#: preferences.py:24
+#: models.py:855
+msgid "Related data check task"
+msgstr ""
+
+#: models.py:863
+msgid "Issue solved"
+msgstr ""
+
+#: models.py:864
+#, fuzzy
+#| msgid "Notifications"
+msgid "Notification sent"
+msgstr "Nuntii"
+
+#: models.py:877
+msgid "Data check result"
+msgstr ""
+
+#: models.py:878
+msgid "Data check results"
+msgstr ""
+
+#: models.py:880
+msgid "Can run data checks"
+msgstr ""
+
+#: models.py:881
+msgid "Can solve data check problems"
+msgstr ""
+
+#: preferences.py:27
 #, fuzzy
 #| msgid "Notifications"
 msgid "Authentication"
 msgstr "Nuntii"
 
-#: preferences.py:33
+#: preferences.py:28
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Internationalisation"
+msgstr "Simulare aliquem"
+
+#: preferences.py:37
 msgid "Site title"
 msgstr "Titulus paginae"
 
-#: preferences.py:42
+#: preferences.py:46
 msgid "Site description"
 msgstr "Descriptio paginae"
 
-#: preferences.py:51
+#: preferences.py:55
 msgid "Primary colour"
 msgstr ""
 
-#: preferences.py:60
+#: preferences.py:64
 msgid "Secondary colour"
 msgstr ""
 
-#: preferences.py:68
+#: preferences.py:72
 #, fuzzy
 #| msgid "Logout"
 msgid "Logo"
 msgstr "nomen retractare"
 
-#: preferences.py:76
+#: preferences.py:80
 msgid "Favicon"
 msgstr ""
 
-#: preferences.py:84
+#: preferences.py:88
 #, fuzzy
 #| msgid "Icon"
 msgid "PWA-Icon"
 msgstr "Nota"
 
-#: preferences.py:93
+#: preferences.py:97
 #, fuzzy
 #| msgid "Last name"
 msgid "Mail out name"
 msgstr "Secondus nomen"
 
-#: preferences.py:102
+#: preferences.py:106
 #, fuzzy
 #| msgid "E-mail address"
 msgid "Mail out address"
 msgstr "Inscriptio electronica"
 
-#: preferences.py:112
+#: preferences.py:116
 msgid "Link to privacy policy"
 msgstr ""
 
-#: preferences.py:122
+#: preferences.py:126
 msgid "Link to imprint"
 msgstr ""
 
-#: preferences.py:132
+#: preferences.py:136
 msgid "Name format for addressing"
 msgstr ""
 
-#: preferences.py:146
+#: preferences.py:150
 msgid "Channels to use for notifications"
 msgstr ""
 
-#: preferences.py:156
+#: preferences.py:160
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr ""
 
-#: preferences.py:165
+#: preferences.py:169
 msgid "Field on person to match primary group against"
 msgstr ""
 
-#: preferences.py:177
+#: preferences.py:181
 msgid "Display name of the school"
 msgstr ""
 
-#: preferences.py:186
+#: preferences.py:190
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr "Officialis nomen scolae, e. g."
 
-#: preferences.py:194
+#: preferences.py:198
 msgid "Enabled custom authentication backends"
 msgstr ""
 
-#: settings.py:300
+#: preferences.py:211
+msgid "Available languages"
+msgstr ""
+
+#: preferences.py:223
+msgid "Send emails if data checks detect problems"
+msgstr ""
+
+#: preferences.py:234
+msgid "Email recipients for data checks problem emails"
+msgstr ""
+
+#: preferences.py:245
+msgid "Email recipient groups for data checks problem emails"
+msgstr ""
+
+#: settings.py:322
 msgid "English"
 msgstr "Britannicus"
 
-#: settings.py:301
+#: settings.py:323
 msgid "German"
 msgstr "Germanus"
 
-#: settings.py:302
+#: settings.py:324
 msgid "French"
 msgstr ""
 
-#: settings.py:303
+#: settings.py:325
 msgid "Norwegian (bokmål)"
 msgstr ""
 
 #: tables.py:19 templates/core/announcement/list.html:36
-#: templates/core/group/full.html:23 templates/core/person/full.html:22
+#: templates/core/group/full.html:24 templates/core/person/full.html:23
 msgid "Edit"
 msgstr ""
 
-#: tables.py:21 templates/core/announcement/list.html:22
+#: tables.py:21 tables.py:89 templates/core/announcement/list.html:22
 #, fuzzy
 #| msgid "Notifications"
 msgid "Actions"
 msgstr "Nuntii"
 
-#: tables.py:56 tables.py:57 tables.py:71
-#: templates/core/announcement/list.html:42 templates/core/group/full.html:30
-#: templates/core/pages/delete.html:22 templates/core/person/full.html:29
+#: tables.py:56 tables.py:57 tables.py:71 tables.py:87
+#: templates/core/announcement/list.html:42 templates/core/group/full.html:31
+#: templates/core/pages/delete.html:22 templates/core/person/full.html:30
 msgid "Delete"
 msgstr ""
 
@@ -839,27 +979,27 @@ msgstr "addita nomines"
 msgid "Create additional field"
 msgstr "addita nomines"
 
-#: templates/core/announcement/form.html:10
-#: templates/core/announcement/form.html:17
+#: templates/core/announcement/form.html:14
+#: templates/core/announcement/form.html:21
 #, fuzzy
 #| msgid "Announcements"
 msgid "Edit announcement"
 msgstr "Nuntii"
 
-#: templates/core/announcement/form.html:12
+#: templates/core/announcement/form.html:16
 #, fuzzy
 #| msgid "Announcements"
 msgid "Publish announcement"
 msgstr "Nuntii"
 
-#: templates/core/announcement/form.html:19
+#: templates/core/announcement/form.html:23
 #: templates/core/announcement/list.html:13
 #, fuzzy
 #| msgid "Who should see the announcement?"
 msgid "Publish new announcement"
 msgstr "Quis nuntium videatne?"
 
-#: templates/core/announcement/form.html:30
+#: templates/core/announcement/form.html:34
 #, fuzzy
 #| msgid "Who should see the announcement?"
 msgid "Save und publish announcement"
@@ -902,6 +1042,101 @@ msgstr ""
 #: templates/core/base_print.html:64
 msgid "Powered by AlekSIS"
 msgstr ""
+
+#: templates/core/dashboard_widget/create.html:8
+#: templates/core/dashboard_widget/create.html:12
+#, fuzzy, python-format
+#| msgid "Stop impersonation"
+msgid "Create %(widget)s"
+msgstr "Simulandum aliquem finire"
+
+#: templates/core/dashboard_widget/edit.html:8
+#: templates/core/dashboard_widget/edit.html:12
+#, python-format
+msgid "Edit %(widget)s"
+msgstr ""
+
+#: templates/core/dashboard_widget/list.html:17
+#, fuzzy, python-format
+#| msgid "Stop impersonation"
+msgid "Create %(name)s"
+msgstr "Simulandum aliquem finire"
+
+#: templates/core/data_check/list.html:15
+msgid "Check data again"
+msgstr ""
+
+#: templates/core/data_check/list.html:22
+msgid "The system detected some problems with your data."
+msgstr ""
+
+#: templates/core/data_check/list.html:23
+msgid ""
+"Please go through all data and check whether some extra action is\n"
+"          needed."
+msgstr ""
+
+#: templates/core/data_check/list.html:31
+msgid "Everything is fine."
+msgstr ""
+
+#: templates/core/data_check/list.html:32
+msgid "The system hasn't detected any problems with your data."
+msgstr ""
+
+#: templates/core/data_check/list.html:40
+msgid "Detected problems"
+msgstr ""
+
+#: templates/core/data_check/list.html:45
+msgid "Affected object"
+msgstr ""
+
+#: templates/core/data_check/list.html:46
+msgid "Detected problem"
+msgstr ""
+
+#: templates/core/data_check/list.html:47
+msgid "Show details"
+msgstr ""
+
+#: templates/core/data_check/list.html:48
+msgid "Options to solve the problem"
+msgstr ""
+
+#: templates/core/data_check/list.html:62
+msgid "Show object"
+msgstr ""
+
+#: templates/core/data_check/list.html:84
+#, fuzzy
+#| msgid "System status"
+msgid "Registered checks"
+msgstr "Status systemae"
+
+#: templates/core/data_check/list.html:88
+msgid ""
+"\n"
+"            The system will check for the following problems:\n"
+"          "
+msgstr ""
+
+#: templates/core/edit_dashboard.html:4 templates/core/edit_dashboard.html:5
+#: templates/core/index.html:14
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Edit dashboard"
+msgstr "Forum"
+
+#: templates/core/edit_dashboard.html:26
+msgid "Available widgets"
+msgstr ""
+
+#: templates/core/edit_dashboard.html:33
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Your dashboard"
+msgstr "Forum"
 
 #: templates/core/group/child_groups.html:18
 msgid ""
@@ -975,12 +1210,38 @@ msgstr ""
 msgid "Save and next"
 msgstr ""
 
-#: templates/core/group/edit.html:6 templates/core/group/edit.html:7
+#: templates/core/group/edit.html:11 templates/core/group/edit.html:12
 msgid "Edit group"
 msgstr ""
 
-#: templates/core/group/full.html:37 templates/core/person/full.html:36
+#: templates/core/group/full.html:38 templates/core/person/full.html:37
 msgid "Change preferences"
+msgstr ""
+
+#: templates/core/group/full.html:64
+#, fuzzy
+#| msgid "System status"
+msgid "Statistics"
+msgstr "Status systemae"
+
+#: templates/core/group/full.html:67
+msgid "Count of members"
+msgstr ""
+
+#: templates/core/group/full.html:71
+msgid "Average age"
+msgstr ""
+
+#: templates/core/group/full.html:76
+msgid "Age range"
+msgstr ""
+
+#: templates/core/group/full.html:76
+msgid "years to"
+msgstr ""
+
+#: templates/core/group/full.html:76
+msgid "years "
 msgstr ""
 
 #: templates/core/group/list.html:14
@@ -1015,27 +1276,35 @@ msgstr "Grex"
 msgid "Home"
 msgstr ""
 
-#: templates/core/index.html:42
-msgid "Last activities"
+#: templates/core/index.html:49
+msgid ""
+"\n"
+"              You haven't selected any dashboard widgets. Please click on \"Edit dashboard\" to add widgets to your\n"
+"              personal dashboard.\n"
+"            "
 msgstr ""
 
 #: templates/core/index.html:60
+msgid "Last activities"
+msgstr ""
+
+#: templates/core/index.html:78
 msgid "No activities available yet."
 msgstr ""
 
-#: templates/core/index.html:65
+#: templates/core/index.html:83
 #, fuzzy
 #| msgid "Notifications"
 msgid "Recent notifications"
 msgstr "Nuntii"
 
-#: templates/core/index.html:81
+#: templates/core/index.html:99
 #, fuzzy
 #| msgid "Edit school information"
 msgid "More information →"
 msgstr "Muta informationes scolae"
 
-#: templates/core/index.html:88
+#: templates/core/index.html:106
 msgid "No notifications available yet."
 msgstr ""
 
@@ -1115,21 +1384,6 @@ msgstr ""
 msgid ""
 "\n"
 "      Do you really want to delete the %(object_name)s \"%(object)s\"?\n"
-"    "
-msgstr ""
-
-#: templates/core/pages/offline.html:6
-msgid ""
-"No internet\n"
-"    connection."
-msgstr ""
-
-#: templates/core/pages/offline.html:10
-msgid ""
-"\n"
-"      There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi\n"
-"      or mobile data is turned on and try again. If you think you are connected, please contact the system\n"
-"      administrators:\n"
 "    "
 msgstr ""
 
@@ -1260,37 +1514,19 @@ msgid ""
 "            "
 msgstr ""
 
-#: templates/core/partials/crud_events.html:10
-#, python-format
-msgid ""
-"\n"
-"              Created by %(person)s\n"
-"            "
+#: templates/core/partials/crud_events.html:15
+msgid "Changed by"
 msgstr ""
 
-#: templates/core/partials/crud_events.html:14
-#: templates/core/partials/crud_events.html:22
-#: templates/core/partials/crud_events.html:26
-#, python-format
-msgid ""
-"\n"
-"              Updated by %(person)s\n"
-"            "
+#: templates/core/partials/crud_events.html:15
+msgid "Unknown"
 msgstr ""
 
-#: templates/core/partials/crud_events.html:18
-#, python-format
-msgid ""
-"\n"
-"              Deleted by %(person)s\n"
-"            "
-msgstr ""
-
-#: templates/core/partials/language_form.html:16
+#: templates/core/partials/language_form.html:15
 msgid "Language"
 msgstr ""
 
-#: templates/core/partials/language_form.html:28
+#: templates/core/partials/language_form.html:27
 msgid "Select language"
 msgstr ""
 
@@ -1311,13 +1547,14 @@ msgid ""
 "          "
 msgstr ""
 
-#: templates/core/person/accounts.html:7 templates/core/person/accounts.html:9
+#: templates/core/person/accounts.html:12
+#: templates/core/person/accounts.html:14
 #, fuzzy
 #| msgid "Persons and accounts"
 msgid "Link persons to accounts"
 msgstr "Personae et computi"
 
-#: templates/core/person/accounts.html:16
+#: templates/core/person/accounts.html:21
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -1327,28 +1564,34 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/core/person/accounts.html:31
-#: templates/core/person/accounts.html:55
+#: templates/core/person/accounts.html:36
+#: templates/core/person/accounts.html:60
 msgid "Update"
 msgstr ""
 
-#: templates/core/person/accounts.html:37
+#: templates/core/person/accounts.html:42
 msgid "Existing account"
 msgstr ""
 
-#: templates/core/person/accounts.html:38
+#: templates/core/person/accounts.html:43
 msgid "New account"
 msgstr ""
 
-#: templates/core/person/edit.html:11 templates/core/person/edit.html:12
+#: templates/core/person/edit.html:12 templates/core/person/edit.html:13
 msgid "Edit person"
 msgstr ""
 
-#: templates/core/person/full.html:42
+#: templates/core/person/full.html:44
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Impersonate"
+msgstr "Simulare aliquem"
+
+#: templates/core/person/full.html:50
 msgid "Contact details"
 msgstr ""
 
-#: templates/core/person/full.html:122
+#: templates/core/person/full.html:130
 msgid "Children"
 msgstr ""
 
@@ -1406,6 +1649,25 @@ msgstr ""
 msgid "Impersonate user"
 msgstr "Simulare aliquem"
 
+#: templates/offline.html:5
+msgid "Network error"
+msgstr ""
+
+#: templates/offline.html:8
+msgid ""
+"No internet\n"
+"    connection."
+msgstr ""
+
+#: templates/offline.html:12
+msgid ""
+"\n"
+"      There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi\n"
+"      or mobile data is turned on and try again. If you think you are connected, please contact the system\n"
+"      administrators:\n"
+"    "
+msgstr ""
+
 #: templates/search/search.html:8
 msgid "Global Search"
 msgstr ""
@@ -1424,6 +1686,41 @@ msgstr ""
 
 #: templates/search/search.html:87
 msgid "Please enter a search term above."
+msgstr ""
+
+#: templates/templated_email/data_checks.email:4
+msgid "The system detected some new problems with your data."
+msgstr ""
+
+#: templates/templated_email/data_checks.email:8
+#: templates/templated_email/data_checks.email:24
+msgid "Hello,"
+msgstr ""
+
+#: templates/templated_email/data_checks.email:10
+msgid ""
+"\n"
+"  the system detected some new problems with your data.\n"
+"  Please take some time to inspect them and solve the issues or mark them as ignored.\n"
+" "
+msgstr ""
+
+#: templates/templated_email/data_checks.email:26
+msgid ""
+"\n"
+"   the system detected some new problems with your data.\n"
+"   Please take some time to inspect them and solve the issues or mark them as ignored.\n"
+"  "
+msgstr ""
+
+#: templates/templated_email/data_checks.email:34
+#, fuzzy
+#| msgid "Site description"
+msgid "Problem description"
+msgstr "Descriptio paginae"
+
+#: templates/templated_email/data_checks.email:35
+msgid "Count of objects with new problems"
 msgstr ""
 
 #: templates/templated_email/notification.email:3
@@ -1815,60 +2112,89 @@ msgstr ""
 msgid "SMS"
 msgstr ""
 
-#: views.py:122
+#: views.py:134
 msgid "The school term has been created."
 msgstr ""
 
-#: views.py:133
+#: views.py:146
 msgid "The school term has been saved."
 msgstr ""
 
-#: views.py:273
+#: views.py:291
 msgid "The child groups were successfully saved."
 msgstr ""
 
-#: views.py:309
+#: views.py:329
 msgid "The person has been saved."
 msgstr ""
 
-#: views.py:346
+#: views.py:368
 msgid "The group has been saved."
 msgstr ""
 
-#: views.py:434
+#: views.py:460
 msgid "The announcement has been saved."
 msgstr ""
 
-#: views.py:450
+#: views.py:476
 msgid "The announcement has been deleted."
 msgstr ""
 
-#: views.py:521
+#: views.py:548
 msgid "The preferences have been saved successfully."
 msgstr ""
 
-#: views.py:544
+#: views.py:572
 msgid "The person has been deleted."
 msgstr ""
 
-#: views.py:557
+#: views.py:586
 msgid "The group has been deleted."
 msgstr ""
 
-#: views.py:588
+#: views.py:618
 msgid "The additional_field has been saved."
 msgstr ""
 
-#: views.py:622
+#: views.py:652
 msgid "The additional field has been deleted."
 msgstr ""
 
-#: views.py:646
+#: views.py:677
 msgid "The group type has been saved."
 msgstr ""
 
-#: views.py:676
+#: views.py:707
 msgid "The group type has been deleted."
+msgstr ""
+
+#: views.py:735
+msgid "The data check has been started. Please note that it may take a while before you are able to fetch the data on this page."
+msgstr ""
+
+#: views.py:740
+msgid "The data check has finished."
+msgstr ""
+
+#: views.py:755
+#, python-brace-format
+msgid "The solve option '{solve_option_obj.verbose_name}' "
+msgstr ""
+
+#: views.py:797
+msgid "The dashboard widget has been saved."
+msgstr ""
+
+#: views.py:827
+msgid "The dashboard widget has been created."
+msgstr ""
+
+#: views.py:837
+msgid "The dashboard widget has been deleted."
+msgstr ""
+
+#: views.py:888
+msgid "Your dashboard configuration has been saved successfully."
 msgstr ""
 
 #~ msgid "School logo"
