@@ -195,6 +195,12 @@ def celery_optional(orig: Callable) -> Callable:
     If Celery is configured and available, it wraps the function in a Task
     and calls its delay method when invoked; if not, it leaves it untouched
     and it is executed synchronously.
+
+    The wrapped function returns a tuple with either
+    the return value of the task's delay method and False
+    if the method has been executed asynchronously
+    or the return value of the executed method and True
+    if the method has been executed synchronously.
     """
     if is_celery_enabled():
         from ..celery import app  # noqa
@@ -203,10 +209,9 @@ def celery_optional(orig: Callable) -> Callable:
 
     def wrapped(*args, **kwargs):
         if is_celery_enabled():
-            task.delay(*args, **kwargs)
+            return task.delay(*args, **kwargs), False
         else:
-            orig(*args, **kwargs)
-            return True
+            return orig(*args, **kwargs), True
 
     return wrapped
 

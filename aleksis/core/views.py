@@ -728,7 +728,7 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not check_data():
+        if not check_data()[1]:
             messages.success(
                 request,
                 _(
