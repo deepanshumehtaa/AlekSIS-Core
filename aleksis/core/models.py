@@ -848,6 +848,8 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
 
 class DataCheckResult(ExtensibleModel):
+    """Save the result of a data check for a specific object."""
+
     check = models.CharField(
         max_length=255,
         verbose_name=_("Related data check task"),
