@@ -154,6 +154,13 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("data_check/", views.DataCheckView.as_view(), name="check_data",),
+    path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
+    path(
+        "data_check/<int:pk>/<str:solve_option>/",
+        views.SolveDataCheckView.as_view(),
+        name="data_check_solve",
+    ),
     path("dashboard_widgets/", views.DashboardWidgetListView.as_view(), name="dashboard_widgets"),
     path(
         "dashboard_widgets/<int:pk>/edit/",

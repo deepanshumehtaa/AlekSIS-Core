@@ -26,6 +26,8 @@ from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
+from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
@@ -843,3 +845,38 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
     class Meta:
         app_label = "core"
+
+
+class DataCheckResult(ExtensibleModel):
+    """Save the result of a data check for a specific object."""
+
+    check = models.CharField(
+        max_length=255,
+        verbose_name=_("Related data check task"),
+        choices=DataCheckRegistry.data_checks_choices,
+    )
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.CharField(max_length=255)
+    related_object = GenericForeignKey("content_type", "object_id")
+
+    solved = models.BooleanField(default=False, verbose_name=_("Issue solved"))
+    sent = models.BooleanField(default=False, verbose_name=_("Notification sent"))
+
+    @property
+    def related_check(self) -> DataCheck:
+        return DataCheckRegistry.data_checks_by_name[self.check]
+
+    def solve(self, solve_option: str = "default"):
+        self.related_check.solve(self, solve_option)
+
+    def __str__(self):
+        return f"{self.related_object}: {self.related_check.problem_name}"
+
+    class Meta:
+        verbose_name = _("Data check result")
+        verbose_name_plural = _("Data check results")
+        permissions = (
+            ("run_data_checks", _("Can run data checks")),
+            ("solve_data_problem", _("Can solve data check problems")),
+        )

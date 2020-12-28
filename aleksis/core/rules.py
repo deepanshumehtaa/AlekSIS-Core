@@ -279,6 +279,21 @@ view_group_stats_predicate = has_person & (
 )
 rules.add_perm("core.view_group_stats", view_group_stats_predicate)
 
+# View data check results
+view_data_check_results_predicate = has_person & has_global_perm("core.view_datacheckresult")
+rules.add_perm("core.view_datacheckresults", view_data_check_results_predicate)
+
+# Run data checks
+run_data_checks_predicate = (
+    has_person & view_data_check_results_predicate & has_global_perm("core.run_data_checks")
+)
+rules.add_perm("core.run_data_checks", run_data_checks_predicate)
+
+# Solve data problems
+solve_data_problem_predicate = (
+    has_person & view_data_check_results_predicate & has_global_perm("core.solve_data_problem")
+)
+rules.add_perm("core.solve_data_problem", solve_data_problem_predicate)
 
 view_dashboard_widget_predicate = has_person & has_global_perm("core.view_dashboardwidget")
 rules.add_perm("core.view_dashboardwidget", view_dashboard_widget_predicate)

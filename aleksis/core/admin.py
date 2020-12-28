@@ -10,6 +10,7 @@ from .models import (
     Announcement,
     AnnouncementRecipient,
     CustomMenuItem,
+    DataCheckResult,
     Group,
     Notification,
     Person,
@@ -33,3 +34,4 @@ class AnnouncementAdmin(BaseModelAdmin, VersionAdmin):
 
 
 admin.site.register(Announcement, AnnouncementAdmin)
+admin.site.register(DataCheckResult)
