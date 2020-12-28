@@ -46,6 +46,7 @@ class SolveOption:
 
 
 class IgnoreSolveOption(SolveOption):
+    """Mark the object with data issues as solved."""
     name = "ignore"
     verbose_name = _("Ignore problem")
 
