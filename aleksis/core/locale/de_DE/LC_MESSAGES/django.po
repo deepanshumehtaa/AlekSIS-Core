@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-28 21:33+0100\n"
-"PO-Revision-Date: 2020-12-19 12:57+0000\n"
+"PO-Revision-Date: 2020-12-28 20:51+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,12 +21,12 @@ msgstr ""
 
 #: data_checks.py:53
 msgid "Ignore problem"
-msgstr ""
+msgstr "Problem ignorieren"
 
 #: data_checks.py:174
 #, python-brace-format
 msgid "Solve option '{solve_option_obj.verbose_name}' "
-msgstr ""
+msgstr "Lösungsoption \"{solve_option_obj.verbose_name}\" "
 
 #: filters.py:37 templates/core/base.html:77 templates/core/group/list.html:20
 #: templates/core/person/list.html:24 templates/search/search.html:7
@@ -128,10 +129,8 @@ msgid "You need at least one recipient."
 msgstr "Sie benötigen mindestens einen Empfänger."
 
 #: health_checks.py:15
-#, fuzzy
-#| msgid "There are no announcements."
 msgid "There are unresolved data problems."
-msgstr "Es gibt aktuell keine Ankündigungen."
+msgstr "Es gibt keine ungelösten Datenprobleme."
 
 #: menus.py:7 templates/two_factor/core/login.html:6
 #: templates/two_factor/core/login.html:10
@@ -183,8 +182,6 @@ msgstr "Schuljahre"
 
 #: menus.py:97 templates/core/dashboard_widget/list.html:8
 #: templates/core/dashboard_widget/list.html:9
-#, fuzzy
-#| msgid "Dashboard Widgets"
 msgid "Dashboard widgets"
 msgstr "Dashboard-Widgets"
 
@@ -208,10 +205,8 @@ msgstr "Konfiguration"
 
 #: menus.py:146 templates/core/data_check/list.html:9
 #: templates/core/data_check/list.html:10
-#, fuzzy
-#| msgid "System checks"
 msgid "Data checks"
-msgstr "Systemprüfungen"
+msgstr "Datenprüfungen"
 
 #: menus.py:152
 msgid "Backend Admin"
@@ -438,10 +433,8 @@ msgid "Can assign child groups to groups"
 msgstr "Kann Kindgruppen zu Gruppen zuordnen"
 
 #: models.py:341
-#, fuzzy
-#| msgid "Can view persons groups"
 msgid "Can view statistics about group."
-msgstr "Kann Gruppen einer Person sehen"
+msgstr "Kann Statistiken über Gruppen sehen"
 
 #: models.py:352
 msgid "Long name"
@@ -546,35 +539,35 @@ msgstr "Widget aktivieren"
 
 #: models.py:694
 msgid "Size on mobile devices"
-msgstr ""
+msgstr "Größe auf Mobilgeräten"
 
 #: models.py:695
 msgid "<= 600 px, 12 columns"
-msgstr ""
+msgstr "<= 600 px, 12 Spalten"
 
 #: models.py:700
 msgid "Size on tablet devices"
-msgstr ""
+msgstr "Größe auf Tablets"
 
 #: models.py:701
 msgid "> 600 px, 12 columns"
-msgstr ""
+msgstr "> 600px, 12 Spalten"
 
 #: models.py:706
 msgid "Size on desktop devices"
-msgstr ""
+msgstr "Größe auf Desktopgeräten"
 
 #: models.py:707
 msgid "> 992 px, 12 columns"
-msgstr ""
+msgstr "> 992 px, 12 Spalten"
 
 #: models.py:712
 msgid "Size on large desktop devices"
-msgstr ""
+msgstr "Größe auf großen Desktopgeräten"
 
 #: models.py:713
 msgid "> 1200 px>, 12 columns"
-msgstr ""
+msgstr "> 1200 px, 12 Spalten"
 
 #: models.py:734
 msgid "Dashboard Widget"
@@ -585,26 +578,20 @@ msgid "Dashboard Widgets"
 msgstr "Dashboard-Widgets"
 
 #: models.py:740
-#, fuzzy
-#| msgid "Dashboard Widget"
 msgid "Dashboard widget"
 msgstr "Dashboard-Widget"
 
 #: models.py:743
 msgid "Order"
-msgstr ""
+msgstr "Reihenfolge"
 
 #: models.py:746
-#, fuzzy
-#| msgid "Dashboard Widget"
 msgid "Dashboard widget order"
-msgstr "Dashboard-Widget"
+msgstr "Reihenfolge der Dashboard-Widgets"
 
 #: models.py:747
-#, fuzzy
-#| msgid "Dashboard Widgets"
 msgid "Dashboard widget orders"
-msgstr "Dashboard-Widgets"
+msgstr "Reihenfolgen der Dashboard-Widgets"
 
 #: models.py:753
 msgid "Menu ID"
@@ -676,43 +663,39 @@ msgstr "Kann Einstellungen einer Gruppe verändern"
 
 #: models.py:855
 msgid "Related data check task"
-msgstr ""
+msgstr "Zugehörige Datenprüfungsaufgabe"
 
 #: models.py:863
 msgid "Issue solved"
-msgstr ""
+msgstr "Problem gelöst"
 
 #: models.py:864
-#, fuzzy
-#| msgid "Notifications"
 msgid "Notification sent"
-msgstr "Benachrichtigungen"
+msgstr "Benachrichtigung gesendet"
 
 #: models.py:877
 msgid "Data check result"
-msgstr ""
+msgstr "Datenprüfungsergebnis"
 
 #: models.py:878
 msgid "Data check results"
-msgstr ""
+msgstr "Datenprüfungsergebnisse"
 
 #: models.py:880
 msgid "Can run data checks"
-msgstr ""
+msgstr "Kann Datenprüfungen ausführen"
 
 #: models.py:881
 msgid "Can solve data check problems"
-msgstr ""
+msgstr "Kann Datenprüfungsprobleme lösen"
 
 #: preferences.py:27
 msgid "Authentication"
 msgstr "Authentifizierung"
 
 #: preferences.py:28
-#, fuzzy
-#| msgid "Impersonation"
 msgid "Internationalisation"
-msgstr "Verkleidung"
+msgstr "Internationalisierung"
 
 #: preferences.py:37
 msgid "Site title"
@@ -787,22 +770,20 @@ msgid "Enabled custom authentication backends"
 msgstr "Benutzerdefinierte Authentifizierungsbackends aktivieren"
 
 #: preferences.py:211
-#, fuzzy
-#| msgid "Select language"
 msgid "Available languages"
-msgstr "Sprache auswählen"
+msgstr "Verfügbare Sprachen"
 
 #: preferences.py:223
 msgid "Send emails if data checks detect problems"
-msgstr ""
+msgstr "E-Mails versenden, wenn Datenprüfungen Probleme finden"
 
 #: preferences.py:234
 msgid "Email recipients for data checks problem emails"
-msgstr ""
+msgstr "E-Mailempfänger für Datenprüfungsproblem-E-Mails"
 
 #: preferences.py:245
 msgid "Email recipient groups for data checks problem emails"
-msgstr ""
+msgstr "E-Mail-Empfängergruppen für Datenprüfungsproblem-E-Mails"
 
 #: settings.py:322
 msgid "English"
@@ -982,116 +963,95 @@ msgstr "Betrieben mit AlekSIS"
 
 #: templates/core/dashboard_widget/create.html:8
 #: templates/core/dashboard_widget/create.html:12
-#, fuzzy, python-format
-#| msgid "Create person"
+#, python-format
 msgid "Create %(widget)s"
-msgstr "Person erstellen"
+msgstr "%(widget)s erstellen"
 
 #: templates/core/dashboard_widget/edit.html:8
 #: templates/core/dashboard_widget/edit.html:12
 #, python-format
 msgid "Edit %(widget)s"
-msgstr ""
+msgstr "%(widget)s bearbeiten"
 
 #: templates/core/dashboard_widget/list.html:17
-#, fuzzy, python-format
-#| msgid "Delete %(object_name)s"
+#, python-format
 msgid "Create %(name)s"
-msgstr "%(object_name)s löschen"
+msgstr "%(name)s erstellen"
 
 #: templates/core/data_check/list.html:15
 msgid "Check data again"
-msgstr ""
+msgstr "Daten erneut prüfen"
 
 #: templates/core/data_check/list.html:22
 msgid "The system detected some problems with your data."
-msgstr ""
+msgstr "Das System hat einige Problemen mit Ihren Daten gefunden."
 
 #: templates/core/data_check/list.html:23
 msgid ""
 "Please go through all data and check whether some extra action is\n"
 "          needed."
 msgstr ""
+"Bitte gehen Sie alle Daten durch und prüfen Sie, ob weitere Aktionen\n"
+"notwendig sind."
 
 #: templates/core/data_check/list.html:31
 msgid "Everything is fine."
-msgstr ""
+msgstr "Alles ist gut."
 
 #: templates/core/data_check/list.html:32
 msgid "The system hasn't detected any problems with your data."
-msgstr ""
+msgstr "Das System hat keine Probleme mit Ihren Daten entdeckt."
 
 #: templates/core/data_check/list.html:40
-#, fuzzy
-#| msgid "Selected persons"
 msgid "Detected problems"
-msgstr "Ausgewählte Personen"
+msgstr "Gefundene Probleme"
 
 #: templates/core/data_check/list.html:45
 msgid "Affected object"
-msgstr ""
+msgstr "Betroffenes Objekt"
 
 #: templates/core/data_check/list.html:46
-#, fuzzy
-#| msgid "Selected persons"
 msgid "Detected problem"
-msgstr "Ausgewählte Personen"
+msgstr "Entdecktes Problem"
 
 #: templates/core/data_check/list.html:47
-#, fuzzy
-#| msgid "Show Codes"
 msgid "Show details"
-msgstr "Codes anzeigen"
+msgstr "Details anzeigen"
 
 #: templates/core/data_check/list.html:48
 msgid "Options to solve the problem"
-msgstr ""
+msgstr "Optionen, das Problem zu lösen"
 
 #: templates/core/data_check/list.html:62
-#, fuzzy
-#| msgid "Show Codes"
 msgid "Show object"
-msgstr "Codes anzeigen"
+msgstr "Objekt anzeigen"
 
 #: templates/core/data_check/list.html:84
-#, fuzzy
-#| msgid "System checks"
 msgid "Registered checks"
-msgstr "Systemprüfungen"
+msgstr "Registrierte Prüfungen"
 
 #: templates/core/data_check/list.html:88
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "              Valid for %(from)s\n"
-#| "            "
 msgid ""
 "\n"
 "            The system will check for the following problems:\n"
 "          "
 msgstr ""
 "\n"
-"              Gültig für %(from)s\n"
-"            "
+"            Das System wird nach folgenden Problemen suchen:\n"
+"          "
 
 #: templates/core/edit_dashboard.html:4 templates/core/edit_dashboard.html:5
 #: templates/core/index.html:14
-#, fuzzy
-#| msgid "Dashboard"
 msgid "Edit dashboard"
-msgstr "Dashboard"
+msgstr "Dashboard bearbeiten"
 
 #: templates/core/edit_dashboard.html:26
-#, fuzzy
-#| msgid "Activate Widget"
 msgid "Available widgets"
-msgstr "Widget aktivieren"
+msgstr "Verfügbare Widgets"
 
 #: templates/core/edit_dashboard.html:33
-#, fuzzy
-#| msgid "Dashboard"
 msgid "Your dashboard"
-msgstr "Dashboard"
+msgstr "Ihr Dashboard"
 
 #: templates/core/group/child_groups.html:18
 msgid ""
@@ -1186,30 +1146,28 @@ msgid "Change preferences"
 msgstr "Einstellungen ändern"
 
 #: templates/core/group/full.html:64
-#, fuzzy
-#| msgid "Status"
 msgid "Statistics"
-msgstr "Status"
+msgstr "Statistiken"
 
 #: templates/core/group/full.html:67
 msgid "Count of members"
-msgstr ""
+msgstr "Anzahl der Mitglieder"
 
 #: templates/core/group/full.html:71
 msgid "Average age"
-msgstr ""
+msgstr "Durchschnittsalter"
 
 #: templates/core/group/full.html:76
 msgid "Age range"
-msgstr ""
+msgstr "Altersbereich"
 
 #: templates/core/group/full.html:76
 msgid "years to"
-msgstr ""
+msgstr "Jahre bis"
 
 #: templates/core/group/full.html:76
 msgid "years "
-msgstr ""
+msgstr "Jahre "
 
 #: templates/core/group/list.html:14
 msgid "Create group"
@@ -1246,6 +1204,11 @@ msgid ""
 "              personal dashboard.\n"
 "            "
 msgstr ""
+"\n"
+"              Sie haben keine Dashboard-Widgets ausgewählt. Bitte klicken "
+"Sie auf \"Dashboard bearbeiten\",\n"
+" um Widgets zu Ihrem persönlichen Dashboard hinzuzufügen.\n"
+"            "
 
 #: templates/core/index.html:60
 msgid "Last activities"
@@ -1500,11 +1463,11 @@ msgstr ""
 
 #: templates/core/partials/crud_events.html:15
 msgid "Changed by"
-msgstr ""
+msgstr "Verändert von"
 
 #: templates/core/partials/crud_events.html:15
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: templates/core/partials/language_form.html:15
 msgid "Language"
@@ -1579,10 +1542,8 @@ msgid "Edit person"
 msgstr "Person editieren"
 
 #: templates/core/person/full.html:44
-#, fuzzy
-#| msgid "Impersonation"
 msgid "Impersonate"
-msgstr "Verkleidung"
+msgstr "Verkleiden"
 
 #: templates/core/person/full.html:50
 msgid "Contact details"
@@ -1642,7 +1603,7 @@ msgstr "Als Benutzer verkleiden"
 
 #: templates/offline.html:5
 msgid "Network error"
-msgstr ""
+msgstr "Netzwerkfehler"
 
 #: templates/offline.html:8
 msgid ""
@@ -1688,12 +1649,12 @@ msgstr "Bitte geben Sie einen Suchausdruck ein."
 
 #: templates/templated_email/data_checks.email:4
 msgid "The system detected some new problems with your data."
-msgstr ""
+msgstr "Das System hat einige neue Probleme mit Ihren Daten entdeckt."
 
 #: templates/templated_email/data_checks.email:8
 #: templates/templated_email/data_checks.email:24
 msgid "Hello,"
-msgstr ""
+msgstr "Hallo,"
 
 #: templates/templated_email/data_checks.email:10
 msgid ""
@@ -1702,6 +1663,11 @@ msgid ""
 "  Please take some time to inspect them and solve the issues or mark them as ignored.\n"
 " "
 msgstr ""
+"\n"
+"  das System hat einige neue Probleme mit Ihren Daten entdeckt.\n"
+"Bitte nehmen Sie sich etwas Zeit, diese zu überprüfen und sie zu lösen oder "
+"als ignoriert zu markieren.\n"
+" "
 
 #: templates/templated_email/data_checks.email:26
 msgid ""
@@ -1710,16 +1676,19 @@ msgid ""
 "   Please take some time to inspect them and solve the issues or mark them as ignored.\n"
 "  "
 msgstr ""
+"\n"
+"   das System hat einige neue Probleme mit Ihren Daten entdeckt.\n"
+"Bitte nehmen Sie sich etwas Zeit, diese zu überprüfen und sie zu lösen oder "
+"als ignoriert zu markieren.\n"
+"  "
 
 #: templates/templated_email/data_checks.email:34
-#, fuzzy
-#| msgid "Site description"
 msgid "Problem description"
-msgstr "Seitenbeschreibung"
+msgstr "Problembeschreibung"
 
 #: templates/templated_email/data_checks.email:35
 msgid "Count of objects with new problems"
-msgstr ""
+msgstr "Anzahl der Objekte mit neuen Problemen"
 
 #: templates/templated_email/notification.email:3
 msgid "New notification for"
@@ -2262,39 +2231,33 @@ msgstr "Der Gruppentyp wurde gelöscht."
 #: views.py:735
 msgid "The data check has been started. Please note that it may take a while before you are able to fetch the data on this page."
 msgstr ""
+"Die Datenüberprüfung wurde gestartet. Bitte beachten Sie, dass es eine Weile "
+"dauern kann, bevor Sie auf dieser Seite Ergebnisse abrufen können."
 
 #: views.py:740
 msgid "The data check has finished."
-msgstr ""
+msgstr "Die Datenüberprüfung wurde beendet."
 
 #: views.py:755
 #, python-brace-format
 msgid "The solve option '{solve_option_obj.verbose_name}' "
-msgstr ""
+msgstr "Die Lösungsoption \"{solve_option_obj.verbose_name}\" "
 
 #: views.py:797
-#, fuzzy
-#| msgid "The school term has been saved."
 msgid "The dashboard widget has been saved."
-msgstr "Das Schuljahr wurde gespeichert."
+msgstr "Das Dashboard-Widget wurde gespeichert."
 
 #: views.py:827
-#, fuzzy
-#| msgid "The school term has been created."
 msgid "The dashboard widget has been created."
-msgstr "Das Schuljahr wurde erstellt."
+msgstr "Das Dashboard-Widget wurde erstellt."
 
 #: views.py:837
-#, fuzzy
-#| msgid "The additional field has been deleted."
 msgid "The dashboard widget has been deleted."
-msgstr "Das zusätzliche Feld wurde gelöscht."
+msgstr "Das Dashboard-Widget wurde gelöscht."
 
 #: views.py:888
-#, fuzzy
-#| msgid "The preferences have been saved successfully."
 msgid "Your dashboard configuration has been saved successfully."
-msgstr "Die Einstellungen wurde gespeichert."
+msgstr "Ihre Dashboardkonfiguration wurde erfolgreich gespeichert."
 
 #~ msgid ""
 #~ "\n"
