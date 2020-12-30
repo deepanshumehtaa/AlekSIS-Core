@@ -538,6 +538,10 @@ def preferences(
         # Invalid registry name passed from URL
         return HttpResponseNotFound()
 
+    if not section and len(registry.sections()) > 0:
+        default_section = list(registry.sections())[0]
+        return redirect(f"preferences_{registry_name}", default_section)
+
     # Build final form from dynamic-preferences
     form_class = preference_form_builder(form_class, instance=instance, section=section)
 
