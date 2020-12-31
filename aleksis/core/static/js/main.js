@@ -110,3 +110,11 @@ $(document).ready(function () {
         el.addClass("closed").removeClass("opened");
     });
 });
+
+// Show notice if serviceworker broadcasts that the current page comes from its cache
+const channel = new BroadcastChannel("cache-or-not");
+channel.addEventListener("message", event => {
+    if ((event.data) && !($("#cache-alert").length)) {
+        $("main").prepend('<div id="cache-alert" class="alert warning"><p><i class="material-icons left">warning</i>' + gettext("This page may contain outdated information since there is no internet connection.") + '</p> </div>')
+    }
+});
