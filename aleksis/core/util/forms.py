@@ -4,20 +4,19 @@ from material import Layout, Row
 
 
 class PreferenceLayout(Layout):
-    """
-    Create a django-material Layout object for the given form_base_class.
-
-    :param form_base_class: A Form class used as the base. Must have a ``registry` attribute
-    :param section: A section where the layout builder will load preferences
-    """
+    """django-material Layout object for managing preferences."""
 
     def __init__(self, form_base_class, section=None):
+        """
+        Create Layout object for the given form_base_class.
 
+        :param form_base_class: A Form class used as the base. Must have a ``registry` attribute
+        :param section: A section where the layout builder will load preferences
+        """
         registry = form_base_class.registry
         if section:
             # Try to use section param
             preferences_obj = registry.preferences(section=section)
-
         else:
             # display all preferences in the form
             preferences_obj = registry.preferences()
