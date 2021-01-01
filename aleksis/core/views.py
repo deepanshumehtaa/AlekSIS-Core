@@ -75,6 +75,7 @@ from .tables import (
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
+from .util.forms import PreferenceLayout
 
 
 @permission_required("core.view_dashboard")
@@ -544,6 +545,9 @@ def preferences(
 
     # Build final form from dynamic-preferences
     form_class = preference_form_builder(form_class, instance=instance, section=section)
+
+    # Get layout
+    form_class.layout = PreferenceLayout(form_class, section=section)
 
     if request.method == "POST":
         form = form_class(request.POST, request.FILES or None)
