@@ -95,6 +95,12 @@ def index(request: HttpRequest) -> HttpResponse:
     context["announcements"] = announcements
 
     widgets = request.user.person.dashboard_widgets
+
+    if len(widgets) <= 0:
+        # Use default dashboard if there are no widgets
+        widgets = DashboardWidgetOrder.default_dashboard_widgets
+        context["default_dashboard"] = True
+
     media = DashboardWidget.get_media(widgets)
 
     context["widgets"] = widgets
@@ -848,10 +854,20 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
 class EditDashboardView(View):
     """View for editing dashboard widget order."""
 
-    def get_context_data(self, request):
+    def get_context_data(self, request, **kwargs):
         context = {}
+        self.default_dashboard = kwargs.get("default", False)
 
-        widgets = request.user.person.dashboard_widgets
+        if self.default_dashboard and not request.user.has_perm("core.edit_default_dashboard"):
+            raise PermissionDenied()
+
+        context["default_dashboard"] = self.default_dashboard
+
+        widgets = (
+            request.user.person.dashboard_widgets
+            if not self.default_dashboard
+            else DashboardWidgetOrder.default_dashboard_widgets
+        )
         not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
         context["widgets"] = widgets
         context["not_used_widgets"] = not_used_widgets
@@ -871,8 +887,8 @@ class EditDashboardView(View):
 
         return context
 
-    def post(self, request):
-        context = self.get_context_data(request)
+    def post(self, request, **kwargs):
+        context = self.get_context_data(request, **kwargs)
 
         if context["formset"].is_valid():
             added_objects = []
@@ -882,22 +898,26 @@ class EditDashboardView(View):
 
                 obj, created = DashboardWidgetOrder.objects.update_or_create(
                     widget=form.cleaned_data["pk"],
-                    person=request.user.person,
+                    person=request.user.person if not self.default_dashboard else None,
+                    default=self.default_dashboard,
                     defaults={"order": form.cleaned_data["order"]},
                 )
 
                 added_objects.append(obj.pk)
 
-            DashboardWidgetOrder.objects.filter(person=request.user.person).exclude(
-                pk__in=added_objects
-            ).delete()
+            DashboardWidgetOrder.objects.filter(
+                person=request.user.person if not self.default_dashboard else None,
+                default=self.default_dashboard,
+            ).exclude(pk__in=added_objects).delete()
 
-            messages.success(
-                request, _("Your dashboard configuration has been saved successfully.")
-            )
-            return redirect("index")
+            if not self.default_dashboard:
+                msg = _("Your dashboard configuration has been saved successfully.")
+            else:
+                msg = _("The configuration of the default dashboard has been saved successfully.")
+            messages.success(request, msg)
+            return redirect("index" if not self.default_dashboard else "dashboard_widgets")
 
-    def get(self, request):
-        context = self.get_context_data(request)
+    def get(self, request, **kwargs):
+        context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
