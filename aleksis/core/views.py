@@ -114,7 +114,7 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, "core/pages/about.html", context)
 
 
-class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
+class SchoolTermListView(PermissionRequiredMixin, SingleTableView):
     """Table of all school terms."""
 
     model = SchoolTerm
@@ -124,7 +124,7 @@ class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
+class SchoolTermCreateView(PermissionRequiredMixin, AdvancedCreateView):
     """Create view for school terms."""
 
     model = SchoolTerm
@@ -136,7 +136,7 @@ class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
+class SchoolTermEditView(PermissionRequiredMixin, AdvancedEditView):
     """Edit view for school terms."""
 
     model = SchoolTerm
@@ -382,7 +382,7 @@ def data_management(request: HttpRequest) -> HttpResponse:
     return render(request, "core/management/data_management.html", context)
 
 
-class SystemStatus(MainView, PermissionRequiredMixin):
+class SystemStatus(PermissionRequiredMixin, MainView):
     """View giving information about the system status."""
 
     template_name = "core/pages/system_status.html"
@@ -773,7 +773,7 @@ class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
             return HttpResponseNotFound()
 
 
-class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
+class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
     """Table of all dashboard widgets."""
 
     model = DashboardWidget
@@ -791,7 +791,7 @@ class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
+class DashboardWidgetEditView(PermissionRequiredMixin, AdvancedEditView):
     """Edit view for dashboard widgets."""
 
     def get_form_class(self) -> Type[BaseModelForm]:
@@ -806,7 +806,7 @@ class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class DashboardWidgetCreateView(AdvancedCreateView, PermissionRequiredMixin):
+class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
     """Create view for dashboard widgets."""
 
     def get_model(self, request, *args, **kwargs):
