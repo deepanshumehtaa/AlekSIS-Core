@@ -96,7 +96,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
     widgets = request.user.person.dashboard_widgets
 
-    if len(widgets) <= 0:
+    if len(widgets) == 0:
         # Use default dashboard if there are no widgets
         widgets = DashboardWidgetOrder.default_dashboard_widgets
         context["default_dashboard"] = True
