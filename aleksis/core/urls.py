@@ -177,6 +177,12 @@ urlpatterns = [
         views.DashboardWidgetCreateView.as_view(),
         name="create_dashboard_widget",
     ),
+    path(
+        "dashboard_widgets/default/",
+        views.EditDashboardView.as_view(),
+        {"default": True},
+        name="edit_default_dashboard",
+    ),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver
