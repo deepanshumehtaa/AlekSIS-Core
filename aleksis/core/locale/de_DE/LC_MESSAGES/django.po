@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-02 16:29+0200\n"
-"PO-Revision-Date: 2020-12-19 12:57+0000\n"
+"POT-Creation-Date: 2020-12-28 21:33+0100\n"
+"PO-Revision-Date: 2020-12-28 20:51+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
@@ -18,6 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
+
+#: data_checks.py:53
+msgid "Ignore problem"
+msgstr "Problem ignorieren"
+
+#: data_checks.py:174
+#, python-brace-format
+msgid "Solve option '{solve_option_obj.verbose_name}' "
+msgstr "Lösungsoption \"{solve_option_obj.verbose_name}\" "
 
 #: filters.py:37 templates/core/base.html:77 templates/core/group/list.html:20
 #: templates/core/person/list.html:24 templates/search/search.html:7
@@ -33,91 +42,95 @@ msgstr "Nach Namen suchen"
 msgid "Search by contact details"
 msgstr "Nach Kontaktdetails suchen"
 
-#: forms.py:46
+#: forms.py:54
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr "Sie können keine neuen Benutzer erstellen, wenn Sie gleichzeitig einen existierenden Benutzer auswählen."
 
-#: forms.py:50
+#: forms.py:58
 msgid "This username is already in use."
 msgstr "Dieser Benutzername wird bereits genutzt."
 
-#: forms.py:74
+#: forms.py:82
 msgid "Base data"
 msgstr "Basisdaten"
 
-#: forms.py:80
+#: forms.py:88
 msgid "Address"
 msgstr "Adresse"
 
-#: forms.py:81
+#: forms.py:89
 msgid "Contact data"
 msgstr "Kontaktdaten"
 
-#: forms.py:83
+#: forms.py:91
 msgid "Advanced personal data"
 msgstr "Zusätzliche persönliche Daten"
 
-#: forms.py:114
+#: forms.py:134
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: forms.py:114
+#: forms.py:134
 msgid "Create a new account"
 msgstr "Neues Benutzerkonto erstellen"
 
-#: forms.py:126 models.py:91
+#: forms.py:146 models.py:102
 msgid "School term"
 msgstr "Schuljahr"
 
-#: forms.py:127
+#: forms.py:147
 msgid "Common data"
 msgstr "Allgemeine Daten"
 
-#: forms.py:128 forms.py:170 menus.py:152 models.py:105
+#: forms.py:148 forms.py:197 menus.py:169 models.py:116
 #: templates/core/person/list.html:8 templates/core/person/list.html:9
 msgid "Persons"
 msgstr "Personen"
 
-#: forms.py:129
+#: forms.py:149
 msgid "Additional data"
 msgstr "Zusätzliche Datne"
 
-#: forms.py:163 forms.py:166 models.py:35
+#: forms.py:189 forms.py:192 models.py:45
 msgid "Date"
 msgstr "Datum"
 
-#: forms.py:164 forms.py:167 models.py:43
+#: forms.py:190 forms.py:193 models.py:53
 msgid "Time"
 msgstr "Zeit"
 
-#: forms.py:172 menus.py:160 models.py:319 templates/core/group/list.html:8
-#: templates/core/group/list.html:9 templates/core/person/full.html:136
+#: forms.py:210 menus.py:177 models.py:338 templates/core/group/list.html:8
+#: templates/core/group/list.html:9 templates/core/person/full.html:144
 msgid "Groups"
 msgstr "Gruppen"
 
-#: forms.py:176
+#: forms.py:220
 msgid "From when until when should the announcement be displayed?"
 msgstr "Von wann bis wann soll die Ankündigung angezeigt werden?"
 
-#: forms.py:179
+#: forms.py:223
 msgid "Who should see the announcement?"
 msgstr "Wer soll die Ankündigung sehen?"
 
-#: forms.py:180
+#: forms.py:224
 msgid "Write your announcement:"
 msgstr "Schreiben Sie ihre Ankündigung:"
 
-#: forms.py:219
+#: forms.py:263
 msgid "You are not allowed to create announcements which are only valid in the past."
 msgstr "Sie dürfen keine Ankündigungen erstellen, die nur für die Vergangenheit gültig sind."
 
-#: forms.py:223
+#: forms.py:267
 msgid "The from date and time must be earlier then the until date and time."
 msgstr "Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit sein."
 
-#: forms.py:232
+#: forms.py:276
 msgid "You need at least one recipient."
 msgstr "Sie benötigen mindestens einen Empfänger."
+
+#: health_checks.py:15
+msgid "There are unresolved data problems."
+msgstr "Es gibt keine ungelösten Datenprobleme."
 
 #: menus.py:7 templates/two_factor/core/login.html:6
 #: templates/two_factor/core/login.html:10
@@ -157,540 +170,649 @@ msgstr "Einstellungen"
 msgid "Admin"
 msgstr "Admin"
 
-#: menus.py:75 models.py:564 templates/core/announcement/list.html:7
+#: menus.py:75 models.py:602 templates/core/announcement/list.html:7
 #: templates/core/announcement/list.html:8
 msgid "Announcements"
 msgstr "Ankündigungen"
 
-#: menus.py:86 models.py:92 templates/core/school_term/list.html:8
+#: menus.py:86 models.py:103 templates/core/school_term/list.html:8
 #: templates/core/school_term/list.html:9
 msgid "School terms"
 msgstr "Schuljahre"
 
-#: menus.py:97 templates/core/management/data_management.html:6
+#: menus.py:97 templates/core/dashboard_widget/list.html:8
+#: templates/core/dashboard_widget/list.html:9
+msgid "Dashboard widgets"
+msgstr "Dashboard-Widgets"
+
+#: menus.py:108 templates/core/management/data_management.html:6
 #: templates/core/management/data_management.html:7
 msgid "Data management"
 msgstr "Datenverwaltung"
 
-#: menus.py:105 templates/core/pages/system_status.html:5
+#: menus.py:116 templates/core/pages/system_status.html:5
 #: templates/core/pages/system_status.html:7
 msgid "System status"
 msgstr "Systemstatus"
 
-#: menus.py:116
+#: menus.py:127
 msgid "Impersonation"
 msgstr "Verkleidung"
 
-#: menus.py:124
+#: menus.py:135
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: menus.py:135
+#: menus.py:146 templates/core/data_check/list.html:9
+#: templates/core/data_check/list.html:10
+msgid "Data checks"
+msgstr "Datenprüfungen"
+
+#: menus.py:152
 msgid "Backend Admin"
 msgstr "Backend-Administration"
 
-#: menus.py:143
+#: menus.py:160
 msgid "People"
 msgstr "Leute"
 
-#: menus.py:168 models.py:727 templates/core/group_type/list.html:8
+#: menus.py:185 models.py:803 templates/core/group_type/list.html:8
 #: templates/core/group_type/list.html:9
 msgid "Group types"
 msgstr "Gruppentypen"
 
-#: menus.py:179
+#: menus.py:196
 msgid "Persons and accounts"
 msgstr "Personen und Konten"
 
-#: menus.py:190
+#: menus.py:207
 msgid "Groups and child groups"
 msgstr "Gruppen und Kindgruppen"
 
-#: menus.py:201 models.py:363 templates/core/additional_field/list.html:8
+#: menus.py:218 models.py:385 templates/core/additional_field/list.html:8
 #: templates/core/additional_field/list.html:9
 msgid "Additional fields"
 msgstr "Zusätzliche Felder"
 
-#: menus.py:216 templates/core/group/child_groups.html:7
+#: menus.py:233 templates/core/group/child_groups.html:7
 #: templates/core/group/child_groups.html:9
 msgid "Assign child groups to groups"
 msgstr "Kindgruppen zu Gruppen zuordnen"
 
-#: mixins.py:406
+#: mixins.py:384
 msgid "Linked school term"
 msgstr "Zugeordnetes Schuljahr"
 
-#: models.py:33
+#: models.py:43
 msgid "Boolean (Yes/No)"
 msgstr "Boolean (Ja/Nein)"
 
-#: models.py:34
+#: models.py:44
 msgid "Text (one line)"
 msgstr "Text (eine Zeile)"
 
-#: models.py:36
+#: models.py:46
 msgid "Date and time"
 msgstr "Datum und Uhrzeit"
 
-#: models.py:37
+#: models.py:47
 msgid "Decimal number"
 msgstr "Dezimalzahl"
 
-#: models.py:38 models.py:146
+#: models.py:48 models.py:157
 msgid "E-mail address"
 msgstr "E-Mail-Adresse"
 
-#: models.py:39
+#: models.py:49
 msgid "Integer"
 msgstr "Ganze Zahl"
 
-#: models.py:40
+#: models.py:50
 msgid "IP address"
 msgstr "IP-Adresse"
 
-#: models.py:41
+#: models.py:51
 msgid "Boolean or empty (Yes/No/Neither)"
 msgstr "Boolean oder leer (Ja/Nein/weder)"
 
-#: models.py:42
+#: models.py:52
 msgid "Text (multi-line)"
 msgstr "Text (mehrzeilig)"
 
-#: models.py:44
+#: models.py:54
 msgid "URL / Link"
 msgstr "URL / Link"
 
-#: models.py:56 models.py:700
+#: models.py:66 models.py:776
 msgid "Name"
 msgstr "Name"
 
-#: models.py:58
+#: models.py:68
 msgid "Start date"
 msgstr "Startdatum"
 
-#: models.py:59
+#: models.py:69
 msgid "End date"
 msgstr "Enddatum"
 
-#: models.py:77
+#: models.py:88
 msgid "The start date must be earlier than the end date."
 msgstr "Das Startdatum muss vor dem Enddatum liegen."
 
-#: models.py:84
+#: models.py:95
 msgid "There is already a school term for this time or a part of this time."
-msgstr ""
-"Es gibt bereits ein Schuljahr für diesen Zeitraum oder einen Teilzeitraum."
+msgstr "Es gibt bereits ein Schuljahr für diesen Zeitraum oder einen Teilzeitraum."
 
-#: models.py:104 templates/core/person/accounts.html:36
+#: models.py:115 models.py:742 templates/core/person/accounts.html:41
 msgid "Person"
 msgstr "Person"
 
-#: models.py:107
+#: models.py:118
 msgid "Can view address"
 msgstr "Kann Adresse sehen"
 
-#: models.py:108
+#: models.py:119
 msgid "Can view contact details"
 msgstr "Kann Kontaktdetails sehen"
 
-#: models.py:109
+#: models.py:120
 msgid "Can view photo"
 msgstr "Kann Foto sehen"
 
-#: models.py:110
+#: models.py:121
 msgid "Can view persons groups"
 msgstr "Kann Gruppen einer Person sehen"
 
-#: models.py:111
+#: models.py:122
 msgid "Can view personal details"
 msgstr "Kann persönliche Daten sehen"
 
-#: models.py:116
+#: models.py:127
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:116
+#: models.py:127
 msgid "male"
 msgstr "männlich"
 
-#: models.py:124
+#: models.py:135
 msgid "Linked user"
 msgstr "Verknüpfter Benutzer"
 
-#: models.py:126
+#: models.py:137
 msgid "Is person active?"
 msgstr "Ist die Person aktiv?"
 
-#: models.py:128
+#: models.py:139
 msgid "First name"
 msgstr "Vorname"
 
-#: models.py:129
+#: models.py:140
 msgid "Last name"
 msgstr "Nachname"
 
-#: models.py:131
+#: models.py:142
 msgid "Additional name(s)"
 msgstr "Zusätzliche Namen"
 
-#: models.py:135 models.py:332
+#: models.py:146 models.py:354
 msgid "Short name"
 msgstr "Kurzname"
 
-#: models.py:138
+#: models.py:149
 msgid "Street"
 msgstr "Straße"
 
-#: models.py:139
+#: models.py:150
 msgid "Street number"
 msgstr "Hausnummer"
 
-#: models.py:140
+#: models.py:151
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: models.py:141
+#: models.py:152
 msgid "Place"
 msgstr "Ort"
 
-#: models.py:143
+#: models.py:154
 msgid "Home phone"
 msgstr "Festnetz"
 
-#: models.py:144
+#: models.py:155
 msgid "Mobile phone"
 msgstr "Handy"
 
-#: models.py:148
+#: models.py:159
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: models.py:149
+#: models.py:160
 msgid "Sex"
 msgstr "Geschlecht"
 
-#: models.py:151
+#: models.py:162
 msgid "Photo"
 msgstr "Foto"
 
-#: models.py:155 templates/core/person/full.html:129
+#: models.py:166 templates/core/person/full.html:137
 msgid "Guardians / Parents"
 msgstr "Erziehungsberechtigte / Eltern"
 
-#: models.py:162
+#: models.py:173
 msgid "Primary group"
 msgstr "Primärgruppe"
 
-#: models.py:165 models.py:423 models.py:447 models.py:532 models.py:720
-#: templates/core/person/full.html:112
+#: models.py:176 models.py:461 models.py:485 models.py:570 models.py:796
+#: templates/core/person/full.html:120
 msgid "Description"
 msgstr "Beschreibung"
 
-#: models.py:296
+#: models.py:313
 msgid "Title of field"
 msgstr "Feldtitel"
 
-#: models.py:298
+#: models.py:315
 msgid "Type of field"
 msgstr "Feldtyp"
 
-#: models.py:305
+#: models.py:322
 msgid "Addtitional field for groups"
 msgstr "Zusätzliche Felder für Gruppen"
 
-#: models.py:306
+#: models.py:323
 msgid "Addtitional fields for groups"
 msgstr "Zusätzliche Felder für Gruppen"
 
-#: models.py:318
+#: models.py:337
 msgid "Group"
 msgstr "Gruppe"
 
-#: models.py:320
+#: models.py:340
 msgid "Can assign child groups to groups"
 msgstr "Kann Kindgruppen zu Gruppen zuordnen"
 
-#: models.py:330
+#: models.py:341
+msgid "Can view statistics about group."
+msgstr "Kann Statistiken über Gruppen sehen"
+
+#: models.py:352
 msgid "Long name"
 msgstr "Langname"
 
-#: models.py:340 templates/core/group/full.html:65
+#: models.py:362 templates/core/group/full.html:85
 msgid "Members"
 msgstr "Mitglieder"
 
-#: models.py:343 templates/core/group/full.html:62
+#: models.py:365 templates/core/group/full.html:82
 msgid "Owners"
 msgstr "Leiter/-innen"
 
-#: models.py:350 templates/core/group/full.html:54
+#: models.py:372 templates/core/group/full.html:55
 msgid "Parent groups"
 msgstr "Übergeordnete Gruppen"
 
-#: models.py:358
+#: models.py:380
 msgid "Type of group"
 msgstr "Gruppentyp"
 
-#: models.py:419
+#: models.py:457
 msgid "User"
 msgstr "Benutzer"
 
-#: models.py:422 models.py:446 models.py:531
+#: models.py:460 models.py:484 models.py:569
 #: templates/core/announcement/list.html:18
 msgid "Title"
 msgstr "Titel"
 
-#: models.py:425
+#: models.py:463
 msgid "Application"
 msgstr "Anwendung"
 
-#: models.py:431
+#: models.py:469
 msgid "Activity"
 msgstr "Aktivität"
 
-#: models.py:432
+#: models.py:470
 msgid "Activities"
 msgstr "Aktivitäten"
 
-#: models.py:438
+#: models.py:476
 msgid "Sender"
 msgstr "Absender"
 
-#: models.py:443
+#: models.py:481
 msgid "Recipient"
 msgstr "Empfänger"
 
-#: models.py:448 models.py:701
+#: models.py:486 models.py:777
 msgid "Link"
 msgstr "Link"
 
-#: models.py:450
+#: models.py:488
 msgid "Read"
 msgstr "Gelesen"
 
-#: models.py:451
+#: models.py:489
 msgid "Sent"
 msgstr "Versandt"
 
-#: models.py:464
+#: models.py:502
 msgid "Notification"
 msgstr "Benachrichtigung"
 
-#: models.py:465
+#: models.py:503
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: models.py:533
+#: models.py:571
 msgid "Link to detailed view"
 msgstr "Link zur detaillierten Ansicht"
 
-#: models.py:536
+#: models.py:574
 msgid "Date and time from when to show"
 msgstr "Datum und Uhrzeit des Anzeigestarts"
 
-#: models.py:539
+#: models.py:577
 msgid "Date and time until when to show"
 msgstr "Anzeigezeitraum"
 
-#: models.py:563
+#: models.py:601
 msgid "Announcement"
 msgstr "Ankündigung"
 
-#: models.py:601
+#: models.py:639
 msgid "Announcement recipient"
 msgstr "Empfänger der Ankündigung"
 
-#: models.py:602
+#: models.py:640
 msgid "Announcement recipients"
 msgstr "Empfänger der Ankündigung"
 
-#: models.py:652
+#: models.py:690
 msgid "Widget Title"
 msgstr "Widget-Titel"
 
-#: models.py:653
+#: models.py:691
 msgid "Activate Widget"
 msgstr "Widget aktivieren"
 
-#: models.py:671
+#: models.py:694
+msgid "Size on mobile devices"
+msgstr "Größe auf Mobilgeräten"
+
+#: models.py:695
+msgid "<= 600 px, 12 columns"
+msgstr "<= 600 px, 12 Spalten"
+
+#: models.py:700
+msgid "Size on tablet devices"
+msgstr "Größe auf Tablets"
+
+#: models.py:701
+msgid "> 600 px, 12 columns"
+msgstr "> 600px, 12 Spalten"
+
+#: models.py:706
+msgid "Size on desktop devices"
+msgstr "Größe auf Desktopgeräten"
+
+#: models.py:707
+msgid "> 992 px, 12 columns"
+msgstr "> 992 px, 12 Spalten"
+
+#: models.py:712
+msgid "Size on large desktop devices"
+msgstr "Größe auf großen Desktopgeräten"
+
+#: models.py:713
+msgid "> 1200 px>, 12 columns"
+msgstr "> 1200 px, 12 Spalten"
+
+#: models.py:734
 msgid "Dashboard Widget"
 msgstr "Dashboard-Widget"
 
-#: models.py:672
+#: models.py:735
 msgid "Dashboard Widgets"
 msgstr "Dashboard-Widgets"
 
-#: models.py:678
+#: models.py:740
+msgid "Dashboard widget"
+msgstr "Dashboard-Widget"
+
+#: models.py:743
+msgid "Order"
+msgstr "Reihenfolge"
+
+#: models.py:746
+msgid "Dashboard widget order"
+msgstr "Reihenfolge der Dashboard-Widgets"
+
+#: models.py:747
+msgid "Dashboard widget orders"
+msgstr "Reihenfolgen der Dashboard-Widgets"
+
+#: models.py:753
 msgid "Menu ID"
 msgstr "Menü-ID"
 
-#: models.py:690
+#: models.py:766
 msgid "Custom menu"
 msgstr "Benutzerdefiniertes Menü"
 
-#: models.py:691
+#: models.py:767
 msgid "Custom menus"
 msgstr "Benutzerdefinierte Menüs"
 
-#: models.py:698
+#: models.py:774
 msgid "Menu"
 msgstr "Menü"
 
-#: models.py:702
+#: models.py:778
 msgid "Icon"
 msgstr "Icon"
 
-#: models.py:708
+#: models.py:784
 msgid "Custom menu item"
 msgstr "Benutzerdefiniertes Menüelement"
 
-#: models.py:709
+#: models.py:785
 msgid "Custom menu items"
 msgstr "Benutzerdefinierte Menüelemente"
 
-#: models.py:719
+#: models.py:795
 msgid "Title of type"
 msgstr "Titel des Typs"
 
-#: models.py:726 templates/core/group/full.html:46
+#: models.py:802 templates/core/group/full.html:47
 msgid "Group type"
 msgstr "Gruppentyp"
 
-#: models.py:736
+#: models.py:812
 msgid "Can view system status"
 msgstr "Kann Systemstatus sehen"
 
-#: models.py:737
+#: models.py:813
 msgid "Can link persons to accounts"
 msgstr "Kann Personen mit Benutzerkonten verknüpfen"
 
-#: models.py:738
+#: models.py:814
 msgid "Can manage data"
 msgstr "Kann Daten verwalten"
 
-#: models.py:739
+#: models.py:815
 msgid "Can impersonate"
 msgstr "Kann sich verkleiden"
 
-#: models.py:740
+#: models.py:816
 msgid "Can use search"
 msgstr "Kann Suche benutzen"
 
-#: models.py:741
+#: models.py:817
 msgid "Can change site preferences"
 msgstr "Kann Konfiguration ändern"
 
-#: models.py:742
+#: models.py:818
 msgid "Can change person preferences"
 msgstr "Kann Einstellungen einer Person verändern"
 
-#: models.py:743
+#: models.py:819
 msgid "Can change group preferences"
 msgstr "Kann Einstellungen einer Gruppe verändern"
 
-#: preferences.py:24
+#: models.py:855
+msgid "Related data check task"
+msgstr "Zugehörige Datenprüfungsaufgabe"
+
+#: models.py:863
+msgid "Issue solved"
+msgstr "Problem gelöst"
+
+#: models.py:864
+msgid "Notification sent"
+msgstr "Benachrichtigung gesendet"
+
+#: models.py:877
+msgid "Data check result"
+msgstr "Datenprüfungsergebnis"
+
+#: models.py:878
+msgid "Data check results"
+msgstr "Datenprüfungsergebnisse"
+
+#: models.py:880
+msgid "Can run data checks"
+msgstr "Kann Datenprüfungen ausführen"
+
+#: models.py:881
+msgid "Can solve data check problems"
+msgstr "Kann Datenprüfungsprobleme lösen"
+
+#: preferences.py:27
 msgid "Authentication"
 msgstr "Authentifizierung"
 
-#: preferences.py:33
+#: preferences.py:28
+msgid "Internationalisation"
+msgstr "Internationalisierung"
+
+#: preferences.py:37
 msgid "Site title"
 msgstr "Seitentitel"
 
-#: preferences.py:42
+#: preferences.py:46
 msgid "Site description"
 msgstr "Seitenbeschreibung"
 
-#: preferences.py:51
+#: preferences.py:55
 msgid "Primary colour"
 msgstr "Primärfarbe"
 
-#: preferences.py:60
+#: preferences.py:64
 msgid "Secondary colour"
 msgstr "Akzentfarbe"
 
-#: preferences.py:68
+#: preferences.py:72
 msgid "Logo"
 msgstr "Logo"
 
-#: preferences.py:76
+#: preferences.py:80
 msgid "Favicon"
 msgstr "Favicon"
 
-#: preferences.py:84
+#: preferences.py:88
 msgid "PWA-Icon"
 msgstr "PWA-Icon"
 
-#: preferences.py:93
+#: preferences.py:97
 msgid "Mail out name"
 msgstr "Ausgangsmailname"
 
-#: preferences.py:102
+#: preferences.py:106
 msgid "Mail out address"
 msgstr "E-Mail-Ausgangsadresse"
 
-#: preferences.py:112
+#: preferences.py:116
 msgid "Link to privacy policy"
 msgstr "Link zur Datenschutzerklärung"
 
-#: preferences.py:122
+#: preferences.py:126
 msgid "Link to imprint"
 msgstr "Link zum Impressum"
 
-#: preferences.py:132
+#: preferences.py:136
 msgid "Name format for addressing"
 msgstr "Namensformat für Anreden"
 
-#: preferences.py:146
+#: preferences.py:150
 msgid "Channels to use for notifications"
 msgstr "Aktivierte Benachrichtungskanäle"
 
-#: preferences.py:156
+#: preferences.py:160
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
-#: preferences.py:165
+#: preferences.py:169
 msgid "Field on person to match primary group against"
 msgstr "Feld um Primärgruppen zu finden"
 
-#: preferences.py:177
+#: preferences.py:181
 msgid "Display name of the school"
 msgstr "Sichtbarer Name der Schule"
 
-#: preferences.py:186
+#: preferences.py:190
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: preferences.py:194
+#: preferences.py:198
 msgid "Enabled custom authentication backends"
 msgstr "Benutzerdefinierte Authentifizierungsbackends aktivieren"
 
-#: settings.py:300
+#: preferences.py:211
+msgid "Available languages"
+msgstr "Verfügbare Sprachen"
+
+#: preferences.py:223
+msgid "Send emails if data checks detect problems"
+msgstr "E-Mails versenden, wenn Datenprüfungen Probleme finden"
+
+#: preferences.py:234
+msgid "Email recipients for data checks problem emails"
+msgstr "E-Mailempfänger für Datenprüfungsproblem-E-Mails"
+
+#: preferences.py:245
+msgid "Email recipient groups for data checks problem emails"
+msgstr "E-Mail-Empfängergruppen für Datenprüfungsproblem-E-Mails"
+
+#: settings.py:322
 msgid "English"
 msgstr "Englisch"
 
-#: settings.py:301
+#: settings.py:323
 msgid "German"
 msgstr "Deutsch"
 
-#: settings.py:302
+#: settings.py:324
 msgid "French"
 msgstr "Französisch"
 
-#: settings.py:303
+#: settings.py:325
 msgid "Norwegian (bokmål)"
 msgstr "Norwegisch (bokmål)"
 
 #: tables.py:19 templates/core/announcement/list.html:36
-#: templates/core/group/full.html:23 templates/core/person/full.html:22
+#: templates/core/group/full.html:24 templates/core/person/full.html:23
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: tables.py:21 templates/core/announcement/list.html:22
+#: tables.py:21 tables.py:89 templates/core/announcement/list.html:22
 msgid "Actions"
 msgstr "Aktionen"
 
-#: tables.py:56 tables.py:57 tables.py:71
-#: templates/core/announcement/list.html:42 templates/core/group/full.html:30
-#: templates/core/pages/delete.html:22 templates/core/person/full.html:29
+#: tables.py:56 tables.py:57 tables.py:71 tables.py:87
+#: templates/core/announcement/list.html:42 templates/core/group/full.html:31
+#: templates/core/pages/delete.html:22 templates/core/person/full.html:30
 msgid "Delete"
 msgstr "Löschen"
 
@@ -785,21 +907,21 @@ msgstr "Zusätzliches Feld bearbeiten"
 msgid "Create additional field"
 msgstr "Zusätzliches Feld erstellen"
 
-#: templates/core/announcement/form.html:10
-#: templates/core/announcement/form.html:17
+#: templates/core/announcement/form.html:14
+#: templates/core/announcement/form.html:21
 msgid "Edit announcement"
 msgstr "Ankündigung bearbeiten"
 
-#: templates/core/announcement/form.html:12
+#: templates/core/announcement/form.html:16
 msgid "Publish announcement"
 msgstr "Ankündigung veröffentlichen"
 
-#: templates/core/announcement/form.html:19
+#: templates/core/announcement/form.html:23
 #: templates/core/announcement/list.html:13
 msgid "Publish new announcement"
 msgstr "Neue Ankündigung veröffentlichen"
 
-#: templates/core/announcement/form.html:30
+#: templates/core/announcement/form.html:34
 msgid "Save und publish announcement"
 msgstr "Ankündigung speichern und veröffentlichen"
 
@@ -838,6 +960,98 @@ msgstr "Datenschutzerklärung"
 #: templates/core/base_print.html:64
 msgid "Powered by AlekSIS"
 msgstr "Betrieben mit AlekSIS"
+
+#: templates/core/dashboard_widget/create.html:8
+#: templates/core/dashboard_widget/create.html:12
+#, python-format
+msgid "Create %(widget)s"
+msgstr "%(widget)s erstellen"
+
+#: templates/core/dashboard_widget/edit.html:8
+#: templates/core/dashboard_widget/edit.html:12
+#, python-format
+msgid "Edit %(widget)s"
+msgstr "%(widget)s bearbeiten"
+
+#: templates/core/dashboard_widget/list.html:17
+#, python-format
+msgid "Create %(name)s"
+msgstr "%(name)s erstellen"
+
+#: templates/core/data_check/list.html:15
+msgid "Check data again"
+msgstr "Daten erneut prüfen"
+
+#: templates/core/data_check/list.html:22
+msgid "The system detected some problems with your data."
+msgstr "Das System hat einige Problemen mit Ihren Daten gefunden."
+
+#: templates/core/data_check/list.html:23
+msgid ""
+"Please go through all data and check whether some extra action is\n"
+"          needed."
+msgstr ""
+"Bitte gehen Sie alle Daten durch und prüfen Sie, ob weitere Aktionen\n"
+"notwendig sind."
+
+#: templates/core/data_check/list.html:31
+msgid "Everything is fine."
+msgstr "Alles ist gut."
+
+#: templates/core/data_check/list.html:32
+msgid "The system hasn't detected any problems with your data."
+msgstr "Das System hat keine Probleme mit Ihren Daten entdeckt."
+
+#: templates/core/data_check/list.html:40
+msgid "Detected problems"
+msgstr "Gefundene Probleme"
+
+#: templates/core/data_check/list.html:45
+msgid "Affected object"
+msgstr "Betroffenes Objekt"
+
+#: templates/core/data_check/list.html:46
+msgid "Detected problem"
+msgstr "Entdecktes Problem"
+
+#: templates/core/data_check/list.html:47
+msgid "Show details"
+msgstr "Details anzeigen"
+
+#: templates/core/data_check/list.html:48
+msgid "Options to solve the problem"
+msgstr "Optionen, das Problem zu lösen"
+
+#: templates/core/data_check/list.html:62
+msgid "Show object"
+msgstr "Objekt anzeigen"
+
+#: templates/core/data_check/list.html:84
+msgid "Registered checks"
+msgstr "Registrierte Prüfungen"
+
+#: templates/core/data_check/list.html:88
+msgid ""
+"\n"
+"            The system will check for the following problems:\n"
+"          "
+msgstr ""
+"\n"
+"            Das System wird nach folgenden Problemen suchen:\n"
+"          "
+
+#: templates/core/edit_dashboard.html:4 templates/core/edit_dashboard.html:5
+#: templates/core/index.html:14
+msgid "Edit dashboard"
+msgstr "Dashboard bearbeiten"
+
+#: templates/core/edit_dashboard.html:26
+msgid "Available widgets"
+msgstr "Verfügbare Widgets"
+
+#: templates/core/edit_dashboard.html:33
+msgid "Your dashboard"
+msgstr "Ihr Dashboard"
 
 #: templates/core/group/child_groups.html:18
 msgid ""
@@ -923,13 +1137,37 @@ msgstr "Speichern"
 msgid "Save and next"
 msgstr "Speichern und weiter"
 
-#: templates/core/group/edit.html:6 templates/core/group/edit.html:7
+#: templates/core/group/edit.html:11 templates/core/group/edit.html:12
 msgid "Edit group"
 msgstr "Gruppe editieren"
 
-#: templates/core/group/full.html:37 templates/core/person/full.html:36
+#: templates/core/group/full.html:38 templates/core/person/full.html:37
 msgid "Change preferences"
 msgstr "Einstellungen ändern"
+
+#: templates/core/group/full.html:64
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: templates/core/group/full.html:67
+msgid "Count of members"
+msgstr "Anzahl der Mitglieder"
+
+#: templates/core/group/full.html:71
+msgid "Average age"
+msgstr "Durchschnittsalter"
+
+#: templates/core/group/full.html:76
+msgid "Age range"
+msgstr "Altersbereich"
+
+#: templates/core/group/full.html:76
+msgid "years to"
+msgstr "Jahre bis"
+
+#: templates/core/group/full.html:76
+msgid "years "
+msgstr "Jahre "
 
 #: templates/core/group/list.html:14
 msgid "Create group"
@@ -959,23 +1197,36 @@ msgstr "Gruppentyp erstellen"
 msgid "Home"
 msgstr "Startseite"
 
-#: templates/core/index.html:42
+#: templates/core/index.html:49
+msgid ""
+"\n"
+"              You haven't selected any dashboard widgets. Please click on \"Edit dashboard\" to add widgets to your\n"
+"              personal dashboard.\n"
+"            "
+msgstr ""
+"\n"
+"              Sie haben keine Dashboard-Widgets ausgewählt. Bitte klicken "
+"Sie auf \"Dashboard bearbeiten\",\n"
+" um Widgets zu Ihrem persönlichen Dashboard hinzuzufügen.\n"
+"            "
+
+#: templates/core/index.html:60
 msgid "Last activities"
 msgstr "Letzte Aktivitäten"
 
-#: templates/core/index.html:60
+#: templates/core/index.html:78
 msgid "No activities available yet."
 msgstr "Aktuell keine Aktivitäten verfügbar."
 
-#: templates/core/index.html:65
+#: templates/core/index.html:83
 msgid "Recent notifications"
 msgstr "Letzte Benachrichtigungen"
 
-#: templates/core/index.html:81
+#: templates/core/index.html:99
 msgid "More information →"
 msgstr "Mehr Informationen →"
 
-#: templates/core/index.html:88
+#: templates/core/index.html:106
 msgid "No notifications available yet."
 msgstr "Aktuell keine Benachrichtigungen verfügbar."
 
@@ -1070,28 +1321,6 @@ msgstr ""
 "      Möchten Sie wirklich %(object_name)s \"%(object)s\" löschen?\n"
 "    "
 
-#: templates/core/pages/offline.html:6
-msgid ""
-"No internet\n"
-"    connection."
-msgstr ""
-"Keine\n"
-"    Internetverbindung."
-
-#: templates/core/pages/offline.html:10
-msgid ""
-"\n"
-"      There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi\n"
-"      or mobile data is turned on and try again. If you think you are connected, please contact the system\n"
-"      administrators:\n"
-"    "
-msgstr ""
-"\n"
-"      Es ist ein Fehler beim Aufrufen der Seite aufgetreten. Eventuell haben Sie keine Internetverbindung. Bitte prüfen Sie, ob WLAN oder mobile Daten aktiv sind, \n"
-"      und probieren Sie es erneut. Wenn Sie der Meinung sind, dass Sie mit dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer \n"
-"      Systemadministratoren:\n"
-"    "
-
 #: templates/core/pages/progress.html:27
 msgid ""
 "\n"
@@ -1099,8 +1328,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"              Ohne aktiviertes JavaScript kann der Fortschritt leider nicht "
-"aktualisiert werden.\n"
+"              Ohne aktiviertes JavaScript kann der Fortschritt leider nicht aktualisiert werden.\n"
 "            "
 
 #: templates/core/pages/progress.html:47
@@ -1233,46 +1461,19 @@ msgstr ""
 "              Gültig von %(from)s – %(until)s\n"
 "            "
 
-#: templates/core/partials/crud_events.html:10
-#, python-format
-msgid ""
-"\n"
-"              Created by %(person)s\n"
-"            "
-msgstr ""
-"\n"
-"              Erstellt von %(person)s\n"
-"            "
+#: templates/core/partials/crud_events.html:15
+msgid "Changed by"
+msgstr "Verändert von"
 
-#: templates/core/partials/crud_events.html:14
-#: templates/core/partials/crud_events.html:22
-#: templates/core/partials/crud_events.html:26
-#, python-format
-msgid ""
-"\n"
-"              Updated by %(person)s\n"
-"            "
-msgstr ""
-"\n"
-"              Aktualisiert von %(person)s\n"
-"            "
+#: templates/core/partials/crud_events.html:15
+msgid "Unknown"
+msgstr "Unbekannt"
 
-#: templates/core/partials/crud_events.html:18
-#, python-format
-msgid ""
-"\n"
-"              Deleted by %(person)s\n"
-"            "
-msgstr ""
-"\n"
-"              Gelöscht von %(person)s\n"
-"            "
-
-#: templates/core/partials/language_form.html:16
+#: templates/core/partials/language_form.html:15
 msgid "Language"
 msgstr "Sprache"
 
-#: templates/core/partials/language_form.html:28
+#: templates/core/partials/language_form.html:27
 msgid "Select language"
 msgstr "Sprache auswählen"
 
@@ -1302,11 +1503,12 @@ msgstr ""
 "        die Verwaltenden von AlekSIS an Ihrer Schule.\n"
 "          "
 
-#: templates/core/person/accounts.html:7 templates/core/person/accounts.html:9
+#: templates/core/person/accounts.html:12
+#: templates/core/person/accounts.html:14
 msgid "Link persons to accounts"
 msgstr "Personen mit Benutzerkonten verknüpfen"
 
-#: templates/core/person/accounts.html:16
+#: templates/core/person/accounts.html:21
 msgid ""
 "\n"
 "        You can use this form to assign user accounts to persons. Use the\n"
@@ -1322,28 +1524,32 @@ msgstr ""
 "    eingegebenen Benutzernamen und kopiert alle anderen Daten der Person.\n"
 "      "
 
-#: templates/core/person/accounts.html:31
-#: templates/core/person/accounts.html:55
+#: templates/core/person/accounts.html:36
+#: templates/core/person/accounts.html:60
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: templates/core/person/accounts.html:37
+#: templates/core/person/accounts.html:42
 msgid "Existing account"
 msgstr "Existierendes Konto"
 
-#: templates/core/person/accounts.html:38
+#: templates/core/person/accounts.html:43
 msgid "New account"
 msgstr "Neues Konto"
 
-#: templates/core/person/edit.html:11 templates/core/person/edit.html:12
+#: templates/core/person/edit.html:12 templates/core/person/edit.html:13
 msgid "Edit person"
 msgstr "Person editieren"
 
-#: templates/core/person/full.html:42
+#: templates/core/person/full.html:44
+msgid "Impersonate"
+msgstr "Verkleiden"
+
+#: templates/core/person/full.html:50
 msgid "Contact details"
 msgstr "Kontaktdetails"
 
-#: templates/core/person/full.html:122
+#: templates/core/person/full.html:130
 msgid "Children"
 msgstr "Kinder"
 
@@ -1395,6 +1601,32 @@ msgstr "Alle"
 msgid "Impersonate user"
 msgstr "Als Benutzer verkleiden"
 
+#: templates/offline.html:5
+msgid "Network error"
+msgstr "Netzwerkfehler"
+
+#: templates/offline.html:8
+msgid ""
+"No internet\n"
+"    connection."
+msgstr ""
+"Keine\n"
+"    Internetverbindung."
+
+#: templates/offline.html:12
+msgid ""
+"\n"
+"      There was an error accessing this page. You probably don't have an internet connection. Check to see if your WiFi\n"
+"      or mobile data is turned on and try again. If you think you are connected, please contact the system\n"
+"      administrators:\n"
+"    "
+msgstr ""
+"\n"
+"      Es ist ein Fehler beim Aufrufen der Seite aufgetreten. Eventuell haben Sie keine Internetverbindung. Bitte prüfen Sie, ob WLAN oder mobile Daten aktiv sind, \n"
+"      und probieren Sie es erneut. Wenn Sie der Meinung sind, dass Sie mit dem Internet verbunden sind, kontaktieren Sie bitte einen Ihrer \n"
+"      Systemadministratoren:\n"
+"    "
+
 #: templates/search/search.html:8
 msgid "Global Search"
 msgstr "Globale Suche"
@@ -1414,6 +1646,49 @@ msgstr "Es konnten keine Suchergebnisse zu Ihrem Suchausdruck gefunden werden."
 #: templates/search/search.html:87
 msgid "Please enter a search term above."
 msgstr "Bitte geben Sie einen Suchausdruck ein."
+
+#: templates/templated_email/data_checks.email:4
+msgid "The system detected some new problems with your data."
+msgstr "Das System hat einige neue Probleme mit Ihren Daten entdeckt."
+
+#: templates/templated_email/data_checks.email:8
+#: templates/templated_email/data_checks.email:24
+msgid "Hello,"
+msgstr "Hallo,"
+
+#: templates/templated_email/data_checks.email:10
+msgid ""
+"\n"
+"  the system detected some new problems with your data.\n"
+"  Please take some time to inspect them and solve the issues or mark them as ignored.\n"
+" "
+msgstr ""
+"\n"
+"  das System hat einige neue Probleme mit Ihren Daten entdeckt.\n"
+"Bitte nehmen Sie sich etwas Zeit, diese zu überprüfen und sie zu lösen oder "
+"als ignoriert zu markieren.\n"
+" "
+
+#: templates/templated_email/data_checks.email:26
+msgid ""
+"\n"
+"   the system detected some new problems with your data.\n"
+"   Please take some time to inspect them and solve the issues or mark them as ignored.\n"
+"  "
+msgstr ""
+"\n"
+"   das System hat einige neue Probleme mit Ihren Daten entdeckt.\n"
+"Bitte nehmen Sie sich etwas Zeit, diese zu überprüfen und sie zu lösen oder "
+"als ignoriert zu markieren.\n"
+"  "
+
+#: templates/templated_email/data_checks.email:34
+msgid "Problem description"
+msgstr "Problembeschreibung"
+
+#: templates/templated_email/data_checks.email:35
+msgid "Count of objects with new problems"
+msgstr "Anzahl der Objekte mit neuen Problemen"
 
 #: templates/templated_email/notification.email:3
 msgid "New notification for"
@@ -1897,61 +2172,119 @@ msgstr "E-Mail"
 msgid "SMS"
 msgstr "SMS"
 
-#: views.py:122
+#: views.py:134
 msgid "The school term has been created."
 msgstr "Das Schuljahr wurde erstellt."
 
-#: views.py:133
+#: views.py:146
 msgid "The school term has been saved."
 msgstr "Das Schuljahr wurde gespeichert."
 
-#: views.py:273
+#: views.py:291
 msgid "The child groups were successfully saved."
 msgstr "Die Untergruppen wurden gespeichert."
 
-#: views.py:309
+#: views.py:329
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: views.py:346
+#: views.py:368
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#: views.py:434
+#: views.py:460
 msgid "The announcement has been saved."
 msgstr "Die Ankündigung wurde gespeichert."
 
-#: views.py:450
+#: views.py:476
 msgid "The announcement has been deleted."
 msgstr "Ankündigung wurde gelöscht."
 
-#: views.py:521
+#: views.py:548
 msgid "The preferences have been saved successfully."
 msgstr "Die Einstellungen wurde gespeichert."
 
-#: views.py:544
+#: views.py:572
 msgid "The person has been deleted."
 msgstr "Die Person wurde gelöscht."
 
-#: views.py:557
+#: views.py:586
 msgid "The group has been deleted."
 msgstr "Die Gruppe wurde gelöscht."
 
-#: views.py:588
+#: views.py:618
 msgid "The additional_field has been saved."
 msgstr "Das zusätzliche Feld wurde gespeichert."
 
-#: views.py:622
+#: views.py:652
 msgid "The additional field has been deleted."
 msgstr "Das zusätzliche Feld wurde gelöscht."
 
-#: views.py:646
+#: views.py:677
 msgid "The group type has been saved."
 msgstr "Der Gruppentyp wurde gespeichert."
 
-#: views.py:676
+#: views.py:707
 msgid "The group type has been deleted."
 msgstr "Der Gruppentyp wurde gelöscht."
+
+#: views.py:735
+msgid "The data check has been started. Please note that it may take a while before you are able to fetch the data on this page."
+msgstr ""
+"Die Datenüberprüfung wurde gestartet. Bitte beachten Sie, dass es eine Weile "
+"dauern kann, bevor Sie auf dieser Seite Ergebnisse abrufen können."
+
+#: views.py:740
+msgid "The data check has finished."
+msgstr "Die Datenüberprüfung wurde beendet."
+
+#: views.py:755
+#, python-brace-format
+msgid "The solve option '{solve_option_obj.verbose_name}' "
+msgstr "Die Lösungsoption \"{solve_option_obj.verbose_name}\" "
+
+#: views.py:797
+msgid "The dashboard widget has been saved."
+msgstr "Das Dashboard-Widget wurde gespeichert."
+
+#: views.py:827
+msgid "The dashboard widget has been created."
+msgstr "Das Dashboard-Widget wurde erstellt."
+
+#: views.py:837
+msgid "The dashboard widget has been deleted."
+msgstr "Das Dashboard-Widget wurde gelöscht."
+
+#: views.py:888
+msgid "Your dashboard configuration has been saved successfully."
+msgstr "Ihre Dashboardkonfiguration wurde erfolgreich gespeichert."
+
+#~ msgid ""
+#~ "\n"
+#~ "              Created by %(person)s\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Erstellt von %(person)s\n"
+#~ "            "
+
+#~ msgid ""
+#~ "\n"
+#~ "              Updated by %(person)s\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Aktualisiert von %(person)s\n"
+#~ "            "
+
+#~ msgid ""
+#~ "\n"
+#~ "              Deleted by %(person)s\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Gelöscht von %(person)s\n"
+#~ "            "
 
 #~ msgid "Dear"
 #~ msgstr "Sehr geehrter"
