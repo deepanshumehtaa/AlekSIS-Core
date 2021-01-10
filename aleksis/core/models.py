@@ -494,7 +494,7 @@ class Notification(ExtensibleModel, TimeStampedModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 

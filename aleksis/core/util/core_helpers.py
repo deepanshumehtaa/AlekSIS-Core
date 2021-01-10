@@ -14,6 +14,7 @@ else:
     import importlib_metadata as metadata
 
 from django.conf import settings
+from django.db import transaction
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -209,7 +210,7 @@ def celery_optional(orig: Callable) -> Callable:
 
     def wrapped(*args, **kwargs):
         if is_celery_enabled():
-            return task.delay(*args, **kwargs), False
+            return transaction.on_commit(lambda: task.delay(*args, **kwargs)), False
         else:
             return orig(*args, **kwargs), True
 
