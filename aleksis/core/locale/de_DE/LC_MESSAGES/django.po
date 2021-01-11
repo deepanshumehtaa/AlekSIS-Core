@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-11 21:30+0100\n"
-"PO-Revision-Date: 2020-12-28 22:07+0000\n"
-"Last-Translator: Tom Teichler <tom.teichler@teckids.org>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"PO-Revision-Date: 2021-01-11 20:42+0000\n"
+"Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -569,10 +570,8 @@ msgid "> 1200 px>, 12 columns"
 msgstr "> 1200 px, 12 Spalten"
 
 #: models.py:734
-#, fuzzy
-#| msgid "Edit dashboard"
 msgid "Can edit default dashboard"
-msgstr "Dashboard bearbeiten"
+msgstr "Kann Standarddashboard bearbeiten"
 
 #: models.py:735
 msgid "Dashboard Widget"
@@ -592,7 +591,7 @@ msgstr "Reihenfolge"
 
 #: models.py:747
 msgid "Part of the default dashboard"
-msgstr ""
+msgstr "Teil des Standarddashboards"
 
 #: models.py:755
 msgid "Dashboard widget order"
@@ -989,10 +988,8 @@ msgstr "%(name)s erstellen"
 
 #: templates/core/dashboard_widget/list.html:25
 #: templates/core/edit_dashboard.html:8 templates/core/edit_dashboard.html:15
-#, fuzzy
-#| msgid "Edit dashboard"
 msgid "Edit default dashboard"
-msgstr "Dashboard bearbeiten"
+msgstr "Standard-Dashboard bearbeiten"
 
 #: templates/core/data_check/list.html:15
 msgid "Check data again"
@@ -1069,6 +1066,14 @@ msgid ""
 "          \"Save\".\n"
 "        "
 msgstr ""
+"\n"
+"          Auf dieser Seite können Sie Ihr persönliches Dashboard "
+"zusammenstallen. Sie können beliebige Elemente von den \"Verfügbaren "
+"Widgets\" \n"
+"in \"Ihr Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die "
+"Widgets bewegen. Wenn Sie fertig sind, vergessen Sie bitte nicht, \n"
+"auf \"Speichern\" zu drücken.\n"
+"        "
 
 #: templates/core/edit_dashboard.html:30
 msgid ""
@@ -1078,6 +1083,16 @@ msgid ""
 "          by moving the widgets. After you have finished, please don't forget to click on \"Save\".\n"
 "        "
 msgstr ""
+"\n"
+"          Auf dieser Seite können Sie Ihr das Standard-Dashboard "
+"zusammenstallen, welches angezeigt wird, wenn ein Nutzer kein eigenes "
+"definiert. \n"
+"Sie können beliebige Elemente von den \"Verfügbaren Widgets\" in \"Standard-"
+"Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die Widgets "
+"bewegen. \n"
+"Wenn Sie fertig sind, vergessen Sie bitte nicht, auf \"Speichern\" zu "
+"drücken.\n"
+"        "
 
 #: templates/core/edit_dashboard.html:48
 msgid "Available widgets"
@@ -1088,10 +1103,8 @@ msgid "Your dashboard"
 msgstr "Ihr Dashboard"
 
 #: templates/core/edit_dashboard.html:59
-#, fuzzy
-#| msgid "Edit dashboard"
 msgid "Default dashboard"
-msgstr "Dashboard bearbeiten"
+msgstr "Standard-Dashboard"
 
 #: templates/core/group/child_groups.html:18
 msgid ""
@@ -1238,12 +1251,6 @@ msgid "Home"
 msgstr "Startseite"
 
 #: templates/core/index.html:50
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "              You haven't selected any dashboard widgets. Please click on \"Edit dashboard\" to add widgets to your\n"
-#| "              personal dashboard.\n"
-#| "            "
 msgid ""
 "\n"
 "          You didn't customise your dashboard so that you see the system default. Please click on \"Edit dashboard\" to\n"
@@ -1251,9 +1258,11 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"              Sie haben keine Dashboard-Widgets ausgewählt. Bitte klicken Sie auf \"Dashboard bearbeiten\",\n"
-" um Widgets zu Ihrem persönlichen Dashboard hinzuzufügen.\n"
-"            "
+"          Sie haben Ihr Dashboard nicht angepasst, sodass Sie das Standard-"
+"Dashboard sehen.\n"
+"Bitte klicken Sie auf \"Dashboard bearbeiten\", um Ihr persönliches "
+"Dashboard anzupassen.\n"
+"        "
 
 #: templates/core/index.html:59
 msgid "Last activities"
@@ -2297,10 +2306,9 @@ msgid "Your dashboard configuration has been saved successfully."
 msgstr "Ihre Dashboardkonfiguration wurde erfolgreich gespeichert."
 
 #: views.py:916
-#, fuzzy
-#| msgid "Your dashboard configuration has been saved successfully."
 msgid "The configuration of the default dashboard has been saved successfully."
-msgstr "Ihre Dashboardkonfiguration wurde erfolgreich gespeichert."
+msgstr ""
+"Die Konfiguration des Standard-Dashboardes wurde erfolgreich gespeichert."
 
 #~ msgid "All"
 #~ msgstr "Alle"
