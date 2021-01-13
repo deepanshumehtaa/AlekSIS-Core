@@ -383,7 +383,7 @@ def get_content_type_by_perm(perm: str) -> Union["ContentType", None]:
         return ContentType.objects.get(
             app_label=perm.split(".", 1)[0], permission__codename=perm.split(".", 1)[1]
         )
-    except ContentType.DoesNotExist:
+    except (ContentType.DoesNotExist, OperationalError):
         return None
 
 
