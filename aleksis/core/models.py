@@ -239,7 +239,10 @@ class Person(ExtensibleModel):
     @property
     def dashboard_widgets(self):
         return [
-            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+            w.widget
+            for w in DashboardWidgetOrder.objects.filter(person=self, widget__active=True).order_by(
+                "order"
+            )
         ]
 
     def save(self, *args, **kwargs):
@@ -749,7 +752,12 @@ class DashboardWidgetOrder(ExtensibleModel):
     @classproperty
     def default_dashboard_widgets(cls):
         """Get default order for dashboard widgets."""
-        return [w.widget for w in cls.objects.filter(person=None, default=True).order_by("order")]
+        return [
+            w.widget
+            for w in cls.objects.filter(person=None, default=True, widget__active=True).order_by(
+                "order"
+            )
+        ]
 
     class Meta:
         verbose_name = _("Dashboard widget order")
