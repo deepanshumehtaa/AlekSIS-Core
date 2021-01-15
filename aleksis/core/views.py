@@ -868,7 +868,9 @@ class EditDashboardView(View):
             if not self.default_dashboard
             else DashboardWidgetOrder.default_dashboard_widgets
         )
-        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
+        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets]).filter(
+            active=True
+        )
         context["widgets"] = widgets
         context["not_used_widgets"] = not_used_widgets
 
