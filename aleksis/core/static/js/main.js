@@ -58,6 +58,9 @@ $(document).ready(function () {
     // Initialize select [MAT]
     $('select').formSelect();
 
+    // Initialize dropdown [MAT]
+    $('.dropdown-trigger').dropdown();
+
     // If JS is activated, the language form will be auto-submitted
     $('.language-field select').change(function () {
 
