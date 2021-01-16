@@ -136,9 +136,8 @@ ul.sidenav li.logo > a:hover {
   background-color: lighten($primary-color, 5%);
 }
 
-li.active > a > .sidenav-badge {
-  background-color: whitesmoke !important;
-  color: $primary-color !important;
+.sidenav-badge {
+  min-width: 2rem!important;
 }
 
 .sidenav li.search {
