@@ -203,6 +203,14 @@ class AuthenticationBackends(MultipleChoicePreference):
 
 
 @site_preferences_registry.register
+class SignupEnabled(BooleanPreference):
+    section = auth
+    name = "signup_enabled"
+    default = False
+    verbose_name = _("Enable signup")
+
+
+@site_preferences_registry.register
 class AvailableLanguages(MultipleChoicePreference):
     section = internationalisation
     name = "languages"

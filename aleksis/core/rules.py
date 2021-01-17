@@ -9,6 +9,7 @@ from .util.predicates import (
     is_current_person,
     is_group_owner,
     is_notification_recipient,
+    is_site_preference_set,
 )
 
 rules.add_perm("core", rules.always_allow)
@@ -311,5 +312,5 @@ edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_defau
 rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 
 # django-allauth
-can_register_predicate = is_site_preference_enabled(section="auth", pref="signup_enabled")
+can_register_predicate = is_site_preference_set(section="auth", pref="signup_enabled")
 rules.add_perm("core.can_register", can_register_predicate)
