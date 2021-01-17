@@ -1,12 +1,14 @@
 {# -*- engine:django -*- #}
 {% extends "two_factor/_base_focus.html" %}
-{% load i18n two_factor %}
+{% load i18n two_factor account socialaccount %}
 
 {% block browser_title %}
   {% trans "Login" %}
 {% endblock %}
 
 {% block content %}
+  {% get_providers as socialaccount_providers %}
+
   <h4>{% trans "Login" %}</h4>
 
   {% if wizard.steps.current == "auth" and user.is_authenticated %}
@@ -24,6 +26,8 @@
         {% blocktrans %}Please login to see this page.{% endblocktrans %}
       </p>
     </div>
+
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
   {% endif %}
 
   {% if wizard.steps.current == 'auth' and ALTERNATIVE_LOGIN_VIEWS %}

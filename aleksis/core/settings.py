@@ -99,6 +99,9 @@ INSTALLED_APPS = [
     "django_otp",
     "otp_yubikey",
     "aleksis.core",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "health_check",
     "health_check.db",
     "health_check.cache",
@@ -220,6 +223,47 @@ AUTH_PASSWORD_VALIDATORS = [
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
 
+# Configuration for django-allauth.
+
+# Add configured social auth providers to INSTALLED_APPS
+for provider in _settings.get("auth.providers", {}).keys():
+    INSTALLED_APPS.append(f"allauth.socialaccount.providers.{provider}")
+
+# Get social auth providers from config
+SOCIALAUTH_PROVIDERS = {
+    f"{provider}": {"APP": config} for provider, config in _settings.get("auth.providers", {})
+}
+
+# Allow login by either username or email
+ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
+
+# Require email address to sign up
+ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
+SOCIALACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
+
+# Require email verification after sigm up
+ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
+SOCIALACCOUNT_EMAIL_VERIFICATION = _settings.get(
+    "auth.registration.email_verification", "mandatory"
+)
+
+# Email subject prefix for verification mails
+ACCOUNT_EMAIL_SUBJECT_PREFIX = _settings.get("auth.registration.subject", "[AlekSIS]")
+
+# Max attempts before login timeout
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = _settings.get("auth.login.login_limit", 5)
+
+# Login timeout after max attempts in seconds
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = _settings.get("auth.login.login_timeout", 300)
+
+# Email confirmation field in form
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+
+# Enforce uniqueness of email addresses
+ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
+
+# LDAP config
+
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
@@ -310,6 +354,9 @@ merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
+
+# Authentication backend for django-allauth.
+AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
 
 # Structure of items: backend, URL name, icon name, button title
 ALTERNATIVE_LOGIN_VIEWS = []
