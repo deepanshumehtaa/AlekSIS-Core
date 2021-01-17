@@ -225,30 +225,45 @@ AUTHENTICATION_BACKENDS = []
 
 # Configuration for django-allauth.
 
-# Add configured social auth providers to INSTALLED_APPS
-for provider in _settings.get("auth.providers", {}).keys():
-    INSTALLED_APPS.append(f"allauth.socialaccount.providers.{provider}")
+# Use custom adapter to override some behaviour, i.e. honour the LDAP backend
+SOCIALACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurSocialAccountAdapter"
 
-# Get social auth providers from config
-SOCIALAUTH_PROVIDERS = {
-    f"{provider}": {"APP": config} for provider, config in _settings.get("auth.providers", {})
+# Get django-allauth providers from config
+_SOCIALACCOUNT_PROVIDERS = _settings.get("auth.providers", None)
+if _SOCIALACCOUNT_PROVIDERS:
+    SOCIALACCOUNT_PROVIDERS = _SOCIALACCOUNT_PROVIDERS.to_dict()
+
+    # Add configured social auth providers to INSTALLED_APPS
+    for provider, config in SOCIALACCOUNT_PROVIDERS.items():
+        INSTALLED_APPS.append(f"allauth.socialaccount.providers.{provider}")
+        for k in config:
+            kupper = k.upper()
+            if k != kupper:
+                config[kupper] = config[k]
+                del config[k]
+
+# Configure custom forms
+
+ACCOUNT_FORMS = {
+    "signup": "aleksis.core.forms.AccountRegisterForm",
 }
+
+# Require password confirmation
+SIGNUP_PASSWORD_ENTER_TWICE = True
 
 # Allow login by either username or email
 ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
 
 # Require email address to sign up
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
-SOCIALACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
+SOCIALACCOUNT_EMAIL_REQUIRED = False
 
 # Require email verification after sigm up
 ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
-SOCIALACCOUNT_EMAIL_VERIFICATION = _settings.get(
-    "auth.registration.email_verification", "mandatory"
-)
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
 # Email subject prefix for verification mails
-ACCOUNT_EMAIL_SUBJECT_PREFIX = _settings.get("auth.registration.subject", "[AlekSIS]")
+ACCOUNT_EMAIL_SUBJECT_PREFIX = _settings.get("auth.registration.subject", "[AlekSIS] ")
 
 # Max attempts before login timeout
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = _settings.get("auth.login.login_limit", 5)
