@@ -13,9 +13,9 @@ MENUS = {
             "name": _("Sign up"),
             "url": "account_signup",
             "icon": "how_to_reg",
-            "validators":
-            ["menu_generator.validators.is_anonymous",
-            ("aleksis.core.util.predicates.permission_validator", "core.can_register"),
+            "validators": [
+                "menu_generator.validators.is_anonymous",
+                ("aleksis.core.util.predicates.permission_validator", "core.can_register"),
             ],
         },
         {
@@ -65,6 +65,15 @@ MENUS = {
                     "name": _("Preferences"),
                     "url": "preferences_person",
                     "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
+                {
+                    "name": _("Social accounts"),
+                    "url": "socialaccount_connections",
+                    "icon": "globe",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
