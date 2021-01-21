@@ -57,6 +57,7 @@ urlpatterns = [
     path("group/<int:id_>/edit", views.edit_group, name="edit_group_by_id"),
     path("group/<int:id_>/delete", views.delete_group, name="delete_group_by_id"),
     path("", views.index, name="index"),
+    path("dashboard/edit/", views.EditDashboardView.as_view(), name="edit_dashboard"),
     path(
         "notifications/mark-read/<int:id_>",
         views.notification_mark_read,
@@ -153,6 +154,35 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("data_check/", views.DataCheckView.as_view(), name="check_data",),
+    path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
+    path(
+        "data_check/<int:pk>/<str:solve_option>/",
+        views.SolveDataCheckView.as_view(),
+        name="data_check_solve",
+    ),
+    path("dashboard_widgets/", views.DashboardWidgetListView.as_view(), name="dashboard_widgets"),
+    path(
+        "dashboard_widgets/<int:pk>/edit/",
+        views.DashboardWidgetEditView.as_view(),
+        name="edit_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<int:pk>/delete/",
+        views.DashboardWidgetDeleteView.as_view(),
+        name="delete_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/<str:app>/<str:model>/new/",
+        views.DashboardWidgetCreateView.as_view(),
+        name="create_dashboard_widget",
+    ),
+    path(
+        "dashboard_widgets/default/",
+        views.EditDashboardView.as_view(),
+        {"default": True},
+        name="edit_default_dashboard",
+    ),
 ]
 
 # Serve static files from STATIC_ROOT to make it work with runserver

@@ -9,6 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
 from django.forms.widgets import Media
@@ -21,8 +22,11 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
+
+from aleksis.core.data_checks import DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
@@ -226,11 +230,20 @@ class Person(ExtensibleModel):
     def age_at(self, today):
         if self.date_of_birth:
             years = today.year - self.date_of_birth.year
-            if (self.date_of_birth.month > today.month
-                or (self.date_of_birth.month == today.month
-                    and self.date_of_birth.day > today.day)):
+            if self.date_of_birth.month > today.month or (
+                self.date_of_birth.month == today.month and self.date_of_birth.day > today.day
+            ):
                 years -= 1
             return years
+
+    @property
+    def dashboard_widgets(self):
+        return [
+            w.widget
+            for w in DashboardWidgetOrder.objects.filter(person=self, widget__active=True).order_by(
+                "order"
+            )
+        ]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -388,14 +401,14 @@ class Group(SchoolTermRelatedExtensibleModel):
         """ Get stats about a given group """
         stats = {}
 
-        stats['members'] = len(self.members.all())
+        stats["members"] = len(self.members.all())
 
         ages = [person.age for person in self.members.filter(date_of_birth__isnull=False)]
 
         if ages:
-            stats['age_avg'] = sum(ages) / len(ages)
-            stats['age_range_min'] = min(ages)
-            stats['age_range_max'] = max(ages)
+            stats["age_avg"] = sum(ages) / len(ages)
+            stats["age_range_min"] = min(ages)
+            stats["age_range_max"] = max(ages)
 
         return stats
 
@@ -440,7 +453,7 @@ class PersonGroupThrough(ExtensibleModel):
             setattr(self, field_name, field_instance)
 
 
-class Activity(ExtensibleModel):
+class Activity(ExtensibleModel, TimeStampedModel):
     """Activity of a user to trace some actions done in AlekSIS in displayable form."""
 
     user = models.ForeignKey(
@@ -460,7 +473,7 @@ class Activity(ExtensibleModel):
         verbose_name_plural = _("Activities")
 
 
-class Notification(ExtensibleModel):
+class Notification(ExtensibleModel, TimeStampedModel):
     """Notification to submit to a user."""
 
     sender = models.CharField(max_length=100, verbose_name=_("Sender"))
@@ -484,7 +497,7 @@ class Notification(ExtensibleModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 
@@ -680,6 +693,31 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
 
+    size_s = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on mobile devices"),
+        help_text=_("<= 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_m = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on tablet devices"),
+        help_text=_("> 600 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=12,
+    )
+    size_l = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on desktop devices"),
+        help_text=_("> 992 px, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=6,
+    )
+    size_xl = models.PositiveSmallIntegerField(
+        verbose_name=_("Size on large desktop devices"),
+        help_text=_("> 1200 px>, 12 columns"),
+        validators=[MaxValueValidator(12)],
+        default=4,
+    )
+
     def get_context(self):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -696,8 +734,34 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return self.title
 
     class Meta:
+        permissions = (("edit_default_dashboard", _("Can edit default dashboard")),)
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class DashboardWidgetOrder(ExtensibleModel):
+    widget = models.ForeignKey(
+        DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
+    )
+    person = models.ForeignKey(
+        Person, on_delete=models.CASCADE, verbose_name=_("Person"), null=True, blank=True
+    )
+    order = models.PositiveIntegerField(verbose_name=_("Order"))
+    default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
+
+    @classproperty
+    def default_dashboard_widgets(cls):
+        """Get default order for dashboard widgets."""
+        return [
+            w.widget
+            for w in cls.objects.filter(person=None, default=True, widget__active=True).order_by(
+                "order"
+            )
+        ]
+
+    class Meta:
+        verbose_name = _("Dashboard widget order")
+        verbose_name_plural = _("Dashboard widget orders")
 
 
 class CustomMenu(ExtensibleModel):
@@ -798,3 +862,38 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
     class Meta:
         app_label = "core"
+
+
+class DataCheckResult(ExtensibleModel):
+    """Save the result of a data check for a specific object."""
+
+    check = models.CharField(
+        max_length=255,
+        verbose_name=_("Related data check task"),
+        choices=DataCheckRegistry.data_checks_choices,
+    )
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.CharField(max_length=255)
+    related_object = GenericForeignKey("content_type", "object_id")
+
+    solved = models.BooleanField(default=False, verbose_name=_("Issue solved"))
+    sent = models.BooleanField(default=False, verbose_name=_("Notification sent"))
+
+    @property
+    def related_check(self) -> DataCheck:
+        return DataCheckRegistry.data_checks_by_name[self.check]
+
+    def solve(self, solve_option: str = "default"):
+        self.related_check.solve(self, solve_option)
+
+    def __str__(self):
+        return f"{self.related_object}: {self.related_check.problem_name}"
+
+    class Meta:
+        verbose_name = _("Data check result")
+        verbose_name_plural = _("Data check results")
+        permissions = (
+            ("run_data_checks", _("Can run data checks")),
+            ("solve_data_problem", _("Can solve data check problems")),
+        )

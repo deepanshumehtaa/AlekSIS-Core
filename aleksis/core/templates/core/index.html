@@ -2,13 +2,21 @@
 {% load i18n static dashboard %}
 
 {% block browser_title %}{% blocktrans %}Home{% endblocktrans %}{% endblock %}
-{% block page_title %}{{ request.site.preferences.general__title }}{% endblock %}
+{% block no_page_title %}{% endblock %}
 
 {% block extra_head %}
   {{ media }}
 {% endblock %}
 
 {% block content %}
+  <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
+    <i class="material-icons left">edit</i>
+    {% trans "Edit dashboard" %}
+  </a>
+  <h4>
+    {{ request.site.preferences.general__title }}
+  </h4>
+
   {% if user.is_authenticated %}
     {% for notification in unread_notifications %}
       <div class="alert primary scale-transition">
@@ -31,11 +39,20 @@
 
     <div class="row" id="live_load">
       {% for widget in widgets %}
-        <div class="col s12 m12 l6 xl4">
+        <div class="col s{{ widget.size_s }} m{{ widget.size_m }} l{{ widget.size_l }} xl{{ widget.size_xl }}">
           {% include_widget widget %}
         </div>
       {% endfor %}
     </div>
+
+    {% if default_dashboard and widgets %}
+      <div class="grey-text right">
+        {% blocktrans %}
+          You didn't customise your dashboard so that you see the system default. Please click on "Edit dashboard" to
+          customise your personal dashboard.
+        {% endblocktrans %}
+      </div>
+    {% endif %}
 
     <div class="row">
       <div class="col s12 m6">
@@ -48,7 +65,7 @@
                 <span class="badge new primary-color">{{ activity.app }}</span>
                 <span class="title">{{ activity.title }}</span>
                 <p>
-                  <i class="material-icons left">access_time</i> {{ activity.created_at }}
+                  <i class="material-icons left">access_time</i> {{ activity.created }}
                 </p>
                 <p>
                   {{ activity.description }}
@@ -71,7 +88,7 @@
                 <span class="badge new primary-color">{{ notification.app }}</span>
                 <span class="title">{{ notification.title }}</span>
                 <p>
-                  <i class="material-icons left">access_time</i> {{ notification.created_at }}
+                  <i class="material-icons left">access_time</i> {{ notification.created }}
                 </p>
                 <p>
                   {{ notification.description }}

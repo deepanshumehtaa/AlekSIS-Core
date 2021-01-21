@@ -1,35 +1,13 @@
+
 // This is the AlekSIS service worker
 
-const CACHE = "aleksis-cache";
+const CACHE = 'aleksis-cache';
 
-const precacheFiles = [
-    '',
-];
+const offlineFallbackPage = 'offline/';
 
-const offlineFallbackPage = '/offline';
+const channel = new BroadcastChannel('cache-or-not');
 
-const avoidCachingPaths = [
-    '/admin',
-    '/settings',
-    '/accounts/login'
-]; // TODO: More paths are needed
-
-function pathComparer(requestUrl, pathRegEx) {
-    return requestUrl.match(new RegExp(pathRegEx));
-}
-
-function comparePaths(requestUrl, pathsArray) {
-    if (requestUrl) {
-        for (let index = 0; index < pathsArray.length; index++) {
-            const pathRegEx = pathsArray[index];
-            if (pathComparer(requestUrl, pathRegEx)) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
+var comesFromCache = false;
 
 self.addEventListener("install", function (event) {
     console.log("[AlekSIS PWA] Install Event processing.");
@@ -40,10 +18,7 @@ self.addEventListener("install", function (event) {
     event.waitUntil(
         caches.open(CACHE).then(function (cache) {
             console.log("[AlekSIS PWA] Caching pages during install.");
-
-            return cache.addAll(precacheFiles).then(function () {
-                return cache.add(offlineFallbackPage);
-            });
+            return cache.add(offlineFallbackPage);
         })
     );
 });
@@ -58,6 +33,7 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
     if (event.request.method !== "GET") return;
     networkFirstFetch(event);
+    if (comesFromCache) channel.postMessage(true);
 });
 
 function networkFirstFetch(event) {
@@ -67,6 +43,7 @@ function networkFirstFetch(event) {
                 // If request was successful, add or update it in the cache
                 console.log("[AlekSIS PWA] Network request successful.");
                 event.waitUntil(updateCache(event.request, response.clone()));
+                comesFromCache = false;
                 return response;
             })
             .catch(function (error) {
@@ -85,21 +62,22 @@ function fromCache(event) {
             .then(function (matching) {
                 if (!matching || matching.status === 404) {
                     console.log("[AlekSIS PWA] Cache request failed. Serving offline fallback page.");
+                    comesFromCache = false;
                     // Use the precached offline page as fallback
-                    return caches.match(offlineFallbackPage)
+                    return caches.match(offlineFallbackPage);
                 }
-
+                comesFromCache = true;
                 return matching;
             });
     });
 }
 
 function updateCache(request, response) {
-    if (!comparePaths(request.url, avoidCachingPaths)) {
+    if (response.headers.get('cache-control') && response.headers.get('cache-control').includes('no-cache')) {
+        return Promise.resolve();
+    } else {
         return caches.open(CACHE).then(function (cache) {
             return cache.put(request, response);
         });
     }
-
-    return Promise.resolve();
 }

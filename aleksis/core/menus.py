@@ -96,6 +96,17 @@ MENUS = {
                     ],
                 },
                 {
+                    "name": _("Dashboard widgets"),
+                    "url": "dashboard_widgets",
+                    "icon": "dashboard",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_dashboardwidget",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Data management"),
                     "url": "data_management",
                     "icon": "view_list",
@@ -132,6 +143,12 @@ MENUS = {
                             "core.change_site_preferences",
                         ),
                     ],
+                },
+                {
+                    "name": _("Data checks"),
+                    "url": "check_data",
+                    "icon": "done_all",
+                    "validators": ["menu_generator.validators.is_superuser"],
                 },
                 {
                     "name": _("Backend Admin"),

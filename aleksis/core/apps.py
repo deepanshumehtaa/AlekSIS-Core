@@ -1,12 +1,14 @@
 from typing import Any, List, Optional, Tuple
 
 import django.apps
+from django.apps import apps
 from django.conf import settings
 from django.db import OperationalError, ProgrammingError
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
 from dynamic_preferences.registries import preference_models
+from health_check.plugins import plugin_dir
 
 from .registries import (
     group_preferences_registry,
@@ -51,6 +53,22 @@ class CoreConfig(AppConfig):
         preference_models.register(grouppreferencemodel, group_preferences_registry)
 
         self._refresh_authentication_backends()
+
+        self._load_data_checks()
+
+        from .health_checks import DataChecksHealthCheckBackend
+
+        plugin_dir.register(DataChecksHealthCheckBackend)
+
+    @classmethod
+    def _load_data_checks(cls):
+        """Get all data checks from all loaded models."""
+        from aleksis.core.data_checks import DataCheckRegistry
+
+        data_checks = []
+        for model in apps.get_models():
+            data_checks += getattr(model, "data_checks", [])
+        DataCheckRegistry.data_checks = data_checks
 
     @classmethod
     def _refresh_authentication_backends(cls):
