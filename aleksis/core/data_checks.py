@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.aggregates import Count
-from django.utils.decorators import classproperty
+from django.utils.functional import classproperty
 from django.utils.translation import gettext as _
 
 import reversion

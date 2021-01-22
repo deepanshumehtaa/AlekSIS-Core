@@ -239,7 +239,10 @@ class Person(ExtensibleModel):
     @property
     def dashboard_widgets(self):
         return [
-            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+            w.widget
+            for w in DashboardWidgetOrder.objects.filter(person=self, widget__active=True).order_by(
+                "order"
+            )
         ]
 
     def save(self, *args, **kwargs):
@@ -494,7 +497,7 @@ class Notification(ExtensibleModel, TimeStampedModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 
@@ -731,6 +734,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return self.title
 
     class Meta:
+        permissions = (("edit_default_dashboard", _("Can edit default dashboard")),)
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
 
@@ -739,8 +743,21 @@ class DashboardWidgetOrder(ExtensibleModel):
     widget = models.ForeignKey(
         DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
     )
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_("Person"))
+    person = models.ForeignKey(
+        Person, on_delete=models.CASCADE, verbose_name=_("Person"), null=True, blank=True
+    )
     order = models.PositiveIntegerField(verbose_name=_("Order"))
+    default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
+
+    @classproperty
+    def default_dashboard_widgets(cls):
+        """Get default order for dashboard widgets."""
+        return [
+            w.widget
+            for w in cls.objects.filter(person=None, default=True, widget__active=True).order_by(
+                "order"
+            )
+        ]
 
     class Meta:
         verbose_name = _("Dashboard widget order")
