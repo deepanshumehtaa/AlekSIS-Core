@@ -28,16 +28,20 @@ class EnsurePersonMiddleware:
                 and request.user.first_name
                 and request.user.last_name
             ):
-                person, created = Person.objects.get_or_create(
-                    email=request.user.email,
-                    defaults={
-                        "first_name": request.user.first_name,
-                        "last_name": request.user.last_name,
-                    },
-                )
-                if prefs.get("account__auto_create_person") or not created:
+                if prefs.get("account__auto_create_person"):
+                    person, created = Person.objects.get_or_create(
+                        email=request.user.email,
+                        defaults={
+                            "first_name": request.user.first_name,
+                            "last_name": request.user.last_name,
+                        },
+                    )
                     person.user = request.user
-                    person.save()
+                else:
+                    person = Person.objects.filter(email=request.user.email).first()
+                    if person:
+                        person.user = request.user
+                        person.save()
 
         if request.user.is_superuser and not has_person(request):
             # Super-users get a dummy person linked
