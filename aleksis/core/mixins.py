@@ -304,7 +304,11 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                         type(
                             "FakeRelatedProxyField",
                             (),
-                            {"name": name, "verbose_name": verbose_name},
+                            {
+                                "name": name,
+                                "verbose_name": verbose_name,
+                                "to_python": lambda v: subfield.to_python(v),
+                            },
                         )
                     )
             elif field.editable and not field.auto_created:
