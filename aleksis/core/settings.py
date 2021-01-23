@@ -42,6 +42,7 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_COLLAPSED": True,
     "JQUERY_URL": "",
     "SHOW_TOOLBAR_CALLBACK": "aleksis.core.util.core_helpers.dt_show_toolbar",
+    "DISABLE_PANELS": {},
 }
 
 DEBUG_TOOLBAR_PANELS = [
