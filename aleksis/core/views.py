@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
@@ -13,6 +14,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import View
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 import reversion
 from django_tables2 import RequestConfig, SingleTableView
@@ -23,7 +26,10 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
 from reversion import set_user
+from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+
+from aleksis.core.data_checks import DataCheckRegistry, check_data
 
 from .filters import GroupFilter, PersonFilter
 from .forms import (
@@ -46,6 +52,7 @@ from .models import (
     Announcement,
     DashboardWidget,
     DashboardWidgetOrder,
+    DataCheckResult,
     Group,
     GroupType,
     Notification,
@@ -68,6 +75,7 @@ from .tables import (
 from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import objectgetter_optional
+from .util.forms import PreferenceLayout
 
 
 @permission_required("core.view_dashboard")
@@ -87,6 +95,12 @@ def index(request: HttpRequest) -> HttpResponse:
     context["announcements"] = announcements
 
     widgets = request.user.person.dashboard_widgets
+
+    if len(widgets) == 0:
+        # Use default dashboard if there are no widgets
+        widgets = DashboardWidgetOrder.default_dashboard_widgets
+        context["default_dashboard"] = True
+
     media = DashboardWidget.get_media(widgets)
 
     context["widgets"] = widgets
@@ -106,7 +120,7 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, "core/pages/about.html", context)
 
 
-class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
+class SchoolTermListView(PermissionRequiredMixin, SingleTableView):
     """Table of all school terms."""
 
     model = SchoolTerm
@@ -116,7 +130,7 @@ class SchoolTermListView(SingleTableView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
+class SchoolTermCreateView(PermissionRequiredMixin, AdvancedCreateView):
     """Create view for school terms."""
 
     model = SchoolTerm
@@ -128,7 +142,7 @@ class SchoolTermCreateView(AdvancedCreateView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class SchoolTermEditView(AdvancedEditView, PermissionRequiredMixin):
+class SchoolTermEditView(PermissionRequiredMixin, AdvancedEditView):
     """Edit view for school terms."""
 
     model = SchoolTerm
@@ -374,7 +388,7 @@ def data_management(request: HttpRequest) -> HttpResponse:
     return render(request, "core/management/data_management.html", context)
 
 
-class SystemStatus(MainView, PermissionRequiredMixin):
+class SystemStatus(PermissionRequiredMixin, MainView):
     """View giving information about the system status."""
 
     template_name = "core/pages/system_status.html"
@@ -531,8 +545,15 @@ def preferences(
         # Invalid registry name passed from URL
         return HttpResponseNotFound()
 
+    if not section and len(registry.sections()) > 0:
+        default_section = list(registry.sections())[0]
+        return redirect(f"preferences_{registry_name}", default_section)
+
     # Build final form from dynamic-preferences
     form_class = preference_form_builder(form_class, instance=instance, section=section)
+
+    # Get layout
+    form_class.layout = PreferenceLayout(form_class, section=section)
 
     if request.method == "POST":
         form = form_class(request.POST, request.FILES or None)
@@ -702,7 +723,63 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("group_types")
 
 
-class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
+class DataCheckView(PermissionRequiredMixin, ListView):
+    permission_required = "core.view_datacheckresults"
+    model = DataCheckResult
+    template_name = "core/data_check/list.html"
+    context_object_name = "results"
+
+    def get_queryset(self) -> QuerySet:
+        return DataCheckResult.objects.filter(solved=False).order_by("check")
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["registered_checks"] = DataCheckRegistry.data_checks
+        return context
+
+
+class RunDataChecks(PermissionRequiredMixin, View):
+    permission_required = "core.run_data_checks"
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not check_data()[1]:
+            messages.success(
+                request,
+                _(
+                    "The data check has been started. Please note that it may take "
+                    "a while before you are able to fetch the data on this page."
+                ),
+            )
+        else:
+            messages.success(request, _("The data check has finished."))
+        return redirect("check_data")
+
+
+class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
+    queryset = DataCheckResult.objects.all()
+    permission_required = "core.solve_data_problem"
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        solve_option = self.kwargs["solve_option"]
+        result = self.get_object()
+        if solve_option in result.related_check.solve_options:
+            solve_option_obj = result.related_check.solve_options[solve_option]
+
+            msg = _(
+                f"The solve option '{solve_option_obj.verbose_name}' "
+                f"has been executed on the object '{result.related_object}' "
+                f"(type: {result.related_object._meta.verbose_name})."
+            )
+
+            result.solve(solve_option)
+
+            messages.success(request, msg)
+            return redirect("check_data")
+        else:
+            return HttpResponseNotFound()
+
+
+class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
     """Table of all dashboard widgets."""
 
     model = DashboardWidget
@@ -720,7 +797,7 @@ class DashboardWidgetListView(SingleTableView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
+class DashboardWidgetEditView(PermissionRequiredMixin, AdvancedEditView):
     """Edit view for dashboard widgets."""
 
     def get_form_class(self) -> Type[BaseModelForm]:
@@ -735,7 +812,7 @@ class DashboardWidgetEditView(AdvancedEditView, PermissionRequiredMixin):
 
 
 @method_decorator(never_cache, name="dispatch")
-class DashboardWidgetCreateView(AdvancedCreateView, PermissionRequiredMixin):
+class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
     """Create view for dashboard widgets."""
 
     def get_model(self, request, *args, **kwargs):
@@ -777,11 +854,23 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
 class EditDashboardView(View):
     """View for editing dashboard widget order."""
 
-    def get_context_data(self, request):
+    def get_context_data(self, request, **kwargs):
         context = {}
+        self.default_dashboard = kwargs.get("default", False)
 
-        widgets = request.user.person.dashboard_widgets
-        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
+        if self.default_dashboard and not request.user.has_perm("core.edit_default_dashboard"):
+            raise PermissionDenied()
+
+        context["default_dashboard"] = self.default_dashboard
+
+        widgets = (
+            request.user.person.dashboard_widgets
+            if not self.default_dashboard
+            else DashboardWidgetOrder.default_dashboard_widgets
+        )
+        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets]).filter(
+            active=True
+        )
         context["widgets"] = widgets
         context["not_used_widgets"] = not_used_widgets
 
@@ -800,8 +889,8 @@ class EditDashboardView(View):
 
         return context
 
-    def post(self, request):
-        context = self.get_context_data(request)
+    def post(self, request, **kwargs):
+        context = self.get_context_data(request, **kwargs)
 
         if context["formset"].is_valid():
             added_objects = []
@@ -811,22 +900,26 @@ class EditDashboardView(View):
 
                 obj, created = DashboardWidgetOrder.objects.update_or_create(
                     widget=form.cleaned_data["pk"],
-                    person=request.user.person,
+                    person=request.user.person if not self.default_dashboard else None,
+                    default=self.default_dashboard,
                     defaults={"order": form.cleaned_data["order"]},
                 )
 
                 added_objects.append(obj.pk)
 
-            DashboardWidgetOrder.objects.filter(person=request.user.person).exclude(
-                pk__in=added_objects
-            ).delete()
+            DashboardWidgetOrder.objects.filter(
+                person=request.user.person if not self.default_dashboard else None,
+                default=self.default_dashboard,
+            ).exclude(pk__in=added_objects).delete()
 
-            messages.success(
-                request, _("Your dashboard configuration has been saved successfully.")
-            )
-            return redirect("index")
+            if not self.default_dashboard:
+                msg = _("Your dashboard configuration has been saved successfully.")
+            else:
+                msg = _("The configuration of the default dashboard has been saved successfully.")
+            messages.success(request, msg)
+            return redirect("index" if not self.default_dashboard else "dashboard_widgets")
 
-    def get(self, request):
-        context = self.get_context_data(request)
+    def get(self, request, **kwargs):
+        context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)

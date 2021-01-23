@@ -5,6 +5,10 @@ const CACHE = 'aleksis-cache';
 
 const offlineFallbackPage = 'offline/';
 
+const channel = new BroadcastChannel('cache-or-not');
+
+var comesFromCache = false;
+
 self.addEventListener("install", function (event) {
     console.log("[AlekSIS PWA] Install Event processing.");
 
@@ -29,6 +33,7 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
     if (event.request.method !== "GET") return;
     networkFirstFetch(event);
+    if (comesFromCache) channel.postMessage(true);
 });
 
 function networkFirstFetch(event) {
@@ -38,6 +43,7 @@ function networkFirstFetch(event) {
                 // If request was successful, add or update it in the cache
                 console.log("[AlekSIS PWA] Network request successful.");
                 event.waitUntil(updateCache(event.request, response.clone()));
+                comesFromCache = false;
                 return response;
             })
             .catch(function (error) {
@@ -56,10 +62,11 @@ function fromCache(event) {
             .then(function (matching) {
                 if (!matching || matching.status === 404) {
                     console.log("[AlekSIS PWA] Cache request failed. Serving offline fallback page.");
+                    comesFromCache = false;
                     // Use the precached offline page as fallback
-                    return caches.match(offlineFallbackPage)
+                    return caches.match(offlineFallbackPage);
                 }
-
+                comesFromCache = true;
                 return matching;
             });
     });

@@ -26,6 +26,8 @@ from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
+from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
@@ -237,7 +239,10 @@ class Person(ExtensibleModel):
     @property
     def dashboard_widgets(self):
         return [
-            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+            w.widget
+            for w in DashboardWidgetOrder.objects.filter(person=self, widget__active=True).order_by(
+                "order"
+            )
         ]
 
     def save(self, *args, **kwargs):
@@ -492,7 +497,7 @@ class Notification(ExtensibleModel, TimeStampedModel):
     def save(self, **kwargs):
         super().save(**kwargs)
         if not self.sent:
-            transaction.on_commit(lambda: send_notification(self.pk, resend=True))
+            send_notification(self.pk, resend=True)
         self.sent = True
         super().save(**kwargs)
 
@@ -729,6 +734,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return self.title
 
     class Meta:
+        permissions = (("edit_default_dashboard", _("Can edit default dashboard")),)
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
 
@@ -737,8 +743,21 @@ class DashboardWidgetOrder(ExtensibleModel):
     widget = models.ForeignKey(
         DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
     )
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name=_("Person"))
+    person = models.ForeignKey(
+        Person, on_delete=models.CASCADE, verbose_name=_("Person"), null=True, blank=True
+    )
     order = models.PositiveIntegerField(verbose_name=_("Order"))
+    default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
+
+    @classproperty
+    def default_dashboard_widgets(cls):
+        """Get default order for dashboard widgets."""
+        return [
+            w.widget
+            for w in cls.objects.filter(person=None, default=True, widget__active=True).order_by(
+                "order"
+            )
+        ]
 
     class Meta:
         verbose_name = _("Dashboard widget order")
@@ -843,3 +862,38 @@ class GroupPreferenceModel(PerInstancePreferenceModel, PureDjangoModel):
 
     class Meta:
         app_label = "core"
+
+
+class DataCheckResult(ExtensibleModel):
+    """Save the result of a data check for a specific object."""
+
+    check = models.CharField(
+        max_length=255,
+        verbose_name=_("Related data check task"),
+        choices=DataCheckRegistry.data_checks_choices,
+    )
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.CharField(max_length=255)
+    related_object = GenericForeignKey("content_type", "object_id")
+
+    solved = models.BooleanField(default=False, verbose_name=_("Issue solved"))
+    sent = models.BooleanField(default=False, verbose_name=_("Notification sent"))
+
+    @property
+    def related_check(self) -> DataCheck:
+        return DataCheckRegistry.data_checks_by_name[self.check]
+
+    def solve(self, solve_option: str = "default"):
+        self.related_check.solve(self, solve_option)
+
+    def __str__(self):
+        return f"{self.related_object}: {self.related_check.problem_name}"
+
+    class Meta:
+        verbose_name = _("Data check result")
+        verbose_name_plural = _("Data check results")
+        permissions = (
+            ("run_data_checks", _("Can run data checks")),
+            ("solve_data_problem", _("Can solve data check problems")),
+        )
