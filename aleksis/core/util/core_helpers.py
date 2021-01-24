@@ -408,4 +408,4 @@ def queryset_rules_filter(
 
 def unread_notifications_badge(request: HttpRequest) -> int:
     """Generate badge content with the number of unread notifications."""
-    return request.user.person.notifications.all().filter(read=False).count()
+    return request.user.person.unread_notifications_count
