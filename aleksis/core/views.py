@@ -109,7 +109,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "core/index.html", context)
 
 
-class Notifications(PermissionRequiredMixin, ListView):
+class NotificationsListView(PermissionRequiredMixin, ListView):
     permission_required = "core.view_notifications"
     template_name = "core/notifications.html"
 
