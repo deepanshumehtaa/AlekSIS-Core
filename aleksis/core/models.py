@@ -35,7 +35,6 @@ from .managers import (
     SchoolTermQuerySet,
 )
 from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
-from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
 
@@ -481,39 +480,6 @@ class Activity(ExtensibleModel, TimeStampedModel):
     class Meta:
         verbose_name = _("Activity")
         verbose_name_plural = _("Activities")
-
-
-class Notification(ExtensibleModel, TimeStampedModel):
-    """Notification to submit to a user."""
-
-    sender = models.CharField(max_length=100, verbose_name=_("Sender"))
-    recipient = models.ForeignKey(
-        "Person",
-        on_delete=models.CASCADE,
-        related_name="notifications",
-        verbose_name=_("Recipient"),
-    )
-
-    title = models.CharField(max_length=150, verbose_name=_("Title"))
-    description = models.TextField(max_length=500, verbose_name=_("Description"))
-    link = models.URLField(blank=True, verbose_name=_("Link"))
-
-    read = models.BooleanField(default=False, verbose_name=_("Read"))
-    sent = models.BooleanField(default=False, verbose_name=_("Sent"))
-
-    def __str__(self):
-        return str(self.title)
-
-    def save(self, **kwargs):
-        super().save(**kwargs)
-        if not self.sent:
-            send_notification(self.pk, resend=True)
-        self.sent = True
-        super().save(**kwargs)
-
-    class Meta:
-        verbose_name = _("Notification")
-        verbose_name_plural = _("Notifications")
 
 
 class AnnouncementQuerySet(models.QuerySet):
