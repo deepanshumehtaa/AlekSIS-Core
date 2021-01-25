@@ -49,7 +49,7 @@ name = "amqp"
 version = "5.0.3"
 description = "Low-level AMQP client for Python (fork of amqplib)."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -142,7 +142,7 @@ name = "billiard"
 version = "3.6.3.0"
 description = "Python multiprocessing fork with improvements and bugfixes"
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [[package]]
@@ -213,7 +213,7 @@ name = "celery"
 version = "5.0.5"
 description = "Distributed Task Queue."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6,"
 
 [package.dependencies]
@@ -315,7 +315,7 @@ name = "click-didyoumean"
 version = "0.0.3"
 description = "Enable git-like did-you-mean feature in click."
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [package.dependencies]
@@ -326,7 +326,7 @@ name = "click-plugins"
 version = "1.1.1"
 description = "An extension module for click to enable registering CLI commands via setuptools entry-points."
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [package.dependencies]
@@ -340,7 +340,7 @@ name = "click-repl"
 version = "0.1.6"
 description = "REPL plugin for Click"
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [package.dependencies]
@@ -765,6 +765,26 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=2.0.1"
+
+[[package]]
+name = "django-notifs"
+version = "2.6.4"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.5.0"
+develop = false
+
+[package.dependencies]
+celery = ">=4.1.0"
+django = ">=2.0"
+pika = ">=0.12.0"
+
+[package.source]
+type = "git"
+url = "https://github.com/danidee10/django-notifs"
+reference = "master"
+resolved_reference = "8d1293bcf3991c5a28ab21c8ee81beb5cda9bfcd"
 
 [[package]]
 name = "django-otp"
@@ -1295,7 +1315,7 @@ name = "kombu"
 version = "5.0.2"
 description = "Messaging library for Python."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -1435,6 +1455,18 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pika"
+version = "1.1.0"
+description = "Pika Python AMQP Client Library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+tornado = ["tornado"]
+twisted = ["twisted"]
+
+[[package]]
 name = "pillow"
 version = "8.1.0"
 description = "Python Imaging Library (Fork)"
@@ -1472,7 +1504,7 @@ name = "prompt-toolkit"
 version = "3.0.14"
 description = "Library for building powerful interactive command lines in Python"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6.1"
 
 [package.dependencies]
@@ -2168,7 +2200,7 @@ name = "vine"
 version = "5.0.0"
 description = "Promises, promises, promises."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [[package]]
@@ -2176,7 +2208,7 @@ name = "wcwidth"
 version = "0.2.5"
 description = "Measures the displayed width of unicode strings in a terminal"
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [[package]]
@@ -2217,7 +2249,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b8b44ac64723c99f10cbeaa085976eb30a503e29379801c21495d362933e4aa0"
+content-hash = "a0f087704c845530d17b62a83b1a679f79fdddffa9302ae09521e239ccb79315"
 
 [metadata.files]
 alabaster = [
@@ -2511,6 +2543,7 @@ django-model-utils = [
     {file = "django-model-utils-4.1.1.tar.gz", hash = "sha256:eb5dd05ef7d7ce6bc79cae54ea7c4a221f6f81e2aad7722933aee66489e7264b"},
     {file = "django_model_utils-4.1.1-py3-none-any.whl", hash = "sha256:ef7c440024e797796a3811432abdd2be8b5225ae64ef346f8bfc6de7d8e5d73c"},
 ]
+django-notifs = []
 django-otp = [
     {file = "django-otp-1.0.2.tar.gz", hash = "sha256:f523fb9dec420f28a29d3e2ad72ac06f64588956ed4f2b5b430d8e957ebb8287"},
     {file = "django_otp-1.0.2-py3-none-any.whl", hash = "sha256:8ba5ab9bd2738c7321376c349d7cce49cf4404e79f6804e0a3cc462a91728e18"},
@@ -2784,6 +2817,10 @@ pg8000 = [
 phonenumbers = [
     {file = "phonenumbers-8.12.16-py2.py3-none-any.whl", hash = "sha256:56ad29025b8f885945506350b06d77afbc506c5463141d77a5df767280a7ee0b"},
     {file = "phonenumbers-8.12.16.tar.gz", hash = "sha256:a820ab08c980ef24a2d2a1ead4f8d7016fdf008e484d1aecf7ff0b32cc475e16"},
+]
+pika = [
+    {file = "pika-1.1.0-py2.py3-none-any.whl", hash = "sha256:4e1a1a6585a41b2341992ec32aadb7a919d649eb82904fd8e4a4e0871c8cf3af"},
+    {file = "pika-1.1.0.tar.gz", hash = "sha256:9fa76ba4b65034b878b2b8de90ff8660a59d925b087c5bb88f8fdbb4b64a1dbf"},
 ]
 pillow = [
     {file = "Pillow-8.1.0-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:d355502dce85ade85a2511b40b4c61a128902f246504f7de29bbeec1ae27933a"},

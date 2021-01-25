@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     "dynamic_preferences.users.apps.UserPreferencesConfig",
     "impersonate",
     "two_factor",
+    "notifications",
     "material",
     "pwa",
     "ckeditor",
