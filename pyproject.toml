@@ -94,6 +94,7 @@ django-prometheus = "^2.1.0"
 importlib-metadata = {version = "^3.0.0", python = "<3.9"}
 django-model-utils = "^4.0.0"
 bs4 = "^0.0.1"
+django-uwsgi = "^0.2.2"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
@@ -101,6 +102,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
+uwsgi = "^2.0"
 
 [tool.poetry.scripts]
 aleksis-admin = 'aleksis.core.util.manage:aleksis_cmd'

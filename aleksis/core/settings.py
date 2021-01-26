@@ -59,6 +59,7 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.logging.LoggingPanel",
     "debug_toolbar.panels.redirects.RedirectsPanel",
     "debug_toolbar.panels.profiling.ProfilingPanel",
+    "django_uwsgi.panels.UwsgiPanel",
 ]
 
 
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django_uwsgi",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
@@ -725,3 +727,9 @@ HEALTH_CHECK = {
 }
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+
+UWSGI = {
+    "module": "aleksis.core.wsgi",
+}
+for k, v in UWSGI.items():
+    os.environ.setdefault(f"UWSGI_{k.upper()}", v)

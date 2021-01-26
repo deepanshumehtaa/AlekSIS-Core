@@ -20,6 +20,7 @@ urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
+    path("admin/uwsgi/", include('django_uwsgi.urls')),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
