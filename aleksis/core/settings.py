@@ -197,18 +197,22 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", False):
-    CACHES = {
-        "default": {
-            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
-            "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
-        }
+CACHES = {
+    "default": {
+        # Use uWSGI if available (will auot-fallback to LocMemCache)
+        "BACKEND": "django_uwsgi.cache.UwsgiCache"
     }
-    INSTALLED_APPS.append("cachalot")
-    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
-    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
-    CACHALOT_DATABASES = set(["default"])
-    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+}
+
+if _settings.get("caching.memcached.enabled", False):
+    CACHES["default"]["BACKEND"] = "django_prometheus.cache.backends.memcached.MemcachedCache"
+    CACHES["default"]["LOCATION"] = _settings.get("caching.memcached.address", "127.0.0.1:11211")
+
+INSTALLED_APPS.append("cachalot")
+DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+CACHALOT_DATABASES = set(["default"])
+SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
