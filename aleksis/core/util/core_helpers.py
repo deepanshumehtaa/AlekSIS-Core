@@ -176,6 +176,9 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         else:
             return False
 
+    if obj.is_anonymous:
+        return False
+
     person = getattr(obj, "person", None)
     if person is None:
         return False
@@ -401,3 +404,8 @@ def queryset_rules_filter(
             wanted_objects.add(item.pk)
 
     return queryset.filter(pk__in=wanted_objects)
+
+
+def unread_notifications_badge(request: HttpRequest) -> int:
+    """Generate badge content with the number of unread notifications."""
+    return request.user.person.unread_notifications_count
