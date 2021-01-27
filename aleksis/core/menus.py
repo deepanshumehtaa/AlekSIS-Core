@@ -30,6 +30,16 @@ MENUS = {
             "name": _("Account"),
             "url": "#",
             "icon": "person",
+            "related_urls": [
+                "twofactor:profile",
+                "twofactor:setup",
+                "twofactor:setup_complete",
+                "twofactor:backup_tokens",
+                "twofactor:phone_create",
+                "twofactor:phone_delete",
+                "twofactor:disable",
+                "person",
+            ],
             "root": True,
             "validators": ["menu_generator.validators.is_authenticated"],
             "submenu": [
@@ -52,7 +62,15 @@ MENUS = {
                     "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
-                    "related_urls": ["/two_factor/"],
+                    "related_urls": [
+                        "twofactor:profile",
+                        "twofactor:setup",
+                        "twofactor:setup_complete",
+                        "twofactor:backup_tokens",
+                        "twofactor:phone_create",
+                        "twofactor:phone_delete",
+                        "twofactor:disable",
+                    ],
                     "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
@@ -79,6 +97,20 @@ MENUS = {
             "name": _("Admin"),
             "url": "#",
             "icon": "security",
+            "related_urls": [
+                "announcements",
+                "add_announcement",
+                "edit_announcement",
+                "delete_announcement",
+                "preferences_site",
+                "dashboard_widgets",
+                "school_terms",
+                "create_school_term",
+                "edit_school_term",
+                "check_data",
+                "data_check_run",
+                "data_check_solve",
+            ],
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_admin_menu"),
             ],
@@ -87,6 +119,12 @@ MENUS = {
                     "name": _("Announcements"),
                     "url": "announcements",
                     "icon": "announcement",
+                    "related_urls": [
+                        "announcements",
+                        "add_announcement",
+                        "edit_announcement",
+                        "delete_announcement",
+                    ],
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -98,7 +136,7 @@ MENUS = {
                     "name": _("School terms"),
                     "url": "school_terms",
                     "icon": "date_range",
-                    "related_urls": ["/school_term/"],
+                    "related_urls": ["school_terms", "create_school_term", "edit_school_term"],
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -159,6 +197,7 @@ MENUS = {
                     "name": _("Data checks"),
                     "url": "check_data",
                     "icon": "done_all",
+                    "related_urls": ["check_data", "data_check_run", "data_check_solve"],
                     "validators": ["menu_generator.validators.is_superuser"],
                 },
                 {
@@ -174,7 +213,28 @@ MENUS = {
             "url": "#",
             "icon": "people",
             "root": True,
-            "related_urls": ["/person/"],
+            "related_urls": [
+                "persons",
+                "edit_person",
+                "create_person",
+                "person_by_id",
+                "edit_person_by_id",
+                "delete_person_by_id",
+                "groups",
+                "group_by_id",
+                "edit_group_by_id",
+                "delete_group_by_id",
+                "create_group_type",
+                "edit_group_type_by_id",
+                "delete_group_type_by_id",
+                "group_types",
+                "additional_fields",
+                "groups_child_groups",
+                "edit_additional_field_by_id",
+                "create_additional_field",
+                "delete_additional_field_by_id",
+                "create_group",
+            ],
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")
             ],
@@ -183,7 +243,14 @@ MENUS = {
                     "name": _("Persons"),
                     "url": "persons",
                     "icon": "person",
-                    "related_urls": ["/person/"],
+                    "related_urls": [
+                        "persons",
+                        "edit_person",
+                        "create_person",
+                        "person_by_id",
+                        "edit_person_by_id",
+                        "delete_person_by_id",
+                    ],
                     "validators": [
                         ("aleksis.core.util.predicates.permission_validator", "core.view_persons")
                     ],
@@ -192,7 +259,13 @@ MENUS = {
                     "name": _("Groups"),
                     "url": "groups",
                     "icon": "group",
-                    "related_urls": ["/group/"],
+                    "related_urls": [
+                        "groups",
+                        "group_by_id",
+                        "edit_group_by_id",
+                        "delete_group_by_id",
+                        "create_group",
+                    ],
                     "validators": [
                         ("aleksis.core.util.predicates.permission_validator", "core.view_groups")
                     ],
@@ -201,7 +274,11 @@ MENUS = {
                     "name": _("Group types"),
                     "url": "group_types",
                     "icon": "category",
-                    "related_urls": ["/group_type/"],
+                    "related_urls": [
+                        "edit_group_type_by_id",
+                        "delete_group_type_by_id",
+                        "group_types",
+                    ],
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -234,7 +311,12 @@ MENUS = {
                 {
                     "name": _("Additional fields"),
                     "url": "additional_fields",
-                    "related_urls": ["/additional_field/"],
+                    "related_urls": [
+                        "additional_fields",
+                        "edit_additional_field_by_id",
+                        "create_additional_field",
+                        "delete_additional_field_by_id",
+                    ],
                     "icon": "style",
                     "validators": [
                         (
