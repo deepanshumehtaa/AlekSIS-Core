@@ -62,6 +62,9 @@ DEBUG_TOOLBAR_PANELS = [
     "django_uwsgi.panels.UwsgiPanel",
 ]
 
+UWSGI = {
+    "module": "aleksis.core.wsgi",
+}
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -497,6 +500,12 @@ if _settings.get("celery.enabled", False):
         INSTALLED_APPS += ("djcelery_email",)
         EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
+    if _settings.get("celery.uwsgi.run", True):
+        concurrency = _settings.get("celery.uwsgi.concurrency", 2)
+        UWSGI.setdefault("attach-daemon", []).append(
+            f"celery -A aleksis.core worker --concurrency={concurrency}"
+        )
+
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
 PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
@@ -731,9 +740,3 @@ HEALTH_CHECK = {
 }
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
-
-UWSGI = {
-    "module": "aleksis.core.wsgi",
-}
-for k, v in UWSGI.items():
-    os.environ.setdefault(f"UWSGI_{k.upper()}", v)
