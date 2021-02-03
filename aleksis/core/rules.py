@@ -312,3 +312,7 @@ rules.add_perm("core.delete_dashboardwidget", delete_dashboard_widget_predicate)
 
 edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_default_dashboard")
 rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
+
+# Upload and browse files via CKEditor
+upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
+rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
