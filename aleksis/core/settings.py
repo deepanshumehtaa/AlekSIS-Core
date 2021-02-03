@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     "material",
     "pwa",
     "ckeditor",
+    "ckeditor_uploader",
     "django_js_reverse",
     "colorfield",
     "django_bleach",
@@ -652,6 +653,9 @@ CKEDITOR_CONFIGS = {
         ),
     }
 }
+
+# Upload path for CKEditor. Relative to MEDIA_ROOT.
+CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
 
 # Which HTML tags are allowed
 BLEACH_ALLOWED_TAGS = ["p", "b", "i", "u", "em", "strong", "a", "div"]
