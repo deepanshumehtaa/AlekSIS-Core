@@ -283,6 +283,16 @@ class PureDjangoModel(object):
     pass
 
 
+class GlobalPermissionModel(models.Model):
+    """Base model for global permissions.
+
+    This base model ensures that global permissions are not managed."""
+
+    class Meta:
+        abstract = True
+        managed = False
+
+
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
     def __new__(cls, name, bases, dct):
         x = super().__new__(cls, name, bases, dct)

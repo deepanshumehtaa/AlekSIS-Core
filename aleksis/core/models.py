@@ -34,7 +34,12 @@ from .managers import (
     GroupQuerySet,
     SchoolTermQuerySet,
 )
-from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
+from .mixins import (
+    ExtensibleModel,
+    GlobalPermissionModel,
+    PureDjangoModel,
+    SchoolTermRelatedExtensibleModel,
+)
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -820,11 +825,10 @@ class GroupType(ExtensibleModel):
         verbose_name_plural = _("Group types")
 
 
-class GlobalPermissions(ExtensibleModel):
+class GlobalPermissions(GlobalPermissionModel):
     """Container for global permissions."""
 
-    class Meta:
-        managed = False
+    class Meta(GlobalPermissionModel.Meta):
         permissions = (
             ("view_system_status", _("Can view system status")),
             ("link_persons_accounts", _("Can link persons to accounts")),
