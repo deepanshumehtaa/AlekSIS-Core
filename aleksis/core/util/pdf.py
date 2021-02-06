@@ -35,7 +35,11 @@ def generate_pdf(recorder: Union[ProgressRecorder, DummyRecorder], html_code: st
     with open(path, "w") as f:
         f.write(html_code)
 
+    # Start a X framebuffer and run electron-pdf
+    os.environ["DISPLAY"] = ":99.0"
+    xfvb_process= subprocess.Popen(["Xvfb", ":99", "-screen", "0", "1024x768x24"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["electron-pdf", path, pdf_path])  # noqa
+    xfvb_process.terminate()
 
     os.remove(path)
 
