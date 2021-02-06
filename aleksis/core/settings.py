@@ -554,11 +554,12 @@ SITE_ID = 1
 
 CKEDITOR_CONFIGS = {
     "default": {
+        "skin": "lul",
         "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
         "toolbar_Full": [
             {
                 "name": "document",
-                "items": ["Source", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"],
+                "items": ["Source", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates", "-", "DocProps"],
             },
             {
                 "name": "clipboard",
@@ -632,6 +633,8 @@ CKEDITOR_CONFIGS = {
         ],
         "toolbar": "Full",
         "tabSpaces": 4,
+        'height': 291,
+        'width': 'auto',
         "extraPlugins": ",".join(
             [
                 "uploadimage",

@@ -8,11 +8,11 @@
       {% part field label %}
         <label{% attrs bound_field 'label' %}
           for="{{ bound_field.id_for_label }}"
-          {% if bound_field.value %}class="active"{% endif %}
+          class="{% if bound_field.value %}active{% endif %} ckeditor-label"
         {% endattrs %}>{{ bound_field.label }}</label>
       {% endpart %}
       {% part field prefix %}{% endpart %}{% part field control %}
-        {{ bound_field }}
+        {{ bound_field }}asdf
       {% endpart %}
       {% part field help_text %}{% if field.help_text %}
         <div class="help-block">{{ bound_field.help_text|safe }}</div>
