@@ -49,7 +49,7 @@ function customSuccess(progressBarElement, progressBarMessageElement) {
     $("#result-box").show();
     const redirect = "redirect_on_success" in OPTIONS;
     if (redirect) {
-        window.location.href = OPTIONS.redirect_on_success;
+        window.location.replace(OPTIONS.redirect_on_success);
     }
 }
 
