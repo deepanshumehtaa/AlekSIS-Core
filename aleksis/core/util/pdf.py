@@ -1,7 +1,6 @@
 import glob
 import os
 import subprocess  # noqa
-from tempfile import mkstemp
 from typing import Union
 
 from django.http.request import HttpRequest
@@ -18,6 +17,7 @@ from aleksis.core.util.core_helpers import (
     celery_optional,
     celery_optional_progress,
     is_celery_enabled,
+    make_temp_file,
     path_and_rename,
 )
 
@@ -31,11 +31,13 @@ def generate_pdf(recorder: Union[ProgressRecorder, DummyRecorder], html_code: st
     html_code = html_code.replace("/static", STATIC_ROOT)
 
     # Write HTML code to a temporary file to make it available for electron-pdf
-    f, path = mkstemp(".html")
+    f, path = make_temp_file(".html")
     with open(path, "w") as f:
         f.write(html_code)
 
     subprocess.run(["electron-pdf", path, pdf_path])  # noqa
+
+    os.remove(path)
 
     recorder.set_progress(1)
 

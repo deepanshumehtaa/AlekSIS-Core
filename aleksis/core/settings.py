@@ -1,6 +1,7 @@
 import os
 from glob import glob
 
+from django.core.files.temp import gettempdir
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
@@ -452,6 +453,9 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
+
+# Temporary files
+TEMP_DIRECTORY = _settings.get("temp_files.directory", gettempdir())
 
 ADMINS = _settings.get("contact.admins", [])
 SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
