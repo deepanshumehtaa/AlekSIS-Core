@@ -415,6 +415,19 @@ class SuccessMessageMixin(ModelFormMixin):
         return super().form_valid(form)
 
 
+class SuccessNextMixin:
+    def get_default_success_url(self):
+        return super().get_success_url()
+
+    def get_success_url(self) -> str:
+        next_url = self.request.GET.get("next")
+
+        if not next_url:
+            next_url = self.get_default_success_url()
+
+        return next_url
+
+
 class AdvancedCreateView(SuccessMessageMixin, CreateView):
     pass
 
