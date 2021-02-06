@@ -662,7 +662,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
       from aleksis.core.models import DashboardWidget
 
-      class MyWidget(DhasboardWIdget):
+      class MyWidget(DashboardWidget):
           template = "myapp/widget.html"
 
           def get_context(self, request):
