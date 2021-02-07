@@ -317,3 +317,7 @@ rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 # django-allauth
 can_register_predicate = is_site_preference_set(section="auth", pref="signup_enabled")
 rules.add_perm("core.can_register", can_register_predicate)
+
+# Upload and browse files via CKEditor
+upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
+rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
