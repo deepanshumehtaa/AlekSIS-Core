@@ -672,10 +672,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
       from aleksis.core.models import DashboardWidget
 
-      class MyWidget(DhasboardWIdget):
+      class MyWidget(DashboardWidget):
           template = "myapp/widget.html"
 
-          def get_context(self):
+          def get_context(self, request):
               context = {"some_content": "foo"}
               return context
 
@@ -728,7 +728,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
-    def get_context(self):
+    def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
