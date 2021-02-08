@@ -289,6 +289,7 @@ class GlobalPermissionModel(models.Model):
     This base model ensures that global permissions are not managed."""
 
     class Meta:
+        default_permissions = ()
         abstract = True
         managed = False
 
