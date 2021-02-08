@@ -50,10 +50,8 @@ def check_app_models_base_class(
 
     for app_config in filter(lambda c: c.name.startswith("aleksis."), app_configs):
         for model in app_config.get_models():
-            if (
-                ExtensibleModel not in model.__mro__
-                and PureDjangoModel not in model.__mro__
-                and GlobalPermissionModel not in model.__mro__
+            if not (
+                set(model.__mro__) & set((ExtensibleModel, PureDjangoModel, GlobalPermissionModel))
             ):
                 results.append(
                     Warning(
