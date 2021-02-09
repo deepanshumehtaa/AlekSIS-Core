@@ -3,6 +3,7 @@ from django.forms import EmailField, ImageField, URLField
 from django.forms.widgets import SelectMultiple
 from django.utils.translation import gettext_lazy as _
 
+from colorfield.widgets import ColorWidget
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import (
     BooleanPreference,
@@ -53,6 +54,7 @@ class ColourPrimary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Primary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -62,6 +64,7 @@ class ColourSecondary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Secondary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -206,6 +209,14 @@ class SchoolNameOfficial(StringPreference):
     default = ""
     required = False
     verbose_name = _("Official name of the school, e.g. as given by supervisory authority")
+
+
+@site_preferences_registry.register
+class AllowPasswordChange(BooleanPreference):
+    section = auth
+    name = "allow_password_change"
+    default = True
+    verbose_name = _("Allow users to change their passwords")
 
 
 @site_preferences_registry.register

@@ -318,6 +318,9 @@ rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 can_register_predicate = is_site_preference_set(section="auth", pref="signup_enabled")
 rules.add_perm("core.can_register", can_register_predicate)
 
+can_change_password_predicate = is_site_preference_set(section="auth", pref="allow_password_change")
+rules.add_perm("core.can_change_password", can_change_password_predicate)
+
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
