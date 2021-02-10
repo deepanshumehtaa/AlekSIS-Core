@@ -79,3 +79,5 @@ package-lock.json
 .vscode/
 .history/
 *.code-workspace
+
+*.png
