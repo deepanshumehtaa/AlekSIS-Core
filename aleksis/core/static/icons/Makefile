@@ -9,7 +9,13 @@ all: \
     favicon_32.png  \
     favicon_48.png
 
-%.png: ../img/aleksis-icon.svg
-	convert -strip -density 1200 -resize $(subst favicon_,,$(subst android_,,$(subst apple_,,$(@:.png=)))) "$<" "$@"
+android_%.png: ../img/aleksis-icon.svg
+	convert -strip -density 1200 -resize $(subst android_,,$(@:.png=)) "$<" "$@"
+
+apple_%.png: ../img/aleksis-icon.svg
+	convert -strip -density 1200 -resize $(subst apple_,,$(@:.png=)) "$<" "$@"
+
+favicon_%.png: ../img/aleksis-icon.svg
+	convert -strip -density 1200 -resize $(subst favicon_,,$(@:.png=)) "$<" "$@"
 
 .PHONY: all
