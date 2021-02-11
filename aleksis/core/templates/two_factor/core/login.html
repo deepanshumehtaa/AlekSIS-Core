@@ -26,6 +26,13 @@
         {% blocktrans %}Please login to see this page.{% endblocktrans %}
       </p>
     </div>
+    <div class="alert primary">
+      <p>
+        <i class="material-icons left">info</i>
+
+        {% trans "Forgot your current password? Click here to reset it:" %} <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+      </p>
+    </div>
 
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
   {% endif %}
