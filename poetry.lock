@@ -263,15 +263,17 @@ zookeeper = ["kazoo (>=1.3.1)"]
 zstd = ["zstandard"]
 
 [[package]]
-name = "celery-haystack"
-version = "0.10"
-description = "An app for integrating Celery with Haystack."
+name = "celery-haystack-ng"
+version = "0.20.post2"
+description = "An app for integrating Celery with Haystack"
 category = "main"
 optional = true
 python-versions = "*"
 
 [package.dependencies]
+celery = ">=4.0"
 django-appconf = ">=0.4.1"
+django-haystack = ">=2.0"
 
 [[package]]
 name = "celery-progress"
@@ -2211,13 +2213,13 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
-celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email", "celery-haystack"]
+celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email", "celery-haystack-ng"]
 ldap = ["django-auth-ldap"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b8b44ac64723c99f10cbeaa085976eb30a503e29379801c21495d362933e4aa0"
+content-hash = "dc2d37f6ce011e944a5ca8165ddd32270911dd3e90303fadbd87bce19e1fe03e"
 
 [metadata.files]
 alabaster = [
@@ -2287,9 +2289,9 @@ celery = [
     {file = "celery-5.0.5-py3-none-any.whl", hash = "sha256:5e8d364e058554e83bbb116e8377d90c79be254785f357cb2cec026e79febe13"},
     {file = "celery-5.0.5.tar.gz", hash = "sha256:f4efebe6f8629b0da2b8e529424de376494f5b7a743c321c8a2ddc2b1414921c"},
 ]
-celery-haystack = [
-    {file = "celery-haystack-0.10.tar.gz", hash = "sha256:b6e2a3c70071bef0838ca1a7d9f14fae6c2ecf385704092e59b82147a1ee552e"},
-    {file = "celery_haystack-0.10-py2.py3-none-any.whl", hash = "sha256:ec1f39050661e033f554de99cb9393c2e94427667ff5401f16393b2a68f888fc"},
+celery-haystack-ng = [
+    {file = "celery-haystack-ng-0.20.post2.tar.gz", hash = "sha256:d2e077851f13dddc36fc86134c7c8a937e46ae75e576eb8e77e03b03977fc7bb"},
+    {file = "celery_haystack_ng-0.20.post2-py2.py3-none-any.whl", hash = "sha256:a13e00f2c29411b06c6cdf59ad6a90b6c158e3384e7ec6d6d64f6a69e8ff299a"},
 ]
 celery-progress = [
     {file = "celery-progress-0.0.14.tar.gz", hash = "sha256:002ead0d3fa3602bd74cf328206b8e2352994ab599711dc20058a5cf2b4db2d1"},
