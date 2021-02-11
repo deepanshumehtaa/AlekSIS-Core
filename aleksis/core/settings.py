@@ -723,6 +723,7 @@ elif HAYSTACK_BACKEND_SHORT == "whoosh":
 if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
     INSTALLED_APPS.append("celery_haystack")
     HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
+    CELERY_HAYSTACK_IGNORE_RESULT = True
 else:
     HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 
