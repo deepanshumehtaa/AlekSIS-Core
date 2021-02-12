@@ -261,10 +261,12 @@ class Person(ExtensibleModel):
         return self.unread_notifications.count()
 
     def save(self, *args, **kwargs):
+        dirty = set(self.get_dirty_fields().keys())
+
         super().save(*args, **kwargs)
 
         # Synchronise user fields to linked User object to keep it up to date
-        if self.user:
+        if self.user and (set(("first_name", "last_name", "email")) & dirty):
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
             self.user.email = self.email
@@ -272,7 +274,8 @@ class Person(ExtensibleModel):
 
         # Save all related groups once to keep synchronisation with Django
         for group in self.member_of.union(self.owner_of.all()).all():
-            group.save()
+            if group.is_dirty():
+                group.save()
 
         # Select a primary group if none is set
         self.auto_select_primary_group()
