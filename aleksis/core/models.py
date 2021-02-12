@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
@@ -272,11 +273,6 @@ class Person(ExtensibleModel):
             self.user.email = self.email
             self.user.save()
 
-        # Save all related groups once to keep synchronisation with Django
-        for group in self.member_of.union(self.owner_of.all()).all():
-            if group.is_dirty():
-                group.save()
-
         # Select a primary group if none is set
         self.auto_select_primary_group()
 
@@ -436,19 +432,23 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    def save(self, *args, **kwargs):
+    def save(self, force: bool = False, *args, **kwargs):
+        created = self.pk is not None
+        dirty = set(self.get_dirty_fields().keys())
+
         super().save(*args, **kwargs)
 
         # Synchronise group to Django group with same name
-        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
-        dj_group.user_set.set(
-            list(
-                self.members.filter(user__isnull=False)
-                .values_list("user", flat=True)
-                .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+        if force or created or dirty:
+            dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+            dj_group.user_set.set(
+                list(
+                    self.members.filter(user__isnull=False)
+                    .values_list("user", flat=True)
+                    .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+                )
             )
-        )
-        dj_group.save()
+            dj_group.save()
 
 
 class PersonGroupThrough(ExtensibleModel):
@@ -469,6 +469,26 @@ class PersonGroupThrough(ExtensibleModel):
             field_name = slugify(field.title).replace("-", "_")
             field_instance = field_class(verbose_name=field.title)
             setattr(self, field_name, field_instance)
+
+
+@receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+def save_group_on_m2m_changed(
+    sender: PersonGroupThrough,
+    instance: models.Model,
+    action: str,
+    reverse: bool,
+    model: models.Model,
+    pk_set: Optional[set],
+    **kwargs,
+) -> None:
+    if action not in ("post_add", "post_remove", "post_clear"):
+        return
+
+    if reverse:
+        for group in model.objects.filter(pk__in=pk_set):
+            group.save(force=True)
+    else:
+        instance.save(force=True)
 
 
 class Activity(ExtensibleModel, TimeStampedModel):
