@@ -103,7 +103,7 @@ celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celer
 aleksis-builddeps = "*"
 
 [tool.poetry.scripts]
-aleksis-admin = 'aleksis.core.util.manage:aleksis_cmd'
+aleksis-admin = 'aleksis.core.__main__:aleksis_cmd'
 
 [tool.black]
 line-length = 100
