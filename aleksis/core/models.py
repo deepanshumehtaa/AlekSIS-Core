@@ -262,12 +262,13 @@ class Person(ExtensibleModel):
         return self.unread_notifications.count()
 
     def save(self, *args, **kwargs):
+        # Determine all fields that were changed since last load
         dirty = set(self.get_dirty_fields().keys())
 
         super().save(*args, **kwargs)
 
-        # Synchronise user fields to linked User object to keep it up to date
         if self.user and (set(("first_name", "last_name", "email")) & dirty):
+            # Synchronise user fields to linked User object to keep it up to date
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
             self.user.email = self.email
@@ -433,13 +434,14 @@ class Group(SchoolTermRelatedExtensibleModel):
             return f"{self.name} ({self.short_name})"
 
     def save(self, force: bool = False, *args, **kwargs):
+        # Determine state of object in relation to database
         created = self.pk is not None
         dirty = set(self.get_dirty_fields().keys())
 
         super().save(*args, **kwargs)
 
-        # Synchronise group to Django group with same name
         if force or created or dirty:
+            # Synchronise group to Django group with same name
             dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
             dj_group.user_set.set(
                 list(
@@ -481,13 +483,27 @@ def save_group_on_m2m_changed(
     pk_set: Optional[set],
     **kwargs,
 ) -> None:
+    """Ensure user and group data is synced to Django's models.
+
+    AlekSIS maintains personal information and group meta-data / membership
+    in its Person and Group models. As third-party libraries have no knowledge
+    about this, we need to keep django.contrib.auth in sync.
+
+    This signal handler triggers a save of group objects whenever a membership
+    changes. The save() code will decide whether to update the Django objects
+    or not.
+    """
     if action not in ("post_add", "post_remove", "post_clear"):
+        # Only trigger once, after the change was applied to the database
         return
 
     if reverse:
+        # Relationship was changed on the Person side, saving all groups
+        # that have been touched there
         for group in model.objects.filter(pk__in=pk_set):
             group.save(force=True)
     else:
+        # Relationship was changed on the Group side
         instance.save(force=True)
 
 
