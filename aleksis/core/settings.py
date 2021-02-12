@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django_extensions",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
