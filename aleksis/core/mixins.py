@@ -20,6 +20,7 @@ from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
+from dirtyfields import DirtyFieldsMixin
 from guardian.admin import GuardedModelAdmin
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
@@ -70,7 +71,7 @@ def _generate_one_to_one_proxy_property(field, subfield):
     return property(getter, setter)
 
 
-class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
+class ExtensibleModel(DirtyFieldsMixin, models.Model, metaclass=_ExtensibleModelBase):
     """Base model for all objects in AlekSIS apps.
 
     This base model ensures all objects in AlekSIS apps fulfill the
