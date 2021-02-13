@@ -116,6 +116,7 @@ INSTALLED_APPS = [
     "material",
     "pwa",
     "ckeditor",
+    "ckeditor_uploader",
     "django_js_reverse",
     "colorfield",
     "django_bleach",
@@ -292,7 +293,7 @@ if _settings.get("ldap.uri", None):
     )
 
     # Enable Django's integration to LDAP
-    AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
+    AUTHENTICATION_BACKENDS.append("aleksis.core.util.ldap.LDAPBackend")
 
     AUTH_LDAP_SERVER_URI = _settings.get("ldap.uri")
 
@@ -300,6 +301,13 @@ if _settings.get("ldap.uri", None):
     if _settings.get("ldap.bind.dn", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
+
+    # Keep local password for users to be required to proveide their old password on change
+    AUTH_LDAP_SET_USABLE_PASSWORD = True
+
+    # Keep bound as the authenticating user
+    # Ensures proper read permissions, and ability to change password without admin
+    AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
 
     # The TOML config might contain either one table or an array of tables
     _AUTH_LDAP_USER_SETTINGS = _settings.get("ldap.users.search")
@@ -714,6 +722,9 @@ CKEDITOR_CONFIGS = {
         ),
     }
 }
+
+# Upload path for CKEditor. Relative to MEDIA_ROOT.
+CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
 
 # Which HTML tags are allowed
 BLEACH_ALLOWED_TAGS = ["p", "b", "i", "u", "em", "strong", "a", "div"]
