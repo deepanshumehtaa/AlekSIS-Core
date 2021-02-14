@@ -440,8 +440,23 @@ MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
 
-DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
-DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
+if _settings.get("backup.storage.module") == "sftp":
+    DBBACKUP_STORAGE = "storages.backends.sftpstorage.SFTPStorage"
+    DBBACKUP_STORAGE_OPTIONS = {
+        "host": _settings.get("backup.storage.host", None),
+        "root_path": _settings.get("backup.storage.location", "/var/backups/aleksis"),
+        "known_host_file": _settings.get("backup.storage.known_hosts", None),
+        "params": {
+            "username": _settings.get("backup.storage.user", None),
+            "password": _settings.get("backup.storage.password", None),
+            "key_filename": _settings.get("backup.storage.private_key", None),
+        },
+    }
+else:
+    DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
+    DBBACKUP_STORAGE_OPTIONS = {
+        "location": _settings.get("backup.storage.location", "/var/backups/aleksis")
+    }
 DBBACKUP_CLEANUP_KEEP = _settings.get("backup.database.keep", 10)
 DBBACKUP_CLEANUP_KEEP_MEDIA = _settings.get("backup.media.keep", 10)
 DBBACKUP_GPG_RECIPIENT = _settings.get("backup.gpg_recipient", None)
