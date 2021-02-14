@@ -1,7 +1,6 @@
 from typing import Any, Dict, Optional, Type
 
 from django.apps import apps
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -411,17 +410,16 @@ class SystemStatus(PermissionRequiredMixin, MainView):
         status_code = 500 if self.errors else 200
         task_results = []
 
-        if "django_celery_results" in settings.INSTALLED_APPS:
-            from django_celery_results.models import TaskResult  # noqa
+        from django_celery_results.models import TaskResult  # noqa
 
-            from .celery import app  # noqa
+        from .celery import app  # noqa
 
-            if app.control.inspect().registered_tasks():
-                job_list = list(app.control.inspect().registered_tasks().values())[0]
-                for job in job_list:
-                    task_results.append(
-                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
-                    )
+        if app.control.inspect().registered_tasks():
+            job_list = list(app.control.inspect().registered_tasks().values())[0]
+            for job in job_list:
+                task_results.append(
+                    TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                )
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
