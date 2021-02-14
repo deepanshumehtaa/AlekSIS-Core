@@ -20,9 +20,6 @@ from django.utils import timezone
 from django.utils.functional import lazy
 
 from cache_memoize import cache_memoize
-from django_global_request.middleware import get_request
-
-from aleksis.core.util import messages
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
@@ -184,15 +181,6 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         return False
     else:
         return True
-
-
-class DummyRecorder:
-    def set_progress(self, *args, **kwargs):
-        pass
-
-    def add_message(self, level: int, message: str, **kwargs) -> Optional[Any]:
-        request = get_request()
-        return messages.add_message(request, level, message, **kwargs)
 
 
 def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
