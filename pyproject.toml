@@ -97,10 +97,13 @@ bs4 = "^0.0.1"
 django-extensions = "^3.1.1"
 django-dirtyfields = "^1.5.0"
 ipython = "^7.20.0"
+django-storages = {version = "^1.11.1", optional = true}
+paramiko = {version = "^2.7.2", optional = true}
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
 celery = ["Celery", "django-celery-results", "django-celery-beat", "django-celery-email", "celery-haystack-ng"]
+sftp = ["django-storages", "paramiko"]
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
