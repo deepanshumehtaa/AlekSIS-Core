@@ -602,18 +602,6 @@ Django = ">=1.11"
 sqlparse = ">=0.2.0"
 
 [[package]]
-name = "django-dirtyfields"
-version = "1.5.0"
-description = "Tracking dirty fields on a Django model instance (actively maintained)"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=1.11"
-pytz = ">=2015.7"
-
-[[package]]
 name = "django-dynamic-preferences"
 version = "1.10.1"
 description = "Dynamic global and instance settings for your django project"
@@ -2370,7 +2358,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ec39224c68bc21b5d35743bf9deef5b5f4f2b77e8e74785318137b9bdd904fe3"
+content-hash = "fff497acb1f86363cd099c56eaf7fa063da88090b5d211d423e3b13c1e016a16"
 
 [metadata.files]
 alabaster = [
@@ -2606,9 +2594,6 @@ django-dbbackup = [
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
     {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
-]
-django-dirtyfields = [
-    {file = "django-dirtyfields-1.5.0.tar.gz", hash = "sha256:7d7e8cf2fa153057cb4b51b5262c6f5b4594f23cd651e2f41746614bedfdf6f6"},
 ]
 django-dynamic-preferences = [
     {file = "django-dynamic-preferences-1.10.1.tar.gz", hash = "sha256:e4b2bb7b2563c5064ba56dd76441c77e06b850ff1466a386a1cd308909a6c7de"},

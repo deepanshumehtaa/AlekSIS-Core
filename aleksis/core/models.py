@@ -23,6 +23,7 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
@@ -261,13 +262,15 @@ class Person(ExtensibleModel):
         """Return the count of unread notifications for this person."""
         return self.unread_notifications.count()
 
+    user_info_tracker = FieldTracker(fields=("first_name", "last_name", "email"))
+
     def save(self, *args, **kwargs):
         # Determine all fields that were changed since last load
-        dirty = set(self.get_dirty_fields().keys())
+        dirty = bool(self.user_info_tracker.changed())
 
         super().save(*args, **kwargs)
 
-        if self.user and (set(("first_name", "last_name", "email")) & dirty):
+        if self.user and dirty:
             # Synchronise user fields to linked User object to keep it up to date
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
@@ -433,10 +436,12 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
+    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
-        created = self.pk is not None
-        dirty = set(self.get_dirty_fields().keys())
+        created = self.pk is None
+        dirty = bool(self.group_info_tracker.changed())
 
         super().save(*args, **kwargs)
 
