@@ -113,7 +113,7 @@ class ProgressRecorder(AbstractProgressRecorder):
 
         percent = 0
         if self._total > 0:
-            percent = self._current / self._total
+            percent = self._current / self._total * 100
 
         if description is not None:
             self._messages.append((level, description))
@@ -140,18 +140,23 @@ class ProgressRecorder(AbstractProgressRecorder):
         self.set_progress(description=message, level=level)
 
 
-def recorded_task(orig: Callable, *args, **kwargs) -> app.Task:
+def recorded_task(orig: Optional[Callable] = None, **kwargs) -> Union[Callable, app.Task]:
     """Create a Celery task that receives a ProgressRecorder.
 
     Returns a Task object with a wrapper that passes the recorder instance
     as the recorder keyword argument.
     """
 
-    @wraps(orig)
-    def _inject_recorder(task, *args, **kwargs):
-        recorder = ProgressRecorder(task)
-        return orig(*args, **kwargs, recorder=recorder)
+    def _real_decorator(orig: Callable) -> app.Task:
+        @wraps(orig)
+        def _inject_recorder(task, *args, **kwargs):
+            recorder = ProgressRecorder(task)
+            return orig(*args, **kwargs, recorder=recorder)
 
-    # Force bind to True because _inject_recorder needs the Task object
-    kwargs["bind"] = True
-    return app.task(_inject_recorder, *args, **kwargs)
+        # Force bind to True because _inject_recorder needs the Task object
+        kwargs["bind"] = True
+        return app.task(_inject_recorder, **kwargs)
+
+    if orig and not kwargs:
+        return _real_decorator(orig)
+    return _real_decorator
