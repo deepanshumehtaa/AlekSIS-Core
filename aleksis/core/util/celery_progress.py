@@ -113,7 +113,7 @@ class ProgressRecorder(AbstractProgressRecorder):
 
         percent = 0
         if self._total > 0:
-            percent = self._current / self._total
+            percent = self._current / self._total * 100
 
         if description is not None:
             self._messages.append((level, description))
