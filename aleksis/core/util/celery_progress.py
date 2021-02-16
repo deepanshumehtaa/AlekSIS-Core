@@ -114,9 +114,6 @@ class ProgressRecorder(AbstractProgressRecorder):
             recorder = ProgressRecorder(self)
             orig(recorder, *args, **kwargs)
 
-            # Needed to ensure that all messages are displayed by frontend
-            time.sleep(0.7)
-
         var_name = f"{orig.__module__}.{orig.__name__}"
 
         task = app.task(recorder_func, bind=True, name=var_name)
