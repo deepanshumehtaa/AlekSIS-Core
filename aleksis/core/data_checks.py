@@ -6,10 +6,10 @@ from django.utils.functional import classproperty
 from django.utils.translation import gettext as _
 
 import reversion
-from celery.decorators import task
 from reversion import set_comment
 from templated_email import send_templated_mail
 
+from .celery import app
 from .util.core_helpers import get_site_preferences
 
 
@@ -208,7 +208,7 @@ class DataCheckRegistry:
         return [(check.name, check.verbose_name) for check in cls.data_checks]
 
 
-@task()
+@app.task
 def check_data():
     """Execute all registered data checks and send email if activated."""
     for check in DataCheckRegistry.data_checks:
