@@ -140,7 +140,7 @@ class ProgressRecorder(AbstractProgressRecorder):
         self.set_progress(description=message, level=level)
 
 
-def recorded_task(*args, **kwargs) -> Union[Callable, app.Task]:
+def recorded_task(orig: Optional[Callable] = None, **kwargs) -> Union[Callable, app.Task]:
     """Create a Celery task that receives a ProgressRecorder.
 
     Returns a Task object with a wrapper that passes the recorder instance
@@ -155,9 +155,8 @@ def recorded_task(*args, **kwargs) -> Union[Callable, app.Task]:
 
         # Force bind to True because _inject_recorder needs the Task object
         kwargs["bind"] = True
-        return app.task(_inject_recorder, *args, **kwargs)
+        return app.task(_inject_recorder, **kwargs)
 
-    if len(args) == 1 and isinstance(args[0], Callable) and not kwargs:
-        return _real_decorator(args[0])
-    else:
-        return _real_decorator
+    if orig and not kwargs:
+        return _real_decorator(orig)
+    return _real_decorator
