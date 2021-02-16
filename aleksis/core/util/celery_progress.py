@@ -1,6 +1,6 @@
 from functools import wraps
 from numbers import Number
-from typing import Callable, Optional
+from typing import Callable, Generator, Iterable, Optional, Sequence, Union
 
 from django.contrib import messages
 
@@ -37,6 +37,8 @@ class ProgressRecorder(AbstractProgressRecorder):
 
             recorder.add_message(messages.SUCCESS, "All data were imported successfully.")
 
+    You can also use `recorder.iterate` to simplify iterating and counting.
+
     2. Track progress in view:
 
     ::
@@ -66,6 +68,28 @@ class ProgressRecorder(AbstractProgressRecorder):
         self._messages = []
         self._current = 0
         self._total = 100
+
+    def iterate(self, data: Union[Iterable, Sequence], total: Optional[int] = None) -> Generator:
+        """Iterate over a sequence or iterable, updating progress on the move.
+
+        ::
+
+            @recorded_task
+            def do_something(long_list, recorder):
+                for item in recorder.iterate(long_list):
+                    do_something_with(item)
+
+        :param data: A sequence (tuple, list, set,...) or an iterable
+        :param total: Total number of items, in case data does not support len()
+        """
+        if total is None and hasattr(data, "__len__"):
+            total = len(data)
+        else:
+            raise TypeError("No total value passed, and data does not support len()")
+
+        for current, item in enumerate(data):
+            self.set_progress(current, total)
+            yield item
 
     def set_progress(
         self,
