@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.core import management
 
-from celery.decorators import task
-
 from .celery import app
 from .util.celery_progress import ProgressRecorder
 from .util.notifications import send_notification as _send_notification
