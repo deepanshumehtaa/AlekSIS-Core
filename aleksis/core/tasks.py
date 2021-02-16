@@ -2,12 +2,11 @@ from django.conf import settings
 from django.core import management
 
 from .celery import app
-from .util.celery_progress import ProgressRecorder
 from .util.notifications import send_notification as _send_notification
 
 
 @app.task
-def send_notification(notification: int, resend: bool = False, recorder=ProgressRecorder) -> None:
+def send_notification(notification: int, resend: bool = False) -> None:
     """Send a notification object to its recipient.
 
     :param notification: primary key of the notification object to send
@@ -17,7 +16,7 @@ def send_notification(notification: int, resend: bool = False, recorder=Progress
 
 
 @app.task
-def backup_data(recorder=ProgressRecorder) -> None:
+def backup_data() -> None:
     """Backup database and media using django-dbbackup."""
     # Assemble command-line options for dbbackup management command
     db_options = []

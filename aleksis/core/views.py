@@ -17,6 +17,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 import reversion
+from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -30,6 +31,7 @@ from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
+from .celery import app
 from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
@@ -409,10 +411,6 @@ class SystemStatus(PermissionRequiredMixin, MainView):
     def get(self, request, *args, **kwargs):
         status_code = 500 if self.errors else 200
         task_results = []
-
-        from django_celery_results.models import TaskResult  # noqa
-
-        from .celery import app  # noqa
 
         if app.control.inspect().registered_tasks():
             job_list = list(app.control.inspect().registered_tasks().values())[0]

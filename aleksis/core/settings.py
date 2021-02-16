@@ -494,7 +494,9 @@ CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
+if _settings.get("celery.email", False):
+    EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
