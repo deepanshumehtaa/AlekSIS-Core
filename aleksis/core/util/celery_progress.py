@@ -8,7 +8,7 @@ from ..celery import app
 
 
 class ProgressRecorder(AbstractProgressRecorder):
-    """Track the process of a Celery task and give data to the frontend.
+    """Track the progress of a Celery task and give data to the frontend.
 
     This recorder provides the functions `set_progress` and `add_message`
     which can be used to track the status of a Celery task.
@@ -23,12 +23,12 @@ class ProgressRecorder(AbstractProgressRecorder):
 
         from aleksis.core.util.celery_progress import ProgressRecorder
 
-        @ProgressRecorder.record
-        def do_something(recorder: ProgressRecorder, foo, bar, baz=None):
+        @ProgressRecorder.recorded_task
+        def do_something(foo, bar, recorder, baz=None):
             # ...
             recorder.total = len(list_with_data)
 
-            for i, item in list_with_data:
+            for i, item in enumerate(list_with_data):
                 # ...
                 recorder.set_progress(i + 1)
                 # ...
@@ -42,7 +42,7 @@ class ProgressRecorder(AbstractProgressRecorder):
         def my_view(request):
             context = {}
             # ...
-            result = do_something(foo, bar, baz=baz)
+            result = do_something.delay(foo, bar, baz=baz)
 
             context = {
                 "title": _("Progress: Import data"),
@@ -70,7 +70,7 @@ class ProgressRecorder(AbstractProgressRecorder):
 
         The progress percentage is automatically calculated in relation to self.total.
 
-        :param current: The number of proceeded items (no percentage)
+        :param current: The absolute number of processed items
         """
         self.current = current
 
