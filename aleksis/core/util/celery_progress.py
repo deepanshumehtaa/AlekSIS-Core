@@ -1,10 +1,64 @@
+import time
 from decimal import Decimal
-from typing import Union
+from typing import Callable, Union
 
 from celery_progress.backend import PROGRESS_STATE, AbstractProgressRecorder
 
+from ..celery import app
+
 
 class ProgressRecorder(AbstractProgressRecorder):
+    """Track the process of a Celery task and give data to the frontend.
+
+    This recorder provides the functions `set_progress` and `add_message`
+    which can be used to track the status of a Celery task.
+
+    How to use
+    ----------
+    1. Write a function and include tracking methods
+
+    ::
+
+        from django.contrib import messages
+
+        from aleksis.core.util.celery_progress import ProgressRecorder
+
+        @ProgressRecorder.record
+        def do_something(recorder: ProgressRecorder, foo, bar, baz=None):
+            # ...
+            recorder.total = len(list_with_data)
+
+            for i, item in list_with_data:
+                # ...
+                recorder.set_progress(i + 1)
+                # ...
+
+            recorder.add_message(messages.SUCCESS, "All data were imported successfully.")
+
+    2. Track progress in view:
+
+    ::
+
+        def my_view(request):
+            context = {}
+            # ...
+            result = do_something(foo, bar, baz=baz)
+
+            context = {
+                "title": _("Progress: Import data"),
+                "back_url": reverse("index"),
+                "progress": {
+                    "task_id": result.task_id,
+                    "title": _("Import objects …"),
+                    "success": _("The import was done successfully."),
+                    "error": _("There was a problem while importing data."),
+                },
+            }
+
+            # Render progress view
+            return render(request, "core/progress.html", context)
+    """
+
     def __init__(self, task):
         self.task = task
         self.messages = []
@@ -12,6 +66,12 @@ class ProgressRecorder(AbstractProgressRecorder):
         self.current = 0
 
     def set_progress(self, current: Union[int, float], **kwargs):
+        """Set the current progress in the frontend.
+
+        The progress percentage is automatically calculated in relation to self.total.
+
+        :param current: The number of proceeded items (no percentage)
+        """
         self.current = current
 
         percent = 0
@@ -29,6 +89,39 @@ class ProgressRecorder(AbstractProgressRecorder):
             },
         )
 
-    def add_message(self, level: int, message: str, **kwargs):
+    def add_message(self, level: int, message: str):
+        """Show a message in the progress frontend.
+
+        :param level: The message level (default levels from django.contrib.messages)
+        :param message: The actual message (should be translated)
+        """
         self.messages.append((level, message))
         self.set_progress(self.current)
+
+    @classmethod
+    def record(cls, orig: Callable):
+        """Decorate a function to use Celery and a progress recorder.
+
+        It wraps the function in a Celery task and calls its delay method when invoked.
+
+
+        Additionally, it adds the matching `ProgressRecorder` instance as first argument.
+
+        """
+
+        def recorder_func(self, *args, **kwargs):
+
+            recorder = ProgressRecorder(self)
+            orig(recorder, *args, **kwargs)
+
+            # Needed to ensure that all messages are displayed by frontend
+            time.sleep(0.7)
+
+        var_name = f"{orig.__module__}.{orig.__name__}"
+
+        task = app.task(recorder_func, bind=True, name=var_name)
+
+        def wrapped(*args, **kwargs):
+            return task.delay(*args, **kwargs)
+
+        return wrapped
