@@ -26,7 +26,7 @@ from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
@@ -688,6 +688,8 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
               js=('animations.js', 'actions.js')
           )
     """
+
+    data_checks = [BrokenDashboardWidgetDataCheck]
 
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
