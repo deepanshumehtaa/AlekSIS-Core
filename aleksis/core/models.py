@@ -698,10 +698,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
+    template_broken = None
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+    broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
     size_s = models.PositiveSmallIntegerField(
         verbose_name=_("Size on mobile devices"),
@@ -736,8 +738,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         """Get template.
 
         Get the template to render the widget with. Defaults to the template attribute,
-        but can be overridden to allow more complex template generation scenarios.
+        but can be overridden to allow more complex template generation scenarios. If
+        the widget is marked as broken, the template_broken attribute will be returned.
         """
+        if not self.template:
+            raise NotImplementedError("A widget subclass needs to define a template.")
+        if self.broken and self.template_broken:
+            return self.template_broken
         return self.template
 
     def __str__(self):
