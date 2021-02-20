@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from importlib import import_module
 from itertools import groupby
 from operator import itemgetter
-from tempfile import mkstemp
 from typing import Any, Callable, Optional, Sequence, Union
 from uuid import uuid4
 
@@ -271,9 +270,3 @@ def queryset_rules_filter(
 def unread_notifications_badge(request: HttpRequest) -> int:
     """Generate badge content with the number of unread notifications."""
     return request.user.person.unread_notifications_count
-
-
-def make_temp_file(*args, **kwargs):
-    """Wrap mkstemp to ensure that the configured temp directory is used."""
-    kwargs["dir"] = settings.TEMP_DIRECTORY
-    return mkstemp(*args, **kwargs)

@@ -1,6 +1,7 @@
 import glob
 import os
 import subprocess  # noqa
+from tempfile import TemporaryDirectory
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -13,7 +14,7 @@ from celery_progress.backend import ProgressRecorder
 from aleksis.core.celery import app
 from aleksis.core.settings import MEDIA_ROOT, MEDIA_URL, STATIC_ROOT
 from aleksis.core.util.celery_progress import recorded_task
-from aleksis.core.util.core_helpers import make_temp_file, path_and_rename
+from aleksis.core.util.core_helpers import path_and_rename
 
 
 @recorded_task
@@ -24,22 +25,22 @@ def generate_pdf(html_code: str, pdf_path: str, recorder: ProgressRecorder):
     # Replace /static with STATIC_ROOT to get local file system paths
     html_code = html_code.replace("/static", STATIC_ROOT)
 
-    # Write HTML code to a temporary file to make it available for electron-pdf
-    f, path = make_temp_file(".html")
-    with open(path, "w") as f:
-        f.write(html_code)
+    # Open a temporary directory
+    with TemporaryDirectory() as temp_dir:
+        # Write HTML code to a temporary file to make it available for electron-pdf
+        path = os.path.join(temp_dir, "print_source.html")
+        with open(path, "w") as f:
+            f.write(html_code)
 
-    # Start a X framebuffer and run electron-pdf
-    os.environ["DISPLAY"] = ":99.0"
-    xfvb_process = subprocess.Popen(  # noqa
-        ["Xvfb", ":99", "-screen", "0", "1024x768x24"],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    subprocess.run(["electron-pdf", path, pdf_path])  # noqa
-    xfvb_process.terminate()
-
-    os.remove(path)
+        # Start a X framebuffer and run electron-pdf
+        os.environ["DISPLAY"] = ":99.0"
+        xfvb_process = subprocess.Popen(  # noqa
+            ["Xvfb", ":99", "-screen", "0", "1024x768x24"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(["electron-pdf", path, pdf_path])  # noqa
+        xfvb_process.terminate()
 
     recorder.set_progress(1, 1)
 
