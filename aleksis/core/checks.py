@@ -71,3 +71,39 @@ def check_app_models_base_class(
                 )
 
     return results
+
+
+@register(Tags.compatibility)
+def check_app_models_meta_base_class(
+    app_configs: Optional[django.apps.registry.Apps] = None, **kwargs
+) -> list:
+    """Check whether all extensible models derive their Meta class correctly.
+
+    Meta classes inside ExtensibleModel sub-classes must inherit Meta as well.
+    """
+    results = []
+
+    if app_configs is None:
+        app_configs = django.apps.apps.get_app_configs()
+
+    for app_config in filter(lambda c: c.name.startswith("aleksis."), app_configs):
+        for model in app_config.get_models():
+            if (
+                isinstance(model, ExtensibleModel)
+                and hasattr(model, "Meta")
+                and not isinstance(model.Meta, ExtensibleModel.Meta)
+            ):
+                results.append(
+                    Warning(
+                        f"Model {model._meta.object_name} in app config {app_config.name}'s Meta "
+                        "does not inherit from ExtensibleModel.Meta.",
+                        hint=(
+                            "Ensure all ExtensibleModels' Meta classes inherit from "
+                            "ExtensibleModel.Meta as it defines default values for e.g. indexes. "
+                        ),
+                        obj=model,
+                        id="aleksis.core.W003",
+                    )
+                )
+
+    return results
