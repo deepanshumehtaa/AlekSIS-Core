@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, SuccessURLAllowedHostsMixin
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.indexes import GinIndex
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
@@ -344,6 +345,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     class Meta:
         abstract = True
+        indexes = [GinIndex(fields=["extended_data"])]
 
 
 class PureDjangoModel(object):

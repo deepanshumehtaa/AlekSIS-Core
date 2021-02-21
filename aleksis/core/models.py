@@ -105,7 +105,7 @@ class SchoolTerm(ExtensibleModel):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("School term")
         verbose_name_plural = _("School terms")
 
@@ -117,7 +117,7 @@ class Person(ExtensibleModel):
     limited to, students, teachers and guardians (parents).
     """
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         ordering = ["last_name", "first_name"]
         verbose_name = _("Person")
         verbose_name_plural = _("Persons")
@@ -339,7 +339,7 @@ class AdditionalField(ExtensibleModel):
     def __str__(self) -> str:
         return self.title
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Addtitional field for groups")
         verbose_name_plural = _("Addtitional fields for groups")
 
@@ -353,7 +353,7 @@ class Group(SchoolTermRelatedExtensibleModel):
 
     objects = GroupManager.from_queryset(GroupQuerySet)()
 
-    class Meta:
+    class Meta(SchoolTermRelatedExtensibleModel.Meta):
         ordering = ["short_name", "name"]
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
@@ -527,7 +527,7 @@ class Activity(ExtensibleModel, TimeStampedModel):
     def __str__(self):
         return self.title
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Activity")
         verbose_name_plural = _("Activities")
 
@@ -560,7 +560,7 @@ class Notification(ExtensibleModel, TimeStampedModel):
         self.sent = True
         super().save(**kwargs)
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Notification")
         verbose_name_plural = _("Notifications")
 
@@ -659,7 +659,7 @@ class Announcement(ExtensibleModel):
     def __str__(self):
         return self.title
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Announcement")
         verbose_name_plural = _("Announcements")
 
@@ -697,7 +697,7 @@ class AnnouncementRecipient(ExtensibleModel):
     def __str__(self):
         return str(self.recipient)
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Announcement recipient")
         verbose_name_plural = _("Announcement recipients")
 
@@ -818,7 +818,7 @@ class DashboardWidgetOrder(ExtensibleModel):
             )
         ]
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Dashboard widget order")
         verbose_name_plural = _("Dashboard widget orders")
 
@@ -838,7 +838,7 @@ class CustomMenu(ExtensibleModel):
         menu, _ = cls.objects.prefetch_related("items").get_or_create(name=name)
         return menu
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Custom menu")
         verbose_name_plural = _("Custom menus")
 
@@ -856,7 +856,7 @@ class CustomMenuItem(ExtensibleModel):
     def __str__(self):
         return f"[{self.menu}] {self.name}"
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
 
@@ -874,7 +874,7 @@ class GroupType(ExtensibleModel):
     def __str__(self) -> str:
         return self.name
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Group type")
         verbose_name_plural = _("Group types")
 
@@ -948,7 +948,7 @@ class DataCheckResult(ExtensibleModel):
     def __str__(self):
         return f"{self.related_object}: {self.related_check.problem_name}"
 
-    class Meta:
+    class Meta(ExtensibleModel.Meta):
         verbose_name = _("Data check result")
         verbose_name_plural = _("Data check results")
         permissions = (
