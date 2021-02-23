@@ -154,8 +154,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     extended_data = JSONField(default=dict, editable=False)
 
-    extended_data = JSONField(default=dict, editable=False)
-
     @classmethod
     def _safe_add(cls, obj: Any, name: Optional[str]) -> None:
         # Decide the name for the attribute
@@ -352,6 +350,17 @@ class PureDjangoModel(object):
     """No-op mixin to mark a model as deliberately not using ExtensibleModel."""
 
     pass
+
+
+class GlobalPermissionModel(models.Model):
+    """Base model for global permissions.
+
+    This base model ensures that global permissions are not managed."""
+
+    class Meta:
+        default_permissions = ()
+        abstract = True
+        managed = False
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
