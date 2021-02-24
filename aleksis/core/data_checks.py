@@ -285,5 +285,5 @@ class BrokenDashboardWidgetDataCheck(DataCheck):
         broken_widgets = DashboardWidget.objects.filter(broken=True, active=True)
 
         for widget in broken_widgets:
-            logging.info(f"Check DashboardWidget {widget}")
+            logging.info("Check DashboardWidget %s", widget)
             cls.register_result(widget)
