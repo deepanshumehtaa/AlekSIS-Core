@@ -291,7 +291,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
     # Keep local password for users to be required to proveide their old password on change
-    AUTH_LDAP_SET_USABLE_PASSWORD = True
+    AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
     # Ensures proper read permissions, and ability to change password without admin
