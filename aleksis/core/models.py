@@ -266,7 +266,7 @@ class Person(ExtensibleModel):
 
     def save(self, *args, **kwargs):
         # Determine all fields that were changed since last load
-        dirty = bool(self.user_info_tracker.changed())
+        dirty = self.pk is None or bool(self.user_info_tracker.changed())
 
         super().save(*args, **kwargs)
 
@@ -440,12 +440,11 @@ class Group(SchoolTermRelatedExtensibleModel):
 
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
-        created = self.pk is None
-        dirty = bool(self.group_info_tracker.changed())
+        dirty = self.pk is None or bool(self.group_info_tracker.changed())
 
         super().save(*args, **kwargs)
 
-        if force or created or dirty:
+        if force or dirty:
             # Synchronise group to Django group with same name
             dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
             dj_group.user_set.set(
