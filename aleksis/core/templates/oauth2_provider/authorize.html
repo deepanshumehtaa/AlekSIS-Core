@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+
+{% load i18n material_form %}
+
+{% block browser_title %}{% blocktrans %}Authorize{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <h4>
+      {% trans "Authorize" %} {{ application.name }}
+  </h4>
+  {% if not error %}
+    <ul class="collection with-header">
+      <li class="collection-header">
+        <p class="flow-text">{% trans "Application requires following permissions" %}</p>
+      </li>
+      {% for scope in scope_descriptions %}
+        <li class="collection-item">
+          <div>
+            {{ scope }}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+    <form method="post">
+      {% csrf_token %}
+      {% form form=form %}{% endform %}
+      <a class="btn red waves-effect waves-light" href="{% block app-form-back-url %}{% url "oauth_detail" application.id %}{% endblock app-form-back-url %}">
+        <i class="material-icons left">cancel</i> {% trans "Go back" %}
+      </a>
+      {% include "core/partials/save_button.html" %}
+    </form>
+  {% else %}
+    <div class="container">
+      <div class="card red">
+        <div class="card-content white-text">
+          <div class="material-icons small left">error_outline</div>
+          <span class="card-title">{% trans "Error" %}: {{ error.error }}</span>
+          <p>
+            {{ error.description }}
+          </p>
+          <p>
+            Please verify if the application is configured correctly or contact one of your site administrators:
+          </p>
+          {% include "core/partials/admins_list.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

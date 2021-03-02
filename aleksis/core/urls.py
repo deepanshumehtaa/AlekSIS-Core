@@ -83,9 +83,9 @@ urlpatterns = [
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
-    path("oauth/applications/<int:pk>", views.OAuth2Detail.as_view(), name="oauth_detail"),
-    path("oauth/applications/<int:pk>", views.OAuth2Delete.as_view(), name="oauth_delete"),
-    path("oauth/applications/<int:pk>", views.OAuth2Update.as_view(), name="oauth_update"),
+    path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
+    path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
+    path("oauth/applications/<int:pk>/update", views.OAuth2Update.as_view(), name="oauth_update"),
     path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(

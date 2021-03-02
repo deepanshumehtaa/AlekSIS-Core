@@ -165,6 +165,17 @@ MENUS = {
                     "icon": "settings",
                     "validators": ["menu_generator.validators.is_superuser",],
                 },
+                {
+                    "name": _("OAuth2 Applications"),
+                    "url": "oauth_list",
+                    "icon": "touch_app",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.list_oauth_applications",
+                        ),
+                    ],
+                },
             ],
         },
         {
