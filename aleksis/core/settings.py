@@ -125,6 +125,7 @@ INSTALLED_APPS = [
     "django_bleach",
     "favicon",
     "django_filters",
+    "oauth2_provider",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
