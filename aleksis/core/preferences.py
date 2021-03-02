@@ -212,6 +212,14 @@ class SchoolNameOfficial(StringPreference):
 
 
 @site_preferences_registry.register
+class EnableOAuthProvider(BooleanPreference):
+    section = auth
+    name = "oauth_provider_enabled"
+    default = False
+    verbose_name = _("Enable creation of OAuth2 providers")
+
+
+@site_preferences_registry.register
 class AvailableLanguages(MultipleChoicePreference):
     section = internationalisation
     name = "languages"

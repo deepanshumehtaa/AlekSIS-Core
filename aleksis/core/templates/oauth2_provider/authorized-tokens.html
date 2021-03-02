@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block browser_title %}{% blocktrans %}Authorized tokens{% endblocktrans %}{% endblock %}
+{% block page_title %}{% trans "Tokens" %}{% endblock %}
+
+{% block content %}
+  {% if authorized_tokens %}
+    {% for authorized_token in authorized_tokens %}
+      <ul class="collection with-header">
+        <li class="collection-header">
+          <h5>{{ authorized_token.application }}</h5>
+          (<a href="{% url 'oauth2_provider:authorized-token-delete' authorized_token.pk %}">revoke</a>)
+        </li>
+        {% for scope_name, scope_description in authorized_token.scopes.items %}
+          <li class="collection-item">
+            <div>
+              {{ scope_name }}: {{ scope_description }}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  {% else %}
+    <div class="alert info">
+      <p>
+        <i class="material-icons left">info</i>
+        {% trans "No authorized tokens defined" %}.
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}
