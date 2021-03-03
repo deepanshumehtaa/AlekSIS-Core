@@ -800,8 +800,8 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 class ExternalLinkWidget(DashboardWidget):
     template = "core/dashboard_widget/external_link_widget.html"
 
-    url = models.URLField(verbose_name = _("URL"))
-    icon_url = models.URLField(verbose_name = _("Icon URL"))
+    url = models.URLField(verbose_name=_("URL"))
+    icon_url = models.URLField(verbose_name=_("Icon URL"))
 
     def get_context(self, request):
         return {"title": self.title, "url": self.url, "icon_url": self.icon_url}
