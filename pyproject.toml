@@ -110,6 +110,18 @@ aleksis-admin = 'aleksis.core.__main__:aleksis_cmd'
 line-length = 100
 exclude = "/migrations/"
 
+[tool.curlylint]
+include = '\.html'
+
+[tool.curlylint.rules]
+aria_role = true
+django_forms_rendering = true
+image_alt = true
+indent = 2
+meta_viewport = true
+no_autofocus = true
+tabindex_no_positive = true
+
 [build-system]
 requires = ["poetry>=1.0"]
 build-backend = "poetry.masonry.api"
