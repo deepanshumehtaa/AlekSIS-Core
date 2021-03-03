@@ -797,6 +797,20 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         verbose_name_plural = _("Dashboard Widgets")
 
 
+class ExternalLinkWidget(DashboardWidget):
+    template = "core/dashboard_widget/external_link_widget.html"
+
+    url = models.URLField(verbose_name = _("URL"))
+    icon_url = models.URLField(verbose_name = _("Icon URL"))
+
+    def get_context(self, request):
+        return {"title": self.title, "url": self.url, "icon_url": self.icon_url}
+
+    class Meta:
+        verbose_name = _("External link widget")
+        verbose_name_plural = _("External link widgets")
+
+
 class DashboardWidgetOrder(ExtensibleModel):
     widget = models.ForeignKey(
         DashboardWidget, on_delete=models.CASCADE, verbose_name=_("Dashboard widget")
