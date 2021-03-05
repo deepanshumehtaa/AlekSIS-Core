@@ -35,6 +35,7 @@ from .managers import (
     GroupManager,
     GroupQuerySet,
     SchoolTermQuerySet,
+    UninstallRenitentPolymorphicManager,
 )
 from .mixins import (
     ExtensibleModel,
@@ -736,6 +737,8 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
               js=('animations.js', 'actions.js')
           )
     """
+
+    objects = UninstallRenitentPolymorphicManager()
 
     data_checks = [BrokenDashboardWidgetDataCheck]
 

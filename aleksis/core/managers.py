@@ -5,6 +5,7 @@ from django.contrib.sites.managers import CurrentSiteManager as _CurrentSiteMana
 from django.db.models import QuerySet
 
 from calendarweek import CalendarWeek
+from polymorphic.managers import PolymorphicManager
 
 
 class CurrentSiteManagerWithoutMigrations(_CurrentSiteManager):
@@ -91,3 +92,10 @@ class GroupManager(CurrentSiteManagerWithoutMigrations):
 
 class GroupQuerySet(SchoolTermRelatedQuerySet):
     pass
+
+
+class UninstallRenitentPolymorphicManager(PolymorphicManager):
+    """A custom manager for django-polymorphic that filters out submodels of unavailable apps."""
+
+    def get_queryset(self):
+        return super().get_queryset().instance_of(*self.model.__subclasses__())
