@@ -261,3 +261,12 @@ class AnonymousDashboard(BooleanPreference):
     default = False
     required = False
     verbose_name = _("Show dashboard to users without login")
+
+
+@site_preferences_registry.register
+class DashboardEditing(BooleanPreference):
+    section = general
+    name = "dashboard_editing"
+    default = True
+    required = False
+    verbose_name = _("Allow users to edit their dashboard")
