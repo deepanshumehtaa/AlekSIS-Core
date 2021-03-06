@@ -84,9 +84,16 @@ def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    if has_person(request.user):
+        person = request.user.person
+        widgets = person.dashboard_widgets
+    else:
+        person = DummyPerson()
+        widgets = []
+
+    activities = person.activities.all()[:5]
+    notifications = person.notifications.all()[:5]
+    unread_notifications = person.notifications.all().filter(read=False)
 
     context["activities"] = activities
     context["notifications"] = notifications
@@ -94,8 +101,6 @@ def index(request: HttpRequest) -> HttpResponse:
 
     announcements = Announcement.objects.at_time().for_person(request.user.person)
     context["announcements"] = announcements
-
-    widgets = request.user.person.dashboard_widgets
 
     if len(widgets) == 0:
         # Use default dashboard if there are no widgets
