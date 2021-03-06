@@ -865,8 +865,10 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     success_message = _("The dashboard widget has been deleted.")
 
 
-class EditDashboardView(View):
+class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
+
+    permission_required = "core.edit_dashboard"
 
     def get_context_data(self, request, **kwargs):
         context = {}
