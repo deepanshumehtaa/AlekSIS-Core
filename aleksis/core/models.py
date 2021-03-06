@@ -783,6 +783,11 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
+    def _get_context_safe(self, request):
+        if self.broken:
+            return {}
+        return self.get_context(request)
+
     def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
