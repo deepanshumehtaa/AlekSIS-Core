@@ -54,6 +54,7 @@ from .models import (
     DashboardWidget,
     DashboardWidgetOrder,
     DataCheckResult,
+    DummyPerson,
     Group,
     GroupType,
     Notification,
@@ -75,7 +76,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
 
 
@@ -84,18 +85,23 @@ def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    if has_person(request.user):
+        person = request.user.person
+        widgets = person.dashboard_widgets
+    else:
+        person = DummyPerson()
+        widgets = []
+
+    activities = person.activities.all()[:5]
+    notifications = person.notifications.all()[:5]
+    unread_notifications = person.notifications.all().filter(read=False)
 
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(person)
     context["announcements"] = announcements
-
-    widgets = request.user.person.dashboard_widgets
 
     if len(widgets) == 0:
         # Use default dashboard if there are no widgets
@@ -859,8 +865,10 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     success_message = _("The dashboard widget has been deleted.")
 
 
-class EditDashboardView(View):
+class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
+
+    permission_required = "core.edit_dashboard"
 
     def get_context_data(self, request, **kwargs):
         context = {}
