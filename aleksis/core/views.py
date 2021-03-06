@@ -54,6 +54,7 @@ from .models import (
     DashboardWidget,
     DashboardWidgetOrder,
     DataCheckResult,
+    DummyPerson,
     Group,
     GroupType,
     Notification,
@@ -75,7 +76,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
 
 
@@ -99,7 +100,7 @@ def index(request: HttpRequest) -> HttpResponse:
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(person)
     context["announcements"] = announcements
 
     if len(widgets) == 0:

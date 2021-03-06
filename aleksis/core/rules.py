@@ -9,12 +9,14 @@ from .util.predicates import (
     is_current_person,
     is_group_owner,
     is_notification_recipient,
+    is_site_preference_set,
 )
 
 rules.add_perm("core", rules.always_allow)
 
 # View dashboard
-rules.add_perm("core.view_dashboard", has_person)
+view_dashboard_predicate = is_site_preference_set("general", "anonymous_dashboard") | has_person
+rules.add_perm("core.view_dashboard", view_dashboard_predicate)
 
 # View notifications
 rules.add_perm("core.view_notifications", has_person)
