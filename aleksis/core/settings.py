@@ -201,13 +201,24 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", False):
+REDIS_HOST = _settings.get("redis.host", "localhost")
+REDIS_PORT = _settings.get("redis.port", 6379)
+REDIS_DB = _settings.get("redis.database", 0)
+REDIS_USER = _settings.get("redis.user", None)
+REDIS_PASSWORD = _settings.get("redis.password", None)
+
+REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+
+if _settings.get("caching.redis.enabled", True):
     CACHES = {
         "default": {
-            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
-            "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
         }
     }
+    if REDIS_PASSWORD:
+        CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
     INSTALLED_APPS.append("cachalot")
     DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
     CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
@@ -488,7 +499,7 @@ if _settings.get("twilio.sid", None):
     TWILIO_TOKEN = _settings.get("twilio.token")
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
-CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
+CELERY_BROKER_URL = _settings.get("celery.broker", REDIS_URL)
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
