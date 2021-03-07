@@ -505,11 +505,13 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 if _settings.get("celery.email", False):
     EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-    if _settings.get("celery.uwsgi.run", True):
-        concurrency = _settings.get("celery.uwsgi.concurrency", 2)
-        UWSGI.setdefault("attach-daemon", []).append(
-            f"celery -A aleksis.core worker --concurrency={concurrency}"
-        )
+if _settings.get("celery.uwsgi.run", True):
+    concurrency = _settings.get("celery.uwsgi.concurrency", 2)
+    UWSGI.setdefault("attach-daemon", [])
+    UWSGI["attach-daemon"].append(
+        f"celery -A aleksis.core worker --concurrency={concurrency}"
+    )
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
