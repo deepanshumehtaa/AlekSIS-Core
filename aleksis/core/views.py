@@ -1,7 +1,6 @@
 from typing import Any, Dict, Optional, Type
 
 from django.apps import apps
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -18,6 +17,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 import reversion
+from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -31,6 +31,7 @@ from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
+from .celery import app
 from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
@@ -53,6 +54,7 @@ from .models import (
     DashboardWidget,
     DashboardWidgetOrder,
     DataCheckResult,
+    DummyPerson,
     Group,
     GroupType,
     Notification,
@@ -74,7 +76,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
 
 
@@ -83,18 +85,23 @@ def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    if has_person(request.user):
+        person = request.user.person
+        widgets = person.dashboard_widgets
+    else:
+        person = DummyPerson()
+        widgets = []
+
+    activities = person.activities.all()[:5]
+    notifications = person.notifications.all()[:5]
+    unread_notifications = person.notifications.all().filter(read=False)
 
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(person)
     context["announcements"] = announcements
-
-    widgets = request.user.person.dashboard_widgets
 
     if len(widgets) == 0:
         # Use default dashboard if there are no widgets
@@ -411,17 +418,12 @@ class SystemStatus(PermissionRequiredMixin, MainView):
         status_code = 500 if self.errors else 200
         task_results = []
 
-        if "django_celery_results" in settings.INSTALLED_APPS:
-            from django_celery_results.models import TaskResult  # noqa
-
-            from .celery import app  # noqa
-
-            if app.control.inspect().registered_tasks():
-                job_list = list(app.control.inspect().registered_tasks().values())[0]
-                for job in job_list:
-                    task_results.append(
-                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
-                    )
+        if app.control.inspect().registered_tasks():
+            job_list = list(app.control.inspect().registered_tasks().values())[0]
+            for job in job_list:
+                task_results.append(
+                    TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                )
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
@@ -863,8 +865,10 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     success_message = _("The dashboard widget has been deleted.")
 
 
-class EditDashboardView(View):
+class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
+
+    permission_required = "core.edit_dashboard"
 
     def get_context_data(self, request, **kwargs):
         context = {}

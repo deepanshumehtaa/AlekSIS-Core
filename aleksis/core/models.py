@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
@@ -22,6 +23,7 @@ from django.utils.translation import gettext_lazy as _
 import jsonstore
 from cache_memoize import cache_memoize
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
@@ -34,7 +36,12 @@ from .managers import (
     GroupQuerySet,
     SchoolTermQuerySet,
 )
-from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
+from .mixins import (
+    ExtensibleModel,
+    GlobalPermissionModel,
+    PureDjangoModel,
+    SchoolTermRelatedExtensibleModel,
+)
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -255,19 +262,20 @@ class Person(ExtensibleModel):
         """Return the count of unread notifications for this person."""
         return self.unread_notifications.count()
 
+    user_info_tracker = FieldTracker(fields=("first_name", "last_name", "email"))
+
     def save(self, *args, **kwargs):
+        # Determine all fields that were changed since last load
+        dirty = self.pk is None or bool(self.user_info_tracker.changed())
+
         super().save(*args, **kwargs)
 
-        # Synchronise user fields to linked User object to keep it up to date
-        if self.user:
+        if self.user and dirty:
+            # Synchronise user fields to linked User object to keep it up to date
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
             self.user.email = self.email
             self.user.save()
-
-        # Save all related groups once to keep synchronisation with Django
-        for group in self.member_of.union(self.owner_of.all()).all():
-            group.save()
 
         # Select a primary group if none is set
         self.auto_select_primary_group()
@@ -428,19 +436,25 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    def save(self, *args, **kwargs):
+    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+
+    def save(self, force: bool = False, *args, **kwargs):
+        # Determine state of object in relation to database
+        dirty = self.pk is None or bool(self.group_info_tracker.changed())
+
         super().save(*args, **kwargs)
 
-        # Synchronise group to Django group with same name
-        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
-        dj_group.user_set.set(
-            list(
-                self.members.filter(user__isnull=False)
-                .values_list("user", flat=True)
-                .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+        if force or dirty:
+            # Synchronise group to Django group with same name
+            dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+            dj_group.user_set.set(
+                list(
+                    self.members.filter(user__isnull=False)
+                    .values_list("user", flat=True)
+                    .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+                )
             )
-        )
-        dj_group.save()
+            dj_group.save()
 
 
 class PersonGroupThrough(ExtensibleModel):
@@ -461,6 +475,40 @@ class PersonGroupThrough(ExtensibleModel):
             field_name = slugify(field.title).replace("-", "_")
             field_instance = field_class(verbose_name=field.title)
             setattr(self, field_name, field_instance)
+
+
+@receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+def save_group_on_m2m_changed(
+    sender: PersonGroupThrough,
+    instance: models.Model,
+    action: str,
+    reverse: bool,
+    model: models.Model,
+    pk_set: Optional[set],
+    **kwargs,
+) -> None:
+    """Ensure user and group data is synced to Django's models.
+
+    AlekSIS maintains personal information and group meta-data / membership
+    in its Person and Group models. As third-party libraries have no knowledge
+    about this, we need to keep django.contrib.auth in sync.
+
+    This signal handler triggers a save of group objects whenever a membership
+    changes. The save() code will decide whether to update the Django objects
+    or not.
+    """
+    if action not in ("post_add", "post_remove", "post_clear"):
+        # Only trigger once, after the change was applied to the database
+        return
+
+    if reverse:
+        # Relationship was changed on the Person side, saving all groups
+        # that have been touched there
+        for group in model.objects.filter(pk__in=pk_set):
+            group.save(force=True)
+    else:
+        # Relationship was changed on the Group side
+        instance.save(force=True)
 
 
 class Activity(ExtensibleModel, TimeStampedModel):
@@ -672,10 +720,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
       from aleksis.core.models import DashboardWidget
 
-      class MyWidget(DhasboardWIdget):
+      class MyWidget(DashboardWidget):
           template = "myapp/widget.html"
 
-          def get_context(self):
+          def get_context(self, request):
               context = {"some_content": "foo"}
               return context
 
@@ -728,7 +776,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
-    def get_context(self):
+    def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
@@ -747,6 +795,20 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         permissions = (("edit_default_dashboard", _("Can edit default dashboard")),)
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class ExternalLinkWidget(DashboardWidget):
+    template = "core/dashboard_widget/external_link_widget.html"
+
+    url = models.URLField(verbose_name=_("URL"))
+    icon_url = models.URLField(verbose_name=_("Icon URL"))
+
+    def get_context(self, request):
+        return {"title": self.title, "url": self.url, "icon_url": self.icon_url}
+
+    class Meta:
+        verbose_name = _("External link widget")
+        verbose_name_plural = _("External link widgets")
 
 
 class DashboardWidgetOrder(ExtensibleModel):
@@ -830,11 +892,10 @@ class GroupType(ExtensibleModel):
         verbose_name_plural = _("Group types")
 
 
-class GlobalPermissions(ExtensibleModel):
+class GlobalPermissions(GlobalPermissionModel):
     """Container for global permissions."""
 
-    class Meta:
-        managed = False
+    class Meta(GlobalPermissionModel.Meta):
         permissions = (
             ("view_system_status", _("Can view system status")),
             ("link_persons_accounts", _("Can link persons to accounts")),

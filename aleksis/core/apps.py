@@ -21,12 +21,14 @@ from .util.sass_helpers import clean_scss
 class CoreConfig(AppConfig):
     name = "aleksis.core"
     verbose_name = "AlekSIS — The Free School Information System"
+    dist_name = "AlekSIS-Core"
 
     urls = {
         "Repository": "https://edugit.org/AlekSIS/official/AlekSIS/",
     }
     licence = "EUPL-1.2+"
     copyright_info = (
+        ([2021], "magicfelix", "felix@felix-zauberer.de"),
         ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
         ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
         ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
@@ -52,9 +54,17 @@ class CoreConfig(AppConfig):
 
         self._load_data_checks()
 
-        from .health_checks import DataChecksHealthCheckBackend
+        from .health_checks import (
+            BackupJobHealthCheck,
+            DataChecksHealthCheckBackend,
+            DbBackupAgeHealthCheck,
+            MediaBackupAgeHealthCheck,
+        )
 
         plugin_dir.register(DataChecksHealthCheckBackend)
+        plugin_dir.register(DbBackupAgeHealthCheck)
+        plugin_dir.register(MediaBackupAgeHealthCheck)
+        plugin_dir.register(BackupJobHealthCheck)
 
     @classmethod
     def _load_data_checks(cls):

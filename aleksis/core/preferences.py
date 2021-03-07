@@ -3,6 +3,7 @@ from django.forms import EmailField, ImageField, URLField
 from django.forms.widgets import SelectMultiple
 from django.utils.translation import gettext_lazy as _
 
+from colorfield.widgets import ColorWidget
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import (
     BooleanPreference,
@@ -53,6 +54,7 @@ class ColourPrimary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Primary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -62,6 +64,7 @@ class ColourSecondary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Secondary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -249,3 +252,21 @@ class DataChecksEmailsRecipientGroups(ModelMultipleChoicePreference):
     default = []
     model = Group
     verbose_name = _("Email recipient groups for data checks problem emails")
+
+
+@site_preferences_registry.register
+class AnonymousDashboard(BooleanPreference):
+    section = general
+    name = "anonymous_dashboard"
+    default = False
+    required = False
+    verbose_name = _("Show dashboard to users without login")
+
+
+@site_preferences_registry.register
+class DashboardEditing(BooleanPreference):
+    section = general
+    name = "dashboard_editing"
+    default = True
+    required = False
+    verbose_name = _("Allow users to edit their dashboard")
