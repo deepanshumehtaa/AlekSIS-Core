@@ -505,7 +505,7 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 if _settings.get("celery.email", False):
     EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-if _settings.get("celery.uwsgi.run", True):
+if _settings.get("dev.uwsgi.celery", True):
     concurrency = _settings.get("celery.uwsgi.concurrency", 2)
     UWSGI.setdefault("attach-daemon", [])
     UWSGI["attach-daemon"].append(
