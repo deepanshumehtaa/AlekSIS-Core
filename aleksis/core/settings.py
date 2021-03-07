@@ -12,6 +12,8 @@ from .util.core_helpers import (
     merge_app_settings,
 )
 
+IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
+
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
 
@@ -209,7 +211,7 @@ REDIS_PASSWORD = _settings.get("redis.password", None)
 
 REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 
-if _settings.get("caching.redis.enabled", True):
+if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",

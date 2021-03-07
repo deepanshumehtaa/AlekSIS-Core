@@ -51,7 +51,6 @@ django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.15.0"
 django-ipware = "^3.0"
 django-impersonate = "^1.4"
-python-memcached = "^1.59"
 django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
