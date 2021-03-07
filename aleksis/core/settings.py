@@ -508,9 +508,7 @@ if _settings.get("celery.email", False):
 if _settings.get("dev.uwsgi.celery", True):
     concurrency = _settings.get("celery.uwsgi.concurrency", 2)
     UWSGI.setdefault("attach-daemon", [])
-    UWSGI["attach-daemon"].append(
-        f"celery -A aleksis.core worker --concurrency={concurrency}"
-    )
+    UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
     UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
