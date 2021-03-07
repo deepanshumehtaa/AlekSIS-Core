@@ -225,6 +225,9 @@ if _settings.get("caching.redis.enabled", True):
     CACHALOT_DATABASES = set(["default"])
     SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
