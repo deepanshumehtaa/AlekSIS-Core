@@ -750,16 +750,14 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not check_data()[1]:
-            messages.success(
-                request,
-                _(
-                    "The data check has been started. Please note that it may take "
-                    "a while before you are able to fetch the data on this page."
-                ),
-            )
-        else:
-            messages.success(request, _("The data check has finished."))
+        check_data.delay()
+        messages.success(
+            request,
+            _(
+                "The data check has been started. Please note that it may take "
+                "a while before you are able to fetch the data on this page."
+            ),
+        )
         return redirect("check_data")
 
 
