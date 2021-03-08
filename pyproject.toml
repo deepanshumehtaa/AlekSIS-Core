@@ -94,7 +94,7 @@ django-prometheus = "^2.1.0"
 importlib-metadata = {version = "^3.0.0", python = "<3.9"}
 django-model-utils = "^4.0.0"
 bs4 = "^0.0.1"
-django-uwsgi = "^0.2.2"
+django-uwsgi-ng = "^0.3.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
 
