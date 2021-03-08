@@ -228,6 +228,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
 
+# Configuration for OAuth2 provider
+
+oidc_enabled = _settings.get("oauth2.oidc.enabled", False)
+
+if oidc_enabled:
+    with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
+        oid_rsa_key = f.read()
+
+    OAUTH2_PROVIDER = {
+        "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
+        "OIDC_ENABLED": oidc_enabled,
+        "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
+#        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
+        "SCOPES": {
+            "openid": "OpenID Connect scope",
+            "profile": "Profile scope",
+            "phone": "Phone scope",
+            "email": "Email scope",
+            "address": "Address scope",
+        },
+    }
+
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
@@ -734,3 +756,5 @@ DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
 MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+
+SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
