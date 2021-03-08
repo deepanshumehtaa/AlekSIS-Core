@@ -60,8 +60,12 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.signals.SignalsPanel",
     "debug_toolbar.panels.logging.LoggingPanel",
     "debug_toolbar.panels.profiling.ProfilingPanel",
+    "django_uwsgi.panels.UwsgiPanel",
 ]
 
+UWSGI = {
+    "module": "aleksis.core.wsgi",
+}
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -75,6 +79,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django_uwsgi",
     "django_extensions",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
@@ -223,11 +228,19 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
         CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
     DJANGO_REDIS_IGNORE_EXCEPTIONS = True
     DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
-    INSTALLED_APPS.append("cachalot")
-    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
-    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
-    CACHALOT_DATABASES = set(["default"])
-    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+else:
+    CACHES = {
+        "default": {
+            # Use uWSGI if available (will auot-fallback to LocMemCache)
+            "BACKEND": "django_uwsgi.cache.UwsgiCache"
+        }
+    }
+
+INSTALLED_APPS.append("cachalot")
+DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+CACHALOT_DATABASES = set(["default"])
+SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
@@ -513,6 +526,12 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 if _settings.get("celery.email", False):
     EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
+if _settings.get("dev.uwsgi.celery", True):
+    concurrency = _settings.get("celery.uwsgi.concurrency", 2)
+    UWSGI.setdefault("attach-daemon", [])
+    UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
