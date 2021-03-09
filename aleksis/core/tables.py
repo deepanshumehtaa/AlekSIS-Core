@@ -1,7 +1,8 @@
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 import django_tables2 as tables
-from django_tables2.utils import A
+from django_tables2.utils import A, AttributeDict, computed_values
 
 
 class SchoolTermTable(tables.Table):
@@ -91,3 +92,29 @@ class DashboardWidgetTable(tables.Table):
 
     def render_widget_name(self, value, record):
         return record._meta.verbose_name
+
+
+class MaterializeCheckboxColumn(tables.CheckBoxColumn):
+    empty_values = ()
+
+    @property
+    def header(self):
+        default = {"type": "checkbox"}
+        general = self.attrs.get("input")
+        specific = self.attrs.get("th__input")
+        attrs = AttributeDict(default, **(specific or general or {}))
+        return mark_safe("<label><input %s/><span></span></label>" % attrs.as_html())  # noqa
+
+    def render(self, value, bound_column, record):
+        default = {"type": "checkbox", "name": bound_column.name, "value": value}
+        if self.is_checked(value, record):
+            default.update({"checked": "checked"})
+
+        general = self.attrs.get("input")
+        specific = self.attrs.get("td__input")
+
+        attrs = dict(default, **(specific or general or {}))
+        attrs = computed_values(attrs, kwargs={"record": record, "value": value})
+        return mark_safe(  # noqa
+            "<label><input %s/><span></span</label>" % AttributeDict(attrs).as_html()
+        )
