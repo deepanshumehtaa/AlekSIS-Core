@@ -1,8 +1,11 @@
 from datetime import datetime, time
+from typing import Callable, Dict, List, Sequence, Tuple
 
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
@@ -370,3 +373,41 @@ class DashboardWidgetOrderForm(ExtensibleForm):
 DashboardWidgetOrderFormSet = forms.formset_factory(
     form=DashboardWidgetOrderForm, max_num=0, extra=0
 )
+
+
+class ActionForm(forms.Form):
+    layout = Layout("action")
+    actions = []
+
+    def get_actions(self) -> Sequence[Callable]:
+        return self.actions
+
+    def _get_actions_dict(self) -> Dict[str, Callable]:
+        return {value.__name__: value for value in self.get_actions()}
+
+    def _get_action_choices(self) -> List[Tuple[str, str]]:
+        return [
+            (value.__name__, getattr(value, "short_description", value.__name__))
+            for value in self.get_actions()
+        ]
+
+    def get_queryset(self) -> QuerySet:
+        raise NotImplementedError("Queryset necessary.")
+
+    action = forms.ChoiceField(choices=[])
+    selected_objects = forms.ModelMultipleChoiceField(queryset=None)
+
+    def __init__(self, request: HttpRequest, *args, queryset: QuerySet = None, **kwargs):
+        self.request = request
+        self.queryset = queryset if isinstance(queryset, QuerySet) else self.get_queryset()
+        super().__init__(*args, **kwargs)
+        self.fields["selected_objects"].queryset = self.queryset
+        self.fields["action"].choices = self._get_action_choices()
+
+    def execute(self) -> bool:
+        if self.is_valid():
+            qs = self.cleaned_data["selected_objects"]
+            action = self._get_actions_dict()[self.cleaned_data["action"]]
+            action(None, self.request, qs)
+            return True
+        return False
