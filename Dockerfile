@@ -13,6 +13,7 @@ ENV PIP_USE_DEPRECATED legacy-resolver
 ENV ALEKSIS_static__root /usr/share/aleksis/static
 ENV ALEKSIS_media__root /var/lib/aleksis/media
 ENV ALEKSIS_backup__location /var/lib/aleksis/backups
+ENV ALEKSIS_dev__uwsgi__celery false
 
 # Install necessary Debian and PyPI packages for build and runtime
 RUN apt-get -y update && \
