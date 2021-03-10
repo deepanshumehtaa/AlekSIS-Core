@@ -14,4 +14,4 @@ include:
     - project: "AlekSIS/official/AlekSIS"
       file: /ci/deploy/pages.yml
     - project: "AlekSIS/official/AlekSIS"
-      file: /ci/deploy/pypi.yml
+      file: /ci/publish/pypi.yml
