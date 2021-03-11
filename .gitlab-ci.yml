@@ -14,4 +14,6 @@ include:
     - project: "AlekSIS/official/AlekSIS"
       file: /ci/docker/image.yml
     - project: "AlekSIS/official/AlekSIS"
+      file: "/ci/docker/trigger_dist.yml"
+    - project: "AlekSIS/official/AlekSIS"
       file: /ci/deploy/pages.yml
