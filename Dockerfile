@@ -42,6 +42,7 @@ RUN   case ",$EXTRAS," in \
 
 # Install core
 ARG APP_VERISON=""
+RUN echo APP_VERSION="$APP_VERSION"
 RUN set -e; \
     mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
