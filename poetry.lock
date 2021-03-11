@@ -951,7 +951,7 @@ management-command = ["django-compressor (>=2.4)"]
 
 [[package]]
 name = "django-select2"
-version = "7.6.1"
+version = "7.6.2"
 description = "Select2 option fields for Django"
 category = "main"
 optional = false
@@ -1053,7 +1053,7 @@ yubikey = ["django-otp-yubikey"]
 
 [[package]]
 name = "django-uwsgi-ng"
-version = "0.3.0"
+version = "1.0.2"
 description = "uWSGI stuff for Django projects"
 category = "main"
 optional = false
@@ -1130,7 +1130,7 @@ yaml = ["ruamel.yaml"]
 
 [[package]]
 name = "faker"
-version = "6.5.2"
+version = "6.6.0"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
@@ -1646,7 +1646,7 @@ twisted = ["twisted"]
 
 [[package]]
 name = "prompt-toolkit"
-version = "3.0.16"
+version = "3.0.17"
 description = "Library for building powerful interactive command lines in Python"
 category = "main"
 optional = false
@@ -2416,7 +2416,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "7581f45aa319870e3862ea68aac2fe0943e9c2edabc830ce27e810435b166f35"
+content-hash = "f03e33046fabe4d97c3ad3f4146a36007ff8b8d0c3a374d6f63f1d19ade08687"
 
 [metadata.files]
 alabaster = [
@@ -2777,8 +2777,8 @@ django-sass-processor = [
     {file = "django-sass-processor-0.8.2.tar.gz", hash = "sha256:9b46a12ca8bdcb397d46fbcc49e6a926ff9f76a93c5efeb23b495419fd01fc7a"},
 ]
 django-select2 = [
-    {file = "django-select2-7.6.1.tar.gz", hash = "sha256:25362c5bafe082a19add598fb0a69e3239b94759691a0ac8e01ab7fba8e650ad"},
-    {file = "django_select2-7.6.1-py2.py3-none-any.whl", hash = "sha256:dc6b6fa737b6ea0b673e27c218955dd51a3fb81b2b28af93ce87703b24f4faf8"},
+    {file = "django-select2-7.6.2.tar.gz", hash = "sha256:be687a1350cb199d3e60e4cb43686111eb04b3fbd0d2cf3309b48685b63fc0e4"},
+    {file = "django_select2-7.6.2-py2.py3-none-any.whl", hash = "sha256:76eb9d378c441ad0959eadfc47929e9258894884f801572589b99429f8c241c3"},
 ]
 django-settings-context-processor = [
     {file = "django-settings-context-processor-0.2.tar.gz", hash = "sha256:d37c853d69a3069f5abbf94c7f4f6fc0fac38bbd0524190cd5a250ba800e496a"},
@@ -2803,7 +2803,7 @@ django-two-factor-auth = [
     {file = "django_two_factor_auth-1.13-py2.py3-none-any.whl", hash = "sha256:afb60e62f22b1f29a568666c0444ab05cabe8acc4d7c54d833d67f7b50f842fd"},
 ]
 django-uwsgi-ng = [
-    {file = "django-uwsgi-ng-0.3.0.tar.gz", hash = "sha256:bce8f0046dea8c4d55281889b9a0a27d662372a9759b9ffb77f08f933d2ef8be"},
+    {file = "django-uwsgi-ng-1.0.2.tar.gz", hash = "sha256:e53267e22b052eb862b5a2f84827a9d763f1ae5449e16815b086128bf2e78190"},
 ]
 django-widget-tweaks = [
     {file = "django-widget-tweaks-1.4.8.tar.gz", hash = "sha256:9f91ca4217199b7671971d3c1f323a2bec71a0c27dec6260b3c006fa541bc489"},
@@ -2825,8 +2825,8 @@ dynaconf = [
     {file = "dynaconf-3.1.4.tar.gz", hash = "sha256:b2f472d83052f809c5925565b8a2ba76a103d5dc1dbb9748b693ed67212781b9"},
 ]
 faker = [
-    {file = "Faker-6.5.2-py3-none-any.whl", hash = "sha256:ee86c3140e1d1651b76a7aab637c7da068660f33937143e7063c663f4cec45ab"},
-    {file = "Faker-6.5.2.tar.gz", hash = "sha256:97fb6748031569a65265d38d85370b3c3970f4333b40430d52a60b37dea97877"},
+    {file = "Faker-6.6.0-py3-none-any.whl", hash = "sha256:38bd2ff0afb7d9956fed477a2cd1007a7012b401a9ffd3de5fb909d739880582"},
+    {file = "Faker-6.6.0.tar.gz", hash = "sha256:0a68a539b236a614157581a135c82a27024a66dc96b9a491883fe583ae3689f9"},
 ]
 flake8 = [
     {file = "flake8-3.8.4-py2.py3-none-any.whl", hash = "sha256:749dbbd6bfd0cf1318af27bf97a14e28e5ff548ef8e5b1566ccfb25a11e7c839"},
@@ -3090,8 +3090,8 @@ prometheus-client = [
     {file = "prometheus_client-0.9.0.tar.gz", hash = "sha256:9da7b32f02439d8c04f7777021c304ed51d9ec180604700c1ba72a4d44dceb03"},
 ]
 prompt-toolkit = [
-    {file = "prompt_toolkit-3.0.16-py3-none-any.whl", hash = "sha256:62c811e46bd09130fb11ab759012a4ae385ce4fb2073442d1898867a824183bd"},
-    {file = "prompt_toolkit-3.0.16.tar.gz", hash = "sha256:0fa02fa80363844a4ab4b8d6891f62dd0645ba672723130423ca4037b80c1974"},
+    {file = "prompt_toolkit-3.0.17-py3-none-any.whl", hash = "sha256:4cea7d09e46723885cb8bc54678175453e5071e9449821dce6f017b1d1fbfc1a"},
+    {file = "prompt_toolkit-3.0.17.tar.gz", hash = "sha256:9397a7162cf45449147ad6042fa37983a081b8a73363a5253dd4072666333137"},
 ]
 psutil = [
     {file = "psutil-5.8.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:0066a82f7b1b37d334e68697faba68e5ad5e858279fd6351c8ca6024e8d6ba64"},
