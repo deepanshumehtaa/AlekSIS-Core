@@ -51,7 +51,6 @@ django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.15.0"
 django-ipware = "^3.0"
 django-impersonate = "^1.4"
-python-memcached = "^1.59"
 django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
@@ -97,6 +96,7 @@ bs4 = "^0.0.1"
 django-uwsgi-ng = "^0.3.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
+django-redis = "^4.12.1"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
