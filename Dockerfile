@@ -13,6 +13,7 @@ ENV PIP_USE_DEPRECATED legacy-resolver
 ENV ALEKSIS_static__root /usr/share/aleksis/static
 ENV ALEKSIS_media__root /var/lib/aleksis/media
 ENV ALEKSIS_backup__location /var/lib/aleksis/backups
+ENV ALEKSIS_dev__uwsgi__celery false
 
 # Install necessary Debian and PyPI packages for build and runtime
 RUN apt-get -y update && \
@@ -26,7 +27,7 @@ RUN apt-get -y update && \
 	libssl-dev \
 	netcat-openbsd \
 	yarnpkg && \
-    eatmydata pip install gunicorn django-compressor
+    eatmydata pip install uwsgi django-compressor
 
 # Install extra dependencies
 ARG EXTRAS="ldap"
@@ -48,7 +49,7 @@ RUN set -e; \
 # Declare a persistent volume for all data
 VOLUME /var/lib/aleksis
 
-# Define entrypoint and gunicorn running on port 8000
+# Define entrypoint and uWSGI running on port 8000
 EXPOSE 8000
 COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

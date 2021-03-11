@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GUNICORN_BIND=${GUNICORN_BIND:-0.0.0.0:8000}
+HTTP_PORT=${HTTP_PORT:8000}
 
 export ALEKSIS_database__host=${ALEKSIS_database__host:-127.0.0.1}
 export ALEKSIS_database__port=${ALEKSIS_database__port:-5432}
@@ -22,12 +22,12 @@ aleksis-admin collectstatic --no-input --clear
 aleksis-admin migrate
 aleksis-admin createinitialrevisions
 
-ARG=${$1:-"gunicorn"}
+ARG=${1:-uwsgi}
 
 if [ $ARG = "celery_worker" ]; then
     exec celery -A aleksis.core worker -l info
 elif [ $ARG = "celery_beat" ]; then
     exec celery -A aleksis.core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 else
-    exec gunicorn aleksis.core.wsgi --bind ${GUNICORN_BIND}
+    exec aleksis-admin runuwsgi http=$HTTP_PORT
 fi
