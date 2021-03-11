@@ -406,8 +406,40 @@ class ActionForm(forms.Form):
 
     def execute(self) -> bool:
         if self.is_valid():
-            qs = self.cleaned_data["selected_objects"]
+            data = self.cleaned_data["selected_objects"]
             action = self._get_actions_dict()[self.cleaned_data["action"]]
-            action(None, self.request, qs)
+            action(None, self.request, data)
             return True
         return False
+
+
+class ListActionForm(ActionForm):
+    selected_objects = forms.MultipleChoiceField(choices=[])
+
+    def get_queryset(self):
+        return None
+
+    def _get_dict(self):
+        return {item["pk"]: item for item in self.items}
+
+    def _get_choices(self) -> List[Tuple[str, str]]:
+        return [(item["pk"], item["pk"]) for item in self.items]
+
+    def _get_real_items(self, items: Sequence[dict]) -> List[dict]:
+        items_dict = self._get_dict()
+        real_items = []
+        for item in items:
+            if item not in items_dict:
+                raise ValidationError(_("No valid selection."))
+            real_items.append(items_dict[item])
+        return real_items
+
+    def clean_selected_objects(self) -> List[dict]:
+        data = self.cleaned_data["selected_objects"]
+        items = self._get_real_items(data)
+        return items
+
+    def __init__(self, request: HttpRequest, items, *args, **kwargs):
+        self.items = items
+        super().__init__(request, *args, **kwargs)
+        self.fields["selected_objects"].choices = self._get_choices()
