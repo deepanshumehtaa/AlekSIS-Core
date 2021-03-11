@@ -3,6 +3,7 @@
 from datetime import date, datetime
 from typing import Iterable, List, Optional, Sequence, Union
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -288,9 +289,7 @@ class Person(ExtensibleModel):
         # Ensure we have an admin user
         user = get_user_model()
         if not user.objects.filter(is_superuser=True).exists():
-            admin = user.objects.create_superuser(
-                username="admin", email="root@example.com", password="admin"
-            )
+            admin = user.objects.create_superuser(**settings.AUTH_INITIAL_SUPERUSER)
             admin.save()
 
     def auto_select_primary_group(

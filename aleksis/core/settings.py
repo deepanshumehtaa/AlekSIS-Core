@@ -255,6 +255,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+AUTH_INITIAL_SUPERUSER = {
+    "username": _settings.get("auth.superuser.username", "admin"),
+    "password": _settings.get("auth.superuser.password", "admin"),
+    "email": _settings.get("auth.superuser.email", "root@example.com"),
+}
+
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
 
