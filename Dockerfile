@@ -41,10 +41,11 @@ RUN   case ",$EXTRAS," in \
       esac
 
 # Install core
-ARG APP_VERISON=""
+ARG APP_SOURCE=AlekSIS-Core
+ARG APP_VERSION=""
 RUN set -e; \
     mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
-    eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
+    eatmydata pip install @APP_SOURCE\[$EXTRAS\]$APP_VERSION
 
 # Declare a persistent volume for all data
 VOLUME /var/lib/aleksis
