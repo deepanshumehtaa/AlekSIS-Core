@@ -118,3 +118,15 @@ class MaterializeCheckboxColumn(tables.CheckBoxColumn):
         return mark_safe(  # noqa
             "<label><input %s/><span></span</label>" % AttributeDict(attrs).as_html()
         )
+
+
+class SelectColumn(MaterializeCheckboxColumn):
+    """Column with a check box prepared for `ActionForm` forms."""
+
+    def __init__(self, *args, **kwargs):
+        kwargs["attrs"] = {
+            "td__input": {"name": "selected_objects"},
+            "th__input": {"id": "header_box"},
+        }
+        kwargs.setdefault("accessor", A("pk"))
+        super().__init__(*args, **kwargs)
