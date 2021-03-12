@@ -22,12 +22,4 @@ aleksis-admin collectstatic --no-input --clear
 aleksis-admin migrate
 aleksis-admin createinitialrevisions
 
-ARG=${1:-uwsgi}
-
-if [ $ARG = "celery_worker" ]; then
-    exec celery -A aleksis.core worker -l info
-elif [ $ARG = "celery_beat" ]; then
-    exec celery -A aleksis.core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-else
-    exec aleksis-admin runuwsgi http=$HTTP_PORT
-fi
+exec aleksis-admin runuwsgi http=$HTTP_PORT
