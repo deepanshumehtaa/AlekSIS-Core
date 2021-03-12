@@ -54,9 +54,9 @@ VOLUME /var/lib/aleksis
 
 # Define entrypoint and uWSGI running on port 8000
 EXPOSE 8000
-COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker-startup.sh /usr/local/bin/aleksis-docker-startup
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/bin/aleksis-docker-startup"]
 
 # Install assets
 FROM core as assets
