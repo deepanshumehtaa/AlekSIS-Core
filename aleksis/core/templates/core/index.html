@@ -32,7 +32,7 @@
         </div>
 
         <strong>{{ notification.title }}</strong>
-        <p>{{ notification.description }}</p>
+        <p>{{ notification.description|linebreaks }}</p>
       </div>
     </div>
   {% endfor %}
