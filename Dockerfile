@@ -1,5 +1,9 @@
 FROM python:3.9-buster AS core
 
+# Build arguments
+ARG EXTRAS="ldap"
+ARG APP_VERSION=""
+
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -30,7 +34,6 @@ RUN apt-get -y update && \
     eatmydata pip install uwsgi django-compressor
 
 # Install extra dependencies
-ARG EXTRAS="ldap"
 RUN   case ",$EXTRAS," in \
         (*",ldap,"*) \
           eatmydata apt-get install -y --no-install-recommends \
@@ -41,7 +44,6 @@ RUN   case ",$EXTRAS," in \
       esac
 
 # Install core
-ARG APP_VERISON=""
 RUN set -e; \
     mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
