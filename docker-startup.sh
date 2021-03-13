@@ -17,9 +17,9 @@ while ! nc -z $ALEKSIS_database__host $ALEKSIS_database__port; do
     sleep 0.1
 done
 
-aleksis-admin compilescss
-aleksis-admin collectstatic --no-input --clear
 aleksis-admin migrate
 aleksis-admin createinitialrevisions
+aleksis-admin compilescss
+aleksis-admin collectstatic --no-input --clear
 
 exec aleksis-admin runuwsgi http=$HTTP_PORT

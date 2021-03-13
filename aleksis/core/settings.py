@@ -537,9 +537,7 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
     concurrency = _settings.get("celery.uwsgi.concurrency", 2)
     UWSGI.setdefault("attach-daemon", [])
     UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
-    UWSGI["attach-daemon"].append(
-        "celery -A aleksis.core beat --scheduler django_celery_beat.schedulers:DatabaseScheduler"
-    )
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
