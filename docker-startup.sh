@@ -22,12 +22,4 @@ aleksis-admin createinitialrevisions
 aleksis-admin compilescss
 aleksis-admin collectstatic --no-input --clear
 
-ARG=${1:-uwsgi}
-
-if [ $ARG = "celery_worker" ]; then
-    exec celery -A aleksis.core worker
-elif [ $ARG = "celery_beat" ]; then
-    exec celery -A aleksis.core beat
-else
-    exec aleksis-admin runuwsgi http=$HTTP_PORT
-fi
+exec aleksis-admin runuwsgi http=$HTTP_PORT

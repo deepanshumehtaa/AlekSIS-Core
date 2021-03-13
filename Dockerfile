@@ -25,6 +25,7 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
+	dumb-init \
 	gettext \
 	libpq5 \
 	libpq-dev \
@@ -53,8 +54,9 @@ VOLUME /var/lib/aleksis
 
 # Define entrypoint and uWSGI running on port 8000
 EXPOSE 8000
-COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY docker-startup.sh /usr/local/bin/aleksis-docker-startup
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/usr/local/bin/aleksis-docker-startup"]
 
 # Install assets
 FROM core as assets
