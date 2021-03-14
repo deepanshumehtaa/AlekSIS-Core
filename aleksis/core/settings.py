@@ -12,6 +12,8 @@ from .util.core_helpers import (
     merge_app_settings,
 )
 
+IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
+
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
 
@@ -58,8 +60,12 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.signals.SignalsPanel",
     "debug_toolbar.panels.logging.LoggingPanel",
     "debug_toolbar.panels.profiling.ProfilingPanel",
+    "django_uwsgi.panels.UwsgiPanel",
 ]
 
+UWSGI = {
+    "module": "aleksis.core.wsgi",
+}
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -73,6 +79,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django_uwsgi",
     "django_extensions",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
@@ -201,18 +208,42 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", False):
+REDIS_HOST = _settings.get("redis.host", "localhost")
+REDIS_PORT = _settings.get("redis.port", 6379)
+REDIS_DB = _settings.get("redis.database", 0)
+REDIS_USER = _settings.get("redis.user", None)
+REDIS_PASSWORD = _settings.get("redis.password", None)
+
+REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+
+if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
         "default": {
-            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
-            "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
         }
     }
-    INSTALLED_APPS.append("cachalot")
-    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
-    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
-    CACHALOT_DATABASES = set(["default"])
-    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+    if REDIS_PASSWORD:
+        CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
+    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
+    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+else:
+    CACHES = {
+        "default": {
+            # Use uWSGI if available (will auot-fallback to LocMemCache)
+            "BACKEND": "django_uwsgi.cache.UwsgiCache"
+        }
+    }
+
+INSTALLED_APPS.append("cachalot")
+DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+CACHALOT_DATABASES = set(["default"])
+SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -223,6 +254,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
+
+AUTH_INITIAL_SUPERUSER = {
+    "username": _settings.get("auth.superuser.username", "admin"),
+    "password": _settings.get("auth.superuser.password", "admin"),
+    "email": _settings.get("auth.superuser.email", "root@example.com"),
+}
 
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
@@ -488,13 +525,19 @@ if _settings.get("twilio.sid", None):
     TWILIO_TOKEN = _settings.get("twilio.token")
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
-CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
+CELERY_BROKER_URL = _settings.get("celery.broker", REDIS_URL)
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 if _settings.get("celery.email", False):
     EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
+if _settings.get("dev.uwsgi.celery", DEBUG):
+    concurrency = _settings.get("celery.uwsgi.concurrency", 2)
+    UWSGI.setdefault("attach-daemon", [])
+    UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
