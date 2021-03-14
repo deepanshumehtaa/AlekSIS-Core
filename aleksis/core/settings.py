@@ -66,7 +66,7 @@ DEBUG_TOOLBAR_PANELS = [
 UWSGI = {
     "module": "aleksis.core.wsgi",
 }
-UWSGI_SERVE_STATIC = _settings.get("dev.uwsgi.serve_static", DEBUG)
+UWSGI_SERVE_STATIC = True
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 

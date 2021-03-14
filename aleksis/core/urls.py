@@ -199,10 +199,6 @@ urlpatterns = [
     ),
 ]
 
-# Serve static files from STATIC_ROOT to make it work with runserver
-# collectstatic is also required in development for this
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 # Serve media files from MEDIA_ROOT to make it work with runserver
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
