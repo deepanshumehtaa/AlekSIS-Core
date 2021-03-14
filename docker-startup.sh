@@ -22,4 +22,4 @@ aleksis-admin createinitialrevisions
 aleksis-admin compilescss
 aleksis-admin collectstatic --no-input --clear
 
-exec aleksis-admin runuwsgi http=$HTTP_PORT
+exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
