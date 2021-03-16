@@ -213,10 +213,13 @@ merge_app_settings("DATABASES", DATABASES, False)
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
-REDIS_USER = _settings.get("redis.user", None)
+REDIS_USER = _settings.get("redis.user", "default")
 REDIS_PASSWORD = _settings.get("redis.password", None)
 
-REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+REDIS_URL = (
+    f"redis://{REDIS_USER}{':'+REDIS_PASSWORD if REDIS_PASSWORD else ''}@"
+    f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+)
 
 if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
