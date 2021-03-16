@@ -2,9 +2,6 @@
 
 HTTP_PORT=${HTTP_PORT:8000}
 
-export ALEKSIS_database__host=${ALEKSIS_database__host:-127.0.0.1}
-export ALEKSIS_database__port=${ALEKSIS_database__port:-5432}
-
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
 	touch /var/lib/aleksis/secret_key; chmod 600 /var/lib/aleksis/secret_key
@@ -13,9 +10,12 @@ if [[ -z $ALEKSIS_secret_key ]]; then
     ALEKSIS_secret_key=$(</var/lib/aleksis/secret_key)
 fi
 
-while ! nc -z $ALEKSIS_database__host $ALEKSIS_database__port; do
-    sleep 0.1
+echo -n "Waiting for database."
+while ! aleksis-admin dbshell -- -c "SELECT 1" >/dev/null 2>&1; do
+    sleep 0.5
+    echo -n .
 done
+echo
 
 aleksis-admin migrate
 aleksis-admin createinitialrevisions
