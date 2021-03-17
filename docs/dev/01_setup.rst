@@ -17,10 +17,7 @@ Get the source tree
 To download AlekSIS and all officially bundled apps in their
 development version, use Git like so::
 
-  git clone --recurse-submodules https://edugit.org/AlekSIS/AlekSIS-Core
-
-If you do not want to download the bundled apps, leave out the
-``--recurse-submodules`` option.
+  git clone https://edugit.org/AlekSIS/official/AlekSIS-Core
 
 
 Install native dependencies
