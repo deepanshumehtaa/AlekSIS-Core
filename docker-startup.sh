@@ -18,19 +18,24 @@ while ! aleksis-admin dbshell -- -c "SELECT 1" >/dev/null 2>&1; do
 done
 echo
 
-aleksis-admin migrate
-aleksis-admin createinitialrevisions
 aleksis-admin compilescss
 aleksis-admin collectstatic --no-input --clear
 
 case "$RUN_MODE" in
     uwsgi)
+	aleksis-admin migrate
+	aleksis-admin createinitialrevisions
+	aleksis-admin compilescss
+	aleksis-admin collectstatic --no-input --clear
 	exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
         ;;
     celery-worker)
+	aleksis-admin migrate
+	aleksis-admin createinitialrevisions
 	exec celery -A aleksis.core worker
 	;;
     celery-beat)
+	aleksis-admin migrate
 	exec celery -A aleksis.core beat
 	;;
     *)
