@@ -1,6 +1,7 @@
 #!/bin/bash
 
 HTTP_PORT=${HTTP_PORT:-8000}
+RUN_MODE=uwsgi
 
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
@@ -22,4 +23,17 @@ aleksis-admin createinitialrevisions
 aleksis-admin compilescss
 aleksis-admin collectstatic --no-input --clear
 
-exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
+case "$RUN_MODE" in
+    uwsgi)
+	exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
+        ;;
+    celery-worker)
+	exec celery -A aleksis.core worker
+	;;
+    celery-beat)
+	exec celery -A aleksis.core beat
+	;;
+    *)
+	exec "$@"
+	;;
+esac
