@@ -40,7 +40,7 @@ class SelectColumn(MaterializeCheckboxColumn):
     def __init__(self, *args, **kwargs):
         kwargs["attrs"] = {
             "td__input": {"name": "selected_objects"},
-            "th__input": {"id": "header_box"},
+            "th__input": {"class": "select--header-box"},
         }
         kwargs.setdefault("accessor", A("pk"))
         super().__init__(*args, **kwargs)

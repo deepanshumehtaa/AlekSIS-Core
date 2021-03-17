@@ -1,17 +1,16 @@
 $(document).ready(function () {
-    $("#select_all_container").show();
-    $("#header_box").change(function () {
+    $(".select--header-box").change(function () {
         /*
         If the top checkbox is checked, all sub checkboxes should be checked,
         if it gets unchecked, all other ones should get unchecked.
         */
         if ($(this).is(":checked")) {
-            $(document).find('input[name="selected_objects"]').prop({
+            $(this).closest("table").find('input[name="selected_objects"]').prop({
                 indeterminate: false,
                 checked: true,
             });
         } else {
-            $(document).find('input[name="selected_objects"]').prop({
+            $(this).closest("table").find('input[name="selected_objects"]').prop({
                 indeterminate: false,
                 checked: false,
             });
@@ -27,10 +26,11 @@ $(document).ready(function () {
          */
         let checked = $(this).is(":checked");
         let indeterminate = false;
-        $(document).find('input[name="selected_objects"]').each(function () {
+        let table = $(this).closest("table");
+        table.find('input[name="selected_objects"]').each(function () {
             if ($(this).is(":checked") !== checked) {
                 /* Set the header box to indeterminate if the boxes are not the same */
-                $("#header_box").prop({
+                table.find(".select--header-box").prop({
                     indeterminate: true,
                 })
                 indeterminate = true;
@@ -39,7 +39,7 @@ $(document).ready(function () {
         });
         if (!(indeterminate)) {
             /* All boxes are the same, set the header box to the same value */
-            $("#header_box").prop({
+            table.find(".select--header-box").prop({
                 indeterminate: false,
                 checked: checked,
             });
