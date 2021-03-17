@@ -1053,7 +1053,7 @@ yubikey = ["django-otp-yubikey"]
 
 [[package]]
 name = "django-uwsgi-ng"
-version = "1.0.2"
+version = "1.1.0"
 description = "uWSGI stuff for Django projects"
 category = "main"
 optional = false
@@ -2416,7 +2416,7 @@ ldap = ["django-auth-ldap"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f03e33046fabe4d97c3ad3f4146a36007ff8b8d0c3a374d6f63f1d19ade08687"
+content-hash = "54320b0755855f08a6b304d526ca62a4650e269513bd2460b348ffa47ef81250"
 
 [metadata.files]
 alabaster = [
@@ -2803,7 +2803,7 @@ django-two-factor-auth = [
     {file = "django_two_factor_auth-1.13-py2.py3-none-any.whl", hash = "sha256:afb60e62f22b1f29a568666c0444ab05cabe8acc4d7c54d833d67f7b50f842fd"},
 ]
 django-uwsgi-ng = [
-    {file = "django-uwsgi-ng-1.0.2.tar.gz", hash = "sha256:e53267e22b052eb862b5a2f84827a9d763f1ae5449e16815b086128bf2e78190"},
+    {file = "django-uwsgi-ng-1.1.0.tar.gz", hash = "sha256:ea6485b5f33acd6721dff3008ad4e20f9ec311555dad2a37e0c47fa360b0fcc5"},
 ]
 django-widget-tweaks = [
     {file = "django-widget-tweaks-1.4.8.tar.gz", hash = "sha256:9f91ca4217199b7671971d3c1f323a2bec71a0c27dec6260b3c006fa541bc489"},

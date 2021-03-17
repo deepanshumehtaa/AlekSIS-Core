@@ -66,6 +66,8 @@ DEBUG_TOOLBAR_PANELS = [
 UWSGI = {
     "module": "aleksis.core.wsgi",
 }
+UWSGI_SERVE_STATIC = True
+UWSGI_SERVE_MEDIA = True
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -211,10 +213,13 @@ merge_app_settings("DATABASES", DATABASES, False)
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
-REDIS_USER = _settings.get("redis.user", None)
+REDIS_USER = _settings.get("redis.user", "default")
 REDIS_PASSWORD = _settings.get("redis.password", None)
 
-REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+REDIS_URL = (
+    f"redis://{REDIS_USER}{':'+REDIS_PASSWORD if REDIS_PASSWORD else ''}@"
+    f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+)
 
 if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
@@ -533,13 +538,11 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 if _settings.get("celery.email", False):
     EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
-if _settings.get("dev.uwsgi.celery", True):
+if _settings.get("dev.uwsgi.celery", DEBUG):
     concurrency = _settings.get("celery.uwsgi.concurrency", 2)
     UWSGI.setdefault("attach-daemon", [])
     UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
-    UWSGI["attach-daemon"].append(
-        "celery -A aleksis.core beat --scheduler django_celery_beat.schedulers:DatabaseScheduler"
-    )
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")

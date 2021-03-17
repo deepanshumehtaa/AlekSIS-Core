@@ -8,7 +8,7 @@ from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
@@ -756,17 +756,19 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not check_data()[1]:
-            messages.success(
-                request,
-                _(
-                    "The data check has been started. Please note that it may take "
-                    "a while before you are able to fetch the data on this page."
-                ),
-            )
-        else:
-            messages.success(request, _("The data check has finished."))
-        return redirect("check_data")
+        result = check_data.delay()
+
+        context = {
+            "title": _("Progress: Run data checks"),
+            "back_url": reverse("check_data"),
+            "progress": {
+                "task_id": result.task_id,
+                "title": _("Run data checks …"),
+                "success": _("The data checks were run successfully."),
+                "error": _("There was a problem while running data checks."),
+            },
+        }
+        return render(request, "core/pages/progress.html", context)
 
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):

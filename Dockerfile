@@ -1,5 +1,9 @@
 FROM python:3.9-buster AS core
 
+# Build arguments
+ARG EXTRAS="ldap"
+ARG APP_VERSION=""
+
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -21,16 +25,17 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
+	dumb-init \
 	gettext \
 	libpq5 \
 	libpq-dev \
 	libssl-dev \
 	netcat-openbsd \
+	postgresql-client \
 	yarnpkg && \
     eatmydata pip install uwsgi django-compressor
 
 # Install extra dependencies
-ARG EXTRAS="ldap"
 RUN   case ",$EXTRAS," in \
         (*",ldap,"*) \
           eatmydata apt-get install -y --no-install-recommends \
@@ -41,7 +46,6 @@ RUN   case ",$EXTRAS," in \
       esac
 
 # Install core
-ARG APP_VERISON=""
 RUN set -e; \
     mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
@@ -51,8 +55,9 @@ VOLUME /var/lib/aleksis
 
 # Define entrypoint and uWSGI running on port 8000
 EXPOSE 8000
-COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY docker-startup.sh /usr/local/bin/aleksis-docker-startup
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/usr/local/bin/aleksis-docker-startup"]
 
 # Install assets
 FROM core as assets
