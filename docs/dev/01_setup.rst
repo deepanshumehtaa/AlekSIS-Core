@@ -62,11 +62,11 @@ some maintenance tasks need to be done:
 All three steps can be done with the ``poetry run`` command and
 ``manage.py``::
 
-  poetry run ./manage.py yarn install
-  poetry run ./manage.py collectstatic
-  poetry run ./manage.py compilemessages
-  poetry run ./manage.py migrate
-  poetry run ./manage.py createinitialrevisions
+  poetry run aleksis-admin yarn install
+  poetry run aleksis-admin collectstatic
+  poetry run aleksis-admin compilemessages
+  poetry run aleksis-admin migrate
+  poetry run aleksis-admin createinitialrevisions
 
 (You might need database settings for the `migrate` command; see below.)
 
@@ -81,7 +81,7 @@ basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
 `aleksis` (all else remains default) and with the `debug` setting enabled::
 
-  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run ./manage.py runuwsgi
+  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run aleksis-admin runuwsgi
 
 .. figure:: /screenshots/index.png
    :scale: 50%
