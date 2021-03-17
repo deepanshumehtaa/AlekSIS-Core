@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HTTP_PORT=${HTTP_PORT:8000}
+HTTP_PORT=${HTTP_PORT:-8000}
 
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
