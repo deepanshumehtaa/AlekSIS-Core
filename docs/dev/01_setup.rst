@@ -26,7 +26,7 @@ If you do not want to download the bundled apps, leave out the
 Install native dependencies
 ---------------------------
 
-Some system libraries are required to install AlekSIS::
+Some system libraries are required to install AlekSIS. On Debian, for example, this would be done with::
 
   sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext chromium
 
@@ -36,7 +36,7 @@ Get Poetry
 Make sure to have Poetry installed like described in its
 documentation. Right now, we encourage using pip to install Poetry
 once system-wide (this will change once distributions pick up
-Poetry). On Debian, for example, this would be done with::
+Poetry).::
 
   sudo pip3 install poetry
 
