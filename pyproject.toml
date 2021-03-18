@@ -51,7 +51,6 @@ django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.15.0"
 django-ipware = "^3.0"
 django-impersonate = "^1.4"
-python-memcached = "^1.59"
 django-hattori = "^0.2"
 psycopg2 = "^2.8"
 django_select2 = "^7.1"
@@ -94,15 +93,18 @@ django-prometheus = "^2.1.0"
 importlib-metadata = {version = "^3.0.0", python = "<3.9"}
 django-model-utils = "^4.0.0"
 bs4 = "^0.0.1"
+django-uwsgi-ng = "^1.1.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
 django-oauth-toolkit = "^1.4.0"
+django-redis = "^4.12.1"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
+uwsgi = "^2.0"
 
 [tool.poetry.scripts]
 aleksis-admin = 'aleksis.core.__main__:aleksis_cmd'
