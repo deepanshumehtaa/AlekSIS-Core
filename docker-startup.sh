@@ -1,9 +1,7 @@
 #!/bin/bash
 
-HTTP_PORT=${HTTP_PORT:8000}
-
-export ALEKSIS_database__host=${ALEKSIS_database__host:-127.0.0.1}
-export ALEKSIS_database__port=${ALEKSIS_database__port:-5432}
+HTTP_PORT=${HTTP_PORT:-8000}
+RUN_MODE=uwsgi
 
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
@@ -13,13 +11,34 @@ if [[ -z $ALEKSIS_secret_key ]]; then
     ALEKSIS_secret_key=$(</var/lib/aleksis/secret_key)
 fi
 
-while ! nc -z $ALEKSIS_database__host $ALEKSIS_database__port; do
-    sleep 0.1
+echo -n "Waiting for database."
+while ! aleksis-admin dbshell -- -c "SELECT 1" >/dev/null 2>&1; do
+    sleep 0.5
+    echo -n .
 done
+echo
 
-aleksis-admin migrate
-aleksis-admin createinitialrevisions
 aleksis-admin compilescss
 aleksis-admin collectstatic --no-input --clear
 
-exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
+case "$RUN_MODE" in
+    uwsgi)
+	aleksis-admin migrate
+	aleksis-admin createinitialrevisions
+	aleksis-admin compilescss
+	aleksis-admin collectstatic --no-input --clear
+	exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
+        ;;
+    celery-worker)
+	aleksis-admin migrate
+	aleksis-admin createinitialrevisions
+	exec celery -A aleksis.core worker
+	;;
+    celery-beat)
+	aleksis-admin migrate
+	exec celery -A aleksis.core beat
+	;;
+    *)
+	exec "$@"
+	;;
+esac
