@@ -1,7 +1,7 @@
 #!/bin/bash
 
+RUN_MODE=${RUN_MODE:-uwsgi}
 HTTP_PORT=${HTTP_PORT:-8000}
-RUN_MODE=uwsgi
 
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
