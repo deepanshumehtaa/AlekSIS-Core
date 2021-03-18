@@ -2,7 +2,7 @@
 
 RUN_MODE=${RUN_MODE:-uwsgi}
 HTTP_PORT=${HTTP_PORT:-8000}
-DEPLOY_IN_K8S:${DEPLOY_IN_K8S:-false}
+PREPARE=${PREPARE:-1}
 
 if [[ -z $ALEKSIS_secret_key ]]; then
     if [[ ! -e /var/lib/aleksis/secret_key ]]; then
@@ -19,32 +19,51 @@ while ! aleksis-admin dbshell -- -c "SELECT 1" >/dev/null 2>&1; do
 done
 echo
 
-aleksis-admin compilescss
-aleksis-admin collectstatic --no-input --clear
+if [[ $PREPARE = 1 ]]; then
+    aleksis-admin compilescss
+    aleksis-admin collectstatic --no-input --clear
+fi
 
 case "$RUN_MODE" in
     uwsgi)
-	if [[ ! $DEPLOY_IN_K8S ]]; then
+	if [[ $PREPARE = 1 ]]; then
 		aleksis-admin migrate
-		aleksis-admin createinitialrevisions
+	        aleksis-admin createinitialrevisions
+	else
+	    while ! aleksis-admin migrate --check; do
+		sleep 0.5
+	    done
 	fi
 	aleksis-admin compilescss
 	aleksis-admin collectstatic --no-input --clear
 	exec aleksis-admin runuwsgi -- --http-socket=:$HTTP_PORT
         ;;
     celery-worker)
-    	if [[ ! $DEPLOY_IN_K8S ]]; then
+    	if [[ $PREPARE = 1 ]]; then
 		aleksis-admin migrate
 		aleksis-admin createinitialrevisions
+	else
+	    while ! aleksis-admin migrate --check; do
+		sleep 0.5
+	    done
 	fi
 	exec celery -A aleksis.core worker
 	;;
     celery-beat)
-    	if [[ ! $DEPLOY_IN_K8S ]]; then
+    	if [[ $PREPARE = 1 ]]; then
 		aleksis-admin migrate
+	else
+	    while ! aleksis-admin migrate --check; do
+		sleep 0.5
+	    done
 	fi
 	exec celery -A aleksis.core beat
 	;;
+    prepare)
+	aleksis-admin compilescss
+	aleksis-admin collectstatic --no-input --clear
+	aleksis-admin migrate
+	aleksis-admin createinitialrevisions
     *)
 	exec "$@"
 	;;
