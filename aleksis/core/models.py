@@ -751,7 +751,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
-    template_broken = "core/partials/dashboardwidget_broken.html"
+    template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))

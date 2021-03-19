@@ -618,6 +618,11 @@ main .alert p:first-child, main .alert div:first-child {
   font-weight: 500;
 }
 
+.stacked-card-icon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .flex-row {
   display: flex;
