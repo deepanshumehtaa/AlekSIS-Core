@@ -5,8 +5,18 @@
     <i class="material-icons large red-text stacked-card-icon">assignment_late</i>
   </div>
   <div class="card-stacked">
-    <div class="card-title">
-      <p>{% trans "This widget is currently not available." %}</p>
+    <div class="card-content">
+      <div class="card-title">
+        {% trans "This widget is currently not available." %}
+      </div>
+      {% if title %}
+        <p>
+          {% blocktrans %}
+            There is a problem getting the widget "{{ title }}".
+            There is no need for you to take any action.
+          {% endblocktrans %}
+        </p>
+      {% endif %}
     </div>
   </div>
 </div>

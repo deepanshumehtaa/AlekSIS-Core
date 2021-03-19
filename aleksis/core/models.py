@@ -785,7 +785,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
     def _get_context_safe(self, request):
         if self.broken:
-            return {}
+            return {"title": self.title}
         return self.get_context(request)
 
     def get_context(self, request):
