@@ -401,6 +401,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "@fontsource/roboto",
     "datatables",
     "jquery",
     "materialize-css",
@@ -435,6 +436,7 @@ ANY_JS = {
     },
     "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
+    "Roboto": {"css_url": JS_URL + "/@fontsource/roboto/index.css"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
