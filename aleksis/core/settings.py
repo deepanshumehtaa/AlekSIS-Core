@@ -787,7 +787,7 @@ PROMETHEUS_EXPORT_MIGRATIONS = False
 if _settings.get("storage.s3.enabled", False):
     INSTALLED_APPS.append("storages")
 
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3BotoStorage"
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
     if _settings.get("storage.s3.static.enabled", False):
         STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
