@@ -8,11 +8,11 @@ AlekSIS allows you to configure an Amazon S3 endpoint for static and media
 files. This is useful e.g. for loadbalancing with multiple AlekSIS
 instances.
 
-Configure a S3 endpoint
+Configure an S3 endpoint
 =======================
 
-If you want to use a S3 endpoint to store files you have to configure the
-endpoint in your configfile (`/etc/aleksis/aleksis.toml`)::
+If you want to use an S3 endpoint to store files you have to configure the
+endpoint in your configuration file (`/etc/aleksis/aleksis.toml`)::
 
   # Default values
   [storage.s3]
@@ -40,7 +40,7 @@ endpoint in your configfile (`/etc/aleksis/aleksis.toml`)::
 MinIO
 =====
 
-MinIO can be deployed in a kubernetes cluster or on bare metal servers. For
+MinIO can be deployed in a Kubernetes cluster or on bare metal servers. For
 more information see https://min.io/.
 
 After you installed your MinIO server you have to create buckets for your
