@@ -48,7 +48,6 @@ wait_database() {
 
 prepare_static() {
 	# Prepare static files; should only be run in app container or job
-	aleksis-admin compilescss
 	aleksis-admin collectstatic --no-input --clear
 }
 
