@@ -16,23 +16,8 @@ endpoint in your configuration file (`/etc/aleksis/aleksis.toml`)::
 
   # Default values
   [storage.s3]
-  region = ""
-  access_key_id = ""
-  session_token = ""
-  bucket_name = ""
-  addressing_style = ""
-  endpoint_url = ""
-  key_prefix = ""
-  bucket_auth = true
-  max_age_seconds = 3600 # 1 hour
-  max_age_seconds_cached_static = 31536000 # 24 hours
-  public_url = ""
-  reduced_redundancy = false
-  content_disposition = ""
-  content_language = ""
-  metadata = {}
-  encrypt_key = False
-  kms_encryption_key_id = ""
-  gzip = true
-  signature_version = None
-  file_overwrite = false
+  enabled = true
+  endpoint_url = "https://minio.example.com"
+  bucket_name = "aleksis-test"
+  access_key_id = "XXXXXXXXXXXXXX"
+  secret_key = "XXXXXXXXXXXXXXXXXXXXXX"
