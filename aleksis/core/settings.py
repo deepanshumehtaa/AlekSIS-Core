@@ -152,14 +152,14 @@ MIDDLEWARE = [
     "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django_global_request.middleware.GlobalRequestMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_otp.middleware.OTPMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -789,9 +789,7 @@ if _settings.get("storage.s3.enabled", False):
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
 
-    if _settings.get("storage.s3.use_aws", False):
-        AWS_REGION = _settings.get("storage.s3.region", "")
-
+    AWS_REGION = _settings.get("storage.s3.region", "")
     AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key_id", "")
     AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
     AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
