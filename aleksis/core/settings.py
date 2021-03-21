@@ -786,7 +786,7 @@ MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 PROMETHEUS_EXPORT_MIGRATIONS = False
 
 if _settings.get("storage.s3.enabled", False):
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3BotoStorage"
 
     if _settings.get("storage.s3.static.enabled", False):
         STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
