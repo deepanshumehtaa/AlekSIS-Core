@@ -1,7 +1,7 @@
 FROM python:3.9-buster AS core
 
 # Build arguments
-ARG EXTRAS="ldap"
+ARG EXTRAS="ldap,s3"
 ARG APP_VERSION=""
 
 # Configure Python to be nice inside Docker and pip to stfu
