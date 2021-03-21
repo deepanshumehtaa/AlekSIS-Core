@@ -783,3 +783,36 @@ DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
 MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+
+if _settings.get("storage.s3.enabled", False):
+    INSTALLED_APPS.append("storages")
+
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3BotoStorage"
+
+    if _settings.get("storage.s3.static.enabled", False):
+        STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+        AWS_STORAGE_BUCKET_NAME_STATIC = _settings.get("storage.s3.static.bucket_name", "")
+        AWS_S3_MAX_AGE_SECONDS_CACHED_STATIC = _settings.get(
+            "storage.s3.static.max_age_seconds", 24 * 60 * 60
+        )
+
+    AWS_REGION = _settings.get("storage.s3.region", "")
+    AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key_id", "")
+    AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
+    AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
+    AWS_STORAGE_BUCKET_NAME = _settings.get("storage.s3.bucket_name", "")
+    AWS_S3_ADDRESSING_STYLE = _settings.get("storage.s3.addressing_style", "auto")
+    AWS_S3_ENDPOINT_URL = _settings.get("storage.s3.endpoint_url", "")
+    AWS_S3_KEY_PREFIX = _settings.get("storage.s3.key_prefix", "")
+    AWS_S3_BUCKET_AUTH = _settings.get("storage.s3.bucket_auth", True)
+    AWS_S3_MAX_AGE_SECONDS = _settings.get("storage.s3.max_age_seconds", 24 * 60 * 60)
+    AWS_S3_PUBLIC_URL = _settings.get("storage.s3.public_url", "")
+    AWS_S3_REDUCED_REDUNDANCY = _settings.get("storage.s3.reduced_redundancy", False)
+    AWS_S3_CONTENT_DISPOSITION = _settings.get("storage.s3.content_disposition", "")
+    AWS_S3_CONTENT_LANGUAGE = _settings.get("storage.s3.content_language", "")
+    AWS_S3_METADATA = _settings.get("storage.s3.metadata", {})
+    AWS_S3_ENCRYPT_KEY = _settings.get("storage.s3.encrypt_key", False)
+    AWS_S3_KMS_ENCRYPTION_KEY_ID = _settings.get("storage.s3.kms_encryption_key_id", "")
+    AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
+    AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
+    AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
