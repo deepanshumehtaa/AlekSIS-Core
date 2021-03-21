@@ -97,6 +97,7 @@ django-uwsgi-ng = "^1.1.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
 django-redis = "^4.12.1"
+django-s3-storage = "^0.13.4"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
