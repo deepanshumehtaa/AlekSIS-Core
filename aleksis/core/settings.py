@@ -89,7 +89,6 @@ INSTALLED_APPS = [
     "polymorphic",
     "django_global_request",
     "dbbackup",
-    "storages",
     "django_celery_beat",
     "django_celery_results",
     "celery_progress",
@@ -786,6 +785,8 @@ MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 PROMETHEUS_EXPORT_MIGRATIONS = False
 
 if _settings.get("storage.s3.enabled", False):
+    INSTALLED_APPS.append("storages")
+
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3BotoStorage"
 
     if _settings.get("storage.s3.static.enabled", False):
