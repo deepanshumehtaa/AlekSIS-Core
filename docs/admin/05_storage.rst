@@ -37,4 +37,22 @@ endpoint in your configfile (`/etc/aleksis/aleksis.toml`)::
   signature_version = None
   file_overwrite = false
 
+MinIO
+=====
+
+MinIO can be deployed in a kubernetes cluster or on bare metal servers. For
+more information see https://min.io/.
+
+After you installed your MinIO server you have to create buckets for your
+AlekSIS instance. In this example we use the MinIO client so you have to install
+mc for your operating system (https://docs.min.io/minio/baremetal/reference/minio-cli/minio-mc.html)::
+
+  # Create alias
+  mc alias set aleksis http://my-minio-server:9000 ACCESS_KEY SECRET_KEY
+  # Create buckets
+  mc mb aleksis/aleksis-media
+  # Make bucket available
+  mc policy set public aleksis/aleksis-media
+
+
 For more information please see https://pypi.org/project/django-s3-storage/
