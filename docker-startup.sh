@@ -46,12 +46,6 @@ wait_database() {
 	echo
 }
 
-prepare_static() {
-	# Prepare static files; should only be run in app container or job
-	aleksis-admin compilescss
-	aleksis-admin collectstatic --no-input --clear
-}
-
 prepare_database() {
 	# Migrate database; should only be run in app container or job
 	aleksis-admin migrate
@@ -79,7 +73,6 @@ uwsgi)
 	if [ $PREPARE = 1 ]; then
 		# Responsible for running migratiosn and preparing staticfiles
 		prepare_database
-		prepare_static
 	else
 		# Wait for migrations to be applied elsewhere
 		wait_migrations
@@ -103,7 +96,6 @@ celery-*)
 prepare)
 	# Preparation only mode
 	prepare_database
-	prepare_static
 	;;
 *)
 	# Run arguments as command verbatim
