@@ -81,11 +81,11 @@ RUN set -e; \
     rm -f /var/lib/apt/lists/*_*; \
     rm -rf /root/.cache
 
-# Drop privileges for runtime
+# Drop privileges for runtime to www-data
 FROM clean AS unprivileged
 WORKDIR /var/lib/aleksis
 RUN chown -R www-data:www-data \
      ${ALEKSIS_static__root} \
      ${ALEKSIS_media__root} \
      ${ALEKSIS_backup__location}
-USER www-data:www-data
+USER 33:33
