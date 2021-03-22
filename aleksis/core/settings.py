@@ -484,9 +484,10 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
 )
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = "ipware.ip.get_ip"
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
-MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
+MAINTENANCE_MODE_STATE_FILE_NAME = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+MAINTENANCE_MODE_STATE_BACKEND = "aleksis.core.util.maintenance.DefaultStorageBackend"
 
 DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
 DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
