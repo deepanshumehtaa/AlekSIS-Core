@@ -52,8 +52,9 @@ RUN set -e; \
              ${ALEKSIS_backup__location}; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
 
-# Define entrypoint and uWSGI running on port 8000
+# Define entrypoint, volumes and uWSGI running on port 8000
 EXPOSE 8000
+VOLUME ${ALEKSIS_media__root} ${ALEKSIS_backup__location}
 COPY docker-startup.sh /usr/local/bin/aleksis-docker-startup
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/local/bin/aleksis-docker-startup"]
@@ -88,8 +89,3 @@ RUN chown -R www-data:www-data \
      ${ALEKSIS_media__root} \
      ${ALEKSIS_backup__location}
 USER www-data:www-data
-
-# Declare persistent volumes for all data
-VOLUME ${ALEKSIS_static__root}
-VOLUME ${ALEKSIS_media__root}
-VOLUME ${ALEKSIS_backup__location}
