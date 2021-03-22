@@ -78,3 +78,11 @@ RUN set -e; \
     apt-get clean -y; \
     rm -f /var/lib/apt/lists/*_*; \
     rm -rf /root/.cache
+
+# Drop privileges for runtime
+FROM clean AS unprivileged
+WORKDIR /var/lib/aleksis
+RUN chown -R www-data:www-data \
+        /var/lib/aleksis \
+        /usr/share/aleksis/static
+USER www-data:www-data
