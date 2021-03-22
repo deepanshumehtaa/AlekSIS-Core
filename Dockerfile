@@ -47,11 +47,10 @@ RUN   case ",$EXTRAS," in \
 
 # Install core
 RUN set -e; \
-    mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
+    mkdir -p ${ALEKSIS_static__root} \
+             ${ALEKSIS_media__root} \
+             ${ALEKSIS_backup__location}; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
-
-# Declare a persistent volume for all data
-VOLUME /var/lib/aleksis
 
 # Define entrypoint and uWSGI running on port 8000
 EXPOSE 8000
@@ -85,6 +84,12 @@ RUN set -e; \
 FROM clean AS unprivileged
 WORKDIR /var/lib/aleksis
 RUN chown -R www-data:www-data \
-        /var/lib/aleksis \
-        /usr/share/aleksis/static
+     ${ALEKSIS_static__root} \
+     ${ALEKSIS_media__root} \
+     ${ALEKSIS_backup__location}
 USER www-data:www-data
+
+# Declare persistent volumes for all data
+VOLUME ${ALEKSIS_static__root}
+VOLUME ${ALEKSIS_media__root}
+VOLUME ${ALEKSIS_backup__location}
