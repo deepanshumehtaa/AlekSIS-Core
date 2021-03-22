@@ -1,6 +1,5 @@
 from django.apps import apps
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
@@ -13,6 +12,7 @@ from django_js_reverse.views import urls_js
 from health_check.urls import urlpatterns as health_urls
 from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
+from oauth2_provider.views import ConnectDiscoveryInfoView
 
 from . import views
 
@@ -21,6 +21,7 @@ urlpatterns = [
     path("", include("pwa.urls"), name="pwa"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
+    path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
@@ -82,6 +83,7 @@ urlpatterns = [
     path("search/", views.PermissionSearchView(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
+    path(".well-known/openid-configuration", ConnectDiscoveryInfoView.as_view(), name="oidc_configuration"),
     path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
     path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
     path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
@@ -202,13 +204,6 @@ urlpatterns = [
         name="edit_default_dashboard",
     ),
 ]
-
-# Serve static files from STATIC_ROOT to make it work with runserver
-# collectstatic is also required in development for this
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# Serve media files from MEDIA_ROOT to make it work with runserver
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):
