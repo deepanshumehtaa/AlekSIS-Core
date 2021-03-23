@@ -48,7 +48,7 @@ colour = "^0.1.5"
 dynaconf = {version = "^3.1", extras = ["yaml", "toml", "ini"]}
 django-settings-context-processor = "^0.2"
 django-auth-ldap = { version = "^2.2", optional = true }
-django-maintenance-mode = "^0.15.0"
+django-maintenance-mode = "^0.16.0"
 django-ipware = "^3.0"
 django-impersonate = "^1.4"
 django-hattori = "^0.2"

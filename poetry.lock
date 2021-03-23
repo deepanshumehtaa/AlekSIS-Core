@@ -809,7 +809,7 @@ six = "*"
 
 [[package]]
 name = "django-maintenance-mode"
-version = "0.15.1"
+version = "0.16.0"
 description = "django-maintenance-mode shows a 503 error page when maintenance-mode is on."
 category = "main"
 optional = false
@@ -2484,7 +2484,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "fdb29a69283c1a951aba974e6b1121bdb2b002b5815df3b93d9cae89fe520f67"
+content-hash = "82daf1de2e6e0268ae924117eff9a831835c3cd9d86708ed5a58ab9e4cf17812"
 
 [metadata.files]
 alabaster = [
@@ -2795,8 +2795,8 @@ django-jsonstore = [
     {file = "django_jsonstore-0.5.0-py2-none-any.whl", hash = "sha256:9630c1fb43ae9f8e32733c5cf7d4c3775ba6f08532f517c64025053352d72844"},
 ]
 django-maintenance-mode = [
-    {file = "django-maintenance-mode-0.15.1.tar.gz", hash = "sha256:d07102cab88dd707a82232f0c552c287e62aa53af582a0ca4f2aa31f14f5ed27"},
-    {file = "django_maintenance_mode-0.15.1-py3-none-any.whl", hash = "sha256:8c45b400253076655562c99a2ffb88f8353fc1c84496c1b9de812cc8132aea6f"},
+    {file = "django-maintenance-mode-0.16.0.tar.gz", hash = "sha256:57595795062156d5f3f712c885acc18b77a303425bf78b5de80e7fd47d9ab433"},
+    {file = "django_maintenance_mode-0.16.0-py3-none-any.whl", hash = "sha256:88287573b4e95285052f664d4f08e15ac4c350c1a6c77bc743ca3fc6e1f6410c"},
 ]
 django-material = [
     {file = "django-material-1.7.5.tar.gz", hash = "sha256:d0df25b1d3ff629a4dfe2bc869550b25289f556940b45fd6d7c4897859446491"},

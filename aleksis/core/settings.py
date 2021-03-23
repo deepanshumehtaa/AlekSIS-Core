@@ -487,7 +487,7 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 MAINTENANCE_MODE_STATE_FILE_NAME = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
-MAINTENANCE_MODE_STATE_BACKEND = "aleksis.core.util.maintenance.DefaultStorageBackend"
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 
 DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
 DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
