@@ -740,7 +740,7 @@ tqdm = ">=4.23.4"
 
 [[package]]
 name = "django-haystack"
-version = "3.0b1"
+version = "3.0"
 description = "Pluggable search for Django."
 category = "main"
 optional = false
@@ -2484,7 +2484,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "d7a3963a23163c781a9275afd58ac4eee57a8ffab73c60587453bae45055697c"
+content-hash = "707a94962dd78ab266a5f67bbf4adf4027c561a9e4b12258dbde80ba0f2ca4f8"
 
 [metadata.files]
 alabaster = [
@@ -2769,8 +2769,7 @@ django-hattori = [
     {file = "django_hattori-0.2.1-py2.py3-none-any.whl", hash = "sha256:e529ed7af8fc34a0169c797c477672b687a205a56f3f5206f90c260acb83b7ac"},
 ]
 django-haystack = [
-    {file = "django-haystack-3.0b1.tar.gz", hash = "sha256:9dba64f5c76cf147ac382d4a4a270f30d30a45a3a7a1738a9d05c96d18777c07"},
-    {file = "django_haystack-3.0b1-py3-none-any.whl", hash = "sha256:b83705e1cf8141cd1755fc6683ac65fea4e1281f4b4306bc9224af96495b0df3"},
+    {file = "django-haystack-3.0.tar.gz", hash = "sha256:d490f920afa85471dd1fa5000bc8eff4b704daacbe09aee1a64e75cbc426f3be"},
 ]
 django-health-check = [
     {file = "django-health-check-3.16.3.tar.gz", hash = "sha256:a6aa6ea423eae4fd0665f6372b826af1ed20dfc3e88cf52789d0b49cfb64969c"},
