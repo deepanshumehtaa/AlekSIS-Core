@@ -52,6 +52,12 @@ RUN set -e; \
              ${ALEKSIS_backup__location}; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
 
+# Installl additional apps
+ONBUILD RUN set -e; \
+            if [ ! -z "$APPS" ]; then \
+                eatmydata pip install $APPS; \
+            fi
+
 # Define entrypoint, volumes and uWSGI running on port 8000
 EXPOSE 8000
 VOLUME ${ALEKSIS_media__root} ${ALEKSIS_backup__location}
@@ -67,7 +73,7 @@ RUN eatmydata aleksis-admin yarn install; \
 
 # Clean up build dependencies
 FROM assets AS clean
-RUN set -e; \
+ONBUILD RUN set -e; \
     eatmydata apt-get remove --purge -y \
         build-essential \
         gettext \
