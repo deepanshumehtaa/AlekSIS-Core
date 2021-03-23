@@ -4,6 +4,9 @@ FROM python:3.9-buster AS core
 ARG EXTRAS="ldap,s3"
 ARG APP_VERSION=""
 
+# Additional apps
+ARG APPS=""
+
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
