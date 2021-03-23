@@ -55,12 +55,6 @@ RUN set -e; \
              ${ALEKSIS_backup__location}; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
 
-# Installl additional apps
-ONBUILD RUN set -e; \
-            if [ ! -z "$APPS" ]; then \
-                eatmydata pip install $APPS; \
-            fi
-
 # Define entrypoint, volumes and uWSGI running on port 8000
 EXPOSE 8000
 VOLUME ${ALEKSIS_media__root} ${ALEKSIS_backup__location}
@@ -76,7 +70,7 @@ RUN eatmydata aleksis-admin yarn install; \
 
 # Clean up build dependencies
 FROM assets AS clean
-ONBUILD RUN set -e; \
+RUN set -e; \
     eatmydata apt-get remove --purge -y \
         build-essential \
         gettext \
@@ -84,10 +78,8 @@ ONBUILD RUN set -e; \
         libssl-dev \
         libldap2-dev \
         libsasl2-dev \
-        yarnpkg; \
     eatmydata apt-get autoremove --purge -y; \
     apt-get clean -y; \
-    rm -f /var/lib/apt/lists/*_*; \
     rm -rf /root/.cache
 
 # Drop privileges for runtime to www-data
@@ -98,3 +90,19 @@ RUN chown -R www-data:www-data \
      ${ALEKSIS_media__root} \
      ${ALEKSIS_backup__location}
 USER 33:33
+
+# Additional steps
+ONBUILD USER 0:0
+ONBUILD RUN set -e; \
+            if [ -n "$APPS" ]; then \
+                eatmydata pip install $APPS; \
+            fi; \
+            eatmydata aleksis-admin yarn install; \
+            eatmydata aleksis-admin collectstatic; \
+            rm -rf /usr/local/share/.cache; \
+            eatmydata apt-get remove --purge -y yarnpkg; \
+            eatmydata apt-get autoremove --purge -y; \
+            apt-get clean -y; \
+            rm -f /var/lib/apt/lists/*_*; \
+            rm -rf /root/.cache
+ONBUILD USER 33:33
