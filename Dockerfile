@@ -98,7 +98,7 @@ ONBUILD RUN set -e; \
                 eatmydata pip install $APPS; \
             fi; \
             eatmydata aleksis-admin yarn install; \
-            eatmydata aleksis-admin collectstatic; \
+            eatmydata aleksis-admin collectstatic --no-input; \
             rm -rf /usr/local/share/.cache; \
             eatmydata apt-get remove --purge -y yarnpkg; \
             eatmydata apt-get autoremove --purge -y; \
