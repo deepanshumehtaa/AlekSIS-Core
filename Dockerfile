@@ -77,7 +77,7 @@ RUN set -e; \
         libpq-dev \
         libssl-dev \
         libldap2-dev \
-        libsasl2-dev \
+        libsasl2-dev; \
     eatmydata apt-get autoremove --purge -y; \
     apt-get clean -y; \
     rm -rf /root/.cache
