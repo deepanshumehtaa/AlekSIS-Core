@@ -231,8 +231,6 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
     }
     if REDIS_PASSWORD:
         CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
-    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
-    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 else:
     CACHES = {
         "default": {
