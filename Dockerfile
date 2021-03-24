@@ -62,7 +62,7 @@ CMD ["/usr/local/bin/aleksis-docker-startup"]
 # Install assets
 FROM core as assets
 RUN eatmydata aleksis-admin yarn install; \
-    eatmydata aleksis-admin collectstatic; \
+    eatmydata aleksis-admin collectstatic --no-input; \
     rm -rf /usr/local/share/.cache
 
 # Clean up build dependencies
