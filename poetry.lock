@@ -213,20 +213,20 @@ python-versions = "*"
 
 [[package]]
 name = "boto3"
-version = "1.17.34"
+version = "1.17.35"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
-botocore = ">=1.20.34,<1.21.0"
+botocore = ">=1.20.35,<1.21.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
 [[package]]
 name = "botocore"
-version = "1.20.34"
+version = "1.20.35"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -585,7 +585,7 @@ Django = ">=1.8"
 
 [[package]]
 name = "django-cachalot"
-version = "2.3.3"
+version = "2.3.4"
 description = "Caches your Django ORM queries and automatically invalidates them."
 category = "main"
 optional = false
@@ -656,7 +656,7 @@ django-js-asset = ">=1.2.2"
 
 [[package]]
 name = "django-colorfield"
-version = "0.3.2"
+version = "0.4.1"
 description = "simple color field for your models with a nice color-picker in the admin-interface."
 category = "main"
 optional = false
@@ -770,7 +770,7 @@ tqdm = ">=4.23.4"
 
 [[package]]
 name = "django-haystack"
-version = "3.0b1"
+version = "3.0"
 description = "Pluggable search for Django."
 category = "main"
 optional = false
@@ -839,7 +839,7 @@ six = "*"
 
 [[package]]
 name = "django-maintenance-mode"
-version = "0.15.1"
+version = "0.16.0"
 description = "django-maintenance-mode shows a 503 error page when maintenance-mode is on."
 category = "main"
 optional = false
@@ -2561,7 +2561,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f33ec3ae5282d41e8d3838ce94f51529e39572c7a3b109430c794b083027a35d"
+content-hash = "baa9461c1e2e73cedf74c877d9154b142dba677a68cac1df5accf6d82a6c5e8d"
 
 [metadata.files]
 alabaster = [
@@ -2633,12 +2633,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.17.34-py2.py3-none-any.whl", hash = "sha256:1ddd597e3d8b7553432f84b32b9519cc90aad91c4dc3873725375163c9f98353"},
-    {file = "boto3-1.17.34.tar.gz", hash = "sha256:8f33cb3d2fc42b0547a5560a6d7397aa93336f50899386762b2450682c0e992b"},
+    {file = "boto3-1.17.35-py2.py3-none-any.whl", hash = "sha256:1e6e06b2f1eee5a76acdde1e7b4f57c93c1bf2905341207d74f2a140ce060cd8"},
+    {file = "boto3-1.17.35.tar.gz", hash = "sha256:40e84a5f7888924db74a2710dbe48d066b51fe1f5549efaffe90e6efe813f37b"},
 ]
 botocore = [
-    {file = "botocore-1.20.34-py2.py3-none-any.whl", hash = "sha256:c4fe4fea1d6a3934dd8c670ee83b128f935a64078786fe8afb8a662446304926"},
-    {file = "botocore-1.20.34.tar.gz", hash = "sha256:749bdb151e340329f1b25600bfe9d223e930f8ba26bd74b71478ca5781f2feaf"},
+    {file = "botocore-1.20.35-py2.py3-none-any.whl", hash = "sha256:e34bbb7d7de154c2ff2a73ae0691c601a69c5bda887374c8a6a23072380b07a4"},
+    {file = "botocore-1.20.35.tar.gz", hash = "sha256:9119ffb231145ffadd55391c9356dcdb18e3de65c3a7c82844634e949f0ca5a0"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -2836,8 +2836,8 @@ django-bulk-update = [
     {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
 ]
 django-cachalot = [
-    {file = "django-cachalot-2.3.3.tar.gz", hash = "sha256:ba3a6cabf834139196179c4f6d77409ae9170267ee8ce40e27bbf6c3f6733b2b"},
-    {file = "django_cachalot-2.3.3-py3-none-any.whl", hash = "sha256:55f94e94f7000f5f6bd92188d3d7535cfdef79f2e697e36daf69cba8f435e156"},
+    {file = "django-cachalot-2.3.4.tar.gz", hash = "sha256:cb984972a3dfe87e7d2a64a235dfcb74a1dc6a152b433e2ba0badb5c06e4bf3c"},
+    {file = "django_cachalot-2.3.4-py3-none-any.whl", hash = "sha256:4062026e4d797896a49165b1227d525b3ce08e3ccf643d4659e833c554a77c4c"},
 ]
 django-cache-memoize = [
     {file = "django-cache-memoize-0.1.8.tar.gz", hash = "sha256:f85ca71ddfe3d61d561d5a382736f83148fb75e542585e7028b65d6d3681ec85"},
@@ -2860,8 +2860,8 @@ django-ckeditor = [
     {file = "django_ckeditor-6.0.0-py2.py3-none-any.whl", hash = "sha256:cc2d377f1bdcd4ca1540caeebe85f7e2cd006198d57328ef6c718d3eaa5a0846"},
 ]
 django-colorfield = [
-    {file = "django-colorfield-0.3.2.tar.gz", hash = "sha256:f5dde281f4db8871eb5845aee614b4f1a47e7fd5b20476238793f519cd7bdf41"},
-    {file = "django_colorfield-0.3.2-py2-none-any.whl", hash = "sha256:e435ec31712f5e8b955cc7633aef1e49cc3b409c21dfcefeb2f6ef0e1cb69533"},
+    {file = "django-colorfield-0.4.1.tar.gz", hash = "sha256:63a542c417b72d0dac898a0f61a2a00aed3c9aabc2f5057c926efccf421f7887"},
+    {file = "django_colorfield-0.4.1-py3-none-any.whl", hash = "sha256:e38f8b9dabbab48a6dab3d1eb5bd802decb92970d56a28128c9a70cdbf383e30"},
 ]
 django-dbbackup = [
     {file = "django-dbbackup-3.3.0.tar.gz", hash = "sha256:bb109735cae98b64ad084e5b461b7aca2d7b39992f10c9ed9435e3ebb6fb76c8"},
@@ -2899,8 +2899,7 @@ django-hattori = [
     {file = "django_hattori-0.2.1-py2.py3-none-any.whl", hash = "sha256:e529ed7af8fc34a0169c797c477672b687a205a56f3f5206f90c260acb83b7ac"},
 ]
 django-haystack = [
-    {file = "django-haystack-3.0b1.tar.gz", hash = "sha256:9dba64f5c76cf147ac382d4a4a270f30d30a45a3a7a1738a9d05c96d18777c07"},
-    {file = "django_haystack-3.0b1-py3-none-any.whl", hash = "sha256:b83705e1cf8141cd1755fc6683ac65fea4e1281f4b4306bc9224af96495b0df3"},
+    {file = "django-haystack-3.0.tar.gz", hash = "sha256:d490f920afa85471dd1fa5000bc8eff4b704daacbe09aee1a64e75cbc426f3be"},
 ]
 django-health-check = [
     {file = "django-health-check-3.16.3.tar.gz", hash = "sha256:a6aa6ea423eae4fd0665f6372b826af1ed20dfc3e88cf52789d0b49cfb64969c"},
@@ -2925,8 +2924,8 @@ django-jsonstore = [
     {file = "django_jsonstore-0.5.0-py2-none-any.whl", hash = "sha256:9630c1fb43ae9f8e32733c5cf7d4c3775ba6f08532f517c64025053352d72844"},
 ]
 django-maintenance-mode = [
-    {file = "django-maintenance-mode-0.15.1.tar.gz", hash = "sha256:d07102cab88dd707a82232f0c552c287e62aa53af582a0ca4f2aa31f14f5ed27"},
-    {file = "django_maintenance_mode-0.15.1-py3-none-any.whl", hash = "sha256:8c45b400253076655562c99a2ffb88f8353fc1c84496c1b9de812cc8132aea6f"},
+    {file = "django-maintenance-mode-0.16.0.tar.gz", hash = "sha256:57595795062156d5f3f712c885acc18b77a303425bf78b5de80e7fd47d9ab433"},
+    {file = "django_maintenance_mode-0.16.0-py3-none-any.whl", hash = "sha256:88287573b4e95285052f664d4f08e15ac4c350c1a6c77bc743ca3fc6e1f6410c"},
 ]
 django-material = [
     {file = "django-material-1.7.5.tar.gz", hash = "sha256:d0df25b1d3ff629a4dfe2bc869550b25289f556940b45fd6d7c4897859446491"},
