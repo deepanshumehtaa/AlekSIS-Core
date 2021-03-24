@@ -1,8 +1,8 @@
 FROM python:3.9-buster AS core
 
 # Build arguments
-ARG EXTRAS="ldap,s3"
-ARG APP_VERSION=""
+ARG EXTRAS=""
+ARG APPS=""
 
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
@@ -50,7 +50,7 @@ RUN set -e; \
     mkdir -p ${ALEKSIS_static__root} \
              ${ALEKSIS_media__root} \
              ${ALEKSIS_backup__location}; \
-    eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
+    eatmydata pip install $APPS
 
 # Define entrypoint, volumes and uWSGI running on port 8000
 EXPOSE 8000
