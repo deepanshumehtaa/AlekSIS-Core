@@ -89,8 +89,8 @@ RUN chown -R www-data:www-data \
 USER 33:33
 
 # Additional steps
+ONBUILD ARG APPS
 ONBUILD USER 0:0
-ONBUILD ARG APPS=""
 ONBUILD RUN set -e; \
             if [ -n "$APPS" ]; then \
                 eatmydata pip install $APPS; \
