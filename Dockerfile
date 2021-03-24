@@ -4,9 +4,6 @@ FROM python:3.9-buster AS core
 ARG EXTRAS="ldap,s3"
 ARG APP_VERSION=""
 
-# Additional apps
-ARG APPS=""
-
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -93,6 +90,7 @@ USER 33:33
 
 # Additional steps
 ONBUILD USER 0:0
+ONBUILD ARG APPS=""
 ONBUILD RUN set -e; \
             if [ -n "$APPS" ]; then \
                 eatmydata pip install $APPS; \
