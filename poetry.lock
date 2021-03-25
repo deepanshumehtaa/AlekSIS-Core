@@ -253,7 +253,7 @@ beautifulsoup4 = "*"
 
 [[package]]
 name = "calendarweek"
-version = "0.4.7"
+version = "0.5.0"
 description = "Utilities for working with calendar weeks in Python and Django"
 category = "main"
 optional = false
@@ -2484,7 +2484,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c4145dcb3ba4dbe189e0941877112f4277da50162c40aff3c7caae37acd88fc2"
+content-hash = "77156dcda6239deacfc351102ec46f1594de74b28f53daee4b50c9c785fc1578"
 
 [metadata.files]
 alabaster = [
@@ -2567,8 +2567,8 @@ bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
 ]
 calendarweek = [
-    {file = "calendarweek-0.4.7-py3-none-any.whl", hash = "sha256:ee65caea113503dcdb33d96bca9f79f88b3ab4f66279d4cb568d89f1f662608a"},
-    {file = "calendarweek-0.4.7.tar.gz", hash = "sha256:7655d6a4c3b4f6a4e01aa7d23b49cd121db0399050e9c08cd8d1210155be25dd"},
+    {file = "calendarweek-0.5.0-py3-none-any.whl", hash = "sha256:f2003e6e0264d3d1320fc99ae6d70e60174c2664e5640c6aa31ad38e229d942d"},
+    {file = "calendarweek-0.5.0.tar.gz", hash = "sha256:32f5c8663799a2f5a0b8909976c7a3ae77397acd7e7c31d1456ece5b452988a5"},
 ]
 celery = [
     {file = "celery-5.0.5-py3-none-any.whl", hash = "sha256:5e8d364e058554e83bbb116e8377d90c79be254785f357cb2cec026e79febe13"},
