@@ -12,7 +12,7 @@ from django.utils.translation import gettext as _
 from celery_progress.backend import ProgressRecorder
 
 from aleksis.core.celery import app
-from aleksis.core.settings import MEDIA_ROOT, MEDIA_URL, STATIC_ROOT
+from aleksis.core.settings import MEDIA_ROOT, MEDIA_URL
 from aleksis.core.util.celery_progress import recorded_task
 from aleksis.core.util.core_helpers import path_and_rename
 
@@ -21,9 +21,6 @@ from aleksis.core.util.core_helpers import path_and_rename
 def generate_pdf(html_code: str, pdf_path: str, recorder: ProgressRecorder):
     """Generate a PDF file by rendering the HTML code using electron-pdf."""
     recorder.set_progress(0, 1)
-
-    # Replace /static with STATIC_ROOT to get local file system paths
-    html_code = html_code.replace("/static", STATIC_ROOT)
 
     # Open a temporary directory
     with TemporaryDirectory() as temp_dir:
@@ -56,6 +53,8 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     """
     if not context:
         context = {}
+    context.setdefault("static_prefix", request.build_absolute_uri("/")[:-1])
+
     pdf_path = path_and_rename(None, "file.pdf", "pdfs")
 
     html_template = render_to_string(template_name, context)
