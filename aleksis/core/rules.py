@@ -1,4 +1,5 @@
 import rules
+from rules import is_superuser
 
 from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
@@ -321,3 +322,6 @@ rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
+
+manage_person_permissions_predicate = has_person & is_superuser
+rules.add_perm("core.manage_permissions", manage_person_permissions_predicate)

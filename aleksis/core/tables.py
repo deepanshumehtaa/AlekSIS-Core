@@ -91,3 +91,48 @@ class DashboardWidgetTable(tables.Table):
 
     def render_widget_name(self, value, record):
         return record._meta.verbose_name
+
+
+class PermissionTable(tables.Table):
+    """Table to list permissions."""
+
+    class Meta:
+        attrs = {"class": "responsive-table highlight"}
+
+    permission = tables.Column()
+
+
+class ObjectPermissionTable(PermissionTable):
+    """Table to list object permissions."""
+
+    content_object = tables.Column()
+
+
+class GlobalPermissionTable(PermissionTable):
+    """Table to list global permissions."""
+
+    pass
+
+
+class GroupObjectPermissionTable(ObjectPermissionTable):
+    """Table to list assigned group object permissions."""
+
+    group = tables.Column()
+
+
+class UserObjectPermissionTable(ObjectPermissionTable):
+    """Table to list assigned user object permissions."""
+
+    user = tables.Column()
+
+
+class GroupGlobalPermissionTable(GlobalPermissionTable):
+    """Table to list assigned global user permissions."""
+
+    group = tables.Column()
+
+
+class UserGlobalPermissionTable(GlobalPermissionTable):
+    """Table to list assigned global group permissions."""
+
+    user = tables.Column()

@@ -196,6 +196,36 @@ urlpatterns = [
         {"default": True},
         name="edit_default_dashboard",
     ),
+    path(
+        "permissions/global/user/",
+        views.UserGlobalPermissionsListBaseView.as_view(),
+        name="manage_user_global_permissions",
+    ),
+    path(
+        "permissions/global/group/",
+        views.GroupGlobalPermissionsListBaseView.as_view(),
+        name="manage_group_global_permissions",
+    ),
+    path(
+        "permissions/object/user/",
+        views.UserObjectPermissionsListBaseView.as_view(),
+        name="manage_user_object_permissions",
+    ),
+    path(
+        "permissions/object/group/",
+        views.GroupObjectPermissionsListBaseView.as_view(),
+        name="manage_group_object_permissions",
+    ),
+    path(
+        "permissions/assign/",
+        views.SelectPermissionForAssignView.as_view(),
+        name="select_permission_for_assign",
+    ),
+    path(
+        "permissions/<int:pk>/assign/",
+        views.AssignPermissionView.as_view(),
+        name="assign_permission",
+    ),
 ]
 
 # Add URLs for optional features

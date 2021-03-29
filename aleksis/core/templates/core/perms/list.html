@@ -1,0 +1,79 @@
+{# -*- engine:django -*- #}
+
+{% extends "core/base.html" %}
+
+{% load material_form i18n any_js django_tables2 %}
+
+{% block extra_head %}
+  {{ filter.form.media.css }}
+  {{ assign_form.media.css }}
+  {% include_css "select2-materialize" %}
+{% endblock %}
+
+{% block browser_title %}{% blocktrans %}Manage permissions{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans %}Manage permissions{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <a class="waves-effect waves-light btn green modal-trigger" href="#assign-modal">
+    <i class="material-icons left">add</i>
+    {% trans "Assign new permission" %}
+  </a>
+
+  <div id="assign-modal" class="modal">
+    <form action="{% url "select_permission_for_assign" %}?next={% url "manage_"|add:tab|add:"_permissions" %}"
+          method="post">
+      <div class="modal-content">
+        <h5>{% trans "Select permission to assign" %}</h5>
+        {% csrf_token %}
+        {% form form=assign_form %}{% endform %}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn green waves-effect waves-light">
+          {% trans "Select" %}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <ul class="tabs">
+    <li class="tab">
+      <a target="_self" href="{% url "manage_user_global_permissions" %}"
+         {% if tab == "user_global" %}class="active"{% endif %}>{% trans "Global (user)" %}</a>
+    </li>
+    <li class="tab">
+      <a target="_self" href="{% url "manage_group_global_permissions" %}"
+         {% if tab == "group_global" %}class="active"{% endif %}>{% trans "Global (group)" %}</a>
+    </li>
+    <li class="tab">
+      <a target="_self" href="{% url "manage_user_object_permissions" %}"
+         {% if tab == "user_object" %}class="active"{% endif %}>{% trans "Object (user)" %}</a>
+    </li>
+    <li class="tab">
+      <a target="_self" href="{% url "manage_group_object_permissions" %}"
+         {% if tab == "group_object" %}class="active"{% endif %}>{% trans "Object (group)" %}</a>
+    </li>
+  </ul>
+
+  <div class="card">
+    <div class="card-content">
+      <form method="get" action="">
+        {% csrf_token %}
+        {% form form=filter.form %}{% endform %}
+        <button type="submit" class="btn waves-effect waves-light">
+          <i class="material-icons left">refresh</i>
+          {% trans "Update" %}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      {% render_table table %}
+    </div>
+  </div>
+
+  {% include_js "select2-materialize" %}
+  {{ filter.form.media.js }}
+  {{ assign_form.media.js }}
+{% endblock %}

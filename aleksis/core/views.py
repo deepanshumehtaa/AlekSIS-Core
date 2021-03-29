@@ -1,7 +1,10 @@
 from typing import Any, Dict, Optional, Type
+from urllib.parse import urlencode
 
 from django.apps import apps
+from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.humanize.templatetags.humanize import apnumber
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
@@ -12,13 +15,15 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.generic import FormView
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 import reversion
 from django_celery_results.models import TaskResult
-from django_tables2 import RequestConfig, SingleTableView
+from django_filters.views import FilterView
+from django_tables2 import RequestConfig, SingleTableMixin, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
@@ -32,9 +37,17 @@ from rules.contrib.views import PermissionRequiredMixin, permission_required
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
 from .celery import app
-from .filters import GroupFilter, PersonFilter
+from .filters import (
+    GroupFilter,
+    GroupGlobalPermissionFilter,
+    GroupObjectPermissionFilter,
+    PersonFilter,
+    UserGlobalPermissionFilter,
+    UserObjectPermissionFilter,
+)
 from .forms import (
     AnnouncementForm,
+    AssignPermissionForm,
     ChildGroupsForm,
     DashboardWidgetOrderFormSet,
     EditAdditionalFieldForm,
@@ -45,9 +58,10 @@ from .forms import (
     PersonPreferenceForm,
     PersonsAccountsFormSet,
     SchoolTermForm,
+    SelectPermissionForm,
     SitePreferenceForm,
 )
-from .mixins import AdvancedCreateView, AdvancedDeleteView, AdvancedEditView
+from .mixins import AdvancedCreateView, AdvancedDeleteView, AdvancedEditView, SuccessNextMixin
 from .models import (
     AdditionalField,
     Announcement,
@@ -69,10 +83,14 @@ from .registries import (
 from .tables import (
     AdditionalFieldsTable,
     DashboardWidgetTable,
+    GroupGlobalPermissionTable,
+    GroupObjectPermissionTable,
     GroupsTable,
     GroupTypesTable,
     PersonsTable,
     SchoolTermTable,
+    UserGlobalPermissionTable,
+    UserObjectPermissionTable,
 )
 from .util import messages
 from .util.apps import AppConfig
@@ -941,3 +959,93 @@ class EditDashboardView(PermissionRequiredMixin, View):
         context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
+
+
+class PermissionsListBaseView(PermissionRequiredMixin, SingleTableMixin, FilterView):
+    """Base view for list of all permissions."""
+
+    template_name = "core/perms/list.html"
+    permission_required = "core.manage_permissions"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["assign_form"] = SelectPermissionForm()
+        context["tab"] = self.tab
+
+        return context
+
+
+class UserGlobalPermissionsListBaseView(PermissionsListBaseView):
+    """List all global user permissions."""
+
+    filterset_class = UserGlobalPermissionFilter
+    table_class = UserGlobalPermissionTable
+    tab = "user_global"
+
+
+class GroupGlobalPermissionsListBaseView(PermissionsListBaseView):
+    """List all global group permissions."""
+
+    filterset_class = GroupGlobalPermissionFilter
+    table_class = GroupGlobalPermissionTable
+    tab = "group_global"
+
+
+class UserObjectPermissionsListBaseView(PermissionsListBaseView):
+    """List all object user permissions."""
+
+    filterset_class = UserObjectPermissionFilter
+    table_class = UserObjectPermissionTable
+    tab = "user_object"
+
+
+class GroupObjectPermissionsListBaseView(PermissionsListBaseView):
+    """List all object group permissions."""
+
+    filterset_class = GroupObjectPermissionFilter
+    table_class = GroupObjectPermissionTable
+    tab = "group_object"
+
+
+class SelectPermissionForAssignView(PermissionRequiredMixin, FormView):
+    """View for selecting a permission to assign."""
+
+    permission_required = "core.manage_permissions"
+    form_class = SelectPermissionForm
+
+    def form_valid(self, form: SelectPermissionForm) -> HttpResponse:
+        url = reverse("assign_permission", args=[form.cleaned_data["selected_permission"].pk])
+        params = {"next": self.request.GET["next"]} if "next" in self.request.GET else {}
+        return redirect(f"{url}?{urlencode(params)}")
+
+    def form_invalid(self, form: SelectPermissionForm) -> HttpResponse:
+        return redirect("manage_group_object_permissions")
+
+
+class AssignPermissionView(SuccessNextMixin, PermissionRequiredMixin, DetailView, FormView):
+    """View for assigning a permission to users/groups for all/some objects."""
+
+    permission_required = "core.manage_permissions"
+    queryset = Permission.objects.all()
+    template_name = "core/perms/assign.html"
+    form_class = AssignPermissionForm
+    success_url = "manage_user_global_permissions"
+
+    def get_form_kwargs(self) -> Dict[str, Any]:
+        kwargs = super().get_form_kwargs()
+        kwargs["permission"] = self.get_object()
+        return kwargs
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        # Overwrite get_context_data to ensure correct function call order
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form: AssignPermissionForm) -> HttpResponse:
+        created = form.save_perms()
+        messages.success(
+            self.request,
+            _("We have successfully created {} permissions.").format(apnumber(created)),
+        )
+        return redirect(self.get_success_url())
