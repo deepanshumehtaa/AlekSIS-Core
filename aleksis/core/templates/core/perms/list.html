@@ -14,25 +14,18 @@
 {% block page_title %}{% blocktrans %}Manage permissions{% endblocktrans %}{% endblock %}
 
 {% block content %}
-  <a class="waves-effect waves-light btn green modal-trigger" href="#assign-modal">
-    <i class="material-icons left">add</i>
-    {% trans "Assign new permission" %}
-  </a>
-
-  <div id="assign-modal" class="modal">
-    <form action="{% url "select_permission_for_assign" %}?next={% url "manage_"|add:tab|add:"_permissions" %}"
-          method="post">
-      <div class="modal-content">
-        <h5>{% trans "Select permission to assign" %}</h5>
+  <div class="card">
+    <div class="card-content">
+      <form action="{% url "select_permission_for_assign" %}?next={% url "manage_"|add:tab|add:"_permissions" %}"
+            method="post">
+        <div class="card-title">{% trans "Assign a new permission" %}</div>
         {% csrf_token %}
         {% form form=assign_form %}{% endform %}
-      </div>
-      <div class="modal-footer">
         <button type="submit" class="btn green waves-effect waves-light">
           {% trans "Select" %}
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 
   <ul class="tabs">
