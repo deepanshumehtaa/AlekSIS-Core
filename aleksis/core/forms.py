@@ -457,11 +457,8 @@ class AssignPermissionForm(forms.Form):
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             )
 
-    def save_perms(self) -> int:
-        """Save permissions for selected user/groups and selected/all objects.
-
-        :return: The number of newly created permissions
-        """
+    def save_perms(self):
+        """Save permissions for selected user/groups and selected/all objects."""
         persons = self.cleaned_data["persons"]
         groups = self.cleaned_data["groups"]
         all_objects = self.cleaned_data["all_objects"]
@@ -488,7 +485,6 @@ class AssignPermissionForm(forms.Form):
             # Object permissions
             for instance in objects:
                 assign_perm(permission_name, django_group, instance)
-        return created
 
 
 class ActionForm(forms.Form):

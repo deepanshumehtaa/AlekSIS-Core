@@ -4,7 +4,6 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.humanize.templatetags.humanize import apnumber
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
@@ -1043,9 +1042,8 @@ class AssignPermissionView(SuccessNextMixin, PermissionRequiredMixin, DetailView
         return context
 
     def form_valid(self, form: AssignPermissionForm) -> HttpResponse:
-        created = form.save_perms()
+        form.save_perms()
         messages.success(
-            self.request,
-            _("We have successfully created {} permissions.").format(apnumber(created)),
+            self.request, _("We have successfully assigned the permissions."),
         )
         return redirect(self.get_success_url())
