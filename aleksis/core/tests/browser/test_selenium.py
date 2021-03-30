@@ -1,3 +1,4 @@
+import json
 import os
 
 from django.conf import settings
@@ -13,6 +14,16 @@ SeleniumTestCaseBase.browsers = list(
     filter(bool, os.environ.get("TEST_SELENIUM_BROWSERS", "").split(","))
 )
 SeleniumTestCaseBase.selenium_hub = os.environ.get("TEST_SELENIUM_HUB", "") or None
+SeleniumTestCaseBase.desired_capabilities = json.loads(os.environ.get("TEST_SELENIUM_CAPABILITIES", "{}"))
+_orig_get_capability = SeleniumTestCase.get_capability
+def _get_capability(cls, browser):
+    desired_capabilities = _orig_get_capability(browser)
+    desired_capabilities.update(cls.desired_capabilities)
+    with open("/tmp/foo.log", "a") as f:
+        print(cls.desired_capabilities, file=f)
+        print(desired_capabilities, file=f)
+    return desired_capabilities
+SeleniumTestCaseBase.get_capability = classmethod(_get_capability)
 
 
 class SeleniumTests(SeleniumTestCase):
