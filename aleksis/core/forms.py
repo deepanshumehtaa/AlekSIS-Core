@@ -471,7 +471,7 @@ class AssignPermissionForm(forms.Form):
 
         # Create permissions for users
         for person in persons:
-            if getattr("person", "user", None):
+            if getattr(person, "user", None):
                 # Global permission
                 if all_objects:
                     assign_perm(permission_name, person.user)
