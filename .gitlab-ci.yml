@@ -1,21 +1,30 @@
+# You can override the included template(s) by including variable overrides
+# See https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#priority-of-environment-variables
 include:
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/general.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/test/test.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/test/lint.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/test/security.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/build/dist.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/publish/pypi.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/docker/image.yml
-    - project: "AlekSIS/official/AlekSIS"
-      file: "/ci/deploy/review.yml"
-    - project: "AlekSIS/official/AlekSIS"
-      file: "/ci/deploy/trigger_dist.yml"
-    - project: "AlekSIS/official/AlekSIS"
-      file: /ci/deploy/pages.yml
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/general.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/test/test.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/test/lint.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/test/security.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/build/dist.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/publish/pypi.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/docker/image.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/deploy/review.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/deploy/trigger_dist.yml"
+- project: AlekSIS/official/AlekSIS
+  file: "/ci/deploy/pages.yml"
+- template: Security/SAST.gitlab-ci.yml
+stages:
+- test
+sast:
+  stage: test
