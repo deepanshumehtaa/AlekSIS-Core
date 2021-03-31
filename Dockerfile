@@ -83,7 +83,6 @@ RUN set -e; \
 FROM clean AS unprivileged
 WORKDIR /var/lib/aleksis
 RUN chown -R www-data:www-data \
-     ${ALEKSIS_static__root} \
      ${ALEKSIS_media__root} \
      ${ALEKSIS_backup__location}
 USER 33:33
