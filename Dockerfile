@@ -33,7 +33,7 @@ RUN apt-get -y update && \
 	netcat-openbsd \
 	postgresql-client \
 	yarnpkg && \
-    eatmydata pip install uwsgi django-compressor
+    eatmydata pip install uwsgi
 
 # Install extra dependencies
 RUN   case ",$EXTRAS," in \
