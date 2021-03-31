@@ -213,11 +213,11 @@ merge_app_settings("DATABASES", DATABASES, False)
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
-REDIS_USER = _settings.get("redis.user", "default")
 REDIS_PASSWORD = _settings.get("redis.password", None)
+REDIS_USER = _settings.get("redis.user", None if REDIS_PASSWORD is None else "default")
 
 REDIS_URL = (
-    f"redis://{REDIS_USER}{':'+REDIS_PASSWORD if REDIS_PASSWORD else ''}@"
+    f"redis://{REDIS_USER+':'+REDIS_PASSWORD+'@' if REDIS_USER else ''}"
     f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 )
 
@@ -484,9 +484,10 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
 )
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = "ipware.ip.get_ip"
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
-MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
+MAINTENANCE_MODE_STATE_FILE_NAME = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 
 DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
 DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}

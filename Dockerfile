@@ -47,21 +47,23 @@ RUN   case ",$EXTRAS," in \
 
 # Install core
 RUN set -e; \
-    mkdir -p /var/lib/aleksis/media /usr/share/aleksis/static /var/lib/aleksis/backups; \
+    mkdir -p ${ALEKSIS_static__root} \
+             ${ALEKSIS_media__root} \
+             ${ALEKSIS_backup__location}; \
     eatmydata pip install AlekSIS-Core\[$EXTRAS\]$APP_VERSION
 
-# Declare a persistent volume for all data
-VOLUME /var/lib/aleksis
-
-# Define entrypoint and uWSGI running on port 8000
+# Define entrypoint, volumes and uWSGI running on port 8000
 EXPOSE 8000
+VOLUME ${ALEKSIS_media__root} ${ALEKSIS_backup__location}
 COPY docker-startup.sh /usr/local/bin/aleksis-docker-startup
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/local/bin/aleksis-docker-startup"]
 
 # Install assets
 FROM core as assets
-RUN eatmydata aleksis-admin yarn install
+RUN eatmydata aleksis-admin yarn install; \
+    eatmydata aleksis-admin collectstatic --no-input; \
+    rm -rf /usr/local/share/.cache
 
 # Clean up build dependencies
 FROM assets AS clean
@@ -72,9 +74,33 @@ RUN set -e; \
         libpq-dev \
         libssl-dev \
         libldap2-dev \
-        libsasl2-dev \
-        yarnpkg; \
+        libsasl2-dev; \
     eatmydata apt-get autoremove --purge -y; \
     apt-get clean -y; \
-    rm -f /var/lib/apt/lists/*_*; \
     rm -rf /root/.cache
+
+# Drop privileges for runtime to www-data
+FROM clean AS unprivileged
+WORKDIR /var/lib/aleksis
+RUN chown -R www-data:www-data \
+     ${ALEKSIS_static__root} \
+     ${ALEKSIS_media__root} \
+     ${ALEKSIS_backup__location}
+USER 33:33
+
+# Additional steps
+ONBUILD ARG APPS
+ONBUILD USER 0:0
+ONBUILD RUN set -e; \
+            if [ -n "$APPS" ]; then \
+                eatmydata pip install $APPS; \
+            fi; \
+            eatmydata aleksis-admin yarn install; \
+            eatmydata aleksis-admin collectstatic --no-input; \
+            rm -rf /usr/local/share/.cache; \
+            eatmydata apt-get remove --purge -y yarnpkg; \
+            eatmydata apt-get autoremove --purge -y; \
+            apt-get clean -y; \
+            rm -f /var/lib/apt/lists/*_*; \
+            rm -rf /root/.cache
+ONBUILD USER 33:33
