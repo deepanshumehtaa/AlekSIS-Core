@@ -30,10 +30,9 @@ RUN apt-get -y update && \
 	libpq5 \
 	libpq-dev \
 	libssl-dev \
-	netcat-openbsd \
 	postgresql-client \
 	yarnpkg && \
-    eatmydata pip install uwsgi django-compressor
+    eatmydata pip install uwsgi
 
 # Install extra dependencies
 RUN   case ",$EXTRAS," in \
@@ -83,7 +82,6 @@ RUN set -e; \
 FROM clean AS unprivileged
 WORKDIR /var/lib/aleksis
 RUN chown -R www-data:www-data \
-     ${ALEKSIS_static__root} \
      ${ALEKSIS_media__root} \
      ${ALEKSIS_backup__location}
 USER 33:33
