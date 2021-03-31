@@ -30,7 +30,6 @@ RUN apt-get -y update && \
 	libpq5 \
 	libpq-dev \
 	libssl-dev \
-	netcat-openbsd \
 	postgresql-client \
 	yarnpkg && \
     eatmydata pip install uwsgi
