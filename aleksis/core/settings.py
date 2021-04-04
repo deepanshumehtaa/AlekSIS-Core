@@ -214,11 +214,11 @@ merge_app_settings("DATABASES", DATABASES, False)
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
-REDIS_USER = _settings.get("redis.user", "default")
 REDIS_PASSWORD = _settings.get("redis.password", None)
+REDIS_USER = _settings.get("redis.user", None if REDIS_PASSWORD is None else "default")
 
 REDIS_URL = (
-    f"redis://{REDIS_USER}{':'+REDIS_PASSWORD if REDIS_PASSWORD else ''}@"
+    f"redis://{REDIS_USER+':'+REDIS_PASSWORD+'@' if REDIS_USER else ''}"
     f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 )
 
@@ -842,3 +842,7 @@ if _settings.get("storage.s3.enabled", False):
     AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
     AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
     AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
