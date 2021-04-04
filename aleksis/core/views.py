@@ -975,6 +975,9 @@ class OAuth2Delete(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("oauth_list")
     template_name = "oauth2_provider/application_confirm_delete.html"
 
+    def get_queryset(self):
+        return Application.objects.all()
+
 
 class OAuth2Update(PermissionRequiredMixin, UpdateView):
     """View used to update an application."""

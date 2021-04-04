@@ -72,6 +72,15 @@ MENUS = {
                         "aleksis.core.util.core_helpers.has_person",
                     ],
                 },
+                {
+                    "name": _("Authorized tokens"),
+                    "url": "oauth2_provider:authorized-token-list",
+                    "icon": "touch_app",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
             ],
         },
         {

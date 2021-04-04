@@ -2,22 +2,22 @@
 
 {% load i18n %}
 
-{% block browser_title %}{% trans "Delete token" %}{% endblock %}
-{% block page_title %}{% trans "Delete token" %}{% endblock %}
+{% block browser_title %}{% trans "Revoke token" %}{% endblock %}
+{% block page_title %}{% trans "Revoke token" %}{% endblock %}
 
 {% block content %}
   <div class="alert info">
     <p>
       <i class="material-icons left">warning</i>
-      {% trans "Are you sure to delete this token?" %}
+      {% trans "Are you sure to revoke this token?" %}
     </p>
   </div>
 
   <form method="post">
     {% csrf_token %}
     <a class="btn waves-effect waves-light red" href="{% url "oauth_list" %}">
-      <i class="material-icons left">check</i>
-      {% trans "Delete" %}
+      <i class="material-icons left">delete</i>
+      {% trans "Revoke" %}
     </a>
     <a class="btn waves-effect waves-light" href="{% url "oauth_list" %}">
       <i class="material-icons left">cancel</i>

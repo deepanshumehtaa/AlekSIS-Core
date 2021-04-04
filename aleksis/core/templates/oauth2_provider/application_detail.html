@@ -3,13 +3,15 @@
 {% load i18n %}
 
 {% block browser_title %}{% blocktrans %}OAuth2 Applications{% endblocktrans %}{% endblock %}
-{% block page_title %}{{ application.name }}{% endblock %}
+{% block page_title %}
+    <a href="{% url "oauth_list" %}"
+       class="btn-flat primary-color-text waves-light waves-effect">
+      <i class="material-icons left">chevron_left</i> {% trans "Back" %}
+    </a>
+    {{ application.name }}
+{% endblock %}
 
 {% block content %}
-  <a class="btn waves-effect waves-light btn-margin" href="{% url "oauth_list" %}">
-    <i class="material-icons left">chevron_left</i>
-    {% trans "Go Back" %}
-  </a>
   <a class="btn waves-effect waves-light btn-margin" href="{% url "oauth_update" application.id %}">
     <i class="material-icons left">edit</i>
     {% trans "Edit" %}
@@ -25,7 +27,7 @@
           {% trans "Client id" %}
         </td>
         <td>
-          <code>{{ application.client_id }}</code>
+          <code class="break-word">{{ application.client_id }}</code>
         </td>
       </tr>
       <tr>
@@ -33,7 +35,7 @@
           {% trans "Client secret"%}
         </td>
         <td>
-          <code>{{ application.client_secret }}</code>
+          <code class="break-word">{{ application.client_secret }}</code>
         </td>
       </tr>
       <tr>
