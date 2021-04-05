@@ -12,7 +12,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -78,6 +78,17 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
+
+
+class RenderPDFView(TemplateView):
+    """View to render a PDF file from a template.
+
+    Makes use of ``render_pdf``.
+    """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        context = self.get_context_data(**kwargs)
+        return render_pdf(request, self.template_name, context)
 
 
 @permission_required("core.view_dashboard")
@@ -427,6 +438,11 @@ class SystemStatus(PermissionRequiredMixin, MainView):
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
+
+
+class TestPDFGenerationView(PermissionRequiredMixin, RenderPDFView):
+    template_name = "core/pages/test_pdf.html"
+    permission_required = "core.test_pdf"
 
 
 @permission_required(

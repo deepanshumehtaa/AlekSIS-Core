@@ -904,6 +904,7 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
+            ("test_pdf", _("Can test PDF generation")),
         )
 
 

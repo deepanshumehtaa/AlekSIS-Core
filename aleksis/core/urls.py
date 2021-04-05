@@ -167,6 +167,7 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
     path("data_check/", views.DataCheckView.as_view(), name="check_data",),
     path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
     path(
