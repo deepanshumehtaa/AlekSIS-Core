@@ -33,30 +33,7 @@ RUN apt-get -y update && \
 	libssl-dev \
 	postgresql-client \
 	yarnpkg \
-	xvfb \
-    x11-xkb-utils \
-    xfonts-100dpi \
-    xfonts-75dpi \
-    xfonts-scalable \
-    xfonts-cyrillic \
-    x11-apps \
-    clang \
-    libdbus-1-dev \
-    libgtk2.0-dev \
-    libnotify-dev \
-    gnome-keyring \
-    libgconf2-dev \
-    libasound2-dev \
-    libcap-dev \
-    libcups2-dev \
-    libxtst-dev \
-    libxss1 \
-    libnss3-dev \
-    gcc-multilib \
-    libgbm-dev \
-    xauth \
-    g++-multilib && \
-	eatmydata yarnpkg global add electron-pdf && \
+	chromium && \
     eatmydata pip install uwsgi
 
 # Install extra dependencies

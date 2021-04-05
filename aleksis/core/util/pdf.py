@@ -2,11 +2,13 @@ import glob
 import os
 import subprocess  # noqa
 from tempfile import TemporaryDirectory
+from typing import Optional
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
 from celery_progress.backend import ProgressRecorder
@@ -18,7 +20,9 @@ from aleksis.core.util.core_helpers import path_and_rename
 
 
 @recorded_task
-def generate_pdf(html_code: str, pdf_path: str, recorder: ProgressRecorder):
+def generate_pdf(
+    html_code: str, pdf_path: str, recorder: ProgressRecorder, lang: Optional[str] = None
+):
     """Generate a PDF file by rendering the HTML code using electron-pdf."""
     recorder.set_progress(0, 1)
 
@@ -29,8 +33,25 @@ def generate_pdf(html_code: str, pdf_path: str, recorder: ProgressRecorder):
         with open(path, "w") as f:
             f.write(html_code)
 
-        # Start a X framebuffer and run electron-pdf
-        subprocess.run(["xvfb-run", "-a", "electron-pdf", path, pdf_path])  # noqa
+        lang = lang or get_language()
+
+        # Run PDF generation using a headless Chromium
+        cmd = [
+            "chromium",
+            "--headless",
+            "--no-sandbox",
+            "--run-all-compositor-stages-before-draw",
+            "--temp-profile",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+            "--disable-setuid-sandbox",
+            "--dbus-stub",
+            f"--home-dir={temp_dir}",
+            f"--lang={lang}",
+            f"--print-to-pdf={pdf_path}",
+            f"file://{path}",
+        ]
+        subprocess.run(cmd)  # noqa
 
     recorder.set_progress(1, 1)
 
@@ -52,7 +73,9 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
 
     html_template = render_to_string(template_name, context)
 
-    result = generate_pdf.delay(html_template, os.path.join(MEDIA_ROOT, pdf_path))
+    result = generate_pdf.delay(
+        html_template, os.path.join(MEDIA_ROOT, pdf_path), lang=get_language()
+    )
 
     context = {
         "title": _("Progress: Generate PDF file"),
