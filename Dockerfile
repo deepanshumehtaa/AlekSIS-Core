@@ -31,7 +31,9 @@ RUN apt-get -y update && \
 	libpq-dev \
 	libssl-dev \
 	postgresql-client \
-	yarnpkg && \
+	yarnpkg \
+	xvfb && \
+	eatmydata yarnpkg global add electron-pdf && \
     eatmydata pip install uwsgi
 
 # Install extra dependencies
