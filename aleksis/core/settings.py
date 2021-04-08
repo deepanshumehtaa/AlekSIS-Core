@@ -210,6 +210,8 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
