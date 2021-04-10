@@ -34,7 +34,7 @@ secondary = true
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Django = "^3.1.7"
+Django = "^3.2"
 django-any-js = "^1.0"
 django-debug-toolbar = "^3.2"
 django-middleware-global-request = "^0.1.2"
