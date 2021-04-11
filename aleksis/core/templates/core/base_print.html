@@ -14,13 +14,13 @@
     {{ config.SITE_TITLE }}
   </title>
 
-  {% include_css "material-design-icons" prefix=static_prefix %}
-  {% include_css "Roboto" prefix=static_prefix %}
-  {% include_css "paper-css" prefix=static_prefix %}
-  <link rel="stylesheet" href="{{ static_prefix }}{% sass_src 'style.scss' %}"/>
-  <link rel="stylesheet" href="{{ static_prefix }}{% static "print.css" %}"/>
+  {% include_css "material-design-icons" %}
+  {% include_css "Roboto" %}
+  {% include_css "paper-css" %}
+  <link rel="stylesheet" href="{% sass_src 'style.scss' %}"/>
+  <link rel="stylesheet" href="{% static "print.css" %}"/>
   {% if landscape %}
-    <link rel="stylesheet" href="{{ static_prefix }}{% static 'print_landscape.css' %}"/>
+    <link rel="stylesheet" href="{% static 'print_landscape.css' %}"/>
   {% endif %}
   {% block extra_head %}{% endblock %}
 </head>
@@ -46,8 +46,8 @@
             <div id="print-header" class="row">
               <div class="col s6 logo">
                 {% static "img/aleksis-banner.svg" as aleksis_banner %}
-                <img src="{{ static_prefix }}{% firstof request.site.preferences.theme__logo.url aleksis_banner %}"
-                     alt="Logo" id="print-logo"/>
+                <img src="{% firstof request.site.preferences.theme__logo.url aleksis_banner %}" alt="Logo"
+                     id="print-logo"/>
               </div>
               <div class="col s6 right-align">
                 <h5>{% block page_title %}{% endblock %}</h5>

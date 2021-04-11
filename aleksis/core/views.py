@@ -1,19 +1,21 @@
 from typing import Any, Dict, Optional, Type
+from urllib.parse import urljoin
 
 from django.apps import apps
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import TemplateView, View
-from django.views.generic.detail import DetailView
+from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.list import ListView
 
 import reversion
@@ -58,6 +60,7 @@ from .models import (
     Group,
     GroupType,
     Notification,
+    PDFFile,
     Person,
     SchoolTerm,
 )
@@ -957,3 +960,25 @@ class EditDashboardView(PermissionRequiredMixin, View):
         context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
+
+
+class RedirectToPDFFile(SingleObjectMixin, View):
+    """Redirect to a generated PDF file."""
+
+    model = PDFFile
+
+    def get(self, *args, **kwargs):
+        file_object = self.get_object()
+        if not file_object.file:
+            raise Http404()
+        return redirect(urljoin(settings.MEDIA_URL, file_object.file.url))
+
+
+class HTMLForPDFFile(SingleObjectMixin, View):
+    """Return rendered HTML for generating a PDF file."""
+
+    model = PDFFile
+
+    def get(self, *args, **kwargs):
+        file_object = self.get_object()
+        return HttpResponse(file_object.html)

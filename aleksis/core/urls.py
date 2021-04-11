@@ -197,6 +197,8 @@ urlpatterns = [
         {"default": True},
         name="edit_default_dashboard",
     ),
+    path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
 
 # Add URLs for optional features

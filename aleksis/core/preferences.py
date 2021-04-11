@@ -9,6 +9,7 @@ from dynamic_preferences.types import (
     BooleanPreference,
     ChoicePreference,
     FilePreference,
+    IntegerPreference,
     ModelMultipleChoicePreference,
     MultipleChoicePreference,
     StringPreference,
@@ -270,3 +271,14 @@ class DashboardEditing(BooleanPreference):
     default = True
     required = False
     verbose_name = _("Allow users to edit their dashboard")
+
+
+@site_preferences_registry.register
+class PDFFileExpirationDuration(IntegerPreference):
+    """PDF file expiration duration."""
+
+    section = general
+    name = "pdf_expiration"
+    default = 24
+    verbose_name = _("PDF file expiration duration")
+    help_text = _("in hours")

@@ -1,6 +1,6 @@
 # flake8: noqa: DJ01
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
 
 from django.conf import settings
@@ -968,3 +968,30 @@ class DataCheckResult(ExtensibleModel):
             ("run_data_checks", _("Can run data checks")),
             ("solve_data_problem", _("Can solve data check problems")),
         )
+
+
+class PDFFile(ExtensibleModel):
+    """Link to a rendered PDF file."""
+
+    person = models.ForeignKey(
+        to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
+    )
+    expires_at = models.DateTimeField(verbose_name=_("File expires at"))
+    html = models.TextField(verbose_name=_("Rendered HTML"))
+    file = models.FileField(
+        upload_to="pdfs/", blank=True, null=True, verbose_name=_("Generated PDF file")
+    )
+
+    def __str__(self):
+        return f"{self.person} ({self.pk})"
+
+    def save(self, *args, **kwargs):
+        if not self.expires_at:
+            self.expires_at = timezone.now() + timedelta(
+                hours=get_site_preferences()["general__pdf_expiration"]
+            )
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = _("PDF file")
+        verbose_name_plural = _("PDF files")

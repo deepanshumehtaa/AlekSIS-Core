@@ -4,35 +4,37 @@ import subprocess  # noqa
 from tempfile import TemporaryDirectory
 from typing import Optional
 
+from django.conf import settings
+from django.core.files import File
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
+from django.test import override_settings
+from django.urls import reverse
 from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
 from celery_progress.backend import ProgressRecorder
 
 from aleksis.core.celery import app
-from aleksis.core.settings import MEDIA_ROOT, MEDIA_URL
+from aleksis.core.models import PDFFile
+from aleksis.core.settings import MEDIA_ROOT
 from aleksis.core.util.celery_progress import recorded_task
-from aleksis.core.util.core_helpers import path_and_rename
 
 
 @recorded_task
 def generate_pdf(
-    html_code: str, pdf_path: str, recorder: ProgressRecorder, lang: Optional[str] = None
+    file_pk: int, html_url: str, recorder: ProgressRecorder, lang: Optional[str] = None
 ):
     """Generate a PDF file by rendering the HTML code using electron-pdf."""
+    file_object = get_object_or_404(PDFFile, pk=file_pk)
+
     recorder.set_progress(0, 1)
 
     # Open a temporary directory
     with TemporaryDirectory() as temp_dir:
-        # Write HTML code to a temporary file to make it available for electron-pdf
-        path = os.path.join(temp_dir, "print_source.html")
-        with open(path, "w") as f:
-            f.write(html_code)
-
+        pdf_path = os.path.join(temp_dir, "print.pdf")
         lang = lang or get_language()
 
         # Run PDF generation using a headless Chromium
@@ -49,9 +51,14 @@ def generate_pdf(
             f"--home-dir={temp_dir}",
             f"--lang={lang}",
             f"--print-to-pdf={pdf_path}",
-            f"file://{path}",
+            html_url,
         ]
         subprocess.run(cmd)  # noqa
+
+        # Upload PDF file to media storage
+        with open(pdf_path, "rb") as f:
+            file_object.file.save("print.pdf", File(f))
+            file_object.save()
 
     recorder.set_progress(1, 1)
 
@@ -67,15 +74,24 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     """
     if not context:
         context = {}
-    context.setdefault("static_prefix", request.build_absolute_uri("/")[:-1])
 
-    pdf_path = path_and_rename(None, "file.pdf", "pdfs")
+    # Generate absolute URLs for static and media files
+    static_url = settings.STATIC_URL
+    media_url = settings.MEDIA_URL
+    if not static_url.startswith(("http://", "https://")):
+        static_url = request.build_absolute_uri(static_url)
+    if not media_url.startswith(("http://", "https://")):
+        media_url = request.build_absolute_uri(media_url)
 
-    html_template = render_to_string(template_name, context)
+    with override_settings(STATIC_URL=static_url, MEDIA_URL=media_url):
+        html_template = render_to_string(template_name, context)
 
-    result = generate_pdf.delay(
-        html_template, os.path.join(MEDIA_ROOT, pdf_path), lang=get_language()
-    )
+    file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
+    html_url = request.build_absolute_uri(reverse("html_for_pdf_file", args=[file_object.pk]))
+
+    result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
+
+    redirect_url = reverse("redirect_to_pdf_file", args=[file_object.pk])
 
     context = {
         "title": _("Progress: Generate PDF file"),
@@ -85,10 +101,10 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
             "title": _("Generating PDF file …"),
             "success": _("The PDF file has been generated successfully."),
             "error": _("There was a problem while generating the PDF file."),
-            "redirect_on_success": MEDIA_URL + pdf_path,
+            "redirect_on_success": redirect_url,
         },
         "additional_button": {
-            "href": MEDIA_URL + pdf_path,
+            "href": redirect_url,
             "caption": _("Download PDF"),
             "icon": "picture_as_pdf",
         },
