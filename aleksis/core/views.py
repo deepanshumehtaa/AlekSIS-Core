@@ -81,6 +81,7 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
+from .util.pdf import render_pdf
 
 
 class RenderPDFView(TemplateView):
