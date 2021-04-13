@@ -53,7 +53,10 @@ def generate_pdf(
             f"--print-to-pdf={pdf_path}",
             html_url,
         ]
-        subprocess.run(cmd)  # noqa
+        res = subprocess.run(cmd)  # noqa
+
+        # Let the task fail on a non-success return code
+        res.check_returncode()
 
         # Upload PDF file to media storage
         with open(pdf_path, "rb") as f:
