@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Tuple
+from typing import Any, Optional
 
 import django.apps
 from django.apps import apps
@@ -107,11 +107,9 @@ class CoreConfig(AppConfig):
         verbosity: int,
         interactive: bool,
         using: str,
-        plan: List[Tuple],
-        apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
+        super().post_migrate(app_config, verbosity, interactive, using, **kwargs)
 
         # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
