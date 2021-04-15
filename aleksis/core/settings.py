@@ -879,3 +879,10 @@ if _settings.get("storage.s3.enabled", False):
     AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
     AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
     AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+# Add django-cleanup after all apps to ensure that it gets all signals as last app
+INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
