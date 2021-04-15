@@ -1,4 +1,3 @@
-import glob
 import os
 import subprocess  # noqa
 from tempfile import TemporaryDirectory
@@ -12,6 +11,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.test import override_settings
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
@@ -19,7 +19,6 @@ from celery_progress.backend import ProgressRecorder
 
 from aleksis.core.celery import app
 from aleksis.core.models import PDFFile
-from aleksis.core.settings import MEDIA_ROOT
 from aleksis.core.util.celery_progress import recorded_task
 
 
@@ -117,9 +116,12 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     return render(request, "core/pages/progress.html", context)
 
 
+def clean_up_expired_pdf_files() -> None:
+    """Clean up expired PDF files."""
+    PDFFile.objects.filter(expires_at__lt=timezone.now()).delete()
+
+
 @app.task
-def clean_up_pdf_directory() -> None:
-    """Clean up directory with generated PDF files."""
-    files = glob.glob(os.path.join(MEDIA_ROOT, "pdfs", "*.pdf"))
-    for file in files:
-        os.remove(file)
+def clean_up_expired_pdf_files_task() -> None:
+    """Clean up expired PDF files."""
+    return clean_up_expired_pdf_files()
