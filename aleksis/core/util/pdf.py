@@ -95,7 +95,7 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
 
     redirect_url = reverse("redirect_to_pdf_file", args=[file_object.pk])
 
-    context = {
+    progress_context = {
         "title": _("Progress: Generate PDF file"),
         "back_url": context.get("back_url", "index"),
         "progress": {
@@ -113,7 +113,7 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     }
 
     # Render progress view
-    return render(request, "core/pages/progress.html", context)
+    return render(request, "core/pages/progress.html", progress_context)
 
 
 def clean_up_expired_pdf_files() -> None:
