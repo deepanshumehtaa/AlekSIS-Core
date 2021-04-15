@@ -19,6 +19,7 @@ SeleniumTestCaseBase.browsers = list(
 )
 SeleniumTestCaseBase.selenium_hub = os.environ.get("TEST_SELENIUM_HUB", "") or None
 
+
 @pytest.mark.usefixtures("celery_worker")
 @override_settings(CELERY_BROKER_URL="memory://localhost//")
 class SeleniumTests(SeleniumTestCase):
@@ -35,7 +36,7 @@ class SeleniumTests(SeleniumTestCase):
         else:
             return False
 
-    def _login(self, username= "admin", password= "admin", with_screenshots=False):
+    def _login(self, username="admin", password="admin", with_screenshots=False):
         # Navigate to configured login page
         self.selenium.get(self.live_server_url + reverse(settings.LOGIN_URL))
         if with_screenshots:
@@ -56,7 +57,7 @@ class SeleniumTests(SeleniumTestCase):
         if with_screenshots:
             self._screenshot("login_default_superuser_submitted.png")
 
-    def _create_person(self, username = "admin"):
+    def _create_person(self, username="admin"):
         user = User.objects.get(username=username)
         person = Person.objects.create(user=user, first_name="Jane", last_name="Doe")
         return person
@@ -65,7 +66,6 @@ class SeleniumTests(SeleniumTestCase):
         self.selenium.get(self.live_server_url + "/")
         assert "AlekSIS" in self.selenium.title
         self._screenshot("index.png")
-
 
     def test_login_default_superuser(self):
         self._login("admin", "admin", with_screenshots=True)
