@@ -10,10 +10,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('core', '0011_test_pdf_permission'),
+        ('core', '0012_valid_from_announcement'),
     ]
 
     operations = [
+        migrations.AlterModelOptions(
+            name='globalpermissions',
+            options={'default_permissions': (), 'managed': False, 'permissions': (
+            ('view_system_status', 'Can view system status'), ('link_persons_accounts', 'Can link persons to accounts'),
+            ('manage_data', 'Can manage data'), ('impersonate', 'Can impersonate'), ('search', 'Can use search'),
+            ('change_site_preferences', 'Can change site preferences'),
+            ('change_person_preferences', 'Can change person preferences'),
+            ('change_group_preferences', 'Can change group preferences'), ('test_pdf', 'Can test PDF generation'))},
+        ),
         migrations.CreateModel(
             name='PDFFile',
             fields=[
