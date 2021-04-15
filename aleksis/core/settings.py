@@ -821,3 +821,6 @@ else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+# Add django-cleanup after all apps to ensure that it gets all signals as last app
+INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
