@@ -987,7 +987,7 @@ class PDFFile(ExtensibleModel):
         return f"{self.person} ({self.pk})"
 
     @property
-    def secret(self):
+    def secret(self) -> str:
         """Get secret needed for accessing the HTML page."""
         return hmac.new(
             bytes(settings.SECRET_KEY, "utf-8"),
@@ -996,7 +996,7 @@ class PDFFile(ExtensibleModel):
         ).hexdigest()
 
     @property
-    def html_url(self):
+    def html_url(self) -> str:
         """Get URL for the HTML page."""
         return (
             urlparse(reverse("html_for_pdf_file", args=[self.pk]))

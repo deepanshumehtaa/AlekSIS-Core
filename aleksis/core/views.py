@@ -972,7 +972,7 @@ class RedirectToPDFFile(SingleObjectMixin, View):
         file_object = self.get_object()
         if not file_object.file:
             raise Http404()
-        return redirect(urljoin(settings.MEDIA_URL, file_object.file.url))
+        return redirect(file_object.file.url)
 
 
 class HTMLForPDFFile(SingleObjectMixin, View):
