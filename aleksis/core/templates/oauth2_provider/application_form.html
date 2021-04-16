@@ -13,9 +13,9 @@
   <form method="post">
     {% csrf_token %}
     {% form form=form %}{% endform %}
+    {% include "core/partials/save_button.html" %}
     <a class="btn waves-effect red waves-light" href="{% block app-form-back-url %}{% url "oauth_detail" application.id %}{% endblock app-form-back-url %}">
       <i class="material-icons left">clear</i> {% trans "Cancel"%}
     </a>
-    {% include "core/partials/save_button.html" %}
   </form>
 {% endblock %}
