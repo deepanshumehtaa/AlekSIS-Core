@@ -898,11 +898,11 @@ YubiOTP = ">=0.2.2"
 
 [[package]]
 name = "django-phonenumber-field"
-version = "5.0.0"
+version = "5.1.0"
 description = "An international phone number field for django models."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
 Django = ">=2.2"
@@ -2496,7 +2496,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b79e567e9ad65c706e30f207a0ccef83f69eb02b54a39c4d9fcbe896c10242ec"
+content-hash = "ee97afe83a2701ba6294b25fac3f7988908fff01dbaaab8ef2a966ed22cda388"
 
 [metadata.files]
 alabaster = [
@@ -2835,8 +2835,8 @@ django-otp-yubikey = [
     {file = "django_otp_yubikey-1.0.0.post1-py2.py3-none-any.whl", hash = "sha256:613c96be211c1267400a5a78ae63f212c722f82dffb9daef3c8b1df370abb9be"},
 ]
 django-phonenumber-field = [
-    {file = "django-phonenumber-field-5.0.0.tar.gz", hash = "sha256:1eb7af3a108744665f7c3939d38aa15b3728c57d13d45d656b0a2aa11e8cdc3c"},
-    {file = "django_phonenumber_field-5.0.0-py3-none-any.whl", hash = "sha256:adb46905cc4ecb19d8494424e1c4352f24946bb472340a2a17257d44bf8228e6"},
+    {file = "django-phonenumber-field-5.1.0.tar.gz", hash = "sha256:9eda963ac15b363393f677cc084efd45c3bd97bb5a0cdb4a06409ac99e05dd4b"},
+    {file = "django_phonenumber_field-5.1.0-py3-none-any.whl", hash = "sha256:48724ba235ee8248a474204faa0934c5baf9536f429859d05cb131fbd6b1c695"},
 ]
 django-polymorphic = [
     {file = "django-polymorphic-3.0.0.tar.gz", hash = "sha256:9d886f19f031d26bb1391c055ed9be06fb226a04a4cec1842b372c58873b3caa"},
