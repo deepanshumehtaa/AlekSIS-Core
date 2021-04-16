@@ -1,4 +1,4 @@
-FROM python:3.9-buster AS core
+FROM debian:bullseye-slim AS core
 
 # Build arguments
 ARG EXTRAS="ldap,s3"
@@ -31,8 +31,11 @@ RUN apt-get -y update && \
 	libpq-dev \
 	libssl-dev \
 	postgresql-client \
-	yarnpkg && \
-    eatmydata pip install uwsgi
+	python3-dev \
+	python3-pip \
+	uwsgi \
+	uwsgi-plugin-python3 \
+	yarnpkg
 
 # Install extra dependencies
 RUN   case ",$EXTRAS," in \
@@ -73,7 +76,8 @@ RUN set -e; \
         libpq-dev \
         libssl-dev \
         libldap2-dev \
-        libsasl2-dev; \
+        libsasl2-dev \
+        python3-dev; \
     eatmydata apt-get autoremove --purge -y; \
     apt-get clean -y; \
     rm -rf /root/.cache
