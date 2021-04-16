@@ -980,6 +980,8 @@ class HTMLForPDFFile(SingleObjectMixin, View):
 
     model = PDFFile
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         file_object = self.get_object()
+        if request.GET.get("secret") != file_object.secret:
+            raise PermissionDenied()
         return HttpResponse(file_object.html)

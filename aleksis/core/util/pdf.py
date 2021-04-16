@@ -89,7 +89,7 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
         html_template = render_to_string(template_name, context)
 
     file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
-    html_url = request.build_absolute_uri(reverse("html_for_pdf_file", args=[file_object.pk]))
+    html_url = request.build_absolute_uri(file_object.html_url)
 
     result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
 

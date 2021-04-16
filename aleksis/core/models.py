@@ -1,7 +1,8 @@
 # flake8: noqa: DJ01
-
+import hmac
 from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
+from urllib.parse import urlparse
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -984,6 +985,24 @@ class PDFFile(ExtensibleModel):
 
     def __str__(self):
         return f"{self.person} ({self.pk})"
+
+    @property
+    def secret(self):
+        """Get secret needed for accessing the HTML page."""
+        return hmac.new(
+            bytes(settings.SECRET_KEY, "utf-8"),
+            msg=bytes(self.html + str(self.expires_at), "utf-8"),
+            digestmod="sha256",
+        ).hexdigest()
+
+    @property
+    def html_url(self):
+        """Get URL for the HTML page."""
+        return (
+            urlparse(reverse("html_for_pdf_file", args=[self.pk]))
+            ._replace(query=f"secret={self.secret}")
+            .geturl()
+        )
 
     def save(self, *args, **kwargs):
         if not self.expires_at:
