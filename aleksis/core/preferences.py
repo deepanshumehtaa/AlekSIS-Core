@@ -279,6 +279,6 @@ class PDFFileExpirationDuration(IntegerPreference):
 
     section = general
     name = "pdf_expiration"
-    default = 24
+    default = 3
     verbose_name = _("PDF file expiration duration")
-    help_text = _("in hours")
+    help_text = _("in minutes")

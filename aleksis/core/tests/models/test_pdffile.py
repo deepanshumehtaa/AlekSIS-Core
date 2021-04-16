@@ -64,7 +64,9 @@ def test_delete_expired_files():
     dummy_person = Person.objects.create(first_name="Jane", last_name="Doe")
     file_object = PDFFile.objects.create(person=dummy_person, html=_get_test_html())
     file_object2 = PDFFile.objects.create(
-        person=dummy_person, html=_get_test_html(), expires_at=timezone.now() + timedelta(hours=40)
+        person=dummy_person,
+        html=_get_test_html(),
+        expires_at=timezone.now() + timedelta(minutes=10),
     )
     with open(_test_pdf, "rb") as f:
         file_object.file.save("print.pdf", File(f))
@@ -77,9 +79,9 @@ def test_delete_expired_files():
     assert PDFFile.objects.get(pk=file_object2.pk)
 
     # Prepare times
-    test_time_before = timezone.now() + timedelta(hours=12)
-    test_time_between = timezone.now() + timedelta(hours=30)
-    test_time_after = timezone.now() + timedelta(hours=70)
+    test_time_before = timezone.now() + timedelta(minutes=2.5)
+    test_time_between = timezone.now() + timedelta(minutes=4)
+    test_time_after = timezone.now() + timedelta(minutes=15)
 
     # None of the files are expired
     with freezegun.freeze_time(test_time_before):

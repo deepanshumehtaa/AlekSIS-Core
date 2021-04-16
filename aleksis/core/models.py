@@ -974,10 +974,15 @@ class DataCheckResult(ExtensibleModel):
 class PDFFile(ExtensibleModel):
     """Link to a rendered PDF file."""
 
+    def _get_default_expiration():  # noqa
+        return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
+
     person = models.ForeignKey(
         to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
     )
-    expires_at = models.DateTimeField(verbose_name=_("File expires at"))
+    expires_at = models.DateTimeField(
+        verbose_name=_("File expires at"), default=_get_default_expiration
+    )
     html = models.TextField(verbose_name=_("Rendered HTML"))
     file = models.FileField(
         upload_to="pdfs/", blank=True, null=True, verbose_name=_("Generated PDF file")
@@ -1003,13 +1008,6 @@ class PDFFile(ExtensibleModel):
             ._replace(query=f"secret={self.secret}")
             .geturl()
         )
-
-    def save(self, *args, **kwargs):
-        if not self.expires_at:
-            self.expires_at = timezone.now() + timedelta(
-                hours=get_site_preferences()["general__pdf_expiration"]
-            )
-        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("PDF file")
