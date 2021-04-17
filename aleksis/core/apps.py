@@ -28,14 +28,14 @@ class CoreConfig(AppConfig):
     }
     licence = "EUPL-1.2+"
     copyright_info = (
-        ([2021], "magicfelix", "felix@felix-zauberer.de"),
-        ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
-        ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
-        ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
-        ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
-        ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
-        ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
+        ([2017, 2018, 2019, 2020, 2021], "Jonathan Weth", "wethjo@katharineum.de"),
+        ([2017, 2018, 2019, 2020], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Julian Leucker", "leuckeju@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Hangzhi Yu", "yuha@katharineum.de"),
+        ([2019, 2020, 2021], "Dominik George", "dominik.george@teckids.org"),
+        ([2019, 2020, 2021], "Tom Teichler", "tom.teichler@teckids.org"),
         ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2021], "magicfelix", "felix@felix-zauberer.de"),
     )
 
     def ready(self):

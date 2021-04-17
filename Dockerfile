@@ -1,4 +1,4 @@
-FROM python:3.9-buster AS core
+FROM debian:bullseye-slim AS core
 
 # Build arguments
 ARG EXTRAS="ldap,s3"
@@ -12,6 +12,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PIP_NO_CACHE_DIR 1
 ENV PIP_EXTRA_INDEX_URL https://edugit.org/api/v4/projects/461/packages/pypi/simple
 ENV PIP_USE_DEPRECATED legacy-resolver
+ENV DEBIAN_FRONTEND noninteractive
 
 # Configure app settings for build and runtime
 ENV ALEKSIS_static__root /usr/share/aleksis/static
@@ -25,14 +26,18 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
+    chromium \
 	dumb-init \
 	gettext \
 	libpq5 \
 	libpq-dev \
 	libssl-dev \
 	postgresql-client \
-	yarnpkg && \
-    eatmydata pip install uwsgi
+	python3-dev \
+	python3-pip \
+	uwsgi \
+	uwsgi-plugin-python3 \
+	yarnpkg
 
 # Install extra dependencies
 RUN   case ",$EXTRAS," in \
@@ -73,7 +78,8 @@ RUN set -e; \
         libpq-dev \
         libssl-dev \
         libldap2-dev \
-        libsasl2-dev; \
+        libsasl2-dev \
+        python3-dev; \
     eatmydata apt-get autoremove --purge -y; \
     apt-get clean -y; \
     rm -rf /root/.cache

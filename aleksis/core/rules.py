@@ -328,3 +328,6 @@ rules.add_perm("core.can_change_password", can_change_password_predicate)
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
+
+test_pdf_generation_predicate = has_person & has_global_perm("core.test_pdf")
+rules.add_perm("core.test_pdf", test_pdf_generation_predicate)
