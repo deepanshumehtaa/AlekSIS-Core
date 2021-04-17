@@ -26,7 +26,7 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
-    chromium
+    chromium \
 	dumb-init \
 	gettext \
 	libpq5 \
