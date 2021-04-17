@@ -3,13 +3,11 @@ import subprocess  # noqa
 from tempfile import TemporaryDirectory
 from typing import Optional
 
-from django.conf import settings
 from django.core.files import File
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
-from django.test import override_settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import get_language
@@ -77,16 +75,7 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     if not context:
         context = {}
 
-    # Generate absolute URLs for static and media files
-    static_url = settings.STATIC_URL
-    media_url = settings.MEDIA_URL
-    if not static_url.startswith(("http://", "https://")):
-        static_url = request.build_absolute_uri(static_url)
-    if not media_url.startswith(("http://", "https://")):
-        media_url = request.build_absolute_uri(media_url)
-
-    with override_settings(STATIC_URL=static_url, MEDIA_URL=media_url):
-        html_template = render_to_string(template_name, context)
+    html_template = render_to_string(template_name, context)
 
     file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
     html_url = request.build_absolute_uri(file_object.html_url)
