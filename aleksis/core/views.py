@@ -2,7 +2,8 @@ from typing import Any, Dict, Optional, Type
 from urllib.parse import urlencode
 
 from django.apps import apps
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Group as DjangoGroup
+from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -24,7 +25,7 @@ from django_celery_results.models import TaskResult
 from django_filters.views import FilterView
 from django_tables2 import RequestConfig, SingleTableMixin, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
-from guardian.shortcuts import get_objects_for_user
+from guardian.shortcuts import GroupObjectPermission, UserObjectPermission, get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
@@ -1065,6 +1066,46 @@ class AssignPermissionView(SuccessNextMixin, PermissionRequiredMixin, DetailView
             self.request, _("We have successfully assigned the permissions."),
         )
         return redirect(self.get_success_url())
+
+
+class UserGlobalPermissionDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete a global user permission."""
+
+    permission_required = "core.manage_permissions"
+    model = User.user_permissions.through
+    success_message = _("The global user permission has been deleted.")
+    success_url = reverse_lazy("manage_user_global_permissions")
+    template_name = "core/pages/delete.html"
+
+
+class GroupGlobalPermissionDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete a global group permission."""
+
+    permission_required = "core.manage_permissions"
+    model = DjangoGroup.permissions.through
+    success_message = _("The global group permission has been deleted.")
+    success_url = reverse_lazy("manage_group_global_permissions")
+    template_name = "core/pages/delete.html"
+
+
+class UserObjectPermissionDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete a object user permission."""
+
+    permission_required = "core.manage_permissions"
+    model = UserObjectPermission
+    success_message = _("The object user permission has been deleted.")
+    success_url = reverse_lazy("manage_user_object_permissions")
+    template_name = "core/pages/delete.html"
+
+
+class GroupObjectPermissionDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
+    """Delete a object group permission."""
+
+    permission_required = "core.manage_permissions"
+    model = GroupObjectPermission
+    success_message = _("The object group permission has been deleted.")
+    success_url = reverse_lazy("manage_group_object_permissions")
+    template_name = "core/pages/delete.html"
 
 
 class RedirectToPDFFile(SingleObjectMixin, View):

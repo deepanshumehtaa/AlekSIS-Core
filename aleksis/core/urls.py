@@ -218,6 +218,26 @@ urlpatterns = [
         name="manage_group_object_permissions",
     ),
     path(
+        "permissions/global/user/<int:pk>/delete/",
+        views.UserGlobalPermissionDeleteView.as_view(),
+        name="delete_user_global_permission",
+    ),
+    path(
+        "permissions/global/group/<int:pk>/delete/",
+        views.GroupGlobalPermissionDeleteView.as_view(),
+        name="delete_group_global_permission",
+    ),
+    path(
+        "permissions/object/user/<int:pk>/delete/",
+        views.UserObjectPermissionDeleteView.as_view(),
+        name="delete_user_object_permission",
+    ),
+    path(
+        "permissions/object/group/<int:pk>/delete/",
+        views.GroupObjectPermissionDeleteView.as_view(),
+        name="delete_group_object_permission",
+    ),
+    path(
         "permissions/assign/",
         views.SelectPermissionForAssignView.as_view(),
         name="select_permission_for_assign",
