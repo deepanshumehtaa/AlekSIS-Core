@@ -977,6 +977,9 @@ class PDFFile(ExtensibleModel):
     def _get_default_expiration():  # noqa
         return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
 
+    def _get_upload_path(instance, filename):  # noqa
+        return f"pdfs/{instance.secret}.pdf"
+
     person = models.ForeignKey(
         to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
     )
@@ -985,7 +988,7 @@ class PDFFile(ExtensibleModel):
     )
     html = models.TextField(verbose_name=_("Rendered HTML"))
     file = models.FileField(
-        upload_to="pdfs/", blank=True, null=True, verbose_name=_("Generated PDF file")
+        upload_to=_get_upload_path, blank=True, null=True, verbose_name=_("Generated PDF file")
     )
 
     def __str__(self):

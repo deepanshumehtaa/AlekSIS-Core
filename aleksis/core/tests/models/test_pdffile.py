@@ -37,7 +37,7 @@ def test_pdf_file():
     with open(_test_pdf, "rb") as f:
         file_object.file.save("print.pdf", File(f))
     file_object.save()
-    re_base = r"pdfs/print_[a-zA-Z0-9]+\.pdf"
+    re_base = r"pdfs/[a-zA-Z0-9]+\.pdf"
     assert re.match(re_base, file_object.file.name)
 
 
