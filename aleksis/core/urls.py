@@ -167,6 +167,7 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
     path("data_check/", views.DataCheckView.as_view(), name="check_data",),
     path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
     path(
@@ -226,6 +227,8 @@ urlpatterns = [
         views.AssignPermissionView.as_view(),
         name="assign_permission",
     ),
+    path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
 
 # Add URLs for optional features

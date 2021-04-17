@@ -8,15 +8,15 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic import FormView
-from django.views.generic.base import View
-from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView, View
+from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.list import ListView
 
 import reversion
@@ -71,6 +71,7 @@ from .models import (
     Group,
     GroupType,
     Notification,
+    PDFFile,
     Person,
     SchoolTerm,
 )
@@ -95,6 +96,18 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
+from .util.pdf import render_pdf
+
+
+class RenderPDFView(TemplateView):
+    """View to render a PDF file from a template.
+
+    Makes use of ``render_pdf``.
+    """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        context = self.get_context_data(**kwargs)
+        return render_pdf(request, self.template_name, context)
 
 
 @permission_required("core.view_dashboard")
@@ -444,6 +457,11 @@ class SystemStatus(PermissionRequiredMixin, MainView):
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
+
+
+class TestPDFGenerationView(PermissionRequiredMixin, RenderPDFView):
+    template_name = "core/pages/test_pdf.html"
+    permission_required = "core.test_pdf"
 
 
 @permission_required(
@@ -1047,3 +1065,27 @@ class AssignPermissionView(SuccessNextMixin, PermissionRequiredMixin, DetailView
             self.request, _("We have successfully assigned the permissions."),
         )
         return redirect(self.get_success_url())
+
+
+class RedirectToPDFFile(SingleObjectMixin, View):
+    """Redirect to a generated PDF file."""
+
+    model = PDFFile
+
+    def get(self, *args, **kwargs):
+        file_object = self.get_object()
+        if not file_object.file:
+            raise Http404()
+        return redirect(file_object.file.url)
+
+
+class HTMLForPDFFile(SingleObjectMixin, View):
+    """Return rendered HTML for generating a PDF file."""
+
+    model = PDFFile
+
+    def get(self, request, *args, **kwargs):
+        file_object = self.get_object()
+        if request.GET.get("secret") != file_object.secret:
+            raise PermissionDenied()
+        return HttpResponse(file_object.html)
