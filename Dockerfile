@@ -12,6 +12,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PIP_NO_CACHE_DIR 1
 ENV PIP_EXTRA_INDEX_URL https://edugit.org/api/v4/projects/461/packages/pypi/simple
 ENV PIP_USE_DEPRECATED legacy-resolver
+ENV DEBIAN_FRONTEND noninteractive
 
 # Configure app settings for build and runtime
 ENV ALEKSIS_static__root /usr/share/aleksis/static
@@ -25,6 +26,7 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
+    chromium \
 	dumb-init \
 	gettext \
 	libpq5 \
