@@ -24,7 +24,7 @@ from aleksis.core.util.celery_progress import recorded_task
 def generate_pdf(
     file_pk: int, html_url: str, recorder: ProgressRecorder, lang: Optional[str] = None
 ):
-    """Generate a PDF file by rendering the HTML code using electron-pdf."""
+    """Generate a PDF file by rendering the HTML code using a headless Chromium."""
     file_object = get_object_or_404(PDFFile, pk=file_pk)
 
     recorder.set_progress(0, 1)
@@ -67,10 +67,6 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     """Start PDF generation and show progress page.
 
     The progress page will redirect to the PDF after completion.
-
-    .. warning::
-
-        If celery isn't enabled, this will render the template directly in the browser.
     """
     if not context:
         context = {}
