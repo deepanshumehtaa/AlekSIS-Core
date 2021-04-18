@@ -809,6 +809,7 @@ if _settings.get("storage.type", "").lower() == "s3":
     AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
     AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
     AWS_STORAGE_BUCKET_NAME = _settings.get("storage.s3.bucket_name", "")
+    AWS_LOCATION = _settings.get("storage.s3.location", "")
     AWS_S3_ADDRESSING_STYLE = _settings.get("storage.s3.addressing_style", "auto")
     AWS_S3_ENDPOINT_URL = _settings.get("storage.s3.endpoint_url", "")
     AWS_S3_KEY_PREFIX = _settings.get("storage.s3.key_prefix", "")
