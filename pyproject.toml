@@ -109,6 +109,10 @@ s3 = ["boto3", "django-storages"]
 aleksis-builddeps = "*"
 uwsgi = "^2.0"
 
+[tool.poetry.build]
+script = "build.py"
+generate-setup-file = false
+
 [tool.poetry.scripts]
 aleksis-admin = 'aleksis.core.__main__:aleksis_cmd'
 
