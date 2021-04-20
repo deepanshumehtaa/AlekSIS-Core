@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Tuple
+from typing import Any, Optional
 
 import django.apps
 from django.apps import apps
@@ -21,19 +21,21 @@ from .util.sass_helpers import clean_scss
 class CoreConfig(AppConfig):
     name = "aleksis.core"
     verbose_name = "AlekSIS — The Free School Information System"
+    dist_name = "AlekSIS-Core"
 
     urls = {
         "Repository": "https://edugit.org/AlekSIS/official/AlekSIS/",
     }
     licence = "EUPL-1.2+"
     copyright_info = (
-        ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
-        ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
-        ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
-        ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
-        ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
-        ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
+        ([2017, 2018, 2019, 2020, 2021], "Jonathan Weth", "wethjo@katharineum.de"),
+        ([2017, 2018, 2019, 2020], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Julian Leucker", "leuckeju@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Hangzhi Yu", "yuha@katharineum.de"),
+        ([2019, 2020, 2021], "Dominik George", "dominik.george@teckids.org"),
+        ([2019, 2020, 2021], "Tom Teichler", "tom.teichler@teckids.org"),
         ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2021], "magicfelix", "felix@felix-zauberer.de"),
     )
 
     def ready(self):
@@ -52,9 +54,17 @@ class CoreConfig(AppConfig):
 
         self._load_data_checks()
 
-        from .health_checks import DataChecksHealthCheckBackend
+        from .health_checks import (
+            BackupJobHealthCheck,
+            DataChecksHealthCheckBackend,
+            DbBackupAgeHealthCheck,
+            MediaBackupAgeHealthCheck,
+        )
 
         plugin_dir.register(DataChecksHealthCheckBackend)
+        plugin_dir.register(DbBackupAgeHealthCheck)
+        plugin_dir.register(MediaBackupAgeHealthCheck)
+        plugin_dir.register(BackupJobHealthCheck)
 
     @classmethod
     def _load_data_checks(cls):
@@ -97,11 +107,9 @@ class CoreConfig(AppConfig):
         verbosity: int,
         interactive: bool,
         using: str,
-        plan: List[Tuple],
-        apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
+        super().post_migrate(app_config, verbosity, interactive, using, **kwargs)
 
         # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(

@@ -1,23 +1,23 @@
 from typing import Any, Dict, Optional, Type
 
 from django.apps import apps
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.generic.base import View
-from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView, View
+from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.list import ListView
 
 import reversion
+from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -31,6 +31,7 @@ from rules.contrib.views import PermissionRequiredMixin, permission_required
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
+from .celery import app
 from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
@@ -53,9 +54,11 @@ from .models import (
     DashboardWidget,
     DashboardWidgetOrder,
     DataCheckResult,
+    DummyPerson,
     Group,
     GroupType,
     Notification,
+    PDFFile,
     Person,
     SchoolTerm,
 )
@@ -74,8 +77,20 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.core_helpers import has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
+from .util.pdf import render_pdf
+
+
+class RenderPDFView(TemplateView):
+    """View to render a PDF file from a template.
+
+    Makes use of ``render_pdf``.
+    """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        context = self.get_context_data(**kwargs)
+        return render_pdf(request, self.template_name, context)
 
 
 @permission_required("core.view_dashboard")
@@ -83,18 +98,23 @@ def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    if has_person(request.user):
+        person = request.user.person
+        widgets = person.dashboard_widgets
+    else:
+        person = DummyPerson()
+        widgets = []
+
+    activities = person.activities.all()[:5]
+    notifications = person.notifications.all()[:5]
+    unread_notifications = person.notifications.all().filter(read=False)
 
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(person)
     context["announcements"] = announcements
-
-    widgets = request.user.person.dashboard_widgets
 
     if len(widgets) == 0:
         # Use default dashboard if there are no widgets
@@ -411,20 +431,20 @@ class SystemStatus(PermissionRequiredMixin, MainView):
         status_code = 500 if self.errors else 200
         task_results = []
 
-        if "django_celery_results" in settings.INSTALLED_APPS:
-            from django_celery_results.models import TaskResult  # noqa
-
-            from .celery import app  # noqa
-
-            if app.control.inspect().registered_tasks():
-                job_list = list(app.control.inspect().registered_tasks().values())[0]
-                for job in job_list:
-                    task_results.append(
-                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
-                    )
+        if app.control.inspect().registered_tasks():
+            job_list = list(app.control.inspect().registered_tasks().values())[0]
+            for job in job_list:
+                task_results.append(
+                    TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                )
 
         context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
         return self.render_to_response(context, status=status_code)
+
+
+class TestPDFGenerationView(PermissionRequiredMixin, RenderPDFView):
+    template_name = "core/pages/test_pdf.html"
+    permission_required = "core.test_pdf"
 
 
 @permission_required(
@@ -754,17 +774,19 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not check_data()[1]:
-            messages.success(
-                request,
-                _(
-                    "The data check has been started. Please note that it may take "
-                    "a while before you are able to fetch the data on this page."
-                ),
-            )
-        else:
-            messages.success(request, _("The data check has finished."))
-        return redirect("check_data")
+        result = check_data.delay()
+
+        context = {
+            "title": _("Progress: Run data checks"),
+            "back_url": reverse("check_data"),
+            "progress": {
+                "task_id": result.task_id,
+                "title": _("Run data checks …"),
+                "success": _("The data checks were run successfully."),
+                "error": _("There was a problem while running data checks."),
+            },
+        }
+        return render(request, "core/pages/progress.html", context)
 
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
@@ -863,8 +885,10 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     success_message = _("The dashboard widget has been deleted.")
 
 
-class EditDashboardView(View):
+class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
+
+    permission_required = "core.edit_dashboard"
 
     def get_context_data(self, request, **kwargs):
         context = {}
@@ -935,3 +959,27 @@ class EditDashboardView(View):
         context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
+
+
+class RedirectToPDFFile(SingleObjectMixin, View):
+    """Redirect to a generated PDF file."""
+
+    model = PDFFile
+
+    def get(self, *args, **kwargs):
+        file_object = self.get_object()
+        if not file_object.file:
+            raise Http404()
+        return redirect(file_object.file.url)
+
+
+class HTMLForPDFFile(SingleObjectMixin, View):
+    """Return rendered HTML for generating a PDF file."""
+
+    model = PDFFile
+
+    def get(self, request, *args, **kwargs):
+        file_object = self.get_object()
+        if request.GET.get("secret") != file_object.secret:
+            raise PermissionDenied()
+        return HttpResponse(file_object.html)

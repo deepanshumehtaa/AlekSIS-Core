@@ -28,8 +28,7 @@ Install native dependencies
 
 Some system libraries are required to install AlekSIS::
 
-  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext
-
+  sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext chromium
 
 Get Poetry
 ----------
@@ -78,12 +77,14 @@ Running the development server
 ------------------------------
 
 The development server can be started using Django's ``runserver`` command.
+If you want to automatically start other necessary tools in development,
+like the `Celery` worker and scheduler, use ``runuwsgi`` instead.
 You can either configure AlekSIS like in a production environment, or pass
 basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
 `aleksis` (all else remains default) and with the `debug` setting enabled::
 
-  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run ./manage.py runserver
+  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run ./manage.py runuwsgi
 
 .. figure:: /screenshots/index.png
    :scale: 50%
@@ -95,3 +96,4 @@ development server against a local PostgreSQL database with password
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
 .. _Yarn: https://yarnpkg.com
+.. _Celery: https://celeryproject.org/

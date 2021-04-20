@@ -1,6 +1,5 @@
 from django.apps import apps
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
@@ -15,16 +14,17 @@ from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
 from . import views
-from .util.core_helpers import is_celery_enabled
 
 urlpatterns = [
     path("", include("django_prometheus.urls")),
     path("", include("pwa.urls"), name="pwa"),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
+    path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
+    path("celery_progress/", include("celery_progress.urls")),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
     path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
@@ -167,6 +167,7 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
     path("data_check/", views.DataCheckView.as_view(), name="check_data",),
     path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
     path(
@@ -196,23 +197,15 @@ urlpatterns = [
         {"default": True},
         name="edit_default_dashboard",
     ),
+    path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
-
-# Serve static files from STATIC_ROOT to make it work with runserver
-# collectstatic is also required in development for this
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# Serve media files from MEDIA_ROOT to make it work with runserver
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa
 
     urlpatterns += [path("", include(tf_twilio_urls))]
-
-if is_celery_enabled():
-    urlpatterns.append(path("celery_progress/", include("celery_progress.urls")))
 
 # Serve javascript-common if in development
 if settings.DEBUG:

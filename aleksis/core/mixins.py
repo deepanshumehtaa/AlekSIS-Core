@@ -21,6 +21,7 @@ from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
 from guardian.admin import GuardedModelAdmin
+from guardian.core import ObjectPermissionChecker
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
@@ -151,8 +152,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             versions_with_changes.append((version, diff))
 
         return versions_with_changes
-
-    extended_data = JSONField(default=dict, editable=False)
 
     extended_data = JSONField(default=dict, editable=False)
 
@@ -334,6 +333,10 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         """Dynamically add a new permission to a model."""
         cls.extra_permissions.append((name, verbose_name))
 
+    def set_object_permission_checker(self, checker: ObjectPermissionChecker):
+        """Annotate a ``ObjectPermissionChecker`` for use with permission system."""
+        self._permission_checker = checker
+
     def save(self, *args, **kwargs):
         """Ensure all functionality of our extensions that needs saving gets it."""
         # For auto-created remote syncable fields
@@ -352,6 +355,17 @@ class PureDjangoModel(object):
     """No-op mixin to mark a model as deliberately not using ExtensibleModel."""
 
     pass
+
+
+class GlobalPermissionModel(models.Model):
+    """Base model for global permissions.
+
+    This base model ensures that global permissions are not managed."""
+
+    class Meta:
+        default_permissions = ()
+        abstract = True
+        managed = False
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
