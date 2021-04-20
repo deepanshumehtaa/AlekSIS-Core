@@ -29,7 +29,7 @@ icons = {
 }
 
 
-def build():
+def build(setup_kwargs):
     """Generate build files, namely PNG icons"""
     os.makedirs(icon_dir, exist_ok=True)
 
@@ -44,6 +44,8 @@ def build():
             svg2png(
                 bytestring=svg_xml.toxml().encode("utf-8"), dpi=1200, scale=scale, write_to=target
             )
+
+    setup_kwargs["package_data"]["aleksis.core"] += ["static/icons/*"]
 
 
 if __name__ == "__main__":
