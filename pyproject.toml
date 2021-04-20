@@ -108,6 +108,7 @@ s3 = ["boto3", "django-storages"]
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
 uwsgi = "^2.0"
+CairoSVG = "^2.5.2"
 
 [tool.poetry.build]
 script = "build.py"
