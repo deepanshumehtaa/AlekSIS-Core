@@ -502,14 +502,14 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-any-js"
-version = "1.0.3.post1"
-description = "Include JavaScript libraries with readable template tags"
+version = "1.1"
+description = "Include JavaScript/CSS libraries with readable template tags"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2,<4.0"
 
 [[package]]
 name = "django-appconf"
@@ -2522,7 +2522,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ee97afe83a2701ba6294b25fac3f7988908fff01dbaaab8ef2a966ed22cda388"
+content-hash = "af4f0501b8a9a33699a20493a4786ddf21abbbbebea9ca6cdc456c31f6fd7bcd"
 
 [metadata.files]
 alabaster = [
@@ -2724,7 +2724,8 @@ django = [
     {file = "Django-3.2.tar.gz", hash = "sha256:21f0f9643722675976004eb683c55d33c05486f94506672df3d6a141546f389d"},
 ]
 django-any-js = [
-    {file = "django-any-js-1.0.3.post1.tar.gz", hash = "sha256:32306643d4989b3cdbbf6a87bb43ca4d5ca35863c96ad96a8bc0d50bcf9d4ab4"},
+    {file = "django-any-js-1.1.tar.gz", hash = "sha256:2972946902ba049f73bf8bb87e0a0118f77a8c9dca89438f193598bff758422f"},
+    {file = "django_any_js-1.1-py3-none-any.whl", hash = "sha256:1499934e293bbcaad29b8edaaefca87dda79eb3df1faeaaea67b80e2866ae1f8"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.4.tar.gz", hash = "sha256:be58deb54a43d77d2e1621fe59f787681376d3cd0b8bd8e4758ef6c3a6453380"},
@@ -2961,6 +2962,7 @@ flake8-bandit = [
 ]
 flake8-black = [
     {file = "flake8-black-0.2.1.tar.gz", hash = "sha256:f26651bc10db786c03f4093414f7c9ea982ed8a244cec323c984feeffdf4c118"},
+    {file = "flake8_black-0.2.1-py3-none-any.whl", hash = "sha256:941514149cb8b489cb17a4bb1cf18d84375db3b34381bb018de83509437931a0"},
 ]
 flake8-builtins = [
     {file = "flake8-builtins-1.5.3.tar.gz", hash = "sha256:09998853b2405e98e61d2ff3027c47033adbdc17f9fe44ca58443d876eb00f3b"},
