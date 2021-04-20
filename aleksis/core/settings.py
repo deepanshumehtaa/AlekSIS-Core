@@ -527,6 +527,13 @@ DBBACKUP_CONNECTOR_MAPPING = {
     "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
 }
 
+if _settings.get("backup.storage.type", "").lower() == "s3":
+    DBBACKUP_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    DBBACKUP_STORAGE_OPTIONS = {
+        key: value for (key, value) in _settings.get("backup.storage.s3").items()
+    }
+
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/materialize.html"
@@ -810,7 +817,7 @@ PROMETHEUS_EXPORT_MIGRATIONS = False
 
 SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
-if _settings.get("storage.s3.enabled", False):
+if _settings.get("storage.type", "").lower() == "s3":
     INSTALLED_APPS.append("storages")
 
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
@@ -822,11 +829,12 @@ if _settings.get("storage.s3.enabled", False):
             "storage.s3.static.max_age_seconds", 24 * 60 * 60
         )
 
-    AWS_REGION = _settings.get("storage.s3.region", "")
-    AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key_id", "")
+    AWS_REGION = _settings.get("storage.s3.region_name", "")
+    AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key", "")
     AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
     AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
     AWS_STORAGE_BUCKET_NAME = _settings.get("storage.s3.bucket_name", "")
+    AWS_LOCATION = _settings.get("storage.s3.location", "")
     AWS_S3_ADDRESSING_STYLE = _settings.get("storage.s3.addressing_style", "auto")
     AWS_S3_ENDPOINT_URL = _settings.get("storage.s3.endpoint_url", "")
     AWS_S3_KEY_PREFIX = _settings.get("storage.s3.key_prefix", "")

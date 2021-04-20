@@ -217,20 +217,20 @@ python-versions = "*"
 
 [[package]]
 name = "boto3"
-version = "1.17.53"
+version = "1.17.54"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
-botocore = ">=1.20.53,<1.21.0"
+botocore = ">=1.20.54,<1.21.0"
 jmespath = ">=0.7.1,<1.0.0"
-s3transfer = ">=0.3.0,<0.4.0"
+s3transfer = ">=0.4.0,<0.5.0"
 
 [[package]]
 name = "botocore"
-version = "1.20.53"
+version = "1.20.54"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -242,7 +242,7 @@ python-dateutil = ">=2.1,<3.0.0"
 urllib3 = ">=1.25.4,<1.27"
 
 [package.extras]
-crt = ["awscrt (==0.10.8)"]
+crt = ["awscrt (==0.11.11)"]
 
 [[package]]
 name = "bs4"
@@ -532,14 +532,14 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-any-js"
-version = "1.0.3.post1"
-description = "Include JavaScript libraries with readable template tags"
+version = "1.1"
+description = "Include JavaScript/CSS libraries with readable template tags"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2,<4.0"
 
 [[package]]
 name = "django-appconf"
@@ -660,7 +660,7 @@ django-js-asset = ">=1.2.2"
 
 [[package]]
 name = "django-cleanup"
-version = "5.1.0"
+version = "5.2.0"
 description = "Deletes old files."
 category = "main"
 optional = false
@@ -714,7 +714,7 @@ six = "*"
 
 [[package]]
 name = "django-extensions"
-version = "3.1.2"
+version = "3.1.3"
 description = "Extensions for Django"
 category = "main"
 optional = false
@@ -748,14 +748,14 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-formtools"
-version = "2.2"
+version = "2.3"
 description = "A set of high-level abstractions for Django forms"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2"
 
 [[package]]
 name = "django-guardian"
@@ -796,14 +796,14 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-health-check"
-version = "3.16.3"
+version = "3.16.4"
 description = "Run checks on services like databases, queue servers, celery processes, etc."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-django = ">=1.11"
+django = ">=2.2"
 
 [[package]]
 name = "django-impersonate"
@@ -2174,7 +2174,7 @@ python-versions = "*"
 
 [[package]]
 name = "s3transfer"
-version = "0.3.7"
+version = "0.4.0"
 description = "An Amazon S3 Transfer Manager"
 category = "main"
 optional = true
@@ -2182,6 +2182,9 @@ python-versions = "*"
 
 [package.dependencies]
 botocore = ">=1.12.36,<2.0a.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
 [[package]]
 name = "safety"
@@ -2599,7 +2602,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b472dfea8ce5f08e84c2befd0c18964a5640d28439ee5304ae4008569023db2e"
+content-hash = "07334850aad2fe9298ecc2eab7abde5f8d1447728f456f9696e9ff773ba435f5"
 
 [metadata.files]
 alabaster = [
@@ -2671,12 +2674,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.17.53-py2.py3-none-any.whl", hash = "sha256:3bf3305571f3c8b738a53e9e7dcff59137dffe94670046c084a17f9fa4599ff3"},
-    {file = "boto3-1.17.53.tar.gz", hash = "sha256:1d26f6e7ae3c940cb07119077ac42485dcf99164350da0ab50d0f5ad345800cd"},
+    {file = "boto3-1.17.54-py2.py3-none-any.whl", hash = "sha256:eab42daaaf68cdad5b112d31dcb0684162098f6558ba7b64156be44f993525fa"},
+    {file = "boto3-1.17.54.tar.gz", hash = "sha256:1e55df93aa47a84e2a12a639c7f145e16e6e9ef959542d69d5526d50d2e92692"},
 ]
 botocore = [
-    {file = "botocore-1.20.53-py2.py3-none-any.whl", hash = "sha256:d5e70d17b91c9b5867be7d6de0caa7dde9ed789bed62f03ea9b60718dc9350bf"},
-    {file = "botocore-1.20.53.tar.gz", hash = "sha256:e303500c4e80f6a706602da53daa6f751cfa8f491665c99a24ee732ab6321573"},
+    {file = "botocore-1.20.54-py2.py3-none-any.whl", hash = "sha256:20a864fc6570ba11d52532c72c3ccabab5c71a9b4a9418601a313d56f1d2ce5b"},
+    {file = "botocore-1.20.54.tar.gz", hash = "sha256:37ec76ea2df8609540ba6cb0fe360ae1c589d2e1ee91eb642fd767823f3fcedd"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -2854,7 +2857,8 @@ django = [
     {file = "Django-3.2.tar.gz", hash = "sha256:21f0f9643722675976004eb683c55d33c05486f94506672df3d6a141546f389d"},
 ]
 django-any-js = [
-    {file = "django-any-js-1.0.3.post1.tar.gz", hash = "sha256:32306643d4989b3cdbbf6a87bb43ca4d5ca35863c96ad96a8bc0d50bcf9d4ab4"},
+    {file = "django-any-js-1.1.tar.gz", hash = "sha256:2972946902ba049f73bf8bb87e0a0118f77a8c9dca89438f193598bff758422f"},
+    {file = "django_any_js-1.1-py3-none-any.whl", hash = "sha256:1499934e293bbcaad29b8edaaefca87dda79eb3df1faeaaea67b80e2866ae1f8"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.4.tar.gz", hash = "sha256:be58deb54a43d77d2e1621fe59f787681376d3cd0b8bd8e4758ef6c3a6453380"},
@@ -2897,8 +2901,8 @@ django-ckeditor = [
     {file = "django_ckeditor-6.0.0-py2.py3-none-any.whl", hash = "sha256:cc2d377f1bdcd4ca1540caeebe85f7e2cd006198d57328ef6c718d3eaa5a0846"},
 ]
 django-cleanup = [
-    {file = "django-cleanup-5.1.0.tar.gz", hash = "sha256:8976aec12a22913afb3d1fcb541b1aedde2f5ec243e4260c5ff78bb6aa75a089"},
-    {file = "django_cleanup-5.1.0-py2.py3-none-any.whl", hash = "sha256:71e098c7d9ac3f3da40b95cff9c0bc51218d40ef419261232f46ba3141c50acc"},
+    {file = "django-cleanup-5.2.0.tar.gz", hash = "sha256:909d10ff574f5ce1a40fa63bd5c94c9ed866fd7ae770994c46cdf66c3db3e846"},
+    {file = "django_cleanup-5.2.0-py2.py3-none-any.whl", hash = "sha256:193cf69de54b9fc0a0f4547edbb3a63bbe01728cb029f9f4b7912098cc1bced7"},
 ]
 django-colorfield = [
     {file = "django-colorfield-0.4.1.tar.gz", hash = "sha256:63a542c417b72d0dac898a0f61a2a00aed3c9aabc2f5057c926efccf421f7887"},
@@ -2916,8 +2920,8 @@ django-dynamic-preferences = [
     {file = "django_dynamic_preferences-1.10.1-py2.py3-none-any.whl", hash = "sha256:9419fa925fd2cbb665269ae72059eb3058bf080913d853419b827e4e7a141902"},
 ]
 django-extensions = [
-    {file = "django-extensions-3.1.2.tar.gz", hash = "sha256:081828e985485662f62a22340c1506e37989d14b927652079a5b7cd84a82368b"},
-    {file = "django_extensions-3.1.2-py3-none-any.whl", hash = "sha256:17f85f4dcdd5eea09b8c4f0bad8f0370bf2db6d03e61b431fa7103fee29888de"},
+    {file = "django-extensions-3.1.3.tar.gz", hash = "sha256:5f0fea7bf131ca303090352577a9e7f8bfbf5489bd9d9c8aea9401db28db34a0"},
+    {file = "django_extensions-3.1.3-py3-none-any.whl", hash = "sha256:50de8977794a66a91575dd40f87d5053608f679561731845edbd325ceeb387e3"},
 ]
 django-favicon-plus-reloaded = [
     {file = "django-favicon-plus-reloaded-1.0.4.tar.gz", hash = "sha256:90c761c636a338e6e9fb1d086649d82095085f92cff816c9cf074607f28c85a5"},
@@ -2928,8 +2932,8 @@ django-filter = [
     {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
 ]
 django-formtools = [
-    {file = "django-formtools-2.2.tar.gz", hash = "sha256:c5272c03c1cd51b2375abf7397a199a3148a9fbbf2f100e186467a84025d13b2"},
-    {file = "django_formtools-2.2-py2.py3-none-any.whl", hash = "sha256:304fa777b8ef9e0693ce7833f885cb89ba46b0e46fc23b01176900a93f46742f"},
+    {file = "django-formtools-2.3.tar.gz", hash = "sha256:9663b6eca64777b68d6d4142efad8597fe9a685924673b25aa8a1dcff4db00c3"},
+    {file = "django_formtools-2.3-py3-none-any.whl", hash = "sha256:4699937e19ee041d803943714fe0c1c7ad4cab802600eb64bbf4cdd0a1bfe7d9"},
 ]
 django-guardian = [
     {file = "django-guardian-2.3.0.tar.gz", hash = "sha256:ed2de26e4defb800919c5749fb1bbe370d72829fbd72895b6cf4f7f1a7607e1b"},
@@ -2943,8 +2947,8 @@ django-haystack = [
     {file = "django-haystack-3.0.tar.gz", hash = "sha256:d490f920afa85471dd1fa5000bc8eff4b704daacbe09aee1a64e75cbc426f3be"},
 ]
 django-health-check = [
-    {file = "django-health-check-3.16.3.tar.gz", hash = "sha256:a6aa6ea423eae4fd0665f6372b826af1ed20dfc3e88cf52789d0b49cfb64969c"},
-    {file = "django_health_check-3.16.3-py2.py3-none-any.whl", hash = "sha256:d0628ffc11aee7e62e73b58ff39179ea2a9ca5abfbc92cb345ceca268593dd71"},
+    {file = "django-health-check-3.16.4.tar.gz", hash = "sha256:334bcbbb9273a6dbd9c928e78474306e623dfb38cc442281cb9fd230a20a7fdb"},
+    {file = "django_health_check-3.16.4-py2.py3-none-any.whl", hash = "sha256:86a8869d67e72394a1dd73e37819a7d2cfd915588b96927fda611d7451fd4735"},
 ]
 django-impersonate = [
     {file = "django-impersonate-1.7.3.tar.gz", hash = "sha256:282003957577c7143fe31e5861f8fffdf6fe0c25557aedb28fcf8b11474eaa23"},
@@ -3095,6 +3099,7 @@ flake8-bandit = [
 ]
 flake8-black = [
     {file = "flake8-black-0.2.1.tar.gz", hash = "sha256:f26651bc10db786c03f4093414f7c9ea982ed8a244cec323c984feeffdf4c118"},
+    {file = "flake8_black-0.2.1-py3-none-any.whl", hash = "sha256:941514149cb8b489cb17a4bb1cf18d84375db3b34381bb018de83509437931a0"},
 ]
 flake8-builtins = [
     {file = "flake8-builtins-1.5.3.tar.gz", hash = "sha256:09998853b2405e98e61d2ff3027c47033adbdc17f9fe44ca58443d876eb00f3b"},
@@ -3695,8 +3700,8 @@ rules = [
     {file = "rules-2.2.tar.gz", hash = "sha256:9bae429f9d4f91a375402990da1541f9e093b0ac077221d57124d06eeeca4405"},
 ]
 s3transfer = [
-    {file = "s3transfer-0.3.7-py2.py3-none-any.whl", hash = "sha256:efa5bd92a897b6a8d5c1383828dca3d52d0790e0756d49740563a3fb6ed03246"},
-    {file = "s3transfer-0.3.7.tar.gz", hash = "sha256:35627b86af8ff97e7ac27975fe0a98a312814b46c6333d8a6b889627bcd80994"},
+    {file = "s3transfer-0.4.0-py2.py3-none-any.whl", hash = "sha256:af1af6384bd7fb8208b06480f9be73d0295d965c4c073a5c95ea5b6661dccc18"},
+    {file = "s3transfer-0.4.0.tar.gz", hash = "sha256:f3dfd791cad2799403e3c8051810a7ca6ee1d2e630e5d2a8f9649d892bdb3db6"},
 ]
 safety = [
     {file = "safety-1.10.3-py2.py3-none-any.whl", hash = "sha256:5f802ad5df5614f9622d8d71fedec2757099705c2356f862847c58c6dfe13e84"},

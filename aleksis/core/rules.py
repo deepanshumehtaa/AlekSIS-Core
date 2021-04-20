@@ -357,3 +357,6 @@ rules.add_perm("core.delete_oauth_applications", delete_oauth_applications_predi
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
+
+test_pdf_generation_predicate = has_person & has_global_perm("core.test_pdf")
+rules.add_perm("core.test_pdf", test_pdf_generation_predicate)
