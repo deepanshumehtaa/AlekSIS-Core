@@ -411,7 +411,7 @@ class AssignPermissionForm(forms.Form):
 
     layout = Layout(
         Fieldset(_("Who should get the permission?"), "groups", "persons"),
-        Fieldset(_("For what?"), "objects", "all_objects"),
+        Fieldset(_("On what?"), "objects", "all_objects"),
     )
     groups = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(),

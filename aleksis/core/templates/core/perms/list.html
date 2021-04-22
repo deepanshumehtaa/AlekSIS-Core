@@ -49,6 +49,7 @@
 
   <div class="card">
     <div class="card-content">
+      <div class="card-title">{% trans "Filter permissions" %}</div>
       <form method="get" action="">
         {% csrf_token %}
         {% form form=filter.form %}{% endform %}
