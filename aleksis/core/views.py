@@ -33,6 +33,7 @@ from health_check.views import MainView
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+from templated_email import send_templated_mail
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
@@ -95,7 +96,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import has_person, objectgetter_optional
+from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
 
@@ -370,16 +371,39 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
     if id_:
         # Edit form for existing group
         edit_person_form = EditPersonForm(
-            request.POST or None, request.FILES or None, instance=person
+            request, request.POST or None, request.FILES or None, instance=person
         )
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST or None, request.FILES or None)
+            edit_person_form = EditPersonForm(request, request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
     if request.method == "POST":
         if edit_person_form.is_valid():
+            if person and person == request.user.person:
+                # Check if user edited non-editable field
+                notification_fields = get_site_preferences()[
+                    "account__notification_on_person_change"
+                ]
+                send_notification_fields = set(edit_person_form.changed_data).intersection(
+                    set(notification_fields)
+                )
+                context["send_notification_fields"] = send_notification_fields
+                if send_notification_fields:
+                    context["send_notification_fields"] = send_notification_fields
+                    send_templated_mail(
+                        template_name="person_changed",
+                        from_email=request.user.person.mail_sender_via,
+                        headers={
+                            "Reply-To": request.user.person.mail_sender,
+                            "Sender": request.user.person.mail_sender,
+                        },
+                        recipient_list=[
+                            get_site_preferences()["account__person_change_notification_contact"]
+                        ],
+                        context=context,
+                    )
             with reversion.create_revision():
                 set_user(request.user)
                 edit_person_form.save(commit=True)
