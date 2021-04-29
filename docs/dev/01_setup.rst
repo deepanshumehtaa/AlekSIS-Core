@@ -10,6 +10,7 @@ environment that contains AlekSIS and everything you need to run the
 framework and selected apps.
 
 Also, `Yarn`_ is needed to resolve JavaScript dependencies.
+For repository management, `myrepos` is required.
 
 Get the source tree
 -------------------
@@ -17,8 +18,12 @@ Get the source tree
 To download AlekSIS and all officially bundled apps in their
 development version, use Git like so::
 
-  git clone https://edugit.org/AlekSIS/official/AlekSIS-Core
+  git clone https://edugit.org/AlekSIS/official/AlekSIS
 
+This first downloads a meta repository that contains a config file for mr.
+To clone the AlekSIS-Core and all official (and onboarding) apps, run::
+
+  mr update
 
 Install native dependencies
 ---------------------------
