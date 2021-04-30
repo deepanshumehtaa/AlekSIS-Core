@@ -7,7 +7,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0012_valid_from_announcement'),
+        ('core', '0014_alter_pdffile_file'),
     ]
 
     operations = [

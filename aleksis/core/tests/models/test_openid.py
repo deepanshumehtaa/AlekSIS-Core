@@ -1,5 +1,4 @@
 import pytest
-
 from oauth2_provider.models import Application
 
 pytestmark = pytest.mark.django_db
