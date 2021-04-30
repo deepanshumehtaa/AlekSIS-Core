@@ -7,7 +7,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0010_external_link_widget'),
+        ('core', '0012_valid_from_announcement'),
     ]
 
     operations = [

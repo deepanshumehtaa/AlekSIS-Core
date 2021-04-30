@@ -20,13 +20,13 @@ class LDAPBackend(_LDAPBackend):
         Django database in order to not require it to have global admin permissions
         on the LDAP directory.
         """
-        user = ldap_user.authenticate(password)
-
-        if not user:
-            # Fail early and do not try other backends
-            raise PermissionDenied("LDAP failed to authenticate user")
+        user = super().authenticate_ldap_user(ldap_user, password)
 
         if self.settings.SET_USABLE_PASSWORD:
+            if not user:
+                # Fail early and do not try other backends
+                raise PermissionDenied("LDAP failed to authenticate user")
+
             # Set a usable password so users can change their LDAP password
             user.set_password(password)
             user.save()

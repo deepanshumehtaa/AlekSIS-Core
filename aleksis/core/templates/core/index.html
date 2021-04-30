@@ -16,9 +16,6 @@
       {% trans "Edit dashboard" %}
     </a>
   {% endif %}
-  <h4>
-    {{ request.site.preferences.general__title }}
-  </h4>
 
   {% for notification in unread_notifications %}
     <div class="alert primary scale-transition">
