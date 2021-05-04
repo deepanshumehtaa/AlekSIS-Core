@@ -47,9 +47,9 @@
 
   <!-- Nav bar (logged in as, logout) -->
   <nav>
-    <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
-
     <div class="nav-wrapper">
+      <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
+
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
           <li>{% trans "Logged in as" %} {{ user.get_username }}</li>

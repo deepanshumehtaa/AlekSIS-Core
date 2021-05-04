@@ -87,7 +87,6 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
-    "django_global_request",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -158,7 +157,6 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
-    "django_global_request.middleware.GlobalRequestMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -350,7 +348,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
     # Keep local password for users to be required to proveide their old password on change
-    AUTH_LDAP_SET_USABLE_PASSWORD = True
+    AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
     # Ensures proper read permissions, and ability to change password without admin
