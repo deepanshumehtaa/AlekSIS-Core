@@ -321,6 +321,22 @@ rules.add_perm("core.edit_dashboard", edit_dashboard_predicate)
 edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_default_dashboard")
 rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 
+# OAuth2 permissions
+add_oauth_applications_predicate = has_person & has_global_perm("core.add_oauth_applications")
+rules.add_perm("core.add_oauth_applications", add_oauth_applications_predicate)
+
+list_oauth_applications_predicate = has_person & has_global_perm("core.list_oauth_applications")
+rules.add_perm("core.list_oauth_applications", list_oauth_applications_predicate)
+
+view_oauth_applications_predicate = has_person & has_global_perm("core.view_oauth_applications")
+rules.add_perm("core.view_oauth_applications", view_oauth_applications_predicate)
+
+update_oauth_applications_predicate = has_person & has_global_perm("core.update_oauth_applications")
+rules.add_perm("core.update_oauth_applications", update_oauth_applications_predicate)
+
+delete_oauth_applications_predicate = has_person & has_global_perm("core.delete_oauth_applications")
+rules.add_perm("core.delete_oauth_applications", delete_oauth_applications_predicate)
+
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)

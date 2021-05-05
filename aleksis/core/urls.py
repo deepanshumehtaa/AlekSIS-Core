@@ -10,6 +10,7 @@ import debug_toolbar
 from ckeditor_uploader import views as ckeditor_uploader_views
 from django_js_reverse.views import urls_js
 from health_check.urls import urlpatterns as health_urls
+from oauth2_provider.views import ConnectDiscoveryInfoView
 from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
@@ -82,6 +83,16 @@ urlpatterns = [
     path("search/", views.PermissionSearchView(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
+    path(
+        ".well-known/openid-configuration",
+        ConnectDiscoveryInfoView.as_view(),
+        name="oidc_configuration",
+    ),
+    path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
+    path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
+    path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
+    path("oauth/applications/<int:pk>/update", views.OAuth2Update.as_view(), name="oauth_update"),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
