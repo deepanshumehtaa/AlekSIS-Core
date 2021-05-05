@@ -322,39 +322,19 @@ edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_defau
 rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
 
 # OAuth2 permissions
-add_oauth_applications_predicate = (
-    has_person
-    & is_site_preference_set(section="auth", pref="oauth_provider_enabled")
-    & has_global_perm("core.add_oauth_applications")
-)
+add_oauth_applications_predicate = has_person & has_global_perm("core.add_oauth_applications")
 rules.add_perm("core.add_oauth_applications", add_oauth_applications_predicate)
 
-list_oauth_applications_predicate = (
-    has_person
-    & is_site_preference_set(section="auth", pref="oauth_provider_enabled")
-    & has_global_perm("core.list_oauth_applications")
-)
+list_oauth_applications_predicate = has_person & has_global_perm("core.list_oauth_applications")
 rules.add_perm("core.list_oauth_applications", list_oauth_applications_predicate)
 
-view_oauth_applications_predicate = (
-    has_person
-    & is_site_preference_set(section="auth", pref="oauth_provider_enabled")
-    & has_global_perm("core.view_oauth_applications")
-)
+view_oauth_applications_predicate = has_person & has_global_perm("core.view_oauth_applications")
 rules.add_perm("core.view_oauth_applications", view_oauth_applications_predicate)
 
-update_oauth_applications_predicate = (
-    has_person
-    & is_site_preference_set(section="auth", pref="oauth_provider_enabled")
-    & has_global_perm("core.update_oauth_applications")
-)
+update_oauth_applications_predicate = has_person & has_global_perm("core.update_oauth_applications")
 rules.add_perm("core.update_oauth_applications", update_oauth_applications_predicate)
 
-delete_oauth_applications_predicate = (
-    has_person
-    & is_site_preference_set(section="auth", pref="oauth_provider_enabled")
-    & has_global_perm("core.delete_oauth_applications")
-)
+delete_oauth_applications_predicate = has_person & has_global_perm("core.delete_oauth_applications")
 rules.add_perm("core.delete_oauth_applications", delete_oauth_applications_predicate)
 
 # Upload and browse files via CKEditor
