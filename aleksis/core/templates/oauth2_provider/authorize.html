@@ -27,6 +27,7 @@
           <form method="post">
             {% csrf_token %}
             {% form form=form %}
+              {% part form.allow %}<input type="hidden" value="true" name="allow">{% endpart %}
             {% endform %}
             <button type="submit" class="btn green waves-effect waves-light btn-margin">
               <i class="material-icons left">done_all</i> {% trans "Allow" %}
