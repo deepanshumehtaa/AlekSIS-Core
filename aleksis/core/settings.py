@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     "favicon",
     "django_filters",
     "oauth2_provider",
+    "rest_framework",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -289,6 +290,13 @@ if oidc_enabled:
             "address": "Address scope",
         },
     }
+
+# Configuration for REST framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    ]
+}
 
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
