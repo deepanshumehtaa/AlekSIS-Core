@@ -277,6 +277,7 @@ OAUTH2_PROVIDER = {
         "write": "Write anything the resource owner can write",
     }
 }
+merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
 
 if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
