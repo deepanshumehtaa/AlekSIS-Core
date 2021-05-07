@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     "favicon",
     "django_filters",
     "oauth2_provider",
+    "rest_framework",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -270,25 +271,42 @@ AUTHENTICATION_BACKENDS = []
 
 # Configuration for OAuth2 provider
 
-oidc_enabled = _settings.get("oauth2.oidc.enabled", False)
+OAUTH2_PROVIDER = {
+    "SCOPES": {
+        "read": "Read anything the resource owner can read",
+        "write": "Write anything the resource owner can write",
+    }
+}
+merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
 
-if oidc_enabled:
+if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
         oid_rsa_key = f.read()
 
-    OAUTH2_PROVIDER = {
-        "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
-        "OIDC_ENABLED": oidc_enabled,
-        "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
-        #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
-        "SCOPES": {
+    OAUTH2_PROVIDER.update(
+        {
+            "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
+            "OIDC_ENABLED": True,
+            "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
+            #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
+        }
+    )
+    OAUTH2_PROVIDER["SCOPES"].update(
+        {
             "openid": "OpenID Connect scope",
             "profile": "Profile scope",
             "phone": "Phone scope",
             "email": "Email scope",
             "address": "Address scope",
-        },
-    }
+        }
+    )
+
+# Configuration for REST framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    ]
+}
 
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
