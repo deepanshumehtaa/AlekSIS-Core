@@ -24,6 +24,7 @@ from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from cache_memoize import cache_memoize
+from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
@@ -1015,3 +1016,23 @@ class PDFFile(ExtensibleModel):
     class Meta:
         verbose_name = _("PDF file")
         verbose_name_plural = _("PDF files")
+
+
+class TaskUserAssignment(ExtensibleModel):
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, verbose_name=_("Task result")
+    )
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name=_("Task user")
+    )
+
+    @classmethod
+    def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
+        # Use get_or_create to ensure the TaskResult exists
+        # django-celery-results will later add the missing information
+        result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        return cls.objects.create(task_result=result, user=user)
+
+    class Meta:
+        verbose_name = _("Task user assignment")
+        verbose_name_plural = _("Task user assignments")

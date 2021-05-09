@@ -6,7 +6,7 @@ from typing import Optional
 from django.core.files import File
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
@@ -17,7 +17,7 @@ from celery_progress.backend import ProgressRecorder
 
 from aleksis.core.celery import app
 from aleksis.core.models import PDFFile
-from aleksis.core.util.celery_progress import recorded_task
+from aleksis.core.util.celery_progress import recorded_task, render_progress_page
 
 
 @recorded_task
@@ -80,25 +80,19 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
 
     redirect_url = reverse("redirect_to_pdf_file", args=[file_object.pk])
 
-    progress_context = {
-        "title": _("Progress: Generate PDF file"),
-        "back_url": context.get("back_url", "index"),
-        "progress": {
-            "task_id": result.task_id,
-            "title": _("Generating PDF file …"),
-            "success": _("The PDF file has been generated successfully."),
-            "error": _("There was a problem while generating the PDF file."),
-            "redirect_on_success": redirect_url,
-        },
-        "additional_button": {
-            "href": redirect_url,
-            "caption": _("Download PDF"),
-            "icon": "picture_as_pdf",
-        },
-    }
-
-    # Render progress view
-    return render(request, "core/pages/progress.html", progress_context)
+    return render_progress_page(
+        request,
+        result,
+        title=_("Progress: Generate PDF file"),
+        progress_title=_("Generating PDF file …"),
+        success_message=_("The PDF file has been generated successfully."),
+        error_message=_("There was a problem while generating the PDF file."),
+        redirect_on_success_url=redirect_url,
+        back_url=context.get("back_url", reverse("index")),
+        button_title=_("Download PDF"),
+        button_url=redirect_url,
+        button_icon="picture_as_pdf",
+    )
 
 
 def clean_up_expired_pdf_files() -> None:
