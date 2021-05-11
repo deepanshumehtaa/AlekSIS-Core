@@ -1078,5 +1078,5 @@ class CeleryProgressView(View):
         if not TaskUserAssignment.objects.filter(
             task_result__task_id=task_id, user=request.user
         ).exists():
-            raise PermissionDenied()
+            raise Http404()
         return get_progress(request, task_id, *args, **kwargs)
