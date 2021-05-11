@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
         ('sites', '0002_alter_domain_unique'),
         ('django_celery_results', '0008_chordcounter'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('core', '0014_alter_pdffile_file'),
+        ('core', '0015_oauth_permissions'),
     ]
 
     operations = [
