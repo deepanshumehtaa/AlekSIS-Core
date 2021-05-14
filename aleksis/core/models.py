@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -436,7 +437,7 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+    group_info_tracker = FieldTracker(fields=("name", "short_name"))
 
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
@@ -478,8 +479,9 @@ class PersonGroupThrough(ExtensibleModel):
 
 
 @receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+@receiver(models.signals.m2m_changed, sender=Group.owners.through)
 def save_group_on_m2m_changed(
-    sender: PersonGroupThrough,
+    sender: Union[PersonGroupThrough, Group.owners.through],
     instance: models.Model,
     action: str,
     reverse: bool,
