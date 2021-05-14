@@ -871,5 +871,12 @@ else:
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
 
+# Settings for sendfile
+if not _settings.get("storage.type", "").lower() == "s3":
+    INSTALLED_APPS.append("django_sendfile")
+    SENDFILE_ROOT = _settings.get("sendfile.root", "/")
+    _SENDFILE_BACKEND = _settings.get("sendfile.backend", "nginx")
+    SENDFILE_BACKEND = f"django_sendfile.backends.{_SENDFILE_BACKEND}"
+
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
