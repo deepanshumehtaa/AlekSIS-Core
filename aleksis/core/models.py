@@ -32,13 +32,15 @@ from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
     GroupQuerySet,
+    InstalledWidgetsDashboardWidgetOrderManager,
     SchoolTermQuerySet,
+    UninstallRenitentPolymorphicManager,
 )
 from .mixins import (
     ExtensibleModel,
@@ -740,6 +742,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
           )
     """
 
+    objects = UninstallRenitentPolymorphicManager()
+
+    data_checks = [BrokenDashboardWidgetDataCheck]
+
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
         """Return all media required to render the selected widgets."""
@@ -749,10 +755,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
+    template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+    broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
     size_s = models.PositiveSmallIntegerField(
         verbose_name=_("Size on mobile devices"),
@@ -779,6 +787,11 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
+    def _get_context_safe(self, request):
+        if self.broken:
+            return {"title": self.title}
+        return self.get_context(request)
+
     def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -787,8 +800,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         """Get template.
 
         Get the template to render the widget with. Defaults to the template attribute,
-        but can be overridden to allow more complex template generation scenarios.
+        but can be overridden to allow more complex template generation scenarios. If
+        the widget is marked as broken, the template_broken attribute will be returned.
         """
+        if self.broken:
+            return self.template_broken
+        if not self.template:
+            raise NotImplementedError("A widget subclass needs to define a template.")
         return self.template
 
     def __str__(self):
@@ -823,6 +841,8 @@ class DashboardWidgetOrder(ExtensibleModel):
     )
     order = models.PositiveIntegerField(verbose_name=_("Order"))
     default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
+
+    objects = InstalledWidgetsDashboardWidgetOrderManager()
 
     @classproperty
     def default_dashboard_widgets(cls):
