@@ -1,14 +1,8 @@
-import sys
 from datetime import datetime, timedelta
-from importlib import import_module
+from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
-
-if sys.version_info >= (3, 9):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata
 
 from django.conf import settings
 from django.db.models import Model, QuerySet
@@ -195,6 +189,7 @@ def custom_information_processor(request: HttpRequest) -> dict:
         "ALTERNATIVE_LOGIN_VIEWS": [
             a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
         ],
+        "ADMINS": settings.ADMINS,
     }
 
 

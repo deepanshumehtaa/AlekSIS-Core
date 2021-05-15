@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GlobalPermissions',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
             ],
             options={
                 'default_permissions': (),
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AdditionalField',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('title', models.CharField(max_length=255, verbose_name='Title of field')),
                 ('field_type', models.CharField(choices=[('BooleanField', 'Boolean (Yes/No)'), ('CharField', 'Text (one line)'), ('DateField', 'Date'), ('DateTimeField', 'Date and time'), ('DecimalField', 'Decimal number'), ('EmailField', 'E-mail address'), ('IntegerField', 'Integer'), ('GenericIPAddressField', 'IP address'), ('NullBooleanField', 'Boolean or empty (Yes/No/Neither)'), ('TextField', 'Text (multi-line)'), ('TimeField', 'Time'), ('URLField', 'URL / Link')], max_length=50, verbose_name='Type of field')),
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Announcement',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('title', models.CharField(max_length=150, verbose_name='Title')),
                 ('description', models.TextField(blank=True, max_length=500, verbose_name='Description')),
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CustomMenu',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('name', models.CharField(max_length=100, unique=True, verbose_name='Menu ID')),
                 ('site', models.ForeignKey(default=1, editable=False, on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Group',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('name', models.CharField(max_length=255, unique=True, verbose_name='Long name')),
                 ('short_name', models.CharField(blank=True, max_length=255, null=True, unique=True, verbose_name='Short name')),
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Person',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('is_active', models.BooleanField(default=True, verbose_name='Is person active?')),
                 ('first_name', models.CharField(max_length=255, verbose_name='First name')),
@@ -155,7 +155,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SitePreferenceModel',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('section', models.CharField(blank=True, db_index=True, default=None, max_length=150, null=True, verbose_name='Section Name')),
                 ('name', models.CharField(db_index=True, max_length=150, verbose_name='Name')),
                 ('raw_value', models.TextField(blank=True, null=True, verbose_name='Raw Value')),
@@ -166,7 +166,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PersonPreferenceModel',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('section', models.CharField(blank=True, db_index=True, default=None, max_length=150, null=True, verbose_name='Section Name')),
                 ('name', models.CharField(db_index=True, max_length=150, verbose_name='Name')),
                 ('raw_value', models.TextField(blank=True, null=True, verbose_name='Raw Value')),
@@ -177,7 +177,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PersonGroupThrough',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.Group')),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.Person')),
@@ -193,7 +193,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Notification',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('sender', models.CharField(max_length=100, verbose_name='Sender')),
                 ('title', models.CharField(max_length=150, verbose_name='Title')),
@@ -215,7 +215,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GroupType',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('name', models.CharField(max_length=50, verbose_name='Title of type')),
                 ('description', models.CharField(max_length=500, verbose_name='Description')),
@@ -232,7 +232,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GroupPreferenceModel',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('section', models.CharField(blank=True, db_index=True, default=None, max_length=150, null=True, verbose_name='Section Name')),
                 ('name', models.CharField(db_index=True, max_length=150, verbose_name='Name')),
                 ('raw_value', models.TextField(blank=True, null=True, verbose_name='Raw Value')),
@@ -268,7 +268,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DashboardWidget',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=150, verbose_name='Widget Title')),
                 ('active', models.BooleanField(verbose_name='Activate Widget')),
                 ('polymorphic_ctype', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='polymorphic_core.dashboardwidget_set+', to='contenttypes.ContentType')),
@@ -282,7 +282,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CustomMenuItem',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('name', models.CharField(max_length=150, verbose_name='Name')),
                 ('url', models.URLField(verbose_name='Link')),
@@ -301,7 +301,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AnnouncementRecipient',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('recipient_id', models.PositiveIntegerField()),
                 ('announcement', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='recipients', to='core.Announcement')),
@@ -319,7 +319,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Activity',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('title', models.CharField(max_length=150, verbose_name='Title')),
                 ('description', models.TextField(max_length=500, verbose_name='Description')),

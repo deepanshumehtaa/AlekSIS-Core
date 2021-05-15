@@ -39,13 +39,11 @@ django-any-js = "^1.1"
 django-debug-toolbar = "^3.2"
 django-menu-generator-ng = "^1.2.3"
 django-tables2 = "^2.1"
-Pillow = "^8.0"
 django-phonenumber-field = {version = "<5.2", extras = ["phonenumbers"]}
 django-sass-processor = "^1.0"
 libsass = "^0.20.0"
 colour = "^0.1.5"
 dynaconf = {version = "^3.1", extras = ["yaml", "toml", "ini"]}
-django-settings-context-processor = "^0.2"
 django-auth-ldap = { version = "^2.2", optional = true }
 django-maintenance-mode = "^0.16.0"
 django-ipware = "^3.0"
@@ -89,7 +87,6 @@ psutil = "^5.7.0"
 celery-progress = "^0.1.0"
 django-cachalot = "^2.3.2"
 django-prometheus = "^2.1.0"
-importlib-metadata = {version = "^4.0.0", python = "<3.9"}
 django-model-utils = "^4.0.0"
 bs4 = "^0.0.1"
 django-allauth = "^0.44.0"

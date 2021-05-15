@@ -284,3 +284,35 @@ def send_emails_for_data_checks():
         logging.info("Sent notification email because of unsent data checks")
 
         results.update(sent=True)
+
+
+class DeactivateDashboardWidgetSolveOption(SolveOption):
+    name = "deactivate_dashboard_widget"
+    verbose_name = _("Deactivate DashboardWidget")
+
+    @classmethod
+    def solve(cls, check_result: "DataCheckResult"):
+        widget = check_result.related_object
+        widget.active = False
+        widget.save()
+        check_result.delete()
+
+
+class BrokenDashboardWidgetDataCheck(DataCheck):
+    name = "broken_dashboard_widgets"
+    verbose_name = _("Ensure that there are no broken DashboardWidgets.")
+    problem_name = _("The DashboardWidget was reported broken automatically.")
+    solve_options = {
+        IgnoreSolveOption.name: IgnoreSolveOption,
+        DeactivateDashboardWidgetSolveOption.name: DeactivateDashboardWidgetSolveOption,
+    }
+
+    @classmethod
+    def check_data(cls):
+        from .models import DashboardWidget
+
+        broken_widgets = DashboardWidget.objects.filter(broken=True, active=True)
+
+        for widget in broken_widgets:
+            logging.info("Check DashboardWidget %s", widget)
+            cls.register_result(widget)

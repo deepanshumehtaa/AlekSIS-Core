@@ -25,19 +25,22 @@ from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from cache_memoize import cache_memoize
+from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
     GroupQuerySet,
+    InstalledWidgetsDashboardWidgetOrderManager,
     SchoolTermQuerySet,
+    UninstallRenitentPolymorphicManager,
 )
 from .mixins import (
     ExtensibleModel,
@@ -739,6 +742,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
           )
     """
 
+    objects = UninstallRenitentPolymorphicManager()
+
+    data_checks = [BrokenDashboardWidgetDataCheck]
+
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
         """Return all media required to render the selected widgets."""
@@ -748,10 +755,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
+    template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+    broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
     size_s = models.PositiveSmallIntegerField(
         verbose_name=_("Size on mobile devices"),
@@ -778,6 +787,11 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
+    def _get_context_safe(self, request):
+        if self.broken:
+            return {"title": self.title}
+        return self.get_context(request)
+
     def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -786,8 +800,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         """Get template.
 
         Get the template to render the widget with. Defaults to the template attribute,
-        but can be overridden to allow more complex template generation scenarios.
+        but can be overridden to allow more complex template generation scenarios. If
+        the widget is marked as broken, the template_broken attribute will be returned.
         """
+        if self.broken:
+            return self.template_broken
+        if not self.template:
+            raise NotImplementedError("A widget subclass needs to define a template.")
         return self.template
 
     def __str__(self):
@@ -822,6 +841,8 @@ class DashboardWidgetOrder(ExtensibleModel):
     )
     order = models.PositiveIntegerField(verbose_name=_("Order"))
     default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
+
+    objects = InstalledWidgetsDashboardWidgetOrderManager()
 
     @classproperty
     def default_dashboard_widgets(cls):
@@ -1022,3 +1043,23 @@ class PDFFile(ExtensibleModel):
     class Meta:
         verbose_name = _("PDF file")
         verbose_name_plural = _("PDF files")
+
+
+class TaskUserAssignment(ExtensibleModel):
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, verbose_name=_("Task result")
+    )
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name=_("Task user")
+    )
+
+    @classmethod
+    def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
+        # Use get_or_create to ensure the TaskResult exists
+        # django-celery-results will later add the missing information
+        result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        return cls.objects.create(task_result=result, user=user)
+
+    class Meta:
+        verbose_name = _("Task user assignment")
+        verbose_name_plural = _("Task user assignments")

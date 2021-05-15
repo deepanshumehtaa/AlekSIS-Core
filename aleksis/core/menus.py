@@ -249,7 +249,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_group_type",
+                            "core.view_grouptypes",
                         )
                     ],
                 },
@@ -282,7 +282,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_additionalfield",
+                            "core.view_additionalfields",
                         )
                     ],
                 },

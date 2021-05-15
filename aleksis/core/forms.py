@@ -1,5 +1,5 @@
 from datetime import datetime, time
-from typing import Callable, Dict, List, Sequence, Tuple
+from typing import Callable, Sequence
 
 from django import forms
 from django.conf import settings
@@ -522,11 +522,11 @@ class ActionForm(forms.Form):
         """Get all defined actions."""
         return self.actions
 
-    def _get_actions_dict(self) -> Dict[str, Callable]:
+    def _get_actions_dict(self) -> dict[str, Callable]:
         """Get all defined actions as dictionary."""
         return {value.__name__: value for value in self.get_actions()}
 
-    def _get_action_choices(self) -> List[Tuple[str, str]]:
+    def _get_action_choices(self) -> list[tuple[str, str]]:
         """Get all defined actions as Django choices."""
         return [
             (value.__name__, getattr(value, "short_description", value.__name__))
@@ -583,15 +583,15 @@ class ListActionForm(ActionForm):
         # Return None in order not to raise an unwanted exception
         return None
 
-    def _get_dict(self) -> Dict[str, dict]:
+    def _get_dict(self) -> dict[str, dict]:
         """Get the items sorted by pk attribute."""
         return {item["pk"]: item for item in self.items}
 
-    def _get_choices(self) -> List[Tuple[str, str]]:
+    def _get_choices(self) -> list[tuple[str, str]]:
         """Get the items as Django choices."""
         return [(item["pk"], item["pk"]) for item in self.items]
 
-    def _get_real_items(self, items: Sequence[dict]) -> List[dict]:
+    def _get_real_items(self, items: Sequence[dict]) -> list[dict]:
         """Get the real dictionaries from a list of pks."""
         items_dict = self._get_dict()
         real_items = []
@@ -601,7 +601,7 @@ class ListActionForm(ActionForm):
             real_items.append(items_dict[item])
         return real_items
 
-    def clean_selected_objects(self) -> List[dict]:
+    def clean_selected_objects(self) -> list[dict]:
         data = self.cleaned_data["selected_objects"]
         items = self._get_real_items(data)
         return items

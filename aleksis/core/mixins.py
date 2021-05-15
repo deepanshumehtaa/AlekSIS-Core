@@ -1,7 +1,7 @@
 # flake8: noqa: DJ12
 
 from datetime import datetime
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -131,7 +131,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         pass
 
     @property
-    def versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
+    def versions(self) -> list[tuple[str, tuple[Any, Any]]]:
         """Get all versions of this object from django-reversion.
 
         Includes diffs to previous version.
@@ -271,8 +271,8 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     @classmethod
     def syncable_fields(
-        cls, recursive: bool = True, exclude_remotes: List = []
-    ) -> List[models.Field]:
+        cls, recursive: bool = True, exclude_remotes: list = []
+    ) -> list[models.Field]:
         """Collect all fields that can be synced on a model.
 
         If recursive is True, it recurses into related models and generates virtual
@@ -317,14 +317,14 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         return fields
 
     @classmethod
-    def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
+    def syncable_fields_choices(cls) -> tuple[tuple[str, str]]:
         """Collect all fields that can be synced on a model."""
         return tuple(
             [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
         )
 
     @classmethod
-    def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
+    def syncable_fields_choices_lazy(cls) -> Callable[[], tuple[tuple[str, str]]]:
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
 
