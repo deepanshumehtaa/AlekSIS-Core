@@ -7,7 +7,7 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from oauth2_provider.oauth2_validators import OAuth2Validator
 
-from .core_helpers import has_person, get_site_preferences
+from .core_helpers import get_site_preferences, has_person
 
 
 class OurSocialAccountAdapter(DefaultSocialAccountAdapter):

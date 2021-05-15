@@ -422,13 +422,9 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
                 label=_("Password (again)"), widget=forms.PasswordInput
             )
 
-        self.fields["first_name"] = forms.CharField(
-            required=True,
-        )
+        self.fields["first_name"] = forms.CharField(required=True,)
 
-        self.fields["last_name"] = forms.CharField(
-            required=True,
-        )
+        self.fields["last_name"] = forms.CharField(required=True,)
 
         self.fields["privacy_policy"] = forms.BooleanField(
             help_text=_(
@@ -465,10 +461,10 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
         Person.objects.create(
-            first_name = self.cleaned_data["first_name"],
-            last_name = self.cleaned_data["last_name"],
-            email = self.cleaned_data["email"],
-            user = user,
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["last_name"],
+            email=self.cleaned_data["email"],
+            user=user,
         )
         self.custom_signup(request, user)
         setup_user_email(request, user, [])

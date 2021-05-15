@@ -11,7 +11,7 @@
     <div class="card red">
       <div class="card-content white-text">
         <div class="material-icons small left">error_outline</div>
-        <span class="card-title">{% blocktrans %}Verify your email!{% endblock %}</span>
+        <span class="card-title">{% blocktrans %}Verify your email!{% endblocktrans %}</span>
         <p>
           {% blocktrans %}
             This part of the site requires us to verify that you are who you claim to be.
@@ -27,7 +27,7 @@
         </p>
         <p>
           {% url 'account_email' as email_url %}
-          {% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>.{% endblocktrans %}
+          {% blocktrans with email_url=email_url %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>{% endblocktrans %}
         </p>
         {% include "core/partials/admins_list.html" %}
       </div>
