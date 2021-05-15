@@ -400,7 +400,7 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
     """Form to register new user accounts."""
 
     class Meta:
-        model = Person
+        model = Group
         fields = []
 
     layout = Layout(
@@ -423,11 +423,11 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
             )
 
         self.fields["first_name"] = forms.CharField(
-            required=True, widget=forms.TextInput(attrs={"placeholder": _("First name"),})
+            required=True,
         )
 
         self.fields["last_name"] = forms.CharField(
-            required=True, widget=forms.TextInput(attrs={"placeholder": _("Last name"),})
+            required=True,
         )
 
         self.fields["privacy_policy"] = forms.BooleanField(
@@ -464,6 +464,12 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         adapter = get_adapter(request)
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
+        Person.objects.create(
+            first_name = self.cleaned_data["first_name"],
+            last_name = self.cleaned_data["last_name"],
+            email = self.cleaned_data["email"],
+            user = user,
+        )
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
