@@ -106,9 +106,10 @@ class InstalledWidgetsDashBoardWidgetOrderManager(Manager):
     """A custom manager that only returns DashboardWidgetOrder objects with an existing dashboard widget"""
     def get_queryset(self):
         queryset = super().get_queryset()
+
         # Get the DashboardWidget model class without importing it to avoid a circular import
         DashboardWidget = queryset.model.widget.field.related_model  # noqa
         dashboard_widget_pks = DashboardWidget.objects.all().values("id")
-        print(dashboard_widget_pks)
+
         # [obj["id"] for obj in list(Person.objects.all().values("id"))]
         return super().get_queryset().filter(widget_id__in=dashboard_widget_pks)
