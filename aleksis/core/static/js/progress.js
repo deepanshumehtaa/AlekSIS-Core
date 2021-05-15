@@ -64,7 +64,7 @@ function customError(progressBarElement, progressBarMessageElement) {
 $(document).ready(function () {
     $("#progress-bar").removeClass("indeterminate").addClass("determinate");
 
-    var progressUrl = Urls["celeryProgress:taskStatus"](OPTIONS.task_id);
+    var progressUrl = Urls["taskStatus"](OPTIONS.task_id);
     CeleryProgressBar.initProgressBar(progressUrl, {
         onProgress: customProgress,
         onSuccess: customSuccess,
