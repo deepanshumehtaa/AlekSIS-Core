@@ -705,7 +705,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
     return render(request, "core/additional_field/edit.html", context)
 
 
-@permission_required("core.view_additionalfield")
+@permission_required("core.view_additionalfields")
 def additional_fields(request: HttpRequest) -> HttpResponse:
     """List view for listing all additional fields."""
     context = {}
@@ -764,7 +764,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
     return render(request, "core/group_type/edit.html", context)
 
 
-@permission_required("core.view_grouptype")
+@permission_required("core.view_grouptypes")
 def group_types(request: HttpRequest) -> HttpResponse:
     """List view for listing all group types."""
     context = {}
