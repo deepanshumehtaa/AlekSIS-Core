@@ -142,12 +142,12 @@ def lazy_get_favicons(
 
         favicon, created = Favicon.on_site.get_or_create(title=title)
         if created:
-            favicon.faviconImg.save(os.path.basename(default), File(open(default, "rb")))
+            favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
             favicon.save()
         favicon_imgs = favicon.get_favicons(config_override=config)
 
         return [
-            {"src": favicon_img.faviconImg.url, "sizes": [f"{favicon_img.size}x{favicon_img.size}"]}
+            {"src": favicon_img.faviconImage.url, "sizes": [f"{favicon_img.size}x{favicon_img.size}"]}
             | add_attrs
             for favicon_img in favicon_imgs
         ]
