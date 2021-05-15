@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -436,7 +437,7 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+    group_info_tracker = FieldTracker(fields=("name", "short_name"))
 
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
@@ -478,8 +479,9 @@ class PersonGroupThrough(ExtensibleModel):
 
 
 @receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+@receiver(models.signals.m2m_changed, sender=Group.owners.through)
 def save_group_on_m2m_changed(
-    sender: PersonGroupThrough,
+    sender: Union[PersonGroupThrough, Group.owners.through],
     instance: models.Model,
     action: str,
     reverse: bool,
@@ -905,6 +907,11 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
+            ("add_oauth_applications", _("Can add oauth applications")),
+            ("list_oauth_applications", _("Can list oauth applications")),
+            ("view_oauth_applications", _("Can view oauth applications")),
+            ("update_oauth_applications", _("Can update oauth applications")),
+            ("delete_oauth_applications", _("Can delete oauth applications")),
             ("test_pdf", _("Can test PDF generation")),
         )
 

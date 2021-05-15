@@ -71,7 +71,7 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     if not context:
         context = {}
 
-    html_template = render_to_string(template_name, context)
+    html_template = render_to_string(template_name, context, request)
 
     file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
     html_url = request.build_absolute_uri(file_object.html_url)
