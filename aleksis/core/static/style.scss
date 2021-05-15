@@ -326,6 +326,11 @@ input[type="checkbox"].chips-checkbox + span {
   }
 }
 
+// Move label of ckeditor up
+.margin-top-35 {
+  margin-top: 35px;
+}
+
 // Badges
 
 span.badge.new::after {
@@ -400,7 +405,7 @@ th.orderable > a {
 }
 
 th.orderable > a::after {
-  @extend i.material-icons;
+  @extend .material-icons;
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -695,4 +700,23 @@ main .alert p:first-child, main .alert div:first-child {
 .jscolor {
   background-color: inherit !important;
   color: inherit !important;
+}
+
+.break-word {
+  overflow-wrap: anywhere;
+}
+
+.card .card-action-light {
+	background-color: inherit;
+	border-top: 1px solid rgba(160, 160, 160, 0.2);
+	position: relative;
+	padding: 16px 24px;
+}
+
+.margin-top {
+  margin-top: 0.7rem !important;
+}
+
+.margin-bottom {
+  margin-bottom: 0.7rem !important;
 }

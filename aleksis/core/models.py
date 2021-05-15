@@ -1,7 +1,8 @@
 # flake8: noqa: DJ01
-
-from datetime import date, datetime
+import hmac
+from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
+from urllib.parse import urlparse
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -13,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -23,6 +25,7 @@ from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from cache_memoize import cache_memoize
+from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
@@ -437,7 +440,7 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+    group_info_tracker = FieldTracker(fields=("name", "short_name"))
 
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
@@ -479,8 +482,9 @@ class PersonGroupThrough(ExtensibleModel):
 
 
 @receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+@receiver(models.signals.m2m_changed, sender=Group.owners.through)
 def save_group_on_m2m_changed(
-    sender: PersonGroupThrough,
+    sender: Union[PersonGroupThrough, Group.owners.through],
     instance: models.Model,
     action: str,
     reverse: bool,
@@ -924,6 +928,12 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
+            ("add_oauth_applications", _("Can add oauth applications")),
+            ("list_oauth_applications", _("Can list oauth applications")),
+            ("view_oauth_applications", _("Can view oauth applications")),
+            ("update_oauth_applications", _("Can update oauth applications")),
+            ("delete_oauth_applications", _("Can delete oauth applications")),
+            ("test_pdf", _("Can test PDF generation")),
         )
 
 
@@ -987,3 +997,69 @@ class DataCheckResult(ExtensibleModel):
             ("run_data_checks", _("Can run data checks")),
             ("solve_data_problem", _("Can solve data check problems")),
         )
+
+
+class PDFFile(ExtensibleModel):
+    """Link to a rendered PDF file."""
+
+    def _get_default_expiration():  # noqa
+        return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
+
+    def _get_upload_path(instance, filename):  # noqa
+        return f"pdfs/{instance.secret}.pdf"
+
+    person = models.ForeignKey(
+        to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
+    )
+    expires_at = models.DateTimeField(
+        verbose_name=_("File expires at"), default=_get_default_expiration
+    )
+    html = models.TextField(verbose_name=_("Rendered HTML"))
+    file = models.FileField(
+        upload_to=_get_upload_path, blank=True, null=True, verbose_name=_("Generated PDF file")
+    )
+
+    def __str__(self):
+        return f"{self.person} ({self.pk})"
+
+    @property
+    def secret(self) -> str:
+        """Get secret needed for accessing the HTML page."""
+        return hmac.new(
+            bytes(settings.SECRET_KEY, "utf-8"),
+            msg=bytes(self.html + str(self.expires_at), "utf-8"),
+            digestmod="sha256",
+        ).hexdigest()
+
+    @property
+    def html_url(self) -> str:
+        """Get URL for the HTML page."""
+        return (
+            urlparse(reverse("html_for_pdf_file", args=[self.pk]))
+            ._replace(query=f"secret={self.secret}")
+            .geturl()
+        )
+
+    class Meta:
+        verbose_name = _("PDF file")
+        verbose_name_plural = _("PDF files")
+
+
+class TaskUserAssignment(ExtensibleModel):
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, verbose_name=_("Task result")
+    )
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name=_("Task user")
+    )
+
+    @classmethod
+    def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
+        # Use get_or_create to ensure the TaskResult exists
+        # django-celery-results will later add the missing information
+        result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        return cls.objects.create(task_result=result, user=user)
+
+    class Meta:
+        verbose_name = _("Task user assignment")
+        verbose_name_plural = _("Task user assignments")

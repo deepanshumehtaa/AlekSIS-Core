@@ -87,7 +87,6 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
-    "django_global_request",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -134,6 +133,8 @@ INSTALLED_APPS = [
     "django_bleach",
     "favicon",
     "django_filters",
+    "oauth2_provider",
+    "rest_framework",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -151,14 +152,13 @@ MIDDLEWARE = [
     "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
-    "django_global_request.middleware.GlobalRequestMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_otp.middleware.OTPMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -213,10 +213,13 @@ merge_app_settings("DATABASES", DATABASES, False)
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
-REDIS_USER = _settings.get("redis.user", None)
 REDIS_PASSWORD = _settings.get("redis.password", None)
+REDIS_USER = _settings.get("redis.user", None if REDIS_PASSWORD is None else "default")
 
-REDIS_URL = f"redis://{REDIS_USER+'@' if REDIS_USER else ''}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+REDIS_URL = (
+    f"redis://{REDIS_USER+':'+REDIS_PASSWORD+'@' if REDIS_USER else ''}"
+    f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+)
 
 if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
@@ -242,7 +245,7 @@ INSTALLED_APPS.append("cachalot")
 DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
 CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
 CACHALOT_DATABASES = set(["default"])
-SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+SILENCED_SYSTEM_CHECKS += ["cachalot.W001"]
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
@@ -266,6 +269,45 @@ AUTH_INITIAL_SUPERUSER = {
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
 
+# Configuration for OAuth2 provider
+
+OAUTH2_PROVIDER = {
+    "SCOPES": {
+        "read": "Read anything the resource owner can read",
+        "write": "Write anything the resource owner can write",
+    }
+}
+merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
+
+if _settings.get("oauth2.oidc.enabled", False):
+    with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
+        oid_rsa_key = f.read()
+
+    OAUTH2_PROVIDER.update(
+        {
+            "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
+            "OIDC_ENABLED": True,
+            "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
+            #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
+        }
+    )
+    OAUTH2_PROVIDER["SCOPES"].update(
+        {
+            "openid": "OpenID Connect scope",
+            "profile": "Profile scope",
+            "phone": "Phone scope",
+            "email": "Email scope",
+            "address": "Address scope",
+        }
+    )
+
+# Configuration for REST framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    ]
+}
+
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
@@ -288,7 +330,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
     # Keep local password for users to be required to proveide their old password on change
-    AUTH_LDAP_SET_USABLE_PASSWORD = True
+    AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
     # Ensures proper read permissions, and ability to change password without admin
@@ -398,6 +440,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "@fontsource/roboto",
     "datatables",
     "jquery",
     "materialize-css",
@@ -432,6 +475,7 @@ ANY_JS = {
     },
     "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
+    "Roboto": {"css_url": JS_URL + "/@fontsource/roboto/index.css"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -479,9 +523,10 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
 )
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = "ipware.ip.get_ip"
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
-MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
+MAINTENANCE_MODE_STATE_FILE_NAME = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 
 DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
 DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
@@ -497,6 +542,13 @@ DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
 DBBACKUP_CONNECTOR_MAPPING = {
     "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
 }
+
+if _settings.get("backup.storage.type", "").lower() == "s3":
+    DBBACKUP_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    DBBACKUP_STORAGE_OPTIONS = {
+        key: value for (key, value) in _settings.get("backup.storage.s3").items()
+    }
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
@@ -778,3 +830,46 @@ DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
 MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+
+SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
+
+if _settings.get("storage.type", "").lower() == "s3":
+    INSTALLED_APPS.append("storages")
+
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    if _settings.get("storage.s3.static.enabled", False):
+        STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+        AWS_STORAGE_BUCKET_NAME_STATIC = _settings.get("storage.s3.static.bucket_name", "")
+        AWS_S3_MAX_AGE_SECONDS_CACHED_STATIC = _settings.get(
+            "storage.s3.static.max_age_seconds", 24 * 60 * 60
+        )
+
+    AWS_REGION = _settings.get("storage.s3.region_name", "")
+    AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key", "")
+    AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
+    AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
+    AWS_STORAGE_BUCKET_NAME = _settings.get("storage.s3.bucket_name", "")
+    AWS_LOCATION = _settings.get("storage.s3.location", "")
+    AWS_S3_ADDRESSING_STYLE = _settings.get("storage.s3.addressing_style", "auto")
+    AWS_S3_ENDPOINT_URL = _settings.get("storage.s3.endpoint_url", "")
+    AWS_S3_KEY_PREFIX = _settings.get("storage.s3.key_prefix", "")
+    AWS_S3_BUCKET_AUTH = _settings.get("storage.s3.bucket_auth", True)
+    AWS_S3_MAX_AGE_SECONDS = _settings.get("storage.s3.max_age_seconds", 24 * 60 * 60)
+    AWS_S3_PUBLIC_URL = _settings.get("storage.s3.public_url", "")
+    AWS_S3_REDUCED_REDUNDANCY = _settings.get("storage.s3.reduced_redundancy", False)
+    AWS_S3_CONTENT_DISPOSITION = _settings.get("storage.s3.content_disposition", "")
+    AWS_S3_CONTENT_LANGUAGE = _settings.get("storage.s3.content_language", "")
+    AWS_S3_METADATA = _settings.get("storage.s3.metadata", {})
+    AWS_S3_ENCRYPT_KEY = _settings.get("storage.s3.encrypt_key", False)
+    AWS_S3_KMS_ENCRYPTION_KEY_ID = _settings.get("storage.s3.kms_encryption_key_id", "")
+    AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
+    AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
+    AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+# Add django-cleanup after all apps to ensure that it gets all signals as last app
+INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

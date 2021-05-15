@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.db.models import Model
@@ -7,6 +9,7 @@ from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
 
+from ..mixins import ExtensibleModel
 from ..models import Group
 from .core_helpers import get_content_type_by_perm, get_site_preferences
 from .core_helpers import has_person as has_person_helper
@@ -25,8 +28,20 @@ def check_global_permission(user: User, perm: str) -> bool:
     return ModelBackend().has_perm(user, perm)
 
 
-def check_object_permission(user: User, perm: str, obj: Model) -> bool:
-    """Check whether a user has a permission on a object."""
+def check_object_permission(
+    user: User, perm: str, obj: Model, checker_obj: Optional[ExtensibleModel] = None
+) -> bool:
+    """Check whether a user has a permission on an object.
+
+    You can provide a custom ``ObjectPermissionChecker`` for prefetching object permissions
+    by annotating an extensible model with ``set_object_permission_checker``.
+    This can be the provided object (``obj``)  or a special object
+    which is only used to get the checker class (``checker_obj``).
+    """
+    if not checker_obj:
+        checker_obj = obj
+    if hasattr(checker_obj, "_permission_checker"):
+        return checker_obj._permission_checker.has_perm(perm, obj)
     return ObjectPermissionBackend().has_perm(user, perm, obj)
 
 
@@ -116,3 +131,14 @@ def is_notification_recipient(user: User, obj: Model) -> bool:
     notification a user wants to mark read is this user.
     """
     return user == obj.recipient.user
+
+
+def contains_site_preference_value(section: str, pref: str, value: str):
+    """Check if given site preference contains a value."""
+    name = f"check_site_preference_value:{section}__{pref}"
+
+    @predicate(name)
+    def fn() -> bool:
+        return bool(value in get_site_preferences()[f"{section}__{pref}"])
+
+    return fn

@@ -10,6 +10,7 @@ import debug_toolbar
 from ckeditor_uploader import views as ckeditor_uploader_views
 from django_js_reverse.views import urls_js
 from health_check.urls import urlpatterns as health_urls
+from oauth2_provider.views import ConnectDiscoveryInfoView
 from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
@@ -24,7 +25,7 @@ urlpatterns = [
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
-    path("celery_progress/", include("celery_progress.urls")),
+    path("celery_progress/<str:task_id>/", views.CeleryProgressView.as_view(), name="task_status"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
     path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
@@ -82,6 +83,16 @@ urlpatterns = [
     path("search/", views.PermissionSearchView(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
+    path(
+        ".well-known/openid-configuration",
+        ConnectDiscoveryInfoView.as_view(),
+        name="oidc_configuration",
+    ),
+    path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
+    path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
+    path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
+    path("oauth/applications/<int:pk>/update", views.OAuth2Update.as_view(), name="oauth_update"),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
@@ -167,6 +178,7 @@ urlpatterns = [
         name="preferences_group",
     ),
     path("health/", include(health_urls)),
+    path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
     path("data_check/", views.DataCheckView.as_view(), name="check_data",),
     path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
     path(
@@ -196,6 +208,8 @@ urlpatterns = [
         {"default": True},
         name="edit_default_dashboard",
     ),
+    path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
 
 # Add URLs for optional features
