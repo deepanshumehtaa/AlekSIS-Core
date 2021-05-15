@@ -108,7 +108,7 @@ class UninstallRenitentPolymorphicManager(PolymorphicManager):
             return super().get_queryset()
 
 
-class InstalledWidgetsDashBoardWidgetOrderManager(Manager):
+class InstalledWidgetsDashboardWidgetOrderManager(Manager):
     """A manager that only returns DashboardWidgetOrder objects with an existing widget."""
 
     def get_queryset(self):

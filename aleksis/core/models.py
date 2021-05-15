@@ -38,7 +38,7 @@ from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
     GroupQuerySet,
-    InstalledWidgetsDashBoardWidgetOrderManager,
+    InstalledWidgetsDashboardWidgetOrderManager,
     SchoolTermQuerySet,
     UninstallRenitentPolymorphicManager,
 )
@@ -842,7 +842,7 @@ class DashboardWidgetOrder(ExtensibleModel):
     order = models.PositiveIntegerField(verbose_name=_("Order"))
     default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
 
-    objects = InstalledWidgetsDashBoardWidgetOrderManager()
+    objects = InstalledWidgetsDashboardWidgetOrderManager()
 
     @classproperty
     def default_dashboard_widgets(cls):
