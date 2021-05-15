@@ -1,14 +1,8 @@
-import sys
 from datetime import datetime, timedelta
-from importlib import import_module
+from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
-
-if sys.version_info >= (3, 9):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata
 
 from django.conf import settings
 from django.db.models import Model, QuerySet

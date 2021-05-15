@@ -502,7 +502,7 @@ dev = ["black (==19.10b0)", "flake8 (==3.8.4)", "mypy (==0.812)", "pytest (==6.2
 
 [[package]]
 name = "decorator"
-version = "5.0.7"
+version = "5.0.8"
 description = "Decorators for Humans"
 category = "main"
 optional = false
@@ -1111,7 +1111,7 @@ django = "*"
 
 [[package]]
 name = "django-tables2"
-version = "2.3.4"
+version = "2.4.0"
 description = "Table/data-grid framework for Django"
 category = "main"
 optional = false
@@ -1177,7 +1177,7 @@ yubikey = ["django-otp-yubikey"]
 
 [[package]]
 name = "django-uwsgi-ng"
-version = "1.1.1"
+version = "1.1.2"
 description = "uWSGI stuff for Django projects"
 category = "main"
 optional = false
@@ -2632,7 +2632,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "bdef0efc4e76b7284f61057efd68475c484c61e4a58e0a3a126fc91e0821b05c"
+content-hash = "40f1db18aa12f9d5a00aeeab3648f7e44ebc1ae00fe5d5499d7fd67c45e69597"
 
 [metadata.files]
 alabaster = [
@@ -2875,8 +2875,8 @@ curlylint = [
     {file = "curlylint-0.12.2.tar.gz", hash = "sha256:76b557cf8d007bd92df2dae61a02e65f8aa2ff3e05c6398b1314d92692fbb0d8"},
 ]
 decorator = [
-    {file = "decorator-5.0.7-py3-none-any.whl", hash = "sha256:945d84890bb20cc4a2f4a31fc4311c0c473af65ea318617f13a7257c9a58bc98"},
-    {file = "decorator-5.0.7.tar.gz", hash = "sha256:6f201a6c4dac3d187352661f508b9364ec8091217442c9478f1f83c003a0f060"},
+    {file = "decorator-5.0.8-py3-none-any.whl", hash = "sha256:77a3141f7f5837b5de43569c35508ca4570022ba501db8c8a2a8b292bd35772a"},
+    {file = "decorator-5.0.8.tar.gz", hash = "sha256:bff00cfb18698f9a19fa6400451fd7ea894f3845cedd7b8b7b0ce9c53171fefb"},
 ]
 dj-database-url = [
     {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
@@ -3080,8 +3080,8 @@ django-stubs-ext = [
     {file = "django_stubs_ext-0.2.0-py3-none-any.whl", hash = "sha256:bd4a1e36ef2ba0ef15801933c85c68e59b383302c873795c6ecfc25950c7ecdb"},
 ]
 django-tables2 = [
-    {file = "django-tables2-2.3.4.tar.gz", hash = "sha256:50ccadbd13740a996d8a4d4f144ef80134745cd0b5ec278061537e341f5ef7a2"},
-    {file = "django_tables2-2.3.4-py2.py3-none-any.whl", hash = "sha256:af5f70a9845fd8690c6b44120b065e55b9771cae99c1dcd0eb4f1cfa3f0a71e4"},
+    {file = "django-tables2-2.4.0.tar.gz", hash = "sha256:4eb526464ee56a0b7d827d1da9a4f257e44edb5e1cbb6a0cfb6ca0fed70d8e4f"},
+    {file = "django_tables2-2.4.0-py2.py3-none-any.whl", hash = "sha256:0f10ecef25708385a9d32d68d7c9478ca8dda31569410cb05a025be3f2c57593"},
 ]
 django-templated-email = [
     {file = "django-templated-email-2.3.0.tar.gz", hash = "sha256:536c4e5ae099eabfb9aab36087d4d7799948c654e73da55a744213d086d5bb33"},
@@ -3095,7 +3095,8 @@ django-two-factor-auth = [
     {file = "django_two_factor_auth-1.13.1-py2.py3-none-any.whl", hash = "sha256:d270d4288731233621a9462a89a8dfed2dcb86fa354125c816a89772d55f9e29"},
 ]
 django-uwsgi-ng = [
-    {file = "django-uwsgi-ng-1.1.1.tar.gz", hash = "sha256:777023fd291c5408f18e2ac4922faf25f161075699e11bf40f86dd90c9b9f1d4"},
+    {file = "django-uwsgi-ng-1.1.2.tar.gz", hash = "sha256:1df2ffa642f7a831bd8d7f7e459f7b0821113b37174ccf4bf977e4467d45d9b3"},
+    {file = "django_uwsgi_ng-1.1.2-py3-none-any.whl", hash = "sha256:8b1a489a1ed9e56da0efadfa86ec306b532e5cd953fe34b234aaefc26898c649"},
 ]
 django-widget-tweaks = [
     {file = "django-widget-tweaks-1.4.8.tar.gz", hash = "sha256:9f91ca4217199b7671971d3c1f323a2bec71a0c27dec6260b3c006fa541bc489"},

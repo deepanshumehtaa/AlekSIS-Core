@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type
+from typing import Any, Optional, Type
 
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
@@ -18,6 +18,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 import reversion
+from celery_progress.views import get_progress
 from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
@@ -64,6 +65,7 @@ from .models import (
     PDFFile,
     Person,
     SchoolTerm,
+    TaskUserAssignment,
 )
 from .registries import (
     group_preferences_registry,
@@ -80,6 +82,7 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
+from .util.celery_progress import render_progress_page
 from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
@@ -139,7 +142,7 @@ class NotificationsListView(PermissionRequiredMixin, ListView):
     def get_queryset(self) -> QuerySet:
         return self.request.user.person.notifications.order_by("-created")
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         self.get_queryset().filter(read=False).update(read=True)
         return super().get_context_data(**kwargs)
 
@@ -790,7 +793,7 @@ class DataCheckView(PermissionRequiredMixin, ListView):
     def get_queryset(self) -> QuerySet:
         return DataCheckResult.objects.filter(solved=False).order_by("check")
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["registered_checks"] = DataCheckRegistry.data_checks
         return context
@@ -802,17 +805,15 @@ class RunDataChecks(PermissionRequiredMixin, View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         result = check_data.delay()
 
-        context = {
-            "title": _("Progress: Run data checks"),
-            "back_url": reverse("check_data"),
-            "progress": {
-                "task_id": result.task_id,
-                "title": _("Run data checks …"),
-                "success": _("The data checks were run successfully."),
-                "error": _("There was a problem while running data checks."),
-            },
-        }
-        return render(request, "core/pages/progress.html", context)
+        return render_progress_page(
+            request,
+            result,
+            title=_("Progress: Run data checks"),
+            progress_title=_("Run data checks …"),
+            success_message=_("The data checks were run successfully."),
+            error_message=_("There was a problem while running data checks."),
+            back_url=reverse("check_data"),
+        )
 
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
@@ -847,7 +848,7 @@ class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
     permission_required = "core.view_dashboardwidget"
     template_name = "core/dashboard_widget/list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["widget_types"] = [
             (ContentType.objects.get_for_model(m, False), m)
@@ -881,7 +882,7 @@ class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
         ct = get_object_or_404(ContentType, app_label=app_label, model=model)
         return ct.model_class()
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["model"] = self.model
         return context
@@ -1068,3 +1069,14 @@ class HTMLForPDFFile(SingleObjectMixin, View):
         if request.GET.get("secret") != file_object.secret:
             raise PermissionDenied()
         return HttpResponse(file_object.html)
+
+
+class CeleryProgressView(View):
+    """Wrap celery-progress view to check permissions before."""
+
+    def get(self, request: HttpRequest, task_id: str, *args, **kwargs) -> HttpResponse:
+        if not TaskUserAssignment.objects.filter(
+            task_result__task_id=task_id, user=request.user
+        ).exists():
+            raise Http404()
+        return get_progress(request, task_id, *args, **kwargs)

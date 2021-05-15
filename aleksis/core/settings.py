@@ -245,7 +245,7 @@ INSTALLED_APPS.append("cachalot")
 DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
 CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
 CACHALOT_DATABASES = set(["default"])
-SILENCED_SYSTEM_CHECKS += ["cachalot.W001", "cachalot.E003"]
+SILENCED_SYSTEM_CHECKS += ["cachalot.W001"]
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
