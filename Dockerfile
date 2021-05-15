@@ -26,7 +26,7 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
-    chromium \
+        chromium \
 	dumb-init \
 	gettext \
 	libpq5 \
@@ -34,6 +34,7 @@ RUN apt-get -y update && \
 	libssl-dev \
 	postgresql-client \
 	python3-dev \
+	python3-magic \
 	python3-pip \
 	uwsgi \
 	uwsgi-plugin-python3 \
