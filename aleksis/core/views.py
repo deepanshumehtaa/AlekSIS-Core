@@ -1,6 +1,7 @@
 from typing import Any, Optional, Type
 
 from django.apps import apps
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -467,7 +468,12 @@ class SystemStatus(PermissionRequiredMixin, MainView):
                     TaskResult.objects.filter(task_name=job).order_by("date_done").last()
                 )
 
-        context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
+        context = {
+            "plugins": self.plugins,
+            "status_code": status_code,
+            "tasks": task_results,
+            "DEBUG": settings.DEBUG,
+        }
         return self.render_to_response(context, status=status_code)
 
 

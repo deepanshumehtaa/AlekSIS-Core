@@ -1044,14 +1044,6 @@ django-appconf = ">=0.6.0"
 test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
 
 [[package]]
-name = "django-settings-context-processor"
-version = "0.2"
-description = "Makes specified django settings visible in template rendering context."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "django-storages"
 version = "1.11.1"
 description = "Support for many storage backends in Django"
@@ -2618,7 +2610,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e75265ed050df6ebdb93f9377a934024b2dad7b7d6a30a8daa757ba7048100ff"
+content-hash = "d535d52d247e075ff7d5c71710f6824e85019c13139ee394bc0b95e5fcd8abd6"
 
 [metadata.files]
 alabaster = [
@@ -3046,9 +3038,6 @@ django-sass-processor = [
 django-select2 = [
     {file = "django-select2-7.7.1.tar.gz", hash = "sha256:dd091342e99436818b3fa98783ae6c24fb2a0cbc37ebd3faa0aef68422b6e416"},
     {file = "django_select2-7.7.1-py2.py3-none-any.whl", hash = "sha256:8c54984bb931d842eab6a46d1b427c6883e5f5347529cda27dcd942fb37d87b9"},
-]
-django-settings-context-processor = [
-    {file = "django-settings-context-processor-0.2.tar.gz", hash = "sha256:d37c853d69a3069f5abbf94c7f4f6fc0fac38bbd0524190cd5a250ba800e496a"},
 ]
 django-storages = [
     {file = "django-storages-1.11.1.tar.gz", hash = "sha256:c823dbf56c9e35b0999a13d7e05062b837bae36c518a40255d522fbe3750fbb4"},

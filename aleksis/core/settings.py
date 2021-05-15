@@ -94,7 +94,6 @@ INSTALLED_APPS = [
     "health_check.contrib.celery",
     "djcelery_email",
     "celery_haystack",
-    "settings_context_processor",
     "sass_processor",
     "django_any_js",
     "django_yarnpkg",
@@ -183,7 +182,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
-                "settings_context_processor.context_processors.settings",
                 "dynamic_preferences.processors.global_preferences",
                 "aleksis.core.util.core_helpers.custom_information_processor",
             ],
@@ -509,9 +507,6 @@ if _settings.get("mail.server.host", None):
 
 TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
-
-
-TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
