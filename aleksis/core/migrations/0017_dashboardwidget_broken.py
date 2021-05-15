@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0009_default_dashboard'),
+        ('core', '0016_taskuserassignment'),
     ]
 
     operations = [
