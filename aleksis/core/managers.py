@@ -1,6 +1,7 @@
 from datetime import date
 from typing import Union
 
+from django.apps import apps
 from django.contrib.sites.managers import CurrentSiteManager as _CurrentSiteManager
 from django.db.models import QuerySet
 from django.db.models.manager import Manager
@@ -99,11 +100,17 @@ class UninstallRenitentPolymorphicManager(PolymorphicManager):
     """A custom manager for django-polymorphic that filters out submodels of unavailable apps."""
 
     def get_queryset(self):
-        return super().get_queryset().instance_of(*self.model.__subclasses__())
+        DashboardWidget = apps.get_model("core", "DashboardWidget")
+        if self.model is DashboardWidget:
+            return super().get_queryset().instance_of(*self.model.__subclasses__())
+        else:
+            # Called on subclasses
+            return super().get_queryset()
 
 
 class InstalledWidgetsDashBoardWidgetOrderManager(Manager):
-    """A custom manager that only returns DashboardWidgetOrder objects with an existing dashboard widget"""
+    """A manager that only returns DashboardWidgetOrder objects with an existing widget."""
+
     def get_queryset(self):
         queryset = super().get_queryset()
 
