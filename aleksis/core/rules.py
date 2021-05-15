@@ -218,11 +218,11 @@ delete_additional_field_predicate = has_person & (
 rules.add_perm("core.delete_additionalfield", delete_additional_field_predicate)
 
 # View additional fields
-view_additional_field_predicate = has_person & (
+view_additional_fields_predicate = has_person & (
     has_global_perm("core.view_additionalfield")
     | has_any_object("core.view_additionalfield", AdditionalField)
 )
-rules.add_perm("core.view_additionalfield", view_additional_field_predicate)
+rules.add_perm("core.view_additionalfields", view_additional_fields_predicate)
 
 # Edit group type
 change_group_type_predicate = has_person & (
@@ -244,10 +244,10 @@ delete_group_type_predicate = has_person & (
 rules.add_perm("core.delete_grouptype", delete_group_type_predicate)
 
 # View group types
-view_group_type_predicate = has_person & (
+view_group_types_predicate = has_person & (
     has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
 )
-rules.add_perm("core.view_grouptype", view_group_type_predicate)
+rules.add_perm("core.view_grouptypes", view_group_types_predicate)
 
 # Create person
 create_person_predicate = has_person & (
