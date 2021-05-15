@@ -297,6 +297,9 @@ ACCOUNT_FORMS = {
     "signup": "aleksis.core.forms.AccountRegisterForm",
 }
 
+# Use custom adapter
+ACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurAccountAdapter"
+
 # Require password confirmation
 SIGNUP_PASSWORD_ENTER_TWICE = True
 
