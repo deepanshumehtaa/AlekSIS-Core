@@ -23,5 +23,14 @@
           {% endblocktrans %}
         </a>
     {% endfor %}
+  {% else %}
+    <div class="alert primary">
+      <div>
+        <i class="material-icons left">info</i>
+        {% blocktrans %}
+          No 3rd party account providers available.
+        {% endblocktrans %}
+      </div>
+    </div>
   {% endif %}
 </p>

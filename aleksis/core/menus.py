@@ -66,7 +66,7 @@ MENUS = {
                 {
                     "name": _("Change password"),
                     "url": "account_change_password",
-                    "icon": "password",
+                    "icon": "lock",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         (
