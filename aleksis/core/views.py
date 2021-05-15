@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type
+from typing import Any, Optional, Type
 
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
@@ -139,7 +139,7 @@ class NotificationsListView(PermissionRequiredMixin, ListView):
     def get_queryset(self) -> QuerySet:
         return self.request.user.person.notifications.order_by("-created")
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         self.get_queryset().filter(read=False).update(read=True)
         return super().get_context_data(**kwargs)
 
@@ -790,7 +790,7 @@ class DataCheckView(PermissionRequiredMixin, ListView):
     def get_queryset(self) -> QuerySet:
         return DataCheckResult.objects.filter(solved=False).order_by("check")
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["registered_checks"] = DataCheckRegistry.data_checks
         return context
@@ -847,7 +847,7 @@ class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
     permission_required = "core.view_dashboardwidget"
     template_name = "core/dashboard_widget/list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["widget_types"] = [
             (ContentType.objects.get_for_model(m, False), m)
@@ -881,7 +881,7 @@ class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
         ct = get_object_or_404(ContentType, app_label=app_label, model=model)
         return ct.model_class()
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["model"] = self.model
         return context

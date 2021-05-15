@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Sequence, Tuple
+from typing import Any, Optional, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -71,7 +71,7 @@ class AppConfig(django.apps.AppConfig):
                 return "unknown"
 
     @classmethod
-    def get_licence(cls) -> Tuple:
+    def get_licence(cls) -> tuple:
         """Get tuple of licence information of application package."""
         # Get string representation of licence in SPDX format
         licence = getattr(cls, "licence", None)
@@ -129,7 +129,7 @@ class AppConfig(django.apps.AppConfig):
         # TODO Try getting from distribution if not set
 
     @classmethod
-    def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
+    def get_copyright(cls) -> Sequence[tuple[str, str, str]]:
         """Get copyright information tuples for application package."""
         copyrights = getattr(cls, "copyright_info", tuple())
 
@@ -170,7 +170,7 @@ class AppConfig(django.apps.AppConfig):
         verbosity: int,
         interactive: bool,
         using: str,
-        plan: List[Tuple],
+        plan: list[tuple],
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
