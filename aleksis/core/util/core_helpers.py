@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 from importlib import import_module, metadata
 from itertools import groupby
@@ -5,6 +6,7 @@ from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
 
 from django.conf import settings
+from django.core.files import File
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -124,23 +126,33 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     return lazy(_get_preference, str)(section, name)
 
 
-def lazy_get_favicon_url(
-    title: str, size: int, rel: str, default: Optional[str] = None
-) -> Callable[[str, str], Any]:
-    """Lazily get the URL to a favicon image."""
+def lazy_get_favicons(
+    title: str,
+    config: dict[str, list[int]],
+    default: str,
+    add_attrs: Optional[dict[str, Any]] = None,
+) -> Callable[[], list[dict[str, str]]]:
+    """Lazily load a dictionary for PWA settings from favicon generation rules."""
+    if add_attrs is None:
+        add_attrs = {}
 
     @cache_memoize(3600)
-    def _get_favicon_url(size: int, rel: str) -> Any:
+    def _get_favicons() -> list[dict[str, str]]:
         from favicon.models import Favicon  # noqa
 
-        try:
-            favicon = Favicon.on_site.get(title=title)
-        except Favicon.DoesNotExist:
-            return default
-        else:
-            return favicon.get_favicon(size, rel).faviconImage.url
+        favicon, created = Favicon.on_site.get_or_create(title=title)
+        if created:
+            favicon.faviconImg.save(os.path.basename(default), File(open(default, "rb")))
+            favicon.save()
+        favicon_imgs = favicon.get_favicons(config_override=config)
 
-    return lazy(_get_favicon_url, str)(size, rel)
+        return [
+            {"src": favicon_img.faviconImg.url, "sizes": [f"{favicon_img.size}x{favicon_img.size}"]}
+            | add_attrs
+            for favicon_img in favicon_imgs
+        ]
+
+    return lazy(_get_favicons, list)()
 
 
 def is_impersonate(request: HttpRequest) -> bool:
