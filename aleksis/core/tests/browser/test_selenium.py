@@ -79,3 +79,34 @@ class SeleniumTests(SeleniumTestCase):
         self.selenium.get(self.live_server_url + reverse("test_pdf"))
         el = WebDriverWait(self.selenium, 10).until(lambda d: ".pdf" in self.selenium.current_url)
         self._screenshot("pdf.png")
+
+    def test_change_password(self):
+        self._login()
+        self._create_person()
+        self.selenium.get(self.live_server_url + reverse("account_change_password"))
+
+        self.selenium.find_element_by_xpath(
+            '//label[contains(text(), "Current Password")]/../input'
+        ).send_keys("admin")
+        self.selenium.find_element_by_xpath(
+            '//label[contains(text(), "New Password")]/../input'
+        ).send_keys("foo123")
+        self.selenium.find_element_by_xpath(
+            '//label[contains(text(), "New Password (again)")]/../input'
+        ).send_keys("foo123")
+
+        self.selenium.find_element_by_xpath('//button[contains(text(), "Change password")]').click()
+
+        assert "Password successfully changed." in self.selenium.page_source
+
+    def test_reset_password(self):
+
+        self.selenium.get(self.live_server_url + reverse("account_reset_password"))
+
+        self.selenium.find_element_by_xpath(
+            '//label[contains(text(), "E-mail")]/../input'
+        ).send_keys("jane@example.ccom")
+
+        self.selenium.find_element_by_xpath('//button[contains(text(), "Reset password")]').click()
+
+        assert "Reset password" in self.selenium.page_source
