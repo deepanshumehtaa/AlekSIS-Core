@@ -19,6 +19,7 @@ from . import views
 urlpatterns = [
     path("", include("django_prometheus.urls")),
     path("", include("pwa.urls"), name="pwa"),
+    path(settings.MEDIA_URL, include("titofisto.urls")),
     path("about/", views.about, name="about_aleksis"),
     path("admin/", admin.site.urls),
     path("admin/uwsgi/", include("django_uwsgi.urls")),
