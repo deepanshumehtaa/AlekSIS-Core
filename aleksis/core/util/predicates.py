@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Model
 from django.http import HttpRequest
 
+from django_otp import user_has_device
 from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
@@ -142,3 +143,9 @@ def contains_site_preference_value(section: str, pref: str, value: str):
         return bool(value in get_site_preferences()[f"{section}__{pref}"])
 
     return fn
+
+
+@predicate
+def has_activated_2fa(user: User) -> bool:
+    """Check if the user has activated two-factor authentication."""
+    return user_has_device(user)
