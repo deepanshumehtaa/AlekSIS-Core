@@ -36,7 +36,7 @@ Licence
 
 ::
 
-  Copyright © 2017, 2018, 2019, 2020, 2021 Jonathan Weth <wethjo@katharineum.de>
+  Copyright © 2017, 2018, 2019, 2020, 2021 Jonathan Weth <dev@jonathanweth.de>
   Copyright © 2017, 2018, 2019, 2020 Frank Poetzsch-Heffter <p-h@katharineum.de>
   Copyright © 2018, 2019, 2020, 2021 Julian Leucker <leuckeju@katharineum.de>
   Copyright © 2018, 2019, 2020, 2021 Hangzhi Yu <yuha@katharineum.de>
