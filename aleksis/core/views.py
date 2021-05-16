@@ -26,7 +26,7 @@ from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
-from haystack.views import SearchView
+from haystack.generic_views import SearchView
 from health_check.views import MainView
 from oauth2_provider.models import Application
 from reversion import set_user
@@ -568,12 +568,6 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
     """Wrapper to apply permission to haystack's search view."""
 
     permission_required = "core.search"
-
-    def create_response(self):
-        context = self.get_context()
-        if not self.has_permission():
-            return self.handle_no_permission()
-        return render(self.request, self.template, context)
 
 
 @never_cache
