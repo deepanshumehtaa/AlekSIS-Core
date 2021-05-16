@@ -788,7 +788,7 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 # Append authentication backends
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
-HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
+HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "whoosh")
 
 if HAYSTACK_BACKEND_SHORT == "simple":
     HAYSTACK_CONNECTIONS = {
