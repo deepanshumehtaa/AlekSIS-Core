@@ -417,8 +417,6 @@ merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 LANGUAGES = [
     ("en", _("English")),
     ("de", _("German")),
-    ("fr", _("French")),
-    ("nb", _("Norwegian (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")

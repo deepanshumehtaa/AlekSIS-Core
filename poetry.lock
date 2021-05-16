@@ -2632,7 +2632,7 @@ xapian = ["xapian-haystack"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e4e61f6ca755997e64d799ed11994b09a7cd3b394397d1eefa14e68200972e8f"
+content-hash = "ece8bce6b86fecc86d3f19eeb1d1f4682213c8a8cc253fddb37a432bdeb604ea"
 
 [metadata.files]
 alabaster = [
