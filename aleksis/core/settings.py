@@ -7,10 +7,13 @@ from dynaconf import LazySettings
 
 from .util.core_helpers import (
     get_app_packages,
-    lazy_get_favicon_url,
+    lazy_get_favicons,
     lazy_preference,
     merge_app_settings,
+    monkey_patch,
 )
+
+monkey_patch()
 
 IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
 
@@ -586,63 +589,31 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
     UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
     UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
+DEFAULT_FAVICON_PATHS = {
+    "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+}
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
 PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
-        ),
-        "sizes": "192x192",
+PWA_APP_ICONS = lazy_get_favicons(
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"android": [192, 512]}
+)
+PWA_APP_ICONS_APPLE = lazy_get_favicons(
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"apple": [76, 114, 152, 180]}
+)
+PWA_APP_SPLASH_SCREEN = lazy_get_favicons(
+    "pwa_icon",
+    default=DEFAULT_FAVICON_PATHS["pwa_icon"],
+    config={"apple": [192]},
+    add_attrs={
+        "media": "(device-width: 320px) and (device-height: 568px) and"
+        "(-webkit-device-pixel-ratio: 2)"
     },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=512, rel="android", default=STATIC_URL + "icons/android_512.png"
-        ),
-        "sizes": "512x512",
-    },
-]
-PWA_APP_ICONS_APPLE = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_76.png"
-        ),
-        "sizes": "76x76",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_114.png"
-        ),
-        "sizes": "114x114",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_152.png"
-        ),
-        "sizes": "152x152",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "sizes": "180x180",
-    },
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "media": (
-            "(device-width: 320px) and (device-height: 568px) and" "(-webkit-device-pixel-ratio: 2)"
-        ),
-    }
-]
-
+)
 
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
