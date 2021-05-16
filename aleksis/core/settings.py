@@ -283,11 +283,7 @@ if _SOCIALACCOUNT_PROVIDERS:
     # Add configured social auth providers to INSTALLED_APPS
     for provider, config in SOCIALACCOUNT_PROVIDERS.items():
         INSTALLED_APPS.append(f"allauth.socialaccount.providers.{provider}")
-        for k in config:
-            kupper = k.upper()
-            if k != kupper:
-                config[kupper] = config[k]
-                del config[k]
+        config = {k.upper(): v for k, v in config.items()}
 
 # Configure custom forms
 
