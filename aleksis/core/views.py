@@ -19,6 +19,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 import reversion
+from allauth.account.views import PasswordChangeView
 from celery_progress.views import get_progress
 from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
@@ -1086,3 +1087,14 @@ class CeleryProgressView(View):
         ).exists():
             raise Http404()
         return get_progress(request, task_id, *args, **kwargs)
+
+
+class CustomPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
+    """Custom password change view to allow to disable changing of password."""
+
+    permission_required = "core.can_change_password"
+
+    if get_site_preferences()["auth__allow_password_change"]:
+        template_name = "account/password_change.html"
+    else:
+        template_name = "account/password_change_disabled.html"
