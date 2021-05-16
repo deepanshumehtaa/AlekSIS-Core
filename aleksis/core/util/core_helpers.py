@@ -136,7 +136,6 @@ def lazy_get_favicons(
     if add_attrs is None:
         add_attrs = {}
 
-    @cache_memoize(3600)
     def _get_favicons() -> list[dict[str, str]]:
         from favicon.models import Favicon  # noqa
 
@@ -147,7 +146,10 @@ def lazy_get_favicons(
         favicon_imgs = favicon.get_favicons(config_override=config)
 
         return [
-            {"src": favicon_img.faviconImage.url, "sizes": [f"{favicon_img.size}x{favicon_img.size}"]}
+            {
+                "src": favicon_img.faviconImage.url,
+                "sizes": [f"{favicon_img.size}x{favicon_img.size}"],
+            }
             | add_attrs
             for favicon_img in favicon_imgs
         ]
