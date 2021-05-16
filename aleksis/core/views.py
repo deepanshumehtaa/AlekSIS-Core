@@ -23,10 +23,11 @@ from celery_progress.views import get_progress
 from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
+from guardian.core import ObjectPermissionChecker
 from guardian.shortcuts import get_objects_for_user
+from haystack.generic_views import SearchView
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
-from haystack.generic_views import SearchView
 from health_check.views import MainView
 from oauth2_provider.models import Application
 from reversion import set_user
@@ -84,7 +85,13 @@ from .tables import (
 from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
-from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
+from .util.core_helpers import (
+    get_groups_for_user,
+    get_persons_for_user,
+    get_site_preferences,
+    has_person,
+    objectgetter_optional,
+)
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
 
@@ -558,7 +565,20 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
 
-    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
+    allowed_person_ids = [
+        f"core.person.{pk}"
+        for pk in get_persons_for_user(request.user).values_list("pk", flat=True)
+    ]
+    allowed_group_ids = [
+        f"core.group.{pk}" for pk in get_groups_for_user(request.user).values_list("pk", flat=True)
+    ]
+
+    results = (
+        SearchQuerySet()
+        .filter(id__in=allowed_person_ids + allowed_group_ids)
+        .filter(text=AutoQuery(query))[:limit]
+    )
+
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
@@ -568,6 +588,22 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
     """Wrapper to apply permission to haystack's search view."""
 
     permission_required = "core.search"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = object_list if object_list is not None else self.object_list
+
+        allowed_person_ids = [
+            f"core.person.{pk}"
+            for pk in get_persons_for_user(self.request.user).values_list("pk", flat=True)
+        ]
+        allowed_group_ids = [
+            f"core.group.{pk}"
+            for pk in get_groups_for_user(self.request.user).values_list("pk", flat=True)
+        ]
+
+        queryset = queryset.filter(id__in=allowed_person_ids + allowed_group_ids)
+
+        return super().get_context_data(object_list=queryset, **kwargs)
 
 
 @never_cache
