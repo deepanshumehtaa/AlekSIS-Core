@@ -272,7 +272,7 @@ def monkey_patch() -> None:  # noqa
     from django.utils.functional import Promise
     class DjangoJSONEncoder(json.DjangoJSONEncoder):
         def default(self, o: Any) -> Any:
-            if isinstance(o, Promise) and hasattr(o, copy):
+            if isinstance(o, Promise) and hasattr(o, "copy"):
                 return super().default(o.copy())
             return super().default(o)
     json.DjangoJSONEncoder = DjangoJSONEncoder
