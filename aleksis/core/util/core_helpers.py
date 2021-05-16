@@ -276,7 +276,7 @@ def unread_notifications_badge(request: HttpRequest) -> int:
 def monkey_patch() -> None:  # noqa
     """Monkey-patch dependencies for special behaviour."""
     # Unwrap promises in JSON serializer instead of stringifying
-    import django.core.serializers.json
+    from django.core.serializers import json
     from django.utils.functional import Promise
     class DjangoJSONEncoder(json.DjangoJSONEncoder):
         def default(self, o: Any) -> Any:
