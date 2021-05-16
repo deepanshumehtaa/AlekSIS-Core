@@ -225,11 +225,14 @@ def objectgetter_optional(
 ) -> Callable[[HttpRequest, Optional[int]], Model]:
     """Get an object by pk, defaulting to None."""
 
-    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Model:
+    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Optional[Model]:
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return eval(default) if default_eval else default  # noqa:S307
+            try:
+                return eval(default) if default_eval else default  # noqa:S307
+            except (AttributeError, KeyError, IndexError):
+                return None
 
     return get_object
 
