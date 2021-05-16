@@ -271,3 +271,16 @@ def queryset_rules_filter(
 def unread_notifications_badge(request: HttpRequest) -> int:
     """Generate badge content with the number of unread notifications."""
     return request.user.person.unread_notifications_count
+
+
+def monkey_patch() -> None:  # noqa
+    """Monkey-patch dependencies for special behaviour."""
+    # Unwrap promises in JSON serializer instead of stringifying
+    import django.core.serializers.json
+    from django.utils.functional import Promise
+    class DjangoJSONEncoder(json.DjangoJSONEncoder):
+        def default(self, o: Any) -> Any:
+            if isinstance(o, Promise) and hasattr(o, "copy"):
+                return super().default(o.copy())
+            return super().default(o)
+    json.DjangoJSONEncoder = DjangoJSONEncoder

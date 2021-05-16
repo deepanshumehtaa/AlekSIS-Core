@@ -10,7 +10,10 @@ from .util.core_helpers import (
     lazy_get_favicons,
     lazy_preference,
     merge_app_settings,
+    monkey_patch,
 )
+
+monkey_patch()
 
 IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
 
