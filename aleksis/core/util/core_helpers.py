@@ -126,6 +126,19 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     return lazy(_get_preference, str)(section, name)
 
 
+def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) -> "Favicon":
+    """Ensure that there is always a favicon object."""
+    from favicon.models import Favicon  # noqa
+
+    favicon, created = Favicon.on_site.update_or_create(
+        title=title, defaults={"isFavicon": is_favicon}
+    )
+    if created:
+        favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
+        favicon.save()
+    return favicon
+
+
 def lazy_get_favicons(
     title: str,
     config: dict[str, list[int]],
@@ -137,12 +150,7 @@ def lazy_get_favicons(
         add_attrs = {}
 
     def _get_favicons() -> list[dict[str, str]]:
-        from favicon.models import Favicon  # noqa
-
-        favicon, created = Favicon.on_site.get_or_create(title=title)
-        if created:
-            favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
-            favicon.save()
+        favicon = get_or_create_favicon(title, default)
         favicon_imgs = favicon.get_favicons(config_override=config)
 
         return [

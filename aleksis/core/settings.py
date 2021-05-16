@@ -588,7 +588,10 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
     UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
     UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
-_default_icon_path = os.path.join(STATIC_ROOT, "img/aleksis-icon.png")
+DEFAULT_FAVICON_PATHS = {
+    "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+}
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
 PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
@@ -596,14 +599,14 @@ PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
 PWA_APP_ICONS = lazy_get_favicons(
-    "pwa_icon", default=_default_icon_path, config={"android": [192, 512]}
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"android": [192, 512]}
 )
 PWA_APP_ICONS_APPLE = lazy_get_favicons(
-    "pwa_icon", default=_default_icon_path, config={"apple": [76, 114, 152, 180]}
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"apple": [76, 114, 152, 180]}
 )
 PWA_APP_SPLASH_SCREEN = lazy_get_favicons(
     "pwa_icon",
-    default=_default_icon_path,
+    default=DEFAULT_FAVICON_PATHS["pwa_icon"],
     config={"apple": [192]},
     add_attrs={
         "media": "(device-width: 320px) and (device-height: 568px) and"
