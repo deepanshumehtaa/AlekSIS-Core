@@ -68,10 +68,6 @@ class CoreConfig(AppConfig):
         plugin_dir.register(MediaBackupAgeHealthCheck)
         plugin_dir.register(BackupJobHealthCheck)
 
-        # Ensure that default Favicon object exists
-        for name, default in settings.DEFAULT_FAVICON_PATHS.items():
-            get_or_create_favicon(name, default, is_favicon=name == "favicon")
-
     @classmethod
     def _load_data_checks(cls):
         """Get all data checks from all loaded models."""
@@ -120,12 +116,18 @@ class CoreConfig(AppConfig):
         using: str,
         **kwargs,
     ) -> None:
+        from django.conf import settings  # noqa
+
         super().post_migrate(app_config, verbosity, interactive, using, **kwargs)
 
         # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
             name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )
+
+        # Ensure that default Favicon object exists
+        for name, default in settings.DEFAULT_FAVICON_PATHS.items():
+            get_or_create_favicon(name, default, is_favicon=name == "favicon")
 
     def user_logged_in(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs
