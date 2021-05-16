@@ -278,9 +278,11 @@ def monkey_patch() -> None:  # noqa
     # Unwrap promises in JSON serializer instead of stringifying
     from django.core.serializers import json
     from django.utils.functional import Promise
+
     class DjangoJSONEncoder(json.DjangoJSONEncoder):
         def default(self, o: Any) -> Any:
             if isinstance(o, Promise) and hasattr(o, "copy"):
                 return o.copy()
             return super().default(o)
+
     json.DjangoJSONEncoder = DjangoJSONEncoder
