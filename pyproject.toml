@@ -33,7 +33,7 @@ url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
 secondary = true
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 Django = "^3.2"
 django-any-js = "^1.1"
 django-debug-toolbar = "^3.2"
@@ -99,6 +99,7 @@ django-cleanup = "^5.1.0"
 djangorestframework = "^3.12.4"
 Whoosh = {version = "^2.7.4", optional = true}
 xapian-haystack = {version = "^2.1.1", optional = true}
+django-titofisto = "^0.1.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
