@@ -130,12 +130,23 @@ def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) ->
     """Ensure that there is always a favicon object."""
     from favicon.models import Favicon  # noqa
 
-    favicon, created = Favicon.on_site.update_or_create(
+    favicon, created = Favicon.on_site.get_or_create(
         title=title, defaults={"isFavicon": is_favicon}
     )
+
+    changed = False
+
+    if favicon.isFavicon != is_favicon:
+        favicon.isFavicon = True
+        changed = True
+
     if created:
         favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
+        changed = True
+
+    if changed:
         favicon.save()
+
     return favicon
 
 
