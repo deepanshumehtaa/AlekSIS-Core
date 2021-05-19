@@ -837,7 +837,11 @@ class DataCheckView(PermissionRequiredMixin, ListView):
     context_object_name = "results"
 
     def get_queryset(self) -> QuerySet:
-        return DataCheckResult.objects.filter(solved=False).order_by("check")
+        return (
+            DataCheckResult.objects.filter(content_type__app_label__in=apps.app_configs.keys())
+            .filter(solved=False)
+            .order_by("check")
+        )
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
