@@ -772,10 +772,7 @@ elif HAYSTACK_BACKEND_SHORT == "xapian":
     }
 elif HAYSTACK_BACKEND_SHORT == "whoosh":
     HAYSTACK_CONNECTIONS = {
-        "default": {
-            "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
-            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
-        },
+        "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
     }
 
 HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"

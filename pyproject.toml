@@ -100,6 +100,7 @@ djangorestframework = "^3.12.4"
 Whoosh = {version = "^2.7.4", optional = true}
 xapian-haystack = {version = "^2.1.1", optional = true}
 django-titofisto = "^0.1.0"
+haystack-redis = "^0.0.1"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
