@@ -70,7 +70,7 @@ UWSGI = {
     "module": "aleksis.core.wsgi",
 }
 UWSGI_SERVE_STATIC = True
-UWSGI_SERVE_MEDIA = True
+UWSGI_SERVE_MEDIA = False
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -831,7 +831,8 @@ if _settings.get("storage.type", "").lower() == "s3":
     AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
     AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
 else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    DEFAULT_FILE_STORAGE = "titofisto.TitofistoStorage"
+    TITOFISTO_TIMEOUT = 10 * 60
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
 
