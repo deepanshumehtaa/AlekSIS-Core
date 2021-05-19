@@ -90,7 +90,6 @@ from .util.core_helpers import (
     get_site_preferences,
     has_person,
     objectgetter_optional,
-    queryset_rules_filter,
 )
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
