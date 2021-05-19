@@ -86,6 +86,7 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
 from .util.core_helpers import (
+    get_allowed_object_ids,
     get_site_preferences,
     has_person,
     objectgetter_optional,
@@ -566,17 +567,7 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
 
     indexed_models = UnifiedIndex().get_indexed_models()
 
-    allowed_object_ids = []
-
-    for model in indexed_models:
-        app_label = ContentType.objects.get_for_model(model).app_label
-        model_name = ContentType.objects.get_for_model(model).model
-        allowed_object_ids += [
-            f"{app_label}.{model_name}.{pk}"
-            for pk in queryset_rules_filter(
-                request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
-            ).values_list("pk", flat=True)
-        ]
+    allowed_object_ids = get_allowed_object_ids(request, indexed_models)
 
     results = (
         SearchQuerySet().filter(id__in=allowed_object_ids).filter(text=AutoQuery(query))[:limit]
@@ -597,17 +588,7 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
 
         indexed_models = UnifiedIndex().get_indexed_models()
 
-        allowed_object_ids = []
-
-        for model in indexed_models:
-            app_label = ContentType.objects.get_for_model(model).app_label
-            model_name = ContentType.objects.get_for_model(model).model
-            allowed_object_ids += [
-                f"{app_label}.{model_name}.{pk}"
-                for pk in queryset_rules_filter(
-                    self.request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
-                ).values_list("pk", flat=True)
-            ]
+        allowed_object_ids = get_allowed_object_ids(self.request, indexed_models)
 
         queryset = queryset.filter(id__in=allowed_object_ids)
 
