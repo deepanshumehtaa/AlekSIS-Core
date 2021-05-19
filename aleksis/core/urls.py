@@ -81,7 +81,7 @@ urlpatterns = [
     path("announcement/edit/<int:id_>/", views.announcement_form, name="edit_announcement"),
     path("announcement/delete/<int:id_>/", views.delete_announcement, name="delete_announcement"),
     path("search/searchbar/", views.searchbar_snippets, name="searchbar_snippets"),
-    path("search/", views.PermissionSearchView(), name="haystack_search"),
+    path("search/", views.PermissionSearchView.as_view(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path(

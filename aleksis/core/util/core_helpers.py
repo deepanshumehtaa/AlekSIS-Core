@@ -300,3 +300,23 @@ def monkey_patch() -> None:  # noqa
             return super().default(o)
 
     json.DjangoJSONEncoder = DjangoJSONEncoder
+
+
+def get_allowed_object_ids(request: HttpRequest, models: list) -> list:
+    """Get all objects of all given models the user of a given request is allowed to view."""
+    allowed_object_ids = []
+
+    for model in models:
+        app_label = model._meta.app_label
+        model_name = model.__name__.lower()
+
+        # Loop through the pks of all objects of the current model the user is allowed to view
+        # and put the corresponding ids into a django-haystack-style-formatted list
+        allowed_object_ids += [
+            f"{app_label}.{model_name}.{pk}"
+            for pk in queryset_rules_filter(
+                request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
+            ).values_list("pk", flat=True)
+        ]
+
+    return allowed_object_ids

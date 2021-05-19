@@ -24,9 +24,10 @@ from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
+from haystack.generic_views import SearchView
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
-from haystack.views import SearchView
+from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
 from oauth2_provider.models import Application
 from reversion import set_user
@@ -84,7 +85,12 @@ from .tables import (
 from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
-from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
+from .util.core_helpers import (
+    get_allowed_object_ids,
+    get_site_preferences,
+    has_person,
+    objectgetter_optional,
+)
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
 
@@ -557,8 +563,11 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     """View to return HTML snippet with searchbar autocompletion results."""
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
-
-    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
+    indexed_models = UnifiedIndex().get_indexed_models()
+    allowed_object_ids = get_allowed_object_ids(request, indexed_models)
+    results = (
+        SearchQuerySet().filter(id__in=allowed_object_ids).filter(text=AutoQuery(query))[:limit]
+    )
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
@@ -569,11 +578,13 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
 
     permission_required = "core.search_rule"
 
-    def create_response(self):
-        context = self.get_context()
-        if not self.has_permission():
-            return self.handle_no_permission()
-        return render(self.request, self.template, context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = object_list if object_list is not None else self.object_list
+        indexed_models = UnifiedIndex().get_indexed_models()
+        allowed_object_ids = get_allowed_object_ids(self.request, indexed_models)
+        queryset = queryset.filter(id__in=allowed_object_ids)
+
+        return super().get_context_data(object_list=queryset, **kwargs)
 
 
 @never_cache
