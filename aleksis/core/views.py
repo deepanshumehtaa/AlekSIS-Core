@@ -575,7 +575,7 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
         allowed_object_ids += [
             f"{app_label}.{model_name}.{pk}"
             for pk in queryset_rules_filter(
-                request, model.objects.all(), f"{app_label}.view_{model_name}"
+                request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
             ).values_list("pk", flat=True)
         ]
 
@@ -601,13 +601,12 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
         allowed_object_ids = []
 
         for model in indexed_models:
-
             app_label = ContentType.objects.get_for_model(model).app_label
             model_name = ContentType.objects.get_for_model(model).model
             allowed_object_ids += [
                 f"{app_label}.{model_name}.{pk}"
                 for pk in queryset_rules_filter(
-                    self.request, model.objects.all(), f"{app_label}.view_{model_name}"
+                    self.request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
                 ).values_list("pk", flat=True)
             ]
 
