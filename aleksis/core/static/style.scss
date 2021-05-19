@@ -136,9 +136,8 @@ ul.sidenav li.logo > a:hover {
   background-color: lighten($primary-color, 5%);
 }
 
-li.active > a > .sidenav-badge {
-  background-color: whitesmoke !important;
-  color: $primary-color !important;
+.sidenav-badge {
+  min-width: 2rem!important;
 }
 
 .sidenav li.search {
@@ -286,6 +285,10 @@ form .row {
   margin-bottom: 0;
 }
 
+.help-block {
+  font-size: 75%;
+}
+
 label.chips-checkbox {
   &.active {
     outline: none;
@@ -323,6 +326,11 @@ input[type="checkbox"].chips-checkbox + span {
   }
 }
 
+// Move label of ckeditor up
+.margin-top-35 {
+  margin-top: 35px;
+}
+
 // Badges
 
 span.badge.new::after {
@@ -344,6 +352,11 @@ span.badge .material-icons {
   font-size: 0.9rem;
 }
 
+.chip .material-icons {
+  line-height: 30px;
+  margin-right: 10px;
+  margin-left: -2px;
+}
 
 /*+++++++++*/
 /* Buttons */
@@ -382,6 +395,50 @@ span.badge .material-icons {
 
 table.striped > tbody > tr:nth-child(odd), table tr.striped, table tbody.striped tr {
   background-color: rgba(208, 208, 208, 0.5);
+}
+
+th.orderable > a {
+  color: rgba(0, 0, 0, 0.6);
+  display: block;
+  width: inherit;
+  height: inherit;
+}
+
+th.orderable > a::after {
+  @extend .material-icons;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+  float: right;
+  content: "unfold_more";
+}
+
+th.orderable.asc > a {
+  color: inherit;
+
+  &::after {
+    content: "expand_less";
+  }
+}
+
+th.orderable.desc > a {
+  color: inherit;
+
+  &::after {
+    content: "expand_more";
+  }
 }
 
 /*+++++++*/
@@ -566,6 +623,11 @@ main .alert p:first-child, main .alert div:first-child {
   font-weight: 500;
 }
 
+.stacked-card-icon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .flex-row {
   display: flex;
@@ -633,4 +695,28 @@ main .alert p:first-child, main .alert div:first-child {
 
 .draggable {
   cursor: grab;
+}
+
+.jscolor {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.break-word {
+  overflow-wrap: anywhere;
+}
+
+.card .card-action-light {
+	background-color: inherit;
+	border-top: 1px solid rgba(160, 160, 160, 0.2);
+	position: relative;
+	padding: 16px 24px;
+}
+
+.margin-top {
+  margin-top: 0.7rem !important;
+}
+
+.margin-bottom {
+  margin-bottom: 0.7rem !important;
 }

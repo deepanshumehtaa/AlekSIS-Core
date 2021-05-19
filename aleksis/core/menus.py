@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+from .util.core_helpers import unread_notifications_badge
+
 MENUS = {
     "NAV_MENU_CORE": [
         {
@@ -14,6 +16,15 @@ MENUS = {
             "url": "index",
             "icon": "home",
             "validators": ["menu_generator.validators.is_authenticated"],
+        },
+        {
+            "name": _("Notifications"),
+            "url": "notifications",
+            "icon": "notifications",
+            "badge": unread_notifications_badge,
+            "validators": [
+                ("aleksis.core.util.predicates.permission_validator", "core.view_notifications",),
+            ],
         },
         {
             "name": _("Account"),
@@ -56,6 +67,15 @@ MENUS = {
                     "name": _("Preferences"),
                     "url": "preferences_person",
                     "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
+                {
+                    "name": _("Authorized tokens"),
+                    "url": "oauth2_provider:authorized-token-list",
+                    "icon": "touch_app",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -154,6 +174,17 @@ MENUS = {
                     "icon": "settings",
                     "validators": ["menu_generator.validators.is_superuser",],
                 },
+                {
+                    "name": _("OAuth2 Applications"),
+                    "url": "oauth_list",
+                    "icon": "touch_app",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.list_oauth_applications",
+                        ),
+                    ],
+                },
             ],
         },
         {
@@ -188,7 +219,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_group_type",
+                            "core.view_grouptypes",
                         )
                     ],
                 },
@@ -221,7 +252,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_additionalfield",
+                            "core.view_additionalfields",
                         )
                     ],
                 },

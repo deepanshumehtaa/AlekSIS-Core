@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type
+from typing import Any, Optional, Type
 
 from django.apps import apps
 from django.conf import settings
@@ -7,17 +7,20 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.generic.base import View
-from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView, View
+from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 import reversion
+from celery_progress.views import get_progress
+from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
@@ -25,12 +28,15 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from health_check.views import MainView
+from oauth2_provider.models import Application
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+from templated_email import send_templated_mail
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
+from .celery import app
 from .filters import GroupFilter, PersonFilter
 from .forms import (
     AnnouncementForm,
@@ -53,11 +59,14 @@ from .models import (
     DashboardWidget,
     DashboardWidgetOrder,
     DataCheckResult,
+    DummyPerson,
     Group,
     GroupType,
     Notification,
+    PDFFile,
     Person,
     SchoolTerm,
+    TaskUserAssignment,
 )
 from .registries import (
     group_preferences_registry,
@@ -74,8 +83,21 @@ from .tables import (
 )
 from .util import messages
 from .util.apps import AppConfig
-from .util.core_helpers import objectgetter_optional
+from .util.celery_progress import render_progress_page
+from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
 from .util.forms import PreferenceLayout
+from .util.pdf import render_pdf
+
+
+class RenderPDFView(TemplateView):
+    """View to render a PDF file from a template.
+
+    Makes use of ``render_pdf``.
+    """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        context = self.get_context_data(**kwargs)
+        return render_pdf(request, self.template_name, context)
 
 
 @permission_required("core.view_dashboard")
@@ -83,18 +105,23 @@ def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
 
-    activities = request.user.person.activities.all()[:5]
-    notifications = request.user.person.notifications.all()[:5]
-    unread_notifications = request.user.person.notifications.all().filter(read=False)
+    if has_person(request.user):
+        person = request.user.person
+        widgets = person.dashboard_widgets
+    else:
+        person = DummyPerson()
+        widgets = []
+
+    activities = person.activities.all()[:5]
+    notifications = person.notifications.all()[:5]
+    unread_notifications = person.notifications.all().filter(read=False)
 
     context["activities"] = activities
     context["notifications"] = notifications
     context["unread_notifications"] = unread_notifications
 
-    announcements = Announcement.objects.at_time().for_person(request.user.person)
+    announcements = Announcement.objects.at_time().for_person(person)
     context["announcements"] = announcements
-
-    widgets = request.user.person.dashboard_widgets
 
     if len(widgets) == 0:
         # Use default dashboard if there are no widgets
@@ -107,6 +134,18 @@ def index(request: HttpRequest) -> HttpResponse:
     context["media"] = media
 
     return render(request, "core/index.html", context)
+
+
+class NotificationsListView(PermissionRequiredMixin, ListView):
+    permission_required = "core.view_notifications"
+    template_name = "core/notifications.html"
+
+    def get_queryset(self) -> QuerySet:
+        return self.request.user.person.notifications.order_by("-created")
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        self.get_queryset().filter(read=False).update(read=True)
+        return super().get_context_data(**kwargs)
 
 
 def about(request: HttpRequest) -> HttpResponse:
@@ -320,16 +359,39 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
     if id_:
         # Edit form for existing group
         edit_person_form = EditPersonForm(
-            request.POST or None, request.FILES or None, instance=person
+            request, request.POST or None, request.FILES or None, instance=person
         )
     else:
         # Empty form to create a new group
         if request.user.has_perm("core.create_person"):
-            edit_person_form = EditPersonForm(request.POST or None, request.FILES or None)
+            edit_person_form = EditPersonForm(request, request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
     if request.method == "POST":
         if edit_person_form.is_valid():
+            if person and person == request.user.person:
+                # Check if user edited non-editable field
+                notification_fields = get_site_preferences()[
+                    "account__notification_on_person_change"
+                ]
+                send_notification_fields = set(edit_person_form.changed_data).intersection(
+                    set(notification_fields)
+                )
+                context["send_notification_fields"] = send_notification_fields
+                if send_notification_fields:
+                    context["send_notification_fields"] = send_notification_fields
+                    send_templated_mail(
+                        template_name="person_changed",
+                        from_email=request.user.person.mail_sender_via,
+                        headers={
+                            "Reply-To": request.user.person.mail_sender,
+                            "Sender": request.user.person.mail_sender,
+                        },
+                        recipient_list=[
+                            get_site_preferences()["account__person_change_notification_contact"]
+                        ],
+                        context=context,
+                    )
             with reversion.create_revision():
                 set_user(request.user)
                 edit_person_form.save(commit=True)
@@ -399,20 +461,25 @@ class SystemStatus(PermissionRequiredMixin, MainView):
         status_code = 500 if self.errors else 200
         task_results = []
 
-        if "django_celery_results" in settings.INSTALLED_APPS:
-            from django_celery_results.models import TaskResult  # noqa
+        if app.control.inspect().registered_tasks():
+            job_list = list(app.control.inspect().registered_tasks().values())[0]
+            for job in job_list:
+                task_results.append(
+                    TaskResult.objects.filter(task_name=job).order_by("date_done").last()
+                )
 
-            from .celery import app  # noqa
-
-            if app.control.inspect().registered_tasks():
-                job_list = list(app.control.inspect().registered_tasks().values())[0]
-                for job in job_list:
-                    task_results.append(
-                        TaskResult.objects.filter(task_name=job).order_by("date_done").last()
-                    )
-
-        context = {"plugins": self.plugins, "status_code": status_code, "tasks": task_results}
+        context = {
+            "plugins": self.plugins,
+            "status_code": status_code,
+            "tasks": task_results,
+            "DEBUG": settings.DEBUG,
+        }
         return self.render_to_response(context, status=status_code)
+
+
+class TestPDFGenerationView(PermissionRequiredMixin, RenderPDFView):
+    template_name = "core/pages/test_pdf.html"
+    permission_required = "core.test_pdf"
 
 
 @permission_required(
@@ -638,7 +705,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
     return render(request, "core/additional_field/edit.html", context)
 
 
-@permission_required("core.view_additionalfield")
+@permission_required("core.view_additionalfields")
 def additional_fields(request: HttpRequest) -> HttpResponse:
     """List view for listing all additional fields."""
     context = {}
@@ -697,7 +764,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
     return render(request, "core/group_type/edit.html", context)
 
 
-@permission_required("core.view_grouptype")
+@permission_required("core.view_grouptypes")
 def group_types(request: HttpRequest) -> HttpResponse:
     """List view for listing all group types."""
     context = {}
@@ -730,9 +797,13 @@ class DataCheckView(PermissionRequiredMixin, ListView):
     context_object_name = "results"
 
     def get_queryset(self) -> QuerySet:
-        return DataCheckResult.objects.filter(solved=False).order_by("check")
+        return (
+            DataCheckResult.objects.filter(content_type__app_label__in=apps.app_configs.keys())
+            .filter(solved=False)
+            .order_by("check")
+        )
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["registered_checks"] = DataCheckRegistry.data_checks
         return context
@@ -742,17 +813,17 @@ class RunDataChecks(PermissionRequiredMixin, View):
     permission_required = "core.run_data_checks"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not check_data()[1]:
-            messages.success(
-                request,
-                _(
-                    "The data check has been started. Please note that it may take "
-                    "a while before you are able to fetch the data on this page."
-                ),
-            )
-        else:
-            messages.success(request, _("The data check has finished."))
-        return redirect("check_data")
+        result = check_data.delay()
+
+        return render_progress_page(
+            request,
+            result,
+            title=_("Progress: Run data checks"),
+            progress_title=_("Run data checks …"),
+            success_message=_("The data checks were run successfully."),
+            error_message=_("There was a problem while running data checks."),
+            back_url=reverse("check_data"),
+        )
 
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
@@ -787,7 +858,7 @@ class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
     permission_required = "core.view_dashboardwidget"
     template_name = "core/dashboard_widget/list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["widget_types"] = [
             (ContentType.objects.get_for_model(m, False), m)
@@ -821,7 +892,7 @@ class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
         ct = get_object_or_404(ContentType, app_label=app_label, model=model)
         return ct.model_class()
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["model"] = self.model
         return context
@@ -851,8 +922,10 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     success_message = _("The dashboard widget has been deleted.")
 
 
-class EditDashboardView(View):
+class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
+
+    permission_required = "core.edit_dashboard"
 
     def get_context_data(self, request, **kwargs):
         context = {}
@@ -868,7 +941,9 @@ class EditDashboardView(View):
             if not self.default_dashboard
             else DashboardWidgetOrder.default_dashboard_widgets
         )
-        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets])
+        not_used_widgets = DashboardWidget.objects.exclude(pk__in=[w.pk for w in widgets]).filter(
+            active=True
+        )
         context["widgets"] = widgets
         context["not_used_widgets"] = not_used_widgets
 
@@ -921,3 +996,97 @@ class EditDashboardView(View):
         context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
+
+
+class OAuth2List(PermissionRequiredMixin, ListView):
+    """List view for all the applications."""
+
+    permission_required = "core.list_oauth_applications"
+    context_object_name = "applications"
+    template_name = "oauth2_provider/application_list.html"
+
+    def get_queryset(self):
+        return Application.objects.all()
+
+
+class OAuth2Detail(PermissionRequiredMixin, DetailView):
+    """Detail view for an application instance."""
+
+    context_object_name = "application"
+    permission_required = "core.view_oauth_applications"
+    template_name = "oauth2_provider/application_detail.html"
+
+    def get_queryset(self):
+        return Application.objects.all()
+
+
+class OAuth2Delete(PermissionRequiredMixin, DeleteView):
+    """View used to delete an application."""
+
+    permission_required = "core.delete_oauth_applications"
+    context_object_name = "application"
+    success_url = reverse_lazy("oauth_list")
+    template_name = "oauth2_provider/application_confirm_delete.html"
+
+    def get_queryset(self):
+        return Application.objects.all()
+
+
+class OAuth2Update(PermissionRequiredMixin, UpdateView):
+    """View used to update an application."""
+
+    permission_required = "core.update_oauth_applications"
+    context_object_name = "application"
+    template_name = "oauth2_provider/application_form.html"
+
+    def get_queryset(self):
+        return Application.objects.all()
+
+    def get_form_class(self):
+        """Return the form class for the application model."""
+        return modelform_factory(
+            Application,
+            fields=(
+                "name",
+                "client_id",
+                "client_secret",
+                "client_type",
+                "authorization_grant_type",
+                "redirect_uris",
+            ),
+        )
+
+
+class RedirectToPDFFile(SingleObjectMixin, View):
+    """Redirect to a generated PDF file."""
+
+    model = PDFFile
+
+    def get(self, *args, **kwargs):
+        file_object = self.get_object()
+        if not file_object.file:
+            raise Http404()
+        return redirect(file_object.file.url)
+
+
+class HTMLForPDFFile(SingleObjectMixin, View):
+    """Return rendered HTML for generating a PDF file."""
+
+    model = PDFFile
+
+    def get(self, request, *args, **kwargs):
+        file_object = self.get_object()
+        if request.GET.get("secret") != file_object.secret:
+            raise PermissionDenied()
+        return HttpResponse(file_object.html)
+
+
+class CeleryProgressView(View):
+    """Wrap celery-progress view to check permissions before."""
+
+    def get(self, request: HttpRequest, task_id: str, *args, **kwargs) -> HttpResponse:
+        if not TaskUserAssignment.objects.filter(
+            task_result__task_id=task_id, user=request.user
+        ).exists():
+            raise Http404()
+        return get_progress(request, task_id, *args, **kwargs)

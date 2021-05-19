@@ -1,10 +1,11 @@
 # flake8: noqa: DJ12
 
 from datetime import datetime
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, SuccessURLAllowedHostsMixin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
@@ -20,6 +21,7 @@ from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
 from guardian.admin import GuardedModelAdmin
+from guardian.core import ObjectPermissionChecker
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
 from rules.contrib.admin import ObjectPermissionsModelAdmin
@@ -45,6 +47,28 @@ class _ExtensibleModelBase(models.base.ModelBase):
             mcls.extra_permissions = []
 
         return mcls
+
+
+def _generate_one_to_one_proxy_property(field, subfield):
+    def getter(self):
+        if hasattr(self, field.name):
+            related = getattr(self, field.name)
+            return getattr(related, subfield.name)
+        # Related instane does not exist
+        return None
+
+    def setter(self, val):
+        if hasattr(self, field.name):
+            related = getattr(self, field.name)
+        else:
+            # Auto-create related instance (but do not save)
+            related = field.related_model()
+            setattr(related, field.remote_field.name, self)
+            # Ensure the related model is saved later
+            self._save_reverse = getattr(self, "_save_reverse", []) + [related]
+        setattr(related, subfield.name, val)
+
+    return property(getter, setter)
 
 
 class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
@@ -107,7 +131,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         pass
 
     @property
-    def versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
+    def versions(self) -> list[tuple[str, tuple[Any, Any]]]:
         """Get all versions of this object from django-reversion.
 
         Includes diffs to previous version.
@@ -128,8 +152,6 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             versions_with_changes.append((version, diff))
 
         return versions_with_changes
-
-    extended_data = JSONField(default=dict, editable=False)
 
     extended_data = JSONField(default=dict, editable=False)
 
@@ -248,23 +270,61 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             to.property_(_virtual_related, related_name)
 
     @classmethod
-    def syncable_fields(cls) -> List[models.Field]:
-        """Collect all fields that can be synced on a model."""
-        return [
-            field
-            for field in cls._meta.fields
-            if (field.editable and not field.auto_created and not field.is_relation)
-        ]
+    def syncable_fields(
+        cls, recursive: bool = True, exclude_remotes: list = []
+    ) -> list[models.Field]:
+        """Collect all fields that can be synced on a model.
+
+        If recursive is True, it recurses into related models and generates virtual
+        proxy fields to access fields in related models."""
+        fields = []
+        for field in cls._meta.get_fields():
+            if field.is_relation and field.one_to_one and recursive:
+                if ExtensibleModel not in field.related_model.__mro__:
+                    # Related model is not extensible and thus has no syncable fields
+                    continue
+                if field.related_model in exclude_remotes:
+                    # Remote is excluded, probably to avoid recursion
+                    continue
+
+                # Recurse into related model to get its fields as well
+                for subfield in field.related_model.syncable_fields(
+                    recursive, exclude_remotes + [cls]
+                ):
+                    # generate virtual field names for proxy access
+                    name = f"_{field.name}__{subfield.name}"
+                    verbose_name = f"{field.name} ({field.related_model._meta.verbose_name}) → {subfield.verbose_name}"
+
+                    if not hasattr(cls, name):
+                        # Add proxy properties to handle access to related model
+                        setattr(cls, name, _generate_one_to_one_proxy_property(field, subfield))
+
+                    # Generate a fake field class with enough API to detect attribute names
+                    fields.append(
+                        type(
+                            "FakeRelatedProxyField",
+                            (),
+                            {
+                                "name": name,
+                                "verbose_name": verbose_name,
+                                "to_python": lambda v: subfield.to_python(v),
+                            },
+                        )
+                    )
+            elif field.editable and not field.auto_created:
+                fields.append(field)
+
+        return fields
 
     @classmethod
-    def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
+    def syncable_fields_choices(cls) -> tuple[tuple[str, str]]:
         """Collect all fields that can be synced on a model."""
         return tuple(
             [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
         )
 
     @classmethod
-    def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
+    def syncable_fields_choices_lazy(cls) -> Callable[[], tuple[tuple[str, str]]]:
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
 
@@ -272,6 +332,20 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
     def add_permission(cls, name: str, verbose_name: str):
         """Dynamically add a new permission to a model."""
         cls.extra_permissions.append((name, verbose_name))
+
+    def set_object_permission_checker(self, checker: ObjectPermissionChecker):
+        """Annotate a ``ObjectPermissionChecker`` for use with permission system."""
+        self._permission_checker = checker
+
+    def save(self, *args, **kwargs):
+        """Ensure all functionality of our extensions that needs saving gets it."""
+        # For auto-created remote syncable fields
+        if hasattr(self, "_save_reverse"):
+            for related in self._save_reverse:
+                related.save()
+            del self._save_reverse
+
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -281,6 +355,17 @@ class PureDjangoModel(object):
     """No-op mixin to mark a model as deliberately not using ExtensibleModel."""
 
     pass
+
+
+class GlobalPermissionModel(models.Model):
+    """Base model for global permissions.
+
+    This base model ensures that global permissions are not managed."""
+
+    class Meta:
+        default_permissions = ()
+        abstract = True
+        managed = False
 
 
 class _ExtensibleFormMetaclass(ModelFormMetaclass):
@@ -342,6 +427,13 @@ class SuccessMessageMixin(ModelFormMixin):
         if self.success_message:
             messages.success(self.request, self.success_message)
         return super().form_valid(form)
+
+
+class SuccessNextMixin(SuccessURLAllowedHostsMixin):
+    redirect_field_name = "next"
+
+    def get_success_url(self) -> str:
+        return LoginView.get_redirect_url(self) or super().get_success_url()
 
 
 class AdvancedCreateView(SuccessMessageMixin, CreateView):

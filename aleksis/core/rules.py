@@ -2,6 +2,7 @@ import rules
 
 from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
+    contains_site_preference_value,
     has_any_object,
     has_global_perm,
     has_object_perm,
@@ -9,12 +10,17 @@ from .util.predicates import (
     is_current_person,
     is_group_owner,
     is_notification_recipient,
+    is_site_preference_set,
 )
 
 rules.add_perm("core", rules.always_allow)
 
 # View dashboard
-rules.add_perm("core.view_dashboard", has_person)
+view_dashboard_predicate = is_site_preference_set("general", "anonymous_dashboard") | has_person
+rules.add_perm("core.view_dashboard", view_dashboard_predicate)
+
+# View notifications
+rules.add_perm("core.view_notifications", has_person)
 
 # Use search
 search_predicate = has_person & has_global_perm("core.search")
@@ -62,7 +68,9 @@ rules.add_perm("core.view_person_groups", view_groups_predicate)
 
 # Edit person
 edit_person_predicate = has_person & (
-    has_global_perm("core.change_person") | has_object_perm("core.change_person")
+    has_global_perm("core.change_person")
+    | has_object_perm("core.change_person")
+    | is_current_person & is_site_preference_set("account", "editable_fields_person")
 )
 rules.add_perm("core.edit_person", edit_person_predicate)
 
@@ -210,11 +218,11 @@ delete_additional_field_predicate = has_person & (
 rules.add_perm("core.delete_additionalfield", delete_additional_field_predicate)
 
 # View additional fields
-view_additional_field_predicate = has_person & (
+view_additional_fields_predicate = has_person & (
     has_global_perm("core.view_additionalfield")
     | has_any_object("core.view_additionalfield", AdditionalField)
 )
-rules.add_perm("core.view_additionalfield", view_additional_field_predicate)
+rules.add_perm("core.view_additionalfields", view_additional_fields_predicate)
 
 # Edit group type
 change_group_type_predicate = has_person & (
@@ -236,10 +244,10 @@ delete_group_type_predicate = has_person & (
 rules.add_perm("core.delete_grouptype", delete_group_type_predicate)
 
 # View group types
-view_group_type_predicate = has_person & (
+view_group_types_predicate = has_person & (
     has_global_perm("core.view_grouptype") | has_any_object("core.view_grouptype", GroupType)
 )
-rules.add_perm("core.view_grouptype", view_group_type_predicate)
+rules.add_perm("core.view_grouptypes", view_group_types_predicate)
 
 # Create person
 create_person_predicate = has_person & (
@@ -307,5 +315,43 @@ rules.add_perm("core.edit_dashboardwidget", edit_dashboard_widget_predicate)
 delete_dashboard_widget_predicate = has_person & has_global_perm("core.delete_dashboardwidget")
 rules.add_perm("core.delete_dashboardwidget", delete_dashboard_widget_predicate)
 
+edit_dashboard_predicate = is_site_preference_set("general", "dashboard_editing") & has_person
+rules.add_perm("core.edit_dashboard", edit_dashboard_predicate)
+
 edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_default_dashboard")
 rules.add_perm("core.edit_default_dashboard", edit_default_dashboard_predicate)
+
+# OAuth2 permissions
+add_oauth_applications_predicate = has_person & has_global_perm("core.add_oauth_applications")
+rules.add_perm("core.add_oauth_applications", add_oauth_applications_predicate)
+
+list_oauth_applications_predicate = has_person & has_global_perm("core.list_oauth_applications")
+rules.add_perm("core.list_oauth_applications", list_oauth_applications_predicate)
+
+view_oauth_applications_predicate = has_person & has_global_perm("core.view_oauth_applications")
+rules.add_perm("core.view_oauth_applications", view_oauth_applications_predicate)
+
+update_oauth_applications_predicate = has_person & has_global_perm("core.update_oauth_applications")
+rules.add_perm("core.update_oauth_applications", update_oauth_applications_predicate)
+
+delete_oauth_applications_predicate = has_person & has_global_perm("core.delete_oauth_applications")
+rules.add_perm("core.delete_oauth_applications", delete_oauth_applications_predicate)
+
+# Upload and browse files via CKEditor
+upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
+rules.add_perm("core.upload_files_ckeditor", upload_files_ckeditor_predicate)
+
+test_pdf_generation_predicate = has_person & has_global_perm("core.test_pdf")
+rules.add_perm("core.test_pdf", test_pdf_generation_predicate)
+
+# Generate rules for syncable fields
+for field in Person._meta.fields:
+    perm = (
+        has_global_perm("core.edit_person")
+        | has_object_perm("core.edit_person")
+        | (
+            is_current_person
+            & contains_site_preference_value("account", "editable_fields_person", field.name)
+        )
+    )
+    rules.add_perm(f"core.change_person_field_{field.name}", perm)

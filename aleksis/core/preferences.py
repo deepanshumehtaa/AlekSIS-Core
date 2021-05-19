@@ -3,11 +3,13 @@ from django.forms import EmailField, ImageField, URLField
 from django.forms.widgets import SelectMultiple
 from django.utils.translation import gettext_lazy as _
 
+from colorfield.widgets import ColorWidget
 from dynamic_preferences.preferences import Section
 from dynamic_preferences.types import (
     BooleanPreference,
     ChoicePreference,
     FilePreference,
+    IntegerPreference,
     ModelMultipleChoicePreference,
     MultipleChoicePreference,
     StringPreference,
@@ -59,6 +61,7 @@ class ColourPrimary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Primary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -70,6 +73,7 @@ class ColourSecondary(StringPreference):
     default = "#0d5eaf"
     required = False
     verbose_name = _("Secondary colour")
+    widget = ColorWidget
 
 
 @site_preferences_registry.register
@@ -203,6 +207,24 @@ class PrimaryGroupField(ChoicePreference):
 
 
 @site_preferences_registry.register
+class AutoCreatePerson(BooleanPreference):
+    section = account
+    name = "auto_create_person"
+    default = False
+    required = False
+    verbose_name = _("Automatically create new persons for new users")
+
+
+@site_preferences_registry.register
+class AutoLinkPerson(BooleanPreference):
+    section = account
+    name = "auto_link_person"
+    default = False
+    required = False
+    verbose_name = _("Automatically link existing persons to new users by their e-mail address")
+
+
+@site_preferences_registry.register
 class SchoolName(StringPreference):
     """Display name of the school."""
 
@@ -281,3 +303,70 @@ class DataChecksEmailsRecipientGroups(ModelMultipleChoicePreference):
     default = []
     model = Group
     verbose_name = _("Email recipient groups for data checks problem emails")
+
+
+@site_preferences_registry.register
+class AnonymousDashboard(BooleanPreference):
+    section = general
+    name = "anonymous_dashboard"
+    default = False
+    required = False
+    verbose_name = _("Show dashboard to users without login")
+
+
+@site_preferences_registry.register
+class DashboardEditing(BooleanPreference):
+    section = general
+    name = "dashboard_editing"
+    default = True
+    required = False
+    verbose_name = _("Allow users to edit their dashboard")
+
+
+@site_preferences_registry.register
+class EditableFieldsPerson(MultipleChoicePreference):
+    """Fields on person model that should be editable by the person."""
+
+    section = account
+    name = "editable_fields_person"
+    default = []
+    widget = SelectMultiple
+    verbose_name = _("Fields on person model which are editable by themselves.")
+    field_attribute = {"initial": []}
+    choices = [(field.name, field.name) for field in Person.syncable_fields()]
+
+
+@site_preferences_registry.register
+class SendNotificationOnPersonChange(MultipleChoicePreference):
+    """Fields on the person model that should trigger a notification on change."""
+
+    section = account
+    name = "notification_on_person_change"
+    default = []
+    widget = SelectMultiple
+    verbose_name = _(
+        "Editable fields on person model which should trigger a notification on change"
+    )
+    field_attribute = {"initial": []}
+    choices = [(field.name, field.name) for field in Person.syncable_fields()]
+
+
+@site_preferences_registry.register
+class PersonChangeNotificationContact(StringPreference):
+    """Mail recipient address for change notifications."""
+
+    section = account
+    name = "person_change_notification_contact"
+    default = ""
+    verbose_name = _("Contact for notification if a person changes their data")
+
+
+@site_preferences_registry.register
+class PDFFileExpirationDuration(IntegerPreference):
+    """PDF file expiration duration."""
+
+    section = general
+    name = "pdf_expiration"
+    default = 3
+    verbose_name = _("PDF file expiration duration")
+    help_text = _("in minutes")

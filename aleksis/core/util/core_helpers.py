@@ -1,20 +1,12 @@
 import os
-import sys
-import time
 from datetime import datetime, timedelta
-from importlib import import_module
+from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
-from uuid import uuid4
-
-if sys.version_info >= (3, 9):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata
 
 from django.conf import settings
-from django.db import transaction
+from django.core.files import File
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -22,9 +14,6 @@ from django.utils import timezone
 from django.utils.functional import lazy
 
 from cache_memoize import cache_memoize
-from django_global_request.middleware import get_request
-
-from aleksis.core.util import messages
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
@@ -137,23 +126,54 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     return lazy(_get_preference, str)(section, name)
 
 
-def lazy_get_favicon_url(
-    title: str, size: int, rel: str, default: Optional[str] = None
-) -> Callable[[str, str], Any]:
-    """Lazily get the URL to a favicon image."""
+def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) -> "Favicon":
+    """Ensure that there is always a favicon object."""
+    from favicon.models import Favicon  # noqa
 
-    @cache_memoize(3600)
-    def _get_favicon_url(size: int, rel: str) -> Any:
-        from favicon.models import Favicon  # noqa
+    favicon, created = Favicon.on_site.get_or_create(
+        title=title, defaults={"isFavicon": is_favicon}
+    )
 
-        try:
-            favicon = Favicon.on_site.get(title=title)
-        except Favicon.DoesNotExist:
-            return default
-        else:
-            return favicon.get_favicon(size, rel).faviconImage.url
+    changed = False
 
-    return lazy(_get_favicon_url, str)(size, rel)
+    if favicon.isFavicon != is_favicon:
+        favicon.isFavicon = True
+        changed = True
+
+    if created:
+        favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
+        changed = True
+
+    if changed:
+        favicon.save()
+
+    return favicon
+
+
+def lazy_get_favicons(
+    title: str,
+    config: dict[str, list[int]],
+    default: str,
+    add_attrs: Optional[dict[str, Any]] = None,
+) -> Callable[[], list[dict[str, str]]]:
+    """Lazily load a dictionary for PWA settings from favicon generation rules."""
+    if add_attrs is None:
+        add_attrs = {}
+
+    def _get_favicons() -> list[dict[str, str]]:
+        favicon = get_or_create_favicon(title, default)
+        favicon_imgs = favicon.get_favicons(config_override=config)
+
+        return [
+            {
+                "src": favicon_img.faviconImage.url,
+                "sizes": [f"{favicon_img.size}x{favicon_img.size}"],
+            }
+            | add_attrs
+            for favicon_img in favicon_imgs
+        ]
+
+    return lazy(_get_favicons, list)()
 
 
 def is_impersonate(request: HttpRequest) -> bool:
@@ -176,6 +196,9 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         else:
             return False
 
+    if obj.is_anonymous:
+        return False
+
     person = getattr(obj, "person", None)
     if person is None:
         return False
@@ -183,154 +206,6 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         return False
     else:
         return True
-
-
-def is_celery_enabled():
-    """Check whether celery support is enabled."""
-    return hasattr(settings, "CELERY_RESULT_BACKEND")
-
-
-def celery_optional(orig: Callable) -> Callable:
-    """Add a decorator that makes Celery optional for a function.
-
-    If Celery is configured and available, it wraps the function in a Task
-    and calls its delay method when invoked; if not, it leaves it untouched
-    and it is executed synchronously.
-
-    The wrapped function returns a tuple with either
-    the return value of the task's delay method and False
-    if the method has been executed asynchronously
-    or the return value of the executed method and True
-    if the method has been executed synchronously.
-    """
-    if is_celery_enabled():
-        from ..celery import app  # noqa
-
-        task = app.task(orig)
-
-    def wrapped(*args, **kwargs):
-        if is_celery_enabled():
-            return transaction.on_commit(lambda: task.delay(*args, **kwargs)), False
-        else:
-            return orig(*args, **kwargs), True
-
-    return wrapped
-
-
-class DummyRecorder:
-    def set_progress(self, *args, **kwargs):
-        pass
-
-    def add_message(self, level: int, message: str, **kwargs) -> Optional[Any]:
-        request = get_request()
-        return messages.add_message(request, level, message, **kwargs)
-
-
-def celery_optional_progress(orig: Callable) -> Callable:
-    """Add a decorator that makes Celery with progress bar support optional for a function.
-
-    If Celery is configured and available, it wraps the function in a Task
-    and calls its delay method when invoked; if not, it leaves it untouched
-    and it is executed synchronously.
-
-    Additionally, it adds a recorder class as first argument
-    (`ProgressRecorder` if Celery is enabled, else `DummyRecoder`).
-
-    This recorder provides the functions `set_progress` and `add_message`
-    which can be used to track the status of the task.
-    For further information, see the respective recorder classes.
-
-    How to use
-    ----------
-    1. Write a function and include tracking methods
-
-    ::
-
-        from django.contrib import messages
-
-        from aleksis.core.util.core_helpers import celery_optional_progress
-
-        @celery_optional_progress
-        def do_something(recorder: Union[ProgressRecorder, DummyRecorder], foo, bar, baz=None):
-            # ...
-            recorder.total = len(list_with_data)
-
-            for i, item in list_with_data:
-                # ...
-                recorder.set_progress(i + 1)
-                # ...
-
-            recorder.add_message(messages.SUCCESS, "All data were imported successfully.")
-
-    2. Track process in view:
-
-    ::
-
-        def my_view(request):
-            context = {}
-            # ...
-            result = do_something(foo, bar, baz=baz)
-
-            if result:
-                context = {
-                    "title": _("Progress: Import data"),
-                    "back_url": reverse("index"),
-                    "progress": {
-                        "task_id": result.task_id,
-                        "title": _("Import objects …"),
-                        "success": _("The import was done successfully."),
-                        "error": _("There was a problem while importing data."),
-                    },
-                }
-
-                # Render progress view
-                return render(request, "core/progress.html", context)
-
-            # Render other view if Celery isn't enabled
-            return render(request, "my-app/other-view.html", context)
-    """
-
-    def recorder_func(self, *args, **kwargs):
-        if is_celery_enabled():
-            from .celery_progress import ProgressRecorder  # noqa
-
-            recorder = ProgressRecorder(self)
-        else:
-            recorder = DummyRecorder()
-        orig(recorder, *args, **kwargs)
-
-        # Needed to ensure that all messages are displayed by frontend
-        time.sleep(0.7)
-
-    var_name = f"{orig.__module__}.{orig.__name__}"
-
-    if is_celery_enabled():
-        from ..celery import app  # noqa
-
-        task = app.task(recorder_func, bind=True, name=var_name)
-
-    def wrapped(*args, **kwargs):
-        if is_celery_enabled():
-            return task.delay(*args, **kwargs)
-        else:
-            recorder_func(None, *args, **kwargs)
-            return None
-
-    return wrapped
-
-
-def path_and_rename(instance, filename: str, upload_to: str = "files") -> str:
-    """Update path of an uploaded file and renames it to a random UUID in Django FileField."""
-    _, ext = os.path.splitext(filename)
-
-    # set filename as random string
-    new_filename = f"{uuid4().hex}{ext}"
-
-    # Create upload directory if necessary
-    os.makedirs(os.path.join(settings.MEDIA_ROOT, upload_to), exist_ok=True)
-
-    # return the whole path to the file
-    return os.path.join(upload_to, new_filename)
 
 
 def custom_information_processor(request: HttpRequest) -> dict:
@@ -347,6 +222,7 @@ def custom_information_processor(request: HttpRequest) -> dict:
         "ALTERNATIVE_LOGIN_VIEWS": [
             a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
         ],
+        "ADMINS": settings.ADMINS,
     }
 
 
@@ -360,11 +236,14 @@ def objectgetter_optional(
 ) -> Callable[[HttpRequest, Optional[int]], Model]:
     """Get an object by pk, defaulting to None."""
 
-    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Model:
+    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Optional[Model]:
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return eval(default) if default_eval else default  # noqa:S307
+            try:
+                return eval(default) if default_eval else default  # noqa:S307
+            except (AttributeError, KeyError, IndexError):
+                return None
 
     return get_object
 
@@ -401,3 +280,23 @@ def queryset_rules_filter(
             wanted_objects.add(item.pk)
 
     return queryset.filter(pk__in=wanted_objects)
+
+
+def unread_notifications_badge(request: HttpRequest) -> int:
+    """Generate badge content with the number of unread notifications."""
+    return request.user.person.unread_notifications_count
+
+
+def monkey_patch() -> None:  # noqa
+    """Monkey-patch dependencies for special behaviour."""
+    # Unwrap promises in JSON serializer instead of stringifying
+    from django.core.serializers import json
+    from django.utils.functional import Promise
+
+    class DjangoJSONEncoder(json.DjangoJSONEncoder):
+        def default(self, o: Any) -> Any:
+            if isinstance(o, Promise) and hasattr(o, "copy"):
+                return o.copy()
+            return super().default(o)
+
+    json.DjangoJSONEncoder = DjangoJSONEncoder

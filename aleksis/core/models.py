@@ -1,8 +1,10 @@
 # flake8: noqa: DJ01
-
-from datetime import date, datetime
+import hmac
+from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
+from urllib.parse import urlparse
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -12,6 +14,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
@@ -21,20 +25,29 @@ from django.utils.translation import gettext_lazy as _
 
 import jsonstore
 from cache_memoize import cache_memoize
+from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
+from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
     GroupQuerySet,
+    InstalledWidgetsDashboardWidgetOrderManager,
     SchoolTermQuerySet,
+    UninstallRenitentPolymorphicManager,
 )
-from .mixins import ExtensibleModel, PureDjangoModel, SchoolTermRelatedExtensibleModel
+from .mixins import (
+    ExtensibleModel,
+    GlobalPermissionModel,
+    PureDjangoModel,
+    SchoolTermRelatedExtensibleModel,
+)
 from .tasks import send_notification
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
@@ -239,22 +252,36 @@ class Person(ExtensibleModel):
     @property
     def dashboard_widgets(self):
         return [
-            w.widget for w in DashboardWidgetOrder.objects.filter(person=self).order_by("order")
+            w.widget
+            for w in DashboardWidgetOrder.objects.filter(person=self, widget__active=True).order_by(
+                "order"
+            )
         ]
 
+    @property
+    def unread_notifications(self) -> QuerySet:
+        """Get all unread notifications for this person."""
+        return self.notifications.filter(read=False)
+
+    @property
+    def unread_notifications_count(self) -> int:
+        """Return the count of unread notifications for this person."""
+        return self.unread_notifications.count()
+
+    user_info_tracker = FieldTracker(fields=("first_name", "last_name", "email"))
+
     def save(self, *args, **kwargs):
+        # Determine all fields that were changed since last load
+        dirty = self.pk is None or bool(self.user_info_tracker.changed())
+
         super().save(*args, **kwargs)
 
-        # Synchronise user fields to linked User object to keep it up to date
-        if self.user:
+        if self.user and dirty:
+            # Synchronise user fields to linked User object to keep it up to date
             self.user.first_name = self.first_name
             self.user.last_name = self.last_name
             self.user.email = self.email
             self.user.save()
-
-        # Save all related groups once to keep synchronisation with Django
-        for group in self.member_of.union(self.owner_of.all()).all():
-            group.save()
 
         # Select a primary group if none is set
         self.auto_select_primary_group()
@@ -267,9 +294,7 @@ class Person(ExtensibleModel):
         # Ensure we have an admin user
         user = get_user_model()
         if not user.objects.filter(is_superuser=True).exists():
-            admin = user.objects.create_superuser(
-                username="admin", email="root@example.com", password="admin"
-            )
+            admin = user.objects.create_superuser(**settings.AUTH_INITIAL_SUPERUSER)
             admin.save()
 
     def auto_select_primary_group(
@@ -415,19 +440,25 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    def save(self, *args, **kwargs):
+    group_info_tracker = FieldTracker(fields=("name", "short_name"))
+
+    def save(self, force: bool = False, *args, **kwargs):
+        # Determine state of object in relation to database
+        dirty = self.pk is None or bool(self.group_info_tracker.changed())
+
         super().save(*args, **kwargs)
 
-        # Synchronise group to Django group with same name
-        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
-        dj_group.user_set.set(
-            list(
-                self.members.filter(user__isnull=False)
-                .values_list("user", flat=True)
-                .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+        if force or dirty:
+            # Synchronise group to Django group with same name
+            dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+            dj_group.user_set.set(
+                list(
+                    self.members.filter(user__isnull=False)
+                    .values_list("user", flat=True)
+                    .union(self.owners.filter(user__isnull=False).values_list("user", flat=True))
+                )
             )
-        )
-        dj_group.save()
+            dj_group.save()
 
 
 class PersonGroupThrough(ExtensibleModel):
@@ -448,6 +479,41 @@ class PersonGroupThrough(ExtensibleModel):
             field_name = slugify(field.title).replace("-", "_")
             field_instance = field_class(verbose_name=field.title)
             setattr(self, field_name, field_instance)
+
+
+@receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+@receiver(models.signals.m2m_changed, sender=Group.owners.through)
+def save_group_on_m2m_changed(
+    sender: Union[PersonGroupThrough, Group.owners.through],
+    instance: models.Model,
+    action: str,
+    reverse: bool,
+    model: models.Model,
+    pk_set: Optional[set],
+    **kwargs,
+) -> None:
+    """Ensure user and group data is synced to Django's models.
+
+    AlekSIS maintains personal information and group meta-data / membership
+    in its Person and Group models. As third-party libraries have no knowledge
+    about this, we need to keep django.contrib.auth in sync.
+
+    This signal handler triggers a save of group objects whenever a membership
+    changes. The save() code will decide whether to update the Django objects
+    or not.
+    """
+    if action not in ("post_add", "post_remove", "post_clear"):
+        # Only trigger once, after the change was applied to the database
+        return
+
+    if reverse:
+        # Relationship was changed on the Person side, saving all groups
+        # that have been touched there
+        for group in model.objects.filter(pk__in=pk_set):
+            group.save(force=True)
+    else:
+        # Relationship was changed on the Group side
+        instance.save(force=True)
 
 
 class Activity(ExtensibleModel, TimeStampedModel):
@@ -659,10 +725,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 
       from aleksis.core.models import DashboardWidget
 
-      class MyWidget(DhasboardWIdget):
+      class MyWidget(DashboardWidget):
           template = "myapp/widget.html"
 
-          def get_context(self):
+          def get_context(self, request):
               context = {"some_content": "foo"}
               return context
 
@@ -676,6 +742,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
           )
     """
 
+    objects = UninstallRenitentPolymorphicManager()
+
+    data_checks = [BrokenDashboardWidgetDataCheck]
+
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
         """Return all media required to render the selected widgets."""
@@ -685,10 +755,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
+    template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+    broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
     size_s = models.PositiveSmallIntegerField(
         verbose_name=_("Size on mobile devices"),
@@ -715,7 +787,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
-    def get_context(self):
+    def _get_context_safe(self, request):
+        if self.broken:
+            return {"title": self.title}
+        return self.get_context(request)
+
+    def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
 
@@ -723,8 +800,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         """Get template.
 
         Get the template to render the widget with. Defaults to the template attribute,
-        but can be overridden to allow more complex template generation scenarios.
+        but can be overridden to allow more complex template generation scenarios. If
+        the widget is marked as broken, the template_broken attribute will be returned.
         """
+        if self.broken:
+            return self.template_broken
+        if not self.template:
+            raise NotImplementedError("A widget subclass needs to define a template.")
         return self.template
 
     def __str__(self):
@@ -734,6 +816,20 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         permissions = (("edit_default_dashboard", _("Can edit default dashboard")),)
         verbose_name = _("Dashboard Widget")
         verbose_name_plural = _("Dashboard Widgets")
+
+
+class ExternalLinkWidget(DashboardWidget):
+    template = "core/dashboard_widget/external_link_widget.html"
+
+    url = models.URLField(verbose_name=_("URL"))
+    icon_url = models.URLField(verbose_name=_("Icon URL"))
+
+    def get_context(self, request):
+        return {"title": self.title, "url": self.url, "icon_url": self.icon_url}
+
+    class Meta:
+        verbose_name = _("External link widget")
+        verbose_name_plural = _("External link widgets")
 
 
 class DashboardWidgetOrder(ExtensibleModel):
@@ -746,10 +842,17 @@ class DashboardWidgetOrder(ExtensibleModel):
     order = models.PositiveIntegerField(verbose_name=_("Order"))
     default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
 
+    objects = InstalledWidgetsDashboardWidgetOrderManager()
+
     @classproperty
     def default_dashboard_widgets(cls):
         """Get default order for dashboard widgets."""
-        return [w.widget for w in cls.objects.filter(person=None, default=True).order_by("order")]
+        return [
+            w.widget
+            for w in cls.objects.filter(person=None, default=True, widget__active=True).order_by(
+                "order"
+            )
+        ]
 
     class Meta:
         verbose_name = _("Dashboard widget order")
@@ -812,11 +915,10 @@ class GroupType(ExtensibleModel):
         verbose_name_plural = _("Group types")
 
 
-class GlobalPermissions(ExtensibleModel):
+class GlobalPermissions(GlobalPermissionModel):
     """Container for global permissions."""
 
-    class Meta:
-        managed = False
+    class Meta(GlobalPermissionModel.Meta):
         permissions = (
             ("view_system_status", _("Can view system status")),
             ("link_persons_accounts", _("Can link persons to accounts")),
@@ -826,6 +928,12 @@ class GlobalPermissions(ExtensibleModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
+            ("add_oauth_applications", _("Can add oauth applications")),
+            ("list_oauth_applications", _("Can list oauth applications")),
+            ("view_oauth_applications", _("Can view oauth applications")),
+            ("update_oauth_applications", _("Can update oauth applications")),
+            ("delete_oauth_applications", _("Can delete oauth applications")),
+            ("test_pdf", _("Can test PDF generation")),
         )
 
 
@@ -889,3 +997,69 @@ class DataCheckResult(ExtensibleModel):
             ("run_data_checks", _("Can run data checks")),
             ("solve_data_problem", _("Can solve data check problems")),
         )
+
+
+class PDFFile(ExtensibleModel):
+    """Link to a rendered PDF file."""
+
+    def _get_default_expiration():  # noqa
+        return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
+
+    def _get_upload_path(instance, filename):  # noqa
+        return f"pdfs/{instance.secret}.pdf"
+
+    person = models.ForeignKey(
+        to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
+    )
+    expires_at = models.DateTimeField(
+        verbose_name=_("File expires at"), default=_get_default_expiration
+    )
+    html = models.TextField(verbose_name=_("Rendered HTML"))
+    file = models.FileField(
+        upload_to=_get_upload_path, blank=True, null=True, verbose_name=_("Generated PDF file")
+    )
+
+    def __str__(self):
+        return f"{self.person} ({self.pk})"
+
+    @property
+    def secret(self) -> str:
+        """Get secret needed for accessing the HTML page."""
+        return hmac.new(
+            bytes(settings.SECRET_KEY, "utf-8"),
+            msg=bytes(self.html + str(self.expires_at), "utf-8"),
+            digestmod="sha256",
+        ).hexdigest()
+
+    @property
+    def html_url(self) -> str:
+        """Get URL for the HTML page."""
+        return (
+            urlparse(reverse("html_for_pdf_file", args=[self.pk]))
+            ._replace(query=f"secret={self.secret}")
+            .geturl()
+        )
+
+    class Meta:
+        verbose_name = _("PDF file")
+        verbose_name_plural = _("PDF files")
+
+
+class TaskUserAssignment(ExtensibleModel):
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, verbose_name=_("Task result")
+    )
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name=_("Task user")
+    )
+
+    @classmethod
+    def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
+        # Use get_or_create to ensure the TaskResult exists
+        # django-celery-results will later add the missing information
+        result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        return cls.objects.create(task_result=result, user=user)
+
+    class Meta:
+        verbose_name = _("Task user assignment")
+        verbose_name_plural = _("Task user assignments")

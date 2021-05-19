@@ -1,9 +1,7 @@
-from typing import Any, List, Optional, Tuple
+from typing import Any, Optional
 
 import django.apps
 from django.apps import apps
-from django.conf import settings
-from django.db import OperationalError, ProgrammingError
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -16,30 +14,34 @@ from .registries import (
     site_preferences_registry,
 )
 from .util.apps import AppConfig
-from .util.core_helpers import get_site_preferences, has_person
+from .util.core_helpers import get_or_create_favicon, has_person
 from .util.sass_helpers import clean_scss
 
 
 class CoreConfig(AppConfig):
     name = "aleksis.core"
     verbose_name = "AlekSIS — The Free School Information System"
+    dist_name = "AlekSIS-Core"
 
     urls = {
         "Repository": "https://edugit.org/AlekSIS/official/AlekSIS/",
     }
     licence = "EUPL-1.2+"
     copyright_info = (
-        ([2017, 2018, 2019, 2020], "Jonathan Weth", "wethjo@katharineum.de"),
-        ([2017, 2018, 2019], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
-        ([2018, 2019, 2020], "Julian Leucker", "leuckeju@katharineum.de"),
-        ([2018, 2019, 2020], "Hangzhi Yu", "yuha@katharineum.de"),
-        ([2019, 2020], "Dominik George", "dominik.george@teckids.org"),
-        ([2019, 2020], "Tom Teichler", "tom.teichler@teckids.org"),
+        ([2017, 2018, 2019, 2020, 2021], "Jonathan Weth", "wethjo@katharineum.de"),
+        ([2017, 2018, 2019, 2020], "Frank Poetzsch-Heffter", "p-h@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Julian Leucker", "leuckeju@katharineum.de"),
+        ([2018, 2019, 2020, 2021], "Hangzhi Yu", "yuha@katharineum.de"),
+        ([2019, 2020, 2021], "Dominik George", "dominik.george@teckids.org"),
+        ([2019, 2020, 2021], "Tom Teichler", "tom.teichler@teckids.org"),
         ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2021], "magicfelix", "felix@felix-zauberer.de"),
     )
 
     def ready(self):
         super().ready()
+
+        from django.conf import settings  # noqa
 
         # Autodiscover various modules defined by AlekSIS
         autodiscover_modules("form_extensions", "model_extensions", "checks")
@@ -52,13 +54,19 @@ class CoreConfig(AppConfig):
         preference_models.register(personpreferencemodel, person_preferences_registry)
         preference_models.register(grouppreferencemodel, group_preferences_registry)
 
-        self._refresh_authentication_backends()
-
         self._load_data_checks()
 
-        from .health_checks import DataChecksHealthCheckBackend
+        from .health_checks import (
+            BackupJobHealthCheck,
+            DataChecksHealthCheckBackend,
+            DbBackupAgeHealthCheck,
+            MediaBackupAgeHealthCheck,
+        )
 
         plugin_dir.register(DataChecksHealthCheckBackend)
+        plugin_dir.register(DbBackupAgeHealthCheck)
+        plugin_dir.register(MediaBackupAgeHealthCheck)
+        plugin_dir.register(BackupJobHealthCheck)
 
     @classmethod
     def _load_data_checks(cls):
@@ -70,24 +78,6 @@ class CoreConfig(AppConfig):
             data_checks += getattr(model, "data_checks", [])
         DataCheckRegistry.data_checks = data_checks
 
-    @classmethod
-    def _refresh_authentication_backends(cls):
-        """Refresh config list of enabled authentication backends."""
-        from .preferences import AuthenticationBackends  # noqa
-
-        idx = settings.AUTHENTICATION_BACKENDS.index("django.contrib.auth.backends.ModelBackend")
-
-        try:
-            # Don't set array directly in order to keep object reference
-            settings._wrapped.AUTHENTICATION_BACKENDS.clear()
-            settings._wrapped.AUTHENTICATION_BACKENDS += settings.ORIGINAL_AUTHENTICATION_BACKENDS
-
-            for backend in get_site_preferences()["auth__backends"]:
-                settings._wrapped.AUTHENTICATION_BACKENDS.insert(idx, backend)
-                idx += 1
-        except (ProgrammingError, OperationalError):
-            pass
-
     def preference_updated(
         self,
         sender: Any,
@@ -97,8 +87,7 @@ class CoreConfig(AppConfig):
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
-        if section == "auth" and name == "backends":
-            self._refresh_authentication_backends()
+        from django.conf import settings  # noqa
 
         if section == "theme":
             if name in ("primary", "secondary"):
@@ -110,11 +99,14 @@ class CoreConfig(AppConfig):
 
                 if new_value:
                     Favicon.on_site.update_or_create(
-                        title=name,
-                        defaults={"isFavicon": name == "favicon", "faviconImage": new_value,},
+                        title=name, defaults={"isFavicon": is_favicon, "faviconImage": new_value},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()
+                    if name in settings.DEFAULT_FAVICON_PATHS:
+                        get_or_create_favicon(
+                            name, settings.DEFAULT_FAVICON_PATHS[name], is_favicon=is_favicon
+                        )
 
     def post_migrate(
         self,
@@ -122,16 +114,20 @@ class CoreConfig(AppConfig):
         verbosity: int,
         interactive: bool,
         using: str,
-        plan: List[Tuple],
-        apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
-        super().post_migrate(app_config, verbosity, interactive, using, plan, apps)
+        from django.conf import settings  # noqa
+
+        super().post_migrate(app_config, verbosity, interactive, using, **kwargs)
 
         # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
             name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )
+
+        # Ensure that default Favicon object exists
+        for name, default in settings.DEFAULT_FAVICON_PATHS.items():
+            get_or_create_favicon(name, default, is_favicon=name == "favicon")
 
     def user_logged_in(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs

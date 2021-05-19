@@ -7,10 +7,15 @@ from dynaconf import LazySettings
 
 from .util.core_helpers import (
     get_app_packages,
-    lazy_get_favicon_url,
+    lazy_get_favicons,
     lazy_preference,
     merge_app_settings,
+    monkey_patch,
 )
+
+monkey_patch()
+
+IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
 
 ENVVAR_PREFIX_FOR_DYNACONF = "ALEKSIS"
 DIRS_FOR_DYNACONF = ["/etc/aleksis"]
@@ -42,6 +47,7 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_COLLAPSED": True,
     "JQUERY_URL": "",
     "SHOW_TOOLBAR_CALLBACK": "aleksis.core.util.core_helpers.dt_show_toolbar",
+    "DISABLE_PANELS": {},
 }
 
 DEBUG_TOOLBAR_PANELS = [
@@ -56,10 +62,15 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.templates.TemplatesPanel",
     "debug_toolbar.panels.signals.SignalsPanel",
     "debug_toolbar.panels.logging.LoggingPanel",
-    "debug_toolbar.panels.redirects.RedirectsPanel",
     "debug_toolbar.panels.profiling.ProfilingPanel",
+    "django_uwsgi.panels.UwsgiPanel",
 ]
 
+UWSGI = {
+    "module": "aleksis.core.wsgi",
+}
+UWSGI_SERVE_STATIC = True
+UWSGI_SERVE_MEDIA = False
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
 
@@ -73,13 +84,19 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django_uwsgi",
+    "django_extensions",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
-    "django_global_request",
     "dbbackup",
-    "settings_context_processor",
+    "django_celery_beat",
+    "django_celery_results",
+    "celery_progress",
+    "health_check.contrib.celery",
+    "djcelery_email",
+    "celery_haystack",
     "sass_processor",
     "django_any_js",
     "django_yarnpkg",
@@ -112,11 +129,14 @@ INSTALLED_APPS = [
     "material",
     "pwa",
     "ckeditor",
+    "ckeditor_uploader",
     "django_js_reverse",
     "colorfield",
     "django_bleach",
     "favicon",
     "django_filters",
+    "oauth2_provider",
+    "rest_framework",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -134,14 +154,13 @@ MIDDLEWARE = [
     "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
-    "django_global_request.middleware.GlobalRequestMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django_otp.middleware.OTPMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -166,7 +185,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
-                "settings_context_processor.context_processors.settings",
                 "dynamic_preferences.processors.global_preferences",
                 "aleksis.core.util.core_helpers.custom_information_processor",
             ],
@@ -187,25 +205,51 @@ DATABASES = {
         "PASSWORD": _settings.get("database.password", None),
         "HOST": _settings.get("database.host", "127.0.0.1"),
         "PORT": _settings.get("database.port", "5432"),
-        "ATOMIC_REQUESTS": True,
         "CONN_MAX_AGE": _settings.get("database.conn_max_age", None),
     }
 }
 
 merge_app_settings("DATABASES", DATABASES, False)
 
-if _settings.get("caching.memcached.enabled", False):
+REDIS_HOST = _settings.get("redis.host", "localhost")
+REDIS_PORT = _settings.get("redis.port", 6379)
+REDIS_DB = _settings.get("redis.database", 0)
+REDIS_PASSWORD = _settings.get("redis.password", None)
+REDIS_USER = _settings.get("redis.user", None if REDIS_PASSWORD is None else "default")
+
+REDIS_URL = (
+    f"redis://{REDIS_USER+':'+REDIS_PASSWORD+'@' if REDIS_USER else ''}"
+    f"{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+)
+
+if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
         "default": {
-            "BACKEND": "django_prometheus.cache.backends.memcached.MemcachedCache",
-            "LOCATION": _settings.get("caching.memcached.address", "127.0.0.1:11211"),
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
         }
     }
-    INSTALLED_APPS.append("cachalot")
-    DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
-    CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
-    CACHALOT_DATABASES = set(["default"])
-    SILENCED_SYSTEM_CHECKS.append("cachalot.W001")
+    if REDIS_PASSWORD:
+        CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
+    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
+    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+else:
+    CACHES = {
+        "default": {
+            # Use uWSGI if available (will auot-fallback to LocMemCache)
+            "BACKEND": "django_uwsgi.cache.UwsgiCache"
+        }
+    }
+
+INSTALLED_APPS.append("cachalot")
+DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
+CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
+CACHALOT_DATABASES = set(["default"])
+SILENCED_SYSTEM_CHECKS += ["cachalot.W001"]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -217,8 +261,53 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+AUTH_INITIAL_SUPERUSER = {
+    "username": _settings.get("auth.superuser.username", "admin"),
+    "password": _settings.get("auth.superuser.password", "admin"),
+    "email": _settings.get("auth.superuser.email", "root@example.com"),
+}
+
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
+
+# Configuration for OAuth2 provider
+
+OAUTH2_PROVIDER = {
+    "SCOPES": {
+        "read": "Read anything the resource owner can read",
+        "write": "Write anything the resource owner can write",
+    }
+}
+merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
+
+if _settings.get("oauth2.oidc.enabled", False):
+    with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
+        oid_rsa_key = f.read()
+
+    OAUTH2_PROVIDER.update(
+        {
+            "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
+            "OIDC_ENABLED": True,
+            "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
+            #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
+        }
+    )
+    OAUTH2_PROVIDER["SCOPES"].update(
+        {
+            "openid": "OpenID Connect scope",
+            "profile": "Profile scope",
+            "phone": "Phone scope",
+            "email": "Email scope",
+            "address": "Address scope",
+        }
+    )
+
+# Configuration for REST framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    ]
+}
 
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
@@ -232,7 +321,7 @@ if _settings.get("ldap.uri", None):
     )
 
     # Enable Django's integration to LDAP
-    AUTHENTICATION_BACKENDS.append("django_auth_ldap.backend.LDAPBackend")
+    AUTHENTICATION_BACKENDS.append("aleksis.core.util.ldap.LDAPBackend")
 
     AUTH_LDAP_SERVER_URI = _settings.get("ldap.uri")
 
@@ -240,6 +329,13 @@ if _settings.get("ldap.uri", None):
     if _settings.get("ldap.bind.dn", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
+
+    # Keep local password for users to be required to proveide their old password on change
+    AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
+
+    # Keep bound as the authenticating user
+    # Ensures proper read permissions, and ability to change password without admin
+    AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
 
     # The TOML config might contain either one table or an array of tables
     _AUTH_LDAP_USER_SETTINGS = _settings.get("ldap.users.search")
@@ -321,8 +417,6 @@ merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 LANGUAGES = [
     ("en", _("English")),
     ("de", _("German")),
-    ("fr", _("French")),
-    ("nb", _("Norwegian (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
@@ -345,6 +439,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "@fontsource/roboto",
     "datatables",
     "jquery",
     "materialize-css",
@@ -377,8 +472,9 @@ ANY_JS = {
         "css_url": JS_URL + "/select2-materialize/select2-materialize.css",
         "js_url": JS_URL + "/select2-materialize/index.js",
     },
-    "sortablejs": {"js_url": JS_URL + "/sortablejs/dist/sortable.umd.js"},
+    "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
+    "Roboto": {"css_url": JS_URL + "/@fontsource/roboto/index.css"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -413,9 +509,6 @@ if _settings.get("mail.server.host", None):
 TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
 
-
-TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
-
 DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
 }
@@ -426,9 +519,10 @@ MAINTENANCE_MODE_IGNORE_IP_ADDRESSES = _settings.get(
 )
 MAINTENANCE_MODE_GET_CLIENT_IP_ADDRESS = "ipware.ip.get_ip"
 MAINTENANCE_MODE_IGNORE_SUPERUSER = True
-MAINTENANCE_MODE_STATE_FILE_PATH = _settings.get(
+MAINTENANCE_MODE_STATE_FILE_NAME = _settings.get(
     "maintenance.statefile", "maintenance_mode_state.txt"
 )
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 
 DBBACKUP_STORAGE = _settings.get("backup.storage", "django.core.files.storage.FileSystemStorage")
 DBBACKUP_STORAGE_OPTIONS = {"location": _settings.get("backup.location", "/var/backups/aleksis")}
@@ -444,6 +538,13 @@ DBBACKUP_CLEANUP_MEDIA = _settings.get("backup.media.clean", True)
 DBBACKUP_CONNECTOR_MAPPING = {
     "django_prometheus.db.backends.postgresql": "dbbackup.db.postgresql.PgDumpConnector",
 }
+
+if _settings.get("backup.storage.type", "").lower() == "s3":
+    DBBACKUP_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    DBBACKUP_STORAGE_OPTIONS = {
+        key: value for (key, value) in _settings.get("backup.storage.s3").items()
+    }
 
 IMPERSONATE = {"USE_HTTP_REFERER": True, "REQUIRE_SUPERUSER": True, "ALLOW_SUPERUSER": True}
 
@@ -474,79 +575,45 @@ if _settings.get("twilio.sid", None):
     TWILIO_TOKEN = _settings.get("twilio.token")
     TWILIO_CALLER_ID = _settings.get("twilio.callerid")
 
-if _settings.get("celery.enabled", False):
-    INSTALLED_APPS += (
-        "django_celery_beat",
-        "django_celery_results",
-        "celery_progress",
-        "health_check.contrib.celery",
-    )
-    CELERY_BROKER_URL = _settings.get("celery.broker", "redis://localhost")
-    CELERY_RESULT_BACKEND = "django-db"
-    CELERY_CACHE_BACKEND = "django-cache"
-    CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_BROKER_URL = _settings.get("celery.broker", REDIS_URL)
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_CACHE_BACKEND = "django-cache"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
-    if _settings.get("celery.email", False):
-        INSTALLED_APPS += ("djcelery_email",)
-        EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+if _settings.get("celery.email", False):
+    EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
+if _settings.get("dev.uwsgi.celery", DEBUG):
+    concurrency = _settings.get("celery.uwsgi.concurrency", 2)
+    UWSGI.setdefault("attach-daemon", [])
+    UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
+    UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
+
+DEFAULT_FAVICON_PATHS = {
+    "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+}
 PWA_APP_NAME = lazy_preference("general", "title")
 PWA_APP_DESCRIPTION = lazy_preference("general", "description")
 PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
 PWA_APP_BACKGROUND_COLOR = "#ffffff"
 PWA_APP_DISPLAY = "standalone"
 PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
-        ),
-        "sizes": "192x192",
+PWA_APP_ICONS = lazy_get_favicons(
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"android": [192, 512]}
+)
+PWA_APP_ICONS_APPLE = lazy_get_favicons(
+    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"apple": [76, 114, 152, 180]}
+)
+PWA_APP_SPLASH_SCREEN = lazy_get_favicons(
+    "pwa_icon",
+    default=DEFAULT_FAVICON_PATHS["pwa_icon"],
+    config={"apple": [192]},
+    add_attrs={
+        "media": "(device-width: 320px) and (device-height: 568px) and"
+        "(-webkit-device-pixel-ratio: 2)"
     },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=512, rel="android", default=STATIC_URL + "icons/android_512.png"
-        ),
-        "sizes": "512x512",
-    },
-]
-PWA_APP_ICONS_APPLE = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_76.png"
-        ),
-        "sizes": "76x76",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_114.png"
-        ),
-        "sizes": "114x114",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_152.png"
-        ),
-        "sizes": "152x152",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "sizes": "180x180",
-    },
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "media": (
-            "(device-width: 320px) and (device-height: 568px) and" "(-webkit-device-pixel-ratio: 2)"
-        ),
-    }
-]
-
+)
 
 PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
@@ -652,6 +719,9 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+# Upload path for CKEditor. Relative to MEDIA_ROOT.
+CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
+
 # Which HTML tags are allowed
 BLEACH_ALLOWED_TAGS = ["p", "b", "i", "u", "em", "strong", "a", "div"]
 
@@ -708,11 +778,8 @@ elif HAYSTACK_BACKEND_SHORT == "whoosh":
         },
     }
 
-if _settings.get("celery.enabled", False) and _settings.get("search.celery", True):
-    INSTALLED_APPS.append("celery_haystack")
-    HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
-else:
-    HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
+HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
+CELERY_HAYSTACK_IGNORE_RESULT = True
 
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
@@ -723,6 +790,51 @@ HEALTH_CHECK = {
     "MEMORY_MIN": _settings.get("health.memory_min_mb", 500),
 }
 
-ORIGINAL_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS[:]
+DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
+MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+
+SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
+
+if _settings.get("storage.type", "").lower() == "s3":
+    INSTALLED_APPS.append("storages")
+
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    if _settings.get("storage.s3.static.enabled", False):
+        STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+        AWS_STORAGE_BUCKET_NAME_STATIC = _settings.get("storage.s3.static.bucket_name", "")
+        AWS_S3_MAX_AGE_SECONDS_CACHED_STATIC = _settings.get(
+            "storage.s3.static.max_age_seconds", 24 * 60 * 60
+        )
+
+    AWS_REGION = _settings.get("storage.s3.region_name", "")
+    AWS_ACCESS_KEY_ID = _settings.get("storage.s3.access_key", "")
+    AWS_SECRET_ACCESS_KEY = _settings.get("storage.s3.secret_key", "")
+    AWS_SESSION_TOKEN = _settings.get("storage.s3.session_token", "")
+    AWS_STORAGE_BUCKET_NAME = _settings.get("storage.s3.bucket_name", "")
+    AWS_LOCATION = _settings.get("storage.s3.location", "")
+    AWS_S3_ADDRESSING_STYLE = _settings.get("storage.s3.addressing_style", "auto")
+    AWS_S3_ENDPOINT_URL = _settings.get("storage.s3.endpoint_url", "")
+    AWS_S3_KEY_PREFIX = _settings.get("storage.s3.key_prefix", "")
+    AWS_S3_BUCKET_AUTH = _settings.get("storage.s3.bucket_auth", True)
+    AWS_S3_MAX_AGE_SECONDS = _settings.get("storage.s3.max_age_seconds", 24 * 60 * 60)
+    AWS_S3_PUBLIC_URL = _settings.get("storage.s3.public_url", "")
+    AWS_S3_REDUCED_REDUNDANCY = _settings.get("storage.s3.reduced_redundancy", False)
+    AWS_S3_CONTENT_DISPOSITION = _settings.get("storage.s3.content_disposition", "")
+    AWS_S3_CONTENT_LANGUAGE = _settings.get("storage.s3.content_language", "")
+    AWS_S3_METADATA = _settings.get("storage.s3.metadata", {})
+    AWS_S3_ENCRYPT_KEY = _settings.get("storage.s3.encrypt_key", False)
+    AWS_S3_KMS_ENCRYPTION_KEY_ID = _settings.get("storage.s3.kms_encryption_key_id", "")
+    AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
+    AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
+    AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+else:
+    DEFAULT_FILE_STORAGE = "titofisto.TitofistoStorage"
+    TITOFISTO_TIMEOUT = 10 * 60
+
+SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+# Add django-cleanup after all apps to ensure that it gets all signals as last app
+INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

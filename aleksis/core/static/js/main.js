@@ -58,14 +58,12 @@ $(document).ready(function () {
     // Initialize select [MAT]
     $('select').formSelect();
 
+    // Initialize dropdown [MAT]
+    $('.dropdown-trigger').dropdown();
+
     // If JS is activated, the language form will be auto-submitted
     $('.language-field select').change(function () {
-
-        // Ugly bug fix to ensure correct value
-        const selectEl = $("select[name=language]");
-        selectEl.val(selectEl.val());
-
-        $(".language-form").submit();
+        $(this).parents(".language-form").submit();
     });
 
     // If auto-submit is activated (see above), the language submit must not be visible
@@ -87,6 +85,11 @@ $(document).ready(function () {
 
     // Intialize Tabs [Materialize]
     $('.tabs').tabs();
+
+    // Sync color picker
+    $(".jscolor").change(function () {
+        $("#" + $(this).data("preview")).css("color", $(this).val());
+    });
 
     $('table.datatable').each(function (index) {
         $(this).DataTable({
