@@ -564,15 +564,11 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     """View to return HTML snippet with searchbar autocompletion results."""
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
-
     indexed_models = UnifiedIndex().get_indexed_models()
-
     allowed_object_ids = get_allowed_object_ids(request, indexed_models)
-
     results = (
         SearchQuerySet().filter(id__in=allowed_object_ids).filter(text=AutoQuery(query))[:limit]
     )
-
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
@@ -585,11 +581,8 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         queryset = object_list if object_list is not None else self.object_list
-
         indexed_models = UnifiedIndex().get_indexed_models()
-
         allowed_object_ids = get_allowed_object_ids(self.request, indexed_models)
-
         queryset = queryset.filter(id__in=allowed_object_ids)
 
         return super().get_context_data(object_list=queryset, **kwargs)
