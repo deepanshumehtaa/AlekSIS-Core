@@ -757,8 +757,6 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 # Append authentication backends
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
-HAYSTACK_BACKEND_SHORT = "whoosh"
-
 HAYSTACK_CONNECTIONS = {
     "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
 }
