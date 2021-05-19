@@ -35,6 +35,7 @@ class CoreConfig(AppConfig):
         ([2019, 2020, 2021], "Dominik George", "dominik.george@teckids.org"),
         ([2019, 2020, 2021], "Tom Teichler", "tom.teichler@teckids.org"),
         ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2021], "Lloyd Meins", "meinsll@katharineum.de"),
         ([2021], "magicfelix", "felix@felix-zauberer.de"),
     )
 
