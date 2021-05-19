@@ -23,7 +23,6 @@ from celery_progress.views import get_progress
 from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
-from guardian.core import ObjectPermissionChecker
 from guardian.shortcuts import get_objects_for_user
 from haystack.generic_views import SearchView
 from haystack.inputs import AutoQuery
