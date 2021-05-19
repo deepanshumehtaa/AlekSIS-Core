@@ -130,6 +130,9 @@ def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) ->
     """Ensure that there is always a favicon object."""
     from favicon.models import Favicon  # noqa
 
+    if not os.path.isfile(default):
+        return
+
     favicon, created = Favicon.on_site.get_or_create(
         title=title, defaults={"isFavicon": is_favicon}
     )
