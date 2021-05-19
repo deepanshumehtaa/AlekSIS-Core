@@ -2,21 +2,16 @@ from datetime import datetime, timedelta
 from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
+from typing import Any, Callable, Optional, Sequence, Union
 
 from django.conf import settings
-from django.db.models import Model, Q, QuerySet
+from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
 
 from cache_memoize import cache_memoize
-
-if TYPE_CHECKING:
-    from django.contrib.auth import get_user_model
-
-    User = get_user_model()  # noqa
 
 
 def copyright_years(years: Sequence[int], seperator: str = ", ", joiner: str = "–") -> str:
@@ -254,53 +249,3 @@ def queryset_rules_filter(
 def unread_notifications_badge(request: HttpRequest) -> int:
     """Generate badge content with the number of unread notifications."""
     return request.user.person.unread_notifications_count
-
-
-def get_persons_for_user(user: "User"):
-    """Get all persons the given user is allowed to view."""
-
-    from guardian.core import ObjectPermissionChecker
-
-    from ..models import Person
-    from .predicates import check_global_permission
-
-    checker = ObjectPermissionChecker(user)
-
-    allowed_persons = Person.objects.filter(is_active=True)
-    if not check_global_permission(user, "core.view_person"):
-        checker.prefetch_perms(allowed_persons)
-
-        obj_perm_persons = set()
-
-        for allowed_person in allowed_persons:
-            if checker.has_perm("core.view_person", allowed_person):
-                obj_perm_persons.add(allowed_person.pk)
-
-        allowed_persons = allowed_persons.filter(Q(pk__in=obj_perm_persons) | Q(pk=user.person.pk))
-
-    return allowed_persons
-
-
-def get_groups_for_user(user: "User"):
-    """Get all groups the given user is allowed to view."""
-
-    from guardian.core import ObjectPermissionChecker
-
-    from ..models import Group
-    from .predicates import check_global_permission
-
-    checker = ObjectPermissionChecker(user)
-
-    allowed_groups = Group.objects.all()
-    if not check_global_permission(user, "core.view_group"):
-        checker.prefetch_perms(allowed_groups)
-
-        obj_perm_groups = set()
-
-        for allowed_group in allowed_groups:
-            if checker.has_perm("core.view_group", allowed_group):
-                obj_perm_groups.add(allowed_group.pk)
-
-        allowed_groups = allowed_groups.filter(pk__in=obj_perm_groups)
-
-    return allowed_groups

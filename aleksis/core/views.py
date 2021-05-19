@@ -28,6 +28,7 @@ from guardian.shortcuts import get_objects_for_user
 from haystack.generic_views import SearchView
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
+from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
 from oauth2_provider.models import Application
 from reversion import set_user
@@ -86,11 +87,10 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
 from .util.core_helpers import (
-    get_groups_for_user,
-    get_persons_for_user,
     get_site_preferences,
     has_person,
     objectgetter_optional,
+    queryset_rules_filter,
 )
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
@@ -565,18 +565,22 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
 
-    allowed_person_ids = [
-        f"core.person.{pk}"
-        for pk in get_persons_for_user(request.user).values_list("pk", flat=True)
-    ]
-    allowed_group_ids = [
-        f"core.group.{pk}" for pk in get_groups_for_user(request.user).values_list("pk", flat=True)
-    ]
+    indexed_models = UnifiedIndex().get_indexed_models()
+
+    allowed_object_ids = []
+
+    for model in indexed_models:
+        app_label = ContentType.objects.get_for_model(model).app_label
+        model_name = ContentType.objects.get_for_model(model).model
+        allowed_object_ids += [
+            f"{app_label}.{model_name}.{pk}"
+            for pk in queryset_rules_filter(
+                request, model.objects.all(), f"{app_label}.view_{model_name}"
+            ).values_list("pk", flat=True)
+        ]
 
     results = (
-        SearchQuerySet()
-        .filter(id__in=allowed_person_ids + allowed_group_ids)
-        .filter(text=AutoQuery(query))[:limit]
+        SearchQuerySet().filter(id__in=allowed_object_ids).filter(text=AutoQuery(query))[:limit]
     )
 
     context = {"results": results}
@@ -592,16 +596,22 @@ class PermissionSearchView(PermissionRequiredMixin, SearchView):
     def get_context_data(self, *, object_list=None, **kwargs):
         queryset = object_list if object_list is not None else self.object_list
 
-        allowed_person_ids = [
-            f"core.person.{pk}"
-            for pk in get_persons_for_user(self.request.user).values_list("pk", flat=True)
-        ]
-        allowed_group_ids = [
-            f"core.group.{pk}"
-            for pk in get_groups_for_user(self.request.user).values_list("pk", flat=True)
-        ]
+        indexed_models = UnifiedIndex().get_indexed_models()
 
-        queryset = queryset.filter(id__in=allowed_person_ids + allowed_group_ids)
+        allowed_object_ids = []
+
+        for model in indexed_models:
+
+            app_label = ContentType.objects.get_for_model(model).app_label
+            model_name = ContentType.objects.get_for_model(model).model
+            allowed_object_ids += [
+                f"{app_label}.{model_name}.{pk}"
+                for pk in queryset_rules_filter(
+                    self.request, model.objects.all(), f"{app_label}.view_{model_name}"
+                ).values_list("pk", flat=True)
+            ]
+
+        queryset = queryset.filter(id__in=allowed_object_ids)
 
         return super().get_context_data(object_list=queryset, **kwargs)
 
