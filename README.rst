@@ -43,8 +43,8 @@ Licence
   Copyright © 2019, 2020, 2021 Dominik George <dominik.george@teckids.org>
   Copyright © 2019, 2020, 2021 Tom Teichler <tom.teichler@teckids.org>
   Copyright © 2019 mirabilos <thorsten.glaser@teckids.org>
-  Copyright © 2021 magicfelix <felix@felix-zauberer.de>
   Copyright © 2021 Lloyd Meins <meinsll@katharineum.de>
+  Copyright © 2021 magicfelix <felix@felix-zauberer.de>
 
   Licenced under the EUPL, version 1.2 or later, by Teckids e.V. (Bonn, Germany).
 
