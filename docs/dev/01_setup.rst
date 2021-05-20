@@ -49,9 +49,14 @@ Install AlekSIS in its own virtual environment
 ----------------------------------------------
 
 Poetry will automatically manage virtual environments per project, so
-installing AlekSIS is a matter of::
+installing AlekSIS is a matter of switching into the Core's directory and running the initial AlekSIS installation::
 
+  cd apps/official/AlekSIS-Core
   poetry install
+
+Now it's recommended to run a shell that uses the newly created venv::
+
+  poetry shell
 
 
 Regular tasks
