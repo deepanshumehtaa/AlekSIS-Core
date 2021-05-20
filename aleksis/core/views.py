@@ -3,11 +3,17 @@ from typing import Any, Optional, Type
 from django.apps import apps
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm, modelform_factory
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import (
+    Http404,
+    HttpRequest,
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -20,6 +26,8 @@ from django.views.generic.list import ListView
 
 import reversion
 from allauth.account.views import PasswordChangeView
+from allauth.socialaccount.adapter import get_adapter
+from allauth.socialaccount.models import SocialAccount
 from celery_progress.views import get_progress
 from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
@@ -1101,3 +1109,34 @@ class CustomPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
         template_name = "account/password_change.html"
     else:
         template_name = "account/password_change_disabled.html"
+
+
+class SocialAccountDeleteView(DeleteView):
+    """Custom view to delete django-allauth social account"""
+
+    template_name = "core/pages/delete.html"
+    success_url = reverse_lazy("socialaccount_connections")
+
+    def get_queryset(self):
+        return SocialAccount.objects.filter(user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        try:
+            get_adapter(self.request).validate_disconnect(
+                self.object, SocialAccount.objects.filter(user=self.request.user)
+            )
+        except ValidationError:
+            messages.error(
+                self.request,
+                _(
+                    "The social account could not be disconnected because it is the only login method available."
+                ),
+            )
+        else:
+            self.object.delete()
+            messages.success(
+                self.request, _("The social account has been successfully disconnected.")
+            )
+        return HttpResponseRedirect(success_url)

@@ -24,6 +24,11 @@ urlpatterns = [
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("accounts/password/change/", views.CustomPasswordChangeView.as_view(), name="account_change_password"),
     path("accounts/", include("allauth.urls")),
+    path(
+        "accounts/social/connections/<int:pk>/delete",
+        views.SocialAccountDeleteView.as_view(),
+        name="delete_social_account_by_pk",
+    ),
     path("admin/", admin.site.urls),
     path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
