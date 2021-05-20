@@ -4,6 +4,7 @@ from tempfile import TemporaryDirectory
 from typing import Optional
 
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -73,8 +74,10 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
 
     html_template = render_to_string(template_name, context, request)
 
-    file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
-    html_url = request.build_absolute_uri(file_object.html_url)
+    file_object = PDFFile.objects.create(
+        person=request.user.person, html_file=ContentFile(html_template, name="source.html")
+    )
+    html_url = request.build_absolute_uri(file_object.html_file.url)
 
     result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
 
