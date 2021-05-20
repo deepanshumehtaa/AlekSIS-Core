@@ -4,8 +4,10 @@ from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
+from warnings import warn
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.core.files import File
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
@@ -130,8 +132,11 @@ def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) ->
     """Ensure that there is always a favicon object."""
     from favicon.models import Favicon  # noqa
 
-    if not os.path.isfile(default):
+    if not os.path.exists(default):
+        warn("staticfiles are not ready yet, not creating default icons")
         return
+    elif os.path.isdir(default):
+        raise ImproperlyConfigured(f"staticfiles are broken: unexpected directory at {default}")
 
     favicon, created = Favicon.on_site.get_or_create(
         title=title, defaults={"isFavicon": is_favicon}
