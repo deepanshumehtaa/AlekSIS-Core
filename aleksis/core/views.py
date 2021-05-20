@@ -1080,18 +1080,6 @@ class RedirectToPDFFile(SingleObjectMixin, View):
         return redirect(file_object.file.url)
 
 
-class HTMLForPDFFile(SingleObjectMixin, View):
-    """Return rendered HTML for generating a PDF file."""
-
-    model = PDFFile
-
-    def get(self, request, *args, **kwargs):
-        file_object = self.get_object()
-        if request.GET.get("secret") != file_object.secret:
-            raise PermissionDenied()
-        return HttpResponse(file_object.html)
-
-
 class CeleryProgressView(View):
     """Wrap celery-progress view to check permissions before."""
 
