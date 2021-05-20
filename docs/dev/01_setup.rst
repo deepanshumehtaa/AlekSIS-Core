@@ -70,7 +70,7 @@ some maintenance tasks need to be done:
 3. Run database migrations
 
 All three steps can be done with the ``poetry run`` command and
-``manage.py``::
+``aleksis-admin``::
 
   poetry run aleksis-admin yarn install
   poetry run aleksis-admin collectstatic
