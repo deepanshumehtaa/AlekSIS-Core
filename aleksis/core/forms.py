@@ -381,14 +381,19 @@ class SchoolTermForm(ExtensibleForm):
 
 class DashboardWidgetOrderForm(ExtensibleForm):
     pk = forms.ModelChoiceField(
-        queryset=DashboardWidget.objects.all(),
-        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+        queryset=None, widget=forms.HiddenInput(attrs={"class": "pk-input"}),
     )
     order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
 
     class Meta:
         model = DashboardWidget
         fields = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Set queryset here to prevent problems with not migrated database due to special queryset
+        self.fields["pk"].queryset = DashboardWidget.objects.all()
 
 
 DashboardWidgetOrderFormSet = forms.formset_factory(

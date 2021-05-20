@@ -4,8 +4,10 @@ from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
+from warnings import warn
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.core.files import File
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
@@ -130,6 +132,12 @@ def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) ->
     """Ensure that there is always a favicon object."""
     from favicon.models import Favicon  # noqa
 
+    if not os.path.exists(default):
+        warn("staticfiles are not ready yet, not creating default icons")
+        return
+    elif os.path.isdir(default):
+        raise ImproperlyConfigured(f"staticfiles are broken: unexpected directory at {default}")
+
     favicon, created = Favicon.on_site.get_or_create(
         title=title, defaults={"isFavicon": is_favicon}
     )
@@ -248,12 +256,6 @@ def objectgetter_optional(
     return get_object
 
 
-def handle_uploaded_file(f, filename: str):
-    with open(filename, "wb+") as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
-
 @cache_memoize(3600)
 def get_content_type_by_perm(perm: str) -> Union["ContentType", None]:
     from django.contrib.contenttypes.models import ContentType  # noqa
@@ -300,3 +302,23 @@ def monkey_patch() -> None:  # noqa
             return super().default(o)
 
     json.DjangoJSONEncoder = DjangoJSONEncoder
+
+
+def get_allowed_object_ids(request: HttpRequest, models: list) -> list:
+    """Get all objects of all given models the user of a given request is allowed to view."""
+    allowed_object_ids = []
+
+    for model in models:
+        app_label = model._meta.app_label
+        model_name = model.__name__.lower()
+
+        # Loop through the pks of all objects of the current model the user is allowed to view
+        # and put the corresponding ids into a django-haystack-style-formatted list
+        allowed_object_ids += [
+            f"{app_label}.{model_name}.{pk}"
+            for pk in queryset_rules_filter(
+                request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
+            ).values_list("pk", flat=True)
+        ]
+
+    return allowed_object_ids

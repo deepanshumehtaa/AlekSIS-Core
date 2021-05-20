@@ -25,9 +25,10 @@ from django_celery_results.models import TaskResult
 from django_tables2 import RequestConfig, SingleTableView
 from dynamic_preferences.forms import preference_form_builder
 from guardian.shortcuts import get_objects_for_user
+from haystack.generic_views import SearchView
 from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
-from haystack.views import SearchView
+from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
 from oauth2_provider.models import Application
 from reversion import set_user
@@ -85,7 +86,12 @@ from .tables import (
 from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
-from .util.core_helpers import get_site_preferences, has_person, objectgetter_optional
+from .util.core_helpers import (
+    get_allowed_object_ids,
+    get_site_preferences,
+    has_person,
+    objectgetter_optional,
+)
 from .util.forms import PreferenceLayout
 from .util.pdf import render_pdf
 
@@ -101,7 +107,7 @@ class RenderPDFView(TemplateView):
         return render_pdf(request, self.template_name, context)
 
 
-@permission_required("core.view_dashboard")
+@permission_required("core.view_dashboard_rule")
 def index(request: HttpRequest) -> HttpResponse:
     """View for dashboard."""
     context = {}
@@ -138,7 +144,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 class NotificationsListView(PermissionRequiredMixin, ListView):
-    permission_required = "core.view_notifications"
+    permission_required = "core.view_notifications_rule"
     template_name = "core/notifications.html"
 
     def get_queryset(self) -> QuerySet:
@@ -165,7 +171,7 @@ class SchoolTermListView(PermissionRequiredMixin, SingleTableView):
 
     model = SchoolTerm
     table_class = SchoolTermTable
-    permission_required = "core.view_schoolterm"
+    permission_required = "core.view_schoolterm_rule"
     template_name = "core/school_term/list.html"
 
 
@@ -175,7 +181,7 @@ class SchoolTermCreateView(PermissionRequiredMixin, AdvancedCreateView):
 
     model = SchoolTerm
     form_class = SchoolTermForm
-    permission_required = "core.add_schoolterm"
+    permission_required = "core.add_schoolterm_rule"
     template_name = "core/school_term/create.html"
     success_url = reverse_lazy("school_terms")
     success_message = _("The school term has been created.")
@@ -193,7 +199,7 @@ class SchoolTermEditView(PermissionRequiredMixin, AdvancedEditView):
     success_message = _("The school term has been saved.")
 
 
-@permission_required("core.view_persons")
+@permission_required("core.view_persons_rule")
 def persons(request: HttpRequest) -> HttpResponse:
     """List view listing all persons."""
     context = {}
@@ -216,7 +222,7 @@ def persons(request: HttpRequest) -> HttpResponse:
 
 
 @permission_required(
-    "core.view_person", fn=objectgetter_optional(Person, "request.user.person", True)
+    "core.view_person_rule", fn=objectgetter_optional(Person, "request.user.person", True)
 )
 def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Detail view for one person; defaulting to logged-in person."""
@@ -236,7 +242,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/person/full.html", context)
 
 
-@permission_required("core.view_group", fn=objectgetter_optional(Group, None, False))
+@permission_required("core.view_group_rule", fn=objectgetter_optional(Group, None, False))
 def group(request: HttpRequest, id_: int) -> HttpResponse:
     """Detail view for one group."""
     context = {}
@@ -269,7 +275,7 @@ def group(request: HttpRequest, id_: int) -> HttpResponse:
     return render(request, "core/group/full.html", context)
 
 
-@permission_required("core.view_groups")
+@permission_required("core.view_groups_rule")
 def groups(request: HttpRequest) -> HttpResponse:
     """List view for listing all groups."""
     context = {}
@@ -290,7 +296,7 @@ def groups(request: HttpRequest) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.link_persons_accounts")
+@permission_required("core.link_persons_accounts_rule")
 def persons_accounts(request: HttpRequest) -> HttpResponse:
     """View allowing to batch-process linking of users to persons."""
     context = {}
@@ -311,7 +317,7 @@ def persons_accounts(request: HttpRequest) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.assign_child_groups_to_groups")
+@permission_required("core.assign_child_groups_to_groups_rule")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
     """View for batch-processing assignment from child groups to groups."""
     context = {}
@@ -349,7 +355,7 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.edit_person", fn=objectgetter_optional(Person))
+@permission_required("core.edit_person_rule", fn=objectgetter_optional(Person))
 def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """Edit view for a single person, defaulting to logged-in person."""
     context = {}
@@ -364,7 +370,7 @@ def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse
         )
     else:
         # Empty form to create a new group
-        if request.user.has_perm("core.create_person"):
+        if request.user.has_perm("core.create_person_rule"):
             edit_person_form = EditPersonForm(request, request.POST or None, request.FILES or None)
         else:
             raise PermissionDenied()
@@ -411,7 +417,7 @@ def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):
 
 
 @never_cache
-@permission_required("core.edit_group", fn=objectgetter_optional(Group, None, False))
+@permission_required("core.edit_group_rule", fn=objectgetter_optional(Group, None, False))
 def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group."""
     context = {}
@@ -424,7 +430,7 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
         edit_group_form = EditGroupForm(request.POST or None, instance=group)
     else:
         # Empty form to create a new group
-        if request.user.has_perm("core.create_group"):
+        if request.user.has_perm("core.create_group_rule"):
             edit_group_form = EditGroupForm(request.POST or None)
         else:
             raise PermissionDenied()
@@ -444,7 +450,7 @@ def edit_group(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     return render(request, "core/group/edit.html", context)
 
 
-@permission_required("core.manage_data")
+@permission_required("core.manage_data_rule")
 def data_management(request: HttpRequest) -> HttpResponse:
     """View with special menu for data management."""
     context = {}
@@ -455,7 +461,7 @@ class SystemStatus(PermissionRequiredMixin, MainView):
     """View giving information about the system status."""
 
     template_name = "core/pages/system_status.html"
-    permission_required = "core.view_system_status"
+    permission_required = "core.view_system_status_rule"
     context = {}
 
     def get(self, request, *args, **kwargs):
@@ -480,11 +486,11 @@ class SystemStatus(PermissionRequiredMixin, MainView):
 
 class TestPDFGenerationView(PermissionRequiredMixin, RenderPDFView):
     template_name = "core/pages/test_pdf.html"
-    permission_required = "core.test_pdf"
+    permission_required = "core.test_pdf_rule"
 
 
 @permission_required(
-    "core.mark_notification_as_read", fn=objectgetter_optional(Notification, None, False)
+    "core.mark_notification_as_read_rule", fn=objectgetter_optional(Notification, None, False)
 )
 def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     """Mark a notification read."""
@@ -497,7 +503,7 @@ def notification_mark_read(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("index")
 
 
-@permission_required("core.view_announcements")
+@permission_required("core.view_announcements_rule")
 def announcements(request: HttpRequest) -> HttpResponse:
     """List view of announcements."""
     context = {}
@@ -511,7 +517,7 @@ def announcements(request: HttpRequest) -> HttpResponse:
 
 @never_cache
 @permission_required(
-    "core.create_or_edit_announcement", fn=objectgetter_optional(Announcement, None, False)
+    "core.create_or_edit_announcement_rule", fn=objectgetter_optional(Announcement, None, False)
 )
 def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to create or edit an announcement."""
@@ -541,7 +547,7 @@ def announcement_form(request: HttpRequest, id_: Optional[int] = None) -> HttpRe
 
 
 @permission_required(
-    "core.delete_announcement", fn=objectgetter_optional(Announcement, None, False)
+    "core.delete_announcement_rule", fn=objectgetter_optional(Announcement, None, False)
 )
 def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an announcement."""
@@ -553,13 +559,16 @@ def delete_announcement(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("announcements")
 
 
-@permission_required("core.search")
+@permission_required("core.search_rule")
 def searchbar_snippets(request: HttpRequest) -> HttpResponse:
     """View to return HTML snippet with searchbar autocompletion results."""
     query = request.GET.get("q", "")
     limit = int(request.GET.get("limit", "5"))
-
-    results = SearchQuerySet().filter(text=AutoQuery(query))[:limit]
+    indexed_models = UnifiedIndex().get_indexed_models()
+    allowed_object_ids = get_allowed_object_ids(request, indexed_models)
+    results = (
+        SearchQuerySet().filter(id__in=allowed_object_ids).filter(text=AutoQuery(query))[:limit]
+    )
     context = {"results": results}
 
     return render(request, "search/searchbar_snippets.html", context)
@@ -568,13 +577,15 @@ def searchbar_snippets(request: HttpRequest) -> HttpResponse:
 class PermissionSearchView(PermissionRequiredMixin, SearchView):
     """Wrapper to apply permission to haystack's search view."""
 
-    permission_required = "core.search"
+    permission_required = "core.search_rule"
 
-    def create_response(self):
-        context = self.get_context()
-        if not self.has_permission():
-            return self.handle_no_permission()
-        return render(self.request, self.template, context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = object_list if object_list is not None else self.object_list
+        indexed_models = UnifiedIndex().get_indexed_models()
+        allowed_object_ids = get_allowed_object_ids(self.request, indexed_models)
+        queryset = queryset.filter(id__in=allowed_object_ids)
+
+        return super().get_context_data(object_list=queryset, **kwargs)
 
 
 @never_cache
@@ -593,21 +604,21 @@ def preferences(
         instance = request.site
         form_class = SitePreferenceForm
 
-        if not request.user.has_perm("core.change_site_preferences", instance):
+        if not request.user.has_perm("core.change_site_preferences_rule", instance):
             raise PermissionDenied()
     elif registry_name == "person":
         registry = person_preferences_registry
         instance = objectgetter_optional(Person, "request.user.person", True)(request, pk)
         form_class = PersonPreferenceForm
 
-        if not request.user.has_perm("core.change_person_preferences", instance):
+        if not request.user.has_perm("core.change_person_preferences_rule", instance):
             raise PermissionDenied()
     elif registry_name == "group":
         registry = group_preferences_registry
         instance = objectgetter_optional(Group, None, False)(request, pk)
         form_class = GroupPreferenceForm
 
-        if not request.user.has_perm("core.change_group_preferences", instance):
+        if not request.user.has_perm("core.change_group_preferences_rule", instance):
             raise PermissionDenied()
     else:
         # Invalid registry name passed from URL
@@ -641,7 +652,7 @@ def preferences(
     return render(request, "dynamic_preferences/form.html", context)
 
 
-@permission_required("core.delete_person", fn=objectgetter_optional(Person))
+@permission_required("core.delete_person_rule", fn=objectgetter_optional(Person))
 def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an person."""
     person = objectgetter_optional(Person)(request, id_)
@@ -656,7 +667,7 @@ def delete_person(request: HttpRequest, id_: int) -> HttpResponse:
     return redirect("persons")
 
 
-@permission_required("core.delete_group", fn=objectgetter_optional(Group))
+@permission_required("core.delete_group_rule", fn=objectgetter_optional(Group))
 def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group."""
     group = objectgetter_optional(Group)(request, id_)
@@ -672,7 +683,7 @@ def delete_group(request: HttpRequest, id_: int) -> HttpResponse:
 
 @never_cache
 @permission_required(
-    "core.change_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+    "core.change_additionalfield_rule", fn=objectgetter_optional(AdditionalField, None, False)
 )
 def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a additional_field."""
@@ -687,7 +698,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
             request.POST or None, instance=additional_field
         )
     else:
-        if request.user.has_perm("core.create_additionalfield"):
+        if request.user.has_perm("core.create_additionalfield_rule"):
             # Empty form to create a new additional_field
             edit_additional_field_form = EditAdditionalFieldForm(request.POST or None)
         else:
@@ -706,7 +717,7 @@ def edit_additional_field(request: HttpRequest, id_: Optional[int] = None) -> Ht
     return render(request, "core/additional_field/edit.html", context)
 
 
-@permission_required("core.view_additionalfields")
+@permission_required("core.view_additionalfields_rule")
 def additional_fields(request: HttpRequest) -> HttpResponse:
     """List view for listing all additional fields."""
     context = {}
@@ -725,7 +736,7 @@ def additional_fields(request: HttpRequest) -> HttpResponse:
 
 
 @permission_required(
-    "core.delete_additionalfield", fn=objectgetter_optional(AdditionalField, None, False)
+    "core.delete_additionalfield_rule", fn=objectgetter_optional(AdditionalField, None, False)
 )
 def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an additional field."""
@@ -737,7 +748,7 @@ def delete_additional_field(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.change_grouptype", fn=objectgetter_optional(GroupType, None, False))
+@permission_required("core.change_grouptype_rule", fn=objectgetter_optional(GroupType, None, False))
 def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     """View to edit or create a group_type."""
     context = {}
@@ -765,7 +776,7 @@ def edit_group_type(request: HttpRequest, id_: Optional[int] = None) -> HttpResp
     return render(request, "core/group_type/edit.html", context)
 
 
-@permission_required("core.view_grouptypes")
+@permission_required("core.view_grouptypes_rule")
 def group_types(request: HttpRequest) -> HttpResponse:
     """List view for listing all group types."""
     context = {}
@@ -781,7 +792,7 @@ def group_types(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group_type/list.html", context)
 
 
-@permission_required("core.delete_grouptype", fn=objectgetter_optional(GroupType, None, False))
+@permission_required("core.delete_grouptype_rule", fn=objectgetter_optional(GroupType, None, False))
 def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
     """View to delete an group_type."""
     group_type = objectgetter_optional(GroupType, None, False)(request, id_)
@@ -792,7 +803,7 @@ def delete_group_type(request: HttpRequest, id_: int) -> HttpResponse:
 
 
 class DataCheckView(PermissionRequiredMixin, ListView):
-    permission_required = "core.view_datacheckresults"
+    permission_required = "core.view_datacheckresults_rule"
     model = DataCheckResult
     template_name = "core/data_check/list.html"
     context_object_name = "results"
@@ -811,7 +822,7 @@ class DataCheckView(PermissionRequiredMixin, ListView):
 
 
 class RunDataChecks(PermissionRequiredMixin, View):
-    permission_required = "core.run_data_checks"
+    permission_required = "core.run_data_checks_rule"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         result = check_data.delay()
@@ -829,7 +840,7 @@ class RunDataChecks(PermissionRequiredMixin, View):
 
 class SolveDataCheckView(PermissionRequiredMixin, RevisionMixin, DetailView):
     queryset = DataCheckResult.objects.all()
-    permission_required = "core.solve_data_problem"
+    permission_required = "core.solve_data_problem_rule"
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         solve_option = self.kwargs["solve_option"]
@@ -856,7 +867,7 @@ class DashboardWidgetListView(PermissionRequiredMixin, SingleTableView):
 
     model = DashboardWidget
     table_class = DashboardWidgetTable
-    permission_required = "core.view_dashboardwidget"
+    permission_required = "core.view_dashboardwidget_rule"
     template_name = "core/dashboard_widget/list.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -877,7 +888,7 @@ class DashboardWidgetEditView(PermissionRequiredMixin, AdvancedEditView):
 
     model = DashboardWidget
     fields = "__all__"
-    permission_required = "core.edit_dashboardwidget"
+    permission_required = "core.edit_dashboardwidget_rule"
     template_name = "core/dashboard_widget/edit.html"
     success_url = reverse_lazy("dashboard_widgets")
     success_message = _("The dashboard widget has been saved.")
@@ -907,7 +918,7 @@ class DashboardWidgetCreateView(PermissionRequiredMixin, AdvancedCreateView):
         return super().post(request, *args, **kwargs)
 
     fields = "__all__"
-    permission_required = "core.add_dashboardwidget"
+    permission_required = "core.add_dashboardwidget_rule"
     template_name = "core/dashboard_widget/create.html"
     success_url = reverse_lazy("dashboard_widgets")
     success_message = _("The dashboard widget has been created.")
@@ -917,7 +928,7 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     """Delete view for dashboard widgets."""
 
     model = DashboardWidget
-    permission_required = "core.delete_dashboardwidget"
+    permission_required = "core.delete_dashboardwidget_rule"
     template_name = "core/pages/delete.html"
     success_url = reverse_lazy("dashboard_widgets")
     success_message = _("The dashboard widget has been deleted.")
@@ -926,13 +937,13 @@ class DashboardWidgetDeleteView(PermissionRequiredMixin, AdvancedDeleteView):
 class EditDashboardView(PermissionRequiredMixin, View):
     """View for editing dashboard widget order."""
 
-    permission_required = "core.edit_dashboard"
+    permission_required = "core.edit_dashboard_rule"
 
     def get_context_data(self, request, **kwargs):
         context = {}
         self.default_dashboard = kwargs.get("default", False)
 
-        if self.default_dashboard and not request.user.has_perm("core.edit_default_dashboard"):
+        if self.default_dashboard and not request.user.has_perm("core.edit_default_dashboard_rule"):
             raise PermissionDenied()
 
         context["default_dashboard"] = self.default_dashboard
@@ -1002,7 +1013,7 @@ class EditDashboardView(PermissionRequiredMixin, View):
 class OAuth2List(PermissionRequiredMixin, ListView):
     """List view for all the applications."""
 
-    permission_required = "core.list_oauth_applications"
+    permission_required = "core.list_oauth_applications_rule"
     context_object_name = "applications"
     template_name = "oauth2_provider/application_list.html"
 
@@ -1014,7 +1025,7 @@ class OAuth2Detail(PermissionRequiredMixin, DetailView):
     """Detail view for an application instance."""
 
     context_object_name = "application"
-    permission_required = "core.view_oauth_applications"
+    permission_required = "core.view_oauth_applications_rule"
     template_name = "oauth2_provider/application_detail.html"
 
     def get_queryset(self):
@@ -1024,7 +1035,7 @@ class OAuth2Detail(PermissionRequiredMixin, DetailView):
 class OAuth2Delete(PermissionRequiredMixin, DeleteView):
     """View used to delete an application."""
 
-    permission_required = "core.delete_oauth_applications"
+    permission_required = "core.delete_oauth_applications_rule"
     context_object_name = "application"
     success_url = reverse_lazy("oauth_list")
     template_name = "oauth2_provider/application_confirm_delete.html"
@@ -1036,7 +1047,7 @@ class OAuth2Delete(PermissionRequiredMixin, DeleteView):
 class OAuth2Update(PermissionRequiredMixin, UpdateView):
     """View used to update an application."""
 
-    permission_required = "core.update_oauth_applications"
+    permission_required = "core.update_oauth_applications_rule"
     context_object_name = "application"
     template_name = "oauth2_provider/application_form.html"
 

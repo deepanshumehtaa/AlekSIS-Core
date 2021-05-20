@@ -128,7 +128,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_announcements",
+                            "core.view_announcements_rule",
                         ),
                     ],
                 },
@@ -139,7 +139,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_schoolterm",
+                            "core.view_schoolterm_rule",
                         ),
                     ],
                 },
@@ -150,7 +150,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_dashboardwidget",
+                            "core.view_dashboardwidget_rule",
                         ),
                     ],
                 },
@@ -159,7 +159,10 @@ MENUS = {
                     "url": "data_management",
                     "icon": "view_list",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.manage_data"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.manage_data_rule",
+                        ),
                     ],
                 },
                 {
@@ -169,7 +172,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_system_status",
+                            "core.view_system_status_rule",
                         ),
                     ],
                 },
@@ -178,7 +181,10 @@ MENUS = {
                     "url": "impersonate-list",
                     "icon": "people",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.impersonate"),
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.impersonate_rule",
+                        ),
                     ],
                 },
                 {
@@ -188,7 +194,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.change_site_preferences",
+                            "core.change_site_preferences_rule",
                         ),
                     ],
                 },
@@ -211,7 +217,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.list_oauth_applications",
+                            "core.list_oauth_applications_rule",
                         ),
                     ],
                 },
@@ -223,7 +229,7 @@ MENUS = {
             "icon": "people",
             "root": True,
             "validators": [
-                ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu")
+                ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu_rule")
             ],
             "submenu": [
                 {
@@ -231,7 +237,10 @@ MENUS = {
                     "url": "persons",
                     "icon": "person",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_persons")
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_persons_rule",
+                        )
                     ],
                 },
                 {
@@ -239,7 +248,10 @@ MENUS = {
                     "url": "groups",
                     "icon": "group",
                     "validators": [
-                        ("aleksis.core.util.predicates.permission_validator", "core.view_groups")
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.view_groups_rule",
+                        )
                     ],
                 },
                 {
@@ -249,7 +261,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_grouptypes",
+                            "core.view_grouptypes_rule",
                         )
                     ],
                 },
@@ -260,7 +272,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.link_persons_accounts",
+                            "core.link_persons_accounts_rule",
                         )
                     ],
                 },
@@ -271,7 +283,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.assign_child_groups_to_groups",
+                            "core.assign_child_groups_to_groups_rule",
                         )
                     ],
                 },
@@ -282,7 +294,7 @@ MENUS = {
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
-                            "core.view_additionalfields",
+                            "core.view_additionalfields_rule",
                         )
                     ],
                 },
@@ -296,7 +308,7 @@ MENUS = {
             "validators": [
                 (
                     "aleksis.core.util.predicates.permission_validator",
-                    "core.assign_child_groups_to_groups",
+                    "core.assign_child_groups_to_groups_rule",
                 )
             ],
         },

@@ -214,20 +214,20 @@ python-versions = "*"
 
 [[package]]
 name = "boto3"
-version = "1.17.74"
+version = "1.17.76"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
-botocore = ">=1.20.74,<1.21.0"
+botocore = ">=1.20.76,<1.21.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.4.0,<0.5.0"
 
 [[package]]
 name = "botocore"
-version = "1.20.74"
+version = "1.20.76"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -1456,6 +1456,19 @@ python-versions = ">=3.5"
 gitdb = ">=4.0.1,<5"
 
 [[package]]
+name = "haystack-redis"
+version = "0.0.1"
+description = "Use redis as a persistence layer for Whoosh and Haystack"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django-haystack = "*"
+redis = "*"
+whoosh = "*"
+
+[[package]]
 name = "html2text"
 version = "2020.1.16"
 description = "Turn HTML into equivalent Markdown-structured text."
@@ -1557,14 +1570,14 @@ testing = ["Django (<3.1)", "colorama", "docopt", "pytest (<6.0.0)"]
 
 [[package]]
 name = "jinja2"
-version = "3.0.0"
+version = "3.0.1"
 description = "A very fast and expressive template engine."
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-MarkupSafe = ">=2.0.0rc2"
+MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
@@ -1769,7 +1782,7 @@ ptyprocess = ">=0.5"
 
 [[package]]
 name = "pg8000"
-version = "1.19.4"
+version = "1.19.5"
 description = "PostgreSQL interface library"
 category = "dev"
 optional = false
@@ -2629,20 +2642,8 @@ name = "whoosh"
 version = "2.7.4"
 description = "Fast, pure-Python full text indexing, search, and spell checking library."
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
-
-[[package]]
-name = "xapian-haystack"
-version = "2.1.1"
-description = "A Xapian backend for Haystack"
-category = "main"
-optional = true
-python-versions = "*"
-
-[package.dependencies]
-django = ">=1.8"
-django-haystack = ">=2.5.1"
 
 [[package]]
 name = "yubiotp"
@@ -2658,13 +2659,11 @@ pycryptodome = "*"
 [extras]
 ldap = ["django-auth-ldap"]
 s3 = ["boto3", "django-storages"]
-whoosh = ["Whoosh"]
-xapian = ["xapian-haystack"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "beabb80d3caf7c756cf28689c2c13d10e09ae12b9bc6a65723797f694e635e68"
+content-hash = "13d988ca4c812fa1cd0c68e210f6d8eb58bd512ab40b47e0830b3d0d714eef3f"
 
 [metadata.files]
 alabaster = [
@@ -2673,6 +2672,7 @@ alabaster = [
 ]
 aleksis-builddeps = [
     {file = "AlekSIS-Builddeps-3.tar.gz", hash = "sha256:04597e29a861e576d78adc068c9f1bf85450c81dc43cb1f7db0ed43e975b64a2"},
+    {file = "AlekSIS_Builddeps-3-py3-none-any.whl", hash = "sha256:0de7fdf007afade836a6dcdbf47eb9fb702786572a8e511c6b6ae33ddce1dda6"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -2736,12 +2736,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.17.74-py2.py3-none-any.whl", hash = "sha256:c83a33fff7d20027386552967355508ce71fb7406ab0cc8e627e257c94754d43"},
-    {file = "boto3-1.17.74.tar.gz", hash = "sha256:0a21893db156c0938d0a06b622c3dd3d2da2dcd9d06d343c8f9536ac9de4ec7f"},
+    {file = "boto3-1.17.76-py2.py3-none-any.whl", hash = "sha256:2421478269219131d58e1a7c49f535d32442a4de9f1b9022bffb3269cc6a46cb"},
+    {file = "boto3-1.17.76.tar.gz", hash = "sha256:b46ce7eaeb5a388b7a4a48999c3bb9e4276677bb0c1ee4b9f2bf7a1250d96e5e"},
 ]
 botocore = [
-    {file = "botocore-1.20.74-py2.py3-none-any.whl", hash = "sha256:2061cf3d17615aa4114c91dbed8917adc5287a88354a7693c96aa8e9f9dedd6e"},
-    {file = "botocore-1.20.74.tar.gz", hash = "sha256:6937954ce6dabc00eb157e9fbd21edd45b4dfe3de738e68dbca4c042bfda0954"},
+    {file = "botocore-1.20.76-py2.py3-none-any.whl", hash = "sha256:277456d5eb993bc5ba13bb66e09875e9e8dab846b8722ed0370c7420858dcfbc"},
+    {file = "botocore-1.20.76.tar.gz", hash = "sha256:208d9d2cc7ec725892c0afcab3c76b42049a7f96309b4286f160b527cd64170f"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -2782,24 +2782,36 @@ cffi = [
     {file = "cffi-1.14.5-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:48e1c69bbacfc3d932221851b39d49e81567a4d4aac3b21258d9c24578280058"},
     {file = "cffi-1.14.5-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:69e395c24fc60aad6bb4fa7e583698ea6cc684648e1ffb7fe85e3c1ca131a7d5"},
     {file = "cffi-1.14.5-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:9e93e79c2551ff263400e1e4be085a1210e12073a31c2011dbbda14bda0c6132"},
+    {file = "cffi-1.14.5-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:24ec4ff2c5c0c8f9c6b87d5bb53555bf267e1e6f70e52e5a9740d32861d36b6f"},
+    {file = "cffi-1.14.5-cp36-cp36m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:3c3f39fa737542161d8b0d680df2ec249334cd70a8f420f71c9304bd83c3cbed"},
+    {file = "cffi-1.14.5-cp36-cp36m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:681d07b0d1e3c462dd15585ef5e33cb021321588bebd910124ef4f4fb71aef55"},
     {file = "cffi-1.14.5-cp36-cp36m-win32.whl", hash = "sha256:58e3f59d583d413809d60779492342801d6e82fefb89c86a38e040c16883be53"},
     {file = "cffi-1.14.5-cp36-cp36m-win_amd64.whl", hash = "sha256:005a36f41773e148deac64b08f233873a4d0c18b053d37da83f6af4d9087b813"},
     {file = "cffi-1.14.5-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:2894f2df484ff56d717bead0a5c2abb6b9d2bf26d6960c4604d5c48bbc30ee73"},
     {file = "cffi-1.14.5-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:0857f0ae312d855239a55c81ef453ee8fd24136eaba8e87a2eceba644c0d4c06"},
     {file = "cffi-1.14.5-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:cd2868886d547469123fadc46eac7ea5253ea7fcb139f12e1dfc2bbd406427d1"},
     {file = "cffi-1.14.5-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:35f27e6eb43380fa080dccf676dece30bef72e4a67617ffda586641cd4508d49"},
+    {file = "cffi-1.14.5-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:06d7cd1abac2ffd92e65c0609661866709b4b2d82dd15f611e602b9b188b0b69"},
+    {file = "cffi-1.14.5-cp37-cp37m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:0f861a89e0043afec2a51fd177a567005847973be86f709bbb044d7f42fc4e05"},
+    {file = "cffi-1.14.5-cp37-cp37m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:cc5a8e069b9ebfa22e26d0e6b97d6f9781302fe7f4f2b8776c3e1daea35f1adc"},
     {file = "cffi-1.14.5-cp37-cp37m-win32.whl", hash = "sha256:9ff227395193126d82e60319a673a037d5de84633f11279e336f9c0f189ecc62"},
     {file = "cffi-1.14.5-cp37-cp37m-win_amd64.whl", hash = "sha256:9cf8022fb8d07a97c178b02327b284521c7708d7c71a9c9c355c178ac4bbd3d4"},
     {file = "cffi-1.14.5-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:8b198cec6c72df5289c05b05b8b0969819783f9418e0409865dac47288d2a053"},
     {file = "cffi-1.14.5-cp38-cp38-manylinux1_i686.whl", hash = "sha256:ad17025d226ee5beec591b52800c11680fca3df50b8b29fe51d882576e039ee0"},
     {file = "cffi-1.14.5-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:6c97d7350133666fbb5cf4abdc1178c812cb205dc6f41d174a7b0f18fb93337e"},
     {file = "cffi-1.14.5-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:8ae6299f6c68de06f136f1f9e69458eae58f1dacf10af5c17353eae03aa0d827"},
+    {file = "cffi-1.14.5-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:04c468b622ed31d408fea2346bec5bbffba2cc44226302a0de1ade9f5ea3d373"},
+    {file = "cffi-1.14.5-cp38-cp38-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:06db6321b7a68b2bd6df96d08a5adadc1fa0e8f419226e25b2a5fbf6ccc7350f"},
+    {file = "cffi-1.14.5-cp38-cp38-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:293e7ea41280cb28c6fcaaa0b1aa1f533b8ce060b9e701d78511e1e6c4a1de76"},
     {file = "cffi-1.14.5-cp38-cp38-win32.whl", hash = "sha256:b85eb46a81787c50650f2392b9b4ef23e1f126313b9e0e9013b35c15e4288e2e"},
     {file = "cffi-1.14.5-cp38-cp38-win_amd64.whl", hash = "sha256:1f436816fc868b098b0d63b8920de7d208c90a67212546d02f84fe78a9c26396"},
     {file = "cffi-1.14.5-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:1071534bbbf8cbb31b498d5d9db0f274f2f7a865adca4ae429e147ba40f73dea"},
     {file = "cffi-1.14.5-cp39-cp39-manylinux1_i686.whl", hash = "sha256:9de2e279153a443c656f2defd67769e6d1e4163952b3c622dcea5b08a6405322"},
     {file = "cffi-1.14.5-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:6e4714cc64f474e4d6e37cfff31a814b509a35cb17de4fb1999907575684479c"},
     {file = "cffi-1.14.5-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:158d0d15119b4b7ff6b926536763dc0714313aa59e320ddf787502c70c4d4bee"},
+    {file = "cffi-1.14.5-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1bf1ac1984eaa7675ca8d5745a8cb87ef7abecb5592178406e55858d411eadc0"},
+    {file = "cffi-1.14.5-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:df5052c5d867c1ea0b311fb7c3cd28b19df469c056f7fdcfe88c7473aa63e333"},
+    {file = "cffi-1.14.5-cp39-cp39-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:24a570cd11895b60829e941f2613a4f79df1a27344cbbb82164ef2e0116f09c7"},
     {file = "cffi-1.14.5-cp39-cp39-win32.whl", hash = "sha256:afb29c1ba2e5a3736f1c301d9d0abe3ec8b86957d04ddfa9d7a6a42b9367e396"},
     {file = "cffi-1.14.5-cp39-cp39-win_amd64.whl", hash = "sha256:f2d45f97ab6bb54753eab54fffe75aaf3de4ff2341c9daee1987ee1837636f1d"},
     {file = "cffi-1.14.5.tar.gz", hash = "sha256:fd78e5fee591709f32ef6edb9a015b4aa1a5022598e36227500c8f4e02328d9c"},
@@ -3217,6 +3229,10 @@ gitpython = [
     {file = "GitPython-3.1.17-py3-none-any.whl", hash = "sha256:29fe82050709760081f588dd50ce83504feddbebdc4da6956d02351552b1c135"},
     {file = "GitPython-3.1.17.tar.gz", hash = "sha256:ee24bdc93dce357630764db659edaf6b8d664d4ff5447ccfeedd2dc5c253f41e"},
 ]
+haystack-redis = [
+    {file = "haystack-redis-0.0.1.tar.gz", hash = "sha256:ccfea88bdc1387c9f7f6f19e9bc062a3612039ef94cfd3e78cf59a96ddd269b2"},
+    {file = "haystack_redis-0.0.1-py3-none-any.whl", hash = "sha256:4fdeee5a9d8daadb1fed4584fd2ffbb25b1ed2315dacb97b53093756d6b54467"},
+]
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
     {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
@@ -3250,8 +3266,8 @@ jedi = [
     {file = "jedi-0.18.0.tar.gz", hash = "sha256:92550a404bad8afed881a137ec9a461fed49eca661414be45059329614ed0707"},
 ]
 jinja2 = [
-    {file = "Jinja2-3.0.0-py3-none-any.whl", hash = "sha256:2f2de5285cf37f33d33ecd4a9080b75c87cd0c1994d5a9c6df17131ea1f049c6"},
-    {file = "Jinja2-3.0.0.tar.gz", hash = "sha256:ea8d7dd814ce9df6de6a761ec7f1cac98afe305b8cdc4aaae4e114b8d8ce24c5"},
+    {file = "Jinja2-3.0.1-py3-none-any.whl", hash = "sha256:1f06f2da51e7b56b8f238affdd6b4e2c61e39598a378cc49345bc1bd42a978a4"},
+    {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
 ]
 jmespath = [
     {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
@@ -3388,8 +3404,8 @@ pexpect = [
     {file = "pexpect-4.8.0.tar.gz", hash = "sha256:fc65a43959d153d0114afe13997d439c22823a27cefceb5ff35c2178c6784c0c"},
 ]
 pg8000 = [
-    {file = "pg8000-1.19.4-py3-none-any.whl", hash = "sha256:510db12be8ad85488289bd0b97bc340202cf6749da08cf8588032a047fb5d0ba"},
-    {file = "pg8000-1.19.4.tar.gz", hash = "sha256:7c9c6d57541b0f2153e23a8d759ceb3d7cb9308918fba6ad9e92f8e0e5a90bc8"},
+    {file = "pg8000-1.19.5-py3-none-any.whl", hash = "sha256:f750fc6c7acab10a399d27fed2732b0f380f0012eeb054ba1637519c190255b3"},
+    {file = "pg8000-1.19.5.tar.gz", hash = "sha256:dcb9afb9cb87acc79388ae633c45cf7f806aabe3bb5d8cf154572b699393f937"},
 ]
 phonenumbers = [
     {file = "phonenumbers-8.12.23-py2.py3-none-any.whl", hash = "sha256:4b9d2f2165309613f32fe5057ff0604eb8e4bbb7be44f7ba77baef760d7d60e2"},
@@ -3936,9 +3952,6 @@ whoosh = [
     {file = "Whoosh-2.7.4-py2.py3-none-any.whl", hash = "sha256:aa39c3c3426e3fd107dcb4bde64ca1e276a65a889d9085a6e4b54ba82420a852"},
     {file = "Whoosh-2.7.4.tar.gz", hash = "sha256:7ca5633dbfa9e0e0fa400d3151a8a0c4bec53bd2ecedc0a67705b17565c31a83"},
     {file = "Whoosh-2.7.4.zip", hash = "sha256:e0857375f63e9041e03fedd5b7541f97cf78917ac1b6b06c1fcc9b45375dda69"},
-]
-xapian-haystack = [
-    {file = "xapian-haystack-2.1.1.tar.gz", hash = "sha256:1e2fc4d84dc32f132e5b143266e4d4a32e6abac1d363742d0ebc212fac8ade70"},
 ]
 yubiotp = [
     {file = "YubiOTP-1.0.0.post1-py2.py3-none-any.whl", hash = "sha256:7ad57011866e0bc6c6d179ffbc3926fcc0e82d410178a6d01ba4da0f88332878"},
