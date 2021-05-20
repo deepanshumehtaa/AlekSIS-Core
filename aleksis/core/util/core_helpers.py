@@ -248,12 +248,6 @@ def objectgetter_optional(
     return get_object
 
 
-def handle_uploaded_file(f, filename: str):
-    with open(filename, "wb+") as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
-
 @cache_memoize(3600)
 def get_content_type_by_perm(perm: str) -> Union["ContentType", None]:
     from django.contrib.contenttypes.models import ContentType  # noqa
