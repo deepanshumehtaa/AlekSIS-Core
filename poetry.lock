@@ -1468,6 +1468,11 @@ django-haystack = "*"
 redis = "*"
 whoosh = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "html2text"
 version = "2020.1.16"
@@ -2672,7 +2677,6 @@ alabaster = [
 ]
 aleksis-builddeps = [
     {file = "AlekSIS-Builddeps-3.tar.gz", hash = "sha256:04597e29a861e576d78adc068c9f1bf85450c81dc43cb1f7db0ed43e975b64a2"},
-    {file = "AlekSIS_Builddeps-3-py3-none-any.whl", hash = "sha256:0de7fdf007afade836a6dcdbf47eb9fb702786572a8e511c6b6ae33ddce1dda6"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -3230,8 +3234,7 @@ gitpython = [
     {file = "GitPython-3.1.17.tar.gz", hash = "sha256:ee24bdc93dce357630764db659edaf6b8d664d4ff5447ccfeedd2dc5c253f41e"},
 ]
 haystack-redis = [
-    {file = "haystack-redis-0.0.1.tar.gz", hash = "sha256:ccfea88bdc1387c9f7f6f19e9bc062a3612039ef94cfd3e78cf59a96ddd269b2"},
-    {file = "haystack_redis-0.0.1-py3-none-any.whl", hash = "sha256:4fdeee5a9d8daadb1fed4584fd2ffbb25b1ed2315dacb97b53093756d6b54467"},
+    {file = "haystack-redis-0.0.1.tar.gz", hash = "sha256:1eb5ee5de1065149a03c621e048c154f25d1745d69bc74ceb672842e882cccdc"},
 ]
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
