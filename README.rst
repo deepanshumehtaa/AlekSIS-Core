@@ -42,7 +42,7 @@ The AlekSIS-Core currently provides the following features:
 
 * For developers
 
- * `aleksis-admin` script to wrap django-admin with pre-configured mappings
+ * `aleksis-admin` script to wrap django-admin with pre-configured settings
  * Caching with Redis
  * Django REST framework for apps to use at own discretion
  * Injection of fields, methods, permissions and properties via custom `ExtensibleModel`
