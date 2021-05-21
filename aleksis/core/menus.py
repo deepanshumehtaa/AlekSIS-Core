@@ -12,6 +12,15 @@ MENUS = {
             "validators": ["menu_generator.validators.is_anonymous"],
         },
         {
+            "name": _("Sign up"),
+            "url": "account_signup",
+            "icon": "how_to_reg",
+            "validators": [
+                "menu_generator.validators.is_anonymous",
+                ("aleksis.core.util.predicates.permission_validator", "core.can_register"),
+            ],
+        },
+        {
             "name": _("Dashboard"),
             "url": "index",
             "icon": "home",
@@ -55,6 +64,18 @@ MENUS = {
                     "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
+                    "name": _("Change password"),
+                    "url": "account_change_password",
+                    "icon": "lock",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.can_change_password",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Me"),
                     "url": "person",
                     "icon": "insert_emoticon",
@@ -67,6 +88,15 @@ MENUS = {
                     "name": _("Preferences"),
                     "url": "preferences_person",
                     "icon": "settings",
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                        "aleksis.core.util.core_helpers.has_person",
+                    ],
+                },
+                {
+                    "name": _("Social accounts"),
+                    "url": "socialaccount_connections",
+                    "icon": "public",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",

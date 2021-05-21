@@ -1,8 +1,36 @@
+"""Helpers/overrides for django-allauth."""
+
+from django.conf import settings
 from django.http import HttpRequest
 
+from allauth.account.adapter import DefaultAccountAdapter
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from oauth2_provider.oauth2_validators import OAuth2Validator
 
-from .core_helpers import has_person
+from .core_helpers import get_site_preferences, has_person
+
+
+class OurSocialAccountAdapter(DefaultSocialAccountAdapter):
+    """Customised adapter that recognises other authentication mechanisms."""
+
+    def validate_disconnect(self, account, accounts):
+        """Validate whether or not the socialaccount account can be safely disconnected.
+
+        Honours other authentication backends, i.e. ignores unusable passwords if LDAP is used.
+        """
+        if "django_auth_ldap.backend.LDAPBackend" in settings.AUTHENTICATION_BACKENDS:
+            # Ignore upstream validation error as we do not need a usable password
+            return None
+
+        # Let upstream decide whether we can disconnect or not
+        return super().validate_disconnect(account, accounts)
+
+
+class OurAccountAdapter(DefaultAccountAdapter):
+    """Customised adapter to allow to disable signup."""
+
+    def is_open_for_signup(self, request):
+        return get_site_preferences()["auth__signup_enabled"]
 
 
 class CustomOAuth2Validator(OAuth2Validator):
