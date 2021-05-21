@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  {% has_perm "core.edit_dashboard" user as can_edit_dashboard %}
+  {% has_perm "core.edit_dashboard_rule" user as can_edit_dashboard %}
   {% if can_edit_dashboard %}
     <div class="row no-margin">
       <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">

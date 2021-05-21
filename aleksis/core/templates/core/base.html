@@ -70,7 +70,7 @@
              alt="{{ request.site.preferences.general__title }} – Logo">
       </a>
     </li>
-    {% has_perm 'core.search' user as search %}
+    {% has_perm 'core.search_rule' user as search %}
     {% if search %}
       <li class="search">
         <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">

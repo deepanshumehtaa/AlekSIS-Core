@@ -115,7 +115,7 @@ def is_current_person(user: User, obj: Model) -> bool:
 @predicate
 def is_group_owner(user: User, group: Group) -> bool:
     """Predicate which checks if the user is a owner of the provided group."""
-    return group.owners.filter(owners=user.person).exists()
+    return user.person in group.owners.all()
 
 
 @predicate
