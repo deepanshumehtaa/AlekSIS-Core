@@ -75,6 +75,7 @@ Create the directories for storage
             /usr/share/aleksis/{static,node_modules} \
             /var/lib/aleksis/media \
 	    /var/backups/aleksis
+   chown -R www-data:www-data /var/lib/aleksis
 
 Create AlekSIS configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
