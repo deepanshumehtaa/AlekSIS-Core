@@ -11,22 +11,41 @@ framework and selected apps.
 
 Also, `Yarn`_ is needed to resolve JavaScript dependencies.
 
+For repository management, `myrepos` is required.
+
+Setup database and message broker
+---------------------------------
+
+AlekSIS requires `PostgreSQL`_ (version 13 or newer) as database
+backend. To provide a database names `aleksis` with a user named
+`aleksis` on Debian::
+
+  sudo apt install postgresql-13
+  sudo -u postgres createuser -P aleksis
+  sudo -u postgres createdb -O aleksis aleksis
+
+Additionally, `Redis`_ is used as message broker and for caching.
+The default configuration of the server in Debian is sufficient::
+
+  sudo apt install redis-server
+
 Get the source tree
 -------------------
 
 To download AlekSIS and all officially bundled apps in their
 development version, use Git like so::
 
-  git clone --recurse-submodules https://edugit.org/AlekSIS/AlekSIS
+  git clone https://edugit.org/AlekSIS/official/AlekSIS
 
-If you do not want to download the bundled apps, leave out the
-``--recurse-submodules`` option.
+This first downloads a meta repository that contains a config file for mr.
+To clone the AlekSIS-Core and all official (and onboarding) apps, run::
 
+  mr update
 
 Install native dependencies
 ---------------------------
 
-Some system libraries are required to install AlekSIS::
+Some system libraries are required to install AlekSIS. On Debian, for example, this would be done with::
 
   sudo apt install build-essential libpq-dev libpq5 libssl-dev python3-dev python3-pip python3-venv yarnpkg gettext chromium
 
@@ -36,7 +55,7 @@ Get Poetry
 Make sure to have Poetry installed like described in its
 documentation. Right now, we encourage using pip to install Poetry
 once system-wide (this will change once distributions pick up
-Poetry). On Debian, for example, this would be done with::
+Poetry).::
 
   sudo pip3 install poetry
 
@@ -47,9 +66,14 @@ Install AlekSIS in its own virtual environment
 ----------------------------------------------
 
 Poetry will automatically manage virtual environments per project, so
-installing AlekSIS is a matter of::
+installing AlekSIS is a matter of switching into the Core's directory and running the initial AlekSIS installation::
 
+  cd apps/official/AlekSIS-Core
   poetry install
+
+Now it's recommended to run a shell that uses the newly created venv::
+
+  poetry shell
 
 
 Regular tasks
@@ -63,13 +87,13 @@ some maintenance tasks need to be done:
 3. Run database migrations
 
 All three steps can be done with the ``poetry run`` command and
-``manage.py``::
+``aleksis-admin``::
 
-  poetry run ./manage.py yarn install
-  poetry run ./manage.py collectstatic
-  poetry run ./manage.py compilemessages
-  poetry run ./manage.py migrate
-  poetry run ./manage.py createinitialrevisions
+  poetry run aleksis-admin yarn install
+  poetry run aleksis-admin collectstatic
+  poetry run aleksis-admin compilemessages
+  poetry run aleksis-admin migrate
+  poetry run aleksis-admin createinitialrevisions
 
 (You might need database settings for the `migrate` command; see below.)
 
@@ -78,13 +102,13 @@ Running the development server
 
 The development server can be started using Django's ``runserver`` command.
 If you want to automatically start other necessary tools in development,
-like the `Celery` worker and scheduler, use ``runuwsgi`` instead.
+like the `Celery`_ worker and scheduler, use ``runuwsgi`` instead.
 You can either configure AlekSIS like in a production environment, or pass
 basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
 `aleksis` (all else remains default) and with the `debug` setting enabled::
 
-  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run ./manage.py runuwsgi
+  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run aleksis-admin runuwsgi
 
 .. figure:: /screenshots/index.png
    :scale: 50%
@@ -96,4 +120,6 @@ development server against a local PostgreSQL database with password
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
 .. _Yarn: https://yarnpkg.com
+.. _PostgreSQL: https://www.postgresql.org/
+.. _Redis: https://redis.io/
 .. _Celery: https://celeryproject.org/

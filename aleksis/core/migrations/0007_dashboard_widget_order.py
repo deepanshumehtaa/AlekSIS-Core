@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Dashboard widget orders',
             },
             managers=[
-                ('objects', django.contrib.sites.managers.CurrentSiteManager()),
             ],
         ),
     ]
