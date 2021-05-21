@@ -7,7 +7,7 @@ From source
 In this section we will install AlekSIS with `uWSGI` and `nGINX` on debian
 bullseye.
 
-0. Prerequisites::
+1. Prerequisites::
 
  * Debian 11
 
@@ -15,14 +15,14 @@ bullseye.
 
   * Install system dependencies::
 
-    $ apt install uwsgi uwsgi-plugin-python3 nginx-full python3.9 python3.9-dev libldap2-dev libsasl2-dev yarnpkg python3-virtualenv
+    $ apt install uwsgi uwsgi-plugin-python3 nginx-full python3.9 python3.9-dev libldap2-dev libsasl2-dev yarnpkg python3-virtualenv chromium redis-server
 
   * Create and activate virtual environment::
 
     $ mkdir -p /srv/www/aleksis
     $ mkdir -p /srv/www/aleksis/data/{static,media}
     $ cd /srv/www/aleksis
-    $ virtualenv -p python3 --system-site-packages venv
+    $ python3 -m venv
     $ source /srv/www/aleksis/venv/bin/activate
     $ pip install poetry
 
@@ -32,8 +32,8 @@ bullseye.
     $ sudo -u postgres createuser -l aleksis -
     $ sudo -u postgres createdb -O aleksis aleksis
 
-  * Configure uWSGI
-    .. code-block::
+  * Configure uWSGI::
+
       $ editor /etc/uwsgi/apps-available/aleksis.ini
 
       [uwsgi]
@@ -51,14 +51,15 @@ bullseye.
       $ ln -s /etc/uwsgi/apps-available/aleksis.ini /etc/uwsgi/apps-enabled/aleksis.ini
       $ service uwsgi restart
 
+  * Get SSL ssl certificate
+    * https://certbot.eff.org/instructions
   * Configure nGINX::
-    .. code-block::
-      $ editor /etc/nginx/sites-available/my.aleksis-instance.com
+      $ editor /etc/nginx/sites-available/aleksis.example.com
         server {
           listen 80;
           listen [::]:80;
 
-          server_name my.aleksis-instance.com my.aleksis-instance.com;
+          server_name aleksis.example.com;
 
           return 301 https://$server_name$request_uri;
         }
@@ -67,11 +68,11 @@ bullseye.
                 listen 443 ssl http2;
                 listen [::]:443 ssl http2;
 
-                ssl_certificate /var/lib/dehydrated/certs/my.aleksis-instance.com/fullchain.pem;
-                ssl_certificate_key /var/lib/dehydrated/certs/my.aleksis-instance.com/privkey.pem;
-                ssl_trusted_certificate /var/lib/dehydrated/certs/my.aleksis-instance.com/chain.pem;
+                ssl_certificate /etc/letsencrypt/certs/aleksis.example.com/fullchain.pem;
+                ssl_certificate_key /etc/letsencrypt/certs/aleksis.example.com/privkey.pem;
+                ssl_trusted_certificate /etc/letsencrypt/certs/aleksis.example.com/chain.pem;
 
-                server_name my.aleksis-instance.com my.aleksis-instance.com;
+                server_name aleksis.example.com;
 
                 access_log /var/log/nginx/access.log;
 
@@ -88,11 +89,10 @@ bullseye.
                 }
         }
 
-      $ ln -s /etc/nginx/sites-available/my.aleksis-instance.com /etc/nginx/sites-enabled/my.aleksis-instance.com
+      $ ln -s /etc/nginx/sites-available/aleksis.example.com /etc/nginx/sites-enabled/aleksis.example.com
       $ service nginx restart
 
   * Configure AlekSIS::
-    .. code-block::
       $ mkdir /etc/aleksis
       $ editor /etc/aleksis/aleksis.toml
         static = { root = "/srv/www/aleksis/data/static", url = "/static/" }
@@ -100,7 +100,7 @@ bullseye.
         secret_key = "SomeRandomValue"
 
         [http]
-        allowed_hosts = ["my.aleksis-instance.com"]
+        allowed_hosts = ["aleksis.example.com"]
 
         [database]
         host = "localhost"
@@ -108,34 +108,32 @@ bullseye.
         username = "aleksis"
         password = "SomeSecretPassword!1"
 
-2. Clone git-Repository and checkout version::
+1. Clone git repository and checkout version::
 
   $ cd /usr/src
   $ git clone https://edugit.org/AlekSIS/official/AlekSIS-Core
   $ cd AlekSIS-Core
   $ git checkout 2.0b
 
-5. Install Dependencies and setup initially::
+1. Install dependencies and setup initially::
 
   $ poetry install
   $ aleksis-admin yarn install
   $ aleksis-admin collectstatic
   $ aleksis-admin migrate
 
-6. Restart uWSGI::
+1. Restart uWSGI::
 
   $ service uwsgi restart
 
 Docker with `docker-compose`
 ---------------------------
 
-0. Prerequisites::
+1. Prerequisites::
 
  * System with docker and docker-compose installed
 
 1. Run docker image::
-
-  .. code-block::
 
     $ git clone https://edugit.org/AlekSIS/Official/AlekSIS
     $ docker-compose up -d

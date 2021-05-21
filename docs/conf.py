@@ -31,7 +31,7 @@ author = "AlekSIS team"
 # The short X.Y version
 version = "2.0"
 # The full version, including alpha/beta/rc tags
-release = "2.0a3.dev0"
+release = "2.0b0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -84,7 +84,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "sphinx_materialdesign_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
