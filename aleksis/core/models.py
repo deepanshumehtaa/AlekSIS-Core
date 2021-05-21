@@ -77,7 +77,7 @@ class SchoolTerm(ExtensibleModel):
 
     objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermQuerySet)()
 
-    name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
+    name = models.CharField(verbose_name=_("Name"), max_length=255)
 
     date_start = models.DateField(verbose_name=_("Start date"))
     date_end = models.DateField(verbose_name=_("End date"))
@@ -115,6 +115,15 @@ class SchoolTerm(ExtensibleModel):
     class Meta:
         verbose_name = _("School term")
         verbose_name_plural = _("School terms")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "name"], name="unique_school_term_name_per_site"
+            ),
+            models.UniqueConstraint(
+                fields=["site_id", "date_start", "date_end"],
+                name="unique_school_term_dates_per_site",
+            ),
+        ]
 
 
 class Person(ExtensibleModel):
@@ -135,6 +144,11 @@ class Person(ExtensibleModel):
             ("view_person_groups", _("Can view persons groups")),
             ("view_personal_details", _("Can view personal details")),
         )
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "short_name"], name="unique_short_name_per_site"
+            ),
+        ]
 
     icon_ = "person"
 
@@ -157,7 +171,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True  # noqa
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -347,6 +361,9 @@ class AdditionalField(ExtensibleModel):
     class Meta:
         verbose_name = _("Addtitional field for groups")
         verbose_name_plural = _("Addtitional fields for groups")
+        constraints = [
+            models.UniqueConstraint(fields=["site_id", "title"], name="unique_title_per_site"),
+        ]
 
 
 class Group(SchoolTermRelatedExtensibleModel):
@@ -367,6 +384,7 @@ class Group(SchoolTermRelatedExtensibleModel):
             ("view_group_stats", _("Can view statistics about group.")),
         )
         constraints = [
+            # Heads up: Uniqueness per school term already implies uniqueness per site
             models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
             models.UniqueConstraint(
                 fields=["school_term", "short_name"], name="unique_school_term_short_name"
@@ -863,7 +881,7 @@ class DashboardWidgetOrder(ExtensibleModel):
 class CustomMenu(ExtensibleModel):
     """A custom menu to display in the footer."""
 
-    name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
+    name = models.CharField(max_length=100, verbose_name=_("Menu ID"))
 
     def __str__(self):
         return self.name if self.name != "" else self.id
@@ -878,6 +896,9 @@ class CustomMenu(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu")
         verbose_name_plural = _("Custom menus")
+        constraints = [
+            models.UniqueConstraint(fields=["site_id", "name"], name="unique_menu_name_per_site"),
+        ]
 
 
 class CustomMenuItem(ExtensibleModel):
@@ -896,6 +917,10 @@ class CustomMenuItem(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
+        constraints = [
+            # Heads up: Uniqueness per menu already implies uniqueness per site
+            models.UniqueConstraint(fields=["menu", "name"], name="unique_name_per_menu"),
+        ]
 
 
 class GroupType(ExtensibleModel):
@@ -914,6 +939,11 @@ class GroupType(ExtensibleModel):
     class Meta:
         verbose_name = _("Group type")
         verbose_name_plural = _("Group types")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "name"], name="unique_group_type_name_per_site"
+            ),
+        ]
 
 
 class GlobalPermissions(GlobalPermissionModel):
