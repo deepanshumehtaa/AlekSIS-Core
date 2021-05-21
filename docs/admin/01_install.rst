@@ -61,8 +61,8 @@ Generate a secure password for the database, then create the user and database.
 
 .. code-block:: shell
 
-   sudo -u postgres createuser -l aleksis -
-   sudo -u postgres createdb -O aleksis aleksis
+   sudo -u postgres createuser -D -P -R -S aleksis
+   sudo -u postgres createdb -E UTF-8 -O aleksis -T template0 -l C.UTF-8 aleksis
 
 When asked, use the password generated above.
 
