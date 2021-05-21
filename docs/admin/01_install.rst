@@ -126,7 +126,18 @@ bullseye.
 
   $ service uwsgi restart
 
-Docker
-------
+Docker with `docker-compose`
+---------------------------
+
+0. Prerequisites::
+
+ * System with docker and docker-compose installed
+
+1. Run docker image::
+
+  .. code-block::
+
+    $ git clone https://edugit.org/AlekSIS/Official/AlekSIS
+    $ docker-compose up -d
 
 .. _Dynaconf: https://dynaconf.readthedocs.io/en/latest/
