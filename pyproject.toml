@@ -1,22 +1,35 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.0a5.dev0"
+version = "2.0b0"
 packages = [
     { include = "aleksis" }
 ]
 readme = "README.rst"
-include = ["CHANGELOG.rst", "LICENCE.rst", "docs/*", "docs/**/*", "aleksis/**/*.mo", "tox.ini"]
+include = ["CHANGELOG.rst", "LICENCE.rst", "docs/*", "docs/**/*", "aleksis/**/*.mo", "conftest.py", "tox.ini"]
 
 description = "AlekSIS (School Information System) — Core"
-authors = ["Dominik George <dominik.george@teckids.org>", "Julian Leucker <leuckeju@katharineum.de>", "mirabilos <thorsten.glaser@teckids.org>", "Frank Poetzsch-Heffter <p-h@katharineum.de>", "Tom Teichler <tom.teichler@teckids.org>", "Jonathan Weth <wethjo@katharineum.de>", "Hangzhi Yu <yuha@katharineum.de>"]
-maintainers = ["Jonathan Weth <wethjo@katharineum.de>", "Dominik George <dominik.george@teckids.org>"]
+authors = [
+    "Dominik George <dominik.george@teckids.org>",
+    "Julian Leucker <leuckeju@katharineum.de>",
+    "mirabilos <thorsten.glaser@teckids.org>",
+    "Frank Poetzsch-Heffter <p-h@katharineum.de>",
+    "Tom Teichler <tom.teichler@teckids.org>",
+    "Jonathan Weth <wethjo@katharineum.de>",
+    "Hangzhi Yu <yuha@katharineum.de>",
+    "Lloyd Meins <meinsll@katharineum.de>",
+    "magicfelix <felix@felix-zauberer.de>"
+]
+maintainers = [
+    "Jonathan Weth <wethjo@katharineum.de>",
+    "Dominik George <dominik.george@teckids.org>"
+]
 license = "EUPL-1.2-or-later"
 homepage = "https://aleksis.org/"
 repository = "https://edugit.org/AlekSIS/official/AlekSIS-Core"
 documentation = "https://aleksis.org/AlekSIS-Core/docs/html/"
 keywords = ["SIS", "education", "school", "digitisation", "school apps"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
     "Framework :: Django :: 3.0",
     "Intended Audience :: Developers",
