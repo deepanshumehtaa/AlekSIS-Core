@@ -1105,10 +1105,13 @@ class CustomPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
 
     permission_required = "core.can_change_password"
 
-    if get_site_preferences()["auth__allow_password_change"]:
-        template_name = "account/password_change.html"
-    else:
-        template_name = "account/password_change_disabled.html"
+    def __init__(self, *args, **kwargs):
+        if get_site_preferences()["auth__allow_password_change"]:
+            self.template_name = "account/password_change.html"
+        else:
+            self.template_name = "account/password_change_disabled.html"
+
+        super().__init__(*args, **kwargs)
 
 
 class SocialAccountDeleteView(DeleteView):
