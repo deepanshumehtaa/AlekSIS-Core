@@ -22,7 +22,11 @@ urlpatterns = [
     path(settings.MEDIA_URL.removeprefix("/"), include("titofisto.urls")),
     path("about/", views.about, name="about_aleksis"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("accounts/password/change/", views.CustomPasswordChangeView.as_view(), name="account_change_password"),
+    path(
+        "accounts/password/change/",
+        views.CustomPasswordChangeView.as_view(),
+        name="account_change_password",
+    ),
     path("accounts/", include("allauth.urls")),
     path(
         "accounts/social/connections/<int:pk>/delete",

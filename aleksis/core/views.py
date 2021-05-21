@@ -1112,7 +1112,7 @@ class CustomPasswordChangeView(PermissionRequiredMixin, PasswordChangeView):
 
 
 class SocialAccountDeleteView(DeleteView):
-    """Custom view to delete django-allauth social account"""
+    """Custom view to delete django-allauth social account."""
 
     template_name = "core/pages/delete.html"
     success_url = reverse_lazy("socialaccount_connections")
@@ -1131,7 +1131,8 @@ class SocialAccountDeleteView(DeleteView):
             messages.error(
                 self.request,
                 _(
-                    "The social account could not be disconnected because it is the only login method available."
+                    "The social account could not be disconnected "
+                    "because it is the only login method available."
                 ),
             )
         else:
