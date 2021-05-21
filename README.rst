@@ -1,16 +1,18 @@
 AlekSIS (School Information System) — Core (Core functionality and app framework)
 =================================================================================
 
-AlekSIS standard distribution
------------------------------
+This is the core of the AlekSIS framework and the official distribution
+(see below). It bundles functionality for all apps, and utilities for
+developers and administrators.
 
-The AlekSIS standard distribution with information about all official apps
-can be found on `EduGit`_.
+If you are looking for the AlekSIS standard distribution, i.e. the complete
+software product ready for installation and usage, please visit the `AlekSIS`_
+website or the distribution repository on `EduGit`_.
 
 Features
 --------
 
-The AlekSIS-Core currently provides the following features:
+The AlekSIS core currently provides the following features:
 
 * For users:
 
@@ -74,6 +76,6 @@ full licence text or on the `European Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
-.. _AlekSIS: https://edugit.org/AlekSIS/Official/AlekSIS
+.. _AlekSIS: https://aleksis.org
 .. _European Union Public Licence: https://eupl.eu/
 .. _EduGit: https://edugit.org/AlekSIS/official/AlekSIS
