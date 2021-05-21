@@ -43,16 +43,16 @@ Install some packages from the Debian package system.
 
    apt install uwsgi \
                uwsgi-plugin-python3 \
-	       nginx-full \
-	       python3 \
-	       python3-dev \
-	       libldap2-dev \
-	       libsasl2-dev \
-	       yarnpkg \
-	       python3-virtualenv \
-	       chromium \
-	       redis-server \
-	       postgresql
+               nginx-full \
+               python3 \
+               python3-dev \
+               libldap2-dev \
+               libsasl2-dev \
+               yarnpkg \
+               python3-virtualenv \
+               chromium \
+               redis-server \
+               postgresql
 
 Create PostgreSQL user and database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +74,7 @@ Create the directories for storage
    mkdir -p /etc/aleksis \
             /usr/share/aleksis/{static,node_modules} \
             /var/lib/aleksis/media \
-	    /var/backups/aleksis
+            /var/backups/aleksis
    chown -R www-data:www-data /var/lib/aleksis
 
 Create AlekSIS configuration file
