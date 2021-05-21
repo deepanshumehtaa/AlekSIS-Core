@@ -17,7 +17,7 @@ Added
 * Add django-cachalot as query cache
 * Add `syncable_fields` property to `ExtensibleModel to discover fields
   sync backends can write to
-* Add `aleksis-admin` script to wrap django-admin with pre-configured mappings
+* Add `aleksis-admin` script to wrap django-admin with pre-configured settings
 * Auto-create persons for users if matching attributes are found
 * Add `django-allauth` to allow authentication using OAuth, user registration,
   password changes and password reset
@@ -25,7 +25,7 @@ Added
 * Add `django-uwsgi` to use uWSGI and Celery in development
 * Add loading page for displaying Celery task progress
 * Implement generic PDF generation using Chromium
-* Support Amaxon S3 storage for /media files
+* Support Amazon S3 storage for /media files
 * Enable Django REST framework for apps to use at own discretion
 * Add method to inject permissions to ExtensibleModels dynamically
 * Add helper function which filters queryset by permission and user
