@@ -241,8 +241,8 @@ Finally, bring the stack up using:
 
   docker-compose up -d
 
-AlekSIS will be reachable on port 8000. You are responsible for adding a
-reverse proxy like nginx providing TLS, etc.
+AlekSIS will be reachable on port 80 if you forgot to configure the environment.
+You are responsible for adding a reverse proxy like nginx providing TLS, etc.
 
 .. _Dynaconf: https://dynaconf.readthedocs.io/en/latest/
 .. _Let's Encrypt: https://certbot.eff.org/instructions
