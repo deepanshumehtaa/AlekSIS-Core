@@ -101,16 +101,17 @@
           {% endif %}
         </div>
       </div>
-      <div class="card">
-        <div class="card-content">
-          {% if wizard.steps.current == 'auth' and socialaccount_providers %}
-            <div class="card-title">
-              {% trans "Use alternative login options" %}
-            </div>
-            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-          {% endif %}
+
+      {% if wizard.steps.current == 'auth' and socialaccount_providers %}
+        <div class="card">
+          <div class="card-content">
+              <div class="card-title">
+                {% trans "Use alternative login options" %}
+              </div>
+              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </div>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
