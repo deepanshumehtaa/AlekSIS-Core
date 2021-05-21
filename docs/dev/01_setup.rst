@@ -120,4 +120,6 @@ development server against a local PostgreSQL database with password
 .. _Poetry: https://poetry.eustace.io/
 .. _Poetry installation methods: https://poetry.eustace.io/docs/#installation
 .. _Yarn: https://yarnpkg.com
+.. _PostgreSQL: https://www.postgresql.org/
+.. _Redis: https://redis.io/
 .. _Celery: https://celeryproject.org/
