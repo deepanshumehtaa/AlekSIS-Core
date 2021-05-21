@@ -748,7 +748,7 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-favicon-plus-reloaded"
-version = "1.1.1"
+version = "1.1.2"
 description = "simple Django app which allows you to upload a image and it renders a wide variety for html link tags to display the favicon"
 category = "main"
 optional = false
@@ -1274,7 +1274,7 @@ yaml = ["ruamel.yaml"]
 
 [[package]]
 name = "faker"
-version = "8.2.0"
+version = "8.2.1"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
@@ -2663,7 +2663,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "13d988ca4c812fa1cd0c68e210f6d8eb58bd512ab40b47e0830b3d0d714eef3f"
+content-hash = "ea255c70cdcfee06fa1ba40233d5ddc8cc8f10409ca2f24d1ddb66a5cfae0d51"
 
 [metadata.files]
 alabaster = [
@@ -2672,6 +2672,7 @@ alabaster = [
 ]
 aleksis-builddeps = [
     {file = "AlekSIS-Builddeps-3.tar.gz", hash = "sha256:04597e29a861e576d78adc068c9f1bf85450c81dc43cb1f7db0ed43e975b64a2"},
+    {file = "AlekSIS_Builddeps-3-py3-none-any.whl", hash = "sha256:0de7fdf007afade836a6dcdbf47eb9fb702786572a8e511c6b6ae33ddce1dda6"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -3004,8 +3005,8 @@ django-extensions = [
     {file = "django_extensions-3.1.3-py3-none-any.whl", hash = "sha256:50de8977794a66a91575dd40f87d5053608f679561731845edbd325ceeb387e3"},
 ]
 django-favicon-plus-reloaded = [
-    {file = "django-favicon-plus-reloaded-1.1.1.tar.gz", hash = "sha256:b3109431eaf350250bf9f60307b4555131b91ca53e6dae8af5df69c459d4218f"},
-    {file = "django_favicon_plus_reloaded-1.1.1-py3-none-any.whl", hash = "sha256:ae88dad87ec270462be003f8a41ab4cc9201561fbdbf43391dea62e7f7518851"},
+    {file = "django-favicon-plus-reloaded-1.1.2.linux-x86_64.tar.gz", hash = "sha256:35d27ed9f559db3ff933b0020d747a94025b296e29b424c860a374fdfa3cef88"},
+    {file = "django_favicon_plus_reloaded-1.1.2-py3-none-any.whl", hash = "sha256:7c7b68180e59412df2b39fced669b286ba895262fb64116e2db61f20f5c8af29"},
 ]
 django-filter = [
     {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
@@ -3170,8 +3171,8 @@ dynaconf = [
     {file = "dynaconf-3.1.4.tar.gz", hash = "sha256:b2f472d83052f809c5925565b8a2ba76a103d5dc1dbb9748b693ed67212781b9"},
 ]
 faker = [
-    {file = "Faker-8.2.0-py3-none-any.whl", hash = "sha256:e4e2f2842b088b0be90b3d7f3ee846962b68550322348ddc9e26a828067c8426"},
-    {file = "Faker-8.2.0.tar.gz", hash = "sha256:6ced74cd3d87f39297c3688e8ef313ff58efa4504c932ae216d85b2a166aecfa"},
+    {file = "Faker-8.2.1-py3-none-any.whl", hash = "sha256:765cb52df0ca2dc5af0393048c1f60b2fec736095b379954c42c5c552f65838a"},
+    {file = "Faker-8.2.1.tar.gz", hash = "sha256:7397915ce793ac1e162eb89450a268c4404121389ca46264648a2a8c56d88624"},
 ]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
