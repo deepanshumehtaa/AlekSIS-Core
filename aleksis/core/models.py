@@ -24,6 +24,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
+from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
 from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
@@ -1005,40 +1006,19 @@ class PDFFile(ExtensibleModel):
     def _get_default_expiration():  # noqa
         return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
 
-    def _get_upload_path(instance, filename):  # noqa
-        return f"pdfs/{instance.secret}.pdf"
-
     person = models.ForeignKey(
         to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
     )
     expires_at = models.DateTimeField(
         verbose_name=_("File expires at"), default=_get_default_expiration
     )
-    html = models.TextField(verbose_name=_("Rendered HTML"))
+    html_file = models.FileField(upload_to="pdfs/", verbose_name=_("Generated HTML file"))
     file = models.FileField(
-        upload_to=_get_upload_path, blank=True, null=True, verbose_name=_("Generated PDF file")
+        upload_to="pdfs/", blank=True, null=True, verbose_name=_("Generated PDF file")
     )
 
     def __str__(self):
         return f"{self.person} ({self.pk})"
-
-    @property
-    def secret(self) -> str:
-        """Get secret needed for accessing the HTML page."""
-        return hmac.new(
-            bytes(settings.SECRET_KEY, "utf-8"),
-            msg=bytes(self.html + str(self.expires_at), "utf-8"),
-            digestmod="sha256",
-        ).hexdigest()
-
-    @property
-    def html_url(self) -> str:
-        """Get URL for the HTML page."""
-        return (
-            urlparse(reverse("html_for_pdf_file", args=[self.pk]))
-            ._replace(query=f"secret={self.secret}")
-            .geturl()
-        )
 
     class Meta:
         verbose_name = _("PDF file")
@@ -1057,7 +1037,8 @@ class TaskUserAssignment(ExtensibleModel):
     def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
         # Use get_or_create to ensure the TaskResult exists
         # django-celery-results will later add the missing information
-        result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        with cachalot_disabled():
+            result, __ = TaskResult.objects.get_or_create(task_id=task_id)
         return cls.objects.create(task_result=result, user=user)
 
     class Meta:

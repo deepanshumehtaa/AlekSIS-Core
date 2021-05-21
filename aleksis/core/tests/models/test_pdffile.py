@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta
 
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.template.loader import render_to_string
 from django.test import TransactionTestCase, override_settings
@@ -25,14 +26,13 @@ class PDFFIleTest(TransactionTestCase):
     _test_pdf = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test.pdf")
 
     def _get_test_html(self):
-        return render_to_string("core/pages/test_pdf.html")
+        return ContentFile(render_to_string("core/pages/test_pdf.html"), name="source.html")
 
     def test_pdf_file(self):
         dummy_person = Person.objects.create(first_name="Jane", last_name="Doe")
 
         html = self._get_test_html()
-        assert "html" in html
-        file_object = PDFFile.objects.create(person=dummy_person, html=html)
+        file_object = PDFFile.objects.create(person=dummy_person, html_file=html)
         assert isinstance(file_object.expires_at, datetime)
         assert file_object.expires_at > timezone.now()
         assert not bool(file_object.file)
@@ -40,12 +40,12 @@ class PDFFIleTest(TransactionTestCase):
         with open(self._test_pdf, "rb") as f:
             file_object.file.save("print.pdf", File(f))
         file_object.save()
-        re_base = r"pdfs/[a-zA-Z0-9]+\.pdf"
+        re_base = r"pdfs/print_[a-zA-Z0-9]+\.pdf"
         assert re.match(re_base, file_object.file.name)
 
     def test_delete_signal(self):
         dummy_person = Person.objects.create(first_name="Jane", last_name="Doe")
-        file_object = PDFFile.objects.create(person=dummy_person, html=self._get_test_html())
+        file_object = PDFFile.objects.create(person=dummy_person, html_file=self._get_test_html())
         with open(self._test_pdf, "rb") as f:
             file_object.file.save("print.pdf", File(f))
         file_object.save()
@@ -59,10 +59,10 @@ class PDFFIleTest(TransactionTestCase):
     def test_delete_expired_files(self):
         # Create test instances
         dummy_person = Person.objects.create(first_name="Jane", last_name="Doe")
-        file_object = PDFFile.objects.create(person=dummy_person, html=self._get_test_html())
+        file_object = PDFFile.objects.create(person=dummy_person, html_file=self._get_test_html())
         file_object2 = PDFFile.objects.create(
             person=dummy_person,
-            html=self._get_test_html(),
+            html_file=self._get_test_html(),
             expires_at=timezone.now() + timedelta(minutes=10),
         )
         with open(self._test_pdf, "rb") as f:

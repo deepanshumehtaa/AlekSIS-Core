@@ -232,8 +232,6 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
     }
     if REDIS_PASSWORD:
         CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
-    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
-    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 else:
     CACHES = {
         "default": {
@@ -757,26 +755,9 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 # Append authentication backends
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
-HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
-
-if HAYSTACK_BACKEND_SHORT == "simple":
-    HAYSTACK_CONNECTIONS = {
-        "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine",},
-    }
-elif HAYSTACK_BACKEND_SHORT == "xapian":
-    HAYSTACK_CONNECTIONS = {
-        "default": {
-            "ENGINE": "xapian_backend.XapianEngine",
-            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
-        },
-    }
-elif HAYSTACK_BACKEND_SHORT == "whoosh":
-    HAYSTACK_CONNECTIONS = {
-        "default": {
-            "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
-            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
-        },
-    }
+HAYSTACK_CONNECTIONS = {
+    "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
+}
 
 HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 CELERY_HAYSTACK_IGNORE_RESULT = True

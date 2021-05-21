@@ -81,7 +81,7 @@ urlpatterns = [
     path("announcement/edit/<int:id_>/", views.announcement_form, name="edit_announcement"),
     path("announcement/delete/<int:id_>/", views.delete_announcement, name="delete_announcement"),
     path("search/searchbar/", views.searchbar_snippets, name="searchbar_snippets"),
-    path("search/", views.PermissionSearchView(), name="haystack_search"),
+    path("search/", views.PermissionSearchView.as_view(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
     path(
@@ -210,7 +210,6 @@ urlpatterns = [
         name="edit_default_dashboard",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
-    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
 
 # Add URLs for optional features
