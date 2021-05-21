@@ -66,7 +66,7 @@
             </div>
           {% endif %}
 
-          <form action="" method="post">
+          <form id="login_form" action="" method="post">
             {% csrf_token %}
             {% include "two_factor/_wizard_forms.html" %}
 
@@ -88,9 +88,10 @@
                 </button>
               </p>
             {% endif %}
+          </form>
         </div>
         <div class="card-action-light">
-          <button type="submit" class="btn green waves-effect waves-light">
+          <button form="login_form" type="submit" class="btn green waves-effect waves-light">
             {% trans "Login" %}
             <i class="material-icons right">send</i>
           </button>
