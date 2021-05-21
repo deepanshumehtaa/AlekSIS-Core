@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "aleksis-builddeps"
-version = "3"
+version = "4"
 description = "AlekSIS (School Information System) — Build/Dev dependencies for apps"
 category = "dev"
 optional = false
@@ -27,7 +27,7 @@ flake8-docstrings = ">=1.5.0,<2.0.0"
 flake8-fixme = ">=1.1.1,<2.0.0"
 flake8-isort = ">=4.0.0,<5.0.0"
 flake8-mypy = ">=17.8.0,<18.0.0"
-flake8-rst-docstrings = ">=0.1.0,<0.2.0"
+flake8-rst-docstrings = ">=0.2.0,<0.3.0"
 freezegun = ">=1.1.0,<2.0.0"
 isort = ">=5.0.0,<6.0.0"
 pytest = ">=6.0,<7.0"
@@ -39,6 +39,7 @@ safety = ">=1.8.5,<2.0.0"
 selenium = ">=3.141.0,<4.0.0"
 sphinx = ">=3.0,<4.0"
 sphinx-autodoc-typehints = ">=1.7,<2.0"
+sphinx_materialdesign_theme = ">=0.1.11,<0.2.0"
 sphinxcontrib-django = ">=0.5.0,<0.6.0"
 
 [package.source]
@@ -214,20 +215,20 @@ python-versions = "*"
 
 [[package]]
 name = "boto3"
-version = "1.17.77"
+version = "1.17.78"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
-botocore = ">=1.20.77,<1.21.0"
+botocore = ">=1.20.78,<1.21.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.4.0,<0.5.0"
 
 [[package]]
 name = "botocore"
-version = "1.20.77"
+version = "1.20.78"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -1123,7 +1124,7 @@ tablib = ["tablib"]
 
 [[package]]
 name = "django-templated-email"
-version = "2.3.0"
+version = "2.4.0"
 description = "A Django oriented templated / transaction email abstraction"
 category = "main"
 optional = false
@@ -1131,7 +1132,6 @@ python-versions = "*"
 
 [package.dependencies]
 django-render-block = ">=0.5"
-six = ">=1"
 
 [[package]]
 name = "django-timezone-field"
@@ -1410,7 +1410,7 @@ flake8 = "*"
 
 [[package]]
 name = "flake8-rst-docstrings"
-version = "0.1.2"
+version = "0.2.3"
 description = "Python docstring reStructuredText (RST) validator"
 category = "dev"
 optional = false
@@ -1418,7 +1418,6 @@ python-versions = ">=3.3"
 
 [package.dependencies]
 flake8 = ">=3.0.0"
-pydocstyle = ">=3.0.0"
 pygments = "*"
 restructuredtext-lint = "*"
 
@@ -1630,7 +1629,7 @@ zookeeper = ["kazoo (>=1.3.1)"]
 
 [[package]]
 name = "libsass"
-version = "0.20.1"
+version = "0.21.0"
 description = "Sass for Python: A straightforward binding of libsass for Python."
 category = "main"
 optional = false
@@ -2375,6 +2374,14 @@ test = ["pytest (>=3.1.0)", "typing-extensions (>=3.5)", "sphobjinv (>=2.0)", "S
 type_comments = ["typed-ast (>=1.4.0)"]
 
 [[package]]
+name = "sphinx-materialdesign-theme"
+version = "0.1.11"
+description = "Sphinx Material Design Theme"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "1.0.2"
 description = "sphinxcontrib-applehelp is a sphinx extension which outputs Apple help books"
@@ -2663,7 +2670,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ea255c70cdcfee06fa1ba40233d5ddc8cc8f10409ca2f24d1ddb66a5cfae0d51"
+content-hash = "9009e40aa54a752649e5539cba2b0b12dc0580c7e93999d177b19f041bdaf85b"
 
 [metadata.files]
 alabaster = [
@@ -2671,8 +2678,7 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 aleksis-builddeps = [
-    {file = "AlekSIS-Builddeps-3.tar.gz", hash = "sha256:04597e29a861e576d78adc068c9f1bf85450c81dc43cb1f7db0ed43e975b64a2"},
-    {file = "AlekSIS_Builddeps-3-py3-none-any.whl", hash = "sha256:0de7fdf007afade836a6dcdbf47eb9fb702786572a8e511c6b6ae33ddce1dda6"},
+    {file = "AlekSIS-Builddeps-4.tar.gz", hash = "sha256:aaaa22965228b9b9b7de812e3e7fa9cbfdbf8635bb22d6f3a201dc0cc6d8d307"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -2736,12 +2742,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.17.77-py2.py3-none-any.whl", hash = "sha256:b434170484348b870e3624069ca577d38e52ace0229d0619d8368454bb66ad3b"},
-    {file = "boto3-1.17.77.tar.gz", hash = "sha256:02835bcad77a5fda1fc376a824323779301ddf88f04a0ac16044d980f350c4a3"},
+    {file = "boto3-1.17.78-py2.py3-none-any.whl", hash = "sha256:1a87855123df1f18081a5fb8c1abde28d0096a03f6f3ebb06bcfb77cdffdae5e"},
+    {file = "boto3-1.17.78.tar.gz", hash = "sha256:2a5caee63d45fbdcc85e710c7f4146112f5d10b22fd0176643d2f2914cce54df"},
 ]
 botocore = [
-    {file = "botocore-1.20.77-py2.py3-none-any.whl", hash = "sha256:466ab5eac5e5735d573e83e84194585cac4e804d2b91b7bbe0351bcaff10df32"},
-    {file = "botocore-1.20.77.tar.gz", hash = "sha256:b2a71043378687dc891997669830e8b61eaea656981059dbd4898825659df639"},
+    {file = "botocore-1.20.78-py2.py3-none-any.whl", hash = "sha256:37105b9434d73f9c4d4960ee54c8eb129120f4c6681eb16edf483f03c5e2326d"},
+    {file = "botocore-1.20.78.tar.gz", hash = "sha256:e74775f9e64e975787d76390fc5ac5aba875d726bb9ece3b7bd900205b430389"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -3129,7 +3135,7 @@ django-tables2 = [
     {file = "django_tables2-2.4.0-py2.py3-none-any.whl", hash = "sha256:0f10ecef25708385a9d32d68d7c9478ca8dda31569410cb05a025be3f2c57593"},
 ]
 django-templated-email = [
-    {file = "django-templated-email-2.3.0.tar.gz", hash = "sha256:536c4e5ae099eabfb9aab36087d4d7799948c654e73da55a744213d086d5bb33"},
+    {file = "django-templated-email-2.4.0.tar.gz", hash = "sha256:3bcd95cb806070b13c9919a72fec944b5ce319e30e8828a08180767bb1f84027"},
 ]
 django-timezone-field = [
     {file = "django-timezone-field-4.1.2.tar.gz", hash = "sha256:cffac62452d060e365938aa9c9f7b72d70d8b26b9c60243bce227b35abd1b9df"},
@@ -3214,8 +3220,8 @@ flake8-polyfill = [
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
 ]
 flake8-rst-docstrings = [
-    {file = "flake8-rst-docstrings-0.1.2.tar.gz", hash = "sha256:7d34d2175a0cd92aba0872ade74268b2f2c12582c7267d4a0e6ef1c32a828ce3"},
-    {file = "flake8_rst_docstrings-0.1.2-py3-none-any.whl", hash = "sha256:73b5db2fd9d4d7c7e6b7767931730c4570e5a89f34a1501b837afb3b6d31537a"},
+    {file = "flake8-rst-docstrings-0.2.3.tar.gz", hash = "sha256:3045794e1c8467fba33aaea5c246b8369efc9c44ef8b0b20199bb6df7a4bd47b"},
+    {file = "flake8_rst_docstrings-0.2.3-py3-none-any.whl", hash = "sha256:565bbb391d7e4d0042924102221e9857ad72929cdd305b26501736ec22c1451a"},
 ]
 freezegun = [
     {file = "freezegun-1.1.0-py2.py3-none-any.whl", hash = "sha256:2ae695f7eb96c62529f03a038461afe3c692db3465e215355e1bb4b0ab408712"},
@@ -3282,19 +3288,15 @@ kombu = [
     {file = "kombu-5.0.2.tar.gz", hash = "sha256:f4965fba0a4718d47d470beeb5d6446e3357a62402b16c510b6a2f251e05ac3c"},
 ]
 libsass = [
-    {file = "libsass-0.20.1-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:4a246e4b88fd279abef8b669206228c92534d96ddcd0770d7012088c408dff23"},
-    {file = "libsass-0.20.1-cp27-cp27m-win32.whl", hash = "sha256:697f0f9fa8a1367ca9ec6869437cb235b1c537fc8519983d1d890178614a8903"},
-    {file = "libsass-0.20.1-cp27-cp27m-win_amd64.whl", hash = "sha256:1b2d415bbf6fa7da33ef46e549db1418498267b459978eff8357e5e823962d35"},
-    {file = "libsass-0.20.1-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:1521d2a8d4b397c6ec90640a1f6b5529077035efc48ef1c2e53095544e713d1b"},
-    {file = "libsass-0.20.1-cp36-abi3-macosx_10_14_x86_64.whl", hash = "sha256:2ae806427b28bc1bb7cb0258666d854fcf92ba52a04656b0b17ba5e190fb48a9"},
-    {file = "libsass-0.20.1-cp36-abi3-manylinux1_x86_64.whl", hash = "sha256:25ebc2085f5eee574761ccc8d9cd29a9b436fc970546d5ef08c6fa41eb57dff1"},
-    {file = "libsass-0.20.1-cp36-cp36m-win32.whl", hash = "sha256:553e5096414a8d4fb48d0a48f5a038d3411abe254d79deac5e008516c019e63a"},
-    {file = "libsass-0.20.1-cp36-cp36m-win_amd64.whl", hash = "sha256:e64ae2587f1a683e831409aad03ba547c245ef997e1329fffadf7a866d2510b8"},
-    {file = "libsass-0.20.1-cp37-cp37m-win32.whl", hash = "sha256:c9411fec76f480ffbacc97d8188322e02a5abca6fc78e70b86a2a2b421eae8a2"},
-    {file = "libsass-0.20.1-cp37-cp37m-win_amd64.whl", hash = "sha256:a8fd4af9f853e8bf42b1425c5e48dd90b504fa2e70d7dac5ac80b8c0a5a5fe85"},
-    {file = "libsass-0.20.1-cp38-cp38-win32.whl", hash = "sha256:f6852828e9e104d2ce0358b73c550d26dd86cc3a69439438c3b618811b9584f5"},
-    {file = "libsass-0.20.1-cp38-cp38-win_amd64.whl", hash = "sha256:daa98a51086d92aa7e9c8871cf1a8258124b90e2abf4697852a3dca619838618"},
-    {file = "libsass-0.20.1.tar.gz", hash = "sha256:e0e60836eccbf2d9e24ec978a805cd6642fa92515fbd95e3493fee276af76f8a"},
+    {file = "libsass-0.21.0-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:06c8776417fe930714bdc930a3d7e795ae3d72be6ac883ff72a1b8f7c49e5ffb"},
+    {file = "libsass-0.21.0-cp27-cp27m-win32.whl", hash = "sha256:a005f298f64624f313a3ac618ab03f844c71d84ae4f4a4aec4b68d2a4ffe75eb"},
+    {file = "libsass-0.21.0-cp27-cp27m-win_amd64.whl", hash = "sha256:6b984510ed94993708c0d697b4fef2d118929bbfffc3b90037be0f5ccadf55e7"},
+    {file = "libsass-0.21.0-cp27-cp27mu-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:1e25dd9047a9392d3c59a0b869e0404f2b325a03871ee45285ee33b3664f5613"},
+    {file = "libsass-0.21.0-cp36-abi3-macosx_10_14_x86_64.whl", hash = "sha256:12f39712de38689a8b785b7db41d3ba2ea1d46f9379d81ea4595802d91fa6529"},
+    {file = "libsass-0.21.0-cp36-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:e2b1a7d093f2e76dc694c17c0c285e846d0b0deb0e8b21dc852ba1a3a4e2f1d6"},
+    {file = "libsass-0.21.0-cp36-abi3-win32.whl", hash = "sha256:abc29357ee540849faf1383e1746d40d69ed5cb6d4c346df276b258f5aa8977a"},
+    {file = "libsass-0.21.0-cp36-abi3-win_amd64.whl", hash = "sha256:659ae41af8708681fa3ec73f47b9735a6725e71c3b66ff570bfce78952f2314e"},
+    {file = "libsass-0.21.0.tar.gz", hash = "sha256:d5ba529d9ce668be9380563279f3ffe988f27bc5b299c5a28453df2e0b0fbaf2"},
 ]
 license-expression = [
     {file = "license-expression-1.2.tar.gz", hash = "sha256:7960e1dfdf20d127e75ead931476f2b5c7556df05b117a73880b22ade17d1abc"},
@@ -3821,6 +3823,9 @@ sphinx = [
 sphinx-autodoc-typehints = [
     {file = "sphinx-autodoc-typehints-1.12.0.tar.gz", hash = "sha256:193617d9dbe0847281b1399d369e74e34cd959c82e02c7efde077fca908a9f52"},
     {file = "sphinx_autodoc_typehints-1.12.0-py3-none-any.whl", hash = "sha256:5e81776ec422dd168d688ab60f034fccfafbcd94329e9537712c93003bddc04a"},
+]
+sphinx-materialdesign-theme = [
+    {file = "sphinx_materialdesign_theme-0.1.11.tar.gz", hash = "sha256:6e9dae4c6e5ba23c0657a94c1cf65f64be9c8bc1594a6fb41815f7daa3326aa9"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
