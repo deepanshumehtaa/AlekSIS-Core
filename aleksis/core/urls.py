@@ -109,12 +109,12 @@ urlpatterns = [
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
-        permission_required("core.ckeditor_upload_files")(ckeditor_uploader_views.upload),
+        permission_required("core.ckeditor_upload_files_rule")(ckeditor_uploader_views.upload),
         name="ckeditor_upload",
     ),
     path(
         "ckeditor/browse/",
-        permission_required("core.ckeditor_upload_files")(ckeditor_uploader_views.browse),
+        permission_required("core.ckeditor_upload_files_rule")(ckeditor_uploader_views.browse),
         name="ckeditor_browse",
     ),
     path("select2/", include("django_select2.urls")),

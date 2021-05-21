@@ -25,7 +25,7 @@
     {% endfor %}
   </ul>
 
-  {% has_perm "core.edit_default_dashboard" user as can_edit_default_dashboard %}
+  {% has_perm "core.edit_default_dashboard_rule" user as can_edit_default_dashboard %}
   {% if can_edit_default_dashboard %}
     <a class="btn orange waves-effect waves-light" href="{% url "edit_default_dashboard" %}">
       <i class="material-icons left">edit</i>
