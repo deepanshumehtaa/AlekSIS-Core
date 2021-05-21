@@ -65,7 +65,6 @@ docs/_build/
 aleksis/node_modules/
 aleksis/static/
 aleksis/whoosh_index/
-aleksis/xapian_index/
 
 .coverage
 .mypy_cache/

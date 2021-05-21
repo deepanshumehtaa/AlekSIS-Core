@@ -14,7 +14,7 @@ from .registries import (
     site_preferences_registry,
 )
 from .util.apps import AppConfig
-from .util.core_helpers import has_person
+from .util.core_helpers import get_or_create_favicon, has_person
 from .util.sass_helpers import clean_scss
 
 
@@ -35,11 +35,14 @@ class CoreConfig(AppConfig):
         ([2019, 2020, 2021], "Dominik George", "dominik.george@teckids.org"),
         ([2019, 2020, 2021], "Tom Teichler", "tom.teichler@teckids.org"),
         ([2019], "mirabilos", "thorsten.glaser@teckids.org"),
+        ([2021], "Lloyd Meins", "meinsll@katharineum.de"),
         ([2021], "magicfelix", "felix@felix-zauberer.de"),
     )
 
     def ready(self):
         super().ready()
+
+        from django.conf import settings  # noqa
 
         # Autodiscover various modules defined by AlekSIS
         autodiscover_modules("form_extensions", "model_extensions", "checks")
@@ -85,6 +88,8 @@ class CoreConfig(AppConfig):
         new_value: Optional[Any] = None,
         **kwargs,
     ) -> None:
+        from django.conf import settings  # noqa
+
         if section == "theme":
             if name in ("primary", "secondary"):
                 clean_scss()
@@ -95,11 +100,14 @@ class CoreConfig(AppConfig):
 
                 if new_value:
                     Favicon.on_site.update_or_create(
-                        title=name,
-                        defaults={"isFavicon": name == "favicon", "faviconImage": new_value,},
+                        title=name, defaults={"isFavicon": is_favicon, "faviconImage": new_value},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()
+                    if name in settings.DEFAULT_FAVICON_PATHS:
+                        get_or_create_favicon(
+                            name, settings.DEFAULT_FAVICON_PATHS[name], is_favicon=is_favicon
+                        )
 
     def post_migrate(
         self,
@@ -109,12 +117,18 @@ class CoreConfig(AppConfig):
         using: str,
         **kwargs,
     ) -> None:
+        from django.conf import settings  # noqa
+
         super().post_migrate(app_config, verbosity, interactive, using, **kwargs)
 
         # Ensure presence of an OTP YubiKey default config
         apps.get_model("otp_yubikey", "ValidationService").objects.using(using).update_or_create(
             name="default", defaults={"use_ssl": True, "param_sl": "", "param_timeout": ""}
         )
+
+        # Ensure that default Favicon object exists
+        for name, default in settings.DEFAULT_FAVICON_PATHS.items():
+            get_or_create_favicon(name, default, is_favicon=name == "favicon")
 
     def user_logged_in(
         self, sender: type, request: Optional[HttpRequest], user: "User", **kwargs

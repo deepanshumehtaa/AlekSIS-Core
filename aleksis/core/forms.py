@@ -1,13 +1,16 @@
 from datetime import datetime, time
-from typing import Callable, Dict, List, Sequence, Tuple
+from typing import Callable, Sequence
 
 from django import forms
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
+from allauth.account.adapter import get_adapter
+from allauth.account.forms import SignupForm
+from allauth.account.utils import get_user_model, setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from guardian.core import ObjectPermissionChecker
@@ -28,6 +31,7 @@ from .registries import (
     person_preferences_registry,
     site_preferences_registry,
 )
+from .util.core_helpers import get_site_preferences
 
 
 class PersonAccountForm(forms.ModelForm):
@@ -377,8 +381,7 @@ class SchoolTermForm(ExtensibleForm):
 
 class DashboardWidgetOrderForm(ExtensibleForm):
     pk = forms.ModelChoiceField(
-        queryset=DashboardWidget.objects.all(),
-        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+        queryset=None, widget=forms.HiddenInput(attrs={"class": "pk-input"}),
     )
     order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
 
@@ -386,10 +389,91 @@ class DashboardWidgetOrderForm(ExtensibleForm):
         model = DashboardWidget
         fields = []
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Set queryset here to prevent problems with not migrated database due to special queryset
+        self.fields["pk"].queryset = DashboardWidget.objects.all()
+
 
 DashboardWidgetOrderFormSet = forms.formset_factory(
     form=DashboardWidgetOrderForm, max_num=0, extra=0
 )
+
+
+class AccountRegisterForm(SignupForm, ExtensibleForm):
+    """Form to register new user accounts."""
+
+    class Meta:
+        model = Group
+        fields = []
+
+    layout = Layout(
+        Fieldset(_("Base data"), Row("first_name", "last_name"),),
+        Fieldset(
+            _("Account data"), "username", Row("email", "email2"), Row("password1", "password2"),
+        ),
+        Fieldset(_("Consents"), Row("privacy_policy"),),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AccountRegisterForm, self).__init__(*args, **kwargs)
+        self.fields["password1"] = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+
+        privacy_policy = get_site_preferences()["footer__privacy_url"]
+
+        if settings.SIGNUP_PASSWORD_ENTER_TWICE:
+            self.fields["password2"] = forms.CharField(
+                label=_("Password (again)"), widget=forms.PasswordInput
+            )
+
+        self.fields["first_name"] = forms.CharField(required=True,)
+
+        self.fields["last_name"] = forms.CharField(required=True,)
+
+        self.fields["privacy_policy"] = forms.BooleanField(
+            help_text=_(
+                f"I have read the <a href='{privacy_policy}'>Privacy policy</a>"
+                " and agree with them."
+            ),
+            required=True,
+        )
+
+    def clean(self):
+        super(AccountRegisterForm, self).clean()
+
+        dummy_user = get_user_model()
+        password = self.cleaned_data.get("password1")
+        if password:
+            try:
+                get_adapter().clean_password(password, user=dummy_user)
+            except forms.ValidationError as e:
+                self.add_error("password1", e)
+
+        if (
+            settings.SIGNUP_PASSWORD_ENTER_TWICE
+            and "password1" in self.cleaned_data
+            and "password2" in self.cleaned_data
+        ):
+            if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
+                self.add_error(
+                    "password2", _("You must type the same password each time."),
+                )
+        return self.cleaned_data
+
+    def save(self, request):
+        adapter = get_adapter(request)
+        user = adapter.new_user(request)
+        adapter.save_user(request, user, self)
+        Person.objects.create(
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["last_name"],
+            email=self.cleaned_data["email"],
+            user=user,
+        )
+        self.custom_signup(request, user)
+        setup_user_email(request, user, [])
+        return user
 
 
 class ActionForm(forms.Form):
@@ -443,11 +527,11 @@ class ActionForm(forms.Form):
         """Get all defined actions."""
         return self.actions
 
-    def _get_actions_dict(self) -> Dict[str, Callable]:
+    def _get_actions_dict(self) -> dict[str, Callable]:
         """Get all defined actions as dictionary."""
         return {value.__name__: value for value in self.get_actions()}
 
-    def _get_action_choices(self) -> List[Tuple[str, str]]:
+    def _get_action_choices(self) -> list[tuple[str, str]]:
         """Get all defined actions as Django choices."""
         return [
             (value.__name__, getattr(value, "short_description", value.__name__))
@@ -504,15 +588,15 @@ class ListActionForm(ActionForm):
         # Return None in order not to raise an unwanted exception
         return None
 
-    def _get_dict(self) -> Dict[str, dict]:
+    def _get_dict(self) -> dict[str, dict]:
         """Get the items sorted by pk attribute."""
         return {item["pk"]: item for item in self.items}
 
-    def _get_choices(self) -> List[Tuple[str, str]]:
+    def _get_choices(self) -> list[tuple[str, str]]:
         """Get the items as Django choices."""
         return [(item["pk"], item["pk"]) for item in self.items]
 
-    def _get_real_items(self, items: Sequence[dict]) -> List[dict]:
+    def _get_real_items(self, items: Sequence[dict]) -> list[dict]:
         """Get the real dictionaries from a list of pks."""
         items_dict = self._get_dict()
         real_items = []
@@ -522,7 +606,7 @@ class ListActionForm(ActionForm):
             real_items.append(items_dict[item])
         return real_items
 
-    def clean_selected_objects(self) -> List[dict]:
+    def clean_selected_objects(self) -> list[dict]:
         data = self.cleaned_data["selected_objects"]
         items = self._get_real_items(data)
         return items

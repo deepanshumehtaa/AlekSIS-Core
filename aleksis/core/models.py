@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
@@ -23,20 +24,24 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 import jsonstore
+from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
+from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 
-from aleksis.core.data_checks import DataCheck, DataCheckRegistry
+from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
 from .managers import (
     CurrentSiteManagerWithoutMigrations,
     GroupManager,
     GroupQuerySet,
+    InstalledWidgetsDashboardWidgetOrderManager,
     SchoolTermQuerySet,
+    UninstallRenitentPolymorphicManager,
 )
 from .mixins import (
     ExtensibleModel,
@@ -72,7 +77,7 @@ class SchoolTerm(ExtensibleModel):
 
     objects = CurrentSiteManagerWithoutMigrations.from_queryset(SchoolTermQuerySet)()
 
-    name = models.CharField(verbose_name=_("Name"), max_length=255, unique=True)
+    name = models.CharField(verbose_name=_("Name"), max_length=255)
 
     date_start = models.DateField(verbose_name=_("Start date"))
     date_end = models.DateField(verbose_name=_("End date"))
@@ -110,6 +115,15 @@ class SchoolTerm(ExtensibleModel):
     class Meta:
         verbose_name = _("School term")
         verbose_name_plural = _("School terms")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "name"], name="unique_school_term_name_per_site"
+            ),
+            models.UniqueConstraint(
+                fields=["site_id", "date_start", "date_end"],
+                name="unique_school_term_dates_per_site",
+            ),
+        ]
 
 
 class Person(ExtensibleModel):
@@ -130,6 +144,11 @@ class Person(ExtensibleModel):
             ("view_person_groups", _("Can view persons groups")),
             ("view_personal_details", _("Can view personal details")),
         )
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "short_name"], name="unique_short_name_per_site"
+            ),
+        ]
 
     icon_ = "person"
 
@@ -152,7 +171,7 @@ class Person(ExtensibleModel):
     )
 
     short_name = models.CharField(
-        verbose_name=_("Short name"), max_length=255, blank=True, null=True, unique=True  # noqa
+        verbose_name=_("Short name"), max_length=255, blank=True, null=True  # noqa
     )
 
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
@@ -342,6 +361,9 @@ class AdditionalField(ExtensibleModel):
     class Meta:
         verbose_name = _("Addtitional field for groups")
         verbose_name_plural = _("Addtitional fields for groups")
+        constraints = [
+            models.UniqueConstraint(fields=["site_id", "title"], name="unique_title_per_site"),
+        ]
 
 
 class Group(SchoolTermRelatedExtensibleModel):
@@ -362,6 +384,7 @@ class Group(SchoolTermRelatedExtensibleModel):
             ("view_group_stats", _("Can view statistics about group.")),
         )
         constraints = [
+            # Heads up: Uniqueness per school term already implies uniqueness per site
             models.UniqueConstraint(fields=["school_term", "name"], name="unique_school_term_name"),
             models.UniqueConstraint(
                 fields=["school_term", "short_name"], name="unique_school_term_short_name"
@@ -436,7 +459,7 @@ class Group(SchoolTermRelatedExtensibleModel):
         else:
             return f"{self.name} ({self.short_name})"
 
-    group_info_tracker = FieldTracker(fields=("name", "short_name", "members", "owners"))
+    group_info_tracker = FieldTracker(fields=("name", "short_name"))
 
     def save(self, force: bool = False, *args, **kwargs):
         # Determine state of object in relation to database
@@ -478,8 +501,9 @@ class PersonGroupThrough(ExtensibleModel):
 
 
 @receiver(models.signals.m2m_changed, sender=PersonGroupThrough)
+@receiver(models.signals.m2m_changed, sender=Group.owners.through)
 def save_group_on_m2m_changed(
-    sender: PersonGroupThrough,
+    sender: Union[PersonGroupThrough, Group.owners.through],
     instance: models.Model,
     action: str,
     reverse: bool,
@@ -737,6 +761,10 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
           )
     """
 
+    objects = UninstallRenitentPolymorphicManager()
+
+    data_checks = [BrokenDashboardWidgetDataCheck]
+
     @staticmethod
     def get_media(widgets: Union[QuerySet, Iterable]):
         """Return all media required to render the selected widgets."""
@@ -746,10 +774,12 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         return media
 
     template = None
+    template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
     title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
+    broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
     size_s = models.PositiveSmallIntegerField(
         verbose_name=_("Size on mobile devices"),
@@ -776,6 +806,11 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         default=4,
     )
 
+    def _get_context_safe(self, request):
+        if self.broken:
+            return {"title": self.title}
+        return self.get_context(request)
+
     def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -784,8 +819,13 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
         """Get template.
 
         Get the template to render the widget with. Defaults to the template attribute,
-        but can be overridden to allow more complex template generation scenarios.
+        but can be overridden to allow more complex template generation scenarios. If
+        the widget is marked as broken, the template_broken attribute will be returned.
         """
+        if self.broken:
+            return self.template_broken
+        if not self.template:
+            raise NotImplementedError("A widget subclass needs to define a template.")
         return self.template
 
     def __str__(self):
@@ -821,6 +861,8 @@ class DashboardWidgetOrder(ExtensibleModel):
     order = models.PositiveIntegerField(verbose_name=_("Order"))
     default = models.BooleanField(default=False, verbose_name=_("Part of the default dashboard"))
 
+    objects = InstalledWidgetsDashboardWidgetOrderManager()
+
     @classproperty
     def default_dashboard_widgets(cls):
         """Get default order for dashboard widgets."""
@@ -839,7 +881,7 @@ class DashboardWidgetOrder(ExtensibleModel):
 class CustomMenu(ExtensibleModel):
     """A custom menu to display in the footer."""
 
-    name = models.CharField(max_length=100, verbose_name=_("Menu ID"), unique=True)
+    name = models.CharField(max_length=100, verbose_name=_("Menu ID"))
 
     def __str__(self):
         return self.name if self.name != "" else self.id
@@ -854,6 +896,9 @@ class CustomMenu(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu")
         verbose_name_plural = _("Custom menus")
+        constraints = [
+            models.UniqueConstraint(fields=["site_id", "name"], name="unique_menu_name_per_site"),
+        ]
 
 
 class CustomMenuItem(ExtensibleModel):
@@ -872,6 +917,10 @@ class CustomMenuItem(ExtensibleModel):
     class Meta:
         verbose_name = _("Custom menu item")
         verbose_name_plural = _("Custom menu items")
+        constraints = [
+            # Heads up: Uniqueness per menu already implies uniqueness per site
+            models.UniqueConstraint(fields=["menu", "name"], name="unique_name_per_menu"),
+        ]
 
 
 class GroupType(ExtensibleModel):
@@ -890,6 +939,11 @@ class GroupType(ExtensibleModel):
     class Meta:
         verbose_name = _("Group type")
         verbose_name_plural = _("Group types")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["site_id", "name"], name="unique_group_type_name_per_site"
+            ),
+        ]
 
 
 class GlobalPermissions(GlobalPermissionModel):
@@ -905,6 +959,11 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
+            ("add_oauth_applications", _("Can add oauth applications")),
+            ("list_oauth_applications", _("Can list oauth applications")),
+            ("view_oauth_applications", _("Can view oauth applications")),
+            ("update_oauth_applications", _("Can update oauth applications")),
+            ("delete_oauth_applications", _("Can delete oauth applications")),
             ("test_pdf", _("Can test PDF generation")),
         )
 
@@ -977,41 +1036,41 @@ class PDFFile(ExtensibleModel):
     def _get_default_expiration():  # noqa
         return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
 
-    def _get_upload_path(instance, filename):  # noqa
-        return f"pdfs/{instance.secret}.pdf"
-
     person = models.ForeignKey(
         to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
     )
     expires_at = models.DateTimeField(
         verbose_name=_("File expires at"), default=_get_default_expiration
     )
-    html = models.TextField(verbose_name=_("Rendered HTML"))
+    html_file = models.FileField(upload_to="pdfs/", verbose_name=_("Generated HTML file"))
     file = models.FileField(
-        upload_to=_get_upload_path, blank=True, null=True, verbose_name=_("Generated PDF file")
+        upload_to="pdfs/", blank=True, null=True, verbose_name=_("Generated PDF file")
     )
 
     def __str__(self):
         return f"{self.person} ({self.pk})"
 
-    @property
-    def secret(self) -> str:
-        """Get secret needed for accessing the HTML page."""
-        return hmac.new(
-            bytes(settings.SECRET_KEY, "utf-8"),
-            msg=bytes(self.html + str(self.expires_at), "utf-8"),
-            digestmod="sha256",
-        ).hexdigest()
-
-    @property
-    def html_url(self) -> str:
-        """Get URL for the HTML page."""
-        return (
-            urlparse(reverse("html_for_pdf_file", args=[self.pk]))
-            ._replace(query=f"secret={self.secret}")
-            .geturl()
-        )
-
     class Meta:
         verbose_name = _("PDF file")
         verbose_name_plural = _("PDF files")
+
+
+class TaskUserAssignment(ExtensibleModel):
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, verbose_name=_("Task result")
+    )
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name=_("Task user")
+    )
+
+    @classmethod
+    def create_for_task_id(cls, task_id: str, user: "User") -> "TaskUserAssignment":
+        # Use get_or_create to ensure the TaskResult exists
+        # django-celery-results will later add the missing information
+        with cachalot_disabled():
+            result, __ = TaskResult.objects.get_or_create(task_id=task_id)
+        return cls.objects.create(task_result=result, user=user)
+
+    class Meta:
+        verbose_name = _("Task user assignment")
+        verbose_name_plural = _("Task user assignments")
