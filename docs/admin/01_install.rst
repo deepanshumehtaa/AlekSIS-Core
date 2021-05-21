@@ -7,6 +7,11 @@ From source
 In this section we will install AlekSIS with `uWSGI` and `nGINX` on debian
 bullseye.
 
+AlekSIS will store its data in two directories; media and static. The
+`media` directory contains everything uploaded by users, e.g. photos of
+persons. The `static` folder contains static files from AlekSIS such as
+scripts an stylesheets.
+
 1. Prerequisites::
 
  * Debian 11
@@ -47,12 +52,16 @@ bullseye.
       chdir = /usr/src/AlekSIS
       lazy = true
       lazy-apps = true
+      attach-daemon = celery -A aleksis.core worker --concurrency=4
+      attach-daemon = celery -A aleksis.core beat
 
       $ ln -s /etc/uwsgi/apps-available/aleksis.ini /etc/uwsgi/apps-enabled/aleksis.ini
       $ service uwsgi restart
 
   * Get SSL ssl certificate
+
     * https://certbot.eff.org/instructions
+
   * Configure nGINX::
       $ editor /etc/nginx/sites-available/aleksis.example.com
         server {
