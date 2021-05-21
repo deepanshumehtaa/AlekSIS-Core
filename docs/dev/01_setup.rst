@@ -10,7 +10,24 @@ environment that contains AlekSIS and everything you need to run the
 framework and selected apps.
 
 Also, `Yarn`_ is needed to resolve JavaScript dependencies.
+
 For repository management, `myrepos` is required.
+
+Setup database and message broker
+---------------------------------
+
+AlekSIS requires `PostgreSQL`_ (version 13 or newer) as database
+backend. To provide a database names `aleksis` with a user named
+`aleksis` on Debian::
+
+  sudo apt install postgresql-13
+  sudo -u postgres createuser -P aleksis
+  sudo -u postgres createdb -O aleksis aleksis
+
+Additionally, `Redis`_ is used as message broker and for caching.
+The default configuration of the server in Debian is sufficient::
+
+  sudo apt install redis-server
 
 Get the source tree
 -------------------
