@@ -85,7 +85,7 @@ Running the development server
 
 The development server can be started using Django's ``runserver`` command.
 If you want to automatically start other necessary tools in development,
-like the `Celery` worker and scheduler, use ``runuwsgi`` instead.
+like the `Celery`_ worker and scheduler, use ``runuwsgi`` instead.
 You can either configure AlekSIS like in a production environment, or pass
 basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
