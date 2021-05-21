@@ -14,22 +14,31 @@ The AlekSIS-Core currently provides the following features:
 
 * For users:
 
+ * Authentication via OAuth applications
+ * Configurable dashboard
  * Custom menu entries (e.g. in footer)
  * Global preferences
+ * Global search
  * Group types
  * Manage announcements
  * Manage groups
  * Manage persons
  * Notifications via SMS email or dashboard
+ * PWA with offline caching
  * Rules and permissions for users, objects and pages
  * Two factor authentication via Yubikey, OTP or SMS
  * User preferences
+ * User registration, password changes and password reset
 
 * For admins
 
  * Asynchronous tasks with celery
  * Authentication via LDAP
  * Automatic backup of database, static and media files
+ * Generic PDF generation with chromium
+ * OAuth2 and OpenID Connect provider support
+ * Serve prometheus metrics
+ * System health and data checks
 
 Licence
 -------
