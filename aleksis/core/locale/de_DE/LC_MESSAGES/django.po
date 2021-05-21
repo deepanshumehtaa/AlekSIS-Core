@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-20 21:06+0200\n"
-"PO-Revision-Date: 2021-03-14 11:51+0000\n"
+"PO-Revision-Date: 2021-05-21 15:58+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,20 +29,16 @@ msgid "Solve option '{solve_option_obj.verbose_name}' "
 msgstr "Lösungsoption \"{solve_option_obj.verbose_name}\" "
 
 #: aleksis/core/data_checks.py:291
-#, fuzzy
-#| msgid "Dashboard Widget"
 msgid "Deactivate DashboardWidget"
-msgstr "Dashboard-Widget"
+msgstr "Dashboard-Widget deaktivieren"
 
 #: aleksis/core/data_checks.py:303
 msgid "Ensure that there are no broken DashboardWidgets."
-msgstr ""
+msgstr "Sicherstellen, dass es keine kaputten Dashboard-Widgets gibt."
 
 #: aleksis/core/data_checks.py:304
-#, fuzzy
-#| msgid "The dashboard widget has been created."
 msgid "The DashboardWidget was reported broken automatically."
-msgstr "Das Dashboard-Widget wurde erstellt."
+msgstr "Das Dashboard-Widget wurde automatisch als kaputt gemeldet."
 
 #: aleksis/core/filters.py:37 aleksis/core/templates/core/base.html:78
 #: aleksis/core/templates/core/group/list.html:20
@@ -152,10 +149,8 @@ msgid "You need at least one recipient."
 msgstr "Sie benötigen mindestens einen Empfänger."
 
 #: aleksis/core/forms.py:526
-#, fuzzy
-#| msgid "Update selection"
 msgid "No valid selection."
-msgstr "Auswahl aktualisieren"
+msgstr "Keine gültige Auswahl."
 
 #: aleksis/core/health_checks.py:21
 msgid "There are unresolved data problems."
@@ -163,27 +158,25 @@ msgstr "Es gibt ungelöste Datenprobleme."
 
 #: aleksis/core/health_checks.py:38
 msgid "The backup folder doesn't exist."
-msgstr ""
+msgstr "Der Backup-Ordner existiert nicht."
 
 #: aleksis/core/health_checks.py:47
 #, python-brace-format
 msgid "Last backup {time_gone_since_backup}!"
-msgstr ""
+msgstr "Letztes Backup: {time_gone_since_backup}!"
 
 #: aleksis/core/health_checks.py:49
-#, fuzzy
-#| msgid "Not found"
 msgid "No backup found!"
-msgstr "Nicht gefunden"
+msgstr "Kein Backup gefunden!"
 
 #: aleksis/core/health_checks.py:76
 msgid "No backup result found!"
-msgstr ""
+msgstr "Kein Backupergebnis gefunden!"
 
 #: aleksis/core/health_checks.py:78
 #, python-brace-format
 msgid "{task.status} - {task.result}"
-msgstr ""
+msgstr "{task.status} - {task.result}"
 
 #: aleksis/core/menus.py:9 aleksis/core/templates/two_factor/core/login.html:6
 #: aleksis/core/templates/two_factor/core/login.html:10
@@ -228,7 +221,7 @@ msgstr "Einstellungen"
 
 #: aleksis/core/menus.py:76
 msgid "Authorized tokens"
-msgstr ""
+msgstr "Autorisierte Tokens"
 
 #: aleksis/core/menus.py:87
 msgid "Admin"
@@ -284,10 +277,8 @@ msgstr "Backend-Administration"
 #: aleksis/core/menus.py:184
 #: aleksis/core/templates/oauth2_provider/application_detail.html:5
 #: aleksis/core/templates/oauth2_provider/application_list.html:5
-#, fuzzy
-#| msgid "Application"
 msgid "OAuth2 Applications"
-msgstr "Anwendung"
+msgstr "OAuth2-Anwendungen"
 
 #: aleksis/core/menus.py:197
 msgid "People"
@@ -617,10 +608,8 @@ msgid "Activate Widget"
 msgstr "Widget aktivieren"
 
 #: aleksis/core/models.py:764
-#, fuzzy
-#| msgid "Widget Title"
 msgid "Widget is broken"
-msgstr "Widget-Titel"
+msgstr "Widget ist kaputt"
 
 #: aleksis/core/models.py:767
 msgid "Size on mobile devices"
@@ -668,21 +657,19 @@ msgstr "Dashboard-Widgets"
 
 #: aleksis/core/models.py:825
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: aleksis/core/models.py:826
-#, fuzzy
-#| msgid "Icon"
 msgid "Icon URL"
-msgstr "Symbol"
+msgstr "Symbol-URL"
 
 #: aleksis/core/models.py:832
 msgid "External link widget"
-msgstr ""
+msgstr "Externer-Link-Widget"
 
 #: aleksis/core/models.py:833
 msgid "External link widgets"
-msgstr ""
+msgstr "Externer-Link-Widgets"
 
 #: aleksis/core/models.py:838
 msgid "Dashboard widget"
@@ -774,29 +761,27 @@ msgstr "Kann Einstellungen einer Gruppe verändern"
 
 #: aleksis/core/models.py:932
 msgid "Can add oauth applications"
-msgstr ""
+msgstr "Kann OAuth-Anwendungen hinzufügen"
 
 #: aleksis/core/models.py:933
 msgid "Can list oauth applications"
-msgstr ""
+msgstr "Can OAuth-Anwendungen auflisten"
 
 #: aleksis/core/models.py:934
-#, fuzzy
-#| msgid "Can view contact details"
 msgid "Can view oauth applications"
-msgstr "Kann Kontaktdetails sehen"
+msgstr "Kann OAuth-Anwendungen sehen"
 
 #: aleksis/core/models.py:935
 msgid "Can update oauth applications"
-msgstr ""
+msgstr "Kann OAuth-Anwendungen aktualisieren"
 
 #: aleksis/core/models.py:936
 msgid "Can delete oauth applications"
-msgstr ""
+msgstr "Kann OAuth-Anwendungen löschen"
 
 #: aleksis/core/models.py:937
 msgid "Can test PDF generation"
-msgstr ""
+msgstr "Kann die PDF-Generierung testen"
 
 #: aleksis/core/models.py:973
 msgid "Related data check task"
@@ -827,54 +812,44 @@ msgid "Can solve data check problems"
 msgstr "Kann Datenprüfungsprobleme lösen"
 
 #: aleksis/core/models.py:1010
-#, fuzzy
-#| msgid "Owners"
 msgid "Owner"
-msgstr "Leiter/-innen"
+msgstr "Leiter"
 
 #: aleksis/core/models.py:1013
 msgid "File expires at"
-msgstr ""
+msgstr "Datei abgelaufen am"
 
 #: aleksis/core/models.py:1015
-#, fuzzy
-#| msgid "Generate Tokens"
 msgid "Generated HTML file"
-msgstr "Tokens generieren"
+msgstr "Generierte HTML-Datei"
 
 #: aleksis/core/models.py:1017
-#, fuzzy
-#| msgid "Generate Tokens"
 msgid "Generated PDF file"
-msgstr "Tokens generieren"
+msgstr "Generierte PDF-Datei"
 
 #: aleksis/core/models.py:1024
 msgid "PDF file"
-msgstr ""
+msgstr "PDF-Datei"
 
 #: aleksis/core/models.py:1025
 msgid "PDF files"
-msgstr ""
+msgstr "PDF-Dateien"
 
 #: aleksis/core/models.py:1030
-#, fuzzy
-#| msgid "Celery task results"
 msgid "Task result"
-msgstr "Celery Task-Ergebnisse"
+msgstr "Task-Ergebnis"
 
 #: aleksis/core/models.py:1033
-#, fuzzy
-#| msgid "Task"
 msgid "Task user"
-msgstr "Task"
+msgstr "Task-Benutzer"
 
 #: aleksis/core/models.py:1045
 msgid "Task user assignment"
-msgstr ""
+msgstr "Task-Benutzer-Zuordnung"
 
 #: aleksis/core/models.py:1046
 msgid "Task user assignments"
-msgstr ""
+msgstr "Task-Benutzer-Zuordnungen"
 
 #: aleksis/core/preferences.py:29
 msgid "Authentication"
@@ -946,11 +921,13 @@ msgstr "Feld um Primärgruppen zu finden"
 
 #: aleksis/core/preferences.py:185
 msgid "Automatically create new persons for new users"
-msgstr ""
+msgstr "Erstelle automatisch neue Personen für neue Benutzer"
 
 #: aleksis/core/preferences.py:194
 msgid "Automatically link existing persons to new users by their e-mail address"
 msgstr ""
+"Verknüpfe existierende Personen automatisch mit neuen Personen anhand ihrer E"
+"-Mail-Adresse"
 
 #: aleksis/core/preferences.py:203
 msgid "Display name of the school"
@@ -978,31 +955,33 @@ msgstr "E-Mail-Empfängergruppen für Datenprüfungsproblem-E-Mails"
 
 #: aleksis/core/preferences.py:264
 msgid "Show dashboard to users without login"
-msgstr ""
+msgstr "Zeige Dashboard für Benutzer ohne Login"
 
 #: aleksis/core/preferences.py:273
 msgid "Allow users to edit their dashboard"
-msgstr ""
+msgstr "Erlaube Benutzern, ihr Dashboard zu bearbeiten"
 
 #: aleksis/core/preferences.py:284
 msgid "Fields on person model which are editable by themselves."
-msgstr ""
+msgstr "Felder des Personen-Models welche von ihnen selbst editierbar sind."
 
 #: aleksis/core/preferences.py:298
 msgid "Editable fields on person model which should trigger a notification on change"
 msgstr ""
+"Editierbare Felder des Personen-Models welche eine Benachrichtigung für "
+"Änderungen auslösen soll"
 
 #: aleksis/core/preferences.py:311
 msgid "Contact for notification if a person changes their data"
-msgstr ""
+msgstr "Kontakt für Benachrichtigung, wenn eine Person ihre Daten ändert"
 
 #: aleksis/core/preferences.py:321
 msgid "PDF file expiration duration"
-msgstr ""
+msgstr "PDF-Datei-Ablaufdauer"
 
 #: aleksis/core/preferences.py:322
 msgid "in minutes"
-msgstr ""
+msgstr "in Minuten"
 
 #: aleksis/core/settings.py:416
 msgid "English"
@@ -1192,7 +1171,7 @@ msgstr "%(widget)s erstellen"
 
 #: aleksis/core/templates/core/dashboard_widget/dashboardwidget_broken.html:10
 msgid "This widget is currently not available."
-msgstr ""
+msgstr "Das Widget ist aktuell nicht verfügbar."
 
 #: aleksis/core/templates/core/dashboard_widget/dashboardwidget_broken.html:14
 #, python-format
@@ -1202,6 +1181,11 @@ msgid ""
 "            There is no need for you to take any action.\n"
 "          "
 msgstr ""
+"\n"
+"            Es ist ein Problem dabei aufgetreten, das Widget \"%(title)s\" "
+"zu laden.\n"
+"Sie brauchen nichts weiter machen.\n"
+"          "
 
 #: aleksis/core/templates/core/dashboard_widget/edit.html:8
 #: aleksis/core/templates/core/dashboard_widget/edit.html:12
@@ -1210,10 +1194,8 @@ msgid "Edit %(widget)s"
 msgstr "%(widget)s bearbeiten"
 
 #: aleksis/core/templates/core/dashboard_widget/list.html:15
-#, fuzzy
-#| msgid "Dashboard widget"
 msgid "Create dashboard widget"
-msgstr "Dashboard-Widget"
+msgstr "Dashboard-Widget erstellen"
 
 #: aleksis/core/templates/core/dashboard_widget/list.html:22
 #, python-format
@@ -1484,12 +1466,6 @@ msgid "Home"
 msgstr "Startseite"
 
 #: aleksis/core/templates/core/index.html:49
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "          You didn't customise your dashboard so that you see the system default. Please click on \"Edit dashboard\" to\n"
-#| "          customise your personal dashboard.\n"
-#| "        "
 msgid ""
 "\n"
 "        You didn't customise your dashboard so that you see the system default. Please click on \"Edit dashboard\" to\n"
@@ -1497,9 +1473,11 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"          Sie haben Ihr Dashboard nicht angepasst, sodass Sie das Standard-Dashboard sehen.\n"
-"Bitte klicken Sie auf \"Dashboard bearbeiten\", um Ihr persönliches Dashboard anzupassen.\n"
-"        "
+"        Sie haben Ihr Dashboard nicht angepasst, sodass Sie das Standard-"
+"Dashboard sehen.\n"
+"Bitte klicken Sie auf \"Dashboard bearbeiten\", um Ihr persönliches "
+"Dashboard anzupassen.\n"
+"      "
 
 #: aleksis/core/templates/core/index.html:59
 msgid "Last activities"
@@ -1724,7 +1702,7 @@ msgstr "Erledigungszeitpunkt"
 #: aleksis/core/templates/core/pages/test_pdf.html:7
 #: aleksis/core/templates/core/pages/test_pdf.html:8
 msgid "Test PDF generation"
-msgstr ""
+msgstr "PDF-Generierung testen"
 
 #: aleksis/core/templates/core/pages/test_pdf.html:14
 msgid ""
@@ -1732,6 +1710,10 @@ msgid ""
 "        This simple view can be used to ensure the correct function of the built-in PDF generation system.\n"
 "      "
 msgstr ""
+"\n"
+"        Diese einfache Seite kann genutzt werden, um die korrekte "
+"Funktionalität des eingebauten PDF-Generierungssystem zu testen.\n"
+"      "
 
 #: aleksis/core/templates/core/partials/announcements.html:9
 #: aleksis/core/templates/core/partials/announcements.html:36
@@ -1906,15 +1888,14 @@ msgstr "Als Benutzer verkleiden"
 
 #: aleksis/core/templates/oauth2_provider/application_confirm_delete.html:5
 #: aleksis/core/templates/oauth2_provider/application_confirm_delete.html:6
-#, fuzzy
-#| msgid "Application"
 msgid "Delete application"
-msgstr "Anwendung"
+msgstr "Anwendung löschen"
 
 #: aleksis/core/templates/oauth2_provider/application_confirm_delete.html:12
 #, python-format
 msgid "Are you sure to delete the application %(application_name)s?"
 msgstr ""
+"Sind Sie sicher, dass Sie die Anwendung %(application_name)s löschen möchten?"
 
 #: aleksis/core/templates/oauth2_provider/application_confirm_delete.html:24
 #: aleksis/core/templates/oauth2_provider/application_form.html:18
@@ -1925,101 +1906,91 @@ msgstr "Abbrechen"
 
 #: aleksis/core/templates/oauth2_provider/application_detail.html:27
 msgid "Client id"
-msgstr ""
+msgstr "Client-ID"
 
 #: aleksis/core/templates/oauth2_provider/application_detail.html:35
 msgid "Client secret"
-msgstr ""
+msgstr "Client-Secret"
 
 #: aleksis/core/templates/oauth2_provider/application_detail.html:43
 msgid "Client type"
-msgstr ""
+msgstr "Client-Typ"
 
 #: aleksis/core/templates/oauth2_provider/application_detail.html:51
 msgid "Authorization Grant Type"
-msgstr ""
+msgstr "Authorization Grant-Typ"
 
 #: aleksis/core/templates/oauth2_provider/application_detail.html:59
 msgid "Redirect URIs"
-msgstr ""
+msgstr "Weiterleitungs-URLs"
 
 #: aleksis/core/templates/oauth2_provider/application_form.html:5
-#, fuzzy
-#| msgid "Application"
 msgid "Create OAuth2 Application"
-msgstr "Anwendung"
+msgstr "OAuth2-Anwendung erstellen"
 
 #: aleksis/core/templates/oauth2_provider/application_form.html:10
-#, fuzzy
-#| msgid "Application"
 msgid "Edit application"
-msgstr "Anwendung"
+msgstr "Anwendung bearbeiten"
 
 #: aleksis/core/templates/oauth2_provider/application_list.html:8
-#, fuzzy
-#| msgid "Application"
 msgid "OAuth2 applications"
-msgstr "Anwendung"
+msgstr "OAuth2-Anwendungen"
 
 #: aleksis/core/templates/oauth2_provider/application_list.html:12
 msgid "Register new applications"
-msgstr ""
+msgstr "Neue Anwendungen registrieren"
 
 #: aleksis/core/templates/oauth2_provider/application_list.html:23
 msgid "No applications defined."
-msgstr ""
+msgstr "Keine Anwendungen definiert."
 
 #: aleksis/core/templates/oauth2_provider/authorize.html:5
 #: aleksis/core/templates/oauth2_provider/authorize.html:16
 msgid "Authorize"
-msgstr ""
+msgstr "Autorisieren"
 
 #: aleksis/core/templates/oauth2_provider/authorize.html:18
 msgid "The application requests access to the following scopes:"
-msgstr ""
+msgstr "Die Anwendung fordert Zugriff auf die folgenden Bereiche an:"
 
 #: aleksis/core/templates/oauth2_provider/authorize.html:33
 msgid "Allow"
-msgstr ""
+msgstr "Erlauben"
 
 #: aleksis/core/templates/oauth2_provider/authorize.html:36
-#, fuzzy
-#| msgid "Disable"
 msgid "Disallow"
-msgstr "Deaktivieren"
+msgstr "Verbieten"
 
 #: aleksis/core/templates/oauth2_provider/authorized-oob.html:12
 msgid "Success!"
-msgstr ""
+msgstr "Erfolg!"
 
 #: aleksis/core/templates/oauth2_provider/authorized-oob.html:14
 msgid "Please return to your application and enter this code:"
-msgstr ""
+msgstr "Bitte gehen Sie zurück in Ihre Anwendung und geben Sie diesen Code ein:"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:6
 msgid "Revoke token"
-msgstr ""
+msgstr "Token zurückziehen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:12
 msgid "Are you sure to revoke this token?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie dieses Token zurückziehen möchten?"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:20
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
 msgid "Revoke"
-msgstr ""
+msgstr "Zurückziehen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authorized applications"
-msgstr "Authentifizierung"
+msgstr "Autorisierte Anwendungen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:33
 msgid "No authorized tokens defined."
-msgstr ""
+msgstr "Keine autorisierten Token definiert."
 
 #: aleksis/core/templates/offline.html:5
 msgid "Network error"
@@ -2160,7 +2131,7 @@ msgstr ""
 #: aleksis/core/templates/templated_email/person_changed.email:4
 #, python-format
 msgid "%(person)s changed their data!"
-msgstr ""
+msgstr "%(person)s hat Daten verändert!"
 
 #: aleksis/core/templates/templated_email/person_changed.email:10
 #, python-format
@@ -2169,6 +2140,9 @@ msgid ""
 "   the person %(person)s recently changed the following fields:\n"
 " "
 msgstr ""
+"\n"
+"   die Person %(person)s hat kürzlich die folgenden Felder geändert:\n"
+" "
 
 #: aleksis/core/templates/templated_email/person_changed.email:22
 #, python-format
@@ -2177,6 +2151,9 @@ msgid ""
 "    the person %(person)s recently changed the following fields:\n"
 "  "
 msgstr ""
+"\n"
+"    die Person %(person)s hat kürzlich die folgenden Felder geändert:\n"
+"  "
 
 #: aleksis/core/templates/two_factor/_base_focus.html:6
 #: aleksis/core/templates/two_factor/core/otp_required.html:22
@@ -2611,25 +2588,23 @@ msgstr "SMS"
 
 #: aleksis/core/util/pdf.py:89
 msgid "Progress: Generate PDF file"
-msgstr ""
+msgstr "Fortschritt: PDF-Datei generieren"
 
 #: aleksis/core/util/pdf.py:90
 msgid "Generating PDF file …"
-msgstr ""
+msgstr "PDF-Datei wird generiert …"
 
 #: aleksis/core/util/pdf.py:91
-#, fuzzy
-#| msgid "The preferences have been saved successfully."
 msgid "The PDF file has been generated successfully."
-msgstr "Die Einstellungen wurde gespeichert."
+msgstr "Die PDF-Datei wurde erfolgreich generiert."
 
 #: aleksis/core/util/pdf.py:92
 msgid "There was a problem while generating the PDF file."
-msgstr ""
+msgstr "Es ist ein Fehler beim Generieren der PDF-Datei aufgetreten."
 
 #: aleksis/core/util/pdf.py:95
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF herunterladen"
 
 #: aleksis/core/views.py:186
 msgid "The school term has been created."
@@ -2688,26 +2663,20 @@ msgid "The group type has been deleted."
 msgstr "Der Gruppentyp wurde gelöscht."
 
 #: aleksis/core/views.py:832
-#, fuzzy
-#| msgid "Can run data checks"
 msgid "Progress: Run data checks"
-msgstr "Kann Datenprüfungen ausführen"
+msgstr "Fortschritt: Datenprüfungen ausführen"
 
 #: aleksis/core/views.py:833
-#, fuzzy
-#| msgid "Can run data checks"
 msgid "Run data checks …"
-msgstr "Kann Datenprüfungen ausführen"
+msgstr "Datenprüfungen laufen …"
 
 #: aleksis/core/views.py:834
-#, fuzzy
-#| msgid "The child groups were successfully saved."
 msgid "The data checks were run successfully."
-msgstr "Die Untergruppen wurden gespeichert."
+msgstr "Die Datenprüfungen wurden erfolgreich ausgeführt."
 
 #: aleksis/core/views.py:835
 msgid "There was a problem while running data checks."
-msgstr ""
+msgstr "Es gab ein Problem beim Ausführen der Datenprüfungen."
 
 #: aleksis/core/views.py:851
 #, python-brace-format
