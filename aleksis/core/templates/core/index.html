@@ -11,10 +11,12 @@
 {% block content %}
   {% has_perm "core.edit_dashboard" user as can_edit_dashboard %}
   {% if can_edit_dashboard %}
-    <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
-      <i class="material-icons left">edit</i>
-      {% trans "Edit dashboard" %}
-    </a>
+    <div class="row no-margin">
+      <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
+        <i class="material-icons left">edit</i>
+        {% trans "Edit dashboard" %}
+      </a>
+    </div>
   {% endif %}
 
   {% for notification in unread_notifications %}
