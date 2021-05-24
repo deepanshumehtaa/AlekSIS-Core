@@ -141,7 +141,7 @@ editor and inserting:
    master = true
    enable-threads = true
    processes = 20
-   wsgi-file = /usr/local/lib/python3/dist-packages/aleksis/core/wsgi.py
+   wsgi-file = /usr/local/lib/python3.9/dist-packages/aleksis/core/wsgi.py
    chdir = /var/lib/aleksis
    lazy = true
    lazy-apps = true
