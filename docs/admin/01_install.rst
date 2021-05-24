@@ -163,6 +163,9 @@ First, you should get a TLS certificate, e.g. by using `Let's Encrypt`_.
 Then, create a virtual host in nginx, by editing `/etc/nginx/sites-available/aleksis.example.com`.
 
 .. code-block:: nginx
+   upstream aleksis {
+     server unix:///run/uwsgi/app/aleksis/socket;
+   }
 
    server {
      listen 80;
