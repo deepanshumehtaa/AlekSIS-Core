@@ -1,3 +1,4 @@
+from importlib import metadata
 from typing import Any, Optional, Sequence
 
 import django.apps
@@ -5,7 +6,6 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
-import pkg_resources
 from dynamic_preferences.signals import preference_updated
 from license_expression import Licensing
 from spdx_license_list import LICENSES
@@ -32,7 +32,7 @@ class AppConfig(django.apps.AppConfig):
         self.preference_updated(self)
 
     def get_distribution_name(self):
-        """Get pkg_resources distribution name of application package."""
+        """Get distribution name of application package."""
         if hasattr(self, "dist_name"):
             return self.dist_name
         elif self.name.lower().startswith("aleksis.apps."):
@@ -41,12 +41,12 @@ class AppConfig(django.apps.AppConfig):
         return None
 
     def get_distribution(self):
-        """Get pkg_resources distribution of application package."""
+        """Get distribution of application package."""
         dist_name = self.get_distribution_name()
         if dist_name:
             try:
-                dist = pkg_resources.get_distribution(dist_name)
-            except pkg_resources.DistributionNotFound:
+                dist = metadata.distribution(dist_name)
+            except PackageNotFoundError:
                 return None
 
             return dist
