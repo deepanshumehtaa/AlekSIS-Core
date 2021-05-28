@@ -5,13 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import (
-    get_app_packages,
-    lazy_get_favicons,
-    lazy_preference,
-    merge_app_settings,
-    monkey_patch,
-)
+from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
 
 monkey_patch()
 
@@ -130,7 +124,6 @@ INSTALLED_APPS = [
     "impersonate",
     "two_factor",
     "material",
-    "pwa",
     "ckeditor",
     "ckeditor_uploader",
     "django_js_reverse",
@@ -652,29 +645,14 @@ DEFAULT_FAVICON_PATHS = {
     "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
     "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
 }
-PWA_APP_NAME = lazy_preference("general", "title")
-PWA_APP_DESCRIPTION = lazy_preference("general", "description")
-PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
-PWA_APP_BACKGROUND_COLOR = "#ffffff"
-PWA_APP_DISPLAY = "standalone"
-PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = lazy_get_favicons(
-    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"android": [192, 512]}
-)
-PWA_APP_ICONS_APPLE = lazy_get_favicons(
-    "pwa_icon", default=DEFAULT_FAVICON_PATHS["pwa_icon"], config={"apple": [76, 114, 152, 180]}
-)
-PWA_APP_SPLASH_SCREEN = lazy_get_favicons(
-    "pwa_icon",
-    default=DEFAULT_FAVICON_PATHS["pwa_icon"],
-    config={"apple": [192]},
-    add_attrs={
-        "media": "(device-width: 320px) and (device-height: 568px) and"
-        "(-webkit-device-pixel-ratio: 2)"
-    },
-)
+PWA_ICONS_CONFIG = {
+    "android": [192, 512],
+    "apple": [76, 114, 152, 180],
+    "apple_splash": [192],
+    "microsoft": [144],
+}
 
-PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
 SITE_ID = 1
 
