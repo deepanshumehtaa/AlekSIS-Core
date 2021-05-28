@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-21 19:54+0200\n"
 "PO-Revision-Date: 2021-06-08 15:00+0000\n"
-"Last-Translator: Lloyd Meins <teckids@lloydmeins.de>\n"
+"Last-Translator: magicfelix <felix@felix-zauberer.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
 "Language: de_DE\n"
@@ -3138,10 +3138,8 @@ msgstr ""
 "nicht entfernt werden."
 
 #: aleksis/core/views.py:1144
-#, fuzzy
-#| msgid "The child groups were successfully saved."
 msgid "The social account has been successfully disconnected."
-msgstr "Die Untergruppen wurden gespeichert."
+msgstr "Verknüpfung zu sozialem Netzwerk erfolgreich entfernt."
 
 #~ msgid ""
 #~ "We are calling your phone right now, please enter the\n"
