@@ -1134,13 +1134,13 @@ class SocialAccountDeleteView(DeleteView):
             messages.error(
                 self.request,
                 _(
-                    "The social account could not be disconnected "
+                    "The third-party account could not be disconnected "
                     "because it is the only login method available."
                 ),
             )
         else:
             self.object.delete()
             messages.success(
-                self.request, _("The social account has been successfully disconnected.")
+                self.request, _("The third-party account has been successfully disconnected.")
             )
         return HttpResponseRedirect(success_url)

@@ -94,7 +94,7 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Social accounts"),
+                    "name": _("Third-party accounts"),
                     "url": "socialaccount_connections",
                     "icon": "public",
                     "validators": [
