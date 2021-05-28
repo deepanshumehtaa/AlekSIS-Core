@@ -13,10 +13,13 @@ from django.http import (
     HttpResponse,
     HttpResponseNotFound,
     HttpResponseRedirect,
+    JsonResponse,
 )
+from django.http.response import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import TemplateView, View
@@ -96,6 +99,7 @@ from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
 from .util.core_helpers import (
     get_allowed_object_ids,
+    get_pwa_icons,
     get_site_preferences,
     has_person,
     objectgetter_optional,
@@ -113,6 +117,56 @@ class RenderPDFView(TemplateView):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         context = self.get_context_data(**kwargs)
         return render_pdf(request, self.template_name, context)
+
+
+class ServiceWorkerView(View):
+    """Render serviceworker.js under root URL.
+
+    This can't be done by static files,
+    because the PWA has a scope and
+    only accepts service worker files from the root URL.
+    """
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        return FileResponse(open(settings.SERVICE_WORKER_PATH))
+
+
+class ManifestView(View):
+    """Build manifest.json for PWA."""
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        prefs = get_site_preferences()
+        pwa_imgs = get_pwa_icons()
+
+        icons = [
+            {
+                "src": favicon_img.faviconImage.url,
+                "sizes": f"{favicon_img.size}x{favicon_img.size}",
+            }
+            for favicon_img in pwa_imgs
+        ]
+
+        manifest = {
+            "name": prefs["general__title"],
+            "short_name": prefs["general__title"],
+            "description": prefs["general__description"],
+            "start_url": "/",
+            "scope": "/",
+            "lang": get_language(),
+            "display": "standalone",
+            "orientation": "any",
+            "status_bar": "default",
+            "background_color": "#ffffff",
+            "theme_color": prefs["theme__primary"],
+            "icons": icons,
+        }
+        return JsonResponse(manifest)
+
+
+class OfflineView(TemplateView):
+    """Show an error page if there is no internet connection."""
+
+    template_name = "offline.html"
 
 
 @permission_required("core.view_dashboard_rule")
