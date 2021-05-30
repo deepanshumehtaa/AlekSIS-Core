@@ -12,7 +12,13 @@ Unreleased
 Changed
 ~~~~~~~
 
+* Rename every occurance of "social account" by "third-party account".
 * Use own templates and views for PWA meta and manifest.
+
+Fixed
+~~~~~
+
+* Fix installation documentation (nginx, uWSGI).
 
 Removed
 ~~~~~~~
