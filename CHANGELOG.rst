@@ -13,8 +13,14 @@ Changed
 ~~~~~~~
 
 * Use own templates and views for PWA meta and manifest.
+* Rename every occurence of "social account" by "third-party account".
 
-Removed
+Fixed
+~~~~~
+
+* Fix installation documentation (nginx, uWSGI).
+
+  Removed
 ~~~~~~~
 
 * Drop django-pwa completely.
