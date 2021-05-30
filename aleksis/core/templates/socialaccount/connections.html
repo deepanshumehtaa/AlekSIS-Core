@@ -31,10 +31,10 @@
     </div>
 
   {% else %}
-    <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+    <p>{% trans 'You currently have no third-party accounts connected to this account.' %}</p>
   {% endif %}
 
-  <h5>{% trans 'Add a 3rd Party Account' %}</h5>
+  <h5>{% trans 'Add a Third-party Account' %}</h5>
 
   {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
 
