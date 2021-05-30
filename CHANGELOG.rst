@@ -12,12 +12,18 @@ Unreleased
 Changed
 ~~~~~~~
 
-* Rename every occurence of "social account" by "third-party account".
+* Rename every occurance of "social account" by "third-party account".
+* Use own templates and views for PWA meta and manifest.
 
 Fixed
 ~~~~~
 
 * Fix installation documentation (nginx, uWSGI).
+
+Removed
+~~~~~~~
+
+* Drop django-pwa completely.
 
 `2.0b0`_ - 2021-05-21
 ---------------------
