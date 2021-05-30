@@ -15,6 +15,7 @@ Changed
 * Use own templates and views for PWA meta and manifest.
 * Rename every occurence of "social account" by "third-party account".
 * Use importlib instead of pkg_resources (no functional changes)
+* Use term "application" for all authorized OAuth2 applications/tokens.
 
 Fixed
 ~~~~~

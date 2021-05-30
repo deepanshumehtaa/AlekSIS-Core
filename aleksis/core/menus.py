@@ -103,7 +103,7 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Authorized tokens"),
+                    "name": _("Authorized applications"),
                     "url": "oauth2_provider:authorized-token-list",
                     "icon": "touch_app",
                     "validators": [
