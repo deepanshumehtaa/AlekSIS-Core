@@ -158,30 +158,12 @@ def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) ->
     return favicon
 
 
-def lazy_get_favicons(
-    title: str,
-    config: dict[str, list[int]],
-    default: str,
-    add_attrs: Optional[dict[str, Any]] = None,
-) -> Callable[[], list[dict[str, str]]]:
-    """Lazily load a dictionary for PWA settings from favicon generation rules."""
-    if add_attrs is None:
-        add_attrs = {}
+def get_pwa_icons():
+    from django.conf import settings  # noqa
 
-    def _get_favicons() -> list[dict[str, str]]:
-        favicon = get_or_create_favicon(title, default)
-        favicon_imgs = favicon.get_favicons(config_override=config)
-
-        return [
-            {
-                "src": favicon_img.faviconImage.url,
-                "sizes": [f"{favicon_img.size}x{favicon_img.size}"],
-            }
-            | add_attrs
-            for favicon_img in favicon_imgs
-        ]
-
-    return lazy(_get_favicons, list)()
+    favicon = get_or_create_favicon("pwa_icon", settings.DEFAULT_FAVICON_PATHS["pwa_icon"])
+    favicon_imgs = favicon.get_favicons(config_override=settings.PWA_ICONS_CONFIG)
+    return favicon_imgs
 
 
 def is_impersonate(request: HttpRequest) -> bool:
@@ -220,6 +202,12 @@ def custom_information_processor(request: HttpRequest) -> dict:
     """Provide custom information in all templates."""
     from ..models import CustomMenu
 
+    pwa_icons = get_pwa_icons()
+    regrouped_pwa_icons = {}
+    for pwa_icon in pwa_icons:
+        regrouped_pwa_icons.setdefault(pwa_icon.rel, {})
+        regrouped_pwa_icons[pwa_icon.rel][pwa_icon.size] = pwa_icon
+
     return {
         "FOOTER_MENU": CustomMenu.get_default("footer"),
         "ALTERNATIVE_LOGIN_VIEWS_LIST": [
@@ -231,6 +219,7 @@ def custom_information_processor(request: HttpRequest) -> dict:
             a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
         ],
         "ADMINS": settings.ADMINS,
+        "PWA_ICONS": regrouped_pwa_icons,
     }
 
 

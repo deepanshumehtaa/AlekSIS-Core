@@ -18,8 +18,10 @@ from . import views
 
 urlpatterns = [
     path("", include("django_prometheus.urls")),
-    path("", include("pwa.urls"), name="pwa"),
     path(settings.MEDIA_URL.removeprefix("/"), include("titofisto.urls")),
+    path("manifest.json", views.ManifestView.as_view(), name="manifest"),
+    path("serviceworker.js", views.ServiceWorkerView.as_view(), name="service_worker"),
+    path("offline/", views.OfflineView.as_view(), name="offline"),
     path("about/", views.about, name="about_aleksis"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path(
