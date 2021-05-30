@@ -14,6 +14,7 @@ Changed
 
 * Rename every occurance of "social account" by "third-party account".
 * Use own templates and views for PWA meta and manifest.
+* Use importlib instead of pkg_resources (no functional changes)
 
 Fixed
 ~~~~~
