@@ -13,6 +13,7 @@ Changed
 ~~~~~~~
 
 * Use own templates and views for PWA meta and manifest.
+* Use importlib instead of pkg_resources (no functional changes)
 
 Removed
 ~~~~~~~
