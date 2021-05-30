@@ -13,6 +13,7 @@ Changed
 ~~~~~~~
 
 * Use own templates and views for PWA meta and manifest.
+* Use term "application" for all authorized OAuth2 applications/tokens.
 
 Removed
 ~~~~~~~
