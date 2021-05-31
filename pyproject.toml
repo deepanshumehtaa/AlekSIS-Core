@@ -52,7 +52,7 @@ django-any-js = "^1.1"
 django-debug-toolbar = "^3.2"
 django-menu-generator-ng = "^1.2.3"
 django-tables2 = "^2.1"
-django-phonenumber-field = {version = "<5.2", extras = ["phonenumbers"]}
+django-phonenumber-field = {version = "<5.3", extras = ["phonenumbers"]}
 django-sass-processor = "^1.0"
 libsass = "^0.21.0"
 colour = "^0.1.5"
