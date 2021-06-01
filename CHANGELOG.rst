@@ -21,6 +21,7 @@ Fixed
 ~~~~~
 
 * Fix installation documentation (nginx, uWSGI).
+* Use a set for data checks registry to prevent double entries.
 
   Removed
 ~~~~~~~
