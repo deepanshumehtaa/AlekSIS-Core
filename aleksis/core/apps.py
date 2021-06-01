@@ -74,9 +74,9 @@ class CoreConfig(AppConfig):
         """Get all data checks from all loaded models."""
         from aleksis.core.data_checks import DataCheckRegistry
 
-        data_checks = []
+        data_checks = set()
         for model in apps.get_models():
-            data_checks += getattr(model, "data_checks", [])
+            data_checks.update(getattr(model, "data_checks", []))
         DataCheckRegistry.data_checks = data_checks
 
     def preference_updated(
