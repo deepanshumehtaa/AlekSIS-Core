@@ -225,7 +225,7 @@ class DataCheck:
 class DataCheckRegistry:
     """Create central registry for all data checks in AlekSIS."""
 
-    data_checks = []
+    data_checks: set = set()
 
     @classproperty
     def data_checks_by_name(cls):
