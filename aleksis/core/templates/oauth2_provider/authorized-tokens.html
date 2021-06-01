@@ -20,7 +20,7 @@
               {% endfor %}
             </div>
             <div class="card-action">
-              <a href="{% url 'oauth2_provider:authorized-token-delete' authorized_token.pk %}">{% trans "Revoke" %}</a>
+              <a href="{% url 'oauth2_provider:authorized-token-delete' authorized_token.pk %}">{% trans "Revoke access" %}</a>
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
     <div class="alert info">
       <p>
         <i class="material-icons left">info</i>
-        {% trans "No authorized tokens defined." %}
+        {% trans "No authorized applications." %}
       </p>
     </div>
   {% endif %}
