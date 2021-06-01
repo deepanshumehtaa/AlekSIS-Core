@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.0b1`_ - 2021-06-01
+---------------------
 
 Changed
 ~~~~~~~
@@ -24,7 +24,7 @@ Fixed
 * Use a set for data checks registry to prevent double entries.
 * Progress page tried to redirect even if the URL is empty.
 
-  Removed
+Removed
 ~~~~~~~
 
 * Drop django-pwa completely.
@@ -228,3 +228,4 @@ Fixed
 .. _2.0a1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0a1
 .. _2.0a2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0a2
 .. _2.0b0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b0
+.. _2.0b1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b1
