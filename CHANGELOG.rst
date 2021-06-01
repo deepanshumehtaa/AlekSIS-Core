@@ -20,6 +20,7 @@ Fixed
 ~~~~~
 
 * Fix installation documentation (nginx, uWSGI).
+* Progress page tried to redirect even if the URL is empty.
 
 Removed
 ~~~~~~~
