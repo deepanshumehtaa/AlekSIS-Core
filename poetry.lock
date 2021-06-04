@@ -1112,7 +1112,7 @@ tablib = ["tablib"]
 
 [[package]]
 name = "django-templated-email"
-version = "2.4.0"
+version = "3.0.0"
 description = "A Django oriented templated / transaction email abstraction"
 category = "main"
 optional = false
@@ -2659,7 +2659,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "90224f9149be3a385e33e37cec650a35637055343fe58e28f4e7e5041de1a0ab"
+content-hash = "1748b9fe2f06eb667d8d3ab33ad383083308a8c895b682b9c3f85c11c3d283c9"
 
 [metadata.files]
 alabaster = [
@@ -3121,7 +3121,8 @@ django-tables2 = [
     {file = "django_tables2-2.4.0-py2.py3-none-any.whl", hash = "sha256:0f10ecef25708385a9d32d68d7c9478ca8dda31569410cb05a025be3f2c57593"},
 ]
 django-templated-email = [
-    {file = "django-templated-email-2.4.0.tar.gz", hash = "sha256:3bcd95cb806070b13c9919a72fec944b5ce319e30e8828a08180767bb1f84027"},
+    {file = "django-templated-email-3.0.0.tar.gz", hash = "sha256:49d61840ec551e640adaf341146e94d6f9058ae01df964480850bf988046e5eb"},
+    {file = "django_templated_email-3.0.0-py3-none-any.whl", hash = "sha256:bf1b68ffe6c8794c0c50e2ce20e3a166c6d511b3879abbd3cf059a3fc2fe2e60"},
 ]
 django-timezone-field = [
     {file = "django-timezone-field-4.1.2.tar.gz", hash = "sha256:cffac62452d060e365938aa9c9f7b72d70d8b26b9c60243bce227b35abd1b9df"},
