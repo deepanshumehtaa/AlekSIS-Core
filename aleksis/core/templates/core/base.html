@@ -98,8 +98,7 @@
 
   {% if messages %}
     {% for message in messages %}
-      <div class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
-        <p>
+      <figure class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
           {% if message.tags == "success" %}
             <i class="material-icons left">check_circle</i>
           {% elif  message.tags == "info" %}
@@ -110,8 +109,7 @@
             <i class="material-icons left">error</i>
           {% endif %}
           {{ message }}
-        </p>
-      </div>
+      </figure>
     {% endfor %}
   {% endif %}
 

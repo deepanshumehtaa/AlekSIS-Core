@@ -534,39 +534,58 @@ th.orderable.desc > a {
   font-weight: 700;
 }
 
-.alert h1 {
+figure.alert > :not(.material-icons.left){
+  margin-left: 39px;
+}
+
+.alert figcaption  {
   font-weight: 700;
   font-size: 17px;
   margin: auto;
 }
 
-.alert > p, .alert > div {
+div.alert > p,
+div.alert > div,
+figure.alert{
   margin: 10px;
   padding: 10px;
   border-left: 5px solid;
 }
 
-.alert.success > p, .alert.success > div {
+div.alert.success > p,
+div.alert.success > div,
+figure.alert.success{
   @extend .success;
   border-color: color("green", "base");
 }
 
-.alert.error > p, .alert.error > div {
+div.alert.error > p,
+div.alert.error > div,
+figure.alert.error {
   @extend .error;
   border-color: color("red", "darken-4");
 }
 
-.alert.primary > p, .alert.primary > div, .alert.info > p, .alert.info > div {
+div.alert.primary > p,
+div.alert.primary > div,
+figure.alert.primary,
+div.alert.info > p,
+div.alert.info > div,
+figure.alert.info {
   background-color: #ececec;
   border-color: $primary-color;
 }
 
-.alert.warning p, .alert.warning div {
+div.alert.warning p,
+div.alert.warning div,
+figure.alert.warning {
   @extend .warning;
   border-color: color("orange", "darken-4");
 }
 
-main .alert p:first-child, main .alert div:first-child {
+main div.alert p:first-child,
+main div.alert div:first-child,
+main figure.alert {
   margin-left: -10px;
   margin-right: -10px;
 }
