@@ -386,3 +386,23 @@ class PDFFileExpirationDuration(IntegerPreference):
     default = 3
     verbose_name = _("PDF file expiration duration")
     help_text = _("in minutes")
+
+
+@person_preferences_registry.register
+class AutoUpdatingDashboard(BooleanPreference):
+    """User preference for automatically updating the dashboard."""
+
+    section = general
+    name = "automatically_update_dashboard"
+    default = True
+    verbose_name = _("Automatically update the dashboard and its widgets")
+
+
+@site_preferences_registry.register
+class AutoUpdatingDashboardSite(BooleanPreference):
+    """Automatic updating of dashboard."""
+
+    section = general
+    name = "automatically_update_dashboard_site"
+    default = True
+    verbose_name = _("Automatically update the dashboard and its widgets sitewide")
