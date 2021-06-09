@@ -14,6 +14,11 @@ Changed
 
 * Add verbose names for all preference sections.
 
+Fixed
+~~~~~
+
+* Fix broken backup health check
+
 `2.0b1`_ - 2021-06-01
 ---------------------
 
