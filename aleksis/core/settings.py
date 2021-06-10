@@ -492,7 +492,6 @@ NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "n
 
 YARN_INSTALLED_APPS = [
     "@fontsource/roboto",
-    "datatables",
     "jquery",
     "materialize-css",
     "material-design-icons-iconfont",
@@ -513,7 +512,6 @@ SELECT2_JS = JS_URL + "/select2/dist/js/select2.min.js"
 SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
-    "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
     "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
     "material-design-icons": {
