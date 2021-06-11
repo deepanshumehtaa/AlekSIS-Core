@@ -24,7 +24,9 @@ MENUS = {
             "name": _("Dashboard"),
             "url": "index",
             "icon": "home",
-            "validators": ["menu_generator.validators.is_authenticated"],
+            "validators": [
+                ("aleksis.core.util.predicates.permission_validator", "core.view_dashboard_rule")
+            ],
         },
         {
             "name": _("Notifications"),
