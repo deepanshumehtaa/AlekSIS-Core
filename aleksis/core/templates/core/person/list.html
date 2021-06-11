@@ -18,7 +18,7 @@
     </a>
   {% endif %}
 
-  <h5>{% trans "Filter persons" %}</h5>
+  <h2>{% trans "Filter persons" %}</h2>
   <form method="get">
     {% form form=persons_filter.form %}{% endform %}
     {% trans "Search" as caption %}
@@ -29,6 +29,6 @@
     </button>
   </form>
 
-  <h5>{% trans "Selected persons" %}</h5>
+  <h2>{% trans "Selected persons" %}</h2>
   {% render_table persons_table %}
 {% endblock %}
