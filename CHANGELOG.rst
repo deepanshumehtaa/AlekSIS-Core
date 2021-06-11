@@ -19,6 +19,11 @@ Fixed
 
 * Fix broken backup health check
 
+Removed
+~~~~~~~
+
+* Drop all leftovers of DataTables.
+
 `2.0b1`_ - 2021-06-01
 ---------------------
 

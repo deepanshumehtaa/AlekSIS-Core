@@ -91,12 +91,6 @@ $(document).ready(function () {
         $("#" + $(this).data("preview")).css("color", $(this).val());
     });
 
-    $('table.datatable').each(function (index) {
-        $(this).DataTable({
-            "paging": false
-        });
-    });
-
     // Initialise auto-completion for search bar
     window.autocomplete = new Autocomplete({minimum_length: 2});
     window.autocomplete.setup();
