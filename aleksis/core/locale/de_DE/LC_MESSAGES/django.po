@@ -1690,7 +1690,7 @@ msgstr "Auswahl aktualisieren"
 
 #: aleksis/core/templates/core/group/child_groups.html:35
 msgid "Clear all filters"
-msgstr "Alle Filter leeren"
+msgstr "Alle Filter zurücksetzen"
 
 #: aleksis/core/templates/core/group/child_groups.html:39
 msgid "Currently selected groups"
