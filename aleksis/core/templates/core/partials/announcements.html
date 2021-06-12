@@ -1,8 +1,7 @@
 {% load i18n humanize %}
 
 {% for announcement in announcements %}
-  <div class="alert primary">
-    <div>
+  <figure class="alert primary">
       {% if show_interval %}
         <em class="right hide-on-small-and-down">
           {% if announcement.valid_from.date == announcement.valid_until.date %}
@@ -25,8 +24,8 @@
         </p>
       {% endif %}
 
+      <figcaption>{{ announcement.title }}</figcaption>
       <p>
-        <strong>{{ announcement.title }}</strong> <br/>
         {{ announcement.description }}
       </p>
 
@@ -43,6 +42,5 @@
           {% endif %}
         </em>
       {% endif %}
-    </div>
-  </div>
+  </figure>
 {% endfor %}
