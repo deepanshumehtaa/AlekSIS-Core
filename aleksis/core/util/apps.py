@@ -46,7 +46,7 @@ class AppConfig(django.apps.AppConfig):
         if dist_name:
             try:
                 dist = metadata.distribution(dist_name)
-            except PackageNotFoundError:
+            except metadata.PackageNotFoundError:
                 return None
 
             return dist
