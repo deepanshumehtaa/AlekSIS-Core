@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-08 16:49+0200\n"
-"PO-Revision-Date: 2021-05-21 18:38+0000\n"
+"PO-Revision-Date: 2021-06-12 10:28+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -261,10 +262,8 @@ msgid "Preferences"
 msgstr "Einstellungen"
 
 #: aleksis/core/menus.py:97
-#, fuzzy
-#| msgid "Social accounts"
 msgid "Third-party accounts"
-msgstr "Soziale Konten"
+msgstr "Drittanbieter-Konten"
 
 #: aleksis/core/menus.py:106
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
@@ -1600,9 +1599,14 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          Auf dieser Seite können Sie Ihr das Standard-Dashboard zusammenstallen, welches angezeigt wird, wenn ein Nutzer kein eigenes definiert. \n"
-"Sie können beliebige Elemente von den \"Verfügbaren Widgets\" in \"Standard-Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die Widgets bewegen. \n"
-"Wenn Sie fertig sind, vergessen Sie bitte nicht, auf \"Speichern\" zu drücken.\n"
+"          Auf dieser Seite können Sie Ihr das Standard-Dashboard "
+"zusammenstallen, welches angezeigt wird, wenn ein Benutzer kein eigenes "
+"definiert. \n"
+"Sie können beliebige Elemente von den \"Verfügbaren Widgets\" in \"Standard-"
+"Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die Widgets "
+"bewegen. \n"
+"Wenn Sie fertig sind, vergessen Sie bitte nicht, auf \"Speichern\" zu "
+"drücken.\n"
 "        "
 
 #: aleksis/core/templates/core/edit_dashboard.html:48
@@ -2269,26 +2273,22 @@ msgstr "Bitte gehen Sie zurück in Ihre Anwendung und geben Sie diesen Code ein:
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:6
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
-#, fuzzy
-#| msgid "Revoke token"
 msgid "Revoke access"
-msgstr "Token zurückziehen"
+msgstr "Zugriff zurückziehen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:12
-#, fuzzy
-#| msgid "Are you sure to revoke this token?"
 msgid "Are you sure to revoke the access for this application?"
-msgstr "Sind Sie sicher, dass Sie dieses Token zurückziehen möchten?"
+msgstr ""
+"Sind Sie sicher, dass Sie den Zugriff für diese Anwendung zurückziehen "
+"möchten?"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:20
 msgid "Revoke"
 msgstr "Zurückziehen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:33
-#, fuzzy
-#| msgid "Authorized applications"
 msgid "No authorized applications."
-msgstr "Autorisierte Anwendungen"
+msgstr "Keine autorisierten Anwendungen."
 
 #: aleksis/core/templates/offline.html:5
 msgid "Network error"
@@ -2339,21 +2339,13 @@ msgstr "Bitte geben Sie einen Suchausdruck ein."
 #: aleksis/core/templates/socialaccount/authentication_error.html:5
 #: aleksis/core/templates/socialaccount/authentication_error.html:6
 msgid "Third-party Account Login Failure"
-msgstr ""
+msgstr "Anmeldung über Drittanbieter-Konto fehlgeschlagen"
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:13
-#, fuzzy
-#| msgid "Social Network Login Failure."
 msgid "Third-party Account Login Failure."
-msgstr "Anmeldung über soziales Netzwerk fehlgeschlagen."
+msgstr "Anmeldung über Drittanbieter-Konto fehlgeschlagen."
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:15
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "            An error occurred while attempting to login via your social network account.\n"
-#| "            Please contact one of your site administrators.\n"
-#| "          "
 msgid ""
 "\n"
 "            An error occurred while attempting to login via your third-party account.\n"
@@ -2361,7 +2353,8 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Beim dem Versuch, die Anmeldung über Ihr soziales Netzwerk durchzuführen, ist ein Fehler aufgetreten.\n"
+"            Beim dem Versuch, die Anmeldung über Ihr Drittanbieter-Konto "
+"durchzuführen, ist ein Fehler aufgetreten.\n"
 "            Kontaktieren Sie bitte einen Ihrer Systemadministratoren:\n"
 "          "
 
@@ -2375,16 +2368,12 @@ msgid "Remove"
 msgstr "Löschen"
 
 #: aleksis/core/templates/socialaccount/connections.html:34
-#, fuzzy
-#| msgid "You currently have no social network accounts connected to this account."
 msgid "You currently have no third-party accounts connected to this account."
-msgstr "Sie haben aktuell keine Konten von sozialen Netzwerken mit Ihrem Konto verbunden."
+msgstr "Sie haben aktuell keine Drittanbieter-Konten mit Ihrem Konto verbunden."
 
 #: aleksis/core/templates/socialaccount/connections.html:37
-#, fuzzy
-#| msgid "Add a 3rd Party Account"
 msgid "Add a Third-party Account"
-msgstr "Ein Drittanbieterkonto hinzufügen"
+msgstr "Ein Drittanbieter-Konto hinzufügen"
 
 #: aleksis/core/templates/socialaccount/login_cancelled.html:5
 #: aleksis/core/templates/socialaccount/login_cancelled.html:6
@@ -2435,11 +2424,6 @@ msgstr ""
 "          "
 
 #: aleksis/core/templates/socialaccount/snippets/provider_list.html:30
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "          No 3rd party account providers available.\n"
-#| "        "
 msgid ""
 "\n"
 "          No third-party account providers available.\n"
@@ -2615,7 +2599,7 @@ msgstr "Tokens generieren"
 
 #: aleksis/core/templates/two_factor/core/login.html:18
 msgid "Login with username and password"
-msgstr "Anmeldung mit Nutzername und Passwort"
+msgstr "Anmeldung mit Benutzername und Passwort"
 
 #: aleksis/core/templates/two_factor/core/login.html:26
 msgid "You have no permission to view this page. Please login with an other account."
@@ -3128,12 +3112,12 @@ msgstr "Die Konfiguration des Standard-Dashboardes wurde erfolgreich gespeichert
 #: aleksis/core/views.py:1191
 msgid "The third-party account could not be disconnected because it is the only login method available."
 msgstr ""
+"Das Drittanbieter-Konto konnte nicht deaktiviert werden, weil es die einzige "
+"verfügbare Anmeldeoption ist."
 
 #: aleksis/core/views.py:1198
-#, fuzzy
-#| msgid "The child groups were successfully saved."
 msgid "The third-party account has been successfully disconnected."
-msgstr "Die Untergruppen wurden gespeichert."
+msgstr "Das Drittanbieter-Konto wurde erfolgreich getrennt."
 
 #~ msgid "Authorized tokens"
 #~ msgstr "Autorisierte Tokens"
