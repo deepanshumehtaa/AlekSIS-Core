@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.0b2` - 2021-06-15
+--------------------
+
+Changed
+~~~~~~~
+
+* Add verbose names for all preference sections.
+* Add verbose names for all openid connect scopes and show them in grant
+  view.
+* Include public dashboard in navigation
+* Update German translations.
+
+Fixed
+~~~~~
+
+* Fix broken backup health check
+* Make error recovery in about page work
+
+Removed
+~~~~~~~
+
+* Drop all leftovers of DataTables.
+
 `2.0b1`_ - 2021-06-01
 ---------------------
 
@@ -229,3 +252,4 @@ Fixed
 .. _2.0a2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0a2
 .. _2.0b0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b0
 .. _2.0b1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b1
+.. _2.0b2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b2

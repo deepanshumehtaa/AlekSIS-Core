@@ -513,6 +513,16 @@ th.orderable.desc > a {
   margin: 0;
 }
 
+.alert strong {
+  font-weight: 700;
+}
+
+.alert h1 {
+  font-weight: 700;
+  font-size: 17px;
+  margin: auto;
+}
+
 .alert > p, .alert > div {
   margin: 10px;
   padding: 10px;

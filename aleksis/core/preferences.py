@@ -19,13 +19,13 @@ from .models import Group, Person
 from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
-general = Section("general")
-school = Section("school")
-theme = Section("theme")
-mail = Section("mail")
-notification = Section("notification")
-footer = Section("footer")
-account = Section("account")
+general = Section("general", verbose_name=_("General"))
+school = Section("school", verbose_name=_("School"))
+theme = Section("theme", verbose_name=_("Theme"))
+mail = Section("mail", verbose_name=_("Mail"))
+notification = Section("notification", verbose_name=_("Notifications"))
+footer = Section("footer", verbose_name=_("Footer"))
+account = Section("account", verbose_name=_("Accounts"))
 auth = Section("auth", verbose_name=_("Authentication"))
 internationalisation = Section("internationalisation", verbose_name=_("Internationalisation"))
 

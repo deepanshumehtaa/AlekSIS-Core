@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 19:54+0200\n"
+"POT-Creation-Date: 2021-06-08 16:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,11 +260,13 @@ msgid "Preferences"
 msgstr ""
 
 #: aleksis/core/menus.py:97
-msgid "Social accounts"
+msgid "Third-party accounts"
 msgstr ""
 
 #: aleksis/core/menus.py:106
-msgid "Authorized tokens"
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
+msgid "Authorized applications"
 msgstr ""
 
 #: aleksis/core/menus.py:117
@@ -354,7 +356,7 @@ msgstr ""
 msgid "Assign child groups to groups"
 msgstr ""
 
-#: aleksis/core/mixins.py:476
+#: aleksis/core/mixins.py:475
 msgid "Linked school term"
 msgstr ""
 
@@ -903,139 +905,143 @@ msgstr ""
 msgid "Internationalisation"
 msgstr ""
 
-#: aleksis/core/preferences.py:39
+#: aleksis/core/preferences.py:41
 msgid "Site title"
 msgstr ""
 
-#: aleksis/core/preferences.py:48
+#: aleksis/core/preferences.py:52
 msgid "Site description"
 msgstr ""
 
-#: aleksis/core/preferences.py:57
+#: aleksis/core/preferences.py:63
 msgid "Primary colour"
 msgstr ""
 
-#: aleksis/core/preferences.py:67
+#: aleksis/core/preferences.py:75
 msgid "Secondary colour"
 msgstr ""
 
-#: aleksis/core/preferences.py:76
+#: aleksis/core/preferences.py:86
 msgid "Logo"
 msgstr ""
 
-#: aleksis/core/preferences.py:84
+#: aleksis/core/preferences.py:96
 msgid "Favicon"
 msgstr ""
 
-#: aleksis/core/preferences.py:92
+#: aleksis/core/preferences.py:106
 msgid "PWA-Icon"
 msgstr ""
 
-#: aleksis/core/preferences.py:101
+#: aleksis/core/preferences.py:117
 msgid "Mail out name"
 msgstr ""
 
-#: aleksis/core/preferences.py:110
+#: aleksis/core/preferences.py:128
 msgid "Mail out address"
 msgstr ""
 
-#: aleksis/core/preferences.py:120
+#: aleksis/core/preferences.py:140
 msgid "Link to privacy policy"
 msgstr ""
 
-#: aleksis/core/preferences.py:130
+#: aleksis/core/preferences.py:152
 msgid "Link to imprint"
 msgstr ""
 
-#: aleksis/core/preferences.py:140
+#: aleksis/core/preferences.py:164
 msgid "Name format for addressing"
 msgstr ""
 
-#: aleksis/core/preferences.py:154
+#: aleksis/core/preferences.py:180
 msgid "Channels to use for notifications"
 msgstr ""
 
-#: aleksis/core/preferences.py:164
+#: aleksis/core/preferences.py:192
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr ""
 
-#: aleksis/core/preferences.py:173
+#: aleksis/core/preferences.py:203
 msgid "Field on person to match primary group against"
 msgstr ""
 
-#: aleksis/core/preferences.py:185
+#: aleksis/core/preferences.py:215
 msgid "Automatically create new persons for new users"
 msgstr ""
 
-#: aleksis/core/preferences.py:194
+#: aleksis/core/preferences.py:224
 msgid "Automatically link existing persons to new users by their e-mail address"
 msgstr ""
 
-#: aleksis/core/preferences.py:203
+#: aleksis/core/preferences.py:235
 msgid "Display name of the school"
 msgstr ""
 
-#: aleksis/core/preferences.py:212
+#: aleksis/core/preferences.py:246
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr ""
 
-#: aleksis/core/preferences.py:220
+#: aleksis/core/preferences.py:256
+msgid "Enabled custom authentication backends"
+msgstr ""
+
+#: aleksis/core/preferences.py:268
 msgid "Allow users to change their passwords"
 msgstr ""
 
-#: aleksis/core/preferences.py:228
+#: aleksis/core/preferences.py:276
 msgid "Enable signup"
 msgstr ""
 
-#: aleksis/core/preferences.py:237
+#: aleksis/core/preferences.py:287
 msgid "Available languages"
 msgstr ""
 
-#: aleksis/core/preferences.py:249
+#: aleksis/core/preferences.py:299
 msgid "Send emails if data checks detect problems"
 msgstr ""
 
-#: aleksis/core/preferences.py:260
+#: aleksis/core/preferences.py:310
 msgid "Email recipients for data checks problem emails"
 msgstr ""
 
-#: aleksis/core/preferences.py:271
+#: aleksis/core/preferences.py:321
 msgid "Email recipient groups for data checks problem emails"
 msgstr ""
 
-#: aleksis/core/preferences.py:280
+#: aleksis/core/preferences.py:330
 msgid "Show dashboard to users without login"
 msgstr ""
 
-#: aleksis/core/preferences.py:289
+#: aleksis/core/preferences.py:339
 msgid "Allow users to edit their dashboard"
 msgstr ""
 
-#: aleksis/core/preferences.py:300
+#: aleksis/core/preferences.py:350
 msgid "Fields on person model which are editable by themselves."
 msgstr ""
 
-#: aleksis/core/preferences.py:314
+#: aleksis/core/preferences.py:364
 msgid "Editable fields on person model which should trigger a notification on change"
 msgstr ""
 
-#: aleksis/core/preferences.py:327
+#: aleksis/core/preferences.py:377
 msgid "Contact for notification if a person changes their data"
 msgstr ""
 
-#: aleksis/core/preferences.py:337
+#: aleksis/core/preferences.py:387
 msgid "PDF file expiration duration"
 msgstr ""
 
-#: aleksis/core/preferences.py:338
+#: aleksis/core/preferences.py:388
 msgid "in minutes"
 msgstr ""
 
-#: aleksis/core/settings.py:477
+#: aleksis/core/settings.py:470
 msgid "English"
 msgstr ""
 
-#: aleksis/core/settings.py:478
+#: aleksis/core/settings.py:471
 msgid "German"
 msgstr ""
 
@@ -2109,25 +2115,20 @@ msgstr ""
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:6
-msgid "Revoke token"
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
+msgid "Revoke access"
 msgstr ""
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:12
-msgid "Are you sure to revoke this token?"
+msgid "Are you sure to revoke the access for this application?"
 msgstr ""
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:20
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
 msgid "Revoke"
 msgstr ""
 
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
-msgid "Authorized applications"
-msgstr ""
-
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:33
-msgid "No authorized tokens defined."
+msgid "No authorized applications."
 msgstr ""
 
 #: aleksis/core/templates/offline.html:5
@@ -2171,17 +2172,17 @@ msgstr ""
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:5
 #: aleksis/core/templates/socialaccount/authentication_error.html:6
-msgid "Social Network Login Failure"
+msgid "Third-party Account Login Failure"
 msgstr ""
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:13
-msgid "Social Network Login Failure."
+msgid "Third-party Account Login Failure."
 msgstr ""
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:15
 msgid ""
 "\n"
-"            An error occurred while attempting to login via your social network account.\n"
+"            An error occurred while attempting to login via your third-party account.\n"
 "            Please contact one of your site administrators.\n"
 "          "
 msgstr ""
@@ -2196,11 +2197,11 @@ msgid "Remove"
 msgstr ""
 
 #: aleksis/core/templates/socialaccount/connections.html:34
-msgid "You currently have no social network accounts connected to this account."
+msgid "You currently have no third-party accounts connected to this account."
 msgstr ""
 
 #: aleksis/core/templates/socialaccount/connections.html:37
-msgid "Add a 3rd Party Account"
+msgid "Add a Third-party Account"
 msgstr ""
 
 #: aleksis/core/templates/socialaccount/login_cancelled.html:5
@@ -2243,7 +2244,7 @@ msgstr ""
 #: aleksis/core/templates/socialaccount/snippets/provider_list.html:30
 msgid ""
 "\n"
-"          No 3rd party account providers available.\n"
+"          No third-party account providers available.\n"
 "        "
 msgstr ""
 
@@ -2704,109 +2705,109 @@ msgstr ""
 msgid "Download PDF"
 msgstr ""
 
-#: aleksis/core/views.py:195
+#: aleksis/core/views.py:249
 msgid "The school term has been created."
 msgstr ""
 
-#: aleksis/core/views.py:207
+#: aleksis/core/views.py:261
 msgid "The school term has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:352
+#: aleksis/core/views.py:406
 msgid "The child groups were successfully saved."
 msgstr ""
 
-#: aleksis/core/views.py:413
+#: aleksis/core/views.py:467
 msgid "The person has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:452
+#: aleksis/core/views.py:506
 msgid "The group has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:549
+#: aleksis/core/views.py:603
 msgid "The announcement has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:565
+#: aleksis/core/views.py:619
 msgid "The announcement has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:649
+#: aleksis/core/views.py:703
 msgid "The preferences have been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:673
+#: aleksis/core/views.py:727
 msgid "The person has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:687
+#: aleksis/core/views.py:741
 msgid "The group has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:719
+#: aleksis/core/views.py:773
 msgid "The additional_field has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:753
+#: aleksis/core/views.py:807
 msgid "The additional field has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:778
+#: aleksis/core/views.py:832
 msgid "The group type has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:808
+#: aleksis/core/views.py:862
 msgid "The group type has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:841
+#: aleksis/core/views.py:895
 msgid "Progress: Run data checks"
 msgstr ""
 
-#: aleksis/core/views.py:842
+#: aleksis/core/views.py:896
 msgid "Run data checks …"
 msgstr ""
 
-#: aleksis/core/views.py:843
+#: aleksis/core/views.py:897
 msgid "The data checks were run successfully."
 msgstr ""
 
-#: aleksis/core/views.py:844
+#: aleksis/core/views.py:898
 msgid "There was a problem while running data checks."
 msgstr ""
 
-#: aleksis/core/views.py:860
+#: aleksis/core/views.py:914
 #, python-brace-format
 msgid "The solve option '{solve_option_obj.verbose_name}' "
 msgstr ""
 
-#: aleksis/core/views.py:902
+#: aleksis/core/views.py:956
 msgid "The dashboard widget has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:932
+#: aleksis/core/views.py:986
 msgid "The dashboard widget has been created."
 msgstr ""
 
-#: aleksis/core/views.py:942
+#: aleksis/core/views.py:996
 msgid "The dashboard widget has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:1009
+#: aleksis/core/views.py:1063
 msgid "Your dashboard configuration has been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:1011
+#: aleksis/core/views.py:1065
 msgid "The configuration of the default dashboard has been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:1137
-msgid "The social account could not be disconnected because it is the only login method available."
+#: aleksis/core/views.py:1191
+msgid "The third-party account could not be disconnected because it is the only login method available."
 msgstr ""
 
-#: aleksis/core/views.py:1144
-msgid "The social account has been successfully disconnected."
+#: aleksis/core/views.py:1198
+msgid "The third-party account has been successfully disconnected."
 msgstr ""
 
 #~ msgid "Norwegian (bokmål)"

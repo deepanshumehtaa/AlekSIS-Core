@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.0b1"
+version = "2.0b2"
 packages = [
     { include = "aleksis" }
 ]
@@ -70,7 +70,7 @@ django-material = "^1.6.0"
 django-dynamic-preferences = "^1.9"
 django_widget_tweaks = "^1.4.5"
 django-filter = "^2.2.0"
-django-templated-email = "^2.3.0"
+django-templated-email = "^3.0.0"
 html2text = "^2020.0.0"
 django-ckeditor = "^6.0.0"
 django-js-reverse = "^0.9.1"
