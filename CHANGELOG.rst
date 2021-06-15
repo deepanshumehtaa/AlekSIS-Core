@@ -21,6 +21,7 @@ Fixed
 ~~~~~
 
 * Fix broken backup health check
+* Make error recovery in about page work
 
 Removed
 ~~~~~~~
