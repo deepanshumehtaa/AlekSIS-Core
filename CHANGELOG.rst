@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.0b2`_ - 2021-06-15
+---------------------
 
 Changed
 ~~~~~~~
@@ -16,6 +16,7 @@ Changed
 * Add verbose names for all openid connect scopes and show them in grant
   view.
 * Include public dashboard in navigation
+* Update translations for German.
 
 Fixed
 ~~~~~
@@ -251,3 +252,4 @@ Fixed
 .. _2.0a2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0a2
 .. _2.0b0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b0
 .. _2.0b1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b1
+.. _2.0b2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b2
