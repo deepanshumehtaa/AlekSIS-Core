@@ -20,8 +20,7 @@
   {% endif %}
 
   {% for notification in unread_notifications %}
-    <div class="alert primary scale-transition">
-      <div>
+    <figure class="alert primary scale-transition">
         <i class="material-icons left">info</i>
 
         <div class="right">
@@ -30,10 +29,9 @@
           </a>
         </div>
 
-        <strong>{{ notification.title }}</strong>
+        <figcaption>{{ notification.title }}</figcaption>
         <p>{{ notification.description|linebreaks }}</p>
-      </div>
-    </div>
+    </figure>
   {% endfor %}
 
   {% include "core/partials/announcements.html" with announcements=announcements %}

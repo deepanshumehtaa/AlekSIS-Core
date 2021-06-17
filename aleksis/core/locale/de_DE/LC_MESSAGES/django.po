@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-21 19:54+0200\n"
-"PO-Revision-Date: 2021-05-21 18:38+0000\n"
+"POT-Creation-Date: 2021-06-08 16:49+0200\n"
+"PO-Revision-Date: 2021-06-12 10:28+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
 "Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
 "de/>\n"
@@ -167,9 +167,7 @@ msgstr "Passwort wiederholen"
 #: aleksis/core/forms.py:436
 #, python-brace-format
 msgid "I have read the <a href='{privacy_policy}'>Privacy policy</a> and agree with them."
-msgstr ""
-"Ich habe die <a href='{privacy_policy}'>Datenschutzerklärung</a> gelesen und "
-"stimme ihr zu."
+msgstr "Ich habe die <a href='{privacy_policy}'>Datenschutzerklärung</a> gelesen und stimme ihr zu."
 
 #: aleksis/core/forms.py:460
 msgid "You must type the same password each time."
@@ -264,12 +262,14 @@ msgid "Preferences"
 msgstr "Einstellungen"
 
 #: aleksis/core/menus.py:97
-msgid "Social accounts"
-msgstr "Soziale Konten"
+msgid "Third-party accounts"
+msgstr "Drittanbieter-Konten"
 
 #: aleksis/core/menus.py:106
-msgid "Authorized tokens"
-msgstr "Autorisierte Tokens"
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
+msgid "Authorized applications"
+msgstr "Autorisierte Anwendungen"
 
 #: aleksis/core/menus.py:117
 msgid "Admin"
@@ -358,7 +358,7 @@ msgstr "Zusätzliche Felder"
 msgid "Assign child groups to groups"
 msgstr "Kindgruppen zu Gruppen zuordnen"
 
-#: aleksis/core/mixins.py:476
+#: aleksis/core/mixins.py:475
 msgid "Linked school term"
 msgstr "Zugeordnetes Schuljahr"
 
@@ -907,139 +907,143 @@ msgstr "Authentifizierung"
 msgid "Internationalisation"
 msgstr "Internationalisierung"
 
-#: aleksis/core/preferences.py:39
+#: aleksis/core/preferences.py:41
 msgid "Site title"
 msgstr "Seitentitel"
 
-#: aleksis/core/preferences.py:48
+#: aleksis/core/preferences.py:52
 msgid "Site description"
 msgstr "Seitenbeschreibung"
 
-#: aleksis/core/preferences.py:57
+#: aleksis/core/preferences.py:63
 msgid "Primary colour"
 msgstr "Primärfarbe"
 
-#: aleksis/core/preferences.py:67
+#: aleksis/core/preferences.py:75
 msgid "Secondary colour"
 msgstr "Akzentfarbe"
 
-#: aleksis/core/preferences.py:76
+#: aleksis/core/preferences.py:86
 msgid "Logo"
 msgstr "Logo"
 
-#: aleksis/core/preferences.py:84
+#: aleksis/core/preferences.py:96
 msgid "Favicon"
 msgstr "Favicon"
 
-#: aleksis/core/preferences.py:92
+#: aleksis/core/preferences.py:106
 msgid "PWA-Icon"
 msgstr "PWA-Icon"
 
-#: aleksis/core/preferences.py:101
+#: aleksis/core/preferences.py:117
 msgid "Mail out name"
 msgstr "Ausgangsmailname"
 
-#: aleksis/core/preferences.py:110
+#: aleksis/core/preferences.py:128
 msgid "Mail out address"
 msgstr "E-Mail-Ausgangsadresse"
 
-#: aleksis/core/preferences.py:120
+#: aleksis/core/preferences.py:140
 msgid "Link to privacy policy"
 msgstr "Link zur Datenschutzerklärung"
 
-#: aleksis/core/preferences.py:130
+#: aleksis/core/preferences.py:152
 msgid "Link to imprint"
 msgstr "Link zum Impressum"
 
-#: aleksis/core/preferences.py:140
+#: aleksis/core/preferences.py:164
 msgid "Name format for addressing"
 msgstr "Namensformat für Anreden"
 
-#: aleksis/core/preferences.py:154
+#: aleksis/core/preferences.py:180
 msgid "Channels to use for notifications"
 msgstr "Aktivierte Benachrichtungskanäle"
 
-#: aleksis/core/preferences.py:164
+#: aleksis/core/preferences.py:192
 msgid "Regular expression to match primary group, e.g. '^Class .*'"
 msgstr "Regulärer Ausdruck um Primärgruppen zu finden, z. B.  '^Class .*'"
 
-#: aleksis/core/preferences.py:173
+#: aleksis/core/preferences.py:203
 msgid "Field on person to match primary group against"
 msgstr "Feld um Primärgruppen zu finden"
 
-#: aleksis/core/preferences.py:185
+#: aleksis/core/preferences.py:215
 msgid "Automatically create new persons for new users"
 msgstr "Erstelle automatisch neue Personen für neue Benutzer"
 
-#: aleksis/core/preferences.py:194
+#: aleksis/core/preferences.py:224
 msgid "Automatically link existing persons to new users by their e-mail address"
 msgstr "Verknüpfe existierende Personen automatisch mit neuen Personen anhand ihrer E-Mail-Adresse"
 
-#: aleksis/core/preferences.py:203
+#: aleksis/core/preferences.py:235
 msgid "Display name of the school"
 msgstr "Sichtbarer Name der Schule"
 
-#: aleksis/core/preferences.py:212
+#: aleksis/core/preferences.py:246
 msgid "Official name of the school, e.g. as given by supervisory authority"
 msgstr "Offizieller Name der Schule, wie er z.B. von der Behörde vorgegeben ist"
 
-#: aleksis/core/preferences.py:220
+#: aleksis/core/preferences.py:256
+msgid "Enabled custom authentication backends"
+msgstr "Benutzerdefinierte Authentifizierungsbackends aktivieren"
+
+#: aleksis/core/preferences.py:268
 msgid "Allow users to change their passwords"
 msgstr "Erlaube Benutzern, ihr Passwort zu ändern"
 
-#: aleksis/core/preferences.py:228
+#: aleksis/core/preferences.py:276
 msgid "Enable signup"
 msgstr "Registrierung aktivieren"
 
-#: aleksis/core/preferences.py:237
+#: aleksis/core/preferences.py:287
 msgid "Available languages"
 msgstr "Verfügbare Sprachen"
 
-#: aleksis/core/preferences.py:249
+#: aleksis/core/preferences.py:299
 msgid "Send emails if data checks detect problems"
 msgstr "E-Mails versenden, wenn Datenprüfungen Probleme finden"
 
-#: aleksis/core/preferences.py:260
+#: aleksis/core/preferences.py:310
 msgid "Email recipients for data checks problem emails"
 msgstr "E-Mailempfänger für Datenprüfungsproblem-E-Mails"
 
-#: aleksis/core/preferences.py:271
+#: aleksis/core/preferences.py:321
 msgid "Email recipient groups for data checks problem emails"
 msgstr "E-Mail-Empfängergruppen für Datenprüfungsproblem-E-Mails"
 
-#: aleksis/core/preferences.py:280
+#: aleksis/core/preferences.py:330
 msgid "Show dashboard to users without login"
 msgstr "Zeige Dashboard für Benutzer ohne Login"
 
-#: aleksis/core/preferences.py:289
+#: aleksis/core/preferences.py:339
 msgid "Allow users to edit their dashboard"
 msgstr "Erlaube Benutzern, ihr Dashboard zu bearbeiten"
 
-#: aleksis/core/preferences.py:300
+#: aleksis/core/preferences.py:350
 msgid "Fields on person model which are editable by themselves."
 msgstr "Felder des Personen-Models welche von ihnen selbst editierbar sind."
 
-#: aleksis/core/preferences.py:314
+#: aleksis/core/preferences.py:364
 msgid "Editable fields on person model which should trigger a notification on change"
 msgstr "Editierbare Felder des Personen-Models welche eine Benachrichtigung für Änderungen auslösen soll"
 
-#: aleksis/core/preferences.py:327
+#: aleksis/core/preferences.py:377
 msgid "Contact for notification if a person changes their data"
 msgstr "Kontakt für Benachrichtigung, wenn eine Person ihre Daten ändert"
 
-#: aleksis/core/preferences.py:337
+#: aleksis/core/preferences.py:387
 msgid "PDF file expiration duration"
 msgstr "PDF-Datei-Ablaufdauer"
 
-#: aleksis/core/preferences.py:338
+#: aleksis/core/preferences.py:388
 msgid "in minutes"
 msgstr "in Minuten"
 
-#: aleksis/core/settings.py:477
+#: aleksis/core/settings.py:470
 msgid "English"
 msgstr "Englisch"
 
-#: aleksis/core/settings.py:478
+#: aleksis/core/settings.py:471
 msgid "German"
 msgstr "Deutsch"
 
@@ -1192,22 +1196,16 @@ msgstr "Bestätigen"
 #: aleksis/core/templates/account/email_confirm.html:12
 #, python-format
 msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
-msgstr ""
-"Bitte bestätigen Sie, dass <a href=\"mailto:%(email)s\">%(email)s</a> eine E"
-"-Mail-Adresse für den Benutzer %(user_display)s ist."
+msgstr "Bitte bestätigen Sie, dass <a href=\"mailto:%(email)s\">%(email)s</a> eine E-Mail-Adresse für den Benutzer %(user_display)s ist."
 
 #: aleksis/core/templates/account/email_confirm.html:25
 #, python-format
 msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr ""
-"Dieser E-Mail-Bestätigungslink ist abgelaufen oder nicht gültig. Bitte <a "
-"href=\"%(email_url)s\">fragen Sie eine neue E-Mail-Bestätigung an</a>."
+msgstr "Dieser E-Mail-Bestätigungslink ist abgelaufen oder nicht gültig. Bitte <a href=\"%(email_url)s\">fragen Sie eine neue E-Mail-Bestätigung an</a>."
 
 #: aleksis/core/templates/account/password_change.html:12
 msgid "Forgot your current password? Click here to reset it:"
-msgstr ""
-"Haben Sie Ihr aktuelles Passwort vergessen? Klicken Sie hier, um es "
-"zurückzusetzen:"
+msgstr "Haben Sie Ihr aktuelles Passwort vergessen? Klicken Sie hier, um es zurückzusetzen:"
 
 #: aleksis/core/templates/account/password_change.html:12
 msgid "Forgot Password?"
@@ -1230,8 +1228,7 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Benutzer dürfen ihre eigenen Passwörter nicht ändern. Wenn Sie "
-"denken, \n"
+"            Benutzer dürfen ihre eigenen Passwörter nicht ändern. Wenn Sie denken, \n"
 "dass dies ein Fehler ist, kontaktieren Sie bitte einen der Administratoren:\n"
 "          "
 
@@ -1247,9 +1244,7 @@ msgstr "Passwort zurücksetzen"
 
 #: aleksis/core/templates/account/password_reset.html:17
 msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
-msgstr ""
-"Passwort vergessen? Geben Sie Ihre E-Mail-Adresse hier ein und wir werden "
-"Ihnen eine E-Mail zum Zurücksetzen des Passwortes schicken."
+msgstr "Passwort vergessen? Geben Sie Ihre E-Mail-Adresse hier ein und wir werden Ihnen eine E-Mail zum Zurücksetzen des Passwortes schicken."
 
 #: aleksis/core/templates/account/password_reset.html:30
 msgid ""
@@ -1272,8 +1267,7 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Wir haben Ihnen eine E-Mail gesendet. Bitte kontaktieren Sie "
-"einen der Administratoren,\n"
+"            Wir haben Ihnen eine E-Mail gesendet. Bitte kontaktieren Sie einen der Administratoren,\n"
 "wenn Sie diese nicht innerhalb weniger Minuten erhalten.\n"
 "          "
 
@@ -1290,10 +1284,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"              Der Link zum Zurücksetzen des Passwortes war falsch, "
-"wahrscheinlich, weil er bereits benutzt wurde. Bitte starten Sie eine neue "
-"Anfrage <a href=\"%(passwd_reset_url)s\"              class=\"blue-text text-"
-"lighten-2\">zum Zurücksetzen des Passwortes</a>.\n"
+"              Der Link zum Zurücksetzen des Passwortes war falsch, wahrscheinlich, weil er bereits benutzt wurde. Bitte starten Sie eine neue Anfrage <a href=\"%(passwd_reset_url)s\"              class=\"blue-text text-lighten-2\">zum Zurücksetzen des Passwortes</a>.\n"
 "            "
 
 #: aleksis/core/templates/account/password_reset_from_key.html:25
@@ -1343,9 +1334,7 @@ msgstr "Registrierung"
 #: aleksis/core/templates/account/signup.html:12
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Haben Sie bereits ein Konto? Dann <a href=\"%(login_url)s\">melden Sie sich "
-"bitte an</a>."
+msgstr "Haben Sie bereits ein Konto? Dann <a href=\"%(login_url)s\">melden Sie sich bitte an</a>."
 
 #: aleksis/core/templates/account/signup_closed.html:5
 #: aleksis/core/templates/account/signup_closed.html:6
@@ -1364,8 +1353,7 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Die Registrierung ist aktuell geschlossen. Wenn Sie denken, dass "
-"dies ein Fehler ist,\n"
+"            Die Registrierung ist aktuell geschlossen. Wenn Sie denken, dass dies ein Fehler ist,\n"
 " kontaktieren Sie bitte einen Ihrer Systemadministratoren.\n"
 "          "
 
@@ -1390,10 +1378,8 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Dieser Teil der Anwendung setzt voraus, dass wir verifizieren, "
-"dass Sie die Person sind, die sie vorgeben, zu sein.\n"
-"Zu diesem Zweck setzen wir voraus, dass Sie die Inhaberschaft Ihrer E-Mail-"
-"Adresse bestätigen.\n"
+"            Dieser Teil der Anwendung setzt voraus, dass wir verifizieren, dass Sie die Person sind, die sie vorgeben, zu sein.\n"
+"Zu diesem Zweck setzen wir voraus, dass Sie die Inhaberschaft Ihrer E-Mail-Adresse bestätigen.\n"
 "          "
 
 #: aleksis/core/templates/account/verification_sent.html:22
@@ -1407,16 +1393,13 @@ msgstr ""
 "\n"
 "            Wir haben Ihnen eine E-Mail zur Verifizierung geschickt.\n"
 "Bitte klicken Sie auf den Link in dieser E-Mail.\n"
-"Bitte kontaktieren Sie uns, wenn Sie diese nicht binnen weniger Minuten "
-"erhalten.\n"
+"Bitte kontaktieren Sie uns, wenn Sie diese nicht binnen weniger Minuten erhalten.\n"
 "          "
 
 #: aleksis/core/templates/account/verification_sent.html:30
 #, python-format
 msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-mail address</a>"
-msgstr ""
-"<strong>Hinweis:</strong> Sie können immer noch <a href=\"%(email_url)s\"> "
-"Ihre E-Mail-Adresse ändern</a>"
+msgstr "<strong>Hinweis:</strong> Sie können immer noch <a href=\"%(email_url)s\"> Ihre E-Mail-Adresse ändern</a>"
 
 #: aleksis/core/templates/core/additional_field/edit.html:6
 #: aleksis/core/templates/core/additional_field/edit.html:7
@@ -1616,9 +1599,14 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          Auf dieser Seite können Sie Ihr das Standard-Dashboard zusammenstallen, welches angezeigt wird, wenn ein Nutzer kein eigenes definiert. \n"
-"Sie können beliebige Elemente von den \"Verfügbaren Widgets\" in \"Standard-Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die Widgets bewegen. \n"
-"Wenn Sie fertig sind, vergessen Sie bitte nicht, auf \"Speichern\" zu drücken.\n"
+"          Auf dieser Seite können Sie Ihr das Standard-Dashboard "
+"zusammenstallen, welches angezeigt wird, wenn ein Benutzer kein eigenes "
+"definiert. \n"
+"Sie können beliebige Elemente von den \"Verfügbaren Widgets\" in \"Standard-"
+"Dashboard\" ziehen oder die Reihenfolge verändern, indem Sie die Widgets "
+"bewegen. \n"
+"Wenn Sie fertig sind, vergessen Sie bitte nicht, auf \"Speichern\" zu "
+"drücken.\n"
 "        "
 
 #: aleksis/core/templates/core/edit_dashboard.html:48
@@ -2284,26 +2272,23 @@ msgstr "Bitte gehen Sie zurück in Ihre Anwendung und geben Sie diesen Code ein:
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:6
-msgid "Revoke token"
-msgstr "Token zurückziehen"
+#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
+msgid "Revoke access"
+msgstr "Zugriff zurückziehen"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:12
-msgid "Are you sure to revoke this token?"
-msgstr "Sind Sie sicher, dass Sie dieses Token zurückziehen möchten?"
+msgid "Are you sure to revoke the access for this application?"
+msgstr ""
+"Sind Sie sicher, dass Sie den Zugriff für diese Anwendung zurückziehen "
+"möchten?"
 
 #: aleksis/core/templates/oauth2_provider/authorized-token-delete.html:20
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:23
 msgid "Revoke"
 msgstr "Zurückziehen"
 
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
-#: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
-msgid "Authorized applications"
-msgstr "Autorisierte Anwendungen"
-
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:33
-msgid "No authorized tokens defined."
-msgstr "Keine autorisierten Token definiert."
+msgid "No authorized applications."
+msgstr "Keine autorisierten Anwendungen."
 
 #: aleksis/core/templates/offline.html:5
 msgid "Network error"
@@ -2353,22 +2338,22 @@ msgstr "Bitte geben Sie einen Suchausdruck ein."
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:5
 #: aleksis/core/templates/socialaccount/authentication_error.html:6
-msgid "Social Network Login Failure"
-msgstr "Anmeldung über soziales Netzwerk fehlgeschlagen"
+msgid "Third-party Account Login Failure"
+msgstr "Anmeldung über Drittanbieter-Konto fehlgeschlagen"
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:13
-msgid "Social Network Login Failure."
-msgstr "Anmeldung über soziales Netzwerk fehlgeschlagen."
+msgid "Third-party Account Login Failure."
+msgstr "Anmeldung über Drittanbieter-Konto fehlgeschlagen."
 
 #: aleksis/core/templates/socialaccount/authentication_error.html:15
 msgid ""
 "\n"
-"            An error occurred while attempting to login via your social network account.\n"
+"            An error occurred while attempting to login via your third-party account.\n"
 "            Please contact one of your site administrators.\n"
 "          "
 msgstr ""
 "\n"
-"            Beim dem Versuch, die Anmeldung über Ihr soziales Netzwerk "
+"            Beim dem Versuch, die Anmeldung über Ihr Drittanbieter-Konto "
 "durchzuführen, ist ein Fehler aufgetreten.\n"
 "            Kontaktieren Sie bitte einen Ihrer Systemadministratoren:\n"
 "          "
@@ -2383,14 +2368,12 @@ msgid "Remove"
 msgstr "Löschen"
 
 #: aleksis/core/templates/socialaccount/connections.html:34
-msgid "You currently have no social network accounts connected to this account."
-msgstr ""
-"Sie haben aktuell keine Konten von sozialen Netzwerken mit Ihrem Konto "
-"verbunden."
+msgid "You currently have no third-party accounts connected to this account."
+msgstr "Sie haben aktuell keine Drittanbieter-Konten mit Ihrem Konto verbunden."
 
 #: aleksis/core/templates/socialaccount/connections.html:37
-msgid "Add a 3rd Party Account"
-msgstr "Ein Drittanbieterkonto hinzufügen"
+msgid "Add a Third-party Account"
+msgstr "Ein Drittanbieter-Konto hinzufügen"
 
 #: aleksis/core/templates/socialaccount/login_cancelled.html:5
 #: aleksis/core/templates/socialaccount/login_cancelled.html:6
@@ -2406,9 +2389,7 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"            Sie haben sich entschieden, die Anmeldung mit einem Ihrer "
-"bestehenden Konten bei uns abzubrechen. Wenn dies ein Fehler war, <a href=\""
-"%(login_url)s\">fahren Sie bitte mit dem Login fort</a>.\n"
+"            Sie haben sich entschieden, die Anmeldung mit einem Ihrer bestehenden Konten bei uns abzubrechen. Wenn dies ein Fehler war, <a href=\"%(login_url)s\">fahren Sie bitte mit dem Login fort</a>.\n"
 "          "
 
 #: aleksis/core/templates/socialaccount/signup.html:12
@@ -2417,8 +2398,7 @@ msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
 "        %(site_name)s. As a final step, please complete the following form:"
 msgstr ""
-"Sie sind dabei, Ihr %(provider_name)s-Konto zur Anmeldung bei %(site_name)s "
-"zu nutzen. \n"
+"Sie sind dabei, Ihr %(provider_name)s-Konto zur Anmeldung bei %(site_name)s zu nutzen. \n"
 "Als ein letzter Schritt vervollständigen Sie bitte das folgende Formular:"
 
 #: aleksis/core/templates/socialaccount/snippets/provider_list.html:12
@@ -2446,7 +2426,7 @@ msgstr ""
 #: aleksis/core/templates/socialaccount/snippets/provider_list.html:30
 msgid ""
 "\n"
-"          No 3rd party account providers available.\n"
+"          No third-party account providers available.\n"
 "        "
 msgstr ""
 "\n"
@@ -2619,7 +2599,7 @@ msgstr "Tokens generieren"
 
 #: aleksis/core/templates/two_factor/core/login.html:18
 msgid "Login with username and password"
-msgstr "Anmeldung mit Nutzername und Passwort"
+msgstr "Anmeldung mit Benutzername und Passwort"
 
 #: aleksis/core/templates/two_factor/core/login.html:26
 msgid "You have no permission to view this page. Please login with an other account."
@@ -2674,10 +2654,8 @@ msgid ""
 "                  "
 msgstr ""
 "\n"
-"                    Nutzen Sie dieses Formular um Ihre Backup-Tokens zum "
-"Anmelden einzugeben.\n"
-"                Diese Tokens wurden für Sie generiert, um diese gut "
-"aufzubewahren. Bitte\n"
+"                    Nutzen Sie dieses Formular um Ihre Backup-Tokens zum Anmelden einzugeben.\n"
+"                Diese Tokens wurden für Sie generiert, um diese gut aufzubewahren. Bitte\n"
 "                geben Sie einen dieser Tokens ein, um sich einzuloggen.\n"
 "                  "
 
@@ -3034,112 +3012,121 @@ msgstr "Es ist ein Fehler beim Generieren der PDF-Datei aufgetreten."
 msgid "Download PDF"
 msgstr "PDF herunterladen"
 
-#: aleksis/core/views.py:195
+#: aleksis/core/views.py:249
 msgid "The school term has been created."
 msgstr "Das Schuljahr wurde erstellt."
 
-#: aleksis/core/views.py:207
+#: aleksis/core/views.py:261
 msgid "The school term has been saved."
 msgstr "Das Schuljahr wurde gespeichert."
 
-#: aleksis/core/views.py:352
+#: aleksis/core/views.py:406
 msgid "The child groups were successfully saved."
 msgstr "Die Untergruppen wurden gespeichert."
 
-#: aleksis/core/views.py:413
+#: aleksis/core/views.py:467
 msgid "The person has been saved."
 msgstr "Die Person wurde gespeichert."
 
-#: aleksis/core/views.py:452
+#: aleksis/core/views.py:506
 msgid "The group has been saved."
 msgstr "Die Gruppe wurde gespeichert."
 
-#: aleksis/core/views.py:549
+#: aleksis/core/views.py:603
 msgid "The announcement has been saved."
 msgstr "Die Ankündigung wurde gespeichert."
 
-#: aleksis/core/views.py:565
+#: aleksis/core/views.py:619
 msgid "The announcement has been deleted."
 msgstr "Ankündigung wurde gelöscht."
 
-#: aleksis/core/views.py:649
+#: aleksis/core/views.py:703
 msgid "The preferences have been saved successfully."
 msgstr "Die Einstellungen wurde gespeichert."
 
-#: aleksis/core/views.py:673
+#: aleksis/core/views.py:727
 msgid "The person has been deleted."
 msgstr "Die Person wurde gelöscht."
 
-#: aleksis/core/views.py:687
+#: aleksis/core/views.py:741
 msgid "The group has been deleted."
 msgstr "Die Gruppe wurde gelöscht."
 
-#: aleksis/core/views.py:719
+#: aleksis/core/views.py:773
 msgid "The additional_field has been saved."
 msgstr "Das zusätzliche Feld wurde gespeichert."
 
-#: aleksis/core/views.py:753
+#: aleksis/core/views.py:807
 msgid "The additional field has been deleted."
 msgstr "Das zusätzliche Feld wurde gelöscht."
 
-#: aleksis/core/views.py:778
+#: aleksis/core/views.py:832
 msgid "The group type has been saved."
 msgstr "Der Gruppentyp wurde gespeichert."
 
-#: aleksis/core/views.py:808
+#: aleksis/core/views.py:862
 msgid "The group type has been deleted."
 msgstr "Der Gruppentyp wurde gelöscht."
 
-#: aleksis/core/views.py:841
+#: aleksis/core/views.py:895
 msgid "Progress: Run data checks"
 msgstr "Fortschritt: Datenprüfungen ausführen"
 
-#: aleksis/core/views.py:842
+#: aleksis/core/views.py:896
 msgid "Run data checks …"
 msgstr "Datenprüfungen laufen …"
 
-#: aleksis/core/views.py:843
+#: aleksis/core/views.py:897
 msgid "The data checks were run successfully."
 msgstr "Die Datenprüfungen wurden erfolgreich ausgeführt."
 
-#: aleksis/core/views.py:844
+#: aleksis/core/views.py:898
 msgid "There was a problem while running data checks."
 msgstr "Es gab ein Problem beim Ausführen der Datenprüfungen."
 
-#: aleksis/core/views.py:860
+#: aleksis/core/views.py:914
 #, python-brace-format
 msgid "The solve option '{solve_option_obj.verbose_name}' "
 msgstr "Die Lösungsoption \"{solve_option_obj.verbose_name}\" "
 
-#: aleksis/core/views.py:902
+#: aleksis/core/views.py:956
 msgid "The dashboard widget has been saved."
 msgstr "Das Dashboard-Widget wurde gespeichert."
 
-#: aleksis/core/views.py:932
+#: aleksis/core/views.py:986
 msgid "The dashboard widget has been created."
 msgstr "Das Dashboard-Widget wurde erstellt."
 
-#: aleksis/core/views.py:942
+#: aleksis/core/views.py:996
 msgid "The dashboard widget has been deleted."
 msgstr "Das Dashboard-Widget wurde gelöscht."
 
-#: aleksis/core/views.py:1009
+#: aleksis/core/views.py:1063
 msgid "Your dashboard configuration has been saved successfully."
 msgstr "Ihre Dashboardkonfiguration wurde erfolgreich gespeichert."
 
-#: aleksis/core/views.py:1011
+#: aleksis/core/views.py:1065
 msgid "The configuration of the default dashboard has been saved successfully."
 msgstr "Die Konfiguration des Standard-Dashboardes wurde erfolgreich gespeichert."
 
-#: aleksis/core/views.py:1137
-msgid "The social account could not be disconnected because it is the only login method available."
+#: aleksis/core/views.py:1191
+msgid "The third-party account could not be disconnected because it is the only login method available."
 msgstr ""
+"Das Drittanbieter-Konto konnte nicht deaktiviert werden, weil es die einzige "
+"verfügbare Anmeldeoption ist."
 
-#: aleksis/core/views.py:1144
-#, fuzzy
-#| msgid "The child groups were successfully saved."
-msgid "The social account has been successfully disconnected."
-msgstr "Die Untergruppen wurden gespeichert."
+#: aleksis/core/views.py:1198
+msgid "The third-party account has been successfully disconnected."
+msgstr "Das Drittanbieter-Konto wurde erfolgreich getrennt."
+
+#~ msgid "Authorized tokens"
+#~ msgstr "Autorisierte Tokens"
+
+#~ msgid "No authorized tokens defined."
+#~ msgstr "Keine autorisierten Token definiert."
+
+#~ msgid "Social Network Login Failure"
+#~ msgstr "Anmeldung über soziales Netzwerk fehlgeschlagen"
 
 #~ msgid ""
 #~ "We are calling your phone right now, please enter the\n"
@@ -3154,9 +3141,6 @@ msgstr "Die Untergruppen wurden gespeichert."
 #~ msgstr ""
 #~ "Wir haben Ihnen eine Textnachricht geschickt. Bitte geben Sie die Tokens ein,\n"
 #~ "              die wir Ihnen geschickt haben."
-
-#~ msgid "Enabled custom authentication backends"
-#~ msgstr "Benutzerdefinierte Authentifizierungsbackends aktivieren"
 
 #~ msgid "French"
 #~ msgstr "Französisch"

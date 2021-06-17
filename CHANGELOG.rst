@@ -6,6 +6,28 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Changed
+~~~~~~~
+
+* Add verbose names for all preference sections.
+* Add verbose names for all openid connect scopes and show them in grant
+  view.
+* Include public dashboard in navigation
+
+Fixed
+~~~~~
+
+* Fix broken backup health check
+* Make error recovery in about page work
+
+Removed
+~~~~~~~
+
+* Drop all leftovers of DataTables.
+
 `2.0b1`_ - 2021-06-01
 ---------------------
 
