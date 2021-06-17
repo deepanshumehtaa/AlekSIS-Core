@@ -16,6 +16,7 @@ Changed
 * Add verbose names for all openid connect scopes and show them in grant
   view.
 * Include public dashboard in navigation
+* Use semantically correct html elements for headings and alerts.
 
 Fixed
 ~~~~~
