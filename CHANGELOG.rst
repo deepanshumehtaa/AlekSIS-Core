@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Changed
+~~~~~~~
+
+* Use semantically correct html elements for headings and alerts.
+
+
 `2.0b2` - 2021-06-15
 --------------------
 

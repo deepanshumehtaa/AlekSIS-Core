@@ -45,20 +45,20 @@
     {% include "core/partials/save_button.html" %}
   </form>
 
-  <h5>{% trans "Available widgets" %}</h5>
+  <h2>{% trans "Available widgets" %}</h2>
   <div class="row card-panel grey lighten-3" id="not-used-widgets">
     {% for widget in not_used_widgets %}
       {% include "core/partials/edit_dashboard_widget.html" %}
     {% endfor %}
   </div>
 
-  <h5>
+  <h2>
     {% if not default_dashboard %}
       {% trans "Your dashboard" %}
     {% else %}
       {% trans "Default dashboard" %}
     {% endif %}
-  </h5>
+  </h2>
 
   <div class="row card-panel grey lighten-3" id="widgets">
     {% for widget in widgets %}

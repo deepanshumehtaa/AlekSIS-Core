@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block content %}
-  <h4>
+  <h1>
     {% block title %}{% trans "Account Security" %}{% endblock %}
-  </h4>
+  </h1>
 
   {% if default_device %}
     {% if default_device_type == 'TOTPDevice' %}
@@ -20,7 +20,7 @@
     {% endif %}
 
     {% if available_phone_methods %}
-      <h5>{% trans "Backup Phone Numbers" %}</h5>
+      <h2>{% trans "Backup Phone Numbers" %}</h2>
       <p>{% blocktrans %}If your primary method is not available, we are able to
         send backup tokens to the phone numbers listed below.{% endblocktrans %}</p>
       <ul class="collection">
@@ -43,7 +43,7 @@
       </p>
     {% endif %}
 
-    <h5>{% trans "Backup Tokens" %}</h5>
+    <h2>{% trans "Backup Tokens" %}</h2>
     <p>
       {% blocktrans %}If you don't have any device with you, you can access
         your account using backup tokens.{% endblocktrans %}
@@ -60,7 +60,7 @@
       </a>
     </p>
 
-    <h5>{% trans "Disable Two-Factor Authentication" %}</h5>
+    <h2>{% trans "Disable Two-Factor Authentication" %}</h2>
     <p>
       {% blocktrans %}
         However we strongly discourage you to do so, you can

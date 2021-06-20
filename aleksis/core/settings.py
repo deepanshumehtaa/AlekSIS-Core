@@ -524,7 +524,12 @@ ANY_JS = {
     },
     "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
-    "Roboto": {"css_url": JS_URL + "/@fontsource/roboto/index.css"},
+    "Roboto100": {"css_url": JS_URL + "/@fontsource/roboto/100.css"},
+    "Roboto300": {"css_url": JS_URL + "/@fontsource/roboto/300.css"},
+    "Roboto400": {"css_url": JS_URL + "/@fontsource/roboto/400.css"},
+    "Roboto500": {"css_url": JS_URL + "/@fontsource/roboto/500.css"},
+    "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
+    "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)

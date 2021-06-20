@@ -8,7 +8,7 @@
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
 {% block content %}
-  <h4>{{ person.first_name }} {{ person.last_name }}</h4>
+  <h1>{{ person.first_name }} {{ person.last_name }}</h1>
 
   {% has_perm 'core.edit_person_rule' user person as can_change_person %}
   {% has_perm 'core.change_person_preferences_rule' user person as can_change_person_preferences %}
@@ -47,7 +47,7 @@
     </p>
   {% endif %}
 
-  <h5>{% blocktrans %}Contact details{% endblocktrans %}</h5>
+  <h2>{% blocktrans %}Contact details{% endblocktrans %}</h2>
   <div class="row">
     <div class="col s12 m4">
       {% has_perm 'core.view_photo_rule' user person as can_view_photo %}
@@ -117,7 +117,7 @@
     </div>
     {% if person.description %}
       <div class="col s12 m12">
-        <h5>{% trans "Description" %}</h5>
+        <h2>{% trans "Description" %}</h2>
         <p>
           {{ person.description }}
         </p>
@@ -127,21 +127,21 @@
 
   {% if person.children.all and can_view_personal_details %}
     <div class="col s12 m12">
-      <h5>{% trans "Children" %}</h5>
+      <h2>{% trans "Children" %}</h2>
       {% include "core/person/collection.html" with persons=person.children.all %}
     </div>
   {% endif %}
 
   {% if person.guardians.all and can_view_personal_details %}
     <div class="col s12 m12">
-      <h5>{% trans "Guardians / Parents" %}</h5>
+      <h2>{% trans "Guardians / Parents" %}</h2>
       {% include "core/person/collection.html" with persons=person.guardians.all %}
     </div>
   {% endif %}
 
   {% has_perm 'core.view_person_groups_rule' user person as can_view_groups %}
   {% if can_view_groups %}
-    <h5>{% blocktrans %}Groups{% endblocktrans %}</h5>
+    <h2>{% blocktrans %}Groups{% endblocktrans %}</h2>
     {% render_table groups_table %}
   {% endif %}
 {% endblock %}

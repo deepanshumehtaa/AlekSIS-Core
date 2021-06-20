@@ -18,7 +18,12 @@
 
   {# CSS #}
   {% include_css "material-design-icons" %}
-  {% include_css "Roboto" %}
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
   <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
 
   {# Add JS URL resolver #}
@@ -109,7 +114,7 @@
   {% endif %}
 
   {% block no_page_title %}
-    <h4>{% block page_title %}{% endblock %}</h4>
+    <h1>{% block page_title %}{% endblock %}</h1>
   {% endblock %}
 
   {% block content %}{% endblock %}
