@@ -23,6 +23,7 @@ Fixed
 ~~~~~
 
 * Add missing AWS options to ignore invalid ssl certificates
+* Add missing dependency python-gnupg
 
 `2.0b2` - 2021-06-15
 --------------------
