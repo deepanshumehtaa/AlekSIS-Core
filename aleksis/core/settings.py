@@ -853,6 +853,8 @@ if _settings.get("storage.type", "").lower() == "s3":
     AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
     AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
     AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+    AWS_S3_VERIFY = _settings.get("storage.s3.verify", True)
+    AWS_S3_USE_SSL = _settings.get("storage.s3.use_ssl", True)
 else:
     DEFAULT_FILE_STORAGE = "titofisto.TitofistoStorage"
     TITOFISTO_TIMEOUT = 10 * 60
