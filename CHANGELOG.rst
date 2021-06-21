@@ -19,6 +19,11 @@ Changed
 
 * Use semantically correct html elements for headings and alerts.
 
+Fixed
+~~~~~
+
+* Add missing AWS options to ignore invalid ssl certificates
+
 `2.0b2` - 2021-06-15
 --------------------
 
