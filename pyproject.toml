@@ -104,7 +104,7 @@ django-uwsgi-ng = "^1.1.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
 django-oauth-toolkit = "^1.5.0"
-django-redis = "^4.12.1"
+django-redis = "^5.0.0"
 django-storages = {version = "^1.11.1", optional = true}
 boto3 = {version = "^1.17.33", optional = true}
 django-cleanup = "^5.1.0"
