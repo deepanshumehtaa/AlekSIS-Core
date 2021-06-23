@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~~~
+
+* Add option to disable dashboard auto updating as a user and sitewide.
+
 Changed
 ~~~~~~~
 
@@ -16,11 +21,6 @@ Changed
 
 `2.0b2` - 2021-06-15
 --------------------
-
-Added
-~~~~~~~
-
-* Add option to disable dashboard auto updating as a user and sitewide.
 
 Changed
 ~~~~~~~
