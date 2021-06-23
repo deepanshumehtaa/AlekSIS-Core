@@ -18,7 +18,12 @@
 
   {# CSS #}
   {% include_css "material-design-icons" %}
-  {% include_css "Roboto" %}
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
   <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
 
   {# Add JS URL resolver #}
@@ -93,8 +98,7 @@
 
   {% if messages %}
     {% for message in messages %}
-      <div class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
-        <p>
+      <figure class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
           {% if message.tags == "success" %}
             <i class="material-icons left">check_circle</i>
           {% elif  message.tags == "info" %}
@@ -105,13 +109,12 @@
             <i class="material-icons left">error</i>
           {% endif %}
           {{ message }}
-        </p>
-      </div>
+      </figure>
     {% endfor %}
   {% endif %}
 
   {% block no_page_title %}
-    <h4>{% block page_title %}{% endblock %}</h4>
+    <h1>{% block page_title %}{% endblock %}</h1>
   {% endblock %}
 
   {% block content %}{% endblock %}
