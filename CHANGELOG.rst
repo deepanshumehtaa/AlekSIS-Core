@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Allow to install system and build dependencies in docker build
+
 Changed
 ~~~~~~~
 
