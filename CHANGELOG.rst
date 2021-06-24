@@ -14,6 +14,11 @@ Added
 
 * Add option to disable dashboard auto updating as a user and sitewide.
 
+Added
+~~~~~
+
+* Allow to install system and build dependencies in docker build
+
 Changed
 ~~~~~~~
 
