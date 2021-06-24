@@ -97,6 +97,15 @@ USER 33:33
 ONBUILD ARG APPS
 ONBUILD USER 0:0
 ONBUILD RUN set -e; \
+            if [ -n "$BUILD_DEPS" ]; then \
+                eatmydata apt-get update; \
+                eatmydata apt-get install -y $BUILD_DEPS; \
+            fi; \
+            if [ -n "$SYSTEM_DEPS" ]; then \
+                eatmydata apt-get update; \
+                eatmydata apt-get install -y $SYSTEM_DEPS; \
+            fi;
+ONBUILD RUN set -e; \
             if [ -n "$APPS" ]; then \
                 eatmydata pip install $APPS; \
             fi; \
