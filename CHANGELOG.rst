@@ -14,6 +14,9 @@ Added
 
 * Allow to install system and build dependencies in docker build
 
+`2.0rc1` - 2021-06-23
+----------------------
+
 Changed
 ~~~~~~~
 
@@ -277,3 +280,4 @@ Fixed
 .. _2.0b0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b0
 .. _2.0b1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b1
 .. _2.0b2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b2
+.. _2.0rc1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc1
