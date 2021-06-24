@@ -106,7 +106,7 @@ ONBUILD RUN set -e; \
             if [ -n "$SYSTEM_DEPS" ]; then \
                 eatmydata apt-get update; \
                 eatmydata apt-get install -y $SYSTEM_DEPS; \
-            fi; \
+            fi;
 ONBUILD RUN set -e; \
             if [ -n "$APPS" ]; then \
                 eatmydata pip install $APPS; \
