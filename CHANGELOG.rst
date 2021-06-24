@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 `2.0rc1` - 2021-06-23
 ----------------------
 
+Added
+~~~~~
+
+* Allow to install system and build dependencies in docker build
+
 Changed
 ~~~~~~~
 
