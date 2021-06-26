@@ -6,13 +6,22 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.0rc2`_ - 2021-06-24
+---------------------
 
 Added
 ~~~~~
 
 * Allow to install system and build dependencies in docker build
+
+
+`2.0rc1`_ - 2021-06-23
+----------------------
+
+Added
+~~~~~
+
+* Add option to disable dashboard auto updating as a user and sitewide.
 
 `2.0rc1` - 2021-06-23
 ----------------------
@@ -28,7 +37,7 @@ Fixed
 * Add missing dependency python-gnupg
 * Add missing AWS options to ignore invalid ssl certificates
 
-`2.0b2` - 2021-06-15
+`2.0b2`_ - 2021-06-15
 --------------------
 
 Added
@@ -281,3 +290,4 @@ Fixed
 .. _2.0b1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b1
 .. _2.0b2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b2
 .. _2.0rc1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc1
+.. _2.0rc2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc2
