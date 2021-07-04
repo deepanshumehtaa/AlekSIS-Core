@@ -149,3 +149,18 @@ def contains_site_preference_value(section: str, pref: str, value: str):
 def has_activated_2fa(user: User) -> bool:
     """Check if the user has activated two-factor authentication."""
     return user_has_device(user)
+
+
+@predicate
+def person_is_member_of_same_group(user: User, person: Person, group: Group) -> bool:
+    """Members of groups can see other members."""
+
+    if group.members.filter(id=person.id) and group.members.filter(id=user.person.id):
+        return True
+
+@prediate
+def person_is_owner_of_same_group(user: User, person: Person, group: Group) -> bool:
+    """Owners of groups can see their members."""
+
+    if group.members.filter(id=person.id) and group.owners.filter(id=user.person.id):
+        return True
