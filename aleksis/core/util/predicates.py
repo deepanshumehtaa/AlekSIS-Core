@@ -155,7 +155,7 @@ def has_activated_2fa(user: User) -> bool:
 def person_is_member_of_same_group(user: User, person: Person, group: Group) -> bool:
     """Members of groups can see other members."""
 
-    if group.members.filter(id=person.id) and group.members.filter(id=user.person.id):
+    if person in group.members.all() and user.person in group.members.all():
         return True
 
 @prediate
