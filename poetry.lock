@@ -551,7 +551,7 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-allauth"
-version = "0.44.0"
+version = "0.45.0"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
 category = "main"
 optional = false
@@ -2690,7 +2690,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6411aef8264b9c8c32a5ccca65bb4d077cf769c9ddaef4135d5274bbc4052c90"
+content-hash = "fadc348111323dfbfd7acdb5d942272cda55dcca2c6e156fdfff8a955f792750"
 
 [metadata.files]
 alabaster = [
@@ -2785,6 +2785,7 @@ celery-haystack-ng = [
     {file = "celery_haystack_ng-0.20.post2-py2.py3-none-any.whl", hash = "sha256:a13e00f2c29411b06c6cdf59ad6a90b6c158e3384e7ec6d6d64f6a69e8ff299a"},
 ]
 celery-progress = [
+    {file = "celery-progress-0.1.0.tar.gz", hash = "sha256:60325e0c6733f99a599a911e520c56b87834c397b454531a426079b4e35a8831"},
     {file = "celery_progress-0.1.0-py3-none-any.whl", hash = "sha256:01bc7ecb2483ed7085b957413a392f85b7e1002fc8ce6d24f3d1ff264173002d"},
 ]
 certifi = [
@@ -2965,7 +2966,7 @@ django = [
     {file = "Django-3.2.4.tar.gz", hash = "sha256:66c9d8db8cc6fe938a28b7887c1596e42d522e27618562517cc8929eb7e7f296"},
 ]
 django-allauth = [
-    {file = "django-allauth-0.44.0.tar.gz", hash = "sha256:e51af457466022f52154d74c8523ac69375120fad2acce6e239635d85e610b25"},
+    {file = "django-allauth-0.45.0.tar.gz", hash = "sha256:6d46be0e1480316ccd45476db3aefb39db70e038d2a543112d314b76bb999a4e"},
 ]
 django-any-js = [
     {file = "django-any-js-1.1.tar.gz", hash = "sha256:2972946902ba049f73bf8bb87e0a0118f77a8c9dca89438f193598bff758422f"},
