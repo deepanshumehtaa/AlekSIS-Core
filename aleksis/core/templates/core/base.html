@@ -49,7 +49,7 @@
   <!-- Menu button (sidenav) -->
   <div class="container">
     <a href="#" data-target="slide-out" class="top-nav sidenav-trigger hide-on-large-only">
-      <i class="material-icons">menu</i>
+      <i class="material-icons iconify" data-icon="mdi:menu"></i>
     </a>
   </div>
 
@@ -62,7 +62,7 @@
         {% if user.is_authenticated %}
           <li>{% trans "Logged in as" %} {{ user.get_username }}</li>
           <li>
-            <a href="{% url 'logout' %}">{% trans "Logout" %} <i class="material-icons right">exit_to_app</i></a>
+            <a href="{% url 'logout' %}">{% trans "Logout" %} <i class="iconify material-icons right" data-icon="mdi:logout"></i></a>
           </li>
         {% endif %}
       </ul>
@@ -84,7 +84,7 @@
         <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
           <div class="search-wrapper">
             <input id="search" name="q" placeholder="{% trans "Search" %}">
-            <i class="material-icons">search</i>
+            <i class="material-icons iconify" data-icon="mdi:search">search</i>
           </div>
         </form>
       </li>
@@ -102,16 +102,16 @@
   {% if messages %}
     {% for message in messages %}
       <figure class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
-          {% if message.tags == "success" %}
-            <i class="material-icons left">check_circle</i>
-          {% elif  message.tags == "info" %}
-            <i class="material-icons left">info</i>
-          {% elif  message.tags == "warning" %}
-            <i class="material-icons left">warning</i>
-          {% elif  message.tags == "error" %}
-            <i class="material-icons left">error</i>
-          {% endif %}
-          {{ message }}
+        {% if message.tags == "success" %}
+          <i class="material-icons left iconify" data-icon="mdi:check-circle"></i>
+        {% elif message.tags == "info" %}
+          <i class="material-icons left iconify" data-icon="mdi:information"></i>
+        {% elif message.tags == "warning" %}
+          <i class="material-icons left iconify" data-icon="mdi:alert"></i>
+        {% elif message.tags == "error" %}
+          <i class="material-icons left iconify" data-icon="mdi:alert-circle"></i>
+        {% endif %}
+        {{ message }}
       </figure>
     {% endfor %}
   {% endif %}
