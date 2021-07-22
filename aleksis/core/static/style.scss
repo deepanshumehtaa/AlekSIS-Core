@@ -766,3 +766,7 @@ main figure.alert {
 .margin-bottom {
   margin-bottom: 0.7rem !important;
 }
+
+svg.iconify {
+  @extend i;
+}
