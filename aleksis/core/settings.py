@@ -133,6 +133,7 @@ INSTALLED_APPS = [
     "django_filters",
     "oauth2_provider",
     "rest_framework",
+    "dj_iconify.apps.DjIconifyConfig",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -500,6 +501,8 @@ YARN_INSTALLED_APPS = [
     "paper-css",
     "jquery-sortablejs",
     "sortablejs",
+    "@iconify/iconify",
+    "@iconify/json",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -530,6 +533,7 @@ ANY_JS = {
     "Roboto500": {"css_url": JS_URL + "/@fontsource/roboto/500.css"},
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
+    "iconify": {"js_url": JS_URL + "/@iconify/iconify/dist/iconify.min.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -545,6 +549,8 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     STATIC_ROOT + "/materialize-css/sass/",
     STATIC_ROOT,
 ]
+
+ICONIFY_JSON_ROOT = os.path.join(JS_ROOT, "@iconify", "json")
 
 ADMINS = _settings.get("contact.admins", [])
 SERVER_EMAIL = _settings.get("contact.from", "root@localhost")

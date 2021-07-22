@@ -114,6 +114,7 @@ Whoosh = "^2.7.4"
 django-titofisto = "^0.1.0"
 haystack-redis = "^0.0.1"
 python-gnupg = "^0.4.7"
+django-iconify = "^0.1.0"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]

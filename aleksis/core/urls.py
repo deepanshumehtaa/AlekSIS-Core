@@ -224,6 +224,7 @@ urlpatterns = [
         name="edit_default_dashboard",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("icons/", include("dj_iconify.urls")),
 ]
 
 # Add URLs for optional features
