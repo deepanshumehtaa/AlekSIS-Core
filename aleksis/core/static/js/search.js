@@ -32,10 +32,11 @@ Autocomplete.prototype.setup = function () {
     // Trigger the "keyup" event if input gets focused
 
     this.query_box.focus(function () {
-        self.query_box.trigger("keydown");
+        self.query_box.trigger("input");
     });
 
-    this.query_box.keyup(function () {
+    this.query_box.on("input", () => {
+        console.log("Input changed, fetching again...")
         var query = self.query_box.val();
 
         if (query.length < self.minimum_length) {
