@@ -13,6 +13,7 @@ var Autocomplete = function (options) {
     this.form_elem = null;
     this.query_box = null;
     this.selected_element = null;
+    this.loader_shown = false;
 };
 
 Autocomplete.prototype.setup = function () {
@@ -98,11 +99,16 @@ Autocomplete.prototype.fetch = function (query) {
     var self = this;
 
     $.ajax({
-        url: this.url
-        , data: {
+        url: this.url,
+        data: {
             'q': query
-        }
-        , success: function (data) {
+        },
+        beforeSend: (request, settings) => {
+            $('#search-results').remove();
+            self.setLoader(true);
+        },
+        success: function (data) {
+            self.setLoader(false);
             self.show_results(data);
         }
     })
@@ -123,3 +129,22 @@ Autocomplete.prototype.setSelectedResult = function (element) {
     this.selected_element = element;
     console.log("New element: ", element);
 };
+
+Autocomplete.prototype.setLoader = function (value) {
+    var self = this;
+    if (typeof value === "boolean"){
+        if (self.loader_shown === value) {
+            return
+        } else {
+            self.loader_shown = value
+
+            if (!value) {
+                $("#search-loader").remove();
+            } else {
+                this.query_box.after(
+                    $('<div class="progress" id="search-loader"><div class="indeterminate"></div></div>')
+                );
+            }
+        }
+    }
+}
