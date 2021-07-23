@@ -1019,14 +1019,14 @@ django = ">=2.2"
 
 [[package]]
 name = "django-reversion"
-version = "3.0.9"
+version = "4.0.0"
 description = "An extension to the Django web framework that provides version control for model instances."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-django = ">=1.11"
+django = ">=2.0"
 
 [[package]]
 name = "django-sass-processor"
@@ -2687,7 +2687,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "fd5fb9827a0ef3f303a62ae841ad499d7fe9992408d76d9e3fbc67a6bf4079fe"
+content-hash = "1ae231ab82c9fe7612d1022ac0f8215dd99724f11406807ba2550ba43cb56f7b"
 
 [metadata.files]
 alabaster = [
@@ -3117,8 +3117,8 @@ django-render-block = [
     {file = "django_render_block-0.8.1-py3-none-any.whl", hash = "sha256:903969efd0949f750c5fe71affe6e6b1ea66d03005c102a67fda36d5b9f4e1e1"},
 ]
 django-reversion = [
-    {file = "django-reversion-3.0.9.tar.gz", hash = "sha256:a5af55f086a3f9c38be2f049c251e06005b9ed48ba7a109473736b1fc95a066f"},
-    {file = "django_reversion-3.0.9-py3-none-any.whl", hash = "sha256:1b57127a136b969f4b843a915c72af271febe7f336469db6c27121f8adcad35c"},
+    {file = "django-reversion-4.0.0.tar.gz", hash = "sha256:ad6d714b4b9b824e22b88d47201cc0f74b5c4294c8d4e1f8d7ac7c3631ef3188"},
+    {file = "django_reversion-4.0.0-py3-none-any.whl", hash = "sha256:f059c654e38c0dd8dccd7f0990aa2f6d9ad22dab55c5e095f9596aeda8079dcd"},
 ]
 django-sass-processor = [
     {file = "django-sass-processor-1.0.1.tar.gz", hash = "sha256:dcaad47c591a2d52689c1bd209259e922e902d886293f0d5c9e0d1a4eb85eda2"},
