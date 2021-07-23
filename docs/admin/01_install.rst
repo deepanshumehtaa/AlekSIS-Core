@@ -47,6 +47,7 @@ Install some packages from the Debian package system.
                python3 \
                python3-dev \
                libldap2-dev \
+               libpq-dev \
                libsasl2-dev \
                yarnpkg \
                python3-virtualenv \
