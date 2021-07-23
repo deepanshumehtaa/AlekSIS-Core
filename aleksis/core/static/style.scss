@@ -179,11 +179,14 @@ ul.sidenav li.logo > a:hover {
   box-shadow: none;
 }
 
-.sidenav li.search .search-wrapper > i.material-icons {
+.sidenav li.search .search-wrapper > button.search-button {
   position: absolute;
-  top: 21px;
+  top: calc(50% - 18px);
   right: 10px;
-  cursor: pointer;
+}
+
+button.btn-flat.search-button:hover {
+  background-color: $button-disabled-background;
 }
 
 a.collection-item.search-item {

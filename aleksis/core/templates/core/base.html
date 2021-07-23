@@ -80,8 +80,10 @@
       <li class="search">
         <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
           <div class="search-wrapper">
-            <input id="search" name="q" placeholder="{% trans "Search" %}">
-            <i class="material-icons">search</i>
+            <input id="search" name="q" type="search" enterkeyhint="search" placeholder="{% trans "Search" %}">
+            <button class="btn btn-flat search-button" type="submit" aria-label="{% trans "Search" %}">
+              <i class="material-icons">search</i>
+            </button>
           </div>
         </form>
       </li>
