@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Support PDF generation without available request object (started completely from background).
+
 Fixed
 ~~~~~
 
