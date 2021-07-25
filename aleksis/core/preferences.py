@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import URLValidator
 from django.forms import EmailField, ImageField, URLField
 from django.forms.widgets import SelectMultiple
 from django.utils.translation import gettext_lazy as _
@@ -50,6 +51,20 @@ class SiteDescription(StringPreference):
     default = "The Free School Information System"
     required = False
     verbose_name = _("Site description")
+
+
+@site_preferences_registry.register
+class PDFURL(StringPreference):
+    """URL which should be used as base for PDF printing."""
+
+    section = general
+    name = "pdf_url"
+    default = ""
+    required = False
+    verbose_name = _("PDF URL")
+    help_text = _("This URL is used for PDF printing.")
+
+    field_kwargs = {"validators": [URLValidator()]}
 
 
 @site_preferences_registry.register
