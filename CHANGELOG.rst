@@ -13,6 +13,12 @@ Added
 ~~~~~
 
 * Support PDF generation without available request object (started completely from background).
+* Display a loading animation while fetching search results in the sidebar.
+
+Fixed
+~~~~~
+
+* Make search suggestions selectable using the arrow keys.
 
 Fixed
 ~~~~~
