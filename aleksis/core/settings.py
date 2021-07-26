@@ -68,6 +68,9 @@ UWSGI_SERVE_STATIC = True
 UWSGI_SERVE_MEDIA = False
 
 ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [getfqdn(), "localhost", "127.0.0.1", "[::1]"])
+BASE_URL = _settings.get(
+    "http.base_url", "http://localhost:8000" if DEBUG else f"https://{ALLOWED_HOSTS[0]}"
+)
 
 # Application definition
 INSTALLED_APPS = [
