@@ -4,6 +4,7 @@ from tempfile import TemporaryDirectory
 from typing import Optional, Tuple
 from urllib.parse import urljoin
 
+from django.conf import settings
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.http.request import HttpRequest
@@ -21,7 +22,6 @@ from celery_progress.backend import ProgressRecorder
 from aleksis.core.celery import app
 from aleksis.core.models import PDFFile
 from aleksis.core.util.celery_progress import recorded_task, render_progress_page
-from aleksis.core.util.core_helpers import get_site_preferences
 
 
 @recorded_task
@@ -76,12 +76,11 @@ def generate_pdf_from_template(
     file_object = PDFFile.objects.create(html_file=ContentFile(html_template, name="source.html"))
 
     # As this method may be run in background and there is no request available,
-    # we have to use a predefined URL from preferences then
+    # we have to use a predefined URL from settings then
     if request:
         html_url = request.build_absolute_uri(file_object.html_file.url)
     else:
-        pdf_base_url = get_site_preferences()["general__pdf_url"]
-        html_url = urljoin(pdf_base_url, file_object.html_file.url)
+        html_url = urljoin(settings.BASE_URL, file_object.html_file.url)
 
     result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
 
