@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Added
+~~~~~
+
+* Support PDF generation without available request object (started completely from background).
+
 `2.0rc2`_ - 2021-06-24
 ---------------------
 
