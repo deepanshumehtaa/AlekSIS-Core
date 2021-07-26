@@ -821,6 +821,8 @@ DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
 MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+PROMETHEUS_METRICS_EXPORT_PORT = _settings.get("prometheus.metrics.port", None)
+PROMETHEUS_METRICS_EXPORT_ADDRESS = _settings.get("prometheus.metrucs.address", None)
 
 SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
