@@ -12,7 +12,7 @@ Unreleased
 Fixed
 ~~~~~
 
-* Use correct HTML 5 elements for the search frontend and fix CSS according.
+* Use correct HTML 5 elements for the search frontend and fix CSS accordingly.
 
 `2.0rc2`_ - 2021-06-24
 ---------------------
