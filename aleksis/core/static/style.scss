@@ -193,6 +193,11 @@ a.collection-item.search-item {
   padding: 20px 10px;
 }
 
+div#search-loader {
+  margin: 0.5rem 0 0 0;
+  display: none;
+}
+
 div#search-results {
   position: absolute;
   margin-top: -10px;
