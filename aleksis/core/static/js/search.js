@@ -13,7 +13,6 @@ var Autocomplete = function (options) {
     this.form_elem = null;
     this.query_box = null;
     this.selected_element = null;
-    this.loader = $("#search-loader");
 };
 
 Autocomplete.prototype.setup = function () {
@@ -131,12 +130,5 @@ Autocomplete.prototype.setSelectedResult = function (element) {
 };
 
 Autocomplete.prototype.setLoader = function (value) {
-    var self = this;
-    if (typeof value === "boolean"){
-        if (value) {
-            self.loader.show();
-        } else {
-            self.loader.hide();
-        }
-    }
+        $("#search-loader").css("display", (value === true ? "block" : "none"))
 }
