@@ -1037,7 +1037,12 @@ class PDFFile(ExtensibleModel):
         return timezone.now() + timedelta(minutes=get_site_preferences()["general__pdf_expiration"])
 
     person = models.ForeignKey(
-        to=Person, on_delete=models.CASCADE, verbose_name=_("Owner"), related_name="pdf_files"
+        to=Person,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name=_("Owner"),
+        related_name="pdf_files",
     )
     expires_at = models.DateTimeField(
         verbose_name=_("File expires at"), default=_get_default_expiration

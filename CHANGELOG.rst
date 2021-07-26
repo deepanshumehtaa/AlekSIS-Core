@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.0rc3`_ - 2021-07-26
+----------------------
+
+Added
+~~~~~
+
+* Support PDF generation without available request object (started completely from background).
+* Display a loading animation while fetching search results in the sidebar.
+
+Fixed
+~~~~~
+
+* Make search suggestions selectable using the arrow keys.
+* Use correct HTML 5 elements for the search frontend and fix CSS accordingly.
 
 `2.0rc2`_ - 2021-06-24
 ---------------------
@@ -284,3 +298,4 @@ Fixed
 .. _2.0b2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0b2
 .. _2.0rc1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc1
 .. _2.0rc2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc2
+.. _2.0rc3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc3
