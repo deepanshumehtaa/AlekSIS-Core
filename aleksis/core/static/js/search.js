@@ -13,7 +13,7 @@ var Autocomplete = function (options) {
     this.form_elem = null;
     this.query_box = null;
     this.selected_element = null;
-    this.loader_shown = false;
+    this.loader = $("#search-loader");
 };
 
 Autocomplete.prototype.setup = function () {
@@ -133,18 +133,10 @@ Autocomplete.prototype.setSelectedResult = function (element) {
 Autocomplete.prototype.setLoader = function (value) {
     var self = this;
     if (typeof value === "boolean"){
-        if (self.loader_shown === value) {
-            return
+        if (value) {
+            self.loader.show();
         } else {
-            self.loader_shown = value
-
-            if (!value) {
-                $("#search-loader").remove();
-            } else {
-                this.query_box.after(
-                    $('<div class="progress" id="search-loader"><div class="indeterminate"></div></div>')
-                );
-            }
+            self.loader.hide();
         }
     }
 }
