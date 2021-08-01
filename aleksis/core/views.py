@@ -15,7 +15,6 @@ from django.http import (
     HttpResponseRedirect,
     JsonResponse,
 )
-from django.http.response import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -128,7 +127,9 @@ class ServiceWorkerView(View):
     """
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        return FileResponse(open(settings.SERVICE_WORKER_PATH))
+        return HttpResponse(
+            open(settings.SERVICE_WORKER_PATH, "rt"), content_type="application/javascript"
+        )
 
 
 class ManifestView(View):
