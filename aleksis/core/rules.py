@@ -28,7 +28,7 @@ rules.add_perm("core.search_rule", search_predicate)
 
 # View persons
 view_persons_predicate = has_person & (
-    has_global_perm("core.view_person") | has_any_object("core.view_person_rule", Person)
+    has_global_perm("core.view_person") | has_any_object("core.view_person", Person)
 )
 rules.add_perm("core.view_persons_rule", view_persons_predicate)
 
