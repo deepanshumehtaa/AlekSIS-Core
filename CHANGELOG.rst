@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Added
+~~~~~
+
+* Allow to configure port for prometheus metrics endpoint.
+
 `2.0rc3`_ - 2021-07-26
 ----------------------
 
