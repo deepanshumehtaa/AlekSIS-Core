@@ -82,7 +82,7 @@ def has_any_object(perm: str, klass):
     @predicate(name)
     def fn(user: User) -> bool:
         ct_perm = get_content_type_by_perm(perm)
-        # In case a object-related permission with the same ContentType class as the given class
+        # In case an object-related permission with the same ContentType class as the given class
         # is passed, the optimized django-guardian get_objects_for_user function is used.
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
