@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 import django.apps
 from django.apps import apps
+from django.conf import settings
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -137,8 +138,12 @@ class CoreConfig(AppConfig):
             # Save the associated person to pick up defaults
             user.person.save()
 
+<<<<<<< HEAD
     @classmethod
     def get_all_scopes(cls) -> dict[str, str]:
+=======
+    def get_all_scopes(self) -> dict[str, str]:
+>>>>>>> 1aabacae (Allow apps to dynamically generate OAuth scopes)
         scopes = {
             "read": "Read anything the resource owner can read",
             "write": "Write anything the resource owner can write",

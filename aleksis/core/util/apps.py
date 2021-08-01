@@ -1,5 +1,5 @@
 from importlib import metadata
-from typing import Any, Optional, Sequence
+from typing import TYPE_CHECKING, Any, Optional, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -11,6 +11,9 @@ from license_expression import Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
+
+if TYPE_CHECKING:
+    from oauth2_provider.models import AbstractApplication
 
 
 class AppConfig(django.apps.AppConfig):

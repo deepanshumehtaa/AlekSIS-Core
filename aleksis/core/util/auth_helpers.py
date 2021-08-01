@@ -1,12 +1,17 @@
 """Helpers/overrides for django-allauth."""
 
+from typing import Optional
+
 from django.conf import settings
 from django.http import HttpRequest
 
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from oauth2_provider.models import AbstractApplication
 from oauth2_provider.oauth2_validators import OAuth2Validator
+from oauth2_provider.scopes import BaseScopes
 
+from .apps import AppConfig
 from .core_helpers import get_site_preferences, has_person
 
 
@@ -76,3 +81,41 @@ class CustomOAuth2Validator(OAuth2Validator):
             claims["groups"] = request.user.person.groups.values_list("name", flat=True).all()
 
         return claims
+
+
+class AppScopes(BaseScopes):
+    """Scopes backend for django-oauth-toolkit gathering scopes from apps.
+
+    Will call the respective method on all known AlekSIS app configs and
+    join the results.
+    """
+
+    def get_all_scopes(self) -> dict[str, str]:
+        scopes = {}
+        for app in AppConfig.__subclasses__():
+            scopes |= app.get_all_scopes()
+        return scopes
+
+    def get_available_scopes(
+        self,
+        application: Optional[AbstractApplication] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs
+    ) -> list[str]:
+        scopes = []
+        for app in AppConfig.__subclasses__():
+            scopes += app.get_available_scopes()
+        return scopes
+
+    def get_default_scopes(
+        self,
+        application: Optional[AbstractApplication] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs
+    ) -> list[str]:
+        scopes = []
+        for app in AppConfig.__subclasses__():
+            scopes += app.get_default_scopes()
+        return scopes
