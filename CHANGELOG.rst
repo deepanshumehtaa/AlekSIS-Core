@@ -14,6 +14,11 @@ Added
 
 * Allow to configure port for prometheus metrics endpoint.
 
+Fixed
+~~~~~
+
+* Correctly deliver server errors to user
+
 `2.0rc3`_ - 2021-07-26
 ----------------------
 
