@@ -17,6 +17,7 @@ Added
 Fixed
 ~~~~~
 
+* Correctly deliver server errors to user
 * Use text HTTP response for serviceworker.js insteas of binary stream
 
 `2.0rc3`_ - 2021-07-26
