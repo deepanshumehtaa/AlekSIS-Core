@@ -1207,7 +1207,7 @@ class SocialAccountDeleteView(DeleteView):
 def server_error(
     request: HttpRequest, template_name: str = ERROR_500_TEMPLATE_NAME
 ) -> HttpResponseServerError:
-    """Custom error view that ensures the request is passed to the error page."""
+    """Ensure the request is passed to the error page."""
     template = loader.get_template(template_name)
     context = {"request": request}
 
