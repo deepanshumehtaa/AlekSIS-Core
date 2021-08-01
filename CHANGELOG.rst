@@ -14,6 +14,11 @@ Added
 
 * Allow to configure port for prometheus metrics endpoint.
 
+Fixed
+~~~~~
+
+* Use text HTTP response for serviceworker.js insteas of binary stream
+
 `2.0rc3`_ - 2021-07-26
 ----------------------
 
