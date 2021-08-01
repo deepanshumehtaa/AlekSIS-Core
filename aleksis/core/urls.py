@@ -226,6 +226,9 @@ urlpatterns = [
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
 ]
 
+# Use custom server error handler to get a request object in the template
+handler500 = views.server_error
+
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):
     from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls  # noqa

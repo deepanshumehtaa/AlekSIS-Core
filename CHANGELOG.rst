@@ -19,6 +19,7 @@ Fixed
 
 * Use text HTTP response for serviceworker.js insteas of binary stream
 * Use Django permission instead of rule to prevent performance issues.
+* Correctly deliver server errors to user
 
 `2.0rc3`_ - 2021-07-26
 ----------------------
