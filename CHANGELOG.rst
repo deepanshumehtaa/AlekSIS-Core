@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.0rc4`_ - 2021-08-01
+----------------------
+
+Added
+~~~~~
+
+* Allow to configure port for prometheus metrics endpoint.
+
+Fixed
+~~~~~
+
+* Use text HTTP response for serviceworker.js insteas of binary stream
+* Use Django permission instead of rule to prevent performance issues.
+* Correctly deliver server errors to user
+
 `2.0rc3`_ - 2021-07-26
 ----------------------
 

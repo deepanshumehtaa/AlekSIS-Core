@@ -13,15 +13,17 @@ from django.http import (
     HttpResponse,
     HttpResponseNotFound,
     HttpResponseRedirect,
+    HttpResponseServerError,
     JsonResponse,
 )
-from django.http.response import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template import loader
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.defaults import ERROR_500_TEMPLATE_NAME
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import DeleteView, UpdateView
@@ -128,7 +130,9 @@ class ServiceWorkerView(View):
     """
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        return FileResponse(open(settings.SERVICE_WORKER_PATH))
+        return HttpResponse(
+            open(settings.SERVICE_WORKER_PATH, "rt"), content_type="application/javascript"
+        )
 
 
 class ManifestView(View):
@@ -1198,3 +1202,13 @@ class SocialAccountDeleteView(DeleteView):
                 self.request, _("The third-party account has been successfully disconnected.")
             )
         return HttpResponseRedirect(success_url)
+
+
+def server_error(
+    request: HttpRequest, template_name: str = ERROR_500_TEMPLATE_NAME
+) -> HttpResponseServerError:
+    """Ensure the request is passed to the error page."""
+    template = loader.get_template(template_name)
+    context = {"request": request}
+
+    return HttpResponseServerError(template.render(context))

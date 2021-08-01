@@ -75,14 +75,19 @@ def has_any_object(perm: str, klass):
 
     Build predicate which checks whether a user has access
     to objects with the provided permission or rule.
+    Differentiates between object-related permissions and rules.
     """
     name = f"has_any_object:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:
         ct_perm = get_content_type_by_perm(perm)
+        # In case an object-related permission with the same ContentType class as the given class
+        # is passed, the optimized django-guardian get_objects_for_user function is used.
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
+        # In other cases, it is checked for each object of the given model whether the current user
+        # fulfills the given rule.
         else:
             return queryset_rules_filter(user, klass.objects.all(), perm).exists()
 
