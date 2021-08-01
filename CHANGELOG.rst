@@ -48,6 +48,13 @@ Added
 ~~~~~
 
 * Allow to configure port for prometheus metrics endpoint.
+* Allow apps to dynamically generate OAuth scopes
+
+Removed
+~~~~~~~
+
+* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
+  on `AppConfig` class instead.
 
 Fixed
 ~~~~~
