@@ -504,6 +504,7 @@ YARN_INSTALLED_APPS = [
     "paper-css",
     "jquery-sortablejs",
     "sortablejs",
+    "broadcast-channel",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -528,6 +529,7 @@ ANY_JS = {
     },
     "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
+    "broadcast-channel": {"js_url": JS_URL + "/broadcast-channel/dist/lib/browser.js"},
     "Roboto100": {"css_url": JS_URL + "/@fontsource/roboto/100.css"},
     "Roboto300": {"css_url": JS_URL + "/@fontsource/roboto/300.css"},
     "Roboto400": {"css_url": JS_URL + "/@fontsource/roboto/400.css"},

@@ -29,6 +29,11 @@
   {# Add JS URL resolver #}
   <script src="{% url "js_reverse" %}" type="text/javascript"></script>
 
+  {# Workaround for BroadcastChannel in Safari #}
+  {% if "Safari" in request.META.HTTP_USER_AGENT and "Chrome" not in request.META.HTTP_USER_AGENT %}
+    {% include_js "broadcast-channel" %}
+  {% endif %}
+
   {# Add i18n names for calendar (for use in datepicker) #}
   {# Passing the locale is not necessary for the scripts to work, but prevents caching issues #}
   <script src="{% url "javascript-catalog" %}?locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
