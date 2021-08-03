@@ -324,13 +324,7 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 # Configuration for OAuth2 provider
 
-OAUTH2_PROVIDER = {
-    "SCOPES": {
-        "read": "Read anything the resource owner can read",
-        "write": "Write anything the resource owner can write",
-    }
-}
-merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
+OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
 
 if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:

@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Added
+~~~~~
+
+* Allow apps to dynamically generate OAuth scopes
+
+Removed
+~~~~~~~
+
+* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
+  on `AppConfig` class instead.
+
+
 `2.0rc4`_ - 2021-08-01
 ----------------------
 
