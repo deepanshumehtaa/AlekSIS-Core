@@ -12,7 +12,6 @@ Unreleased
 Added
 ~~~~~
 
-* Allow to configure port for prometheus metrics endpoint.
 * Allow apps to dynamically generate OAuth scopes
 
 Removed
@@ -21,11 +20,21 @@ Removed
 * `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
   on `AppConfig` class instead.
 
+
+`2.0rc4`_ - 2021-08-01
+----------------------
+
+Added
+~~~~~
+
+* Allow to configure port for prometheus metrics endpoint.
+
 Fixed
 ~~~~~
 
 * Correctly deliver server errors to user
 * Use text HTTP response for serviceworker.js insteas of binary stream
+* Use Django permission instead of rule to prevent performance issues.
 
 `2.0rc3`_ - 2021-07-26
 ----------------------
