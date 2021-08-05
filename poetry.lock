@@ -1212,6 +1212,22 @@ url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
 reference = "gitlab"
 
 [[package]]
+name = "django-jwt-auth"
+version = "0.0.2"
+description = "JSON Web Token based authentication for Django"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+PyJWT = ">=1.4.0,<2.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
+[[package]]
 name = "django-maintenance-mode"
 version = "0.16.1"
 description = "django-maintenance-mode shows a 503 error page when maintenance-mode is on."
@@ -2722,20 +2738,19 @@ reference = "gitlab"
 
 [[package]]
 name = "pyjwt"
-version = "2.3.0"
+version = "1.7.1"
 description = "JSON Web Token implementation in Python"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = "*"
 
 [package.dependencies]
-cryptography = {version = ">=3.3.1", optional = true, markers = "extra == \"crypto\""}
+cryptography = {version = ">=1.4", optional = true, markers = "extra == \"crypto\""}
 
 [package.extras]
-crypto = ["cryptography (>=3.3.1)"]
-dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)", "pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)", "mypy", "pre-commit"]
-docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
-tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
+crypto = ["cryptography (>=1.4)"]
+flake8 = ["flake8", "flake8-import-order", "pep8-naming"]
+test = ["pytest (>=4.0.1,<5.0.0)", "pytest-cov (>=2.6.0,<3.0.0)", "pytest-runner (>=4.2,<5.0.0)"]
 
 [package.source]
 type = "legacy"
@@ -3571,16 +3586,17 @@ reference = "gitlab"
 
 [[package]]
 name = "twilio"
-version = "7.2.0"
+version = "6.63.2"
 description = "Twilio API client and TwiML generator"
 category = "main"
 optional = false
-python-versions = ">=3.6.0"
+python-versions = "*"
 
 [package.dependencies]
-PyJWT = ">=2.0.0,<3.0.0"
+PyJWT = "1.7.1"
 pytz = "*"
-requests = ">=2.0.0"
+requests = {version = ">=2.0.0", markers = "python_version >= \"3.0\""}
+six = "*"
 
 [package.source]
 type = "legacy"
@@ -3758,7 +3774,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9117742426e175d6402dac268ed74f7e72e084fe020e5ebf22e97915ff7acd0d"
+content-hash = "d5f801ed06f355b49055399e50566ca32c7f592ad702809bde33139bad53db50"
 
 [metadata.files]
 alabaster = [
@@ -3767,6 +3783,7 @@ alabaster = [
 ]
 aleksis-builddeps = [
     {file = "AlekSIS-Builddeps-4.tar.gz", hash = "sha256:aaaa22965228b9b9b7de812e3e7fa9cbfdbf8635bb22d6f3a201dc0cc6d8d307"},
+    {file = "AlekSIS_Builddeps-4-py3-none-any.whl", hash = "sha256:02a93e503f5810e6c93a8bc829bc8cbda735ccbf78b91954d2f6507dfea3d01f"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -4130,6 +4147,10 @@ django-js-reverse = [
 django-jsonstore = [
     {file = "django-jsonstore-0.5.0.tar.gz", hash = "sha256:896dc10b08f59807eda1c6cebf43cd26e50d0db29d13495c027dc31e464be3c3"},
     {file = "django_jsonstore-0.5.0-py2-none-any.whl", hash = "sha256:9630c1fb43ae9f8e32733c5cf7d4c3775ba6f08532f517c64025053352d72844"},
+]
+django-jwt-auth = [
+    {file = "django-jwt-auth-0.0.2.tar.gz", hash = "sha256:14500d927fb83959e31371fd7df6dcde76b99011d3b0fc3f1849be373fb04532"},
+    {file = "django_jwt_auth-0.0.2-py2.py3-none-any.whl", hash = "sha256:6925215e90a9e49da5352cbcb568a0087c8d385faeffa4f7963dad99e3c9b780"},
 ]
 django-maintenance-mode = [
     {file = "django-maintenance-mode-0.16.1.tar.gz", hash = "sha256:da1f77f431ab5c55913459adb3c259e091f783ffc72de701690826aaaccce4ca"},
@@ -4667,8 +4688,8 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pyjwt = [
-    {file = "PyJWT-2.3.0-py3-none-any.whl", hash = "sha256:e0c4bb8d9f0af0c7f5b1ec4c5036309617d03d56932877f2f7a0beeb5318322f"},
-    {file = "PyJWT-2.3.0.tar.gz", hash = "sha256:b888b4d56f06f6dcd777210c334e69c737be74755d3e5e9ee3fe67dc18a0ee41"},
+    {file = "PyJWT-1.7.1-py2.py3-none-any.whl", hash = "sha256:5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e"},
+    {file = "PyJWT-1.7.1.tar.gz", hash = "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
@@ -4944,7 +4965,7 @@ traitlets = [
     {file = "traitlets-5.1.0.tar.gz", hash = "sha256:bd382d7ea181fbbcce157c133db9a829ce06edffe097bcf3ab945b435452b46d"},
 ]
 twilio = [
-    {file = "twilio-7.2.0.tar.gz", hash = "sha256:f99643641c193fcd09b58f20ef65a78937e5c426319530a42c325b3abd80e739"},
+    {file = "twilio-6.63.2.tar.gz", hash = "sha256:cd1456b5deb82166d5f41d5e5eecd7938e656a626571332b9d9ae8062303fabd"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.3-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:2068531575a125b87a41802130fa7e29f26c09a2833fea68d9a40cf33902eba6"},
