@@ -14,6 +14,10 @@ Added
 
 * Allow apps to dynamically generate OAuth scopes
 
+Fixed
+~~~~~
+* The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
+
 Removed
 ~~~~~~~
 
