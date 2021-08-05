@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Fixed
+~~~~~
+* The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
+
+
 `2.0rc4`_ - 2021-08-01
 ----------------------
 
