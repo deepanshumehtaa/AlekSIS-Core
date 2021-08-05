@@ -120,3 +120,7 @@ class InstalledWidgetsDashboardWidgetOrderManager(Manager):
 
         # [obj["id"] for obj in list(Person.objects.all().values("id"))]
         return super().get_queryset().filter(widget_id__in=dashboard_widget_pks)
+
+
+class PolymorphicCurrentSiteManager(_CurrentSiteManager, PolymorphicManager):
+    """Default manager for extensible, polymorphic models."""
