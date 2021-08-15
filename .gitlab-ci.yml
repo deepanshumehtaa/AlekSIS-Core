@@ -19,3 +19,12 @@ include:
       file: "/ci/deploy/trigger_dist.yml"
     - project: "AlekSIS/official/AlekSIS"
       file: /ci/deploy/pages.yml
+
+lint:
+  interruptible: true
+  stage: test
+  before_script:
+    - id testuser || adduser --disabled-password --gecos "Test User" testuser
+    - chown -R testuser .
+  script:
+    - sudo -u testuser tox -e lint,lint-i18n
