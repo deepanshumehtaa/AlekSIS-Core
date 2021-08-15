@@ -27,4 +27,4 @@ lint:
     - id testuser || adduser --disabled-password --gecos "Test User" testuser
     - chown -R testuser .
   script:
-    - sudo -u testuser tox -e lint,lint-i18n
+    - sudo -u testuser tox -e lint,makemessages,lint-i18n
