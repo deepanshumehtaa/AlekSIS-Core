@@ -16,7 +16,9 @@ Added
 
 Fixed
 ~~~~~
+
 * The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
+* Updated django to latest 3.2.x
 
 Removed
 ~~~~~~~
