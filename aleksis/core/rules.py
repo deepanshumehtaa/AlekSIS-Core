@@ -206,7 +206,7 @@ rules.add_perm("core.change_additionalfield_rule", change_additional_field_predi
 
 # Edit additional field
 create_additional_field_predicate = has_person & (
-    has_global_perm("core.create_additionalfield") | has_object_perm("core.create_additionalfield")
+    has_global_perm("core.add_additionalfield") | has_object_perm("core.add_additionalfield")
 )
 rules.add_perm("core.create_additionalfield_rule", create_additional_field_predicate)
 
@@ -232,7 +232,7 @@ rules.add_perm("core.edit_grouptype_rule", change_group_type_predicate)
 
 # Create group type
 create_group_type_predicate = has_person & (
-    has_global_perm("core.create_grouptype") | has_object_perm("core.change_grouptype")
+    has_global_perm("core.add_grouptype") | has_object_perm("core.add_grouptype")
 )
 rules.add_perm("core.create_grouptype_rule", create_group_type_predicate)
 
@@ -251,13 +251,13 @@ rules.add_perm("core.view_grouptypes_rule", view_group_types_predicate)
 
 # Create person
 create_person_predicate = has_person & (
-    has_global_perm("core.create_person") | has_object_perm("core.create_person")
+    has_global_perm("core.add_person") | has_object_perm("core.add_person")
 )
 rules.add_perm("core.create_person_rule", create_person_predicate)
 
 # Create group
 create_group_predicate = has_person & (
-    has_global_perm("core.create_group") | has_object_perm("core.create_group")
+    has_global_perm("core.add_group") | has_object_perm("core.add_group")
 )
 rules.add_perm("core.create_group_rule", create_group_predicate)
 
