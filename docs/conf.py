@@ -31,7 +31,7 @@ author = "AlekSIS team"
 # The short X.Y version
 version = "2.0"
 # The full version, including alpha/beta/rc tags
-release = "2.0rc3"
+release = "2.0rc5"
 
 
 # -- General configuration ---------------------------------------------------
