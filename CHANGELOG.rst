@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.0rc5`_ - 2021-08-25
+----------------------
+
+Fixed
+~~~~~
+
+* The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
+* Updated django to latest 3.2.x
+
+
 `2.0rc4`_ - 2021-08-01
 ----------------------
 
@@ -314,3 +324,5 @@ Fixed
 .. _2.0rc1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc1
 .. _2.0rc2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc2
 .. _2.0rc3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc3
+.. _2.0rc4: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc4
+.. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
