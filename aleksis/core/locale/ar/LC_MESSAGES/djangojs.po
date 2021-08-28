@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-08 16:49+0200\n"
+"POT-Creation-Date: 2021-08-28 17:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,6 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: aleksis/core/static/js/main.js:133
+#: aleksis/core/static/js/main.js:127
 msgid "This page may contain outdated information since there is no internet connection."
 msgstr ""
