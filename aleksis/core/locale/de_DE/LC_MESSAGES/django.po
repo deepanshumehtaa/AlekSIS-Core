@@ -7,15 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2021-06-08 16:49+0200\n"
-"PO-Revision-Date: 2021-06-12 10:28+0000\n"
-=======
 "POT-Creation-Date: 2021-08-28 17:53+0200\n"
-"PO-Revision-Date: 2021-06-16 12:00+0000\n"
->>>>>>> 7edb7944 (Update translation files)
+"PO-Revision-Date: 2021-08-28 17:33+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,29 +21,23 @@ msgstr ""
 
 #: aleksis/core/apps.py:148 aleksis/core/settings.py:343
 msgid "OpenID Connect scope"
-msgstr ""
+msgstr "OpenID-Connect-Scope"
 
 #: aleksis/core/apps.py:149 aleksis/core/settings.py:344
 msgid "Given name, family name, link to profile and picture if existing."
-msgstr ""
+msgstr "Vorname, Nachname, Link zum Profil und Bild falls vorhanden"
 
 #: aleksis/core/apps.py:150 aleksis/core/settings.py:345
-#, fuzzy
-#| msgid "Mail out address"
 msgid "Full home postal address"
-msgstr "E-Mail-Ausgangsadresse"
+msgstr "Vollständige Postanschrift"
 
 #: aleksis/core/apps.py:151 aleksis/core/settings.py:346
-#, fuzzy
-#| msgid "E-mail address"
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 
 #: aleksis/core/apps.py:152 aleksis/core/settings.py:347
-#, fuzzy
-#| msgid "Mobile phone"
 msgid "Home and mobile phone"
-msgstr "Handy"
+msgstr "Festnetz- und Mobilfunknummer"
 
 #: aleksis/core/data_checks.py:55
 msgid "Ignore problem"
@@ -933,7 +923,7 @@ msgstr "Task-Benutzer-Zuordnungen"
 
 #: aleksis/core/preferences.py:22
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: aleksis/core/preferences.py:23
 msgid "School"
@@ -941,23 +931,19 @@ msgstr "Schule"
 
 #: aleksis/core/preferences.py:24
 msgid "Theme"
-msgstr ""
+msgstr "Theme"
 
 #: aleksis/core/preferences.py:25
-#, fuzzy
-#| msgid "E-Mail"
 msgid "Mail"
 msgstr "E-Mail"
 
 #: aleksis/core/preferences.py:27
 msgid "Footer"
-msgstr ""
+msgstr "Fußbereich"
 
 #: aleksis/core/preferences.py:28
-#, fuzzy
-#| msgid "Account"
 msgid "Accounts"
-msgstr "Konto"
+msgstr "Konten"
 
 #: aleksis/core/preferences.py:29
 msgid "Authentication"
@@ -1100,14 +1086,14 @@ msgid "in minutes"
 msgstr "in Minuten"
 
 #: aleksis/core/preferences.py:398
-#, fuzzy
-#| msgid "Automatically create new persons for new users"
 msgid "Automatically update the dashboard and its widgets"
-msgstr "Erstelle automatisch neue Personen für neue Benutzer"
+msgstr "Automatisch das Dashboard und seine Widgets aktualisieren"
 
 #: aleksis/core/preferences.py:408
 msgid "Automatically update the dashboard and its widgets sitewide"
 msgstr ""
+"Automatisch das Dashboard und seine Widgets aktualisieren (auf der ganzen "
+"Seite)"
 
 #: aleksis/core/settings.py:468
 msgid "English"
