@@ -23,8 +23,21 @@ include:
 lint:
   interruptible: true
   stage: test
+  variables:
+    REPO: ${WEBLATE_REPO:-$(echo "aleksis/$CI_PROJECT_NAME" | tr '[:upper:]' '[:lower:]')}
   before_script:
+    - pip3 install wlc
     - id testuser || adduser --disabled-password --gecos "Test User" testuser
     - chown -R testuser .
+    - git fetch origin master:master
   script:
     - sudo -u testuser tox -e lint,makemessages,lint-i18n
+    - wlc --key $WEBLATE_API_KEY  --url https://translate.edugit.org/api/ -D repo $REPO
+    - |
+      if git diff $CI_COMMIT_SHA master --exit-code -G "^(msgid|msgstr)"; then
+        echo "The translation files have been changed. Check if there are unmerged translations which could cause conflicts later:";
+        wlc --key $WEBLATE_API_KEY --url https://translate.edugit.org/api/ repo $REPO \
+        | grep -q -E -i -w "needs_commit: True|needs_merge: True|needs_push: True" \
+        && (echo "Yes, there are unmerged translations. Please merge them before adding new changes to the translation files." && false) \
+        || (echo "No, there are no unmerged translations. You're ready to merge your changes." && true)
+      fi
