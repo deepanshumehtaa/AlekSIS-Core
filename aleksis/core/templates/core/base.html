@@ -157,12 +157,12 @@
       </div>
       <div class="right">
         <span id="doit"></span>
-        {% if request.site.preferences.footer__impress_url %}
-          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__impress_url }}">
+        {% if request.site.preferences.footer__imprint_url %}
+          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__imprint_url }}">
             {% trans "Impress" %}
           </a>
         {% endif %}
-        {% if request.site.preferences.footer__privacy_url and request.site.preferences.footer__impress_url %}
+        {% if request.site.preferences.footer__privacy_url and request.site.preferences.footer__imprint_url %}
           ·
         {% endif %}
         {% if request.site.preferences.footer__privacy_url %}
