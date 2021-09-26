@@ -12,6 +12,8 @@ Unreleased
 Added
 ~~~~~
 
+* OpenID connect scope and accompanying claim `groups`
+
 Fixed
 ~~~~~
 

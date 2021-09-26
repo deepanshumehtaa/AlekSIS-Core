@@ -77,6 +77,9 @@ class CustomOAuth2Validator(OAuth2Validator):
                 "postal_code": request.user.person.postal_code,
             }
 
+        if "groups" in request.scopes and has_person(request.user):
+            claims["groups"] = request.user.person.groups.values_list("name", flat=True).all()
+
         return claims
 
 
