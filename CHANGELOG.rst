@@ -12,6 +12,8 @@ Unreleased
 Added
 ~~~~~
 
+* Allow to configure custom redirect uri schemes for OAuth2.
+
 Fixed
 ~~~~~
 
