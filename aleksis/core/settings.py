@@ -326,6 +326,8 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
 
+ALLOWED_REDIRECT_URI_SCHEMES = _settings.get("oauth2.redirect_schemes", ["http", "https"])
+
 if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
         oid_rsa_key = f.read()
