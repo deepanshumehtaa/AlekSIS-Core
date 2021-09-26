@@ -13,12 +13,12 @@ Added
 ~~~~~
 
 * Support config files in JSON format
+* OpenID connect scope `groups`
 
 Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
-
 
 Fixed
 ~~~~~
