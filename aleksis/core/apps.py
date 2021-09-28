@@ -138,7 +138,8 @@ class CoreConfig(AppConfig):
             # Save the associated person to pick up defaults
             user.person.save()
 
-    def get_all_scopes(self) -> dict[str, str]:
+    @classmethod
+    def get_all_scopes(cls) -> dict[str, str]:
         scopes = {
             "read": "Read anything the resource owner can read",
             "write": "Write anything the resource owner can write",
