@@ -18,6 +18,16 @@ Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
+
+
+Fixed
+~~~~~
+
+* Fix API for adding OAuth scopes in AppConfigs
+
+Removed
+~~~~~~~
+
 * Dropped data anonymization (django-hattori) support for now
 
 `2.0rc5`_ - 2021-08-25
