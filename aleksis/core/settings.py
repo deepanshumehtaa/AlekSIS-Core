@@ -107,7 +107,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_prometheus",
     "django_select2",
-    "hattori",
     "templated_email",
     "html2text",
     "django_otp.plugins.otp_totp",
