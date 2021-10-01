@@ -847,22 +847,6 @@ url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
 reference = "gitlab"
 
 [[package]]
-name = "django-bulk-update"
-version = "2.2.0"
-description = "Bulk update using one query over Django ORM."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=1.8"
-
-[package.source]
-type = "legacy"
-url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
-reference = "gitlab"
-
-[[package]]
 name = "django-cachalot"
 version = "2.4.2"
 description = "Caches your Django ORM queries and automatically invalidates them."
@@ -1117,26 +1101,6 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 Django = ">=2.2"
-
-[package.source]
-type = "legacy"
-url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
-reference = "gitlab"
-
-[[package]]
-name = "django-hattori"
-version = "0.2.1"
-description = "Command to anonymize sensitive data."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=1.8"
-django-bulk-update = ">=2.2.0"
-Faker = ">=0.8.13"
-six = "*"
-tqdm = ">=4.23.4"
 
 [package.source]
 type = "legacy"
@@ -1776,23 +1740,6 @@ redis = ["redis"]
 toml = ["toml"]
 vault = ["hvac"]
 yaml = ["ruamel.yaml"]
-
-[package.source]
-type = "legacy"
-url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
-reference = "gitlab"
-
-[[package]]
-name = "faker"
-version = "8.11.0"
-description = "Faker is a Python package that generates fake data for you."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-python-dateutil = ">=2.4"
-text-unidecode = "1.3"
 
 [package.source]
 type = "legacy"
@@ -3602,46 +3549,12 @@ url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
 reference = "gitlab"
 
 [[package]]
-name = "text-unidecode"
-version = "1.3"
-description = "The most basic Text::Unidecode port"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.source]
-type = "legacy"
-url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
-reference = "gitlab"
-
-[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
 category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-
-[package.source]
-type = "legacy"
-url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
-reference = "gitlab"
-
-[[package]]
-name = "tqdm"
-version = "4.62.1"
-description = "Fast, Extensible Progress Meter"
-category = "main"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["py-make (>=0.1.0)", "twine", "wheel"]
-notebook = ["ipywidgets (>=6)"]
-telegram = ["requests"]
 
 [package.source]
 type = "legacy"
@@ -3831,7 +3744,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6a724338c0ba4c5474cc14863e10134c9e4d3bce6a989b1171805f893d63f04b"
+content-hash = "95d36470d3b0297d1dc7921f52d66a758de153d002c5b98ffd9ed57bebe60a55"
 
 [metadata.files]
 alabaster = [
@@ -4123,10 +4036,6 @@ django-bleach = [
     {file = "django-bleach-0.8.0.tar.gz", hash = "sha256:42a83ad8a3306e081facb7ef405883035ea23a35204aea7c2502391f3911f821"},
     {file = "django_bleach-0.8.0-py2.py3-none-any.whl", hash = "sha256:2c978b4a7516a9e166fa1d8eba950dcfadcd6b68c80971b527fd36f03050f4c2"},
 ]
-django-bulk-update = [
-    {file = "django-bulk-update-2.2.0.tar.gz", hash = "sha256:5ab7ce8a65eac26d19143cc189c0f041d5c03b9d1b290ca240dc4f3d6aaeb337"},
-    {file = "django_bulk_update-2.2.0-py2.py3-none-any.whl", hash = "sha256:49a403392ae05ea872494d74fb3dfa3515f8df5c07cc277c3dc94724c0ee6985"},
-]
 django-cachalot = [
     {file = "django-cachalot-2.4.2.tar.gz", hash = "sha256:67d3a783a8f61191cf8a1c1db944b08e276e93735434aafdee8d721bfd9e4901"},
     {file = "django_cachalot-2.4.2-py3-none-any.whl", hash = "sha256:1d5c47e56425afc0b7131696d7894ed5c9d85cb6994282a02fe3d8bc274e1bd3"},
@@ -4188,10 +4097,6 @@ django-formtools = [
 django-guardian = [
     {file = "django-guardian-2.4.0.tar.gz", hash = "sha256:c58a68ae76922d33e6bdc0e69af1892097838de56e93e78a8361090bcd9f89a0"},
     {file = "django_guardian-2.4.0-py3-none-any.whl", hash = "sha256:440ca61358427e575323648b25f8384739e54c38b3d655c81d75e0cd0d61b697"},
-]
-django-hattori = [
-    {file = "django-hattori-0.2.1.tar.gz", hash = "sha256:6953d40881317252f19f62c4e7fe8058924b852c7498bc42beb7bc4d268c252c"},
-    {file = "django_hattori-0.2.1-py2.py3-none-any.whl", hash = "sha256:e529ed7af8fc34a0169c797c477672b687a205a56f3f5206f90c260acb83b7ac"},
 ]
 django-haystack = [
     {file = "django-haystack-3.0.tar.gz", hash = "sha256:d490f920afa85471dd1fa5000bc8eff4b704daacbe09aee1a64e75cbc426f3be"},
@@ -4336,10 +4241,6 @@ dparse = [
 dynaconf = [
     {file = "dynaconf-3.1.7-py2.py3-none-any.whl", hash = "sha256:f52fe5db7622da56a552275e8f64e4df46e3b4ae11158831b042e8ba2f6d1c96"},
     {file = "dynaconf-3.1.7.tar.gz", hash = "sha256:e9d80b46ba4d9372f2f40c812594c963f74178140c0b596e57f2881001fc4d35"},
-]
-faker = [
-    {file = "Faker-8.11.0-py3-none-any.whl", hash = "sha256:3e737576ff50cd98dfed643d6b3fd63194eca9df00e7f595960fe7da5220723d"},
-    {file = "Faker-8.11.0.tar.gz", hash = "sha256:b9e81e9da3dda3ac54189e034cfb943de576a259caeb226ccab43fcbcf6a7891"},
 ]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
@@ -5023,17 +4924,9 @@ testfixtures = [
     {file = "testing.postgresql-1.3.0-py2.py3-none-any.whl", hash = "sha256:1b41daeb98dfc8cd4a584bb91e8f5f4ab182993870f95257afe5f1ba6151a598"},
     {file = "testing.postgresql-1.3.0.tar.gz", hash = "sha256:8e1a69760369a7a8ffe63a66b6d95a5cd82db2fb976e4a8f85ffd24fbfc447d8"},
 ]
-text-unidecode = [
-    {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
-    {file = "text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8"},
-]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
-]
-tqdm = [
-    {file = "tqdm-4.62.1-py2.py3-none-any.whl", hash = "sha256:07856e19a1fe4d2d9621b539d3f072fa88c9c1ef1f3b7dd4d4953383134c3164"},
-    {file = "tqdm-4.62.1.tar.gz", hash = "sha256:35540feeaca9ac40c304e916729e6b78045cbbeccd3e941b2868f09306798ac9"},
 ]
 traitlets = [
     {file = "traitlets-5.0.5-py3-none-any.whl", hash = "sha256:69ff3f9d5351f31a7ad80443c2674b7099df13cc41fc5fa6e2f6d3b0330b0426"},

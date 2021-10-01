@@ -23,6 +23,8 @@ Fixed
 Removed
 ~~~~~~~
 
+* Dropped data anonymization (django-hattori) support for now
+
 `2.0rc5`_ - 2021-08-25
 ----------------------
 
