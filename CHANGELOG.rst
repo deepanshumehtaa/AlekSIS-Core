@@ -18,7 +18,7 @@ Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
-* Droped data anonymization (django-hattori) support for now
+* Dropped data anonymization (django-hattori) support for now
 
 `2.0rc5`_ - 2021-08-25
 ----------------------
