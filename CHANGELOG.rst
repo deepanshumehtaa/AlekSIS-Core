@@ -20,6 +20,11 @@ Fixed
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
 
+Changed
+~~~~~~~
+
+* Use initial superuser settings as default contact and from addresses
+
 Removed
 ~~~~~~~
 
