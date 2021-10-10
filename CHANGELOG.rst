@@ -15,6 +15,10 @@ Added
 * OpenID connect scope and accompanying claim `groups`
 * Support config files in JSON format
 
+Changed
+~~~~~~~
+* Replace dev.sh helper script with tox environments.
+
 Fixed
 ~~~~~
 
