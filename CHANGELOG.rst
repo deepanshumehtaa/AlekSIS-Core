@@ -25,6 +25,7 @@ Fixed
 
 * Fix API for adding OAuth scopes in AppConfigs
 * Show link to imprint in footer
+* Deleting persons is possible again.
 
 Removed
 ~~~~~~~
