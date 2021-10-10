@@ -13,6 +13,7 @@ Added
 ~~~~~
 
 * OpenID connect scope and accompanying claim `groups`
+* Support config files in JSON format
 
 Fixed
 ~~~~~
