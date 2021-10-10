@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Added
+~~~~~
+
+* Support config files in JSON format
+
 `2.0rc5`_ - 2021-08-25
 ----------------------
 
