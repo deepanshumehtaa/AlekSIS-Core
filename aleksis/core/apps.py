@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 import django.apps
 from django.apps import apps
+from django.conf import settings
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
 
@@ -136,3 +137,19 @@ class CoreConfig(AppConfig):
         if has_person(user):
             # Save the associated person to pick up defaults
             user.person.save()
+
+    @classmethod
+    def get_all_scopes(cls) -> dict[str, str]:
+        scopes = {
+            "read": "Read anything the resource owner can read",
+            "write": "Write anything the resource owner can write",
+        }
+        if settings.OAUTH2_PROVIDER.get("OIDC_ENABLED", False):
+            scopes |= {
+                "openid": _("OpenID Connect scope"),
+                "profile": _("Given name, family name, link to profile and picture if existing."),
+                "address": _("Full home postal address"),
+                "email": _("Email address"),
+                "phone": _("Home and mobile phone"),
+            }
+        return scopes

@@ -1,5 +1,5 @@
 from importlib import metadata
-from typing import Any, Optional, Sequence
+from typing import TYPE_CHECKING, Any, Optional, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -11,6 +11,9 @@ from license_expression import Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
+
+if TYPE_CHECKING:
+    from oauth2_provider.models import AbstractApplication
 
 
 class AppConfig(django.apps.AppConfig):
@@ -213,6 +216,33 @@ class AppConfig(django.apps.AppConfig):
         By default, it does nothing.
         """
         pass
+
+    @classmethod
+    def get_all_scopes(cls) -> dict[str, str]:
+        """Return all OAuth scopes and their descriptions for this app."""
+        return {}
+
+    @classmethod
+    def get_available_scopes(
+        cls,
+        application: Optional["AbstractApplication"] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> list[str]:
+        """Return a list of all OAuth scopes available to the request and application."""
+        return list(cls.get_all_scopes().keys())
+
+    @classmethod
+    def get_default_scopes(
+        cls,
+        application: Optional["AbstractApplication"] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> list[str]:
+        """Return a list of all OAuth scopes to always include for this request and application."""
+        return []
 
     def _maintain_default_data(self):
         from django.contrib.auth.models import Permission

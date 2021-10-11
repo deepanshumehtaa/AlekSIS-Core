@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-08 16:49+0200\n"
+"POT-Creation-Date: 2021-08-28 17:53+0200\n"
 "PO-Revision-Date: 2020-12-19 12:57+0000\n"
 "Last-Translator: Julian <leuckerj@gmail.com>\n"
 "Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/la/>\n"
@@ -17,6 +17,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
+
+#: aleksis/core/apps.py:148 aleksis/core/settings.py:343
+msgid "OpenID Connect scope"
+msgstr ""
+
+#: aleksis/core/apps.py:149 aleksis/core/settings.py:344
+msgid "Given name, family name, link to profile and picture if existing."
+msgstr ""
+
+#: aleksis/core/apps.py:150 aleksis/core/settings.py:345
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Full home postal address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/apps.py:151 aleksis/core/settings.py:346
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Email address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/apps.py:152 aleksis/core/settings.py:347
+#, fuzzy
+#| msgid "Mobile phone"
+msgid "Home and mobile phone"
+msgstr "Numerus telephoni mobilis"
 
 #: aleksis/core/data_checks.py:55
 msgid "Ignore problem"
@@ -41,7 +67,8 @@ msgstr ""
 msgid "The DashboardWidget was reported broken automatically."
 msgstr ""
 
-#: aleksis/core/filters.py:37 aleksis/core/templates/core/base.html:78
+#: aleksis/core/filters.py:37 aleksis/core/templates/core/base.html:83
+#: aleksis/core/templates/core/base.html:84
 #: aleksis/core/templates/core/group/list.html:20
 #: aleksis/core/templates/core/person/list.html:24
 #: aleksis/core/templates/search/search.html:7
@@ -106,7 +133,7 @@ msgid "Common data"
 msgstr "Adminstratio datarum"
 
 #: aleksis/core/forms.py:172 aleksis/core/forms.py:221
-#: aleksis/core/menus.py:236 aleksis/core/models.py:139
+#: aleksis/core/menus.py:238 aleksis/core/models.py:139
 #: aleksis/core/templates/core/person/list.html:8
 #: aleksis/core/templates/core/person/list.html:9
 msgid "Persons"
@@ -128,7 +155,7 @@ msgstr "dies"
 msgid "Time"
 msgstr "tempus"
 
-#: aleksis/core/forms.py:234 aleksis/core/menus.py:247
+#: aleksis/core/forms.py:234 aleksis/core/menus.py:249
 #: aleksis/core/models.py:381 aleksis/core/templates/core/group/list.html:8
 #: aleksis/core/templates/core/group/list.html:9
 #: aleksis/core/templates/core/person/full.html:144
@@ -233,29 +260,30 @@ msgstr ""
 msgid "Dashboard"
 msgstr "Forum"
 
-#: aleksis/core/menus.py:30 aleksis/core/models.py:588
+#: aleksis/core/menus.py:32 aleksis/core/models.py:588
+#: aleksis/core/preferences.py:26
 #: aleksis/core/templates/core/notifications.html:4
 #: aleksis/core/templates/core/notifications.html:5
 msgid "Notifications"
 msgstr "Nuntii"
 
-#: aleksis/core/menus.py:39
+#: aleksis/core/menus.py:41
 msgid "Account"
 msgstr ""
 
-#: aleksis/core/menus.py:46
+#: aleksis/core/menus.py:48
 msgid "Stop impersonation"
 msgstr "Simulandum aliquem finire"
 
-#: aleksis/core/menus.py:55 aleksis/core/templates/core/base.html:57
+#: aleksis/core/menus.py:57 aleksis/core/templates/core/base.html:62
 msgid "Logout"
 msgstr "nomen retractare"
 
-#: aleksis/core/menus.py:61
+#: aleksis/core/menus.py:63
 msgid "2FA"
 msgstr ""
 
-#: aleksis/core/menus.py:67
+#: aleksis/core/menus.py:69
 #: aleksis/core/templates/account/password_change.html:5
 #: aleksis/core/templates/account/password_change.html:6
 #: aleksis/core/templates/account/password_change.html:19
@@ -267,22 +295,22 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: aleksis/core/menus.py:79
+#: aleksis/core/menus.py:81
 msgid "Me"
 msgstr ""
 
-#: aleksis/core/menus.py:88
+#: aleksis/core/menus.py:90
 #: aleksis/core/templates/dynamic_preferences/form.html:5
 msgid "Preferences"
 msgstr ""
 
-#: aleksis/core/menus.py:97
+#: aleksis/core/menus.py:99
 #, fuzzy
 #| msgid "Persons and accounts"
 msgid "Third-party accounts"
 msgstr "Personae et computi"
 
-#: aleksis/core/menus.py:106
+#: aleksis/core/menus.py:108
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:5
 #: aleksis/core/templates/oauth2_provider/authorized-tokens.html:6
 #, fuzzy
@@ -290,23 +318,23 @@ msgstr "Personae et computi"
 msgid "Authorized applications"
 msgstr "Nuntii"
 
-#: aleksis/core/menus.py:117
+#: aleksis/core/menus.py:119
 msgid "Admin"
 msgstr "Administratio"
 
-#: aleksis/core/menus.py:125 aleksis/core/models.py:687
+#: aleksis/core/menus.py:127 aleksis/core/models.py:687
 #: aleksis/core/templates/core/announcement/list.html:7
 #: aleksis/core/templates/core/announcement/list.html:8
 msgid "Announcements"
 msgstr "Nuntii"
 
-#: aleksis/core/menus.py:136 aleksis/core/models.py:117
+#: aleksis/core/menus.py:138 aleksis/core/models.py:117
 #: aleksis/core/templates/core/school_term/list.html:8
 #: aleksis/core/templates/core/school_term/list.html:9
 msgid "School terms"
 msgstr "ani scolae"
 
-#: aleksis/core/menus.py:147
+#: aleksis/core/menus.py:149
 #: aleksis/core/templates/core/dashboard_widget/list.html:8
 #: aleksis/core/templates/core/dashboard_widget/list.html:9
 #, fuzzy
@@ -314,40 +342,40 @@ msgstr "ani scolae"
 msgid "Dashboard widgets"
 msgstr "Forum"
 
-#: aleksis/core/menus.py:158
+#: aleksis/core/menus.py:160
 #: aleksis/core/templates/core/management/data_management.html:6
 #: aleksis/core/templates/core/management/data_management.html:7
 msgid "Data management"
 msgstr "Adminstratio datarum"
 
-#: aleksis/core/menus.py:169
+#: aleksis/core/menus.py:171
 #: aleksis/core/templates/core/pages/system_status.html:5
 #: aleksis/core/templates/core/pages/system_status.html:7
 msgid "System status"
 msgstr "Status systemae"
 
-#: aleksis/core/menus.py:180
+#: aleksis/core/menus.py:182
 msgid "Impersonation"
 msgstr "Simulare aliquem"
 
-#: aleksis/core/menus.py:191
+#: aleksis/core/menus.py:193
 #, fuzzy
 #| msgid "Notification"
 msgid "Configuration"
 msgstr "Nuntius"
 
-#: aleksis/core/menus.py:202 aleksis/core/templates/core/data_check/list.html:9
+#: aleksis/core/menus.py:204 aleksis/core/templates/core/data_check/list.html:9
 #: aleksis/core/templates/core/data_check/list.html:10
 #, fuzzy
 #| msgid "System status"
 msgid "Data checks"
 msgstr "Status systemae"
 
-#: aleksis/core/menus.py:208
+#: aleksis/core/menus.py:210
 msgid "Backend Admin"
 msgstr ""
 
-#: aleksis/core/menus.py:214
+#: aleksis/core/menus.py:216
 #: aleksis/core/templates/oauth2_provider/application_detail.html:5
 #: aleksis/core/templates/oauth2_provider/application_list.html:5
 #, fuzzy
@@ -355,11 +383,11 @@ msgstr ""
 msgid "OAuth2 Applications"
 msgstr "Nuntii"
 
-#: aleksis/core/menus.py:227
+#: aleksis/core/menus.py:229
 msgid "People"
 msgstr "Personae"
 
-#: aleksis/core/menus.py:258 aleksis/core/models.py:941
+#: aleksis/core/menus.py:260 aleksis/core/models.py:941
 #: aleksis/core/templates/core/group_type/list.html:8
 #: aleksis/core/templates/core/group_type/list.html:9
 #, fuzzy
@@ -367,15 +395,15 @@ msgstr "Personae"
 msgid "Group types"
 msgstr "Greges"
 
-#: aleksis/core/menus.py:269
+#: aleksis/core/menus.py:271
 msgid "Persons and accounts"
 msgstr "Personae et computi"
 
-#: aleksis/core/menus.py:280
+#: aleksis/core/menus.py:282
 msgid "Groups and child groups"
 msgstr ""
 
-#: aleksis/core/menus.py:291 aleksis/core/models.py:429
+#: aleksis/core/menus.py:293 aleksis/core/models.py:429
 #: aleksis/core/templates/core/additional_field/list.html:8
 #: aleksis/core/templates/core/additional_field/list.html:9
 #, fuzzy
@@ -383,7 +411,7 @@ msgstr ""
 msgid "Additional fields"
 msgstr "addita nomines"
 
-#: aleksis/core/menus.py:306
+#: aleksis/core/menus.py:308
 #: aleksis/core/templates/core/group/child_groups.html:7
 #: aleksis/core/templates/core/group/child_groups.html:9
 msgid "Assign child groups to groups"
@@ -954,45 +982,71 @@ msgstr ""
 msgid "Can solve data check problems"
 msgstr ""
 
-#: aleksis/core/models.py:1040
+#: aleksis/core/models.py:1044
 msgid "Owner"
 msgstr ""
 
-#: aleksis/core/models.py:1043
+#: aleksis/core/models.py:1048
 msgid "File expires at"
 msgstr ""
 
-#: aleksis/core/models.py:1045
+#: aleksis/core/models.py:1050
 msgid "Generated HTML file"
 msgstr ""
 
-#: aleksis/core/models.py:1047
+#: aleksis/core/models.py:1052
 msgid "Generated PDF file"
 msgstr ""
 
-#: aleksis/core/models.py:1054
+#: aleksis/core/models.py:1059
 msgid "PDF file"
 msgstr ""
 
-#: aleksis/core/models.py:1055
+#: aleksis/core/models.py:1060
 msgid "PDF files"
 msgstr ""
 
-#: aleksis/core/models.py:1060
+#: aleksis/core/models.py:1065
 msgid "Task result"
 msgstr ""
 
-#: aleksis/core/models.py:1063
+#: aleksis/core/models.py:1068
 msgid "Task user"
 msgstr ""
 
-#: aleksis/core/models.py:1075
+#: aleksis/core/models.py:1080
 msgid "Task user assignment"
 msgstr ""
 
-#: aleksis/core/models.py:1076
+#: aleksis/core/models.py:1081
 msgid "Task user assignments"
 msgstr ""
+
+#: aleksis/core/preferences.py:22
+msgid "General"
+msgstr ""
+
+#: aleksis/core/preferences.py:23
+msgid "School"
+msgstr "Scola"
+
+#: aleksis/core/preferences.py:24
+msgid "Theme"
+msgstr ""
+
+#: aleksis/core/preferences.py:25
+msgid "Mail"
+msgstr ""
+
+#: aleksis/core/preferences.py:27
+msgid "Footer"
+msgstr ""
+
+#: aleksis/core/preferences.py:28
+#, fuzzy
+#| msgid "Data management"
+msgid "Accounts"
+msgstr "Adminstratio datarum"
 
 #: aleksis/core/preferences.py:29
 #, fuzzy
@@ -1146,11 +1200,19 @@ msgstr ""
 msgid "in minutes"
 msgstr ""
 
-#: aleksis/core/settings.py:470
+#: aleksis/core/preferences.py:398
+msgid "Automatically update the dashboard and its widgets"
+msgstr ""
+
+#: aleksis/core/preferences.py:408
+msgid "Automatically update the dashboard and its widgets sitewide"
+msgstr ""
+
+#: aleksis/core/settings.py:468
 msgid "English"
 msgstr "Britannicus"
 
-#: aleksis/core/settings.py:471
+#: aleksis/core/settings.py:469
 msgid "German"
 msgstr "Germanus"
 
@@ -1511,23 +1573,23 @@ msgstr ""
 msgid "There are no announcements."
 msgstr "Scribe nuntium:"
 
-#: aleksis/core/templates/core/base.html:55
+#: aleksis/core/templates/core/base.html:60
 msgid "Logged in as"
 msgstr ""
 
-#: aleksis/core/templates/core/base.html:148
+#: aleksis/core/templates/core/base.html:154
 msgid "About AlekSIS — The Free School Information System"
 msgstr ""
 
-#: aleksis/core/templates/core/base.html:156
+#: aleksis/core/templates/core/base.html:162
 msgid "Impress"
 msgstr ""
 
-#: aleksis/core/templates/core/base.html:164
+#: aleksis/core/templates/core/base.html:170
 msgid "Privacy Policy"
 msgstr ""
 
-#: aleksis/core/templates/core/base_print.html:67
+#: aleksis/core/templates/core/base_print.html:72
 msgid "Powered by AlekSIS"
 msgstr ""
 
@@ -1821,7 +1883,7 @@ msgstr "Grex"
 msgid "Home"
 msgstr ""
 
-#: aleksis/core/templates/core/index.html:51
+#: aleksis/core/templates/core/index.html:49
 msgid ""
 "\n"
 "        You didn't customise your dashboard so that you see the system default. Please click on \"Edit dashboard\" to\n"
@@ -1829,28 +1891,28 @@ msgid ""
 "      "
 msgstr ""
 
-#: aleksis/core/templates/core/index.html:61
+#: aleksis/core/templates/core/index.html:59
 msgid "Last activities"
 msgstr ""
 
-#: aleksis/core/templates/core/index.html:79
+#: aleksis/core/templates/core/index.html:77
 msgid "No activities available yet."
 msgstr ""
 
-#: aleksis/core/templates/core/index.html:84
+#: aleksis/core/templates/core/index.html:82
 #, fuzzy
 #| msgid "Notifications"
 msgid "Recent notifications"
 msgstr "Nuntii"
 
-#: aleksis/core/templates/core/index.html:100
+#: aleksis/core/templates/core/index.html:98
 #: aleksis/core/templates/core/notifications.html:23
 #, fuzzy
 #| msgid "Edit school information"
 msgid "More information →"
 msgstr "Muta informationes scolae"
 
-#: aleksis/core/templates/core/index.html:107
+#: aleksis/core/templates/core/index.html:105
 #: aleksis/core/templates/core/notifications.html:30
 msgid "No notifications available yet."
 msgstr ""
@@ -2049,8 +2111,8 @@ msgid ""
 "      "
 msgstr ""
 
-#: aleksis/core/templates/core/partials/announcements.html:9
-#: aleksis/core/templates/core/partials/announcements.html:36
+#: aleksis/core/templates/core/partials/announcements.html:8
+#: aleksis/core/templates/core/partials/announcements.html:35
 #, python-format
 msgid ""
 "\n"
@@ -2058,7 +2120,7 @@ msgid ""
 "            "
 msgstr ""
 
-#: aleksis/core/templates/core/partials/announcements.html:13
+#: aleksis/core/templates/core/partials/announcements.html:12
 #, python-format
 msgid ""
 "\n"
@@ -2066,7 +2128,7 @@ msgid ""
 "            "
 msgstr ""
 
-#: aleksis/core/templates/core/partials/announcements.html:40
+#: aleksis/core/templates/core/partials/announcements.html:39
 #, python-format
 msgid ""
 "\n"
@@ -2877,130 +2939,130 @@ msgstr ""
 msgid "SMS"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:89
+#: aleksis/core/util/pdf.py:105
 msgid "Progress: Generate PDF file"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:90
+#: aleksis/core/util/pdf.py:106
 msgid "Generating PDF file …"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:91
+#: aleksis/core/util/pdf.py:107
 msgid "The PDF file has been generated successfully."
 msgstr ""
 
-#: aleksis/core/util/pdf.py:92
+#: aleksis/core/util/pdf.py:108
 msgid "There was a problem while generating the PDF file."
 msgstr ""
 
-#: aleksis/core/util/pdf.py:95
+#: aleksis/core/util/pdf.py:111
 msgid "Download PDF"
 msgstr ""
 
-#: aleksis/core/views.py:249
+#: aleksis/core/views.py:253
 msgid "The school term has been created."
 msgstr ""
 
-#: aleksis/core/views.py:261
+#: aleksis/core/views.py:265
 msgid "The school term has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:406
+#: aleksis/core/views.py:410
 msgid "The child groups were successfully saved."
 msgstr ""
 
-#: aleksis/core/views.py:467
+#: aleksis/core/views.py:471
 msgid "The person has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:506
+#: aleksis/core/views.py:510
 msgid "The group has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:603
+#: aleksis/core/views.py:607
 msgid "The announcement has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:619
+#: aleksis/core/views.py:623
 msgid "The announcement has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:703
+#: aleksis/core/views.py:707
 msgid "The preferences have been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:727
+#: aleksis/core/views.py:731
 msgid "The person has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:741
+#: aleksis/core/views.py:745
 msgid "The group has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:773
+#: aleksis/core/views.py:777
 msgid "The additional_field has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:807
+#: aleksis/core/views.py:811
 msgid "The additional field has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:832
+#: aleksis/core/views.py:836
 msgid "The group type has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:862
+#: aleksis/core/views.py:866
 msgid "The group type has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:895
+#: aleksis/core/views.py:899
 msgid "Progress: Run data checks"
 msgstr ""
 
-#: aleksis/core/views.py:896
+#: aleksis/core/views.py:900
 #, fuzzy
 #| msgid "System status"
 msgid "Run data checks …"
 msgstr "Status systemae"
 
-#: aleksis/core/views.py:897
+#: aleksis/core/views.py:901
 msgid "The data checks were run successfully."
 msgstr ""
 
-#: aleksis/core/views.py:898
+#: aleksis/core/views.py:902
 msgid "There was a problem while running data checks."
 msgstr ""
 
-#: aleksis/core/views.py:914
+#: aleksis/core/views.py:918
 #, python-brace-format
 msgid "The solve option '{solve_option_obj.verbose_name}' "
 msgstr ""
 
-#: aleksis/core/views.py:956
+#: aleksis/core/views.py:960
 msgid "The dashboard widget has been saved."
 msgstr ""
 
-#: aleksis/core/views.py:986
+#: aleksis/core/views.py:990
 msgid "The dashboard widget has been created."
 msgstr ""
 
-#: aleksis/core/views.py:996
+#: aleksis/core/views.py:1000
 msgid "The dashboard widget has been deleted."
 msgstr ""
 
-#: aleksis/core/views.py:1063
+#: aleksis/core/views.py:1067
 msgid "Your dashboard configuration has been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:1065
+#: aleksis/core/views.py:1069
 msgid "The configuration of the default dashboard has been saved successfully."
 msgstr ""
 
-#: aleksis/core/views.py:1191
+#: aleksis/core/views.py:1197
 msgid "The third-party account could not be disconnected because it is the only login method available."
 msgstr ""
 
-#: aleksis/core/views.py:1198
+#: aleksis/core/views.py:1204
 msgid "The third-party account has been successfully disconnected."
 msgstr ""
 
@@ -3012,9 +3074,6 @@ msgstr ""
 
 #~ msgid "Official name"
 #~ msgstr "Officialis nomen"
-
-#~ msgid "School"
-#~ msgstr "Scola"
 
 #~ msgid "Schools"
 #~ msgstr "Scholae"

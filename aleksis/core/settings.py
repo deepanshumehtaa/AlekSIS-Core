@@ -17,6 +17,7 @@ DIRS_FOR_DYNACONF = ["/etc/aleksis"]
 
 SETTINGS_FILE_FOR_DYNACONF = []
 for directory in DIRS_FOR_DYNACONF:
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.json"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.ini"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.yaml"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.toml"))
@@ -106,7 +107,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_prometheus",
     "django_select2",
-    "hattori",
     "templated_email",
     "html2text",
     "django_otp.plugins.otp_totp",
@@ -324,13 +324,7 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 # Configuration for OAuth2 provider
 
-OAUTH2_PROVIDER = {
-    "SCOPES": {
-        "read": "Read anything the resource owner can read",
-        "write": "Write anything the resource owner can write",
-    }
-}
-merge_app_settings("OAUTH2_SCOPES", OAUTH2_PROVIDER["SCOPES"], True)
+OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
 
 if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
@@ -351,6 +345,7 @@ if _settings.get("oauth2.oidc.enabled", False):
             "address": _("Full home postal address"),
             "email": _("Email address"),
             "phone": _("Home and mobile phone"),
+            "groups": _("Groups"),
         }
     )
 
@@ -550,10 +545,10 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     STATIC_ROOT,
 ]
 
-ADMINS = _settings.get("contact.admins", [])
-SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", "root@localhost")
-MANAGERS = _settings.get("contact.admins", [])
+ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
+MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
     EMAIL_HOST = _settings.get("mail.server.host")
@@ -786,10 +781,20 @@ BLEACH_STRIP_COMMENTS = True
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
+        "null": {"class": "logging.NullHandler"},
+    },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "loggers": {},
 }
+
+if not _settings.get("logging.disallowed_host", False):
+    LOGGING["loggers"]["django.security.DisallowedHost"] = {
+        "handlers": ["null"],
+        "propagate": False,
+    }
 
 # Rules and permissions
 
