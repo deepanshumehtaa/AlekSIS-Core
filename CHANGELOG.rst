@@ -14,6 +14,11 @@ Added
 
 * Support config files in JSON format
 
+Changed
+~~~~~~~
+
+* Do not log or e-mail ALLOWED_HOSTS violations
+
 `2.0rc5`_ - 2021-08-25
 ----------------------
 
