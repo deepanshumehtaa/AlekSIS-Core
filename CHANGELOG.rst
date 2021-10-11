@@ -12,7 +12,7 @@ Unreleased
 Added
 ~~~~~
 
-* OpenID connect scope and accompanying claim `groups`
+* OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
 * Allow apps to dynamically generate OAuth scopes
 
@@ -30,6 +30,7 @@ Fixed
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
 * Deleting persons is possible again.
+* Removed wrong changelog section
 
 Removed
 ~~~~~~~
@@ -168,14 +169,14 @@ Added
 * Allow defining several search configs for LDAP users and groups
 * Use setuptools entrypoints to find apps
 * Add django-cachalot as query cache
-* Add `syncable_fields` property to `ExtensibleModel to discover fields
+* Add ``syncable_fields`` property to ``ExtensibleModel`` to discover fields
   sync backends can write to
-* Add `aleksis-admin` script to wrap django-admin with pre-configured settings
+* Add ``aleksis-admin`` script to wrap django-admin with pre-configured settings
 * Auto-create persons for users if matching attributes are found
-* Add `django-allauth` to allow authentication using OAuth, user registration,
+* Add ``django-allauth`` to allow authentication using OAuth, user registration,
   password changes and password reset
 * Add OAuth2 and OpenID Connect provider support
-* Add `django-uwsgi` to use uWSGI and Celery in development
+* Add ``django-uwsgi`` to use uWSGI and Celery in development
 * Add loading page for displaying Celery task progress
 * Implement generic PDF generation using Chromium
 * Support Amazon S3 storage for /media files
@@ -213,7 +214,7 @@ Changed
 * Default search index backend is now Whoosh with Redis storage
 * Re-style search result page
 * Move notifications to separate page with indicator in menu
-* Move to `BigAutoField` for all AlekSIS apps
+* Move to ``BigAutoField`` for all AlekSIS apps
 * Require Django 3.2 and Python 3.9
 * Person and group lists can now be filtered
 * Allow displaying the default widget to anonymous users
