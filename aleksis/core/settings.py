@@ -781,10 +781,20 @@ BLEACH_STRIP_COMMENTS = True
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
+        "null": {"class": "logging.NullHandler"},
+    },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "loggers": {},
 }
+
+if not _settings.get("logging.disallowed_host", False):
+    LOGGING["loggers"]["django.security.DisallowedHost"] = {
+        "handlers": ["null"],
+        "propagate": False,
+    }
 
 # Rules and permissions
 

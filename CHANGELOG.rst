@@ -17,6 +17,8 @@ Added
 
 Changed
 ~~~~~~~
+
+* Do not log or e-mail ALLOWED_HOSTS violations
 * Replace dev.sh helper script with tox environments.
 
 Fixed
