@@ -2648,7 +2648,7 @@ s3 = ["boto3", "django-storages"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c0be2d7f31c358132dd478bea49249d57ef4e276251677822b4f147a4fa32b32"
+content-hash = "16117dad49f2c46bddeac9b61a27c4edd882396730dccc826262a14100cac8b9"
 
 [metadata.files]
 alabaster = [
