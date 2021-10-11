@@ -793,13 +793,14 @@ LOGGING = {
     },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
-    "loggers": {
-        "django.security.DisallowedHost": {
-            "handlers": ["null"],
-            "propagate": False,
-        },
-    },
+    "loggers": {},
 }
+
+if not _settings.get("logging.disallowed_host", False):
+    LOGGING["loggers"]["django.security.DisallowedHost"] = {
+        "handlers": ["null"],
+        "propagate": False,
+    }
 
 # Rules and permissions
 
