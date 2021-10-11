@@ -12,25 +12,30 @@ Unreleased
 Added
 ~~~~~
 
-* Support config files in JSON format
 * OpenID connect scope and accompanying claim `groups`
+* Support config files in JSON format
+* Allow apps to dynamically generate OAuth scopes
+
 
 Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
+* Update translations.
 
 Fixed
 ~~~~~
 
-* Fix API for adding OAuth scopes in AppConfigs
 * Show link to imprint in footer
+* Fix API for adding OAuth scopes in AppConfigs
 * Deleting persons is possible again.
 
 Removed
 ~~~~~~~
 
 * Dropped data anonymization (django-hattori) support for now
+* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
+  on `AppConfig` class instead.
 
 `2.0rc5`_ - 2021-08-25
 ----------------------
