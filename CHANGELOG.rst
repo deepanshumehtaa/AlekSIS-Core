@@ -6,57 +6,46 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.0rc6`_ - 2021-10-11
+----------------------
 
 Added
 ~~~~~
 
 * OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
+* Allow apps to dynamically generate OAuth scopes
 
 Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
+* Update translations.
+* Use initial superuser settings as default contact and from addresses
 
 Fixed
 ~~~~~
 
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
-* Removed wrong changelog section
 * Deleting persons is possible again.
-
-Changed
-~~~~~~~
-
-* Use initial superuser settings as default contact and from addresses
+* Removed wrong changelog section
 
 Removed
 ~~~~~~~
 
 * Dropped data anonymization (django-hattori) support for now
+* ``OAUTH2_SCOPES`` setting in apps is not supported anymore. Use ``get_all_scopes`` method
+  on ``AppConfig`` class instead.
 
 `2.0rc5`_ - 2021-08-25
 ----------------------
-
-Added
-~~~~~
-
-* Allow apps to dynamically generate OAuth scopes
 
 Fixed
 ~~~~~
 
 * The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
 * Updated django to latest 3.2.x
-
-Removed
-~~~~~~~
-
-* ``OAUTH2_SCOPES`` setting in apps is not supported anymore. Use ``get_all_scopes`` method
-  on ``AppConfig`` class instead.
 
 
 `2.0rc4`_ - 2021-08-01
@@ -378,3 +367,4 @@ Fixed
 .. _2.0rc3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc3
 .. _2.0rc4: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc4
 .. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
+.. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
