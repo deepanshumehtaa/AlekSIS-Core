@@ -26,6 +26,7 @@ Fixed
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
 * Removed wrong changelog section
+* Deleting persons is possible again.
 
 Removed
 ~~~~~~~
