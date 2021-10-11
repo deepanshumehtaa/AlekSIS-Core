@@ -22,6 +22,7 @@ Changed
 
 * Do not log or e-mail ALLOWED_HOSTS violations
 * Update translations.
+* Use initial superuser settings as default contact and from addresses
 
 Fixed
 ~~~~~
@@ -29,11 +30,6 @@ Fixed
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
 * Deleting persons is possible again.
-
-Changed
-~~~~~~~
-
-* Use initial superuser settings as default contact and from addresses
 
 Removed
 ~~~~~~~
