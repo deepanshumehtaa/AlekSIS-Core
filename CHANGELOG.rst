@@ -36,8 +36,8 @@ Removed
 ~~~~~~~
 
 * Dropped data anonymization (django-hattori) support for now
-* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
-  on `AppConfig` class instead.
+* ``OAUTH2_SCOPES`` setting in apps is not supported anymore. Use ``get_all_scopes`` method
+  on ``AppConfig`` class instead.
 
 `2.0rc5`_ - 2021-08-25
 ----------------------
@@ -56,13 +56,6 @@ Added
 ~~~~~
 
 * Allow to configure port for prometheus metrics endpoint.
-* Allow apps to dynamically generate OAuth scopes
-
-Removed
-~~~~~~~
-
-* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
-  on `AppConfig` class instead.
 
 Fixed
 ~~~~~
