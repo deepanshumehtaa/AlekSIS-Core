@@ -27,6 +27,11 @@ Fixed
 * Fix API for adding OAuth scopes in AppConfigs
 * Deleting persons is possible again.
 
+Changed
+~~~~~~~
+
+* Use initial superuser settings as default contact and from addresses
+
 Removed
 ~~~~~~~
 

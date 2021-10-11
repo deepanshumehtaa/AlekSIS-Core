@@ -545,10 +545,10 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     STATIC_ROOT,
 ]
 
-ADMINS = _settings.get("contact.admins", [])
-SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", "root@localhost")
-MANAGERS = _settings.get("contact.admins", [])
+ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
+MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
     EMAIL_HOST = _settings.get("mail.server.host")
