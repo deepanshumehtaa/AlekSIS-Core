@@ -15,6 +15,11 @@ Added
 * OpenID connect scope and accompanying claim `groups`
 * Support config files in JSON format
 
+Changed
+~~~~~~~
+
+* Do not log or e-mail ALLOWED_HOSTS violations
+
 Fixed
 ~~~~~
 
