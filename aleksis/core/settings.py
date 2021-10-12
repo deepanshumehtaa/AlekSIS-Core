@@ -338,16 +338,6 @@ if _settings.get("oauth2.oidc.enabled", False):
             #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
         }
     )
-    OAUTH2_PROVIDER["SCOPES"].update(
-        {
-            "openid": _("OpenID Connect scope"),
-            "profile": _("Given name, family name, link to profile and picture if existing."),
-            "address": _("Full home postal address"),
-            "email": _("Email address"),
-            "phone": _("Home and mobile phone"),
-            "groups": _("Groups"),
-        }
-    )
 
 # Configuration for REST framework
 REST_FRAMEWORK = {
