@@ -5,6 +5,7 @@ from django.apps import apps
 from django.conf import settings
 from django.http import HttpRequest
 from django.utils.module_loading import autodiscover_modules
+from django.utils.translation import gettext as _
 
 from dynamic_preferences.registries import preference_models
 from health_check.plugins import plugin_dir
