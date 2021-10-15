@@ -13,6 +13,7 @@ Fixed
 ~~~~~
 
 * Configuration mechanisms for OpenID Connect were broken.
+* Set a fixed version for django-sass-processor to avoid a bug with searching ``style.css`` in the wrong storage.
 
 `2.0rc6`_ - 2021-10-11
 ----------------------
