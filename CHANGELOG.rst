@@ -13,6 +13,7 @@ Fixed
 ~~~~~
 
 * Configuration mechanisms for OpenID Connect were broken.
+* Set a fixed version for django-sass-processor to avoid a bug with searching ``style.css`` in the wrong storage.
 * Correct the z-index of the navbar to display the main title again on mobile devices.
 
 `2.0rc6`_ - 2021-10-11
