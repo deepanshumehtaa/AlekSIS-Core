@@ -13,6 +13,7 @@ Fixed
 ~~~~~
 
 * Configuration mechanisms for OpenID Connect were broken.
+* Correct the z-index of the navbar to display the main title again on mobile devices.
 
 `2.0rc6`_ - 2021-10-11
 ----------------------
