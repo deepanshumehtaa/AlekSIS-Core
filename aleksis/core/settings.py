@@ -438,19 +438,12 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-CUSTOM_AUTHENTICATION_BACKENDS = []
-merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
-
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
 # Authentication backend for django-allauth.
 AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
-
-# Structure of items: backend, URL name, icon name, button title
-ALTERNATIVE_LOGIN_VIEWS = []
-merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
