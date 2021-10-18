@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.0rc7`_ - 2021-10-18
+----------------------
+
+Fixed
+~~~~~
+
+* Configuration mechanisms for OpenID Connect were broken.
+* Set a fixed version for django-sass-processor to avoid a bug with searching ``style.css`` in the wrong storage.
+* Correct the z-index of the navbar to display the main title again on mobile devices.
+
+Removed
+~~~~~~~
+
+* Leftovers from a functionality already dropped in the development process
+  (custom authentication backends and alternative login views).
+
 `2.0rc6`_ - 2021-10-11
 ----------------------
 
@@ -360,3 +376,4 @@ Fixed
 .. _2.0rc4: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc4
 .. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
 .. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
+.. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
