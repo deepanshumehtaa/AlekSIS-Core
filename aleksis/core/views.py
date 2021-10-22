@@ -1151,6 +1151,8 @@ class CeleryProgressView(View):
     """Wrap celery-progress view to check permissions before."""
 
     def get(self, request: HttpRequest, task_id: str, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            raise Http404()
         if not TaskUserAssignment.objects.filter(
             task_result__task_id=task_id, user=request.user
         ).exists():

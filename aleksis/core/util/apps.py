@@ -217,22 +217,25 @@ class AppConfig(django.apps.AppConfig):
         """
         pass
 
-    def get_all_scopes(self) -> dict[str, str]:
+    @classmethod
+    def get_all_scopes(cls) -> dict[str, str]:
         """Return all OAuth scopes and their descriptions for this app."""
         return {}
 
+    @classmethod
     def get_available_scopes(
-        self,
+        cls,
         application: Optional["AbstractApplication"] = None,
         request: Optional[HttpRequest] = None,
         *args,
         **kwargs,
     ) -> list[str]:
         """Return a list of all OAuth scopes available to the request and application."""
-        return list(self.get_all_scopes().keys())
+        return list(cls.get_all_scopes().keys())
 
+    @classmethod
     def get_default_scopes(
-        self,
+        cls,
         application: Optional["AbstractApplication"] = None,
         request: Optional[HttpRequest] = None,
         *args,

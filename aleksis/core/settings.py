@@ -17,6 +17,7 @@ DIRS_FOR_DYNACONF = ["/etc/aleksis"]
 
 SETTINGS_FILE_FOR_DYNACONF = []
 for directory in DIRS_FOR_DYNACONF:
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.json"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.ini"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.yaml"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.toml"))
@@ -106,7 +107,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_prometheus",
     "django_select2",
-    "hattori",
     "templated_email",
     "html2text",
     "django_otp.plugins.otp_totp",
@@ -338,15 +338,6 @@ if _settings.get("oauth2.oidc.enabled", False):
             #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
         }
     )
-    OAUTH2_PROVIDER["SCOPES"].update(
-        {
-            "openid": _("OpenID Connect scope"),
-            "profile": _("Given name, family name, link to profile and picture if existing."),
-            "address": _("Full home postal address"),
-            "email": _("Email address"),
-            "phone": _("Home and mobile phone"),
-        }
-    )
 
 # Configuration for REST framework
 REST_FRAMEWORK = {
@@ -447,19 +438,12 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-CUSTOM_AUTHENTICATION_BACKENDS = []
-merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
-
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
 # Authentication backend for django-allauth.
 AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
-
-# Structure of items: backend, URL name, icon name, button title
-ALTERNATIVE_LOGIN_VIEWS = []
-merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -544,10 +528,10 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     STATIC_ROOT,
 ]
 
-ADMINS = _settings.get("contact.admins", [])
-SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", "root@localhost")
-MANAGERS = _settings.get("contact.admins", [])
+ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
+MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
     EMAIL_HOST = _settings.get("mail.server.host")
@@ -780,10 +764,20 @@ BLEACH_STRIP_COMMENTS = True
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
+        "null": {"class": "logging.NullHandler"},
+    },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "loggers": {},
 }
+
+if not _settings.get("logging.disallowed_host", False):
+    LOGGING["loggers"]["django.security.DisallowedHost"] = {
+        "handlers": ["null"],
+        "propagate": False,
+    }
 
 # Rules and permissions
 
