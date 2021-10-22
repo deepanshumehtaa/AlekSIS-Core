@@ -13,7 +13,7 @@ Fixed
 ~~~~~
 
 * Fix order of submit buttons in login form and restructure login template
-  to make 2FA working correctly.
+  to make 2FA work correctly.
 
 `2.0rc7`_ - 2021-10-18
 ----------------------
