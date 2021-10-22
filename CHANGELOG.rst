@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Fixed
+~~~~~
+
+* Fix order of submit buttons in login form and restructure login template
+  to make 2FA work correctly.
+
 `2.0rc7`_ - 2021-10-18
 ----------------------
 
