@@ -35,6 +35,18 @@
   <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}"
           type="text/javascript"></script>
 
+  {% if SENTRY_ENABLED %}
+    {% include_js "Sentry" %}
+    <script type="text/javascript">
+      Sentry.init({
+        dsn: '{{ SENTRY_SETTINGS.dsn }}',
+        environment: '{{ SENTRY_SETTINGS.environment }}',
+        tracesSampleRate: {{ SENTRY_SETTINGS.traces_sample_rate }},
+        integrations: [new Sentry.Integrations.BrowserTracing()]
+      });
+    </script>
+  {% endif %}
+
   {# Include jQuery early to provide $(document).ready #}
   {% include_js "jQuery" %}
 
