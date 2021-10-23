@@ -14,6 +14,7 @@ Fixed
 
 * Fix order of submit buttons in login form and restructure login template
   to make 2FA work correctly.
+* Provide `style.css` and icon files without any authentication to avoid caching issues.
 
 `2.0rc7`_ - 2021-10-18
 ----------------------
