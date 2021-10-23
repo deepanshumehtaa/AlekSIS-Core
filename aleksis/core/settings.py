@@ -855,5 +855,22 @@ else:
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
 
+if _settings.get("health.sentry.enabled", False):
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from aleksis.core import __version__
+
+    sentry_sdk.init(
+        dsn=_settings.get("health.sentry.dsn"),
+        environment=_settings.get("health.sentry.environment"),
+        integrations=[DjangoIntegration(
+            transaction_style="function_name",
+        )],
+        traces_sample_rate=_settings.get("health.sentry.traces_sample_rate", 1.0),
+        send_default_pii=_settings.get("health.sentry.send_default_pii", False),
+        release=f"aleksis-core@{__version__}",
+        in_app_include="aleksis",
+    )
+
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
