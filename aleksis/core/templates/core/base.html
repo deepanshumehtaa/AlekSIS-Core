@@ -36,6 +36,9 @@
           type="text/javascript"></script>
 
   {% if SENTRY_ENABLED %}
+    {% if SENTRY_TRACE_ID %}
+      <meta name="sentry-trace" content="{{ SENTRY_TRACE_ID }}" />
+    {% endif %}
     {% include_js "Sentry" %}
     {{ SENTRY_SETTINGS|json_script:"sentry_settings" }}
     <script type="text/javascript">
