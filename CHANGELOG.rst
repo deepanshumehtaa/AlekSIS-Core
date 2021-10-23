@@ -40,6 +40,7 @@ Added
 * OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
 * Allow apps to dynamically generate OAuth scopes
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 
 Changed
 ~~~~~~~
