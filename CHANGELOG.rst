@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Implement optional Sentry integration for error and performance tracing.
+
 Fixed
 ~~~~~
 
