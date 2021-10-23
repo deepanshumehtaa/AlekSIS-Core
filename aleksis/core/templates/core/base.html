@@ -37,11 +37,14 @@
 
   {% if SENTRY_ENABLED %}
     {% include_js "Sentry" %}
+    {{ SENTRY_SETTINGS|json_script:"sentry_settings" }}
     <script type="text/javascript">
+      const sentry_settings = JSON.parse(document.getElementById('sentry_settings').textContent);
+
       Sentry.init({
-        dsn: '{{ SENTRY_SETTINGS.dsn }}',
-        environment: '{{ SENTRY_SETTINGS.environment }}',
-        tracesSampleRate: {{ SENTRY_SETTINGS.traces_sample_rate }},
+        dsn: sentry_settings.dsn,
+        environment: sentry_settings.environment,
+        tracesSampleRate: sentry_settings.traces_sample_rate,
         integrations: [new Sentry.Integrations.BrowserTracing()]
       });
     </script>
