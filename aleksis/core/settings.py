@@ -635,6 +635,7 @@ PWA_ICONS_CONFIG = {
     "apple_splash": [192],
     "microsoft": [144],
 }
+FAVICON_PATH = os.path.join("public", "favicon")
 
 SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
