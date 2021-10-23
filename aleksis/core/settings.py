@@ -858,9 +858,10 @@ SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
 SENTRY_ENABLED = _settings.get("health.sentry.enabled", False)
 if SENTRY_ENABLED:
     import sentry_sdk
+    from sentry_sdk.integrations.celery import CeleryIntegration
     from sentry_sdk.integrations.django import DjangoIntegration
     from sentry_sdk.integrations.redis import RedisIntegration
-    from sentry_sdk.integrations.celery import CeleryIntegration
+
     from aleksis.core import __version__
 
     SENTRY_SETTINGS = {
@@ -877,7 +878,7 @@ if SENTRY_ENABLED:
             RedisIntegration(),
             CeleryIntegration(),
         ],
-        **SENTRY_SETTINGS
+        **SENTRY_SETTINGS,
     )
 
     YARN_INSTALLED_APPS += [

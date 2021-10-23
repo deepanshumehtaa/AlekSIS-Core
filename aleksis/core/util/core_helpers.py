@@ -219,11 +219,13 @@ def custom_information_processor(request: HttpRequest) -> dict:
         context["SENTRY_SETTINGS"] = settings.SENTRY_SETTINGS
 
         import sentry_sdk
+
         span = sentry_sdk.Hub.current.scope.span
         if span is not None:
             context["SENTRY_TRACE_ID"] = span.to_traceparent()
 
     return context
+
 
 def now_tomorrow() -> datetime:
     """Return current time tomorrow."""
