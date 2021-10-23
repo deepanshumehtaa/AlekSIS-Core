@@ -523,9 +523,8 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
-    STATIC_ROOT + "/materialize-css/sass/",
-    STATIC_ROOT,
+    _settings.get("materialize.sass_path", os.path.join(JS_ROOT, "materialize-css", "sass")),
+    os.path.join(STATIC_ROOT, "public"),
 ]
 
 ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
