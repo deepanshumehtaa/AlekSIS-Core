@@ -10,6 +10,7 @@ import debug_toolbar
 from ckeditor_uploader import views as ckeditor_uploader_views
 from django_js_reverse.views import urls_js
 from health_check.urls import urlpatterns as health_urls
+from jwt_auth import views as jwt_auth_views
 from oauth2_provider.views import ConnectDiscoveryInfoView
 from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
@@ -224,6 +225,8 @@ urlpatterns = [
         name="edit_default_dashboard",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("token-auth/", jwt_auth_views.jwt_token),
+    path("token-refresh/", jwt_auth_views.refresh_jwt_token),
 ]
 
 # Use custom server error handler to get a request object in the template
