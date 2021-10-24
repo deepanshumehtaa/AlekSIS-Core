@@ -46,7 +46,6 @@ urlpatterns = [
     path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
     path("school_terms/<int:pk>/", views.SchoolTermEditView.as_view(), name="edit_school_term"),
     path("persons", views.persons, name="persons"),
-    path("persons/accounts", views.persons_accounts, name="persons_accounts"),
     path("person", views.person, name="person"),
     path("person/create", views.edit_person, name="create_person"),
     path("person/<int:id_>", views.person, name="person_by_id"),

@@ -952,7 +952,6 @@ class GlobalPermissions(GlobalPermissionModel):
     class Meta(GlobalPermissionModel.Meta):
         permissions = (
             ("view_system_status", _("Can view system status")),
-            ("link_persons_accounts", _("Can link persons to accounts")),
             ("manage_data", _("Can manage data")),
             ("impersonate", _("Can impersonate")),
             ("search", _("Can use search")),
