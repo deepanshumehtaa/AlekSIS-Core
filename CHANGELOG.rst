@@ -22,6 +22,13 @@ Fixed
   to make 2FA work correctly.
 * Fix page title bug on the impersonate page.
 
+
+Removed
+~~~~~~~
+
+* Remove mass linking of persons to accounts, bevcause the view had performance issues,
+  but was practically unused.
+
 `2.0rc7`_ - 2021-10-18
 ----------------------
 
