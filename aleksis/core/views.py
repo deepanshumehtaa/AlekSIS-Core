@@ -361,27 +361,6 @@ def groups(request: HttpRequest) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.link_persons_accounts_rule")
-def persons_accounts(request: HttpRequest) -> HttpResponse:
-    """View allowing to batch-process linking of users to persons."""
-    context = {}
-
-    # Get all persons
-    persons_qs = Person.objects.all()
-
-    # Form set with one form per known person
-    persons_accounts_formset = PersonsAccountsFormSet(request.POST or None, queryset=persons_qs)
-
-    if request.method == "POST":
-        if persons_accounts_formset.is_valid():
-            persons_accounts_formset.save()
-
-    context["persons_accounts_formset"] = persons_accounts_formset
-
-    return render(request, "core/person/accounts.html", context)
-
-
-@never_cache
 @permission_required("core.assign_child_groups_to_groups_rule")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
     """View for batch-processing assignment from child groups to groups."""
