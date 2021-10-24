@@ -9,6 +9,12 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+
+
 Fixed
 ~~~~~
 
