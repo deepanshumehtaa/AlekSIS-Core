@@ -14,6 +14,7 @@ Fixed
 
 * Fix order of submit buttons in login form and restructure login template
   to make 2FA work correctly.
+* Fix page title bug on the impersonate page.
 * Provide `style.css` and icon files without any authentication to avoid caching issues.
 
 `2.0rc7`_ - 2021-10-18
@@ -41,6 +42,7 @@ Added
 * OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
 * Allow apps to dynamically generate OAuth scopes
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 
 Changed
 ~~~~~~~
