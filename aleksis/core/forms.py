@@ -146,17 +146,20 @@ class EditPersonForm(ExtensibleForm):
         super().__init__(*args, **kwargs)
 
         # Disable non-editable fields
-        person_fields = set([field.name for field in Person.syncable_fields()]).intersection(
-            set(self.fields)
-        )
+        allowed_person_fields = get_site_preferences()["account__editable_fields_person"]
 
-        if self.instance:
-            checker = ObjectPermissionChecker(request.user)
-            checker.prefetch_perms([self.instance])
+        if (
+            request
+            and self.instance
+            and not request.user.has_perm("core.change_person", self.instance)
+        ):
+            # First, disable all fields
+            for field in self.fields:
+                self.fields[field].disabled = True
 
-            for field in person_fields:
-                if not checker.has_perm(f"core.change_person_field_{field}", self.instance):
-                    self.fields[field].disabled = True
+            # Then, activate allowed fields
+            for field in allowed_person_fields:
+                self.fields[field].disabled = False
 
     def clean(self) -> None:
         # Use code implemented in dedicated form to verify user selection
