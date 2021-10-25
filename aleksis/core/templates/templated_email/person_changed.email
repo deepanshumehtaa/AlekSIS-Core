@@ -11,7 +11,7 @@
    the person {{ person }} recently changed the following fields:
  {% endblocktrans %}
 
- {% for field in send_notification_fields %}
+ {% for field in changed_fields %}
   * {{ field }}
  {% endfor %}
 {% endblock %}
@@ -25,7 +25,7 @@
  </p>
 
  <ul>
-  {% for field in send_notification_fields %}
+  {% for field in changed_fields %}
    <li>{{ field }}</li>
   {% endfor %}
  </ul>
