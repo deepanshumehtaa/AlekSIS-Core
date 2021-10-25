@@ -13,7 +13,6 @@ from allauth.account.forms import SignupForm
 from allauth.account.utils import get_user_model, setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from guardian.core import ObjectPermissionChecker
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -82,8 +81,8 @@ PersonsAccountsFormSet = forms.modelformset_factory(
 )
 
 
-class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend."""
+class PersonForm(ExtensibleForm):
+    """Form to edit or add a person object in the frontend."""
 
     layout = Layout(
         Fieldset(
@@ -142,7 +141,8 @@ class EditPersonForm(ExtensibleForm):
         required=False, label=_("New user"), help_text=_("Create a new account")
     )
 
-    def __init__(self, request: HttpRequest, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
 
         # Disable non-editable fields
