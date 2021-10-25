@@ -14,6 +14,10 @@ Added
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 
+Changed
+~~~~~~~
+
+* Refactor views/forms for creating/editing persons.
 
 Fixed
 ~~~~~
@@ -21,6 +25,8 @@ Fixed
 * Fix order of submit buttons in login form and restructure login template
   to make 2FA work correctly.
 * Fix page title bug on the impersonate page.
+* Users were able to edit the linked user if self-editing was activated.
+* Users weren't able to edit the allowed fields although they were configured correctly.
 
 `2.0rc7`_ - 2021-10-18
 ----------------------
