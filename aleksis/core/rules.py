@@ -2,7 +2,6 @@ import rules
 
 from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
-    contains_site_preference_value,
     has_any_object,
     has_global_perm,
     has_object_perm,
@@ -341,15 +340,3 @@ rules.add_perm("core.upload_files_ckeditor_rule", upload_files_ckeditor_predicat
 
 test_pdf_generation_predicate = has_person & has_global_perm("core.test_pdf")
 rules.add_perm("core.test_pdf_rule", test_pdf_generation_predicate)
-
-# Generate rules for syncable fields
-for field in Person._meta.fields:
-    perm = (
-        has_global_perm("core.edit_person")
-        | has_object_perm("core.edit_person")
-        | (
-            is_current_person
-            & contains_site_preference_value("account", "editable_fields_person", field.name)
-        )
-    )
-    rules.add_perm(f"core.change_person_field_{field.name}_rule", perm)

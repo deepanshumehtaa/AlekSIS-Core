@@ -13,7 +13,6 @@ from allauth.account.forms import SignupForm
 from allauth.account.utils import get_user_model, setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from guardian.core import ObjectPermissionChecker
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -34,8 +33,8 @@ from .registries import (
 from .util.core_helpers import get_site_preferences
 
 
-class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend."""
+class PersonForm(ExtensibleForm):
+    """Form to edit or add a person object in the frontend."""
 
     layout = Layout(
         Fieldset(
@@ -94,23 +93,29 @@ class EditPersonForm(ExtensibleForm):
         required=False, label=_("New user"), help_text=_("Create a new account")
     )
 
-    def __init__(self, request: HttpRequest, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
 
         # Disable non-editable fields
-        person_fields = set([field.name for field in Person.syncable_fields()]).intersection(
-            set(self.fields)
-        )
+        allowed_person_fields = get_site_preferences()["account__editable_fields_person"]
 
-        if self.instance:
-            checker = ObjectPermissionChecker(request.user)
-            checker.prefetch_perms([self.instance])
+        if (
+            request
+            and self.instance
+            and not request.user.has_perm("core.change_person", self.instance)
+        ):
+            # First, disable all fields
+            for field in self.fields:
+                self.fields[field].disabled = True
 
-            for field in person_fields:
-                if not checker.has_perm(f"core.change_person_field_{field}", self.instance):
-                    self.fields[field].disabled = True
+            # Then, activate allowed fields
+            for field in allowed_person_fields:
+                self.fields[field].disabled = False
 
     def clean(self) -> None:
+        user = get_user_model()
+
         if self.cleaned_data.get("new_user", None):
             if self.cleaned_data.get("user", None):
                 # The user selected both an existing user and provided a name to create a new one
