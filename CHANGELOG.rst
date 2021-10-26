@@ -28,6 +28,13 @@ Fixed
 * Users were able to edit the linked user if self-editing was activated.
 * Users weren't able to edit the allowed fields although they were configured correctly.
 
+
+Removed
+~~~~~~~
+
+* Remove mass linking of persons to accounts, bevcause the view had performance issues,
+  but was practically unused.
+
 `2.0rc7`_ - 2021-10-18
 ----------------------
 
