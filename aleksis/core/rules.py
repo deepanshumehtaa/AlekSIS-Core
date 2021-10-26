@@ -153,11 +153,7 @@ rules.add_perm("core.view_system_status_rule", view_system_status_predicate)
 rules.add_perm(
     "core.view_people_menu_rule",
     has_person
-    & (
-        view_persons_predicate
-        | view_groups_predicate
-        | assign_child_groups_to_groups_predicate
-    ),
+    & (view_persons_predicate | view_groups_predicate | assign_child_groups_to_groups_predicate),
 )
 
 # View person personal details

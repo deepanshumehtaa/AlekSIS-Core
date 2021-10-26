@@ -62,7 +62,6 @@ from .forms import (
     GroupPreferenceForm,
     PersonForm,
     PersonPreferenceForm,
-    PersonsAccountsFormSet,
     SchoolTermForm,
     SitePreferenceForm,
 )
