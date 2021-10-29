@@ -27,6 +27,7 @@ Fixed
 * Fix page title bug on the impersonate page.
 * Users were able to edit the linked user if self-editing was activated.
 * Users weren't able to edit the allowed fields although they were configured correctly.
+* Provide `style.css` and icon files without any authentication to avoid caching issues.
 
 
 Removed
