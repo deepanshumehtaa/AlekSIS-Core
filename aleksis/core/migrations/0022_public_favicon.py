@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0020_pdf_file_person_optional'),
+        ('core', '0021_drop_persons_accounts_perm'),
         ('favicon', '0004_faviconimg_favicon_size_rel_unique'),
     ]
 
