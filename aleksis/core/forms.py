@@ -13,7 +13,6 @@ from allauth.account.forms import SignupForm
 from allauth.account.utils import get_user_model, setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from guardian.core import ObjectPermissionChecker
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -34,56 +33,8 @@ from .registries import (
 from .util.core_helpers import get_site_preferences
 
 
-class PersonAccountForm(forms.ModelForm):
-    """Form to assign user accounts to persons in the frontend."""
-
-    class Meta:
-        model = Person
-        fields = ["last_name", "first_name", "user"]
-        widgets = {"user": Select2Widget(attrs={"class": "browser-default"})}
-
-    new_user = forms.CharField(required=False)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # Fields displayed only for informational purposes
-        self.fields["first_name"].disabled = True
-        self.fields["last_name"].disabled = True
-
-    def clean(self) -> None:
-        user = get_user_model()
-
-        if self.cleaned_data.get("new_user", None):
-            if self.cleaned_data.get("user", None):
-                # The user selected both an existing user and provided a name to create a new one
-                self.add_error(
-                    "new_user",
-                    _("You cannot set a new username when also selecting an existing user."),
-                )
-            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
-                # The user tried to create a new user with the name of an existing user
-                self.add_error("new_user", _("This username is already in use."))
-            else:
-                # Create new User object and assign to form field for existing user
-                new_user_obj = user.objects.create_user(
-                    self.cleaned_data["new_user"],
-                    self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
-                )
-
-                self.cleaned_data["user"] = new_user_obj
-
-
-# Formset for batch-processing of assignments of users to persons
-PersonsAccountsFormSet = forms.modelformset_factory(
-    Person, form=PersonAccountForm, max_num=0, extra=0
-)
-
-
-class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend."""
+class PersonForm(ExtensibleForm):
+    """Form to edit or add a person object in the frontend."""
 
     layout = Layout(
         Fieldset(
@@ -142,25 +93,49 @@ class EditPersonForm(ExtensibleForm):
         required=False, label=_("New user"), help_text=_("Create a new account")
     )
 
-    def __init__(self, request: HttpRequest, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
 
         # Disable non-editable fields
-        person_fields = set([field.name for field in Person.syncable_fields()]).intersection(
-            set(self.fields)
-        )
+        allowed_person_fields = get_site_preferences()["account__editable_fields_person"]
 
-        if self.instance:
-            checker = ObjectPermissionChecker(request.user)
-            checker.prefetch_perms([self.instance])
+        if (
+            request
+            and self.instance
+            and not request.user.has_perm("core.change_person", self.instance)
+        ):
+            # First, disable all fields
+            for field in self.fields:
+                self.fields[field].disabled = True
 
-            for field in person_fields:
-                if not checker.has_perm(f"core.change_person_field_{field}", self.instance):
-                    self.fields[field].disabled = True
+            # Then, activate allowed fields
+            for field in allowed_person_fields:
+                self.fields[field].disabled = False
 
     def clean(self) -> None:
-        # Use code implemented in dedicated form to verify user selection
-        return PersonAccountForm.clean(self)
+        user = get_user_model()
+
+        if self.cleaned_data.get("new_user", None):
+            if self.cleaned_data.get("user", None):
+                # The user selected both an existing user and provided a name to create a new one
+                self.add_error(
+                    "new_user",
+                    _("You cannot set a new username when also selecting an existing user."),
+                )
+            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
+                # The user tried to create a new user with the name of an existing user
+                self.add_error("new_user", _("This username is already in use."))
+            else:
+                # Create new User object and assign to form field for existing user
+                new_user_obj = user.objects.create_user(
+                    self.cleaned_data["new_user"],
+                    self.instance.email,
+                    first_name=self.instance.first_name,
+                    last_name=self.instance.last_name,
+                )
+
+                self.cleaned_data["user"] = new_user_obj
 
 
 class EditGroupForm(SchoolTermRelatedExtensibleForm):

@@ -268,17 +268,6 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Persons and accounts"),
-                    "url": "persons_accounts",
-                    "icon": "person_add",
-                    "validators": [
-                        (
-                            "aleksis.core.util.predicates.permission_validator",
-                            "core.link_persons_accounts_rule",
-                        )
-                    ],
-                },
-                {
                     "name": _("Groups and child groups"),
                     "url": "groups_child_groups",
                     "icon": "group_add",

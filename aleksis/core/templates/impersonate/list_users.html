@@ -4,9 +4,8 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
-{% block page_title %}
-  {% blocktrans %}Impersonate user{% endblocktrans %}
-{% endblock %}
+{% block browser_title %}{% trans "Impersonate" %}{% endblock %}
+{% block page_title %}{% trans "Impersonate" %}{% endblock %}
 
 {% block content %}
   {% if page.object_list %}
