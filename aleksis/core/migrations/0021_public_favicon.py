@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0020_pdf_file_person_optional'),
+        ('favicon', '0004_faviconimg_favicon_size_rel_unique'),
     ]
 
     def _migrate_favicons(apps, schema_editor):
