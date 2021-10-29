@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.0rc7"
+version = "2.0"
 packages = [
     { include = "aleksis" }
 ]
@@ -29,7 +29,7 @@ repository = "https://edugit.org/AlekSIS/official/AlekSIS-Core"
 documentation = "https://aleksis.org/AlekSIS-Core/docs/html/"
 keywords = ["SIS", "education", "school", "digitisation", "school apps"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
     "Framework :: Django :: 3.0",
     "Intended Audience :: Developers",
