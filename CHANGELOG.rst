@@ -6,13 +6,8 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
-
-Added
-~~~~~
-
-* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+`2.0`_ - 2021-10-29
+-------------------
 
 Changed
 ~~~~~~~
@@ -406,3 +401,4 @@ Fixed
 .. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
 .. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
 .. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
+.. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
