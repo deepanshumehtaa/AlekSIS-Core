@@ -29,6 +29,13 @@ Fixed
 * Users weren't able to edit the allowed fields although they were configured correctly.
 * Provide `style.css` and icon files without any authentication to avoid caching issues.
 
+
+Removed
+~~~~~~~
+
+* Remove mass linking of persons to accounts, bevcause the view had performance issues,
+  but was practically unused.
+
 `2.0rc7`_ - 2021-10-18
 ----------------------
 

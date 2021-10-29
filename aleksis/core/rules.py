@@ -79,10 +79,6 @@ delete_person_predicate = has_person & (
 )
 rules.add_perm("core.delete_person_rule", delete_person_predicate)
 
-# Link persons with accounts
-link_persons_accounts_predicate = has_person & has_global_perm("core.link_persons_accounts")
-rules.add_perm("core.link_persons_accounts_rule", link_persons_accounts_predicate)
-
 # View groups
 view_groups_predicate = has_person & (
     has_global_perm("core.view_group") | has_any_object("core.view_group", Group)
@@ -157,12 +153,7 @@ rules.add_perm("core.view_system_status_rule", view_system_status_predicate)
 rules.add_perm(
     "core.view_people_menu_rule",
     has_person
-    & (
-        view_persons_predicate
-        | view_groups_predicate
-        | link_persons_accounts_predicate
-        | assign_child_groups_to_groups_predicate
-    ),
+    & (view_persons_predicate | view_groups_predicate | assign_child_groups_to_groups_predicate),
 )
 
 # View person personal details

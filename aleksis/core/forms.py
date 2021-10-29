@@ -33,54 +33,6 @@ from .registries import (
 from .util.core_helpers import get_site_preferences
 
 
-class PersonAccountForm(forms.ModelForm):
-    """Form to assign user accounts to persons in the frontend."""
-
-    class Meta:
-        model = Person
-        fields = ["last_name", "first_name", "user"]
-        widgets = {"user": Select2Widget(attrs={"class": "browser-default"})}
-
-    new_user = forms.CharField(required=False)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # Fields displayed only for informational purposes
-        self.fields["first_name"].disabled = True
-        self.fields["last_name"].disabled = True
-
-    def clean(self) -> None:
-        user = get_user_model()
-
-        if self.cleaned_data.get("new_user", None):
-            if self.cleaned_data.get("user", None):
-                # The user selected both an existing user and provided a name to create a new one
-                self.add_error(
-                    "new_user",
-                    _("You cannot set a new username when also selecting an existing user."),
-                )
-            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
-                # The user tried to create a new user with the name of an existing user
-                self.add_error("new_user", _("This username is already in use."))
-            else:
-                # Create new User object and assign to form field for existing user
-                new_user_obj = user.objects.create_user(
-                    self.cleaned_data["new_user"],
-                    self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
-                )
-
-                self.cleaned_data["user"] = new_user_obj
-
-
-# Formset for batch-processing of assignments of users to persons
-PersonsAccountsFormSet = forms.modelformset_factory(
-    Person, form=PersonAccountForm, max_num=0, extra=0
-)
-
-
 class PersonForm(ExtensibleForm):
     """Form to edit or add a person object in the frontend."""
 
@@ -162,8 +114,28 @@ class PersonForm(ExtensibleForm):
                 self.fields[field].disabled = False
 
     def clean(self) -> None:
-        # Use code implemented in dedicated form to verify user selection
-        return PersonAccountForm.clean(self)
+        user = get_user_model()
+
+        if self.cleaned_data.get("new_user", None):
+            if self.cleaned_data.get("user", None):
+                # The user selected both an existing user and provided a name to create a new one
+                self.add_error(
+                    "new_user",
+                    _("You cannot set a new username when also selecting an existing user."),
+                )
+            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
+                # The user tried to create a new user with the name of an existing user
+                self.add_error("new_user", _("This username is already in use."))
+            else:
+                # Create new User object and assign to form field for existing user
+                new_user_obj = user.objects.create_user(
+                    self.cleaned_data["new_user"],
+                    self.instance.email,
+                    first_name=self.instance.first_name,
+                    last_name=self.instance.last_name,
+                )
+
+                self.cleaned_data["user"] = new_user_obj
 
 
 class EditGroupForm(SchoolTermRelatedExtensibleForm):

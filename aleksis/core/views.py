@@ -62,7 +62,6 @@ from .forms import (
     GroupPreferenceForm,
     PersonForm,
     PersonPreferenceForm,
-    PersonsAccountsFormSet,
     SchoolTermForm,
     SitePreferenceForm,
 )
@@ -358,27 +357,6 @@ def groups(request: HttpRequest) -> HttpResponse:
     context["groups_table"] = groups_table
 
     return render(request, "core/group/list.html", context)
-
-
-@never_cache
-@permission_required("core.link_persons_accounts_rule")
-def persons_accounts(request: HttpRequest) -> HttpResponse:
-    """View allowing to batch-process linking of users to persons."""
-    context = {}
-
-    # Get all persons
-    persons_qs = Person.objects.all()
-
-    # Form set with one form per known person
-    persons_accounts_formset = PersonsAccountsFormSet(request.POST or None, queryset=persons_qs)
-
-    if request.method == "POST":
-        if persons_accounts_formset.is_valid():
-            persons_accounts_formset.save()
-
-    context["persons_accounts_formset"] = persons_accounts_formset
-
-    return render(request, "core/person/accounts.html", context)
 
 
 @never_cache
