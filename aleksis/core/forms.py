@@ -33,8 +33,8 @@ from .registries import (
 from .util.core_helpers import get_site_preferences
 
 
-class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend."""
+class PersonForm(ExtensibleForm):
+    """Form to edit or add a person object in the frontend."""
 
     layout = Layout(
         Fieldset(
