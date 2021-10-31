@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+`2.1`_ - 2021-10-31
+-------------------
+
+Added
+~~~~~
+
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+
 `2.0`_ - 2021-10-29
 -------------------
 
@@ -55,8 +63,6 @@ Added
 * OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
 * Allow apps to dynamically generate OAuth scopes
-* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
-
 
 Changed
 ~~~~~~~
@@ -403,3 +409,4 @@ Fixed
 .. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
 .. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
 .. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
+.. _2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1
