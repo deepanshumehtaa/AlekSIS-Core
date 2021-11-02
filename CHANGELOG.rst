@@ -14,6 +14,11 @@ Added
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 
+Changed
+~~~~~~~
+
+* Replace dev.sh helper script with tox environments.
+
 `2.0`_ - 2021-10-29
 -------------------
 
