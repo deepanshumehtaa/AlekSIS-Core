@@ -12,45 +12,94 @@ Unreleased
 Added
 ~~~~~
 
-* OpenID connect scope and accompanying claim `groups`
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+
+Changed
+~~~~~~~
+
+* Replace dev.sh helper script with tox environments.
+
+`2.0`_ - 2021-10-29
+-------------------
+
+Changed
+~~~~~~~
+
+* Refactor views/forms for creating/editing persons.
+
+Fixed
+~~~~~
+
+* Fix order of submit buttons in login form and restructure login template
+  to make 2FA work correctly.
+* Fix page title bug on the impersonate page.
+* Users were able to edit the linked user if self-editing was activated.
+* Users weren't able to edit the allowed fields although they were configured correctly.
+* Provide `style.css` and icon files without any authentication to avoid caching issues.
+
+
+Removed
+~~~~~~~
+
+* Remove mass linking of persons to accounts, bevcause the view had performance issues,
+  but was practically unused.
+
+`2.0rc7`_ - 2021-10-18
+----------------------
+
+Fixed
+~~~~~
+
+* Configuration mechanisms for OpenID Connect were broken.
+* Set a fixed version for django-sass-processor to avoid a bug with searching ``style.css`` in the wrong storage.
+* Correct the z-index of the navbar to display the main title again on mobile devices.
+
+Removed
+~~~~~~~
+
+* Leftovers from a functionality already dropped in the development process
+  (custom authentication backends and alternative login views).
+
+`2.0rc6`_ - 2021-10-11
+----------------------
+
+Added
+~~~~~
+
+* OpenID Connect scope and accompanying claim ``groups``
 * Support config files in JSON format
+* Allow apps to dynamically generate OAuth scopes
 
 Changed
 ~~~~~~~
 
 * Do not log or e-mail ALLOWED_HOSTS violations
-* Replace dev.sh helper script with tox environments.
+* Update translations.
+* Use initial superuser settings as default contact and from addresses
 
 Fixed
 ~~~~~
 
 * Show link to imprint in footer
 * Fix API for adding OAuth scopes in AppConfigs
+* Deleting persons is possible again.
+* Removed wrong changelog section
 
 Removed
 ~~~~~~~
 
 * Dropped data anonymization (django-hattori) support for now
+* ``OAUTH2_SCOPES`` setting in apps is not supported anymore. Use ``get_all_scopes`` method
+  on ``AppConfig`` class instead.
 
 `2.0rc5`_ - 2021-08-25
 ----------------------
-
-Added
-~~~~~
-
-* Allow apps to dynamically generate OAuth scopes
 
 Fixed
 ~~~~~
 
 * The view for getting the progress of celery tasks didn't respect that there can be anonymous users.
 * Updated django to latest 3.2.x
-
-Removed
-~~~~~~~
-
-* `OAUTH2_SCOPES` setting in apps is not supported anymore. Use `get_all_scopes` method
-  on `AppConfig` class instead.
 
 
 `2.0rc4`_ - 2021-08-01
@@ -103,9 +152,6 @@ Added
 ~~~~~
 
 * Add option to disable dashboard auto updating as a user and sitewide.
-
-`2.0rc1` - 2021-06-23
-----------------------
 
 Changed
 ~~~~~~~
@@ -178,14 +224,14 @@ Added
 * Allow defining several search configs for LDAP users and groups
 * Use setuptools entrypoints to find apps
 * Add django-cachalot as query cache
-* Add `syncable_fields` property to `ExtensibleModel to discover fields
+* Add ``syncable_fields`` property to ``ExtensibleModel`` to discover fields
   sync backends can write to
-* Add `aleksis-admin` script to wrap django-admin with pre-configured settings
+* Add ``aleksis-admin`` script to wrap django-admin with pre-configured settings
 * Auto-create persons for users if matching attributes are found
-* Add `django-allauth` to allow authentication using OAuth, user registration,
+* Add ``django-allauth`` to allow authentication using OAuth, user registration,
   password changes and password reset
 * Add OAuth2 and OpenID Connect provider support
-* Add `django-uwsgi` to use uWSGI and Celery in development
+* Add ``django-uwsgi`` to use uWSGI and Celery in development
 * Add loading page for displaying Celery task progress
 * Implement generic PDF generation using Chromium
 * Support Amazon S3 storage for /media files
@@ -223,7 +269,7 @@ Changed
 * Default search index backend is now Whoosh with Redis storage
 * Re-style search result page
 * Move notifications to separate page with indicator in menu
-* Move to `BigAutoField` for all AlekSIS apps
+* Move to ``BigAutoField`` for all AlekSIS apps
 * Require Django 3.2 and Python 3.9
 * Person and group lists can now be filtered
 * Allow displaying the default widget to anonymous users
@@ -375,3 +421,6 @@ Fixed
 .. _2.0rc3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc3
 .. _2.0rc4: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc4
 .. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
+.. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
+.. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
+.. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0

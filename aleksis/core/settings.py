@@ -338,16 +338,6 @@ if _settings.get("oauth2.oidc.enabled", False):
             #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
         }
     )
-    OAUTH2_PROVIDER["SCOPES"].update(
-        {
-            "openid": _("OpenID Connect scope"),
-            "profile": _("Given name, family name, link to profile and picture if existing."),
-            "address": _("Full home postal address"),
-            "email": _("Email address"),
-            "phone": _("Home and mobile phone"),
-            "groups": _("Groups"),
-        }
-    )
 
 # Configuration for REST framework
 REST_FRAMEWORK = {
@@ -448,19 +438,12 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-CUSTOM_AUTHENTICATION_BACKENDS = []
-merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
-
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
 # Authentication backend for django-allauth.
 AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
-
-# Structure of items: backend, URL name, icon name, button title
-ALTERNATIVE_LOGIN_VIEWS = []
-merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -540,15 +523,14 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
-    STATIC_ROOT + "/materialize-css/sass/",
-    STATIC_ROOT,
+    _settings.get("materialize.sass_path", os.path.join(JS_ROOT, "materialize-css", "sass")),
+    os.path.join(STATIC_ROOT, "public"),
 ]
 
-ADMINS = _settings.get("contact.admins", [])
-SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", "root@localhost")
-MANAGERS = _settings.get("contact.admins", [])
+ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
+MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
     EMAIL_HOST = _settings.get("mail.server.host")
@@ -653,6 +635,7 @@ PWA_ICONS_CONFIG = {
     "apple_splash": [192],
     "microsoft": [144],
 }
+FAVICON_PATH = os.path.join("public", "favicon")
 
 SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 

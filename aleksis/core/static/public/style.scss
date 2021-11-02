@@ -1,4 +1,4 @@
-@import "materialize";
+@import "materialize-custom";
 
 .primary-color {
   background-color: $primary-color !important;
@@ -85,12 +85,6 @@ header, main, footer {
 #sidenav-logo {
   height: 70px;
   width: auto;
-}
-
-@media only screen and (max-width: 993px) {
-  header div.nav-wrapper {
-    z-index: -5;
-  }
 }
 
 

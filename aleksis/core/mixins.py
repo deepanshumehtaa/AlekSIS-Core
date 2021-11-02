@@ -24,9 +24,16 @@ from guardian.admin import GuardedModelAdmin
 from guardian.core import ObjectPermissionChecker
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
+from polymorphic.base import PolymorphicModelBase
+from polymorphic.managers import PolymorphicManager
+from polymorphic.models import PolymorphicModel
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
-from aleksis.core.managers import CurrentSiteManagerWithoutMigrations, SchoolTermRelatedQuerySet
+from aleksis.core.managers import (
+    CurrentSiteManagerWithoutMigrations,
+    PolymorphicCurrentSiteManager,
+    SchoolTermRelatedQuerySet,
+)
 
 
 class _ExtensibleModelBase(models.base.ModelBase):
@@ -346,6 +353,22 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             del self._save_reverse
 
         super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class _ExtensiblePolymorphicModelBase(_ExtensibleModelBase, PolymorphicModelBase):
+    """Base class for extensible, polymorphic models."""
+
+
+class ExtensiblePolymorphicModel(
+    ExtensibleModel, PolymorphicModel, metaclass=_ExtensiblePolymorphicModelBase
+):
+    """Model class for extensible, polymorphic models."""
+
+    objects = PolymorphicCurrentSiteManager()
+    objects_all_sites = PolymorphicManager()
 
     class Meta:
         abstract = True
