@@ -186,6 +186,7 @@ class Person(ExtensibleModel):
     email = models.EmailField(verbose_name=_("E-mail address"), blank=True)
 
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
+    place_of_birth = models.CharField(verbose_name=_("Place of birth"), max_length=255, blank=True, null=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
     photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
