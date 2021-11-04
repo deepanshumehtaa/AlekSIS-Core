@@ -30,6 +30,7 @@ from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
+from multiselectfield import MultiSelectField
 from oauth2_provider.models import (
     AbstractAccessToken,
     AbstractApplication,
@@ -58,6 +59,7 @@ from .mixins import (
     SchoolTermRelatedExtensibleModel,
 )
 from .tasks import send_notification
+from .util.auth_helpers import AppScopes
 from .util.core_helpers import get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
 
@@ -1111,6 +1113,9 @@ class OAuthApplication(AbstractApplication):
     authorization_grant_type = models.CharField(
         max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True, null=True
     )
+
+    # Optional list of alloewd scopes
+    allowed_scopes = MultiSelectField(choices=list(AppScopes().get_all_scopes().items()))
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
