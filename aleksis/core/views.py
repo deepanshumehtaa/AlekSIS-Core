@@ -43,7 +43,6 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
-from oauth2_provider.models import Application
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
@@ -76,6 +75,7 @@ from .models import (
     Group,
     GroupType,
     Notification,
+    OAuthApplication,
     PDFFile,
     Person,
     SchoolTerm,
@@ -1040,7 +1040,7 @@ class OAuth2List(PermissionRequiredMixin, ListView):
     template_name = "oauth2_provider/application_list.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
 class OAuth2Detail(PermissionRequiredMixin, DetailView):
@@ -1051,7 +1051,7 @@ class OAuth2Detail(PermissionRequiredMixin, DetailView):
     template_name = "oauth2_provider/application_detail.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
 class OAuth2Delete(PermissionRequiredMixin, DeleteView):
@@ -1063,7 +1063,7 @@ class OAuth2Delete(PermissionRequiredMixin, DeleteView):
     template_name = "oauth2_provider/application_confirm_delete.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
 class OAuth2Update(PermissionRequiredMixin, UpdateView):
@@ -1074,12 +1074,12 @@ class OAuth2Update(PermissionRequiredMixin, UpdateView):
     template_name = "oauth2_provider/application_form.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
     def get_form_class(self):
         """Return the form class for the application model."""
         return modelform_factory(
-            Application,
+            OAuthApplication,
             fields=(
                 "name",
                 "client_id",

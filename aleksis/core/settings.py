@@ -323,8 +323,8 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
 
 # Configuration for OAuth2 provider
-
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
+OAUTH2_PROVIDER_APPLICATION_MODEL = "core.OAuthApplication"
 
 if _settings.get("oauth2.oidc.enabled", False):
     with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:

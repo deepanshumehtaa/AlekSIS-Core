@@ -30,6 +30,7 @@ from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
+from oauth2_provider.models import AbstractApplication
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 from templated_email import send_templated_mail
@@ -1095,3 +1096,12 @@ class TaskUserAssignment(ExtensibleModel):
     class Meta:
         verbose_name = _("Task user assignment")
         verbose_name_plural = _("Task user assignments")
+
+
+class OAuthApplication(AbstractApplication):
+    """Modified OAuth application class that supports Grant Flows configured in preferences."""
+
+    def allows_grant_type(self, *grant_types: set[str]) -> bool:
+        allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
+
+        return bool(set(allowed_grants) & grant_types)
