@@ -106,6 +106,9 @@ class AppScopes(BaseScopes):
         scopes = []
         for app in AppConfig.__subclasses__():
             scopes += app.get_available_scopes()
+        # Filter by allowed scopes of requesting application
+        if application and application.allowed_scopes:
+            scopes = list(filter(lambda scope: scope in application.alloewd_scopes, scopes))
         return scopes
 
     def get_default_scopes(
@@ -118,4 +121,7 @@ class AppScopes(BaseScopes):
         scopes = []
         for app in AppConfig.__subclasses__():
             scopes += app.get_default_scopes()
+        # Filter by allowed scopes of requesting application
+        if application and application.allowed_scopes:
+            scopes = list(filter(lambda scope: scope in application.alloewd_scopes, scopes))
         return scopes
