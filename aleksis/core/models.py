@@ -1101,6 +1101,11 @@ class TaskUserAssignment(ExtensibleModel):
 class OAuthApplication(AbstractApplication):
     """Modified OAuth application class that supports Grant Flows configured in preferences."""
 
+    # Override grant types to make field optional
+    authorization_grant_type = models.CharField(
+        max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True, null=True
+    )
+
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
 

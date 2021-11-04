@@ -1080,14 +1080,7 @@ class OAuth2Update(PermissionRequiredMixin, UpdateView):
         """Return the form class for the application model."""
         return modelform_factory(
             OAuthApplication,
-            fields=(
-                "name",
-                "client_id",
-                "client_secret",
-                "client_type",
-                "authorization_grant_type",
-                "redirect_uris",
-            ),
+            fields=("name", "client_id", "client_secret", "client_type", "redirect_uris",),
         )
 
 
