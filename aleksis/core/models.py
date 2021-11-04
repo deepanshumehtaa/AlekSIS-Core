@@ -30,7 +30,13 @@ from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
-from oauth2_provider.models import AbstractApplication
+from oauth2_provider.models import (
+    AbstractAccessToken,
+    AbstractApplication,
+    AbstractGrant,
+    AbstractIDToken,
+    AbstractRefreshToken,
+)
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 from templated_email import send_templated_mail
@@ -1110,3 +1116,27 @@ class OAuthApplication(AbstractApplication):
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
 
         return bool(set(allowed_grants) & grant_types)
+
+
+class OAuthGrant(AbstractGrant):
+    """Placeholder for customising the Grant model."""
+
+    pass
+
+
+class OAuthAccessToken(AbstractAccessToken):
+    """Placeholder for customising the AccessToken model."""
+
+    pass
+
+
+class OAuthIDToken(AbstractIDToken):
+    """Placeholder for customising the IDToken model."""
+
+    pass
+
+
+class OAuthRefreshToken(AbstractRefreshToken):
+    """Placeholder for customising the RefreshToken model."""
+
+    pass
