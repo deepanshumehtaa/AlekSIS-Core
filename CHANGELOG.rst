@@ -13,6 +13,7 @@ Added
 ~~~~~
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+* Option to limit allowed scopes per application, including mixin to enforce that limit on OAuth resource views
 
 Changed
 ~~~~~~~
