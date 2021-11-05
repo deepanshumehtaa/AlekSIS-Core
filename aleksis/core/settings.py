@@ -137,7 +137,6 @@ INSTALLED_APPS = [
     "django_filters",
     "oauth2_provider",
     "rest_framework",
-    "multiselectfield",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
