@@ -30,6 +30,13 @@ from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
+from oauth2_provider.models import (
+    AbstractAccessToken,
+    AbstractApplication,
+    AbstractGrant,
+    AbstractIDToken,
+    AbstractRefreshToken,
+)
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 from templated_email import send_templated_mail
@@ -976,11 +983,6 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
-            ("add_oauth_applications", _("Can add oauth applications")),
-            ("list_oauth_applications", _("Can list oauth applications")),
-            ("view_oauth_applications", _("Can view oauth applications")),
-            ("update_oauth_applications", _("Can update oauth applications")),
-            ("delete_oauth_applications", _("Can delete oauth applications")),
             ("test_pdf", _("Can test PDF generation")),
         )
 
@@ -1096,3 +1098,41 @@ class TaskUserAssignment(ExtensibleModel):
     class Meta:
         verbose_name = _("Task user assignment")
         verbose_name_plural = _("Task user assignments")
+
+
+class OAuthApplication(AbstractApplication):
+    """Modified OAuth application class that supports Grant Flows configured in preferences."""
+
+    # Override grant types to make field optional
+    authorization_grant_type = models.CharField(
+        max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True, null=True
+    )
+
+    def allows_grant_type(self, *grant_types: set[str]) -> bool:
+        allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
+
+        return bool(set(allowed_grants) & grant_types)
+
+
+class OAuthGrant(AbstractGrant):
+    """Placeholder for customising the Grant model."""
+
+    pass
+
+
+class OAuthAccessToken(AbstractAccessToken):
+    """Placeholder for customising the AccessToken model."""
+
+    pass
+
+
+class OAuthIDToken(AbstractIDToken):
+    """Placeholder for customising the IDToken model."""
+
+    pass
+
+
+class OAuthRefreshToken(AbstractRefreshToken):
+    """Placeholder for customising the RefreshToken model."""
+
+    pass

@@ -22,6 +22,7 @@ from .models import (
     DashboardWidget,
     Group,
     GroupType,
+    OAuthApplication,
     Person,
     SchoolTerm,
 )
@@ -591,3 +592,16 @@ class ListActionForm(ActionForm):
         self.items = items
         super().__init__(request, *args, **kwargs)
         self.fields["selected_objects"].choices = self._get_choices()
+
+
+class OAuthApplicationForm(forms.ModelForm):
+    class Meta:
+        model = OAuthApplication
+        fields = (
+            "name",
+            "client_id",
+            "client_secret",
+            "client_type",
+            "redirect_uris",
+            "skip_authorization",
+        )

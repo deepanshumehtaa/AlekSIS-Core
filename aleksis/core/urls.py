@@ -102,11 +102,26 @@ urlpatterns = [
         ConnectDiscoveryInfoView.as_view(),
         name="oidc_configuration",
     ),
-    path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
-    path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
-    path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
-    path("oauth/applications/<int:pk>/update", views.OAuth2Update.as_view(), name="oauth_update"),
-    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("oauth2/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
+    path(
+        "oauth2/applications/register/",
+        views.OAuth2RegisterView.as_view(),
+        name="register_oauth_application",
+    ),
+    path(
+        "oauth2/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
+    ),
+    path(
+        "oauth2/applications/<int:pk>/delete/",
+        views.OAuth2DeleteView.as_view(),
+        name="delete_oauth2_application",
+    ),
+    path(
+        "oauth2/applications/<int:pk>/edit/",
+        views.OAuth2EditView.as_view(),
+        name="edit_oauth2_application",
+    ),
+    path("oauth2/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
