@@ -103,9 +103,18 @@ urlpatterns = [
         name="oidc_configuration",
     ),
     path("oauth/applications/", views.OAuth2List.as_view(), name="oauth_list"),
+    path(
+        "oauth/applications/register/",
+        views.OAuth2RegisterView.as_view(),
+        name="register_oauth_application",
+    ),
     path("oauth/applications/<int:pk>/detail", views.OAuth2Detail.as_view(), name="oauth_detail"),
     path("oauth/applications/<int:pk>/delete", views.OAuth2Delete.as_view(), name="oauth_delete"),
-    path("oauth/applications/<int:pk>/update", views.OAuth2Update.as_view(), name="oauth_update"),
+    path(
+        "oauth/applications/<int:pk>/edit/",
+        views.OAuth2EditView.as_view(),
+        name="edit_oauth_application",
+    ),
     path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(

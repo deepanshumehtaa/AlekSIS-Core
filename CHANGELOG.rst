@@ -18,6 +18,7 @@ Changed
 ~~~~~~~
 
 * Replace dev.sh helper script with tox environments.
+* OAuth Grant Flows are now configured system-wide instead of per app.
 
 `2.0`_ - 2021-10-29
 -------------------

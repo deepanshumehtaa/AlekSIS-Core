@@ -26,7 +26,7 @@ from django.views.decorators.cache import never_cache
 from django.views.defaults import ERROR_500_TEMPLATE_NAME
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 
 import reversion
@@ -43,7 +43,6 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
-from oauth2_provider.models import Application
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
@@ -60,6 +59,7 @@ from .forms import (
     EditGroupForm,
     EditGroupTypeForm,
     GroupPreferenceForm,
+    OAuthApplicationForm,
     PersonForm,
     PersonPreferenceForm,
     SchoolTermForm,
@@ -76,6 +76,7 @@ from .models import (
     Group,
     GroupType,
     Notification,
+    OAuthApplication,
     PDFFile,
     Person,
     SchoolTerm,
@@ -1040,7 +1041,7 @@ class OAuth2List(PermissionRequiredMixin, ListView):
     template_name = "oauth2_provider/application_list.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
 class OAuth2Detail(PermissionRequiredMixin, DetailView):
@@ -1051,7 +1052,7 @@ class OAuth2Detail(PermissionRequiredMixin, DetailView):
     template_name = "oauth2_provider/application_detail.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
 class OAuth2Delete(PermissionRequiredMixin, DeleteView):
@@ -1063,32 +1064,28 @@ class OAuth2Delete(PermissionRequiredMixin, DeleteView):
     template_name = "oauth2_provider/application_confirm_delete.html"
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
 
-class OAuth2Update(PermissionRequiredMixin, UpdateView):
+class OAuth2EditView(PermissionRequiredMixin, AdvancedEditView):
     """View used to update an application."""
 
     permission_required = "core.update_oauth_applications_rule"
     context_object_name = "application"
-    template_name = "oauth2_provider/application_form.html"
+    template_name = "oauth2_provider/application/edit.html"
+    form_class = OAuthApplicationForm
 
     def get_queryset(self):
-        return Application.objects.all()
+        return OAuthApplication.objects.all()
 
-    def get_form_class(self):
-        """Return the form class for the application model."""
-        return modelform_factory(
-            Application,
-            fields=(
-                "name",
-                "client_id",
-                "client_secret",
-                "client_type",
-                "authorization_grant_type",
-                "redirect_uris",
-            ),
-        )
+
+class OAuth2RegisterView(PermissionRequiredMixin, AdvancedCreateView):
+    """View used to register an application."""
+
+    permission_required = "core.add_oauth_applications_rule"
+    context_object_name = "application"
+    template_name = "oauth2_provider/application/create.html"
+    form_class = OAuthApplicationForm
 
 
 class RedirectToPDFFile(SingleObjectMixin, View):

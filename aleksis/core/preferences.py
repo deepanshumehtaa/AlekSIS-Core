@@ -14,6 +14,7 @@ from dynamic_preferences.types import (
     MultipleChoicePreference,
     StringPreference,
 )
+from oauth2_provider.models import AbstractApplication
 
 from .models import Group, Person
 from .registries import person_preferences_registry, site_preferences_registry
@@ -260,6 +261,19 @@ class SignupEnabled(BooleanPreference):
     name = "signup_enabled"
     default = False
     verbose_name = _("Enable signup")
+
+
+@site_preferences_registry.register
+class OAuthAllowedGrants(MultipleChoicePreference):
+    """Grant Flows allowed for OAuth applications."""
+
+    section = auth
+    name = "oauth_allowed_grants"
+    default = [grant[0] for grant in AbstractApplication.GRANT_TYPES]
+    widget = SelectMultiple
+    verbose_name = _("Allowed Grant Flows for OAuth applications")
+    field_attribute = {"initial": []}
+    choices = AbstractApplication.GRANT_TYPES
 
 
 @site_preferences_registry.register
