@@ -26,7 +26,7 @@ from django.views.decorators.cache import never_cache
 from django.views.defaults import ERROR_500_TEMPLATE_NAME
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 
 import reversion
@@ -59,6 +59,7 @@ from .forms import (
     EditGroupForm,
     EditGroupTypeForm,
     GroupPreferenceForm,
+    OAuthApplicationForm,
     PersonForm,
     PersonPreferenceForm,
     SchoolTermForm,
@@ -1066,28 +1067,25 @@ class OAuth2Delete(PermissionRequiredMixin, DeleteView):
         return OAuthApplication.objects.all()
 
 
-class OAuth2Update(PermissionRequiredMixin, UpdateView):
+class OAuth2EditView(PermissionRequiredMixin, AdvancedEditView):
     """View used to update an application."""
 
     permission_required = "core.update_oauth_applications_rule"
     context_object_name = "application"
-    template_name = "oauth2_provider/application_form.html"
+    template_name = "oauth2_provider/application/edit.html"
+    form_class = OAuthApplicationForm
 
     def get_queryset(self):
         return OAuthApplication.objects.all()
 
-    def get_form_class(self):
-        """Return the form class for the application model."""
-        return modelform_factory(
-            OAuthApplication,
-            fields=(
-                "name",
-                "client_id",
-                "client_secret",
-                "client_type",
-                "allowed_scopes",
-                "redirect_uris",),
-        )
+
+class OAuth2RegisterView(PermissionRequiredMixin, AdvancedCreateView):
+    """View used to register an application."""
+
+    permission_required = "core.add_oauth_applications_rule"
+    context_object_name = "application"
+    template_name = "oauth2_provider/application/create.html"
+    form_class = OAuthApplicationForm
 
 
 class RedirectToPDFFile(SingleObjectMixin, View):
