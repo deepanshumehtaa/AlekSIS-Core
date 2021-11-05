@@ -983,11 +983,6 @@ class GlobalPermissions(GlobalPermissionModel):
             ("change_site_preferences", _("Can change site preferences")),
             ("change_person_preferences", _("Can change person preferences")),
             ("change_group_preferences", _("Can change group preferences")),
-            ("add_oauth_applications", _("Can add oauth applications")),
-            ("list_oauth_applications", _("Can list oauth applications")),
-            ("view_oauth_applications", _("Can view oauth applications")),
-            ("update_oauth_applications", _("Can update oauth applications")),
-            ("delete_oauth_applications", _("Can delete oauth applications")),
             ("test_pdf", _("Can test PDF generation")),
         )
 

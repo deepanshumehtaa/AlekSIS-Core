@@ -486,6 +486,7 @@ YARN_INSTALLED_APPS = [
     "paper-css",
     "jquery-sortablejs",
     "sortablejs",
+    "@sentry/tracing",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -516,6 +517,7 @@ ANY_JS = {
     "Roboto500": {"css_url": JS_URL + "/@fontsource/roboto/500.css"},
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
+    "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -858,6 +860,32 @@ else:
     TITOFISTO_TIMEOUT = 10 * 60
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+SENTRY_ENABLED = _settings.get("health.sentry.enabled", False)
+if SENTRY_ENABLED:
+    import sentry_sdk
+    from sentry_sdk.integrations.celery import CeleryIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.redis import RedisIntegration
+
+    from aleksis.core import __version__
+
+    SENTRY_SETTINGS = {
+        "dsn": _settings.get("health.sentry.dsn"),
+        "environment": _settings.get("health.sentry.environment"),
+        "traces_sample_rate": _settings.get("health.sentry.traces_sample_rate", 1.0),
+        "send_default_pii": _settings.get("health.sentry.send_default_pii", False),
+        "release": f"aleksis-core@{__version__}",
+        "in_app_include": "aleksis",
+    }
+    sentry_sdk.init(
+        integrations=[
+            DjangoIntegration(transaction_style="function_name"),
+            RedisIntegration(),
+            CeleryIntegration(),
+        ],
+        **SENTRY_SETTINGS,
+    )
 
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

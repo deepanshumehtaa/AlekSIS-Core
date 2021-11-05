@@ -610,4 +610,5 @@ class OAuthApplicationForm(forms.ModelForm):
             "client_type",
             "allowed_scopes",
             "redirect_uris",
+            "skip_authorization",
         )

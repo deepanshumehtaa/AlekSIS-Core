@@ -113,10 +113,12 @@ Whoosh = "^2.7.4"
 django-titofisto = "^0.1.0"
 haystack-redis = "^0.0.1"
 python-gnupg = "^0.4.7"
+sentry-sdk = {version = "^1.4.3", optional = true}
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
 s3 = ["boto3", "django-storages"]
+sentry = ["sentry"]
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "*"
