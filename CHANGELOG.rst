@@ -14,6 +14,7 @@ Added
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 * Implement optional Sentry integration for error and performance tracing.
+* Support trusted OAuth applications that leave out the authorisation screen.
 
 Changed
 ~~~~~~~
