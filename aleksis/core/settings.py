@@ -482,6 +482,7 @@ YARN_INSTALLED_APPS = [
     "paper-css",
     "jquery-sortablejs",
     "sortablejs",
+    "@sentry/tracing",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -512,6 +513,7 @@ ANY_JS = {
     "Roboto500": {"css_url": JS_URL + "/@fontsource/roboto/500.css"},
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
+    "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -880,11 +882,6 @@ if SENTRY_ENABLED:
         ],
         **SENTRY_SETTINGS,
     )
-
-    YARN_INSTALLED_APPS += [
-        "@sentry/tracing",
-    ]
-    ANY_JS["Sentry"] = {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"}
 
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
