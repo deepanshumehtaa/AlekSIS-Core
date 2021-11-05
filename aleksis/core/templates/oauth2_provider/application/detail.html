@@ -48,6 +48,14 @@
     </tr>
     <tr>
       <th>
+        {% trans "Allowed scopes" %}
+      </th>
+      <td>
+        {{ application.allowed_scopes|join:", " }}
+      </td>
+    </tr>
+    <tr>
+      <th>
         {% trans "Redirect URIs" %}
       </th>
       <td>

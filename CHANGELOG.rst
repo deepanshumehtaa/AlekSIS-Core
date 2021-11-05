@@ -14,6 +14,7 @@ Added
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 * Implement optional Sentry integration for error and performance tracing.
+* Option to limit allowed scopes per application, including mixin to enforce that limit on OAuth resource views
 * Support trusted OAuth applications that leave out the authorisation screen.
 
 Changed
