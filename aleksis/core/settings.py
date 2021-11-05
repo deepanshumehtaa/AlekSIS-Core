@@ -536,8 +536,8 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 ADMINS = _settings.get(
     "contact.admins", [(AUTH_INITIAL_SUPERUSER["username"], AUTH_INITIAL_SUPERUSER["email"])]
 )
-SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0][1])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0][1])
 MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
