@@ -214,7 +214,7 @@ MENUS = {
                 },
                 {
                     "name": _("OAuth2 Applications"),
-                    "url": "oauth_list",
+                    "url": "oauth2_applications",
                     "icon": "touch_app",
                     "validators": [
                         (
