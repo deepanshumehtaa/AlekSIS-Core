@@ -1116,6 +1116,7 @@ class OAuthApplication(AbstractApplication):
     # Optional list of alloewd scopes
     allowed_scopes = ArrayField(
         models.CharField(max_length=32),
+        verbose_name=_("Allowed scopes that clients can request"),
         null=True,
     )
 
