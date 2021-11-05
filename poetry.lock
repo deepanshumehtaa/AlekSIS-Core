@@ -6,6 +6,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "aleksis-builddeps"
 version = "4"
@@ -58,6 +63,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 vine = "5.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "appdirs"
 version = "1.4.4"
@@ -66,6 +76,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "appnope"
 version = "0.1.2"
@@ -73,6 +88,11 @@ description = "Disable App Nap on macOS >= 10.9"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "asgiref"
@@ -85,6 +105,11 @@ python-versions = ">=3.6"
 [package.extras]
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "asn1crypto"
 version = "1.4.0"
@@ -93,6 +118,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "atomicwrites"
 version = "1.4.0"
@@ -100,6 +130,11 @@ description = "Atomic file writes."
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "attrs"
@@ -115,6 +150,11 @@ docs = ["furo", "sphinx", "zope.interface", "sphinx-notfound-page"]
 tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins", "zope.interface"]
 tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "babel"
 version = "2.9.1"
@@ -126,6 +166,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.dependencies]
 pytz = ">=2015.7"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "backcall"
 version = "0.2.0"
@@ -133,6 +178,11 @@ description = "Specifications for callback functions passed in to an API"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "bandit"
@@ -149,6 +199,11 @@ PyYAML = ">=5.3.1"
 six = ">=1.10.0"
 stevedore = ">=1.20.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "beautifulsoup4"
 version = "4.10.0"
@@ -164,6 +219,11 @@ soupsieve = ">1.2"
 html5lib = ["html5lib"]
 lxml = ["lxml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "billiard"
 version = "3.6.4.0"
@@ -171,6 +231,11 @@ description = "Python multiprocessing fork with improvements and bugfixes"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "black"
@@ -192,6 +257,11 @@ typed-ast = ">=1.4.0"
 [package.extras]
 d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "bleach"
 version = "4.1.0"
@@ -205,6 +275,11 @@ packaging = "*"
 six = ">=1.9.0"
 webencodings = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "boolean.py"
 version = "3.8"
@@ -213,16 +288,21 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "boto3"
-version = "1.19.3"
+version = "1.19.12"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.22.3,<1.23.0"
+botocore = ">=1.22.12,<1.23.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
@@ -231,7 +311,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.22.3"
+version = "1.22.12"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -245,16 +325,26 @@ urllib3 = ">=1.25.4,<1.27"
 [package.extras]
 crt = ["awscrt (==0.12.5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "bs4"
 version = "0.0.1"
-description = "Dummy package for Beautiful Soup"
+description = "Screen-scraping library"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
 beautifulsoup4 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "calendarweek"
@@ -266,6 +356,11 @@ python-versions = ">=3.7,<4.0"
 
 [package.extras]
 django = ["Django (>=2.2,<4.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "celery"
@@ -320,6 +415,11 @@ yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 zstd = ["zstandard"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "celery-haystack-ng"
 version = "0.20.post2"
@@ -332,6 +432,11 @@ python-versions = "*"
 celery = ">=4.0"
 django-appconf = ">=0.4.1"
 django-haystack = ">=2.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "celery-progress"
@@ -346,6 +451,11 @@ rabbitmq = ["channels-rabbitmq"]
 redis = ["channels-redis"]
 websockets = ["channels"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "certifi"
 version = "2021.10.8"
@@ -353,6 +463,11 @@ description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "cffi"
@@ -365,6 +480,11 @@ python-versions = "*"
 [package.dependencies]
 pycparser = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "charset-normalizer"
 version = "2.0.7"
@@ -376,6 +496,11 @@ python-versions = ">=3.5.0"
 [package.extras]
 unicode_backport = ["unicodedata2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "click"
 version = "7.1.2"
@@ -383,6 +508,11 @@ description = "Composable command line interface toolkit"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "click-didyoumean"
@@ -394,6 +524,11 @@ python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
 click = ">=7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "click-plugins"
@@ -409,6 +544,11 @@ click = ">=4.0"
 [package.extras]
 dev = ["pytest (>=3.6)", "pytest-cov", "wheel", "coveralls"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "click-repl"
 version = "0.2.0"
@@ -422,6 +562,11 @@ click = "*"
 prompt-toolkit = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "colorama"
 version = "0.4.4"
@@ -429,6 +574,11 @@ description = "Cross-platform colored terminal text."
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "colour"
@@ -441,6 +591,11 @@ python-versions = "*"
 [package.extras]
 test = ["nose"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "configobj"
 version = "5.0.6"
@@ -452,9 +607,14 @@ python-versions = "*"
 [package.dependencies]
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "coverage"
-version = "6.0.2"
+version = "6.1.1"
 description = "Code coverage measurement for Python"
 category = "dev"
 optional = false
@@ -462,6 +622,11 @@ python-versions = ">=3.6"
 
 [package.extras]
 toml = ["tomli"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "cryptography"
@@ -482,6 +647,11 @@ sdist = ["setuptools_rust (>=0.11.4)"]
 ssh = ["bcrypt (>=3.1.5)"]
 test = ["pytest (>=6.2.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "curlylint"
 version = "0.12.2"
@@ -500,6 +670,11 @@ toml = ">=0.9.4"
 [package.extras]
 dev = ["black (==19.10b0)", "flake8 (==3.8.4)", "mypy (==0.812)", "pytest (==6.2.2)", "coverage (==5.4)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "decorator"
 version = "5.1.0"
@@ -508,6 +683,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "defusedxml"
 version = "0.7.1"
@@ -515,6 +695,11 @@ description = "XML bomb protection for Python stdlib modules"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "deprecated"
@@ -530,6 +715,11 @@ wrapt = ">=1.10,<2"
 [package.extras]
 dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "importlib-resources (<4)", "configparser (<5)", "sphinxcontrib-websupport (<2)", "zipp (<2)", "PyTest (<5)", "PyTest-Cov (<2.6)", "pytest", "pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "dj-database-url"
 version = "0.5.0"
@@ -538,9 +728,14 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django"
-version = "3.2.8"
+version = "3.2.9"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -554,6 +749,11 @@ sqlparse = ">=0.2.2"
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-allauth"
@@ -570,6 +770,11 @@ python3-openid = ">=3.0.8"
 requests = "*"
 requests-oauthlib = ">=0.3.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-any-js"
 version = "1.1"
@@ -580,6 +785,11 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 Django = ">=2.2,<4.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-appconf"
@@ -592,9 +802,14 @@ python-versions = ">=3.6"
 [package.dependencies]
 django = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-auth-ldap"
-version = "2.4.0"
+version = "3.0.0"
 description = "Django LDAP authentication backend."
 category = "main"
 optional = true
@@ -603,6 +818,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 python-ldap = ">=3.1"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-bleach"
@@ -616,9 +836,14 @@ python-versions = "*"
 bleach = ">=1.5.0"
 Django = ">=1.11"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-cachalot"
-version = "2.4.3"
+version = "2.4.4"
 description = "Caches your Django ORM queries and automatically invalidates them."
 category = "main"
 optional = false
@@ -626,6 +851,11 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=2.2,<3.3"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-cache-memoize"
@@ -637,6 +867,11 @@ python-versions = ">=3.5"
 
 [package.extras]
 dev = ["flake8", "tox", "twine", "therapist", "black"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-celery-beat"
@@ -652,6 +887,11 @@ Django = ">=2.2,<4.0"
 django-timezone-field = ">=4.1.0,<5.0"
 python-crontab = ">=2.3.4"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-celery-email"
 version = "3.0.0"
@@ -665,6 +905,11 @@ celery = ">=4.0"
 django = ">=2.2"
 django-appconf = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-celery-results"
 version = "2.2.0"
@@ -675,6 +920,11 @@ python-versions = "*"
 
 [package.dependencies]
 celery = ">=5.0,<6.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-ckeditor"
@@ -687,6 +937,11 @@ python-versions = "*"
 [package.dependencies]
 django-js-asset = ">=1.2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-cleanup"
 version = "5.2.0"
@@ -695,6 +950,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-colorfield"
 version = "0.4.5"
@@ -702,6 +962,11 @@ description = "simple color field for your models with a nice color-picker in th
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-dbbackup"
@@ -716,6 +981,11 @@ Django = ">=1.5"
 pytz = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-debug-toolbar"
 version = "3.2.2"
@@ -727,6 +997,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 sqlparse = ">=0.2.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-dynamic-preferences"
@@ -741,6 +1016,11 @@ django = ">=1.11"
 persisting-theory = ">=0.2.1"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-extensions"
 version = "3.1.3"
@@ -751,6 +1031,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 Django = ">=2.2"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-favicon-plus-reloaded"
@@ -764,6 +1049,11 @@ python-versions = "*"
 django = "*"
 pillow = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-filter"
 version = "2.4.0"
@@ -774,6 +1064,11 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 Django = ">=2.2"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-formtools"
@@ -786,6 +1081,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-guardian"
 version = "2.4.0"
@@ -797,9 +1097,14 @@ python-versions = ">=3.5"
 [package.dependencies]
 Django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-haystack"
-version = "3.0"
+version = "3.1.1"
 description = "Pluggable search for Django."
 category = "main"
 optional = false
@@ -807,6 +1112,14 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=2.2"
+
+[package.extras]
+elasticsearch = ["elasticsearch (>=5,<6)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-health-check"
@@ -819,6 +1132,11 @@ python-versions = "*"
 [package.dependencies]
 django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-impersonate"
 version = "1.7.3"
@@ -826,6 +1144,11 @@ description = "Django app to allow superusers to impersonate other users."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-ipware"
@@ -835,6 +1158,11 @@ category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-js-asset"
 version = "1.2.2"
@@ -842,6 +1170,11 @@ description = "script tag with additional attributes for django.forms.Media"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-js-reverse"
@@ -853,6 +1186,11 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=1.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-jsonstore"
@@ -866,6 +1204,11 @@ python-versions = "*"
 Django = ">=1.11"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-maintenance-mode"
 version = "0.16.1"
@@ -873,6 +1216,11 @@ description = "django-maintenance-mode shows a 503 error page when maintenance-m
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-material"
@@ -885,6 +1233,11 @@ python-versions = "*"
 [package.dependencies]
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-menu-generator-ng"
 version = "1.2.3"
@@ -892,6 +1245,11 @@ description = "A straightforward menu generator for Django"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-model-utils"
@@ -903,6 +1261,11 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=2.0.1"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-oauth-toolkit"
@@ -919,6 +1282,11 @@ oauthlib = ">=3.1.0"
 requests = ">=2.13.0"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-otp"
 version = "1.1.1"
@@ -933,6 +1301,11 @@ django = ">=2.2"
 [package.extras]
 qrcode = ["qrcode"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-otp-yubikey"
 version = "1.0.0.post1"
@@ -944,6 +1317,11 @@ python-versions = "*"
 [package.dependencies]
 django-otp = ">=1.0.0"
 YubiOTP = ">=0.2.2"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-phonenumber-field"
@@ -961,6 +1339,11 @@ phonenumbers = {version = ">=7.0.2", optional = true, markers = "extra == \"phon
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-polymorphic"
 version = "3.0.0"
@@ -972,6 +1355,11 @@ python-versions = "*"
 [package.dependencies]
 Django = ">=2.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-prometheus"
 version = "2.1.0"
@@ -982,6 +1370,11 @@ python-versions = "*"
 
 [package.dependencies]
 prometheus-client = ">=0.7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-redis"
@@ -995,6 +1388,11 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 redis = ">=3.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-render-block"
 version = "0.8.1"
@@ -1006,9 +1404,14 @@ python-versions = ">=3.5"
 [package.dependencies]
 django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-reversion"
-version = "4.0.0"
+version = "4.0.1"
 description = "An extension to the Django web framework that provides version control for model instances."
 category = "main"
 optional = false
@@ -1016,6 +1419,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 django = ">=2.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-sass-processor"
@@ -1028,9 +1436,14 @@ python-versions = "*"
 [package.extras]
 management_command = ["django-compressor (>=2.4)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-select2"
-version = "7.7.3"
+version = "7.9.0"
 description = "Select2 option fields for Django"
 category = "main"
 optional = false
@@ -1043,9 +1456,14 @@ django-appconf = ">=0.6.0"
 [package.extras]
 test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-storages"
-version = "1.12.2"
+version = "1.12.3"
 description = "Support for many storage backends in Django"
 category = "main"
 optional = true
@@ -1061,6 +1479,11 @@ dropbox = ["dropbox (>=7.2.1)"]
 google = ["google-cloud-storage (>=1.27.0)"]
 libcloud = ["apache-libcloud"]
 sftp = ["paramiko"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-stubs"
@@ -1079,6 +1502,11 @@ types-pytz = "*"
 types-PyYAML = "*"
 typing-extensions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-stubs-ext"
 version = "0.3.1"
@@ -1090,6 +1518,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 django = "*"
 typing-extensions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-tables2"
@@ -1105,6 +1538,11 @@ Django = ">=1.11"
 [package.extras]
 tablib = ["tablib"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-templated-email"
 version = "3.0.0"
@@ -1115,6 +1553,11 @@ python-versions = "*"
 
 [package.dependencies]
 django-render-block = ">=0.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-timezone-field"
@@ -1131,6 +1574,11 @@ pytz = "*"
 [package.extras]
 rest_framework = ["djangorestframework (>=3.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-titofisto"
 version = "0.1.2.post1"
@@ -1141,6 +1589,11 @@ python-versions = ">=3.9,<4.0"
 
 [package.dependencies]
 Django = ">2.2,<4.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-two-factor-auth"
@@ -1167,6 +1620,11 @@ phonenumberslite = ["phonenumberslite (>=7.0.9,<8.99)"]
 sms = ["twilio (>=6.0)"]
 yubikey = ["django-otp-yubikey"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-uwsgi-ng"
 version = "1.1.2"
@@ -1178,6 +1636,11 @@ python-versions = "*"
 [package.extras]
 uwsgi = ["uwsgi"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-widget-tweaks"
 version = "1.4.9"
@@ -1185,6 +1648,11 @@ description = "Tweak the form field rendering in templates, not in python-level 
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-yarnpkg"
@@ -1198,6 +1666,11 @@ python-versions = "*"
 django = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "djangorestframework"
 version = "3.12.4"
@@ -1209,6 +1682,11 @@ python-versions = ">=3.5"
 [package.dependencies]
 django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "docutils"
 version = "0.16"
@@ -1216,6 +1694,11 @@ description = "Docutils -- Python Documentation Utilities"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "dparse"
@@ -1232,6 +1715,11 @@ toml = "*"
 
 [package.extras]
 pipenv = ["pipenv"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "dynaconf"
@@ -1255,6 +1743,11 @@ toml = ["toml"]
 vault = ["hvac"]
 yaml = ["ruamel.yaml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8"
 version = "3.9.2"
@@ -1267,6 +1760,11 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 mccabe = ">=0.6.0,<0.7.0"
 pycodestyle = ">=2.7.0,<2.8.0"
 pyflakes = ">=2.3.0,<2.4.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-bandit"
@@ -1282,6 +1780,11 @@ flake8 = "*"
 flake8-polyfill = "*"
 pycodestyle = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-black"
 version = "0.2.3"
@@ -1294,6 +1797,11 @@ python-versions = "*"
 black = "*"
 flake8 = ">=3.0.0"
 toml = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-builtins"
@@ -1309,6 +1817,11 @@ flake8 = "*"
 [package.extras]
 test = ["coverage", "coveralls", "mock", "pytest", "pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-django"
 version = "1.1.2"
@@ -1319,6 +1832,11 @@ python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
 flake8 = ">=3.8.4,<4.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-docstrings"
@@ -1332,6 +1850,11 @@ python-versions = "*"
 flake8 = ">=3"
 pydocstyle = ">=2.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-fixme"
 version = "1.1.1"
@@ -1339,6 +1862,11 @@ description = "Check for FIXME, TODO and other temporary developer notes. Plugin
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-isort"
@@ -1356,6 +1884,11 @@ testfixtures = ">=6.8.0,<7"
 [package.extras]
 test = ["pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-mypy"
 version = "17.8.0"
@@ -1369,6 +1902,11 @@ attrs = "*"
 flake8 = ">=3.0.0"
 mypy = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-polyfill"
 version = "1.0.2"
@@ -1379,6 +1917,11 @@ python-versions = "*"
 
 [package.dependencies]
 flake8 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-rst-docstrings"
@@ -1393,6 +1936,11 @@ flake8 = ">=3.0.0"
 pygments = "*"
 restructuredtext-lint = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "freezegun"
 version = "1.1.0"
@@ -1403,6 +1951,11 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 python-dateutil = ">=2.7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "gitdb"
@@ -1415,6 +1968,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 smmap = ">=3.0.1,<6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "gitpython"
 version = "3.1.24"
@@ -1426,6 +1984,11 @@ python-versions = ">=3.7"
 [package.dependencies]
 gitdb = ">=4.0.1,<5"
 typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.10\""}
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "haystack-redis"
@@ -1440,6 +2003,11 @@ django-haystack = "*"
 redis = "*"
 whoosh = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "html2text"
 version = "2020.1.16"
@@ -1447,6 +2015,11 @@ description = "Turn HTML into equivalent Markdown-structured text."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "idna"
@@ -1456,6 +2029,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "imagesize"
 version = "1.2.0"
@@ -1463,6 +2041,11 @@ description = "Getting image size from png/jpeg/jpeg2000/gif file"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "iniconfig"
@@ -1472,9 +2055,14 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "ipython"
-version = "7.28.0"
+version = "7.29.0"
 description = "IPython: Productive Interactive Computing"
 category = "main"
 optional = false
@@ -1504,19 +2092,29 @@ parallel = ["ipyparallel"]
 qtconsole = ["qtconsole"]
 test = ["nose (>=0.10.1)", "requests", "testpath", "pygments", "nbformat", "ipykernel", "numpy (>=1.17)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "isort"
-version = "5.9.3"
+version = "5.10.0"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
 python-versions = ">=3.6.1,<4.0"
 
 [package.extras]
-pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
-requirements_deprecated_finder = ["pipreqs", "pip-api"]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
+requirements_deprecated_finder = ["pip-api", "pipreqs"]
+pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
 plugins = ["setuptools"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "jedi"
@@ -1533,6 +2131,11 @@ parso = ">=0.8.0,<0.9.0"
 qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["Django (<3.1)", "colorama", "docopt", "pytest (<6.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "jinja2"
 version = "3.0.2"
@@ -1547,6 +2150,11 @@ MarkupSafe = ">=2.0"
 [package.extras]
 i18n = ["Babel (>=2.7)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "jmespath"
 version = "0.10.0"
@@ -1554,6 +2162,11 @@ description = "JSON Matching Expressions"
 category = "main"
 optional = true
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "jwcrypto"
@@ -1567,13 +2180,18 @@ python-versions = "*"
 cryptography = ">=2.3"
 deprecated = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "kombu"
-version = "5.1.0"
+version = "5.2.0"
 description = "Messaging library for Python."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 amqp = ">=5.0.6,<6.0.0"
@@ -1595,6 +2213,11 @@ sqs = ["boto3 (>=1.4.4)", "pycurl (==7.43.0.2)", "urllib3 (<1.26)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "libsass"
 version = "0.21.0"
@@ -1605,6 +2228,11 @@ python-versions = "*"
 
 [package.dependencies]
 six = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "license-expression"
@@ -1617,6 +2245,11 @@ python-versions = "*"
 [package.dependencies]
 "boolean.py" = ">=3.6,<4.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "markupsafe"
 version = "2.0.1"
@@ -1624,6 +2257,11 @@ description = "Safely add untrusted strings to HTML/XML markup."
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "matplotlib-inline"
@@ -1636,6 +2274,11 @@ python-versions = ">=3.5"
 [package.dependencies]
 traitlets = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "mccabe"
 version = "0.6.1"
@@ -1643,6 +2286,11 @@ description = "McCabe checker, plugin for flake8"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "mypy"
@@ -1661,6 +2309,11 @@ typing-extensions = ">=3.7.4"
 dmypy = ["psutil (>=4.0)"]
 python2 = ["typed-ast (>=1.4.0,<1.5.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "mypy-extensions"
 version = "0.4.3"
@@ -1668,6 +2321,11 @@ description = "Experimental type system extensions for programs checked with the
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "oauthlib"
@@ -1682,16 +2340,26 @@ rsa = ["cryptography (>=3.0.0,<4)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0,<4)", "pyjwt (>=2.0.0,<3)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "packaging"
-version = "21.0"
+version = "21.2"
 description = "Core utilities for Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-pyparsing = ">=2.0.2"
+pyparsing = ">=2.0.2,<3"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "parso"
@@ -1705,6 +2373,11 @@ python-versions = ">=3.6"
 qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["docopt", "pytest (<6.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "parsy"
 version = "1.1.0"
@@ -1712,6 +2385,11 @@ description = "easy-to-use parser combinators, for parsing in pure Python"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pathspec"
@@ -1721,13 +2399,23 @@ category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pbr"
-version = "5.6.0"
+version = "5.7.0"
 description = "Python Build Reasonableness"
 category = "dev"
 optional = false
 python-versions = ">=2.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "persisting-theory"
@@ -1736,6 +2424,11 @@ description = "Registries that can autodiscover values accross your project apps
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pexpect"
@@ -1748,6 +2441,11 @@ python-versions = "*"
 [package.dependencies]
 ptyprocess = ">=0.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pg8000"
 version = "1.22.0"
@@ -1759,13 +2457,23 @@ python-versions = ">=3.6"
 [package.dependencies]
 scramp = ">=1.4.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "phonenumbers"
-version = "8.12.35"
+version = "8.12.36"
 description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pickleshare"
@@ -1775,6 +2483,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pillow"
 version = "8.4.0"
@@ -1782,6 +2495,11 @@ description = "Python Imaging Library (Fork)"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pluggy"
@@ -1795,9 +2513,14 @@ python-versions = ">=3.6"
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "prometheus-client"
-version = "0.11.0"
+version = "0.12.0"
 description = "Python client for the Prometheus monitoring system."
 category = "main"
 optional = false
@@ -1806,9 +2529,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.extras]
 twisted = ["twisted"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "prompt-toolkit"
-version = "3.0.21"
+version = "3.0.22"
 description = "Library for building powerful interactive command lines in Python"
 category = "main"
 optional = false
@@ -1816,6 +2544,11 @@ python-versions = ">=3.6.2"
 
 [package.dependencies]
 wcwidth = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "psutil"
@@ -1828,6 +2561,11 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.extras]
 test = ["ipaddress", "mock", "unittest2", "enum34", "pywin32", "wmi"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "psycopg2"
 version = "2.9.1"
@@ -1835,6 +2573,11 @@ description = "psycopg2 - Python-PostgreSQL Database Adapter"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "ptyprocess"
@@ -1844,13 +2587,23 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "py"
-version = "1.10.0"
+version = "1.11.0"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pyasn1"
@@ -1859,6 +2612,11 @@ description = "ASN.1 types and codecs"
 category = "main"
 optional = true
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pyasn1-modules"
@@ -1871,6 +2629,11 @@ python-versions = "*"
 [package.dependencies]
 pyasn1 = ">=0.4.6,<0.5.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pycodestyle"
 version = "2.7.0"
@@ -1878,6 +2641,11 @@ description = "Python style guide checker"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pycparser"
@@ -1887,6 +2655,11 @@ category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pycryptodome"
 version = "3.11.0"
@@ -1894,6 +2667,11 @@ description = "Cryptographic library for Python"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pydocstyle"
@@ -1909,6 +2687,11 @@ snowballstemmer = "*"
 [package.extras]
 toml = ["toml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyflakes"
 version = "2.3.1"
@@ -1917,6 +2700,11 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pygments"
 version = "2.10.0"
@@ -1924,6 +2712,11 @@ description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pyjwt"
@@ -1942,16 +2735,23 @@ dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)",
 docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyparsing"
-version = "3.0.1"
+version = "2.4.7"
 description = "Python parsing module"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
-[package.extras]
-diagrams = ["jinja2", "railroad-diagrams"]
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pytest"
@@ -1974,6 +2774,11 @@ toml = "*"
 [package.extras]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytest-cov"
 version = "2.12.1"
@@ -1990,6 +2795,11 @@ toml = "*"
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytest-django"
 version = "4.4.0"
@@ -2005,6 +2815,11 @@ pytest = ">=5.4.0"
 docs = ["sphinx", "sphinx-rtd-theme"]
 testing = ["django", "django-configurations (>=2.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytest-django-testing-postgresql"
 version = "0.1.post0"
@@ -2016,6 +2831,11 @@ python-versions = "*"
 [package.dependencies]
 dj-database-url = "*"
 "testing.postgresql" = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pytest-sugar"
@@ -2029,6 +2849,11 @@ python-versions = "*"
 packaging = ">=14.1"
 pytest = ">=2.9"
 termcolor = ">=1.1.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python-crontab"
@@ -2045,6 +2870,11 @@ python-dateutil = "*"
 cron-description = ["cron-descriptor"]
 cron-schedule = ["croniter"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "python-dateutil"
 version = "2.8.2"
@@ -2056,6 +2886,11 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 [package.dependencies]
 six = ">=1.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "python-gnupg"
 version = "0.4.7"
@@ -2063,6 +2898,11 @@ description = "A wrapper for the Gnu Privacy Guard (GPG or GnuPG)"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python-ldap"
@@ -2075,6 +2915,11 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 [package.dependencies]
 pyasn1 = ">=0.3.7"
 pyasn1_modules = ">=0.1.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python3-openid"
@@ -2091,6 +2936,11 @@ defusedxml = "*"
 mysql = ["mysql-connector-python"]
 postgresql = ["psycopg2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytz"
 version = "2021.3"
@@ -2099,6 +2949,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyyaml"
 version = "6.0"
@@ -2106,6 +2961,11 @@ description = "YAML parser and emitter for Python"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "qrcode"
@@ -2125,6 +2985,11 @@ maintainer = ["zest.releaser"]
 pil = ["pillow"]
 test = ["pytest", "pytest-cov", "mock"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "redis"
 version = "3.5.3"
@@ -2136,13 +3001,23 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 [package.extras]
 hiredis = ["hiredis (>=0.1.3)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "regex"
-version = "2021.10.23"
+version = "2021.11.2"
 description = "Alternative regular expression module, to replace re."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "requests"
@@ -2162,6 +3037,11 @@ urllib3 = ">=1.21.1,<1.27"
 socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "requests-oauthlib"
 version = "1.3.0"
@@ -2177,6 +3057,11 @@ requests = ">=2.0.0"
 [package.extras]
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "restructuredtext-lint"
 version = "1.3.2"
@@ -2188,9 +3073,14 @@ python-versions = "*"
 [package.dependencies]
 docutils = ">=0.11,<1.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "ruamel.yaml"
-version = "0.17.16"
+version = "0.17.17"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 category = "main"
 optional = false
@@ -2203,6 +3093,11 @@ python-versions = ">=3"
 docs = ["ryd"]
 jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "ruamel.yaml.clib"
 version = "0.2.6"
@@ -2211,6 +3106,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "rules"
 version = "2.2"
@@ -2218,6 +3118,11 @@ description = "Awesome Django authorization, without the database"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "s3transfer"
@@ -2233,6 +3138,11 @@ botocore = ">=1.12.36,<2.0a.0"
 [package.extras]
 crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "safety"
 version = "1.10.3"
@@ -2247,6 +3157,11 @@ dparse = ">=0.5.1"
 packaging = "*"
 requests = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "scramp"
 version = "1.4.1"
@@ -2258,6 +3173,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 asn1crypto = ">=1.4.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "selenium"
 version = "3.141.0"
@@ -2268,6 +3188,11 @@ python-versions = "*"
 
 [package.dependencies]
 urllib3 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sentry-sdk"
@@ -2298,6 +3223,11 @@ sanic = ["sanic (>=0.8)"]
 sqlalchemy = ["sqlalchemy (>=1.2)"]
 tornado = ["tornado (>=5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "six"
 version = "1.16.0"
@@ -2305,6 +3235,11 @@ description = "Python 2 and 3 compatibility utilities"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "smmap"
@@ -2314,6 +3249,11 @@ category = "dev"
 optional = false
 python-versions = ">=3.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "snowballstemmer"
 version = "2.1.0"
@@ -2322,13 +3262,23 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "soupsieve"
-version = "2.2.1"
+version = "2.3"
 description = "A modern CSS selector implementation for Beautiful Soup."
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "spdx-license-list"
@@ -2337,6 +3287,11 @@ description = "A simple tool/library for working with SPDX license definitions."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinx"
@@ -2369,6 +3324,11 @@ docs = ["sphinxcontrib-websupport"]
 lint = ["flake8 (>=3.5.0)", "isort", "mypy (>=0.800)", "docutils-stubs"]
 test = ["pytest", "pytest-cov", "html5lib", "cython", "typed-ast"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinx-autodoc-typehints"
 version = "1.12.0"
@@ -2384,6 +3344,11 @@ Sphinx = ">=3.0"
 test = ["pytest (>=3.1.0)", "typing-extensions (>=3.5)", "sphobjinv (>=2.0)", "Sphinx (>=3.2.0)", "dataclasses"]
 type_comments = ["typed-ast (>=1.4.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinx-materialdesign-theme"
 version = "0.1.11"
@@ -2391,6 +3356,11 @@ description = "Sphinx Material Design Theme"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-applehelp"
@@ -2404,6 +3374,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-devhelp"
 version = "1.0.2"
@@ -2416,6 +3391,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-django"
 version = "0.5.1"
@@ -2423,6 +3403,11 @@ description = "Improve the Sphinx autodoc for Django classes."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-htmlhelp"
@@ -2436,6 +3421,11 @@ python-versions = ">=3.6"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest", "html5lib"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-jsmath"
 version = "1.0.1"
@@ -2446,6 +3436,11 @@ python-versions = ">=3.5"
 
 [package.extras]
 test = ["pytest", "flake8", "mypy"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-qthelp"
@@ -2459,6 +3454,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-serializinghtml"
 version = "1.1.5"
@@ -2471,6 +3471,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sqlparse"
 version = "0.4.2"
@@ -2478,6 +3483,11 @@ description = "A non-validating SQL parser."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "stevedore"
@@ -2490,6 +3500,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "termcolor"
 version = "1.1.0"
@@ -2497,6 +3512,11 @@ description = "ANSII Color formatting for output in terminal."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "testfixtures"
@@ -2511,6 +3531,11 @@ build = ["setuptools-git", "wheel", "twine"]
 docs = ["sphinx", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
 test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "testing.common.database"
 version = "2.0.3"
@@ -2521,6 +3546,11 @@ python-versions = "*"
 
 [package.extras]
 testing = ["nose"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "testing.postgresql"
@@ -2537,6 +3567,11 @@ pg8000 = ">=1.10"
 [package.extras]
 testing = ["sqlalchemy", "nose", "psycopg2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "toml"
 version = "0.10.2"
@@ -2544,6 +3579,11 @@ description = "Python Library for Tom's Obvious, Minimal Language"
 category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "traitlets"
@@ -2556,9 +3596,14 @@ python-versions = ">=3.7"
 [package.extras]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "twilio"
-version = "7.2.0"
+version = "7.3.0"
 description = "Twilio API client and TwiML generator"
 category = "main"
 optional = false
@@ -2569,6 +3614,11 @@ PyJWT = ">=2.0.0,<3.0.0"
 pytz = "*"
 requests = ">=2.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "typed-ast"
 version = "1.4.3"
@@ -2576,6 +3626,11 @@ description = "a fork of Python 2 and 3 ast modules with type comment support"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "types-pytz"
@@ -2585,6 +3640,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "types-pyyaml"
 version = "6.0.0"
@@ -2593,6 +3653,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "typing-extensions"
 version = "3.10.0.2"
@@ -2600,6 +3665,11 @@ description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "urllib3"
@@ -2614,6 +3684,11 @@ brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "uwsgi"
 version = "2.0.20"
@@ -2621,6 +3696,11 @@ description = "The uWSGI server"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "vine"
@@ -2630,6 +3710,11 @@ category = "main"
 optional = false
 python-versions = ">=3.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "wcwidth"
 version = "0.2.5"
@@ -2637,6 +3722,11 @@ description = "Measures the displayed width of unicode strings in a terminal"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "webencodings"
@@ -2646,6 +3736,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "whoosh"
 version = "2.7.4"
@@ -2654,13 +3749,23 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "wrapt"
-version = "1.13.2"
+version = "1.13.3"
 description = "Module for decorators, wrappers and monkey patching."
 category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "yubiotp"
@@ -2673,6 +3778,11 @@ python-versions = "*"
 [package.dependencies]
 pycryptodome = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [extras]
 ldap = ["django-auth-ldap"]
 s3 = ["boto3", "django-storages"]
@@ -2681,7 +3791,7 @@ sentry = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9e75106577cf557cef702384995a681d85a6cf5c8d6f1205dd125148b7b10587"
+content-hash = "28e627cd320dc660f1e12088709cc04f4097a53edc3283b57c1385ef19a118de"
 
 [metadata.files]
 alabaster = [
@@ -2690,7 +3800,6 @@ alabaster = [
 ]
 aleksis-builddeps = [
     {file = "AlekSIS-Builddeps-4.tar.gz", hash = "sha256:aaaa22965228b9b9b7de812e3e7fa9cbfdbf8635bb22d6f3a201dc0cc6d8d307"},
-    {file = "AlekSIS_Builddeps-4-py3-none-any.whl", hash = "sha256:02a93e503f5810e6c93a8bc829bc8cbda735ccbf78b91954d2f6507dfea3d01f"},
 ]
 amqp = [
     {file = "amqp-5.0.6-py3-none-any.whl", hash = "sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb"},
@@ -2753,12 +3862,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.19.3-py3-none-any.whl", hash = "sha256:2dfc8cf34d6dfbdfca4c88e8fddf9fe95cde489fb83144fe35f989ec6790e325"},
-    {file = "boto3-1.19.3.tar.gz", hash = "sha256:e36ffaf9969648e2f435aa1f0029956fea3aac52466eef3bcb43bde498a182dd"},
+    {file = "boto3-1.19.12-py3-none-any.whl", hash = "sha256:b9105554477978e80fda1103ff21ecf07502080667730e45383e1d3951c87954"},
+    {file = "boto3-1.19.12.tar.gz", hash = "sha256:182a2b756a2c2180b473bc8452227062394a24e3701548be23ebc30d85976c64"},
 ]
 botocore = [
-    {file = "botocore-1.22.3-py3-none-any.whl", hash = "sha256:aacdb9b8e09e356515966251d1e08d9929575a76af504992bfb941553dee59c2"},
-    {file = "botocore-1.22.3.tar.gz", hash = "sha256:53ca22aeac9b53fe5ec1f40b8ca9620ffe8b054458abfeb9ab74bbe9e0b0ecfa"},
+    {file = "botocore-1.22.12-py3-none-any.whl", hash = "sha256:1d1094fb53ebe4535d8840fbd7c14aadb65bde7ff03a65f9a4f1d76bd03e16ff"},
+    {file = "botocore-1.22.12.tar.gz", hash = "sha256:fc59b55e8c5dde64b017b2f114c25f8cce397b667e812aea7eafb4b59b49d7cb"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -2867,39 +3976,52 @@ configobj = [
     {file = "configobj-5.0.6.tar.gz", hash = "sha256:a2f5650770e1c87fb335af19a9b7eb73fc05ccf22144eb68db7d00cd2bcb0902"},
 ]
 coverage = [
-    {file = "coverage-6.0.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:1549e1d08ce38259de2bc3e9a0d5f3642ff4a8f500ffc1b2df73fd621a6cdfc0"},
-    {file = "coverage-6.0.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:bcae10fccb27ca2a5f456bf64d84110a5a74144be3136a5e598f9d9fb48c0caa"},
-    {file = "coverage-6.0.2-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:53a294dc53cfb39c74758edaa6305193fb4258a30b1f6af24b360a6c8bd0ffa7"},
-    {file = "coverage-6.0.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:8251b37be1f2cd9c0e5ccd9ae0380909c24d2a5ed2162a41fcdbafaf59a85ebd"},
-    {file = "coverage-6.0.2-cp310-cp310-win32.whl", hash = "sha256:db42baa892cba723326284490283a68d4de516bfb5aaba369b4e3b2787a778b7"},
-    {file = "coverage-6.0.2-cp310-cp310-win_amd64.whl", hash = "sha256:bbffde2a68398682623d9dd8c0ca3f46fda074709b26fcf08ae7a4c431a6ab2d"},
-    {file = "coverage-6.0.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:60e51a3dd55540bec686d7fff61b05048ca31e804c1f32cbb44533e6372d9cc3"},
-    {file = "coverage-6.0.2-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6a6a9409223a27d5ef3cca57dd7cd4dfcb64aadf2fad5c3b787830ac9223e01a"},
-    {file = "coverage-6.0.2-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:4b34ae4f51bbfa5f96b758b55a163d502be3dcb24f505d0227858c2b3f94f5b9"},
-    {file = "coverage-6.0.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3bbda1b550e70fa6ac40533d3f23acd4f4e9cb4e6e77251ce77fdf41b3309fb2"},
-    {file = "coverage-6.0.2-cp36-cp36m-win32.whl", hash = "sha256:4e28d2a195c533b58fc94a12826f4431726d8eb029ac21d874345f943530c122"},
-    {file = "coverage-6.0.2-cp36-cp36m-win_amd64.whl", hash = "sha256:a82d79586a0a4f5fd1cf153e647464ced402938fbccb3ffc358c7babd4da1dd9"},
-    {file = "coverage-6.0.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:3be1206dc09fb6298de3fce70593e27436862331a85daee36270b6d0e1c251c4"},
-    {file = "coverage-6.0.2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c9cd3828bbe1a40070c11fe16a51df733fd2f0cb0d745fb83b7b5c1f05967df7"},
-    {file = "coverage-6.0.2-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:d036dc1ed8e1388e995833c62325df3f996675779541f682677efc6af71e96cc"},
-    {file = "coverage-6.0.2-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:04560539c19ec26995ecfb3d9307ff154fbb9a172cb57e3b3cfc4ced673103d1"},
-    {file = "coverage-6.0.2-cp37-cp37m-win32.whl", hash = "sha256:e4fb7ced4d9dec77d6cf533acfbf8e1415fe799430366affb18d69ee8a3c6330"},
-    {file = "coverage-6.0.2-cp37-cp37m-win_amd64.whl", hash = "sha256:77b1da5767ed2f44611bc9bc019bc93c03fa495728ec389759b6e9e5039ac6b1"},
-    {file = "coverage-6.0.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:61b598cbdbaae22d9e34e3f675997194342f866bb1d781da5d0be54783dce1ff"},
-    {file = "coverage-6.0.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:36e9040a43d2017f2787b28d365a4bb33fcd792c7ff46a047a04094dc0e2a30d"},
-    {file = "coverage-6.0.2-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:9f1627e162e3864a596486774876415a7410021f4b67fd2d9efdf93ade681afc"},
-    {file = "coverage-6.0.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:e7a0b42db2a47ecb488cde14e0f6c7679a2c5a9f44814393b162ff6397fcdfbb"},
-    {file = "coverage-6.0.2-cp38-cp38-win32.whl", hash = "sha256:a1b73c7c4d2a42b9d37dd43199c5711d91424ff3c6c22681bc132db4a4afec6f"},
-    {file = "coverage-6.0.2-cp38-cp38-win_amd64.whl", hash = "sha256:1db67c497688fd4ba85b373b37cc52c50d437fd7267520ecd77bddbd89ea22c9"},
-    {file = "coverage-6.0.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:f2f184bf38e74f152eed7f87e345b51f3ab0b703842f447c22efe35e59942c24"},
-    {file = "coverage-6.0.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cd1cf1deb3d5544bd942356364a2fdc8959bad2b6cf6eb17f47d301ea34ae822"},
-    {file = "coverage-6.0.2-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:ad9b8c1206ae41d46ec7380b78ba735ebb77758a650643e841dd3894966c31d0"},
-    {file = "coverage-6.0.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:381d773d896cc7f8ba4ff3b92dee4ed740fb88dfe33b6e42efc5e8ab6dfa1cfe"},
-    {file = "coverage-6.0.2-cp39-cp39-win32.whl", hash = "sha256:424c44f65e8be58b54e2b0bd1515e434b940679624b1b72726147cfc6a9fc7ce"},
-    {file = "coverage-6.0.2-cp39-cp39-win_amd64.whl", hash = "sha256:abbff240f77347d17306d3201e14431519bf64495648ca5a49571f988f88dee9"},
-    {file = "coverage-6.0.2-pp36-none-any.whl", hash = "sha256:7092eab374346121805fb637572483270324407bf150c30a3b161fc0c4ca5164"},
-    {file = "coverage-6.0.2-pp37-none-any.whl", hash = "sha256:30922626ce6f7a5a30bdba984ad21021529d3d05a68b4f71ea3b16bda35b8895"},
-    {file = "coverage-6.0.2.tar.gz", hash = "sha256:6807947a09510dc31fa86f43595bf3a14017cd60bf633cc746d52141bfa6b149"},
+    {file = "coverage-6.1.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:42a1fb5dee3355df90b635906bb99126faa7936d87dfc97eacc5293397618cb7"},
+    {file = "coverage-6.1.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a00284dbfb53b42e35c7dd99fc0e26ef89b4a34efff68078ed29d03ccb28402a"},
+    {file = "coverage-6.1.1-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:51a441011a30d693e71dea198b2a6f53ba029afc39f8e2aeb5b77245c1b282ef"},
+    {file = "coverage-6.1.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:e76f017b6d4140a038c5ff12be1581183d7874e41f1c0af58ecf07748d36a336"},
+    {file = "coverage-6.1.1-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:7833c872718dc913f18e51ee97ea0dece61d9930893a58b20b3daf09bb1af6b6"},
+    {file = "coverage-6.1.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:8186b5a4730c896cbe1e4b645bdc524e62d874351ae50e1db7c3e9f5dc81dc26"},
+    {file = "coverage-6.1.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:bbca34dca5a2d60f81326d908d77313816fad23d11b6069031a3d6b8c97a54f9"},
+    {file = "coverage-6.1.1-cp310-cp310-win32.whl", hash = "sha256:72bf437d54186d104388cbae73c9f2b0f8a3e11b6e8d7deb593bd14625c96026"},
+    {file = "coverage-6.1.1-cp310-cp310-win_amd64.whl", hash = "sha256:994ce5a7b3d20981b81d83618aa4882f955bfa573efdbef033d5632b58597ba9"},
+    {file = "coverage-6.1.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:ab6a0fe4c96f8058d41948ddf134420d3ef8c42d5508b5a341a440cce7a37a1d"},
+    {file = "coverage-6.1.1-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:10ab138b153e4cc408b43792cb7f518f9ee02f4ff55cd1ab67ad6fd7e9905c7e"},
+    {file = "coverage-6.1.1-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:7e083d32965d2eb6638a77e65b622be32a094fdc0250f28ce6039b0732fbcaa8"},
+    {file = "coverage-6.1.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:359a32515e94e398a5c0fa057e5887a42e647a9502d8e41165cf5cb8d3d1ca67"},
+    {file = "coverage-6.1.1-cp36-cp36m-musllinux_1_1_aarch64.whl", hash = "sha256:bf656cd74ff7b4ed7006cdb2a6728150aaad69c7242b42a2a532f77b63ea233f"},
+    {file = "coverage-6.1.1-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:dc5023be1c2a8b0a0ab5e31389e62c28b2453eb31dd069f4b8d1a0f9814d951a"},
+    {file = "coverage-6.1.1-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:557594a50bfe3fb0b1b57460f6789affe8850ad19c1acf2d14a3e12b2757d489"},
+    {file = "coverage-6.1.1-cp36-cp36m-win32.whl", hash = "sha256:9eb0a1923354e0fdd1c8a6f53f5db2e6180d670e2b587914bf2e79fa8acfd003"},
+    {file = "coverage-6.1.1-cp36-cp36m-win_amd64.whl", hash = "sha256:04a92a6cf9afd99f9979c61348ec79725a9f9342fb45e63c889e33c04610d97b"},
+    {file = "coverage-6.1.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:479228e1b798d3c246ac89b09897ee706c51b3e5f8f8d778067f38db73ccc717"},
+    {file = "coverage-6.1.1-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:78287731e3601ea5ce9d6468c82d88a12ef8fe625d6b7bdec9b45d96c1ad6533"},
+    {file = "coverage-6.1.1-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:c95257aa2ccf75d3d91d772060538d5fea7f625e48157f8ca44594f94d41cb33"},
+    {file = "coverage-6.1.1-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:9ad5895938a894c368d49d8470fe9f519909e5ebc6b8f8ea5190bd0df6aa4271"},
+    {file = "coverage-6.1.1-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:326d944aad0189603733d646e8d4a7d952f7145684da973c463ec2eefe1387c2"},
+    {file = "coverage-6.1.1-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:e7d5606b9240ed4def9cbdf35be4308047d11e858b9c88a6c26974758d6225ce"},
+    {file = "coverage-6.1.1-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:572f917267f363101eec375c109c9c1118037c7cc98041440b5eabda3185ac7b"},
+    {file = "coverage-6.1.1-cp37-cp37m-win32.whl", hash = "sha256:35cd2230e1ed76df7d0081a997f0fe705be1f7d8696264eb508076e0d0b5a685"},
+    {file = "coverage-6.1.1-cp37-cp37m-win_amd64.whl", hash = "sha256:65ad3ff837c89a229d626b8004f0ee32110f9bfdb6a88b76a80df36ccc60d926"},
+    {file = "coverage-6.1.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:977ce557d79577a3dd510844904d5d968bfef9489f512be65e2882e1c6eed7d8"},
+    {file = "coverage-6.1.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:62512c0ec5d307f56d86504c58eace11c1bc2afcdf44e3ff20de8ca427ca1d0e"},
+    {file = "coverage-6.1.1-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:2e5b9c17a56b8bf0c0a9477fcd30d357deb486e4e1b389ed154f608f18556c8a"},
+    {file = "coverage-6.1.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:666c6b32b69e56221ad1551d377f718ed00e6167c7a1b9257f780b105a101271"},
+    {file = "coverage-6.1.1-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:fb2fa2f6506c03c48ca42e3fe5a692d7470d290c047ee6de7c0f3e5fa7639ac9"},
+    {file = "coverage-6.1.1-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:f0f80e323a17af63eac6a9db0c9188c10f1fd815c3ab299727150cc0eb92c7a4"},
+    {file = "coverage-6.1.1-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:738e823a746841248b56f0f3bd6abf3b73af191d1fd65e4c723b9c456216f0ad"},
+    {file = "coverage-6.1.1-cp38-cp38-win32.whl", hash = "sha256:8605add58e6a960729aa40c0fd9a20a55909dd9b586d3e8104cc7f45869e4c6b"},
+    {file = "coverage-6.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:6e994003e719458420e14ffb43c08f4c14990e20d9e077cb5cad7a3e419bbb54"},
+    {file = "coverage-6.1.1-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:e3c4f5211394cd0bf6874ac5d29684a495f9c374919833dcfff0bd6d37f96201"},
+    {file = "coverage-6.1.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e14bceb1f3ae8a14374be2b2d7bc12a59226872285f91d66d301e5f41705d4d6"},
+    {file = "coverage-6.1.1-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:0147f7833c41927d84f5af9219d9b32f875c0689e5e74ac8ca3cb61e73a698f9"},
+    {file = "coverage-6.1.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:b1d0a1bce919de0dd8da5cff4e616b2d9e6ebf3bd1410ff645318c3dd615010a"},
+    {file = "coverage-6.1.1-cp39-cp39-win32.whl", hash = "sha256:a11a2c019324fc111485e79d55907e7289e53d0031275a6c8daed30690bc50c0"},
+    {file = "coverage-6.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:4d8b453764b9b26b0dd2afb83086a7c3f9379134e340288d2a52f8a91592394b"},
+    {file = "coverage-6.1.1-pp36-none-any.whl", hash = "sha256:3b270c6b48d3ff5a35deb3648028ba2643ad8434b07836782b1139cf9c66313f"},
+    {file = "coverage-6.1.1-pp37-none-any.whl", hash = "sha256:ffa8fee2b1b9e60b531c4c27cf528d6b5d5da46b1730db1f4d6eee56ff282e07"},
+    {file = "coverage-6.1.1-pp38-none-any.whl", hash = "sha256:4cd919057636f63ab299ccb86ea0e78b87812400c76abab245ca385f17d19fb5"},
+    {file = "coverage-6.1.1.tar.gz", hash = "sha256:b8e4f15b672c9156c1154249a9c5746e86ac9ae9edc3799ee3afebc323d9d9e0"},
 ]
 cryptography = [
     {file = "cryptography-35.0.0-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:d57e0cdc1b44b6cdf8af1d01807db06886f10177469312fbde8f44ccbb284bc9"},
@@ -2944,8 +4066,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
-    {file = "Django-3.2.8-py3-none-any.whl", hash = "sha256:42573831292029639b798fe4d3812996bfe4ff3275f04566da90764daec011a5"},
-    {file = "Django-3.2.8.tar.gz", hash = "sha256:f6d2c4069c9b9bfac03bedff927ea1f9e0d29e34525cec8a68fd28eb2a8df7af"},
+    {file = "Django-3.2.9-py3-none-any.whl", hash = "sha256:e22c9266da3eec7827737cde57694d7db801fedac938d252bf27377cec06ed1b"},
+    {file = "Django-3.2.9.tar.gz", hash = "sha256:51284300f1522ffcdb07ccbdf676a307c6678659e1284f0618e5a774127a6a08"},
 ]
 django-allauth = [
     {file = "django-allauth-0.45.0.tar.gz", hash = "sha256:6d46be0e1480316ccd45476db3aefb39db70e038d2a543112d314b76bb999a4e"},
@@ -2959,16 +4081,16 @@ django-appconf = [
     {file = "django_appconf-1.0.5-py3-none-any.whl", hash = "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d"},
 ]
 django-auth-ldap = [
-    {file = "django-auth-ldap-2.4.0.tar.gz", hash = "sha256:60fcbfc3141c99c3c49d3ccd7311a3992a231c319d94b6d2c143968f63676676"},
-    {file = "django_auth_ldap-2.4.0-py3-none-any.whl", hash = "sha256:2d869955da8a0c9a4448671bd9826b9f87458f6a9fc20278e84de8a81200a2be"},
+    {file = "django-auth-ldap-3.0.0.tar.gz", hash = "sha256:1f2d5c562d9ba9a5e9a64099ae9798e1a63840a11afe4d1c4a9c74121f066eaa"},
+    {file = "django_auth_ldap-3.0.0-py3-none-any.whl", hash = "sha256:19ee19034f344d9efd07ed88d3187e256ec33ae39d6a47222083b89f7d35c5f6"},
 ]
 django-bleach = [
     {file = "django-bleach-0.9.0.tar.gz", hash = "sha256:d76534566987187da35c60d9097bc18e6d8aadc2d8743cee46b820940e45cea7"},
     {file = "django_bleach-0.9.0-py2.py3-none-any.whl", hash = "sha256:12aeffd1b9f96d91d92bb04e9ce46dba29294c7fc1c6678d111e769d279bad3e"},
 ]
 django-cachalot = [
-    {file = "django-cachalot-2.4.3.tar.gz", hash = "sha256:2c81390f53d8c2e0ae6f266cff170b5681dad2416e09266ca7ca25f50e892a53"},
-    {file = "django_cachalot-2.4.3-py3-none-any.whl", hash = "sha256:d56ffa280da8317019959801703659616adcf60e1bf6513bd7e154b0b0851014"},
+    {file = "django-cachalot-2.4.4.tar.gz", hash = "sha256:8489a74e9a689437f81fa61705b154a4be3cac1b62b61f68215d79668c9ac037"},
+    {file = "django_cachalot-2.4.4-py3-none-any.whl", hash = "sha256:f8995a85197ac290e63a2f97c577cc9825000fe081b08d5c7d35079e7f1daa43"},
 ]
 django-cache-memoize = [
     {file = "django-cache-memoize-0.1.10.tar.gz", hash = "sha256:63e8faa245a41c0dbad843807e9f21a6e59eba8e6e50df310fdf6485a6749843"},
@@ -3030,7 +4152,8 @@ django-guardian = [
     {file = "django_guardian-2.4.0-py3-none-any.whl", hash = "sha256:440ca61358427e575323648b25f8384739e54c38b3d655c81d75e0cd0d61b697"},
 ]
 django-haystack = [
-    {file = "django-haystack-3.0.tar.gz", hash = "sha256:d490f920afa85471dd1fa5000bc8eff4b704daacbe09aee1a64e75cbc426f3be"},
+    {file = "django-haystack-3.1.1.tar.gz", hash = "sha256:6d05756b95d7d5ec1dbd4668eb999ced1504b47f588e2e54be53b1404c516a82"},
+    {file = "django_haystack-3.1.1-py3-none-any.whl", hash = "sha256:970ebc6362f3f84861209154ec34b57f3e87d2d7922f948df80177f0e2e3ced7"},
 ]
 django-health-check = [
     {file = "django-health-check-3.16.4.tar.gz", hash = "sha256:334bcbbb9273a6dbd9c928e78474306e623dfb38cc442281cb9fd230a20a7fdb"},
@@ -3103,19 +4226,19 @@ django-render-block = [
     {file = "django_render_block-0.8.1-py3-none-any.whl", hash = "sha256:903969efd0949f750c5fe71affe6e6b1ea66d03005c102a67fda36d5b9f4e1e1"},
 ]
 django-reversion = [
-    {file = "django-reversion-4.0.0.tar.gz", hash = "sha256:ad6d714b4b9b824e22b88d47201cc0f74b5c4294c8d4e1f8d7ac7c3631ef3188"},
-    {file = "django_reversion-4.0.0-py3-none-any.whl", hash = "sha256:f059c654e38c0dd8dccd7f0990aa2f6d9ad22dab55c5e095f9596aeda8079dcd"},
+    {file = "django-reversion-4.0.1.tar.gz", hash = "sha256:6991f16e5d3a972912db3d56e3a714d10b07becd566ab87f85f2e9b671981339"},
+    {file = "django_reversion-4.0.1-py3-none-any.whl", hash = "sha256:2e40ed41e08cdd83a05dc70a1974feface52a61ba7d289727117163052081ae6"},
 ]
 django-sass-processor = [
     {file = "django-sass-processor-1.0.0.tar.gz", hash = "sha256:cb90efee38cd7b0fe727c78d8993ad7804de33f40328200dfc1a481307ef0466"},
 ]
 django-select2 = [
-    {file = "django-select2-7.7.3.tar.gz", hash = "sha256:063d29df5598ec6549a4d49cc4beb85d585987a4e470224592034aff2d4f0a3f"},
-    {file = "django_select2-7.7.3-py2.py3-none-any.whl", hash = "sha256:7bf5b35595624a3318f46d69f639e38dafb123fa4a6f82d63a6a1ac6d532317d"},
+    {file = "django-select2-7.9.0.tar.gz", hash = "sha256:4494cf5fa13333ddbd34e4dbeca4b44a22ed6367342cccd24f6f122f6ef4a20b"},
+    {file = "django_select2-7.9.0-py2.py3-none-any.whl", hash = "sha256:40d42643b459f79c31598fa5645f5f7e8edda8350a78761ab6c06105ca588872"},
 ]
 django-storages = [
-    {file = "django-storages-1.12.2.tar.gz", hash = "sha256:0013ebe4904521e2fa28f33591a03a7210304d73363e7eadd7cdcf81c12ba003"},
-    {file = "django_storages-1.12.2-py3-none-any.whl", hash = "sha256:683b70617f4be9baa17b2d6d7df46cf6afe31b5eb17ece3ca82f773f555592a7"},
+    {file = "django-storages-1.12.3.tar.gz", hash = "sha256:a475edb2f0f04c4f7e548919a751ecd50117270833956ed5bd585c0575d2a5e7"},
+    {file = "django_storages-1.12.3-py3-none-any.whl", hash = "sha256:204a99f218b747c46edbfeeb1310d357f83f90fa6a6024d8d0a3f422570cee84"},
 ]
 django-stubs = [
     {file = "django-stubs-1.9.0.tar.gz", hash = "sha256:664843091636a917faf5256d028476559dc360fdef9050b6df87ab61b21607bf"},
@@ -3248,12 +4371,12 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 ipython = [
-    {file = "ipython-7.28.0-py3-none-any.whl", hash = "sha256:f16148f9163e1e526f1008d7c8d966d9c15600ca20d1a754287cf96d00ba6f1d"},
-    {file = "ipython-7.28.0.tar.gz", hash = "sha256:2097be5c814d1b974aea57673176a924c4c8c9583890e7a5f082f547b9975b11"},
+    {file = "ipython-7.29.0-py3-none-any.whl", hash = "sha256:a658beaf856ce46bc453366d5dc6b2ddc6c481efd3540cb28aa3943819caac9f"},
+    {file = "ipython-7.29.0.tar.gz", hash = "sha256:4f69d7423a5a1972f6347ff233e38bbf4df6a150ef20fbb00c635442ac3060aa"},
 ]
 isort = [
-    {file = "isort-5.9.3-py3-none-any.whl", hash = "sha256:e17d6e2b81095c9db0a03a8025a957f334d6ea30b26f9ec70805411e5c7c81f2"},
-    {file = "isort-5.9.3.tar.gz", hash = "sha256:9c2ea1e62d871267b78307fe511c0838ba0da28698c5732d54e2790bf3ba9899"},
+    {file = "isort-5.10.0-py3-none-any.whl", hash = "sha256:1a18ccace2ed8910bd9458b74a3ecbafd7b2f581301b0ab65cfdd4338272d76f"},
+    {file = "isort-5.10.0.tar.gz", hash = "sha256:e52ff6d38012b131628cf0f26c51e7bd3a7c81592eefe3ac71411e692f1b9345"},
 ]
 jedi = [
     {file = "jedi-0.18.0-py2.py3-none-any.whl", hash = "sha256:18456d83f65f400ab0c2d3319e48520420ef43b23a086fdc05dff34132f0fb93"},
@@ -3272,8 +4395,8 @@ jwcrypto = [
     {file = "jwcrypto-1.0.tar.gz", hash = "sha256:f88816eb0a41b8f006af978ced5f171f33782525006cdb055b536a40f4d46ac9"},
 ]
 kombu = [
-    {file = "kombu-5.1.0-py3-none-any.whl", hash = "sha256:e2dedd8a86c9077c350555153825a31e456a0dc20c15d5751f00137ec9c75f0a"},
-    {file = "kombu-5.1.0.tar.gz", hash = "sha256:01481d99f4606f6939cdc9b637264ed353ee9e3e4f62cfb582324142c41a572d"},
+    {file = "kombu-5.2.0-py3-none-any.whl", hash = "sha256:8eefdb136d15449743f5db3d7af53cf0f1eb283c011ed670986c745bef268b81"},
+    {file = "kombu-5.2.0.tar.gz", hash = "sha256:af17a0ab0c7508dd50cc9d1378d0cf68566a953fca8aaae4e8dab107a79aa440"},
 ]
 libsass = [
     {file = "libsass-0.21.0-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:06c8776417fe930714bdc930a3d7e795ae3d72be6ac883ff72a1b8f7c49e5ffb"},
@@ -3296,9 +4419,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2d7d807855b419fc2ed3e631034685db6079889a1f01d5d9dac950f764da3dad"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:add36cb2dbb8b736611303cd3bfcee00afd96471b09cda130da3581cbdc56a6d"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:168cd0a3642de83558a5153c8bd34f175a9a6e7f6dc6384b9655d2697312a646"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:4dc8f9fb58f7364b63fd9f85013b780ef83c11857ae79f2feda41e270468dd9b"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:20dca64a3ef2d6e4d5d615a3fd418ad3bde77a47ec8a23d984a12b5b4c74491a"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:cdfba22ea2f0029c9261a4bd07e830a8da012291fbe44dc794e488b6c9bb353a"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-win32.whl", hash = "sha256:99df47edb6bda1249d3e80fdabb1dab8c08ef3975f69aed437cb69d0a5de1e28"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-win_amd64.whl", hash = "sha256:e0f138900af21926a02425cf736db95be9f4af72ba1bb21453432a07f6082134"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:f9081981fe268bd86831e5c75f7de206ef275defcb82bc70740ae6dc507aee51"},
@@ -3310,9 +4430,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:bf5d821ffabf0ef3533c39c518f3357b171a1651c1ff6827325e4489b0e46c3c"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:0d4b31cc67ab36e3392bbf3862cfbadac3db12bdd8b02a2731f509ed5b829724"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:baa1a4e8f868845af802979fcdbf0bb11f94f1cb7ced4c4b8a351bb60d108145"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_aarch64.whl", hash = "sha256:deb993cacb280823246a026e3b2d81c493c53de6acfd5e6bfe31ab3402bb37dd"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:63f3268ba69ace99cab4e3e3b5840b03340efed0948ab8f78d2fd87ee5442a4f"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:8d206346619592c6200148b01a2142798c989edcb9c896f9ac9722a99d4e77e6"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-win32.whl", hash = "sha256:6c4ca60fa24e85fe25b912b01e62cb969d69a23a5d5867682dd3e80b5b02581d"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:b2f4bf27480f5e5e8ce285a8c8fd176c0b03e93dcc6646477d4630e83440c6a9"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:0717a7390a68be14b8c793ba258e075c6f4ca819f15edfc2a3a027c823718567"},
@@ -3324,9 +4441,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e9936f0b261d4df76ad22f8fee3ae83b60d7c3e871292cd42f40b81b70afae85"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:2a7d351cbd8cfeb19ca00de495e224dea7e7d919659c2841bbb7f420ad03e2d6"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:60bf42e36abfaf9aff1f50f52644b336d4f0a3fd6d8a60ca0d054ac9f713a864"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:d6c7ebd4e944c85e2c3421e612a7057a2f48d478d79e61800d81468a8d842207"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:f0567c4dc99f264f49fe27da5f735f414c4e7e7dd850cfd8e69f0862d7c74ea9"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:89c687013cb1cd489a0f0ac24febe8c7a666e6e221b783e53ac50ebf68e45d86"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-win32.whl", hash = "sha256:a30e67a65b53ea0a5e62fe23682cfe22712e01f453b95233b25502f7c61cb415"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:611d1ad9a4288cf3e3c16014564df047fe08410e628f89805e475368bd304914"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:5bb28c636d87e840583ee3adeb78172efc47c8b26127267f54a9c0ec251d41a9"},
@@ -3339,9 +4453,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6fcf051089389abe060c9cd7caa212c707e58153afa2c649f00346ce6d260f1b"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:5855f8438a7d1d458206a2466bf82b0f104a3724bf96a1c781ab731e4201731a"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3dd007d54ee88b46be476e293f48c85048603f5f516008bee124ddd891398ed6"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:aca6377c0cb8a8253e493c6b451565ac77e98c2951c45f913e0b52facdcff83f"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:04635854b943835a6ea959e948d19dcd311762c5c0c6e1f0e16ee57022669194"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:6300b8454aa6930a24b9618fbb54b5a68135092bc666f7b06901f897fa5c2fee"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-win32.whl", hash = "sha256:023cb26ec21ece8dc3907c0e8320058b2e0cb3c55cf9564da612bc325bed5e64"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-win_amd64.whl", hash = "sha256:984d76483eb32f1bcb536dc27e4ad56bba4baa70be32fa87152832cdd9db0833"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:2ef54abee730b502252bcdf31b10dacb0a416229b72c18b19e24a4509f273d26"},
@@ -3354,9 +4465,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c47adbc92fc1bb2b3274c4b3a43ae0e4573d9fbff4f54cd484555edbf030baf1"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:37205cac2a79194e3750b0af2a5720d95f786a55ce7df90c3af697bfa100eaac"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:1f2ade76b9903f39aa442b4aadd2177decb66525062db244b35d71d0ee8599b6"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:4296f2b1ce8c86a6aea78613c34bb1a672ea0e3de9c6ba08a960efe0b0a09047"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_i686.whl", hash = "sha256:9f02365d4e99430a12647f09b6cc8bab61a6564363f313126f775eb4f6ef798e"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:5b6d930f030f8ed98e3e6c98ffa0652bdb82601e7a016ec2ab5d7ff23baa78d1"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win32.whl", hash = "sha256:10f82115e21dc0dfec9ab5c0223652f7197feb168c940f3ef61563fc2d6beb74"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:693ce3f9e70a6cf7d2fb9e6c9d8b204b6b39897a2c4a1aa65728d5ac97dcc1d8"},
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
@@ -3403,8 +4511,8 @@ oauthlib = [
     {file = "oauthlib-3.1.1.tar.gz", hash = "sha256:8f0215fcc533dd8dd1bee6f4c412d4f0cd7297307d43ac61666389e3bc3198a3"},
 ]
 packaging = [
-    {file = "packaging-21.0-py3-none-any.whl", hash = "sha256:c86254f9220d55e31cc94d69bade760f0847da8000def4dfe1c6b872fd14ff14"},
-    {file = "packaging-21.0.tar.gz", hash = "sha256:7dc96269f53a4ccec5c0670940a4281106dd0bb343f47b7471f779df49c2fbe7"},
+    {file = "packaging-21.2-py3-none-any.whl", hash = "sha256:14317396d1e8cdb122989b916fa2c7e9ca8e2be9e8060a6eff75b6b7b4d8a7e0"},
+    {file = "packaging-21.2.tar.gz", hash = "sha256:096d689d78ca690e4cd8a89568ba06d07ca097e3306a4381635073ca91479966"},
 ]
 parso = [
     {file = "parso-0.8.2-py2.py3-none-any.whl", hash = "sha256:a8c4922db71e4fdb90e0d0bc6e50f9b273d3397925e5e60a717e719201778d22"},
@@ -3419,8 +4527,8 @@ pathspec = [
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
 ]
 pbr = [
-    {file = "pbr-5.6.0-py2.py3-none-any.whl", hash = "sha256:c68c661ac5cc81058ac94247278eeda6d2e6aecb3e227b0387c30d277e7ef8d4"},
-    {file = "pbr-5.6.0.tar.gz", hash = "sha256:42df03e7797b796625b1029c0400279c7c34fd7df24a7d7818a1abb5b38710dd"},
+    {file = "pbr-5.7.0-py2.py3-none-any.whl", hash = "sha256:60002958e459b195e8dbe61bf22bcf344eedf1b4e03a321a5414feb15566100c"},
+    {file = "pbr-5.7.0.tar.gz", hash = "sha256:4651ca1445e80f2781827305de3d76b3ce53195f2227762684eb08f17bc473b7"},
 ]
 persisting-theory = [
     {file = "persisting-theory-0.2.1.tar.gz", hash = "sha256:00ff7dcc8f481ff75c770ca5797d968e8725b6df1f77fe0cf7d20fa1e5790c0a"},
@@ -3434,8 +4542,8 @@ pg8000 = [
     {file = "pg8000-1.22.0.tar.gz", hash = "sha256:c5172252fc92142ec104cd5e7231be4580a1a0a814403707bafbf7bb8383a29a"},
 ]
 phonenumbers = [
-    {file = "phonenumbers-8.12.35-py2.py3-none-any.whl", hash = "sha256:16c8f6d682ab5be550af2f4a2f81f0a90c8743e37babc7465edcefc106d0a1eb"},
-    {file = "phonenumbers-8.12.35.tar.gz", hash = "sha256:f426d419aabf6366c27ef1193918cc55217ef0e8be8f09cbf0667131037ca229"},
+    {file = "phonenumbers-8.12.36-py2.py3-none-any.whl", hash = "sha256:fa91fff1cefee6873c78f08c767f341a7658c849ffb74b605cb38cefef0e76fa"},
+    {file = "phonenumbers-8.12.36.tar.gz", hash = "sha256:e29717fcf86d68082fc6e42ca07e52bff863b6e0b354edd1644ba15c35ef213d"},
 ]
 pickleshare = [
     {file = "pickleshare-0.7.5-py2.py3-none-any.whl", hash = "sha256:9649af414d74d4df115d5d718f82acb59c9d418196b7b4290ed47a12ce62df56"},
@@ -3489,12 +4597,12 @@ pluggy = [
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
 prometheus-client = [
-    {file = "prometheus_client-0.11.0-py2.py3-none-any.whl", hash = "sha256:b014bc76815eb1399da8ce5fc84b7717a3e63652b0c0f8804092c9363acab1b2"},
-    {file = "prometheus_client-0.11.0.tar.gz", hash = "sha256:3a8baade6cb80bcfe43297e33e7623f3118d660d41387593758e2fb1ea173a86"},
+    {file = "prometheus_client-0.12.0-py2.py3-none-any.whl", hash = "sha256:317453ebabff0a1b02df7f708efbab21e3489e7072b61cb6957230dd004a0af0"},
+    {file = "prometheus_client-0.12.0.tar.gz", hash = "sha256:1b12ba48cee33b9b0b9de64a1047cbd3c5f2d0ab6ebcead7ddda613a750ec3c5"},
 ]
 prompt-toolkit = [
-    {file = "prompt_toolkit-3.0.21-py3-none-any.whl", hash = "sha256:62b3d3ea5a3ccee94dc1aac018279cf64866a76837156ebe159b981c42dd20a8"},
-    {file = "prompt_toolkit-3.0.21.tar.gz", hash = "sha256:27f13ff4e4850fe8f860b77414c7880f67c6158076a7b099062cc8570f1562e5"},
+    {file = "prompt_toolkit-3.0.22-py3-none-any.whl", hash = "sha256:48d85cdca8b6c4f16480c7ce03fd193666b62b0a21667ca56b4bb5ad679d1170"},
+    {file = "prompt_toolkit-3.0.22.tar.gz", hash = "sha256:449f333dd120bd01f5d296a8ce1452114ba3a71fae7288d2f0ae2c918764fa72"},
 ]
 psutil = [
     {file = "psutil-5.8.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:0066a82f7b1b37d334e68697faba68e5ad5e858279fd6351c8ca6024e8d6ba64"},
@@ -3527,8 +4635,6 @@ psutil = [
     {file = "psutil-5.8.0.tar.gz", hash = "sha256:0c9ccb99ab76025f2f0bbecf341d4656e9c1351db8cc8a03ccd62e318ab4b5c6"},
 ]
 psycopg2 = [
-    {file = "psycopg2-2.9.1-cp310-cp310-win32.whl", hash = "sha256:25615574419dd9bda6fdfdcd58afb22e721f5b807cb3d5e62f488c8acf8cb754"},
-    {file = "psycopg2-2.9.1-cp310-cp310-win_amd64.whl", hash = "sha256:e5a8ed9dbfca8dc162c4ada5ab017e10d5a66c542b4c73569f103fa5f342f498"},
     {file = "psycopg2-2.9.1-cp36-cp36m-win32.whl", hash = "sha256:7f91312f065df517187134cce8e395ab37f5b601a42446bdc0f0d51773621854"},
     {file = "psycopg2-2.9.1-cp36-cp36m-win_amd64.whl", hash = "sha256:830c8e8dddab6b6716a4bf73a09910c7954a92f40cf1d1e702fb93c8a919cc56"},
     {file = "psycopg2-2.9.1-cp37-cp37m-win32.whl", hash = "sha256:89409d369f4882c47f7ea20c42c5046879ce22c1e4ea20ef3b00a4dfc0a7f188"},
@@ -3544,38 +4650,16 @@ ptyprocess = [
     {file = "ptyprocess-0.7.0.tar.gz", hash = "sha256:5c5d0a3b48ceee0b48485e0c26037c0acd7d29765ca3fbb5cb3831d347423220"},
 ]
 py = [
-    {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
-    {file = "py-1.10.0.tar.gz", hash = "sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3"},
+    {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
+    {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pyasn1 = [
-    {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
-    {file = "pyasn1-0.4.8-py2.5.egg", hash = "sha256:0458773cfe65b153891ac249bcf1b5f8f320b7c2ce462151f8fa74de8934becf"},
-    {file = "pyasn1-0.4.8-py2.6.egg", hash = "sha256:5c9414dcfede6e441f7e8f81b43b34e834731003427e5b09e4e00e3172a10f00"},
-    {file = "pyasn1-0.4.8-py2.7.egg", hash = "sha256:6e7545f1a61025a4e58bb336952c5061697da694db1cae97b116e9c46abcf7c8"},
     {file = "pyasn1-0.4.8-py2.py3-none-any.whl", hash = "sha256:39c7e2ec30515947ff4e87fb6f456dfc6e84857d34be479c9d4a4ba4bf46aa5d"},
-    {file = "pyasn1-0.4.8-py3.1.egg", hash = "sha256:78fa6da68ed2727915c4767bb386ab32cdba863caa7dbe473eaae45f9959da86"},
-    {file = "pyasn1-0.4.8-py3.2.egg", hash = "sha256:08c3c53b75eaa48d71cf8c710312316392ed40899cb34710d092e96745a358b7"},
-    {file = "pyasn1-0.4.8-py3.3.egg", hash = "sha256:03840c999ba71680a131cfaee6fab142e1ed9bbd9c693e285cc6aca0d555e576"},
-    {file = "pyasn1-0.4.8-py3.4.egg", hash = "sha256:7ab8a544af125fb704feadb008c99a88805126fb525280b2270bb25cc1d78a12"},
-    {file = "pyasn1-0.4.8-py3.5.egg", hash = "sha256:e89bf84b5437b532b0803ba5c9a5e054d21fec423a89952a74f87fa2c9b7bce2"},
-    {file = "pyasn1-0.4.8-py3.6.egg", hash = "sha256:014c0e9976956a08139dc0712ae195324a75e142284d5f87f1a87ee1b068a359"},
-    {file = "pyasn1-0.4.8-py3.7.egg", hash = "sha256:99fcc3c8d804d1bc6d9a099921e39d827026409a58f2a720dcdb89374ea0c776"},
     {file = "pyasn1-0.4.8.tar.gz", hash = "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"},
 ]
 pyasn1-modules = [
     {file = "pyasn1-modules-0.2.8.tar.gz", hash = "sha256:905f84c712230b2c592c19470d3ca8d552de726050d1d1716282a1f6146be65e"},
-    {file = "pyasn1_modules-0.2.8-py2.4.egg", hash = "sha256:0fe1b68d1e486a1ed5473f1302bd991c1611d319bba158e98b106ff86e1d7199"},
-    {file = "pyasn1_modules-0.2.8-py2.5.egg", hash = "sha256:fe0644d9ab041506b62782e92b06b8c68cca799e1a9636ec398675459e031405"},
-    {file = "pyasn1_modules-0.2.8-py2.6.egg", hash = "sha256:a99324196732f53093a84c4369c996713eb8c89d360a496b599fb1a9c47fc3eb"},
-    {file = "pyasn1_modules-0.2.8-py2.7.egg", hash = "sha256:0845a5582f6a02bb3e1bde9ecfc4bfcae6ec3210dd270522fee602365430c3f8"},
     {file = "pyasn1_modules-0.2.8-py2.py3-none-any.whl", hash = "sha256:a50b808ffeb97cb3601dd25981f6b016cbb3d31fbf57a8b8a87428e6158d0c74"},
-    {file = "pyasn1_modules-0.2.8-py3.1.egg", hash = "sha256:f39edd8c4ecaa4556e989147ebf219227e2cd2e8a43c7e7fcb1f1c18c5fd6a3d"},
-    {file = "pyasn1_modules-0.2.8-py3.2.egg", hash = "sha256:b80486a6c77252ea3a3e9b1e360bc9cf28eaac41263d173c032581ad2f20fe45"},
-    {file = "pyasn1_modules-0.2.8-py3.3.egg", hash = "sha256:65cebbaffc913f4fe9e4808735c95ea22d7a7775646ab690518c056784bc21b4"},
-    {file = "pyasn1_modules-0.2.8-py3.4.egg", hash = "sha256:15b7c67fabc7fc240d87fb9aabf999cf82311a6d6fb2c70d00d3d0604878c811"},
-    {file = "pyasn1_modules-0.2.8-py3.5.egg", hash = "sha256:426edb7a5e8879f1ec54a1864f16b882c2837bfd06eee62f2c982315ee2473ed"},
-    {file = "pyasn1_modules-0.2.8-py3.6.egg", hash = "sha256:cbac4bc38d117f2a49aeedec4407d23e8866ea4ac27ff2cf7fb3e5b570df19e0"},
-    {file = "pyasn1_modules-0.2.8-py3.7.egg", hash = "sha256:c29a5e5cc7a3f05926aff34e097e84f8589cd790ce0ed41b67aed6857b26aafd"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"},
@@ -3634,8 +4718,8 @@ pyjwt = [
     {file = "PyJWT-2.3.0.tar.gz", hash = "sha256:b888b4d56f06f6dcd777210c334e69c737be74755d3e5e9ee3fe67dc18a0ee41"},
 ]
 pyparsing = [
-    {file = "pyparsing-3.0.1-py3-none-any.whl", hash = "sha256:fd93fc45c47893c300bd98f5dd1b41c0e783eaeb727e7cea210dcc09d64ce7c3"},
-    {file = "pyparsing-3.0.1.tar.gz", hash = "sha256:84196357aa3566d64ad123d7a3c67b0e597a115c4934b097580e5ce220b91531"},
+    {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
+    {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
@@ -3722,42 +4806,55 @@ redis = [
     {file = "redis-3.5.3.tar.gz", hash = "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2"},
 ]
 regex = [
-    {file = "regex-2021.10.23-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:45b65d6a275a478ac2cbd7fdbf7cc93c1982d613de4574b56fd6972ceadb8395"},
-    {file = "regex-2021.10.23-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:74d071dbe4b53c602edd87a7476ab23015a991374ddb228d941929ad7c8c922e"},
-    {file = "regex-2021.10.23-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:34d870f9f27f2161709054d73646fc9aca49480617a65533fc2b4611c518e455"},
-    {file = "regex-2021.10.23-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2fb698037c35109d3c2e30f2beb499e5ebae6e4bb8ff2e60c50b9a805a716f79"},
-    {file = "regex-2021.10.23-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:cb46b542133999580ffb691baf67410306833ee1e4f58ed06b6a7aaf4e046952"},
-    {file = "regex-2021.10.23-cp310-cp310-win32.whl", hash = "sha256:5e9c9e0ce92f27cef79e28e877c6b6988c48b16942258f3bc55d39b5f911df4f"},
-    {file = "regex-2021.10.23-cp310-cp310-win_amd64.whl", hash = "sha256:ab7c5684ff3538b67df3f93d66bd3369b749087871ae3786e70ef39e601345b0"},
-    {file = "regex-2021.10.23-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:de557502c3bec8e634246588a94e82f1ee1b9dfcfdc453267c4fb652ff531570"},
-    {file = "regex-2021.10.23-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ee684f139c91e69fe09b8e83d18b4d63bf87d9440c1eb2eeb52ee851883b1b29"},
-    {file = "regex-2021.10.23-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:5095a411c8479e715784a0c9236568ae72509450ee2226b649083730f3fadfc6"},
-    {file = "regex-2021.10.23-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:7b568809dca44cb75c8ebb260844ea98252c8c88396f9d203f5094e50a70355f"},
-    {file = "regex-2021.10.23-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:eb672217f7bd640411cfc69756ce721d00ae600814708d35c930930f18e8029f"},
-    {file = "regex-2021.10.23-cp36-cp36m-win32.whl", hash = "sha256:a7a986c45d1099a5de766a15de7bee3840b1e0e1a344430926af08e5297cf666"},
-    {file = "regex-2021.10.23-cp36-cp36m-win_amd64.whl", hash = "sha256:6d7722136c6ed75caf84e1788df36397efdc5dbadab95e59c2bba82d4d808a4c"},
-    {file = "regex-2021.10.23-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:9f665677e46c5a4d288ece12fdedf4f4204a422bb28ff05f0e6b08b7447796d1"},
-    {file = "regex-2021.10.23-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:450dc27483548214314640c89a0f275dbc557968ed088da40bde7ef8fb52829e"},
-    {file = "regex-2021.10.23-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:129472cd06062fb13e7b4670a102951a3e655e9b91634432cfbdb7810af9d710"},
-    {file = "regex-2021.10.23-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:a940ca7e7189d23da2bfbb38973832813eab6bd83f3bf89a977668c2f813deae"},
-    {file = "regex-2021.10.23-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:530fc2bbb3dc1ebb17f70f7b234f90a1dd43b1b489ea38cea7be95fb21cdb5c7"},
-    {file = "regex-2021.10.23-cp37-cp37m-win32.whl", hash = "sha256:ded0c4a3eee56b57fcb2315e40812b173cafe79d2f992d50015f4387445737fa"},
-    {file = "regex-2021.10.23-cp37-cp37m-win_amd64.whl", hash = "sha256:391703a2abf8013d95bae39145d26b4e21531ab82e22f26cd3a181ee2644c234"},
-    {file = "regex-2021.10.23-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:be04739a27be55631069b348dda0c81d8ea9822b5da10b8019b789e42d1fe452"},
-    {file = "regex-2021.10.23-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:13ec99df95003f56edcd307db44f06fbeb708c4ccdcf940478067dd62353181e"},
-    {file = "regex-2021.10.23-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:8d1cdcda6bd16268316d5db1038965acf948f2a6f43acc2e0b1641ceab443623"},
-    {file = "regex-2021.10.23-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:0c186691a7995ef1db61205e00545bf161fb7b59cdb8c1201c89b333141c438a"},
-    {file = "regex-2021.10.23-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:2b20f544cbbeffe171911f6ce90388ad36fe3fad26b7c7a35d4762817e9ea69c"},
-    {file = "regex-2021.10.23-cp38-cp38-win32.whl", hash = "sha256:c0938ddd60cc04e8f1faf7a14a166ac939aac703745bfcd8e8f20322a7373019"},
-    {file = "regex-2021.10.23-cp38-cp38-win_amd64.whl", hash = "sha256:56f0c81c44638dfd0e2367df1a331b4ddf2e771366c4b9c5d9a473de75e3e1c7"},
-    {file = "regex-2021.10.23-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:80bb5d2e92b2258188e7dcae5b188c7bf868eafdf800ea6edd0fbfc029984a88"},
-    {file = "regex-2021.10.23-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e1dae12321b31059a1a72aaa0e6ba30156fe7e633355e445451e4021b8e122b6"},
-    {file = "regex-2021.10.23-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:1f2b59c28afc53973d22e7bc18428721ee8ca6079becf1b36571c42627321c65"},
-    {file = "regex-2021.10.23-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d134757a37d8640f3c0abb41f5e68b7cf66c644f54ef1cb0573b7ea1c63e1509"},
-    {file = "regex-2021.10.23-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0dcc0e71118be8c69252c207630faf13ca5e1b8583d57012aae191e7d6d28b84"},
-    {file = "regex-2021.10.23-cp39-cp39-win32.whl", hash = "sha256:a30513828180264294953cecd942202dfda64e85195ae36c265daf4052af0464"},
-    {file = "regex-2021.10.23-cp39-cp39-win_amd64.whl", hash = "sha256:0f7552429dd39f70057ac5d0e897e5bfe211629652399a21671e53f2a9693a4e"},
-    {file = "regex-2021.10.23.tar.gz", hash = "sha256:f3f9a91d3cc5e5b0ddf1043c0ae5fa4852f18a1c0050318baf5fc7930ecc1f9c"},
+    {file = "regex-2021.11.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:897c539f0f3b2c3a715be651322bef2167de1cdc276b3f370ae81a3bda62df71"},
+    {file = "regex-2021.11.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:886f459db10c0f9d17c87d6594e77be915f18d343ee138e68d259eb385f044a8"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:075b0fdbaea81afcac5a39a0d1bb91de887dd0d93bf692a5dd69c430e7fc58cb"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:c6238d30dcff141de076344cf7f52468de61729c2f70d776fce12f55fe8df790"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:7fab29411d75c2eb48070020a40f80255936d7c31357b086e5931c107d48306e"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f0148988af0182a0a4e5020e7c168014f2c55a16d11179610f7883dd48ac0ebe"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:be30cd315db0168063a1755fa20a31119da91afa51da2907553493516e165640"},
+    {file = "regex-2021.11.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:e9cec3a62d146e8e122d159ab93ac32c988e2ec0dcb1e18e9e53ff2da4fbd30c"},
+    {file = "regex-2021.11.2-cp310-cp310-win32.whl", hash = "sha256:41c66bd6750237a8ed23028a6c9173dc0c92dc24c473e771d3bfb9ee817700c3"},
+    {file = "regex-2021.11.2-cp310-cp310-win_amd64.whl", hash = "sha256:0075fe4e2c2720a685fef0f863edd67740ff78c342cf20b2a79bc19388edf5db"},
+    {file = "regex-2021.11.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:0ed3465acf8c7c10aa2e0f3d9671da410ead63b38a77283ef464cbb64275df58"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ab1fea8832976ad0bebb11f652b692c328043057d35e9ebc78ab0a7a30cf9a70"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:cb1e44d860345ab5d4f533b6c37565a22f403277f44c4d2d5e06c325da959883"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:9486ebda015913909bc28763c6b92fcc3b5e5a67dee4674bceed112109f5dfb8"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:20605bfad484e1341b2cbfea0708e4b211d233716604846baa54b94821f487cb"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:f20f9f430c33597887ba9bd76635476928e76cad2981643ca8be277b8e97aa96"},
+    {file = "regex-2021.11.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:1d85ca137756d62c8138c971453cafe64741adad1f6a7e63a22a5a8abdbd19fa"},
+    {file = "regex-2021.11.2-cp36-cp36m-win32.whl", hash = "sha256:af23b9ca9a874ef0ec20e44467b8edd556c37b0f46f93abfa93752ea7c0e8d1e"},
+    {file = "regex-2021.11.2-cp36-cp36m-win_amd64.whl", hash = "sha256:070336382ca92c16c45b4066c4ba9fa83fb0bd13d5553a82e07d344df8d58a84"},
+    {file = "regex-2021.11.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:ef4e53e2fdc997d91f5b682f81f7dc9661db9a437acce28745d765d251902d85"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:35ed5714467fc606551db26f80ee5d6aa1f01185586a7bccd96f179c4b974a11"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:7ee36d5113b6506b97f45f2e8447cb9af146e60e3f527d93013d19f6d0405f3b"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:4fba661a4966adbd2c3c08d3caad6822ecb6878f5456588e2475ae23a6e47929"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:77f9d16f7970791f17ecce7e7f101548314ed1ee2583d4268601f30af3170856"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:f6a28e87ba69f3a4f30d775b179aac55be1ce59f55799328a0d9b6df8f16b39d"},
+    {file = "regex-2021.11.2-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:9267e4fba27e6dd1008c4f2983cc548c98b4be4444e3e342db11296c0f45512f"},
+    {file = "regex-2021.11.2-cp37-cp37m-win32.whl", hash = "sha256:d4bfe3bc3976ccaeb4ae32f51e631964e2f0e85b2b752721b7a02de5ce3b7f27"},
+    {file = "regex-2021.11.2-cp37-cp37m-win_amd64.whl", hash = "sha256:2bb7cae741de1aa03e3dd3a7d98c304871eb155921ca1f0d7cc11f5aade913fd"},
+    {file = "regex-2021.11.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:23f93e74409c210de4de270d4bf88fb8ab736a7400f74210df63a93728cf70d6"},
+    {file = "regex-2021.11.2-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:d8ee91e1c295beb5c132ebd78616814de26fedba6aa8687ea460c7f5eb289b72"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2e3ff69ab203b54ce5c480c3ccbe959394ea5beef6bd5ad1785457df7acea92e"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:e3c00cb5c71da655e1e5161481455479b613d500dd1bd252aa01df4f037c641f"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:4abf35e16f4b639daaf05a2602c1b1d47370e01babf9821306aa138924e3fe92"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bb11c982a849dc22782210b01d0c1b98eb3696ce655d58a54180774e4880ac66"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:07e3755e0f070bc31567dfe447a02011bfa8444239b3e9e5cca6773a22133839"},
+    {file = "regex-2021.11.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0621c90f28d17260b41838b22c81a79ff436141b322960eb49c7b3f91d1cbab6"},
+    {file = "regex-2021.11.2-cp38-cp38-win32.whl", hash = "sha256:8fbe1768feafd3d0156556677b8ff234c7bf94a8110e906b2d73506f577a3269"},
+    {file = "regex-2021.11.2-cp38-cp38-win_amd64.whl", hash = "sha256:f9ee98d658a146cb6507be720a0ce1b44f2abef8fb43c2859791d91aace17cd5"},
+    {file = "regex-2021.11.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:b3794cea825f101fe0df9af8a00f9fad8e119c91e39a28636b95ee2b45b6c2e5"},
+    {file = "regex-2021.11.2-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:3576e173e7b4f88f683b4de7db0c2af1b209bb48b2bf1c827a6f3564fad59a97"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:48b4f4810117a9072a5aa70f7fea5f86fa9efbe9a798312e0a05044bd707cc33"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:f5930d334c2f607711d54761956aedf8137f83f1b764b9640be21d25a976f3a4"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:956187ff49db7014ceb31e88fcacf4cf63371e6e44d209cf8816cd4a2d61e11a"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:17e095f7f96a4b9f24b93c2c915f31a5201a6316618d919b0593afb070a5270e"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:a56735c35a3704603d9d7b243ee06139f0837bcac2171d9ba1d638ce1df0742a"},
+    {file = "regex-2021.11.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:adf35d88d9cffc202e6046e4c32e1e11a1d0238b2fcf095c94f109e510ececea"},
+    {file = "regex-2021.11.2-cp39-cp39-win32.whl", hash = "sha256:30fe317332de0e50195665bc61a27d46e903d682f94042c36b3f88cb84bd7958"},
+    {file = "regex-2021.11.2-cp39-cp39-win_amd64.whl", hash = "sha256:85289c25f658e3260b00178757c87f033f3d4b3e40aa4abdd4dc875ff11a94fb"},
+    {file = "regex-2021.11.2.tar.gz", hash = "sha256:5e85dcfc5d0f374955015ae12c08365b565c6f1eaf36dd182476a4d8e5a1cdb7"},
 ]
 requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
@@ -3766,14 +4863,13 @@ requests = [
 requests-oauthlib = [
     {file = "requests-oauthlib-1.3.0.tar.gz", hash = "sha256:b4261601a71fd721a8bd6d7aa1cc1d6a8a93b4a9f5e96626f8e4d91e8beeaa6a"},
     {file = "requests_oauthlib-1.3.0-py2.py3-none-any.whl", hash = "sha256:7f71572defaecd16372f9006f33c2ec8c077c3cfa6f5911a9a90202beb513f3d"},
-    {file = "requests_oauthlib-1.3.0-py3.7.egg", hash = "sha256:fa6c47b933f01060936d87ae9327fead68768b69c6c9ea2109c48be30f2d4dbc"},
 ]
 restructuredtext-lint = [
     {file = "restructuredtext_lint-1.3.2.tar.gz", hash = "sha256:d3b10a1fe2ecac537e51ae6d151b223b78de9fafdd50e5eb6b08c243df173c80"},
 ]
 "ruamel.yaml" = [
-    {file = "ruamel.yaml-0.17.16-py3-none-any.whl", hash = "sha256:ea21da1198c4b41b8e7a259301cc9710d3b972bf8ba52f06218478e6802dd1f1"},
-    {file = "ruamel.yaml-0.17.16.tar.gz", hash = "sha256:1a771fc92d3823682b7f0893ad56cb5a5c87c48e62b5399d6f42c8759a583b33"},
+    {file = "ruamel.yaml-0.17.17-py3-none-any.whl", hash = "sha256:9af3ec5d7f8065582f3aa841305465025d0afd26c5fb54e15b964e11838fc74f"},
+    {file = "ruamel.yaml-0.17.17.tar.gz", hash = "sha256:9751de4cbb57d4bfbf8fc394e125ed4a2f170fbff3dc3d78abf50be85924f8be"},
 ]
 "ruamel.yaml.clib" = [
     {file = "ruamel.yaml.clib-0.2.6-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:cfdb9389d888c5b74af297e51ce357b800dd844898af9d4a547ffc143fa56751"},
@@ -3834,8 +4930,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
 ]
 soupsieve = [
-    {file = "soupsieve-2.2.1-py3-none-any.whl", hash = "sha256:c2c1c2d44f158cdbddab7824a9af8c4f83c76b1e23e049479aa432feb6c4c23b"},
-    {file = "soupsieve-2.2.1.tar.gz", hash = "sha256:052774848f448cf19c7e959adf5566904d525f33a3f8b6ba6f6f8f26ec7de0cc"},
+    {file = "soupsieve-2.3-py3-none-any.whl", hash = "sha256:617ffc4d0dfd39c66f4d1413a6e165663a34eca86be9b54f97b91756300ff6df"},
+    {file = "soupsieve-2.3.tar.gz", hash = "sha256:e4860f889dfa88774c07da0b276b70c073b6470fa1a4a8350800bb7bce3dcc76"},
 ]
 spdx-license-list = [
     {file = "spdx_license_list-0.5.2-py3-none-any.whl", hash = "sha256:1b338470c7b403dbecceca563a316382c7977516128ca6c1e8f7078e3ed6e7b0"},
@@ -3912,7 +5008,8 @@ traitlets = [
     {file = "traitlets-5.1.1.tar.gz", hash = "sha256:059f456c5a7c1c82b98c2e8c799f39c9b8128f6d0d46941ee118daace9eb70c7"},
 ]
 twilio = [
-    {file = "twilio-7.2.0.tar.gz", hash = "sha256:f99643641c193fcd09b58f20ef65a78937e5c426319530a42c325b3abd80e739"},
+    {file = "twilio-7.3.0-py2.py3-none-any.whl", hash = "sha256:61fea551066fe4f55b9cbaf0568b54f2d8706a0a63ee77e87f78c1f3a1739935"},
+    {file = "twilio-7.3.0.tar.gz", hash = "sha256:2fe11888675165ab0301d00b9af0c206fd1dfa8d6e5dee6e6b64e42d6e690b83"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.3-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:2068531575a125b87a41802130fa7e29f26c09a2833fea68d9a40cf33902eba6"},
@@ -3984,50 +5081,57 @@ whoosh = [
     {file = "Whoosh-2.7.4.zip", hash = "sha256:e0857375f63e9041e03fedd5b7541f97cf78917ac1b6b06c1fcc9b45375dda69"},
 ]
 wrapt = [
-    {file = "wrapt-1.13.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3de7b4d3066cc610054e7aa2c005645e308df2f92be730aae3a47d42e910566a"},
-    {file = "wrapt-1.13.2-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:8164069f775c698d15582bf6320a4f308c50d048c1c10cf7d7a341feaccf5df7"},
-    {file = "wrapt-1.13.2-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:9adee1891253670575028279de8365c3a02d3489a74a66d774c321472939a0b1"},
-    {file = "wrapt-1.13.2-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:a70d876c9aba12d3bd7f8f1b05b419322c6789beb717044eea2c8690d35cb91b"},
-    {file = "wrapt-1.13.2-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:3f87042623530bcffea038f824b63084180513c21e2e977291a9a7e65a66f13b"},
-    {file = "wrapt-1.13.2-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:e634136f700a21e1fcead0c137f433dde928979538c14907640607d43537d468"},
-    {file = "wrapt-1.13.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:3e33c138d1e3620b1e0cc6fd21e46c266393ed5dae0d595b7ed5a6b73ed57aa0"},
-    {file = "wrapt-1.13.2-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:283e402e5357e104ac1e3fba5791220648e9af6fb14ad7d9cc059091af2b31d2"},
-    {file = "wrapt-1.13.2-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:ccb34ce599cab7f36a4c90318697ead18312c67a9a76327b3f4f902af8f68ea1"},
-    {file = "wrapt-1.13.2-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:fbad5ba74c46517e6488149514b2e2348d40df88cd6b52a83855b7a8bf04723f"},
-    {file = "wrapt-1.13.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:724ed2bc9c91a2b9026e5adce310fa60c6e7c8760b03391445730b9789b9d108"},
-    {file = "wrapt-1.13.2-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:83f2793ec6f3ef513ad8d5b9586f5ee6081cad132e6eae2ecb7eac1cc3decae0"},
-    {file = "wrapt-1.13.2-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:0473d1558b93e314e84313cc611f6c86be779369f9d3734302bf185a4d2625b1"},
-    {file = "wrapt-1.13.2-cp35-cp35m-win32.whl", hash = "sha256:15eee0e6fd07f48af2f66d0e6f2ff1916ffe9732d464d5e2390695296872cad9"},
-    {file = "wrapt-1.13.2-cp35-cp35m-win_amd64.whl", hash = "sha256:bc85d17d90201afd88e3d25421da805e4e135012b5d1f149e4de2981394b2a52"},
-    {file = "wrapt-1.13.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:c6ee5f8734820c21b9b8bf705e99faba87f21566d20626568eeb0d62cbeaf23c"},
-    {file = "wrapt-1.13.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:53c6706a1bcfb6436f1625511b95b812798a6d2ccc51359cd791e33722b5ea32"},
-    {file = "wrapt-1.13.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:fbe6aebc9559fed7ea27de51c2bf5c25ba2a4156cf0017556f72883f2496ee9a"},
-    {file = "wrapt-1.13.2-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:0582180566e7a13030f896c2f1ac6a56134ab5f3c3f4c5538086f758b1caf3f2"},
-    {file = "wrapt-1.13.2-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:bff0a59387a0a2951cb869251257b6553663329a1b5525b5226cab8c88dcbe7e"},
-    {file = "wrapt-1.13.2-cp36-cp36m-win32.whl", hash = "sha256:df3eae297a5f1594d1feb790338120f717dac1fa7d6feed7b411f87e0f2401c7"},
-    {file = "wrapt-1.13.2-cp36-cp36m-win_amd64.whl", hash = "sha256:1eb657ed84f4d3e6ad648483c8a80a0cf0a78922ef94caa87d327e2e1ad49b48"},
-    {file = "wrapt-1.13.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:a0cdedf681db878416c05e1831ec69691b0e6577ac7dca9d4f815632e3549580"},
-    {file = "wrapt-1.13.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:87ee3c73bdfb4367b26c57259995935501829f00c7b3eed373e2ad19ec21e4e4"},
-    {file = "wrapt-1.13.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:3e0d16eedc242d01a6f8cf0623e9cdc3b869329da3f97a15961d8864111d8cf0"},
-    {file = "wrapt-1.13.2-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:8318088860968c07e741537030b1abdd8908ee2c71fbe4facdaade624a09e006"},
-    {file = "wrapt-1.13.2-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:d90520616fce71c05dedeac3a0fe9991605f0acacd276e5f821842e454485a70"},
-    {file = "wrapt-1.13.2-cp37-cp37m-win32.whl", hash = "sha256:22142afab65daffc95863d78effcbd31c19a8003eca73de59f321ee77f73cadb"},
-    {file = "wrapt-1.13.2-cp37-cp37m-win_amd64.whl", hash = "sha256:d0d717e10f952df7ea41200c507cc7e24458f4c45b56c36ad418d2e79dacd1d4"},
-    {file = "wrapt-1.13.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:593cb049ce1c391e0288523b30426c4430b26e74c7e6f6e2844bd99ac7ecc831"},
-    {file = "wrapt-1.13.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:8860c8011a6961a651b1b9f46fdbc589ab63b0a50d645f7d92659618a3655867"},
-    {file = "wrapt-1.13.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ada5e29e59e2feb710589ca1c79fd989b1dd94d27079dc1d199ec954a6ecc724"},
-    {file = "wrapt-1.13.2-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:fdede980273aeca591ad354608778365a3a310e0ecdd7a3587b38bc5be9b1808"},
-    {file = "wrapt-1.13.2-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:af9480de8e63c5f959a092047aaf3d7077422ded84695b3398f5d49254af3e90"},
-    {file = "wrapt-1.13.2-cp38-cp38-win32.whl", hash = "sha256:c65e623ea7556e39c4f0818200a046cbba7575a6b570ff36122c276fdd30ab0a"},
-    {file = "wrapt-1.13.2-cp38-cp38-win_amd64.whl", hash = "sha256:b20703356cae1799080d0ad15085dc3213c1ac3f45e95afb9f12769b98231528"},
-    {file = "wrapt-1.13.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:1c5c4cf188b5643a97e87e2110bbd4f5bc491d54a5b90633837b34d5df6a03fe"},
-    {file = "wrapt-1.13.2-cp39-cp39-manylinux1_i686.whl", hash = "sha256:82223f72eba6f63eafca87a0f614495ae5aa0126fe54947e2b8c023969e9f2d7"},
-    {file = "wrapt-1.13.2-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:81a4cf257263b299263472d669692785f9c647e7dca01c18286b8f116dbf6b38"},
-    {file = "wrapt-1.13.2-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:728e2d9b7a99dd955d3426f237b940fc74017c4a39b125fec913f575619ddfe9"},
-    {file = "wrapt-1.13.2-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:7574de567dcd4858a2ffdf403088d6df8738b0e1eabea220553abf7c9048f59e"},
-    {file = "wrapt-1.13.2-cp39-cp39-win32.whl", hash = "sha256:c7ac2c7a8e34bd06710605b21dd1f3576764443d68e069d2afba9b116014d072"},
-    {file = "wrapt-1.13.2-cp39-cp39-win_amd64.whl", hash = "sha256:6e6d1a8eeef415d7fb29fe017de0e48f45e45efd2d1bfda28fc50b7b330859ef"},
-    {file = "wrapt-1.13.2.tar.gz", hash = "sha256:dca56cc5963a5fd7c2aa8607017753f534ee514e09103a6c55d2db70b50e7447"},
+    {file = "wrapt-1.13.3-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:e05e60ff3b2b0342153be4d1b597bbcfd8330890056b9619f4ad6b8d5c96a81a"},
+    {file = "wrapt-1.13.3-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:85148f4225287b6a0665eef08a178c15097366d46b210574a658c1ff5b377489"},
+    {file = "wrapt-1.13.3-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:2dded5496e8f1592ec27079b28b6ad2a1ef0b9296d270f77b8e4a3a796cf6909"},
+    {file = "wrapt-1.13.3-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:e94b7d9deaa4cc7bac9198a58a7240aaf87fe56c6277ee25fa5b3aa1edebd229"},
+    {file = "wrapt-1.13.3-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:498e6217523111d07cd67e87a791f5e9ee769f9241fcf8a379696e25806965af"},
+    {file = "wrapt-1.13.3-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:ec7e20258ecc5174029a0f391e1b948bf2906cd64c198a9b8b281b811cbc04de"},
+    {file = "wrapt-1.13.3-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:87883690cae293541e08ba2da22cacaae0a092e0ed56bbba8d018cc486fbafbb"},
+    {file = "wrapt-1.13.3-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:f99c0489258086308aad4ae57da9e8ecf9e1f3f30fa35d5e170b4d4896554d80"},
+    {file = "wrapt-1.13.3-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:6a03d9917aee887690aa3f1747ce634e610f6db6f6b332b35c2dd89412912bca"},
+    {file = "wrapt-1.13.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:936503cb0a6ed28dbfa87e8fcd0a56458822144e9d11a49ccee6d9a8adb2ac44"},
+    {file = "wrapt-1.13.3-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:f9c51d9af9abb899bd34ace878fbec8bf357b3194a10c4e8e0a25512826ef056"},
+    {file = "wrapt-1.13.3-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:220a869982ea9023e163ba915077816ca439489de6d2c09089b219f4e11b6785"},
+    {file = "wrapt-1.13.3-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:0877fe981fd76b183711d767500e6b3111378ed2043c145e21816ee589d91096"},
+    {file = "wrapt-1.13.3-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:43e69ffe47e3609a6aec0fe723001c60c65305784d964f5007d5b4fb1bc6bf33"},
+    {file = "wrapt-1.13.3-cp310-cp310-win32.whl", hash = "sha256:78dea98c81915bbf510eb6a3c9c24915e4660302937b9ae05a0947164248020f"},
+    {file = "wrapt-1.13.3-cp310-cp310-win_amd64.whl", hash = "sha256:ea3e746e29d4000cd98d572f3ee2a6050a4f784bb536f4ac1f035987fc1ed83e"},
+    {file = "wrapt-1.13.3-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:8c73c1a2ec7c98d7eaded149f6d225a692caa1bd7b2401a14125446e9e90410d"},
+    {file = "wrapt-1.13.3-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:086218a72ec7d986a3eddb7707c8c4526d677c7b35e355875a0fe2918b059179"},
+    {file = "wrapt-1.13.3-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:e92d0d4fa68ea0c02d39f1e2f9cb5bc4b4a71e8c442207433d8db47ee79d7aa3"},
+    {file = "wrapt-1.13.3-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:d4a5f6146cfa5c7ba0134249665acd322a70d1ea61732723c7d3e8cc0fa80755"},
+    {file = "wrapt-1.13.3-cp35-cp35m-win32.whl", hash = "sha256:8aab36778fa9bba1a8f06a4919556f9f8c7b33102bd71b3ab307bb3fecb21851"},
+    {file = "wrapt-1.13.3-cp35-cp35m-win_amd64.whl", hash = "sha256:944b180f61f5e36c0634d3202ba8509b986b5fbaf57db3e94df11abee244ba13"},
+    {file = "wrapt-1.13.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:2ebdde19cd3c8cdf8df3fc165bc7827334bc4e353465048b36f7deeae8ee0918"},
+    {file = "wrapt-1.13.3-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:610f5f83dd1e0ad40254c306f4764fcdc846641f120c3cf424ff57a19d5f7ade"},
+    {file = "wrapt-1.13.3-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5601f44a0f38fed36cc07db004f0eedeaadbdcec90e4e90509480e7e6060a5bc"},
+    {file = "wrapt-1.13.3-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:e6906d6f48437dfd80464f7d7af1740eadc572b9f7a4301e7dd3d65db285cacf"},
+    {file = "wrapt-1.13.3-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:766b32c762e07e26f50d8a3468e3b4228b3736c805018e4b0ec8cc01ecd88125"},
+    {file = "wrapt-1.13.3-cp36-cp36m-win32.whl", hash = "sha256:5f223101f21cfd41deec8ce3889dc59f88a59b409db028c469c9b20cfeefbe36"},
+    {file = "wrapt-1.13.3-cp36-cp36m-win_amd64.whl", hash = "sha256:f122ccd12fdc69628786d0c947bdd9cb2733be8f800d88b5a37c57f1f1d73c10"},
+    {file = "wrapt-1.13.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:46f7f3af321a573fc0c3586612db4decb7eb37172af1bc6173d81f5b66c2e068"},
+    {file = "wrapt-1.13.3-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:778fd096ee96890c10ce96187c76b3e99b2da44e08c9e24d5652f356873f6709"},
+    {file = "wrapt-1.13.3-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0cb23d36ed03bf46b894cfec777eec754146d68429c30431c99ef28482b5c1df"},
+    {file = "wrapt-1.13.3-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:96b81ae75591a795d8c90edc0bfaab44d3d41ffc1aae4d994c5aa21d9b8e19a2"},
+    {file = "wrapt-1.13.3-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:7dd215e4e8514004c8d810a73e342c536547038fb130205ec4bba9f5de35d45b"},
+    {file = "wrapt-1.13.3-cp37-cp37m-win32.whl", hash = "sha256:47f0a183743e7f71f29e4e21574ad3fa95676136f45b91afcf83f6a050914829"},
+    {file = "wrapt-1.13.3-cp37-cp37m-win_amd64.whl", hash = "sha256:fd76c47f20984b43d93de9a82011bb6e5f8325df6c9ed4d8310029a55fa361ea"},
+    {file = "wrapt-1.13.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:b73d4b78807bd299b38e4598b8e7bd34ed55d480160d2e7fdaabd9931afa65f9"},
+    {file = "wrapt-1.13.3-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:ec9465dd69d5657b5d2fa6133b3e1e989ae27d29471a672416fd729b429eb554"},
+    {file = "wrapt-1.13.3-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:dd91006848eb55af2159375134d724032a2d1d13bcc6f81cd8d3ed9f2b8e846c"},
+    {file = "wrapt-1.13.3-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:ae9de71eb60940e58207f8e71fe113c639da42adb02fb2bcbcaccc1ccecd092b"},
+    {file = "wrapt-1.13.3-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:51799ca950cfee9396a87f4a1240622ac38973b6df5ef7a41e7f0b98797099ce"},
+    {file = "wrapt-1.13.3-cp38-cp38-win32.whl", hash = "sha256:4b9c458732450ec42578b5642ac53e312092acf8c0bfce140ada5ca1ac556f79"},
+    {file = "wrapt-1.13.3-cp38-cp38-win_amd64.whl", hash = "sha256:7dde79d007cd6dfa65afe404766057c2409316135cb892be4b1c768e3f3a11cb"},
+    {file = "wrapt-1.13.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:981da26722bebb9247a0601e2922cedf8bb7a600e89c852d063313102de6f2cb"},
+    {file = "wrapt-1.13.3-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:705e2af1f7be4707e49ced9153f8d72131090e52be9278b5dbb1498c749a1e32"},
+    {file = "wrapt-1.13.3-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:25b1b1d5df495d82be1c9d2fad408f7ce5ca8a38085e2da41bb63c914baadff7"},
+    {file = "wrapt-1.13.3-cp39-cp39-musllinux_1_1_i686.whl", hash = "sha256:77416e6b17926d953b5c666a3cb718d5945df63ecf922af0ee576206d7033b5e"},
+    {file = "wrapt-1.13.3-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:865c0b50003616f05858b22174c40ffc27a38e67359fa1495605f96125f76640"},
+    {file = "wrapt-1.13.3-cp39-cp39-win32.whl", hash = "sha256:0a017a667d1f7411816e4bf214646d0ad5b1da2c1ea13dec6c162736ff25a374"},
+    {file = "wrapt-1.13.3-cp39-cp39-win_amd64.whl", hash = "sha256:81bd7c90d28a4b2e1df135bfbd7c23aee3050078ca6441bead44c42483f9ebfb"},
+    {file = "wrapt-1.13.3.tar.gz", hash = "sha256:1fea9cd438686e6682271d36f3481a9f3636195578bab9ca3382e2f5f01fc185"},
 ]
 yubiotp = [
     {file = "YubiOTP-1.0.0.post1-py2.py3-none-any.whl", hash = "sha256:7ad57011866e0bc6c6d179ffbc3926fcc0e82d410178a6d01ba4da0f88332878"},
