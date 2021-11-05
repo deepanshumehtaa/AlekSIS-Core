@@ -62,6 +62,14 @@
         {{ application.redirect_uris }}
       </td>
     </tr>
+    <tr>
+      <th>
+        {% trans "Skip Authorisation" %}
+      </th>
+      <td>
+        <i class="material-icons">{{ application.skip_authorization|yesno:"check,close" }}</i>
+      </td>
+    </tr>
     </tbody>
   </table>
 {% endblock %}
