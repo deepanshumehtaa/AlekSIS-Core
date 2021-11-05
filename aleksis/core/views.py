@@ -1033,44 +1033,44 @@ class EditDashboardView(PermissionRequiredMixin, View):
         return render(request, "core/edit_dashboard.html", context=context)
 
 
-class OAuth2List(PermissionRequiredMixin, ListView):
+class OAuth2ListView(PermissionRequiredMixin, ListView):
     """List view for all the applications."""
 
-    permission_required = "core.list_oauth_applications_rule"
+    permission_required = "core.view_oauthapplications_rule"
     context_object_name = "applications"
-    template_name = "oauth2_provider/application_list.html"
+    template_name = "oauth2_provider/application/list.html"
 
     def get_queryset(self):
         return OAuthApplication.objects.all()
 
 
-class OAuth2Detail(PermissionRequiredMixin, DetailView):
+class OAuth2DetailView(PermissionRequiredMixin, DetailView):
     """Detail view for an application instance."""
 
     context_object_name = "application"
-    permission_required = "core.view_oauth_applications_rule"
-    template_name = "oauth2_provider/application_detail.html"
+    permission_required = "core.view_oauthapplication_rule"
+    template_name = "oauth2_provider/application/detail.html"
 
     def get_queryset(self):
         return OAuthApplication.objects.all()
 
 
-class OAuth2Delete(PermissionRequiredMixin, DeleteView):
+class OAuth2DeleteView(PermissionRequiredMixin, AdvancedDeleteView):
     """View used to delete an application."""
 
-    permission_required = "core.delete_oauth_applications_rule"
+    permission_required = "core.delete_oauthapplication_rule"
     context_object_name = "application"
-    success_url = reverse_lazy("oauth_list")
-    template_name = "oauth2_provider/application_confirm_delete.html"
+    success_url = reverse_lazy("oauth2_applications")
+    template_name = "core/pages/delete.html"
 
     def get_queryset(self):
         return OAuthApplication.objects.all()
 
 
 class OAuth2EditView(PermissionRequiredMixin, AdvancedEditView):
-    """View used to update an application."""
+    """View used to edit an application."""
 
-    permission_required = "core.update_oauth_applications_rule"
+    permission_required = "core.edit_oauthapplication_rule"
     context_object_name = "application"
     template_name = "oauth2_provider/application/edit.html"
     form_class = OAuthApplicationForm
@@ -1082,7 +1082,7 @@ class OAuth2EditView(PermissionRequiredMixin, AdvancedEditView):
 class OAuth2RegisterView(PermissionRequiredMixin, AdvancedCreateView):
     """View used to register an application."""
 
-    permission_required = "core.add_oauth_applications_rule"
+    permission_required = "core.create_oauthapplication_rule"
     context_object_name = "application"
     template_name = "oauth2_provider/application/create.html"
     form_class = OAuthApplicationForm

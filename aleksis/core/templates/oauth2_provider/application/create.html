@@ -10,7 +10,7 @@
     {% csrf_token %}
     {% form form=form %}{% endform %}
     {% include "core/partials/save_button.html" %}
-    <a class="btn waves-effect red waves-light" href="{% url "oauth_list" %}">
+    <a class="btn waves-effect red waves-light" href="{% url "oauth2_applications" %}">
       <i class="material-icons left">clear</i> {% trans "Cancel" %}
     </a>
   </form>

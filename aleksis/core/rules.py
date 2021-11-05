@@ -319,17 +319,17 @@ can_change_password_predicate = is_site_preference_set(section="auth", pref="all
 rules.add_perm("core.can_change_password", can_change_password_predicate)
 
 # OAuth2 permissions
-add_oauth_applications_predicate = has_person & has_global_perm("core.add_oauth_applications")
-rules.add_perm("core.add_oauth_applications_rule", add_oauth_applications_predicate)
+create_oauthapplication_predicate = has_person & has_global_perm("core.add_oauthapplication")
+rules.add_perm("core.create_oauthapplication_rule", create_oauthapplication_predicate)
 
-list_oauth_applications_predicate = has_person & has_global_perm("core.list_oauth_applications")
-rules.add_perm("core.list_oauth_applications_rule", list_oauth_applications_predicate)
+view_oauth_applications_predicate = has_person & has_global_perm("core.view_oauthapplication")
+rules.add_perm("core.view_oauthapplications_rule", view_oauth_applications_predicate)
 
-view_oauth_applications_predicate = has_person & has_global_perm("core.view_oauth_applications")
-rules.add_perm("core.view_oauth_applications_rule", view_oauth_applications_predicate)
+view_oauth_application_predicate = has_person & has_global_perm("core.view_oauthapplication")
+rules.add_perm("core.view_oauthapplication_rule", view_oauth_application_predicate)
 
-update_oauth_applications_predicate = has_person & has_global_perm("core.update_oauth_applications")
-rules.add_perm("core.update_oauth_applications_rule", update_oauth_applications_predicate)
+edit_oauth_application_predicate = has_person & has_global_perm("core.change_oauthapplication")
+rules.add_perm("core.edit_oauthapplication_rule", edit_oauth_application_predicate)
 
 delete_oauth_applications_predicate = has_person & has_global_perm("core.delete_oauth_applications")
 rules.add_perm("core.delete_oauth_applications_rule", delete_oauth_applications_predicate)
