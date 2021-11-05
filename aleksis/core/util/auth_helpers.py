@@ -10,6 +10,10 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from oauth2_provider.models import AbstractApplication
 from oauth2_provider.oauth2_validators import OAuth2Validator
 from oauth2_provider.scopes import BaseScopes
+from oauth2_provider.views.mixin import (
+    ClientProtectedResourceMixin as _ClientProtectedResourceMixin,
+)
+from oauthlib.common import Request as OauthlibRequest
 
 from .apps import AppConfig
 from .core_helpers import get_site_preferences, has_person
@@ -125,3 +129,38 @@ class AppScopes(BaseScopes):
         if application and application.allowed_scopes:
             scopes = list(filter(lambda scope: scope in application.alloewd_scopes, scopes))
         return scopes
+
+
+class ClientProtectedResourceMixin(_ClientProtectedResourceMixin):
+    """Mixin for protecting resources with client authentication as mentioned in rfc:`3.2.1`.
+    This involves authenticating with any of: HTTP Basic Auth, Client Credentials and
+    Access token in that order. Breaks off after first validation.
+
+    This sub-class extends the functionality of Django OAuth Toolkit's mixin with support
+    for AlekSIS's `allowed_scopes` feature. For applications that have configured allowed
+    scopes, the required scopes for the view are checked to be a subset of the application's
+    allowed scopes (best to be combined with ScopedResourceMixin).
+    """
+
+    def authenticate_client(self, request: HttpRequest) -> bool:
+        """Returns a boolean representing if client is authenticated with client credentials.
+
+        If the view has configured required scopes, they are verified against the application's
+        allowed scopes.
+        """
+        # Build an OAuth request so we can handle client information
+        core = self.get_oauthlib_core()
+        uri, http_method, body, headers = core._extract_params(request)
+        oauth_request = OauthlibRequest(uri, http_method, body, headers)
+
+        # Verify general authentication of the client
+        if not core.server.request_validator.authenticate_client(oauth_request):
+            # Client credentials were invalid
+            return False
+
+        # Verify scopes of configured application
+        # The OAuth request was enriched with a reference to the Application when using the
+        #  validator above.
+        required_scopes = set(self.get_scopes() or [])
+        allowed_scopes = set(AppScopes().get_available_scopes(oauth_request.client) or [])
+        return required_scopes.issubset(allowed_scopes)
