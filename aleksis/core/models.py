@@ -1120,7 +1120,8 @@ class OAuthApplication(AbstractApplication):
 
     # Optional list of alloewd scopes
     allowed_scopes = ArrayField(
-        models.CharField(max_length=32, choices=get_scopes_choices_lazy())
+        models.CharField(max_length=32, choices=get_scopes_choices_lazy()),
+        default=list
     )
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
