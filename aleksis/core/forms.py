@@ -31,6 +31,7 @@ from .registries import (
     person_preferences_registry,
     site_preferences_registry,
 )
+from .util.auth_helpers import AppScopes
 from .util.core_helpers import get_site_preferences
 
 
@@ -595,6 +596,12 @@ class ListActionForm(ActionForm):
 
 
 class OAuthApplicationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["allowed_scopes"].widget = forms.SelectMultiple(
+            choices=list(AppScopes().get_all_scopes().items())
+        )
+
     class Meta:
         model = OAuthApplication
         fields = (
@@ -602,6 +609,7 @@ class OAuthApplicationForm(forms.ModelForm):
             "client_id",
             "client_secret",
             "client_type",
+            "allowed_scopes",
             "redirect_uris",
             "skip_authorization",
         )

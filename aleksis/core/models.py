@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
@@ -1106,6 +1107,14 @@ class OAuthApplication(AbstractApplication):
     # Override grant types to make field optional
     authorization_grant_type = models.CharField(
         max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True, null=True
+    )
+
+    # Optional list of alloewd scopes
+    allowed_scopes = ArrayField(
+        models.CharField(max_length=32),
+        verbose_name=_("Allowed scopes that clients can request"),
+        null=True,
+        blank=True,
     )
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
