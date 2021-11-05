@@ -16,6 +16,7 @@ Added
 * Implement optional Sentry integration for error and performance tracing.
 * Option to limit allowed scopes per application, including mixin to enforce that limit on OAuth resource views
 * Support trusted OAuth applications that leave out the authorisation screen.
+* Add birthplace to Person model.
 
 Changed
 ~~~~~~~
