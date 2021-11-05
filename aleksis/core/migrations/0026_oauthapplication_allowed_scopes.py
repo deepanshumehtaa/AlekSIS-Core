@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='oauthapplication',
             name='allowed_scopes',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), null=True, size=None, verbose_name='Allowed scopes that clients can request'),
+            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), blank=True, null=True, size=None, verbose_name='Allowed scopes that clients can request'),
         ),
     ]

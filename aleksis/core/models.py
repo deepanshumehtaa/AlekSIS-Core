@@ -1118,6 +1118,7 @@ class OAuthApplication(AbstractApplication):
         models.CharField(max_length=32),
         verbose_name=_("Allowed scopes that clients can request"),
         null=True,
+        blank=True,
     )
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
