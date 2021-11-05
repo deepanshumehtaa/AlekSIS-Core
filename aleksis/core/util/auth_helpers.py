@@ -10,7 +10,7 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from oauth2_provider.models import AbstractApplication
 from oauth2_provider.oauth2_validators import OAuth2Validator
 from oauth2_provider.scopes import BaseScopes
-from oauth2_provider.views.mixin import (
+from oauth2_provider.views.mixins import (
     ClientProtectedResourceMixin as _ClientProtectedResourceMixin,
 )
 from oauthlib.common import Request as OauthlibRequest
@@ -112,7 +112,7 @@ class AppScopes(BaseScopes):
             scopes += app.get_available_scopes()
         # Filter by allowed scopes of requesting application
         if application and application.allowed_scopes:
-            scopes = list(filter(lambda scope: scope in application.alloewd_scopes, scopes))
+            scopes = list(filter(lambda scope: scope in application.allowed_scopes, scopes))
         return scopes
 
     def get_default_scopes(
@@ -127,7 +127,7 @@ class AppScopes(BaseScopes):
             scopes += app.get_default_scopes()
         # Filter by allowed scopes of requesting application
         if application and application.allowed_scopes:
-            scopes = list(filter(lambda scope: scope in application.alloewd_scopes, scopes))
+            scopes = list(filter(lambda scope: scope in application.allowed_scopes, scopes))
         return scopes
 
 
