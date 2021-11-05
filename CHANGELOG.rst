@@ -23,6 +23,11 @@ Changed
 * OAuth Grant Flows are now configured system-wide instead of per app.
 * Refactor OAuth2 application management views.
 
+Fixed
+~~~~~
+
+* Fix default admin contacts
+
 `2.0`_ - 2021-10-29
 -------------------
 

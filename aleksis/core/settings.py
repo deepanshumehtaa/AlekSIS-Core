@@ -533,7 +533,9 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(STATIC_ROOT, "public"),
 ]
 
-ADMINS = _settings.get("contact.admins", [AUTH_INITIAL_SUPERUSER["email"]])
+ADMINS = _settings.get(
+    "contact.admins", [(AUTH_INITIAL_SUPERUSER["username"], AUTH_INITIAL_SUPERUSER["email"])]
+)
 SERVER_EMAIL = _settings.get("contact.from", ADMINS[0])
 DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0])
 MANAGERS = _settings.get("contact.admins", ADMINS)
