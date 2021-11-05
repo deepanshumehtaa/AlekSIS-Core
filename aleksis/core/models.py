@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as DjangoGroup
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
@@ -30,7 +31,6 @@ from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
-from multiselectfield import MultiSelectField
 from oauth2_provider.models import (
     AbstractAccessToken,
     AbstractApplication,
@@ -1115,7 +1115,9 @@ class OAuthApplication(AbstractApplication):
     )
 
     # Optional list of alloewd scopes
-    allowed_scopes = MultiSelectField(choices=list(AppScopes().get_all_scopes().items()))
+    allowed_scopes = ArrayField(
+        models.CharField(max_length=32, choices=list(AppScopes().get_all_scopes().items()))
+    )
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
