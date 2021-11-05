@@ -20,7 +20,7 @@ from django.dispatch import receiver
 from django.forms.widgets import Media
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.functional import classproperty, lazy
+from django.utils.functional import classproperty
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -1105,11 +1105,6 @@ class TaskUserAssignment(ExtensibleModel):
         verbose_name_plural = _("Task user assignments")
 
 
-def get_scopes_choices():
-    from .util.auth_helpers import AppScopes
-    return list(AppScopes().get_all_scopes().items())
-get_scopes_choices_lazy = lazy(get_scopes_choices, list)
-
 class OAuthApplication(AbstractApplication):
     """Modified OAuth application class that supports Grant Flows configured in preferences."""
 
@@ -1120,8 +1115,8 @@ class OAuthApplication(AbstractApplication):
 
     # Optional list of alloewd scopes
     allowed_scopes = ArrayField(
-        models.CharField(max_length=32, choices=get_scopes_choices_lazy()),
-        default=list
+        models.CharField(max_length=32),
+        null=True,
     )
 
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
