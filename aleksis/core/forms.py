@@ -49,7 +49,11 @@ class PersonForm(ExtensibleForm):
         Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
         Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
         Fieldset(
-            _("Advanced personal data"), Row("date_of_birth", "place_of_birth"), Row("sex"), Row("photo"), "guardians",
+            _("Advanced personal data"),
+            Row("date_of_birth", "place_of_birth"),
+            Row("sex"),
+            Row("photo"),
+            "guardians",
         ),
     )
 
