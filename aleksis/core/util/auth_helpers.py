@@ -133,6 +133,7 @@ class AppScopes(BaseScopes):
 
 class ClientProtectedResourceMixin(_ClientProtectedResourceMixin):
     """Mixin for protecting resources with client authentication as mentioned in rfc:`3.2.1`.
+
     This involves authenticating with any of: HTTP Basic Auth, Client Credentials and
     Access token in that order. Breaks off after first validation.
 
@@ -143,7 +144,7 @@ class ClientProtectedResourceMixin(_ClientProtectedResourceMixin):
     """
 
     def authenticate_client(self, request: HttpRequest) -> bool:
-        """Returns a boolean representing if client is authenticated with client credentials.
+        """Return a boolean representing if client is authenticated with client credentials.
 
         If the view has configured required scopes, they are verified against the application's
         allowed scopes.
