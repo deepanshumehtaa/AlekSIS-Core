@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-  <a class="btn waves-effect waves-light btn-margin" href="{% url "oauth_update" application.id %}">
+  <a class="btn waves-effect waves-light btn-margin" href="{% url "edit_oauth_application" application.id %}">
     <i class="material-icons left">edit</i>
     {% trans "Edit" %}
   </a>
@@ -44,14 +44,6 @@
         </td>
         <td>
           {{ application.client_type }}
-        </td>
-      </tr>
-      <tr>
-        <th>
-          {% trans "Authorization Grant Type"%}
-        </td>
-        <td>
-          {{ application.authorization_grant_type }}
         </td>
       </tr>
       <tr>

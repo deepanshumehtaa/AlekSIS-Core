@@ -6,10 +6,9 @@
 
 {% block content %}
   <h1>{% blocktrans %}OAuth2 applications{% endblocktrans %}</h1>
-  <a href="{% url "oauth2_provider:register" %}" class="btn green waves-effect
-  waves-light">
+  <a href="{% url "register_oauth_application" %}" class="btn green waves-effect waves-light">
     <i class="material-icons left">add</i>
-    {% blocktrans %}Register new applications{% endblocktrans %}
+    {% blocktrans %}Register new application{% endblocktrans %}
   </a>
   <ul class="collection">
   {% for application in applications %}
