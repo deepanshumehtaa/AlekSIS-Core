@@ -13,6 +13,7 @@ Added
 ~~~~~
 
 * Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
+* Implement optional Sentry integration for error and performance tracing.
 
 Changed
 ~~~~~~~
