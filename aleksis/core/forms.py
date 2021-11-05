@@ -602,4 +602,5 @@ class OAuthApplicationForm(forms.ModelForm):
             "client_secret",
             "client_type",
             "redirect_uris",
+            "skip_authorization",
         )
