@@ -48,10 +48,26 @@
     </tr>
     <tr>
       <th>
+        {% trans "Allowed scopes" %}
+      </th>
+      <td>
+        {{ application.allowed_scopes|join:", " }}
+      </td>
+    </tr>
+    <tr>
+      <th>
         {% trans "Redirect URIs" %}
       </th>
       <td>
         {{ application.redirect_uris }}
+      </td>
+    </tr>
+    <tr>
+      <th>
+        {% trans "Skip Authorisation" %}
+      </th>
+      <td>
+        <i class="material-icons">{{ application.skip_authorization|yesno:"check,close" }}</i>
       </td>
     </tr>
     </tbody>
