@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 from importlib import import_module, metadata
 from itertools import groupby
+from logging import Filter
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
 from warnings import warn
@@ -315,3 +316,8 @@ def get_allowed_object_ids(request: HttpRequest, models: list) -> list:
         ]
 
     return allowed_object_ids
+
+
+class Ignorable500URLsFilter(Filter):
+    def filter(self, record):
+        breakpoint()

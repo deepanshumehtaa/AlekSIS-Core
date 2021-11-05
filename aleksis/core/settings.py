@@ -773,9 +773,11 @@ LOGGING = {
     "handlers": {
         "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
         "null": {"class": "logging.NullHandler"},
+        "mail_admins": {"class": "django.utils.log.AdminEmailHandler", "filters": ["require_debug_false", "ignorable_500",],},
     },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "filters": {"ignorable_500": {"()": "aleksis.core.util.core_helpers.Ignorable500URLsFilter"},},
     "loggers": {},
 }
 
