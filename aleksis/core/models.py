@@ -32,6 +32,7 @@ from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
+from templated_email import send_templated_mail
 
 from aleksis.core.data_checks import BrokenDashboardWidgetDataCheck, DataCheck, DataCheckRegistry
 
@@ -328,6 +329,22 @@ class Person(ExtensibleModel):
         if pattern:
             if force or not self.primary_group:
                 self.primary_group = self.member_of.filter(**{f"{field}__regex": pattern}).first()
+
+    def notify_about_changed_data(
+        self, changed_fields: Iterable[str], recipients: Optional[List[str]] = None
+    ):
+        """Notify (configured) recipients about changed data of this person."""
+        context = {"person": self, "changed_fields": changed_fields}
+        recipients = recipients or [
+            get_site_preferences()["account__person_change_notification_contact"]
+        ]
+        send_templated_mail(
+            template_name="person_changed",
+            from_email=self.mail_sender_via,
+            headers={"Reply-To": self.mail_sender, "Sender": self.mail_sender,},
+            recipient_list=recipients,
+            context=context,
+        )
 
 
 class DummyPerson(Person):
@@ -952,7 +969,6 @@ class GlobalPermissions(GlobalPermissionModel):
     class Meta(GlobalPermissionModel.Meta):
         permissions = (
             ("view_system_status", _("Can view system status")),
-            ("link_persons_accounts", _("Can link persons to accounts")),
             ("manage_data", _("Can manage data")),
             ("impersonate", _("Can impersonate")),
             ("search", _("Can use search")),

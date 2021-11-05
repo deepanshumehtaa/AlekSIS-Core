@@ -47,7 +47,6 @@ from oauth2_provider.models import Application
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
-from templated_email import send_templated_mail
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
@@ -60,10 +59,9 @@ from .forms import (
     EditAdditionalFieldForm,
     EditGroupForm,
     EditGroupTypeForm,
-    EditPersonForm,
     GroupPreferenceForm,
+    PersonForm,
     PersonPreferenceForm,
-    PersonsAccountsFormSet,
     SchoolTermForm,
     SitePreferenceForm,
 )
@@ -362,27 +360,6 @@ def groups(request: HttpRequest) -> HttpResponse:
 
 
 @never_cache
-@permission_required("core.link_persons_accounts_rule")
-def persons_accounts(request: HttpRequest) -> HttpResponse:
-    """View allowing to batch-process linking of users to persons."""
-    context = {}
-
-    # Get all persons
-    persons_qs = Person.objects.all()
-
-    # Form set with one form per known person
-    persons_accounts_formset = PersonsAccountsFormSet(request.POST or None, queryset=persons_qs)
-
-    if request.method == "POST":
-        if persons_accounts_formset.is_valid():
-            persons_accounts_formset.save()
-
-    context["persons_accounts_formset"] = persons_accounts_formset
-
-    return render(request, "core/person/accounts.html", context)
-
-
-@never_cache
 @permission_required("core.assign_child_groups_to_groups_rule")
 def groups_child_groups(request: HttpRequest) -> HttpResponse:
     """View for batch-processing assignment from child groups to groups."""
@@ -420,59 +397,38 @@ def groups_child_groups(request: HttpRequest) -> HttpResponse:
     return render(request, "core/group/child_groups.html", context)
 
 
-@never_cache
-@permission_required("core.edit_person_rule", fn=objectgetter_optional(Person))
-def edit_person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
-    """Edit view for a single person, defaulting to logged-in person."""
-    context = {}
+@method_decorator(never_cache, name="dispatch")
+class CreatePersonView(PermissionRequiredMixin, AdvancedCreateView):
+    form_class = PersonForm
+    model = Person
+    permission_required = "core.create_person_rule"
+    template_name = "core/person/create.html"
+    success_message = _("The person has been saved.")
 
-    person = objectgetter_optional(Person)(request, id_)
-    context["person"] = person
 
-    if id_:
-        # Edit form for existing group
-        edit_person_form = EditPersonForm(
-            request, request.POST or None, request.FILES or None, instance=person
-        )
-    else:
-        # Empty form to create a new group
-        if request.user.has_perm("core.create_person_rule"):
-            edit_person_form = EditPersonForm(request, request.POST or None, request.FILES or None)
-        else:
-            raise PermissionDenied()
-    if request.method == "POST":
-        if edit_person_form.is_valid():
-            if person and person == request.user.person:
-                # Check if user edited non-editable field
-                notification_fields = get_site_preferences()[
-                    "account__notification_on_person_change"
-                ]
-                send_notification_fields = set(edit_person_form.changed_data).intersection(
-                    set(notification_fields)
-                )
-                context["send_notification_fields"] = send_notification_fields
-                if send_notification_fields:
-                    context["send_notification_fields"] = send_notification_fields
-                    send_templated_mail(
-                        template_name="person_changed",
-                        from_email=request.user.person.mail_sender_via,
-                        headers={
-                            "Reply-To": request.user.person.mail_sender,
-                            "Sender": request.user.person.mail_sender,
-                        },
-                        recipient_list=[
-                            get_site_preferences()["account__person_change_notification_contact"]
-                        ],
-                        context=context,
-                    )
-            with reversion.create_revision():
-                set_user(request.user)
-                edit_person_form.save(commit=True)
-            messages.success(request, _("The person has been saved."))
+@method_decorator(never_cache, name="dispatch")
+class EditPersonView(PermissionRequiredMixin, RevisionMixin, AdvancedEditView):
+    form_class = PersonForm
+    model = Person
+    permission_required = "core.edit_person_rule"
+    context_object_name = "person"
+    template_name = "core/person/edit.html"
+    success_message = _("The person has been saved.")
 
-    context["edit_person_form"] = edit_person_form
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
-    return render(request, "core/person/edit.html", context)
+    def form_valid(self, form):
+        if self.object == self.request.user.person:
+            # Get all changed fields and send a notification about them
+            notification_fields = get_site_preferences()["account__notification_on_person_change"]
+            send_notification_fields = set(form.changed_data).intersection(set(notification_fields))
+
+            if send_notification_fields:
+                self.object.notify_about_changed_data(send_notification_fields)
+        return super().form_valid(form)
 
 
 def get_group_by_id(request: HttpRequest, id_: Optional[int] = None):

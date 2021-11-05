@@ -12,13 +12,38 @@ Unreleased
 Added
 ~~~~~
 
+* Provide an ``ExtensiblePolymorphicModel`` to support the features of extensible models for polymorphic models and vice-versa.
 * Implement optional Sentry integration for error and performance tracing.
+
+Changed
+~~~~~~~
+
+* Replace dev.sh helper script with tox environments.
+
+`2.0`_ - 2021-10-29
+-------------------
+
+Changed
+~~~~~~~
+
+* Refactor views/forms for creating/editing persons.
 
 Fixed
 ~~~~~
 
 * Fix order of submit buttons in login form and restructure login template
   to make 2FA work correctly.
+* Fix page title bug on the impersonate page.
+* Users were able to edit the linked user if self-editing was activated.
+* Users weren't able to edit the allowed fields although they were configured correctly.
+* Provide `style.css` and icon files without any authentication to avoid caching issues.
+
+
+Removed
+~~~~~~~
+
+* Remove mass linking of persons to accounts, bevcause the view had performance issues,
+  but was practically unused.
 
 `2.0rc7`_ - 2021-10-18
 ----------------------
@@ -399,3 +424,4 @@ Fixed
 .. _2.0rc5: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc5
 .. _2.0rc6: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc6
 .. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
+.. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
