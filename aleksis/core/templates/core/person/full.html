@@ -8,12 +8,12 @@
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
 {% block content %}
-  <h4>{{ person.first_name }} {{ person.last_name }}</h4>
+  <h1>{{ person.first_name }} {{ person.last_name }}</h1>
 
-  {% has_perm 'core.edit_person' user person as can_change_person %}
-  {% has_perm 'core.change_person_preferences' user person as can_change_person_preferences %}
-  {% has_perm 'core.delete_person' user person as can_delete_person %}
-  {% has_perm "core.impersonate" user person as can_impersonate %}
+  {% has_perm 'core.edit_person_rule' user person as can_change_person %}
+  {% has_perm 'core.change_person_preferences_rule' user person as can_change_person_preferences %}
+  {% has_perm 'core.delete_person_rule' user person as can_delete_person %}
+  {% has_perm "core.impersonate_rule" user person as can_impersonate %}
 
   {% if can_change_person or can_change_person_preferences or can_delete_person or can_impersonate %}
     <p>
@@ -47,10 +47,10 @@
     </p>
   {% endif %}
 
-  <h5>{% blocktrans %}Contact details{% endblocktrans %}</h5>
+  <h2>{% blocktrans %}Contact details{% endblocktrans %}</h2>
   <div class="row">
     <div class="col s12 m4">
-      {% has_perm 'core.view_photo' user person as can_view_photo %}
+      {% has_perm 'core.view_photo_rule' user person as can_view_photo %}
       {% if person.photo and can_view_photo %}
         <img class="person-img" src="{{ person.photo.url }}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
@@ -78,7 +78,7 @@
           </td>
           <td colspan="3">{{ person.get_sex_display }}</td>
         </tr>
-        {% has_perm 'core.view_address' user person as can_view_address %}
+        {% has_perm 'core.view_address_rule' user person as can_view_address %}
         {% if can_view_address %}
           <tr>
             <td>
@@ -88,7 +88,7 @@
             <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
           </tr>
         {% endif %}
-        {% has_perm 'core.view_contact_details' user person as can_view_contact_details %}
+        {% has_perm 'core.view_contact_details_rule' user person as can_view_contact_details %}
         {% if can_view_contact_details %}
           <tr>
             <td>
@@ -104,20 +104,21 @@
             <td colspan="3">{{ person.email }}</td>
           </tr>
         {% endif %}
-        {% has_perm 'core.view_personal_details' user person as can_view_personal_details %}
+        {% has_perm 'core.view_personal_details_rule' user person as can_view_personal_details %}
         {% if can_view_personal_details %}
           <tr>
             <td>
               <i class="material-icons small">cake</i>
             </td>
-            <td colspan="3">{{ person.date_of_birth|date }}</td>
+            <td colspan="2">{{ person.date_of_birth|date }}</td>
+            <td colspan="2">{{ person.place_of_birth }}</td>
           </tr>
         {% endif %}
       </table>
     </div>
     {% if person.description %}
       <div class="col s12 m12">
-        <h5>{% trans "Description" %}</h5>
+        <h2>{% trans "Description" %}</h2>
         <p>
           {{ person.description }}
         </p>
@@ -127,21 +128,21 @@
 
   {% if person.children.all and can_view_personal_details %}
     <div class="col s12 m12">
-      <h5>{% trans "Children" %}</h5>
+      <h2>{% trans "Children" %}</h2>
       {% include "core/person/collection.html" with persons=person.children.all %}
     </div>
   {% endif %}
 
   {% if person.guardians.all and can_view_personal_details %}
     <div class="col s12 m12">
-      <h5>{% trans "Guardians / Parents" %}</h5>
+      <h2>{% trans "Guardians / Parents" %}</h2>
       {% include "core/person/collection.html" with persons=person.guardians.all %}
     </div>
   {% endif %}
 
-  {% has_perm 'core.view_person_groups' user person as can_view_groups %}
+  {% has_perm 'core.view_person_groups_rule' user person as can_view_groups %}
   {% if can_view_groups %}
-    <h5>{% blocktrans %}Groups{% endblocktrans %}</h5>
+    <h2>{% blocktrans %}Groups{% endblocktrans %}</h2>
     {% render_table groups_table %}
   {% endif %}
 {% endblock %}

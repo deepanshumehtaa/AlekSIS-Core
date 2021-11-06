@@ -1,10 +1,13 @@
 from datetime import date
 from typing import Union
 
+from django.apps import apps
 from django.contrib.sites.managers import CurrentSiteManager as _CurrentSiteManager
 from django.db.models import QuerySet
+from django.db.models.manager import Manager
 
 from calendarweek import CalendarWeek
+from polymorphic.managers import PolymorphicManager
 
 
 class CurrentSiteManagerWithoutMigrations(_CurrentSiteManager):
@@ -91,3 +94,33 @@ class GroupManager(CurrentSiteManagerWithoutMigrations):
 
 class GroupQuerySet(SchoolTermRelatedQuerySet):
     pass
+
+
+class UninstallRenitentPolymorphicManager(PolymorphicManager):
+    """A custom manager for django-polymorphic that filters out submodels of unavailable apps."""
+
+    def get_queryset(self):
+        DashboardWidget = apps.get_model("core", "DashboardWidget")
+        if self.model is DashboardWidget:
+            return super().get_queryset().instance_of(*self.model.__subclasses__())
+        else:
+            # Called on subclasses
+            return super().get_queryset()
+
+
+class InstalledWidgetsDashboardWidgetOrderManager(Manager):
+    """A manager that only returns DashboardWidgetOrder objects with an existing widget."""
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Get the DashboardWidget model class without importing it to avoid a circular import
+        DashboardWidget = queryset.model.widget.field.related_model  # noqa
+        dashboard_widget_pks = DashboardWidget.objects.all().values("id")
+
+        # [obj["id"] for obj in list(Person.objects.all().values("id"))]
+        return super().get_queryset().filter(widget_id__in=dashboard_widget_pks)
+
+
+class PolymorphicCurrentSiteManager(_CurrentSiteManager, PolymorphicManager):
+    """Default manager for extensible, polymorphic models."""

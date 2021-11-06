@@ -26,7 +26,7 @@ RUN apt-get -y update && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
-    chromium \
+        chromium \
 	dumb-init \
 	gettext \
 	libpq5 \
@@ -34,6 +34,7 @@ RUN apt-get -y update && \
 	libssl-dev \
 	postgresql-client \
 	python3-dev \
+	python3-magic \
 	python3-pip \
 	uwsgi \
 	uwsgi-plugin-python3 \
@@ -94,7 +95,18 @@ USER 33:33
 
 # Additional steps
 ONBUILD ARG APPS
+ONBUILD ARG BUILD_DEPS
+ONBUILD ARG SYSTEM_DEPS
 ONBUILD USER 0:0
+ONBUILD RUN set -e; \
+            if [ -n "$BUILD_DEPS" ]; then \
+                eatmydata apt-get update; \
+                eatmydata apt-get install -y $BUILD_DEPS; \
+            fi; \
+            if [ -n "$SYSTEM_DEPS" ]; then \
+                eatmydata apt-get update; \
+                eatmydata apt-get install -y $SYSTEM_DEPS; \
+            fi;
 ONBUILD RUN set -e; \
             if [ -n "$APPS" ]; then \
                 eatmydata pip install $APPS; \
@@ -102,7 +114,7 @@ ONBUILD RUN set -e; \
             eatmydata aleksis-admin yarn install; \
             eatmydata aleksis-admin collectstatic --no-input; \
             rm -rf /usr/local/share/.cache; \
-            eatmydata apt-get remove --purge -y yarnpkg; \
+            eatmydata apt-get remove --purge -y yarnpkg $BUILD_DEPS; \
             eatmydata apt-get autoremove --purge -y; \
             apt-get clean -y; \
             rm -f /var/lib/apt/lists/*_*; \

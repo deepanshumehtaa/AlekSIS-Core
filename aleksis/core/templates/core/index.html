@@ -9,20 +9,18 @@
 {% endblock %}
 
 {% block content %}
-  {% has_perm "core.edit_dashboard" user as can_edit_dashboard %}
+  {% has_perm "core.edit_dashboard_rule" user as can_edit_dashboard %}
   {% if can_edit_dashboard %}
-    <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
-      <i class="material-icons left">edit</i>
-      {% trans "Edit dashboard" %}
-    </a>
+    <div class="row no-margin">
+      <a class="btn-flat waves-effect waves-light right" href="{% url "edit_dashboard" %}">
+        <i class="material-icons left">edit</i>
+        {% trans "Edit dashboard" %}
+      </a>
+    </div>
   {% endif %}
-  <h4>
-    {{ request.site.preferences.general__title }}
-  </h4>
 
   {% for notification in unread_notifications %}
-    <div class="alert primary scale-transition">
-      <div>
+    <figure class="alert primary scale-transition">
         <i class="material-icons left">info</i>
 
         <div class="right">
@@ -31,10 +29,9 @@
           </a>
         </div>
 
-        <strong>{{ notification.title }}</strong>
+        <figcaption>{{ notification.title }}</figcaption>
         <p>{{ notification.description|linebreaks }}</p>
-      </div>
-    </div>
+    </figure>
   {% endfor %}
 
   {% include "core/partials/announcements.html" with announcements=announcements %}
@@ -59,7 +56,7 @@
   {% if activities or notifications %}
     <div class="row">
       <div class="col s12 m6">
-        <h5>{% blocktrans %}Last activities{% endblocktrans %}</h5>
+        <h2>{% blocktrans %}Last activities{% endblocktrans %}</h2>
 
         {% if activities %}
           <ul class="collection">
@@ -82,7 +79,7 @@
       </div>
 
       <div class="col s12 m6">
-        <h5>{% blocktrans %}Recent notifications{% endblocktrans %}</h5>
+        <h2>{% blocktrans %}Recent notifications{% endblocktrans %}</h2>
 
         {% if notifications %}
           <ul class="collection">
@@ -111,5 +108,7 @@
     </div>
   {% endif %}
 
-  <script type="text/javascript" src="{% static "js/include_ajax_live.js" %}"></script>
+  {% if user.person.preferences.general__automatically_update_dashboard and request.site.preferences.general__automatically_update_dashboard_site %}
+    <script type="text/javascript" src="{% static "js/include_ajax_live.js" %}"></script>
+  {% endif %}
 {% endblock %}

@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PDFFile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('expires_at', models.DateTimeField(default=aleksis.core.models.PDFFile._get_default_expiration, verbose_name='File expires at')),
                 ('html', models.TextField(verbose_name='Rendered HTML')),

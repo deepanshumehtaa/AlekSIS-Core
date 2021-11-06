@@ -34,10 +34,13 @@ class BaseBackupHealthCheck(BaseHealthCheckBackend):
     def check_status(self):
         storage = get_storage()
         backups = storage.list_backups(content_type=self.content_type)
+        if not storage.storage.exists(""):
+            self.add_error(_("The backup folder doesn't exist."))
+            return
         if backups:
-            last_backup = backups[-1]
-            last_backup_time = dbbackup_utils.filename_to_date(last_backup)
-            time_gone_since_backup = last_backup_time - datetime.now()
+            last_backup = backups[:1]
+            last_backup_time = dbbackup_utils.filename_to_date(last_backup[0])
+            time_gone_since_backup = datetime.now() - last_backup_time
 
             # Check if backup is older than configured time
             if time_gone_since_backup.seconds > self.configured_seconds:

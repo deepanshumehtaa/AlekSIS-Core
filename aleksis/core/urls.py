@@ -10,6 +10,7 @@ import debug_toolbar
 from ckeditor_uploader import views as ckeditor_uploader_views
 from django_js_reverse.views import urls_js
 from health_check.urls import urlpatterns as health_urls
+from oauth2_provider.views import ConnectDiscoveryInfoView
 from rules.contrib.views import permission_required
 from two_factor.urls import urlpatterns as tf_urls
 
@@ -17,25 +18,39 @@ from . import views
 
 urlpatterns = [
     path("", include("django_prometheus.urls")),
-    path("", include("pwa.urls"), name="pwa"),
+    path(settings.MEDIA_URL.removeprefix("/"), include("titofisto.urls")),
+    path("manifest.json", views.ManifestView.as_view(), name="manifest"),
+    path("serviceworker.js", views.ServiceWorkerView.as_view(), name="service_worker"),
+    path("offline/", views.OfflineView.as_view(), name="offline"),
     path("about/", views.about, name="about_aleksis"),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path(
+        "accounts/password/change/",
+        views.CustomPasswordChangeView.as_view(),
+        name="account_change_password",
+    ),
+    path("accounts/", include("allauth.urls")),
+    path(
+        "accounts/social/connections/<int:pk>/delete",
+        views.SocialAccountDeleteView.as_view(),
+        name="delete_social_account_by_pk",
+    ),
     path("admin/", admin.site.urls),
     path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
     path("", include(tf_urls)),
-    path("celery_progress/", include("celery_progress.urls")),
+    path("celery_progress/<str:task_id>/", views.CeleryProgressView.as_view(), name="task_status"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("school_terms/", views.SchoolTermListView.as_view(), name="school_terms"),
     path("school_terms/create/", views.SchoolTermCreateView.as_view(), name="create_school_term"),
     path("school_terms/<int:pk>/", views.SchoolTermEditView.as_view(), name="edit_school_term"),
     path("persons", views.persons, name="persons"),
-    path("persons/accounts", views.persons_accounts, name="persons_accounts"),
-    path("person", views.person, name="person"),
-    path("person/create", views.edit_person, name="create_person"),
-    path("person/<int:id_>", views.person, name="person_by_id"),
-    path("person/<int:id_>/edit", views.edit_person, name="edit_person_by_id"),
-    path("person/<int:id_>/delete", views.delete_person, name="delete_person_by_id"),
+    path("person/", views.person, name="person"),
+    path("person/create/", views.CreatePersonView.as_view(), name="create_person"),
+    path("person/<int:id_>/", views.person, name="person_by_id"),
+    path("person/<int:pk>/edit/", views.EditPersonView.as_view(), name="edit_person_by_id"),
+    path("person/<int:id_>/delete/", views.delete_person, name="delete_person_by_id"),
     path("groups", views.groups, name="groups"),
     path("groups/additional_fields", views.additional_fields, name="additional_fields"),
     path("groups/child_groups/", views.groups_child_groups, name="groups_child_groups"),
@@ -79,18 +94,43 @@ urlpatterns = [
     path("announcement/edit/<int:id_>/", views.announcement_form, name="edit_announcement"),
     path("announcement/delete/<int:id_>/", views.delete_announcement, name="delete_announcement"),
     path("search/searchbar/", views.searchbar_snippets, name="searchbar_snippets"),
-    path("search/", views.PermissionSearchView(), name="haystack_search"),
+    path("search/", views.PermissionSearchView.as_view(), name="haystack_search"),
     path("maintenance-mode/", include("maintenance_mode.urls")),
     path("impersonate/", include("impersonate.urls")),
+    path(
+        ".well-known/openid-configuration",
+        ConnectDiscoveryInfoView.as_view(),
+        name="oidc_configuration",
+    ),
+    path("oauth2/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
+    path(
+        "oauth2/applications/register/",
+        views.OAuth2RegisterView.as_view(),
+        name="register_oauth_application",
+    ),
+    path(
+        "oauth2/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
+    ),
+    path(
+        "oauth2/applications/<int:pk>/delete/",
+        views.OAuth2DeleteView.as_view(),
+        name="delete_oauth2_application",
+    ),
+    path(
+        "oauth2/applications/<int:pk>/edit/",
+        views.OAuth2EditView.as_view(),
+        name="edit_oauth2_application",
+    ),
+    path("oauth2/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
-        permission_required("core.ckeditor_upload_files")(ckeditor_uploader_views.upload),
+        permission_required("core.ckeditor_upload_files_rule")(ckeditor_uploader_views.upload),
         name="ckeditor_upload",
     ),
     path(
         "ckeditor/browse/",
-        permission_required("core.ckeditor_upload_files")(ckeditor_uploader_views.browse),
+        permission_required("core.ckeditor_upload_files_rule")(ckeditor_uploader_views.browse),
         name="ckeditor_browse",
     ),
     path("select2/", include("django_select2.urls")),
@@ -248,8 +288,10 @@ urlpatterns = [
         name="assign_permission",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
-    path("pdfs/<int:pk>/html/", views.HTMLForPDFFile.as_view(), name="html_for_pdf_file"),
 ]
+
+# Use custom server error handler to get a request object in the template
+handler500 = views.server_error
 
 # Add URLs for optional features
 if hasattr(settings, "TWILIO_ACCOUNT_SID"):

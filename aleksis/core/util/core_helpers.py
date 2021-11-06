@@ -1,16 +1,14 @@
-import sys
+import os
 from datetime import datetime, timedelta
-from importlib import import_module
+from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
 from typing import Any, Callable, Optional, Sequence, Union
-
-if sys.version_info >= (3, 9):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata
+from warnings import warn
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.files import File
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -130,23 +128,42 @@ def lazy_preference(section: str, name: str) -> Callable[[str, str], Any]:
     return lazy(_get_preference, str)(section, name)
 
 
-def lazy_get_favicon_url(
-    title: str, size: int, rel: str, default: Optional[str] = None
-) -> Callable[[str, str], Any]:
-    """Lazily get the URL to a favicon image."""
+def get_or_create_favicon(title: str, default: str, is_favicon: bool = False) -> "Favicon":
+    """Ensure that there is always a favicon object."""
+    from favicon.models import Favicon  # noqa
 
-    @cache_memoize(3600)
-    def _get_favicon_url(size: int, rel: str) -> Any:
-        from favicon.models import Favicon  # noqa
+    if not os.path.exists(default):
+        warn("staticfiles are not ready yet, not creating default icons")
+        return
+    elif os.path.isdir(default):
+        raise ImproperlyConfigured(f"staticfiles are broken: unexpected directory at {default}")
 
-        try:
-            favicon = Favicon.on_site.get(title=title)
-        except Favicon.DoesNotExist:
-            return default
-        else:
-            return favicon.get_favicon(size, rel).faviconImage.url
+    favicon, created = Favicon.on_site.get_or_create(
+        title=title, defaults={"isFavicon": is_favicon}
+    )
 
-    return lazy(_get_favicon_url, str)(size, rel)
+    changed = False
+
+    if favicon.isFavicon != is_favicon:
+        favicon.isFavicon = True
+        changed = True
+
+    if created:
+        favicon.faviconImage.save(os.path.basename(default), File(open(default, "rb")))
+        changed = True
+
+    if changed:
+        favicon.save()
+
+    return favicon
+
+
+def get_pwa_icons():
+    from django.conf import settings  # noqa
+
+    favicon = get_or_create_favicon("pwa_icon", settings.DEFAULT_FAVICON_PATHS["pwa_icon"])
+    favicon_imgs = favicon.get_favicons(config_override=settings.PWA_ICONS_CONFIG)
+    return favicon_imgs
 
 
 def is_impersonate(request: HttpRequest) -> bool:
@@ -185,17 +202,29 @@ def custom_information_processor(request: HttpRequest) -> dict:
     """Provide custom information in all templates."""
     from ..models import CustomMenu
 
-    return {
+    pwa_icons = get_pwa_icons()
+    regrouped_pwa_icons = {}
+    for pwa_icon in pwa_icons:
+        regrouped_pwa_icons.setdefault(pwa_icon.rel, {})
+        regrouped_pwa_icons[pwa_icon.rel][pwa_icon.size] = pwa_icon
+
+    context = {
         "FOOTER_MENU": CustomMenu.get_default("footer"),
-        "ALTERNATIVE_LOGIN_VIEWS_LIST": [
-            a[0]
-            for a in settings.ALTERNATIVE_LOGIN_VIEWS
-            if a[0] in settings.AUTHENTICATION_BACKENDS
-        ],
-        "ALTERNATIVE_LOGIN_VIEWS": [
-            a for a in settings.ALTERNATIVE_LOGIN_VIEWS if a[0] in settings.AUTHENTICATION_BACKENDS
-        ],
+        "ADMINS": settings.ADMINS,
+        "PWA_ICONS": regrouped_pwa_icons,
+        "SENTRY_ENABLED": settings.SENTRY_ENABLED,
     }
+
+    if settings.SENTRY_ENABLED:
+        context["SENTRY_SETTINGS"] = settings.SENTRY_SETTINGS
+
+        import sentry_sdk
+
+        span = sentry_sdk.Hub.current.scope.span
+        if span is not None:
+            context["SENTRY_TRACE_ID"] = span.to_traceparent()
+
+    return context
 
 
 def now_tomorrow() -> datetime:
@@ -208,19 +237,16 @@ def objectgetter_optional(
 ) -> Callable[[HttpRequest, Optional[int]], Model]:
     """Get an object by pk, defaulting to None."""
 
-    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Model:
+    def get_object(request: HttpRequest, id_: Optional[int] = None, **kwargs) -> Optional[Model]:
         if id_ is not None:
             return get_object_or_404(model, pk=id_)
         else:
-            return eval(default) if default_eval else default  # noqa:S307
+            try:
+                return eval(default) if default_eval else default  # noqa:S307
+            except (AttributeError, KeyError, IndexError):
+                return None
 
     return get_object
-
-
-def handle_uploaded_file(f, filename: str):
-    with open(filename, "wb+") as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 
 
 @cache_memoize(3600)
@@ -254,3 +280,38 @@ def queryset_rules_filter(
 def unread_notifications_badge(request: HttpRequest) -> int:
     """Generate badge content with the number of unread notifications."""
     return request.user.person.unread_notifications_count
+
+
+def monkey_patch() -> None:  # noqa
+    """Monkey-patch dependencies for special behaviour."""
+    # Unwrap promises in JSON serializer instead of stringifying
+    from django.core.serializers import json
+    from django.utils.functional import Promise
+
+    class DjangoJSONEncoder(json.DjangoJSONEncoder):
+        def default(self, o: Any) -> Any:
+            if isinstance(o, Promise) and hasattr(o, "copy"):
+                return o.copy()
+            return super().default(o)
+
+    json.DjangoJSONEncoder = DjangoJSONEncoder
+
+
+def get_allowed_object_ids(request: HttpRequest, models: list) -> list:
+    """Get all objects of all given models the user of a given request is allowed to view."""
+    allowed_object_ids = []
+
+    for model in models:
+        app_label = model._meta.app_label
+        model_name = model.__name__.lower()
+
+        # Loop through the pks of all objects of the current model the user is allowed to view
+        # and put the corresponding ids into a django-haystack-style-formatted list
+        allowed_object_ids += [
+            f"{app_label}.{model_name}.{pk}"
+            for pk in queryset_rules_filter(
+                request, model.objects.all(), f"{app_label}.view_{model_name}_rule"
+            ).values_list("pk", flat=True)
+        ]
+
+    return allowed_object_ids

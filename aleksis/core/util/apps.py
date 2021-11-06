@@ -1,20 +1,25 @@
-from typing import Any, List, Optional, Sequence, Tuple
+from importlib import metadata
+from typing import TYPE_CHECKING, Any, Optional, Sequence
 
 import django.apps
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.db.models.signals import post_migrate, pre_migrate
 from django.http import HttpRequest
 
-import pkg_resources
 from dynamic_preferences.signals import preference_updated
 from license_expression import Licensing
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
 
+if TYPE_CHECKING:
+    from oauth2_provider.models import AbstractApplication
+
 
 class AppConfig(django.apps.AppConfig):
     """An extended version of DJango's AppConfig container."""
+
+    default_auto_field = "django.db.models.BigAutoField"
 
     def ready(self):
         super().ready()
@@ -30,7 +35,7 @@ class AppConfig(django.apps.AppConfig):
         self.preference_updated(self)
 
     def get_distribution_name(self):
-        """Get pkg_resources distribution name of application package."""
+        """Get distribution name of application package."""
         if hasattr(self, "dist_name"):
             return self.dist_name
         elif self.name.lower().startswith("aleksis.apps."):
@@ -39,12 +44,12 @@ class AppConfig(django.apps.AppConfig):
         return None
 
     def get_distribution(self):
-        """Get pkg_resources distribution of application package."""
+        """Get distribution of application package."""
         dist_name = self.get_distribution_name()
         if dist_name:
             try:
-                dist = pkg_resources.get_distribution(dist_name)
-            except pkg_resources.DistributionNotFound:
+                dist = metadata.distribution(dist_name)
+            except metadata.PackageNotFoundError:
                 return None
 
             return dist
@@ -71,7 +76,7 @@ class AppConfig(django.apps.AppConfig):
                 return "unknown"
 
     @classmethod
-    def get_licence(cls) -> Tuple:
+    def get_licence(cls) -> tuple:
         """Get tuple of licence information of application package."""
         # Get string representation of licence in SPDX format
         licence = getattr(cls, "licence", None)
@@ -129,7 +134,7 @@ class AppConfig(django.apps.AppConfig):
         # TODO Try getting from distribution if not set
 
     @classmethod
-    def get_copyright(cls) -> Sequence[Tuple[str, str, str]]:
+    def get_copyright(cls) -> Sequence[tuple[str, str, str]]:
         """Get copyright information tuples for application package."""
         copyrights = getattr(cls, "copyright_info", tuple())
 
@@ -170,7 +175,7 @@ class AppConfig(django.apps.AppConfig):
         verbosity: int,
         interactive: bool,
         using: str,
-        plan: List[Tuple],
+        plan: list[tuple],
         apps: django.apps.registry.Apps,
         **kwargs,
     ) -> None:
@@ -211,6 +216,33 @@ class AppConfig(django.apps.AppConfig):
         By default, it does nothing.
         """
         pass
+
+    @classmethod
+    def get_all_scopes(cls) -> dict[str, str]:
+        """Return all OAuth scopes and their descriptions for this app."""
+        return {}
+
+    @classmethod
+    def get_available_scopes(
+        cls,
+        application: Optional["AbstractApplication"] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> list[str]:
+        """Return a list of all OAuth scopes available to the request and application."""
+        return list(cls.get_all_scopes().keys())
+
+    @classmethod
+    def get_default_scopes(
+        cls,
+        application: Optional["AbstractApplication"] = None,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> list[str]:
+        """Return a list of all OAuth scopes to always include for this request and application."""
+        return []
 
     def _maintain_default_data(self):
         from django.contrib.auth.models import Permission

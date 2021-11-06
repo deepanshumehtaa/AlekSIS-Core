@@ -1,6 +1,6 @@
 {# -*- engine:django -*- #}
 
-{% load i18n menu_generator static sass_tags any_js pwa rules %}
+{% load i18n menu_generator static sass_tags any_js rules %}
 {% get_current_language as LANGUAGE_CODE %}
 
 
@@ -18,8 +18,13 @@
 
   {# CSS #}
   {% include_css "material-design-icons" %}
-  {% include_css "Roboto" %}
-  <link rel="stylesheet" href="{% sass_src 'style.scss' %}">
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
+  <link rel="stylesheet" href="{% sass_src 'public/style.scss' %}">
 
   {# Add JS URL resolver #}
   <script src="{% url "js_reverse" %}" type="text/javascript"></script>
@@ -29,6 +34,24 @@
   <script src="{% url "javascript-catalog" %}?locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
   <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}"
           type="text/javascript"></script>
+
+  {% if SENTRY_ENABLED %}
+    {% if SENTRY_TRACE_ID %}
+      <meta name="sentry-trace" content="{{ SENTRY_TRACE_ID }}" />
+    {% endif %}
+    {% include_js "Sentry" %}
+    {{ SENTRY_SETTINGS|json_script:"sentry_settings" }}
+    <script type="text/javascript">
+      const sentry_settings = JSON.parse(document.getElementById('sentry_settings').textContent);
+
+      Sentry.init({
+        dsn: sentry_settings.dsn,
+        environment: sentry_settings.environment,
+        tracesSampleRate: sentry_settings.traces_sample_rate,
+        integrations: [new Sentry.Integrations.BrowserTracing()]
+      });
+    </script>
+  {% endif %}
 
   {# Include jQuery early to provide $(document).ready #}
   {% include_js "jQuery" %}
@@ -47,9 +70,9 @@
 
   <!-- Nav bar (logged in as, logout) -->
   <nav>
-    <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
-
     <div class="nav-wrapper">
+      <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
+
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
           <li>{% trans "Logged in as" %} {{ user.get_username }}</li>
@@ -70,13 +93,16 @@
              alt="{{ request.site.preferences.general__title }} – Logo">
       </a>
     </li>
-    {% has_perm 'core.search' user as search %}
+    {% has_perm 'core.search_rule' user as search %}
     {% if search %}
       <li class="search">
         <form method="get" action="{% url "haystack_search" %}" id="search-form" class="autocomplete">
           <div class="search-wrapper">
-            <input id="search" name="q" placeholder="{% trans "Search" %}">
-            <i class="material-icons">search</i>
+            <input id="search" name="q" type="search" enterkeyhint="search" placeholder="{% trans "Search" %}">
+            <button class="btn btn-flat search-button" type="submit" aria-label="{% trans "Search" %}">
+              <i class="material-icons">search</i>
+            </button>
+            <div class="progress" id="search-loader"><div class="indeterminate"></div></div>
           </div>
         </form>
       </li>
@@ -93,8 +119,7 @@
 
   {% if messages %}
     {% for message in messages %}
-      <div class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
-        <p>
+      <figure class="alert {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
           {% if message.tags == "success" %}
             <i class="material-icons left">check_circle</i>
           {% elif  message.tags == "info" %}
@@ -105,13 +130,12 @@
             <i class="material-icons left">error</i>
           {% endif %}
           {{ message }}
-        </p>
-      </div>
+      </figure>
     {% endfor %}
   {% endif %}
 
   {% block no_page_title %}
-    <h4>{% block page_title %}{% endblock %}</h4>
+    <h1>{% block page_title %}{% endblock %}</h1>
   {% endblock %}
 
   {% block content %}{% endblock %}
@@ -151,12 +175,12 @@
       </div>
       <div class="right">
         <span id="doit"></span>
-        {% if request.site.preferences.footer__impress_url %}
-          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__impress_url }}">
+        {% if request.site.preferences.footer__imprint_url %}
+          <a class="blue-text text-lighten-4" href="{{ request.site.preferences.footer__imprint_url }}">
             {% trans "Impress" %}
           </a>
         {% endif %}
-        {% if request.site.preferences.footer__privacy_url and request.site.preferences.footer__impress_url %}
+        {% if request.site.preferences.footer__privacy_url and request.site.preferences.footer__imprint_url %}
           ·
         {% endif %}
         {% if request.site.preferences.footer__privacy_url %}

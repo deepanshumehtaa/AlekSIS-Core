@@ -9,7 +9,7 @@
 {% block page_title %}{% blocktrans %}Persons{% endblocktrans %}{% endblock %}
 
 {% block content %}
-  {% has_perm 'core.create_person' user person as can_create_person %}
+  {% has_perm 'core.create_person_rule' user person as can_create_person %}
 
   {% if can_create_person %}
     <a class="btn green waves-effect waves-light" href="{% url 'create_person' %}">
@@ -18,7 +18,7 @@
     </a>
   {% endif %}
 
-  <h5>{% trans "Filter persons" %}</h5>
+  <h2>{% trans "Filter persons" %}</h2>
   <form method="get">
     {% form form=persons_filter.form %}{% endform %}
     {% trans "Search" as caption %}
@@ -29,6 +29,6 @@
     </button>
   </form>
 
-  <h5>{% trans "Selected persons" %}</h5>
+  <h2>{% trans "Selected persons" %}</h2>
   {% render_table persons_table %}
 {% endblock %}

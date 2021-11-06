@@ -14,7 +14,7 @@
     {% trans "Create group" %}
   </a>
 
-  <h5>{% trans "Filter groups" %}</h5>
+  <h2>{% trans "Filter groups" %}</h2>
   <form method="get">
     {% form form=groups_filter.form %}{% endform %}
     {% trans "Search" as caption %}
@@ -25,6 +25,6 @@
     </button>
   </form>
 
-  <h5>{% trans "Selected groups" %}</h5>
+  <h2>{% trans "Selected groups" %}</h2>
   {% render_table groups_table %}
 {% endblock %}

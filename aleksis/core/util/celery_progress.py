@@ -2,8 +2,12 @@ from functools import wraps
 from numbers import Number
 from typing import Callable, Generator, Iterable, Optional, Sequence, Union
 
+from django.apps import apps
 from django.contrib import messages
+from django.http import HttpRequest
+from django.shortcuts import render
 
+from celery.result import AsyncResult
 from celery_progress.backend import PROGRESS_STATE, AbstractProgressRecorder
 
 from ..celery import app
@@ -48,19 +52,19 @@ class ProgressRecorder(AbstractProgressRecorder):
             # ...
             result = do_something.delay(foo, bar, baz=baz)
 
-            context = {
-                "title": _("Progress: Import data"),
-                "back_url": reverse("index"),
-                "progress": {
-                    "task_id": result.task_id,
-                    "title": _("Import objects …"),
-                    "success": _("The import was done successfully."),
-                    "error": _("There was a problem while importing data."),
-                },
-            }
-
             # Render progress view
-            return render(request, "core/progress.html", context)
+            return render_progress_page(
+                request,
+                result,
+                title=_("Progress: Import data"),
+                back_url=reverse("index"),
+                progress_title=_("Import objects …"),
+                success_message=_("The import was done successfully."),
+                error_message=_("There was a problem while importing data."),
+            )
+
+    Please take a look at the documentation of ``render_progress_page``
+    to get all available options.
     """
 
     def __init__(self, task):
@@ -160,3 +164,60 @@ def recorded_task(orig: Optional[Callable] = None, **kwargs) -> Union[Callable, 
     if orig and not kwargs:
         return _real_decorator(orig)
     return _real_decorator
+
+
+def render_progress_page(
+    request: HttpRequest,
+    task_result: AsyncResult,
+    title: str,
+    progress_title: str,
+    success_message: str,
+    error_message: str,
+    back_url: Optional[str] = None,
+    redirect_on_success_url: Optional[str] = None,
+    button_title: Optional[str] = None,
+    button_url: Optional[str] = None,
+    button_icon: Optional[str] = None,
+    context: Optional[dict] = None,
+):
+    """Show a page to track the progress of a Celery task using a ``ProgressRecorder``.
+
+    :param task_result: The ``AsyncResult`` of the task to track
+    :param title: The title of the progress page
+    :param progress_title: The text shown under the progress bar
+    :param success_message: The message shown on task success
+    :param error_message: The message shown on task failure
+    :param back_url: The URL for the back button (leave empty to disable back button)
+    :param redirect_on_success_url: The URL to redirect on task success
+    :param button_title: The label for a button shown on task success
+        (leave empty to not show a button)
+    :param button_url: The URL for the button
+    :param button_icon: The icon for the button (leave empty to not show an icon)
+    :param context: Additional context for the progress page
+    """
+    if not context:
+        context = {}
+
+    # Create TaskUserAssignment to track permissions on this task
+    TaskUserAssignment = apps.get_model("core", "TaskUserAssignment")
+    assignment = TaskUserAssignment.create_for_task_id(task_result.task_id, request.user)
+
+    # Prepare context for progress page
+    context["title"] = title
+    context["back_url"] = back_url
+    context["progress"] = {
+        "task_id": task_result.task_id,
+        "title": progress_title,
+        "success": success_message,
+        "error": error_message,
+        "redirect_on_success": redirect_on_success_url,
+    }
+
+    if button_url and button_title:
+        context["additional_button"] = {
+            "href": button_url,
+            "caption": button_title,
+            "icon": button_icon,
+        }
+
+    return render(request, "core/pages/progress.html", context)

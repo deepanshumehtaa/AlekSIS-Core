@@ -1,23 +1,27 @@
 import os
 import subprocess  # noqa
 from tempfile import TemporaryDirectory
-from typing import Optional
+from typing import Optional, Tuple
+from urllib.parse import urljoin
 
+from django.conf import settings
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 
+from celery.result import AsyncResult
 from celery_progress.backend import ProgressRecorder
 
 from aleksis.core.celery import app
 from aleksis.core.models import PDFFile
-from aleksis.core.util.celery_progress import recorded_task
+from aleksis.core.util.celery_progress import recorded_task, render_progress_page
 
 
 @recorded_task
@@ -63,6 +67,26 @@ def generate_pdf(
     recorder.set_progress(1, 1)
 
 
+def generate_pdf_from_template(
+    template_name: str, context: Optional[dict] = None, request: Optional[HttpRequest] = None
+) -> Tuple[PDFFile, AsyncResult]:
+    """Start a PDF generation task and return the matching file object and Celery result."""
+    html_template = render_to_string(template_name, context, request)
+
+    file_object = PDFFile.objects.create(html_file=ContentFile(html_template, name="source.html"))
+
+    # As this method may be run in background and there is no request available,
+    # we have to use a predefined URL from settings then
+    if request:
+        html_url = request.build_absolute_uri(file_object.html_file.url)
+    else:
+        html_url = urljoin(settings.BASE_URL, file_object.html_file.url)
+
+    result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
+
+    return file_object, result
+
+
 def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -> HttpResponse:
     """Start PDF generation and show progress page.
 
@@ -71,34 +95,23 @@ def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -
     if not context:
         context = {}
 
-    html_template = render_to_string(template_name, context)
-
-    file_object = PDFFile.objects.create(person=request.user.person, html=html_template)
-    html_url = request.build_absolute_uri(file_object.html_url)
-
-    result = generate_pdf.delay(file_object.pk, html_url, lang=get_language())
+    file_object, result = generate_pdf_from_template(template_name, context, request)
 
     redirect_url = reverse("redirect_to_pdf_file", args=[file_object.pk])
 
-    progress_context = {
-        "title": _("Progress: Generate PDF file"),
-        "back_url": context.get("back_url", "index"),
-        "progress": {
-            "task_id": result.task_id,
-            "title": _("Generating PDF file …"),
-            "success": _("The PDF file has been generated successfully."),
-            "error": _("There was a problem while generating the PDF file."),
-            "redirect_on_success": redirect_url,
-        },
-        "additional_button": {
-            "href": redirect_url,
-            "caption": _("Download PDF"),
-            "icon": "picture_as_pdf",
-        },
-    }
-
-    # Render progress view
-    return render(request, "core/pages/progress.html", progress_context)
+    return render_progress_page(
+        request,
+        result,
+        title=_("Progress: Generate PDF file"),
+        progress_title=_("Generating PDF file …"),
+        success_message=_("The PDF file has been generated successfully."),
+        error_message=_("There was a problem while generating the PDF file."),
+        redirect_on_success_url=redirect_url,
+        back_url=context.get("back_url", reverse("index")),
+        button_title=_("Download PDF"),
+        button_url=redirect_url,
+        button_icon="picture_as_pdf",
+    )
 
 
 def clean_up_expired_pdf_files() -> None:

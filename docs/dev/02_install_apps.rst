@@ -4,18 +4,18 @@ Installing apps into development environment
 Officially bundled apps
 -----------------------
 
-Officially bundlede apps are available in the ``apps/official/``
-sub-folder as Git submodules. If you followed the documentation, they
+Officially bundled apps are available in the ``apps/official/``
+sub-folder of the meta repository. If you followed the documentation, they
 will already be checked out in the version required for the bundle you
 are running.
 
-Installing apps into the existing virtual environment is a bit awkward::
+Installing apps into the existing virtual environment of `AlekSIS-Core` can
+be easily done after starting `poetry shell`::
 
-  poetry run sh -c "cd apps/official/AlekSIS-App-Exlibris; poetry install"
-
-This will install the Exlibris app (library management) app by using a
-shell for first ``cd``'ing into the app directory and then using
-poetry to install the app.
+  poetry install
 
 Do not forget to run the maintenance tasks described earlier after
 installing any app.
+
+**Heads up:** This is not suitable for working on the core, because it
+will install the `AlekSIS-Core` version used by the app using `pip` again.

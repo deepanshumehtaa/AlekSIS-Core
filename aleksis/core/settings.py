@@ -1,16 +1,14 @@
 import os
 from glob import glob
+from socket import getfqdn
 
 from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import (
-    get_app_packages,
-    lazy_get_favicon_url,
-    lazy_preference,
-    merge_app_settings,
-)
+from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
+
+monkey_patch()
 
 IN_PYTEST = "PYTEST_CURRENT_TEST" in os.environ or "TOX_ENV_DIR" in os.environ
 
@@ -19,6 +17,7 @@ DIRS_FOR_DYNACONF = ["/etc/aleksis"]
 
 SETTINGS_FILE_FOR_DYNACONF = []
 for directory in DIRS_FOR_DYNACONF:
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.json"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.ini"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.yaml"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.toml"))
@@ -67,9 +66,12 @@ UWSGI = {
     "module": "aleksis.core.wsgi",
 }
 UWSGI_SERVE_STATIC = True
-UWSGI_SERVE_MEDIA = True
+UWSGI_SERVE_MEDIA = False
 
-ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [])
+ALLOWED_HOSTS = _settings.get("http.allowed_hosts", [getfqdn(), "localhost", "127.0.0.1", "[::1]"])
+BASE_URL = _settings.get(
+    "http.base_url", "http://localhost:8000" if DEBUG else f"https://{ALLOWED_HOSTS[0]}"
+)
 
 # Application definition
 INSTALLED_APPS = [
@@ -87,7 +89,6 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
-    "django_global_request",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -95,7 +96,6 @@ INSTALLED_APPS = [
     "health_check.contrib.celery",
     "djcelery_email",
     "celery_haystack",
-    "settings_context_processor",
     "sass_processor",
     "django_any_js",
     "django_yarnpkg",
@@ -107,7 +107,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_prometheus",
     "django_select2",
-    "hattori",
     "templated_email",
     "html2text",
     "django_otp.plugins.otp_totp",
@@ -115,6 +114,9 @@ INSTALLED_APPS = [
     "django_otp",
     "otp_yubikey",
     "aleksis.core",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "health_check",
     "health_check.db",
     "health_check.cache",
@@ -126,7 +128,6 @@ INSTALLED_APPS = [
     "impersonate",
     "two_factor",
     "material",
-    "pwa",
     "ckeditor",
     "ckeditor_uploader",
     "django_js_reverse",
@@ -134,6 +135,8 @@ INSTALLED_APPS = [
     "django_bleach",
     "favicon",
     "django_filters",
+    "oauth2_provider",
+    "rest_framework",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -155,7 +158,6 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
-    "django_global_request.middleware.GlobalRequestMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -183,7 +185,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "maintenance_mode.context_processors.maintenance_mode",
-                "settings_context_processor.context_processors.settings",
                 "dynamic_preferences.processors.global_preferences",
                 "aleksis.core.util.core_helpers.custom_information_processor",
             ],
@@ -231,8 +232,6 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
     }
     if REDIS_PASSWORD:
         CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
-    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
-    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 else:
     CACHES = {
         "default": {
@@ -245,7 +244,7 @@ INSTALLED_APPS.append("cachalot")
 DEBUG_TOOLBAR_PANELS.append("cachalot.panels.CachalotPanel")
 CACHALOT_TIMEOUT = _settings.get("caching.cachalot.timeout", None)
 CACHALOT_DATABASES = set(["default"])
-SILENCED_SYSTEM_CHECKS += ["cachalot.W001", "cachalot.E003"]
+SILENCED_SYSTEM_CHECKS += ["cachalot.W001"]
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
@@ -269,6 +268,89 @@ AUTH_INITIAL_SUPERUSER = {
 # Authentication backends are dynamically populated
 AUTHENTICATION_BACKENDS = []
 
+# Configuration for django-allauth.
+
+# Use custom adapter to override some behaviour, i.e. honour the LDAP backend
+SOCIALACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurSocialAccountAdapter"
+
+# Get django-allauth providers from config
+_SOCIALACCOUNT_PROVIDERS = _settings.get("auth.providers", None)
+if _SOCIALACCOUNT_PROVIDERS:
+    SOCIALACCOUNT_PROVIDERS = _SOCIALACCOUNT_PROVIDERS.to_dict()
+
+    # Add configured social auth providers to INSTALLED_APPS
+    for provider, config in SOCIALACCOUNT_PROVIDERS.items():
+        INSTALLED_APPS.append(f"allauth.socialaccount.providers.{provider}")
+        SOCIALACCOUNT_PROVIDERS[provider] = {k.upper(): v for k, v in config.items()}
+
+
+# Configure custom forms
+
+ACCOUNT_FORMS = {
+    "signup": "aleksis.core.forms.AccountRegisterForm",
+}
+
+# Use custom adapter
+ACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurAccountAdapter"
+
+# Require password confirmation
+SIGNUP_PASSWORD_ENTER_TWICE = True
+
+# Allow login by either username or email
+ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
+
+# Require email address to sign up
+ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+
+# Require email verification after sigm up
+ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
+
+# Email subject prefix for verification mails
+ACCOUNT_EMAIL_SUBJECT_PREFIX = _settings.get("auth.registration.subject", "[AlekSIS] ")
+
+# Max attempts before login timeout
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = _settings.get("auth.login.login_limit", 5)
+
+# Login timeout after max attempts in seconds
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = _settings.get("auth.login.login_timeout", 300)
+
+# Email confirmation field in form
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+
+# Enforce uniqueness of email addresses
+ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
+
+# Configuration for OAuth2 provider
+OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
+OAUTH2_PROVIDER_APPLICATION_MODEL = "core.OAuthApplication"
+OAUTH2_PROVIDER_GRANT_MODEL = "core.OAuthGrant"
+OAUTH2_PROVIDER_ACCESS_TOKEN_MODEL = "core.OAuthAccessToken"  # noqa: S105
+OAUTH2_PROVIDER_ID_TOKEN_MODEL = "core.OAuthIDToken"  # noqa: S105
+OAUTH2_PROVIDER_REFRESH_TOKEN_MODEL = "core.OAuthRefreshToken"  # noqa: S105
+
+if _settings.get("oauth2.oidc.enabled", False):
+    with open(_settings.get("oauth2.oidc.rsa_key", "/etc/aleksis/oidc.pem"), "r") as f:
+        oid_rsa_key = f.read()
+
+    OAUTH2_PROVIDER.update(
+        {
+            "OAUTH2_VALIDATOR_CLASS": "aleksis.core.util.auth_helpers.CustomOAuth2Validator",
+            "OIDC_ENABLED": True,
+            "OIDC_RSA_PRIVATE_KEY": oid_rsa_key,
+            #        "OIDC_ISS_ENDPOINT": _settings.get("oauth2.oidc.issuer_name", "example.com"),
+        }
+    )
+
+# Configuration for REST framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+    ]
+}
+
+# LDAP config
 if _settings.get("ldap.uri", None):
     # LDAP dependencies are not necessarily installed, so import them here
     import ldap  # noqa
@@ -291,7 +373,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
     # Keep local password for users to be required to proveide their old password on change
-    AUTH_LDAP_SET_USABLE_PASSWORD = True
+    AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
     # Ensures proper read permissions, and ability to change password without admin
@@ -360,16 +442,12 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-CUSTOM_AUTHENTICATION_BACKENDS = []
-merge_app_settings("AUTHENTICATION_BACKENDS", CUSTOM_AUTHENTICATION_BACKENDS)
-
 # Add ModelBckend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
-# Structure of items: backend, URL name, icon name, button title
-ALTERNATIVE_LOGIN_VIEWS = []
-merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
+# Authentication backend for django-allauth.
+AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -377,8 +455,6 @@ merge_app_settings("ALTERNATIVE_LOGIN_VIEWS", ALTERNATIVE_LOGIN_VIEWS, True)
 LANGUAGES = [
     ("en", _("English")),
     ("de", _("German")),
-    ("fr", _("French")),
-    ("nb", _("Norwegian (bokmål)")),
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
@@ -402,7 +478,6 @@ NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "n
 
 YARN_INSTALLED_APPS = [
     "@fontsource/roboto",
-    "datatables",
     "jquery",
     "materialize-css",
     "material-design-icons-iconfont",
@@ -411,6 +486,7 @@ YARN_INSTALLED_APPS = [
     "paper-css",
     "jquery-sortablejs",
     "sortablejs",
+    "@sentry/tracing",
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
@@ -423,7 +499,6 @@ SELECT2_JS = JS_URL + "/select2/dist/js/select2.min.js"
 SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
-    "DataTables": {"js_url": JS_URL + "/datatables/media/js/jquery.dataTables.min.js"},
     "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
     "material-design-icons": {
@@ -436,7 +511,13 @@ ANY_JS = {
     },
     "sortablejs": {"js_url": JS_URL + "/sortablejs/Sortable.min.js"},
     "jquery-sortablejs": {"js_url": JS_URL + "/jquery-sortablejs/jquery-sortable.js"},
-    "Roboto": {"css_url": JS_URL + "/@fontsource/roboto/index.css"},
+    "Roboto100": {"css_url": JS_URL + "/@fontsource/roboto/100.css"},
+    "Roboto300": {"css_url": JS_URL + "/@fontsource/roboto/300.css"},
+    "Roboto400": {"css_url": JS_URL + "/@fontsource/roboto/400.css"},
+    "Roboto500": {"css_url": JS_URL + "/@fontsource/roboto/500.css"},
+    "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
+    "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
+    "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
@@ -448,15 +529,16 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get("materialize.sass_path", JS_ROOT + "/materialize-css/sass/"),
-    STATIC_ROOT + "/materialize-css/sass/",
-    STATIC_ROOT,
+    _settings.get("materialize.sass_path", os.path.join(JS_ROOT, "materialize-css", "sass")),
+    os.path.join(STATIC_ROOT, "public"),
 ]
 
-ADMINS = _settings.get("contact.admins", [])
-SERVER_EMAIL = _settings.get("contact.from", "root@localhost")
-DEFAULT_FROM_EMAIL = _settings.get("contact.from", "root@localhost")
-MANAGERS = _settings.get("contact.admins", [])
+ADMINS = _settings.get(
+    "contact.admins", [(AUTH_INITIAL_SUPERUSER["username"], AUTH_INITIAL_SUPERUSER["email"])]
+)
+SERVER_EMAIL = _settings.get("contact.from", ADMINS[0][1])
+DEFAULT_FROM_EMAIL = _settings.get("contact.from", ADMINS[0][1])
+MANAGERS = _settings.get("contact.admins", ADMINS)
 
 if _settings.get("mail.server.host", None):
     EMAIL_HOST = _settings.get("mail.server.host")
@@ -470,9 +552,6 @@ if _settings.get("mail.server.host", None):
 
 TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django"
 TEMPLATED_EMAIL_AUTO_PLAIN = True
-
-
-TEMPLATE_VISIBLE_SETTINGS = ["ADMINS", "DEBUG"]
 
 DYNAMIC_PREFERENCES = {
     "REGISTRY_MODULE": "preferences",
@@ -554,65 +633,19 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
     UWSGI["attach-daemon"].append(f"celery -A aleksis.core worker --concurrency={concurrency}")
     UWSGI["attach-daemon"].append("celery -A aleksis.core beat")
 
-PWA_APP_NAME = lazy_preference("general", "title")
-PWA_APP_DESCRIPTION = lazy_preference("general", "description")
-PWA_APP_THEME_COLOR = lazy_preference("theme", "primary")
-PWA_APP_BACKGROUND_COLOR = "#ffffff"
-PWA_APP_DISPLAY = "standalone"
-PWA_APP_ORIENTATION = "any"
-PWA_APP_ICONS = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="android", default=STATIC_URL + "icons/android_192.png"
-        ),
-        "sizes": "192x192",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=512, rel="android", default=STATIC_URL + "icons/android_512.png"
-        ),
-        "sizes": "512x512",
-    },
-]
-PWA_APP_ICONS_APPLE = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_76.png"
-        ),
-        "sizes": "76x76",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_114.png"
-        ),
-        "sizes": "114x114",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_152.png"
-        ),
-        "sizes": "152x152",
-    },
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "sizes": "180x180",
-    },
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        "src": lazy_get_favicon_url(
-            title="pwa_icon", size=192, rel="apple", default=STATIC_URL + "icons/apple_180.png"
-        ),
-        "media": (
-            "(device-width: 320px) and (device-height: 568px) and" "(-webkit-device-pixel-ratio: 2)"
-        ),
-    }
-]
+DEFAULT_FAVICON_PATHS = {
+    "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+}
+PWA_ICONS_CONFIG = {
+    "android": [192, 512],
+    "apple": [76, 114, 152, 180],
+    "apple_splash": [192],
+    "microsoft": [144],
+}
+FAVICON_PATH = os.path.join("public", "favicon")
 
-
-PWA_SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
+SERVICE_WORKER_PATH = os.path.join(STATIC_ROOT, "js", "serviceworker.js")
 
 SITE_ID = 1
 
@@ -739,10 +772,20 @@ BLEACH_STRIP_COMMENTS = True
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"},},
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
+        "null": {"class": "logging.NullHandler"},
+    },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
     "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "loggers": {},
 }
+
+if not _settings.get("logging.disallowed_host", False):
+    LOGGING["loggers"]["django.security.DisallowedHost"] = {
+        "handlers": ["null"],
+        "propagate": False,
+    }
 
 # Rules and permissions
 
@@ -754,26 +797,9 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 # Append authentication backends
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
-HAYSTACK_BACKEND_SHORT = _settings.get("search.backend", "simple")
-
-if HAYSTACK_BACKEND_SHORT == "simple":
-    HAYSTACK_CONNECTIONS = {
-        "default": {"ENGINE": "haystack.backends.simple_backend.SimpleEngine",},
-    }
-elif HAYSTACK_BACKEND_SHORT == "xapian":
-    HAYSTACK_CONNECTIONS = {
-        "default": {
-            "ENGINE": "xapian_backend.XapianEngine",
-            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "xapian_index")),
-        },
-    }
-elif HAYSTACK_BACKEND_SHORT == "whoosh":
-    HAYSTACK_CONNECTIONS = {
-        "default": {
-            "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
-            "PATH": _settings.get("search.index", os.path.join(BASE_DIR, "whoosh_index")),
-        },
-    }
+HAYSTACK_CONNECTIONS = {
+    "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
+}
 
 HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"
 CELERY_HAYSTACK_IGNORE_RESULT = True
@@ -791,6 +817,10 @@ DBBACKUP_CHECK_SECONDS = _settings.get("backup.database.check_seconds", 7200)
 MEDIABACKUP_CHECK_SECONDS = _settings.get("backup.media.check_seconds", 7200)
 
 PROMETHEUS_EXPORT_MIGRATIONS = False
+PROMETHEUS_METRICS_EXPORT_PORT = _settings.get("prometheus.metrics.port", None)
+PROMETHEUS_METRICS_EXPORT_ADDRESS = _settings.get("prometheus.metrucs.address", None)
+
+SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
 if _settings.get("storage.type", "").lower() == "s3":
     INSTALLED_APPS.append("storages")
@@ -825,10 +855,39 @@ if _settings.get("storage.type", "").lower() == "s3":
     AWS_S3_GZIP = _settings.get("storage.s3.gzip", True)
     AWS_S3_SIGNATURE_VERSION = _settings.get("storage.s3.signature_version", None)
     AWS_S3_FILE_OVERWRITE = _settings.get("storage.s3.file_overwrite", False)
+    AWS_S3_VERIFY = _settings.get("storage.s3.verify", True)
+    AWS_S3_USE_SSL = _settings.get("storage.s3.use_ssl", True)
 else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    DEFAULT_FILE_STORAGE = "titofisto.TitofistoStorage"
+    TITOFISTO_TIMEOUT = 10 * 60
 
 SASS_PROCESSOR_STORAGE = DEFAULT_FILE_STORAGE
+
+SENTRY_ENABLED = _settings.get("health.sentry.enabled", False)
+if SENTRY_ENABLED:
+    import sentry_sdk
+    from sentry_sdk.integrations.celery import CeleryIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.redis import RedisIntegration
+
+    from aleksis.core import __version__
+
+    SENTRY_SETTINGS = {
+        "dsn": _settings.get("health.sentry.dsn"),
+        "environment": _settings.get("health.sentry.environment"),
+        "traces_sample_rate": _settings.get("health.sentry.traces_sample_rate", 1.0),
+        "send_default_pii": _settings.get("health.sentry.send_default_pii", False),
+        "release": f"aleksis-core@{__version__}",
+        "in_app_include": "aleksis",
+    }
+    sentry_sdk.init(
+        integrations=[
+            DjangoIntegration(transaction_style="function_name"),
+            RedisIntegration(),
+            CeleryIntegration(),
+        ],
+        **SENTRY_SETTINGS,
+    )
 
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DashboardWidgetOrder',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extended_data', models.JSONField(default=dict, editable=False)),
                 ('order', models.PositiveIntegerField(verbose_name='Order')),
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.person', verbose_name='Person')),
@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Dashboard widget orders',
             },
             managers=[
-                ('objects', django.contrib.sites.managers.CurrentSiteManager()),
             ],
         ),
     ]

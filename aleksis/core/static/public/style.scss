@@ -1,4 +1,4 @@
-@import "materialize";
+@import "materialize-custom";
 
 .primary-color {
   background-color: $primary-color !important;
@@ -87,12 +87,6 @@ header, main, footer {
   width: auto;
 }
 
-@media only screen and (max-width: 993px) {
-  header div.nav-wrapper {
-    z-index: -5;
-  }
-}
-
 
 /********/
 /* MAIN */
@@ -179,15 +173,23 @@ ul.sidenav li.logo > a:hover {
   box-shadow: none;
 }
 
-.sidenav li.search .search-wrapper > i.material-icons {
+.sidenav li.search .search-wrapper > button.search-button {
   position: absolute;
-  top: 21px;
+  top: calc(50% - 18px);
   right: 10px;
-  cursor: pointer;
+}
+
+button.btn-flat.search-button:hover {
+  background-color: $button-disabled-background;
 }
 
 a.collection-item.search-item {
   padding: 20px 10px;
+}
+
+div#search-loader {
+  margin: 0.5rem 0 0 0;
+  display: none;
 }
 
 div#search-results {
@@ -271,6 +273,23 @@ ul.footer-ul {
   fill: white;
 }
 
+//////////////
+// HEADINGS //
+//////////////
+
+h1 {
+  font-weight: 300;
+  font-style: normal;
+  font-size: 3.6rem;
+  line-height: 110%;
+  margin: 1.4rem 0 1.68rem 0;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 3.0rem;
+}
+
 /* Collections */
 
 ul.collection .collection-item .title {
@@ -324,6 +343,11 @@ input[type="checkbox"].chips-checkbox + span {
     display: none;
     width: 0;
   }
+}
+
+// Move label of ckeditor up
+.margin-top-35 {
+  margin-top: 35px;
 }
 
 // Badges
@@ -508,33 +532,62 @@ th.orderable.desc > a {
   margin: 0;
 }
 
-.alert > p, .alert > div {
+.alert strong {
+  font-weight: 700;
+}
+
+figure.alert > :not(.material-icons.left){
+  margin-left: 39px;
+}
+
+.alert figcaption  {
+  font-weight: 700;
+  font-size: 17px;
+  margin: auto;
+}
+
+div.alert > p,
+div.alert > div,
+figure.alert{
   margin: 10px;
   padding: 10px;
   border-left: 5px solid;
 }
 
-.alert.success > p, .alert.success > div {
+div.alert.success > p,
+div.alert.success > div,
+figure.alert.success{
   @extend .success;
   border-color: color("green", "base");
 }
 
-.alert.error > p, .alert.error > div {
+div.alert.error > p,
+div.alert.error > div,
+figure.alert.error {
   @extend .error;
   border-color: color("red", "darken-4");
 }
 
-.alert.primary > p, .alert.primary > div, .alert.info > p, .alert.info > div {
+div.alert.primary > p,
+div.alert.primary > div,
+figure.alert.primary,
+div.alert.info > p,
+div.alert.info > div,
+figure.alert.info {
   background-color: #ececec;
   border-color: $primary-color;
 }
 
-.alert.warning p, .alert.warning div {
+div.alert.warning p,
+div.alert.warning div,
+figure.alert.warning {
   @extend .warning;
   border-color: color("orange", "darken-4");
 }
 
-main .alert p:first-child, main .alert div:first-child {
+main div.alert p:first-child,
+main div.alert div:first-child,
+main figure.alert {
   margin-left: -10px;
   margin-right: -10px;
 }
@@ -618,6 +671,11 @@ main .alert p:first-child, main .alert div:first-child {
   font-weight: 500;
 }
 
+.stacked-card-icon {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .flex-row {
   display: flex;
@@ -690,4 +748,23 @@ main .alert p:first-child, main .alert div:first-child {
 .jscolor {
   background-color: inherit !important;
   color: inherit !important;
+}
+
+.break-word {
+  overflow-wrap: anywhere;
+}
+
+.card .card-action-light {
+	background-color: inherit;
+	border-top: 1px solid rgba(160, 160, 160, 0.2);
+	position: relative;
+	padding: 16px 24px;
+}
+
+.margin-top {
+  margin-top: 0.7rem !important;
+}
+
+.margin-bottom {
+  margin-bottom: 0.7rem !important;
 }

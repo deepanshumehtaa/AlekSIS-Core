@@ -1,4 +1,4 @@
-import pkg_resources
+from importlib import metadata
 
 try:
     from .celery import app as celery_app
@@ -7,7 +7,7 @@ except ModuleNotFoundError:
     celery_app = None
 
 try:
-    __version__ = pkg_resources.get_distribution("AlekSIS-Core").version
+    __version__ = metadata.distribution("AlekSIS-Core").version
 except Exception:
     __version__ = "unknown"
 

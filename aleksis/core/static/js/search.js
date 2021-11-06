@@ -32,10 +32,11 @@ Autocomplete.prototype.setup = function () {
     // Trigger the "keyup" event if input gets focused
 
     this.query_box.focus(function () {
-        self.query_box.trigger("keydown");
+        self.query_box.trigger("input");
     });
 
-    this.query_box.keyup(function () {
+    this.query_box.on("input", () => {
+        console.log("Input changed, fetching again...")
         var query = self.query_box.val();
 
         if (query.length < self.minimum_length) {
@@ -97,11 +98,16 @@ Autocomplete.prototype.fetch = function (query) {
     var self = this;
 
     $.ajax({
-        url: this.url
-        , data: {
+        url: this.url,
+        data: {
             'q': query
-        }
-        , success: function (data) {
+        },
+        beforeSend: (request, settings) => {
+            $('#search-results').remove();
+            self.setLoader(true);
+        },
+        success: function (data) {
+            self.setLoader(false);
             self.show_results(data);
         }
     })
@@ -122,3 +128,7 @@ Autocomplete.prototype.setSelectedResult = function (element) {
     this.selected_element = element;
     console.log("New element: ", element);
 };
+
+Autocomplete.prototype.setLoader = function (value) {
+        $("#search-loader").css("display", (value === true ? "block" : "none"))
+}

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Model
 from django.http import HttpRequest
 
+from django_otp import user_has_device
 from guardian.backends import ObjectPermissionBackend
 from guardian.shortcuts import get_objects_for_user
 from rules import predicate
@@ -74,14 +75,19 @@ def has_any_object(perm: str, klass):
 
     Build predicate which checks whether a user has access
     to objects with the provided permission or rule.
+    Differentiates between object-related permissions and rules.
     """
     name = f"has_any_object:{perm}"
 
     @predicate(name)
     def fn(user: User) -> bool:
         ct_perm = get_content_type_by_perm(perm)
+        # In case an object-related permission with the same ContentType class as the given class
+        # is passed, the optimized django-guardian get_objects_for_user function is used.
         if ct_perm and ct_perm.model_class() == klass:
             return get_objects_for_user(user, perm, klass).exists()
+        # In other cases, it is checked for each object of the given model whether the current user
+        # fulfills the given rule.
         else:
             return queryset_rules_filter(user, klass.objects.all(), perm).exists()
 
@@ -114,7 +120,7 @@ def is_current_person(user: User, obj: Model) -> bool:
 @predicate
 def is_group_owner(user: User, group: Group) -> bool:
     """Predicate which checks if the user is a owner of the provided group."""
-    return group.owners.filter(owners=user.person).exists()
+    return user.person in group.owners.all()
 
 
 @predicate
@@ -142,3 +148,9 @@ def contains_site_preference_value(section: str, pref: str, value: str):
         return bool(value in get_site_preferences()[f"{section}__{pref}"])
 
     return fn
+
+
+@predicate
+def has_activated_2fa(user: User) -> bool:
+    """Check if the user has activated two-factor authentication."""
+    return user_has_device(user)

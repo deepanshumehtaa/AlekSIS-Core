@@ -15,9 +15,14 @@
   </title>
 
   {% include_css "material-design-icons" %}
-  {% include_css "Roboto" %}
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
   {% include_css "paper-css" %}
-  <link rel="stylesheet" href="{% sass_src 'style.scss' %}"/>
+  <link rel="stylesheet" href="{% sass_src 'public/style.scss' %}"/>
   <link rel="stylesheet" href="{% static "print.css" %}"/>
   {% if landscape %}
     <link rel="stylesheet" href="{% static 'print_landscape.css' %}"/>

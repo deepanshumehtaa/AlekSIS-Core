@@ -1,7 +1,8 @@
 from datetime import datetime, time
-from typing import Any, Callable, Dict, List, Sequence, Tuple
+from typing import Any, Callable, Dict, Sequence
 
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
@@ -9,9 +10,11 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
+from allauth.account.adapter import get_adapter
+from allauth.account.forms import SignupForm
+from allauth.account.utils import setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
-from guardian.core import ObjectPermissionChecker
 from guardian.shortcuts import assign_perm
 from material import Fieldset, Layout, Row
 
@@ -22,6 +25,7 @@ from .models import (
     DashboardWidget,
     Group,
     GroupType,
+    OAuthApplication,
     Person,
     SchoolTerm,
 )
@@ -30,58 +34,12 @@ from .registries import (
     person_preferences_registry,
     site_preferences_registry,
 )
+from .util.auth_helpers import AppScopes
+from .util.core_helpers import get_site_preferences
 
 
-class PersonAccountForm(forms.ModelForm):
-    """Form to assign user accounts to persons in the frontend."""
-
-    class Meta:
-        model = Person
-        fields = ["last_name", "first_name", "user"]
-        widgets = {"user": Select2Widget(attrs={"class": "browser-default"})}
-
-    new_user = forms.CharField(required=False)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # Fields displayed only for informational purposes
-        self.fields["first_name"].disabled = True
-        self.fields["last_name"].disabled = True
-
-    def clean(self) -> None:
-        user = get_user_model()
-
-        if self.cleaned_data.get("new_user", None):
-            if self.cleaned_data.get("user", None):
-                # The user selected both an existing user and provided a name to create a new one
-                self.add_error(
-                    "new_user",
-                    _("You cannot set a new username when also selecting an existing user."),
-                )
-            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
-                # The user tried to create a new user with the name of an existing user
-                self.add_error("new_user", _("This username is already in use."))
-            else:
-                # Create new User object and assign to form field for existing user
-                new_user_obj = user.objects.create_user(
-                    self.cleaned_data["new_user"],
-                    self.instance.email,
-                    first_name=self.instance.first_name,
-                    last_name=self.instance.last_name,
-                )
-
-                self.cleaned_data["user"] = new_user_obj
-
-
-# Formset for batch-processing of assignments of users to persons
-PersonsAccountsFormSet = forms.modelformset_factory(
-    Person, form=PersonAccountForm, max_num=0, extra=0
-)
-
-
-class EditPersonForm(ExtensibleForm):
-    """Form to edit an existing person object in the frontend."""
+class PersonForm(ExtensibleForm):
+    """Form to edit or add a person object in the frontend."""
 
     layout = Layout(
         Fieldset(
@@ -94,7 +52,11 @@ class EditPersonForm(ExtensibleForm):
         Fieldset(_("Address"), Row("street", "housenumber"), Row("postal_code", "place")),
         Fieldset(_("Contact data"), "email", Row("phone_number", "mobile_number")),
         Fieldset(
-            _("Advanced personal data"), Row("sex", "date_of_birth"), Row("photo"), "guardians",
+            _("Advanced personal data"),
+            Row("date_of_birth", "place_of_birth"),
+            Row("sex"),
+            Row("photo"),
+            "guardians",
         ),
     )
 
@@ -115,6 +77,7 @@ class EditPersonForm(ExtensibleForm):
             "mobile_number",
             "email",
             "date_of_birth",
+            "place_of_birth",
             "sex",
             "photo",
             "guardians",
@@ -140,25 +103,49 @@ class EditPersonForm(ExtensibleForm):
         required=False, label=_("New user"), help_text=_("Create a new account")
     )
 
-    def __init__(self, request: HttpRequest, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
 
         # Disable non-editable fields
-        person_fields = set([field.name for field in Person.syncable_fields()]).intersection(
-            set(self.fields)
-        )
+        allowed_person_fields = get_site_preferences()["account__editable_fields_person"]
 
-        if self.instance:
-            checker = ObjectPermissionChecker(request.user)
-            checker.prefetch_perms([self.instance])
+        if (
+            request
+            and self.instance
+            and not request.user.has_perm("core.change_person", self.instance)
+        ):
+            # First, disable all fields
+            for field in self.fields:
+                self.fields[field].disabled = True
 
-            for field in person_fields:
-                if not checker.has_perm(f"core.change_person_field_{field}", self.instance):
-                    self.fields[field].disabled = True
+            # Then, activate allowed fields
+            for field in allowed_person_fields:
+                self.fields[field].disabled = False
 
     def clean(self) -> None:
-        # Use code implemented in dedicated form to verify user selection
-        return PersonAccountForm.clean(self)
+        user = get_user_model()
+
+        if self.cleaned_data.get("new_user", None):
+            if self.cleaned_data.get("user", None):
+                # The user selected both an existing user and provided a name to create a new one
+                self.add_error(
+                    "new_user",
+                    _("You cannot set a new username when also selecting an existing user."),
+                )
+            elif user.objects.filter(username=self.cleaned_data["new_user"]).exists():
+                # The user tried to create a new user with the name of an existing user
+                self.add_error("new_user", _("This username is already in use."))
+            else:
+                # Create new User object and assign to form field for existing user
+                new_user_obj = user.objects.create_user(
+                    self.cleaned_data["new_user"],
+                    self.instance.email,
+                    first_name=self.instance.first_name,
+                    last_name=self.instance.last_name,
+                )
+
+                self.cleaned_data["user"] = new_user_obj
 
 
 class EditGroupForm(SchoolTermRelatedExtensibleForm):
@@ -379,14 +366,19 @@ class SchoolTermForm(ExtensibleForm):
 
 class DashboardWidgetOrderForm(ExtensibleForm):
     pk = forms.ModelChoiceField(
-        queryset=DashboardWidget.objects.all(),
-        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+        queryset=None, widget=forms.HiddenInput(attrs={"class": "pk-input"}),
     )
     order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
 
     class Meta:
         model = DashboardWidget
         fields = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Set queryset here to prevent problems with not migrated database due to special queryset
+        self.fields["pk"].queryset = DashboardWidget.objects.all()
 
 
 DashboardWidgetOrderFormSet = forms.formset_factory(
@@ -504,6 +496,81 @@ class AssignPermissionForm(forms.Form):
                 assign_perm(permission_name, django_group, instance)
 
 
+class AccountRegisterForm(SignupForm, ExtensibleForm):
+    """Form to register new user accounts."""
+
+    class Meta:
+        model = Group
+        fields = []
+
+    layout = Layout(
+        Fieldset(_("Base data"), Row("first_name", "last_name"),),
+        Fieldset(
+            _("Account data"), "username", Row("email", "email2"), Row("password1", "password2"),
+        ),
+        Fieldset(_("Consents"), Row("privacy_policy"),),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AccountRegisterForm, self).__init__(*args, **kwargs)
+        self.fields["password1"] = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+
+        privacy_policy = get_site_preferences()["footer__privacy_url"]
+
+        if settings.SIGNUP_PASSWORD_ENTER_TWICE:
+            self.fields["password2"] = forms.CharField(
+                label=_("Password (again)"), widget=forms.PasswordInput
+            )
+
+        self.fields["first_name"] = forms.CharField(required=True,)
+
+        self.fields["last_name"] = forms.CharField(required=True,)
+
+        self.fields["privacy_policy"] = forms.BooleanField(
+            help_text=_(
+                f"I have read the <a href='{privacy_policy}'>Privacy policy</a>"
+                " and agree with them."
+            ),
+            required=True,
+        )
+
+    def clean(self):
+        super(AccountRegisterForm, self).clean()
+
+        dummy_user = get_user_model()
+        password = self.cleaned_data.get("password1")
+        if password:
+            try:
+                get_adapter().clean_password(password, user=dummy_user)
+            except forms.ValidationError as e:
+                self.add_error("password1", e)
+
+        if (
+            settings.SIGNUP_PASSWORD_ENTER_TWICE
+            and "password1" in self.cleaned_data
+            and "password2" in self.cleaned_data
+        ):
+            if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
+                self.add_error(
+                    "password2", _("You must type the same password each time."),
+                )
+        return self.cleaned_data
+
+    def save(self, request):
+        adapter = get_adapter(request)
+        user = adapter.new_user(request)
+        adapter.save_user(request, user, self)
+        Person.objects.create(
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["last_name"],
+            email=self.cleaned_data["email"],
+            user=user,
+        )
+        self.custom_signup(request, user)
+        setup_user_email(request, user, [])
+        return user
+
+
 class ActionForm(forms.Form):
     """Generic form for executing actions on multiple items of a queryset.
 
@@ -555,11 +622,11 @@ class ActionForm(forms.Form):
         """Get all defined actions."""
         return self.actions
 
-    def _get_actions_dict(self) -> Dict[str, Callable]:
+    def _get_actions_dict(self) -> dict[str, Callable]:
         """Get all defined actions as dictionary."""
         return {value.__name__: value for value in self.get_actions()}
 
-    def _get_action_choices(self) -> List[Tuple[str, str]]:
+    def _get_action_choices(self) -> list[tuple[str, str]]:
         """Get all defined actions as Django choices."""
         return [
             (value.__name__, getattr(value, "short_description", value.__name__))
@@ -616,15 +683,15 @@ class ListActionForm(ActionForm):
         # Return None in order not to raise an unwanted exception
         return None
 
-    def _get_dict(self) -> Dict[str, dict]:
+    def _get_dict(self) -> dict[str, dict]:
         """Get the items sorted by pk attribute."""
         return {item["pk"]: item for item in self.items}
 
-    def _get_choices(self) -> List[Tuple[str, str]]:
+    def _get_choices(self) -> list[tuple[str, str]]:
         """Get the items as Django choices."""
         return [(item["pk"], item["pk"]) for item in self.items]
 
-    def _get_real_items(self, items: Sequence[dict]) -> List[dict]:
+    def _get_real_items(self, items: Sequence[dict]) -> list[dict]:
         """Get the real dictionaries from a list of pks."""
         items_dict = self._get_dict()
         real_items = []
@@ -634,7 +701,7 @@ class ListActionForm(ActionForm):
             real_items.append(items_dict[item])
         return real_items
 
-    def clean_selected_objects(self) -> List[dict]:
+    def clean_selected_objects(self) -> list[dict]:
         data = self.cleaned_data["selected_objects"]
         items = self._get_real_items(data)
         return items
@@ -643,3 +710,23 @@ class ListActionForm(ActionForm):
         self.items = items
         super().__init__(request, *args, **kwargs)
         self.fields["selected_objects"].choices = self._get_choices()
+
+
+class OAuthApplicationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["allowed_scopes"].widget = forms.SelectMultiple(
+            choices=list(AppScopes().get_all_scopes().items())
+        )
+
+    class Meta:
+        model = OAuthApplication
+        fields = (
+            "name",
+            "client_id",
+            "client_secret",
+            "client_type",
+            "allowed_scopes",
+            "redirect_uris",
+            "skip_authorization",
+        )

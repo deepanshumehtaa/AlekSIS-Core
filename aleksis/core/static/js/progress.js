@@ -47,7 +47,7 @@ function customSuccess(progressBarElement, progressBarMessageElement) {
     $("#result-icon").text("check_circle");
     $("#result-text").text(OPTIONS.success);
     $("#result-box").show();
-    const redirect = "redirect_on_success" in OPTIONS;
+    const redirect = "redirect_on_success" in OPTIONS && OPTIONS.redirect_on_success;
     if (redirect) {
         window.location.replace(OPTIONS.redirect_on_success);
     }
@@ -64,7 +64,7 @@ function customError(progressBarElement, progressBarMessageElement) {
 $(document).ready(function () {
     $("#progress-bar").removeClass("indeterminate").addClass("determinate");
 
-    var progressUrl = Urls["celeryProgress:taskStatus"](OPTIONS.task_id);
+    var progressUrl = Urls["taskStatus"](OPTIONS.task_id);
     CeleryProgressBar.initProgressBar(progressUrl, {
         onProgress: customProgress,
         onSuccess: customSuccess,

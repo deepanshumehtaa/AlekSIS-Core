@@ -77,5 +77,5 @@ class SeleniumTests(SeleniumTestCase):
         self._login()
         self._create_person()
         self.selenium.get(self.live_server_url + reverse("test_pdf"))
-        el = WebDriverWait(self.selenium, 10).until(lambda d: ".pdf" in self.selenium.current_url)
+        el = WebDriverWait(self.selenium, 20).until(lambda d: ".pdf" in self.selenium.current_url)
         self._screenshot("pdf.png")

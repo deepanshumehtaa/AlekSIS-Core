@@ -1,5 +1,6 @@
 import logging
 
+from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.aggregates import Count
 from django.utils.functional import classproperty
@@ -156,10 +157,18 @@ class DataCheck:
 
     solve_options = {IgnoreSolveOption.name: IgnoreSolveOption}
 
+    _current_results = []
+
     @classmethod
     def check_data(cls):
         """Find all objects with data issues and register them."""
         pass
+
+    @classmethod
+    def run_check_data(cls):
+        """Wrap ``check_data`` to ensure that post-processing tasks are run."""
+        cls.check_data()
+        cls.delete_old_results()
 
     @classmethod
     def solve(cls, check_result: "DataCheckResult", solve_option: str):
@@ -188,16 +197,35 @@ class DataCheck:
         from aleksis.core.models import DataCheckResult
 
         ct = ContentType.objects.get_for_model(instance)
-        result = DataCheckResult.objects.get_or_create(
+        result, __ = DataCheckResult.objects.get_or_create(
             check=cls.name, content_type=ct, object_id=instance.id
         )
+
+        # Track all existing problems (for deleting old results)
+        cls._current_results.append(result)
+
         return result
+
+    @classmethod
+    def delete_old_results(cls):
+        """Delete old data check results for problems which exist no longer."""
+        DataCheckResult = apps.get_model("core", "DataCheckResult")
+
+        pks = [r.pk for r in cls._current_results]
+        old_results = DataCheckResult.objects.filter(check=cls.name).exclude(pk__in=pks)
+
+        if old_results:
+            logging.info(f"Delete {old_results.count()} old data check results.")
+            old_results.delete()
+
+        # Reset list with existing problems
+        cls._current_results = []
 
 
 class DataCheckRegistry:
     """Create central registry for all data checks in AlekSIS."""
 
-    data_checks = []
+    data_checks: set = set()
 
     @classproperty
     def data_checks_by_name(cls):
@@ -213,7 +241,7 @@ def check_data(recorder: ProgressRecorder):
     """Execute all registered data checks and send email if activated."""
     for check in recorder.iterate(DataCheckRegistry.data_checks):
         logging.info(f"Run check: {check.verbose_name}")
-        check.check_data()
+        check.run_check_data()
 
     if get_site_preferences()["general__data_checks_send_emails"]:
         send_emails_for_data_checks()
@@ -256,3 +284,35 @@ def send_emails_for_data_checks():
         logging.info("Sent notification email because of unsent data checks")
 
         results.update(sent=True)
+
+
+class DeactivateDashboardWidgetSolveOption(SolveOption):
+    name = "deactivate_dashboard_widget"
+    verbose_name = _("Deactivate DashboardWidget")
+
+    @classmethod
+    def solve(cls, check_result: "DataCheckResult"):
+        widget = check_result.related_object
+        widget.active = False
+        widget.save()
+        check_result.delete()
+
+
+class BrokenDashboardWidgetDataCheck(DataCheck):
+    name = "broken_dashboard_widgets"
+    verbose_name = _("Ensure that there are no broken DashboardWidgets.")
+    problem_name = _("The DashboardWidget was reported broken automatically.")
+    solve_options = {
+        IgnoreSolveOption.name: IgnoreSolveOption,
+        DeactivateDashboardWidgetSolveOption.name: DeactivateDashboardWidgetSolveOption,
+    }
+
+    @classmethod
+    def check_data(cls):
+        from .models import DashboardWidget
+
+        broken_widgets = DashboardWidget.objects.filter(broken=True, active=True)
+
+        for widget in broken_widgets:
+            logging.info("Check DashboardWidget %s", widget)
+            cls.register_result(widget)

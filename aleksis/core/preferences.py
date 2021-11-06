@@ -14,24 +14,27 @@ from dynamic_preferences.types import (
     MultipleChoicePreference,
     StringPreference,
 )
+from oauth2_provider.models import AbstractApplication
 
 from .models import Group, Person
 from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
 
-general = Section("general")
-school = Section("school")
-theme = Section("theme")
-mail = Section("mail")
-notification = Section("notification")
-footer = Section("footer")
-account = Section("account")
+general = Section("general", verbose_name=_("General"))
+school = Section("school", verbose_name=_("School"))
+theme = Section("theme", verbose_name=_("Theme"))
+mail = Section("mail", verbose_name=_("Mail"))
+notification = Section("notification", verbose_name=_("Notifications"))
+footer = Section("footer", verbose_name=_("Footer"))
+account = Section("account", verbose_name=_("Accounts"))
 auth = Section("auth", verbose_name=_("Authentication"))
 internationalisation = Section("internationalisation", verbose_name=_("Internationalisation"))
 
 
 @site_preferences_registry.register
 class SiteTitle(StringPreference):
+    """Title of the AlekSIS instance, e.g. schools display name."""
+
     section = general
     name = "title"
     default = "AlekSIS"
@@ -41,6 +44,8 @@ class SiteTitle(StringPreference):
 
 @site_preferences_registry.register
 class SiteDescription(StringPreference):
+    """Site description, e.g. a slogan."""
+
     section = general
     name = "description"
     default = "The Free School Information System"
@@ -50,6 +55,8 @@ class SiteDescription(StringPreference):
 
 @site_preferences_registry.register
 class ColourPrimary(StringPreference):
+    """Primary colour in AlekSIS frontend."""
+
     section = theme
     name = "primary"
     default = "#0d5eaf"
@@ -60,6 +67,8 @@ class ColourPrimary(StringPreference):
 
 @site_preferences_registry.register
 class ColourSecondary(StringPreference):
+    """Secondary colour in AlekSIS frontend."""
+
     section = theme
     name = "secondary"
     default = "#0d5eaf"
@@ -70,6 +79,8 @@ class ColourSecondary(StringPreference):
 
 @site_preferences_registry.register
 class Logo(FilePreference):
+    """Logo of your AlekSIS instance."""
+
     section = theme
     field_class = ImageField
     name = "logo"
@@ -78,6 +89,8 @@ class Logo(FilePreference):
 
 @site_preferences_registry.register
 class Favicon(FilePreference):
+    """Favicon of your AlekSIS instance."""
+
     section = theme
     field_class = ImageField
     name = "favicon"
@@ -86,6 +99,8 @@ class Favicon(FilePreference):
 
 @site_preferences_registry.register
 class PWAIcon(FilePreference):
+    """PWA-Icon of your AlekSIS instance."""
+
     section = theme
     field_class = ImageField
     name = "pwa_icon"
@@ -94,6 +109,8 @@ class PWAIcon(FilePreference):
 
 @site_preferences_registry.register
 class MailOutName(StringPreference):
+    """Mail out name of your AlekSIS instance."""
+
     section = mail
     name = "name"
     default = "AlekSIS"
@@ -103,6 +120,8 @@ class MailOutName(StringPreference):
 
 @site_preferences_registry.register
 class MailOut(StringPreference):
+    """Mail out address of your AlekSIS instance."""
+
     section = mail
     name = "address"
     default = settings.DEFAULT_FROM_EMAIL
@@ -113,6 +132,8 @@ class MailOut(StringPreference):
 
 @site_preferences_registry.register
 class PrivacyURL(StringPreference):
+    """Link to privacy policy of your AlekSIS instance."""
+
     section = footer
     name = "privacy_url"
     default = ""
@@ -123,6 +144,8 @@ class PrivacyURL(StringPreference):
 
 @site_preferences_registry.register
 class ImprintURL(StringPreference):
+    """Link to imprint of your AlekSIS instance."""
+
     section = footer
     name = "imprint_url"
     default = ""
@@ -133,6 +156,8 @@ class ImprintURL(StringPreference):
 
 @person_preferences_registry.register
 class AdressingNameFormat(ChoicePreference):
+    """User preference for adressing name format."""
+
     section = notification
     name = "addressing_name_format"
     default = "first_last"
@@ -146,6 +171,8 @@ class AdressingNameFormat(ChoicePreference):
 
 @person_preferences_registry.register
 class NotificationChannels(ChoicePreference):
+    """User preference for notification channels."""
+
     # FIXME should be a MultipleChoicePreference
     section = notification
     name = "channels"
@@ -157,6 +184,8 @@ class NotificationChannels(ChoicePreference):
 
 @site_preferences_registry.register
 class PrimaryGroupPattern(StringPreference):
+    """Regular expression to match primary group."""
+
     section = account
     name = "primary_group_pattern"
     default = ""
@@ -166,6 +195,8 @@ class PrimaryGroupPattern(StringPreference):
 
 @site_preferences_registry.register
 class PrimaryGroupField(ChoicePreference):
+    """Field on person to match primary group against."""
+
     section = account
     name = "primary_group_field"
     default = "name"
@@ -196,6 +227,8 @@ class AutoLinkPerson(BooleanPreference):
 
 @site_preferences_registry.register
 class SchoolName(StringPreference):
+    """Display name of the school."""
+
     section = school
     name = "name"
     default = ""
@@ -205,6 +238,8 @@ class SchoolName(StringPreference):
 
 @site_preferences_registry.register
 class SchoolNameOfficial(StringPreference):
+    """Official name of the school, e.g. as given by supervisory authority."""
+
     section = school
     name = "name_official"
     default = ""
@@ -213,7 +248,38 @@ class SchoolNameOfficial(StringPreference):
 
 
 @site_preferences_registry.register
+class AllowPasswordChange(BooleanPreference):
+    section = auth
+    name = "allow_password_change"
+    default = True
+    verbose_name = _("Allow users to change their passwords")
+
+
+@site_preferences_registry.register
+class SignupEnabled(BooleanPreference):
+    section = auth
+    name = "signup_enabled"
+    default = False
+    verbose_name = _("Enable signup")
+
+
+@site_preferences_registry.register
+class OAuthAllowedGrants(MultipleChoicePreference):
+    """Grant Flows allowed for OAuth applications."""
+
+    section = auth
+    name = "oauth_allowed_grants"
+    default = [grant[0] for grant in AbstractApplication.GRANT_TYPES]
+    widget = SelectMultiple
+    verbose_name = _("Allowed Grant Flows for OAuth applications")
+    field_attribute = {"initial": []}
+    choices = AbstractApplication.GRANT_TYPES
+
+
+@site_preferences_registry.register
 class AvailableLanguages(MultipleChoicePreference):
+    """Available languages  of your AlekSIS instance."""
+
     section = internationalisation
     name = "languages"
     default = [code[0] for code in settings.LANGUAGES]
@@ -320,3 +386,23 @@ class PDFFileExpirationDuration(IntegerPreference):
     default = 3
     verbose_name = _("PDF file expiration duration")
     help_text = _("in minutes")
+
+
+@person_preferences_registry.register
+class AutoUpdatingDashboard(BooleanPreference):
+    """User preference for automatically updating the dashboard."""
+
+    section = general
+    name = "automatically_update_dashboard"
+    default = True
+    verbose_name = _("Automatically update the dashboard and its widgets")
+
+
+@site_preferences_registry.register
+class AutoUpdatingDashboardSite(BooleanPreference):
+    """Automatic updating of dashboard."""
+
+    section = general
+    name = "automatically_update_dashboard_site"
+    default = True
+    verbose_name = _("Automatically update the dashboard and its widgets sitewide")

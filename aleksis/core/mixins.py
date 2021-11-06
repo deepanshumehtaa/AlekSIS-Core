@@ -1,7 +1,7 @@
 # flake8: noqa: DJ12
 
 from datetime import datetime
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -25,9 +25,16 @@ from guardian.admin import GuardedModelAdmin
 from guardian.core import ObjectPermissionChecker
 from jsonstore.fields import IntegerField, JSONFieldMixin
 from material.base import Layout, LayoutNode
+from polymorphic.base import PolymorphicModelBase
+from polymorphic.managers import PolymorphicManager
+from polymorphic.models import PolymorphicModel
 from rules.contrib.admin import ObjectPermissionsModelAdmin
 
-from aleksis.core.managers import CurrentSiteManagerWithoutMigrations, SchoolTermRelatedQuerySet
+from aleksis.core.managers import (
+    CurrentSiteManagerWithoutMigrations,
+    PolymorphicCurrentSiteManager,
+    SchoolTermRelatedQuerySet,
+)
 
 
 class _ExtensibleModelBase(models.base.ModelBase):
@@ -132,7 +139,7 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         pass
 
     @property
-    def versions(self) -> List[Tuple[str, Tuple[Any, Any]]]:
+    def versions(self) -> list[tuple[str, tuple[Any, Any]]]:
         """Get all versions of this object from django-reversion.
 
         Includes diffs to previous version.
@@ -281,8 +288,8 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
 
     @classmethod
     def syncable_fields(
-        cls, recursive: bool = True, exclude_remotes: List = []
-    ) -> List[models.Field]:
+        cls, recursive: bool = True, exclude_remotes: list = []
+    ) -> list[models.Field]:
         """Collect all fields that can be synced on a model.
 
         If recursive is True, it recurses into related models and generates virtual
@@ -327,14 +334,14 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
         return fields
 
     @classmethod
-    def syncable_fields_choices(cls) -> Tuple[Tuple[str, str]]:
+    def syncable_fields_choices(cls) -> tuple[tuple[str, str]]:
         """Collect all fields that can be synced on a model."""
         return tuple(
             [(field.name, field.verbose_name or field.name) for field in cls.syncable_fields()]
         )
 
     @classmethod
-    def syncable_fields_choices_lazy(cls) -> Callable[[], Tuple[Tuple[str, str]]]:
+    def syncable_fields_choices_lazy(cls) -> Callable[[], tuple[tuple[str, str]]]:
         """Collect all fields that can be synced on a model."""
         return lazy(cls.syncable_fields_choices, tuple)
 
@@ -356,6 +363,22 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             del self._save_reverse
 
         super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class _ExtensiblePolymorphicModelBase(_ExtensibleModelBase, PolymorphicModelBase):
+    """Base class for extensible, polymorphic models."""
+
+
+class ExtensiblePolymorphicModel(
+    ExtensibleModel, PolymorphicModel, metaclass=_ExtensiblePolymorphicModelBase
+):
+    """Model class for extensible, polymorphic models."""
+
+    objects = PolymorphicCurrentSiteManager()
+    objects_all_sites = PolymorphicManager()
 
     class Meta:
         abstract = True
@@ -400,17 +423,16 @@ class ExtensibleForm(ModelForm, metaclass=_ExtensibleFormMetaclass):
     This mixin adds functionality which allows
     - apps to add layout nodes to the layout used by django-material
 
-    Add layout nodes
-    ================
+    :Add layout nodes:
 
-    ```
-    from material import Fieldset
+    .. code-block:: python
 
-    from aleksis.core.forms import ExampleForm
+        from material import Fieldset
 
-    node = Fieldset("field_name")
-    ExampleForm.add_node_to_layout(node)
-    ```
+        from aleksis.core.forms import ExampleForm
+
+        node = Fieldset("field_name")
+        ExampleForm.add_node_to_layout(node)
 
     """
 
