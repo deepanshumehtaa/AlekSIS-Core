@@ -21,11 +21,11 @@
 
   {% for notification in unread_notifications %}
     <figure class="alert primary scale-transition">
-        <i class="material-icons left">info</i>
+        <i class="material-icons left iconify" data-icon="mdi:information-outline"></i>
 
         <div class="right">
           <a class="btn-flat waves-effect" href="{% url "notification_mark_read" notification.id %}">
-            <i class="material-icons center">close</i>
+            <i class="material-icons center iconify" data-icon="mdi:close"></i>
           </a>
         </div>
 
@@ -65,7 +65,7 @@
                 <span class="badge new primary-color">{{ activity.app }}</span>
                 <span class="title">{{ activity.title }}</span>
                 <p>
-                  <i class="material-icons left">access_time</i> {{ activity.created }}
+                  <i class="material-icons left iconify" data-icon="mdi:clock-outline"></i> {{ activity.created }}
                 </p>
                 <p>
                   {{ activity.description }}
@@ -88,7 +88,7 @@
                 <span class="badge new primary-color">{{ notification.app }}</span>
                 <span class="title">{{ notification.title }}</span>
                 <p>
-                  <i class="material-icons left">access_time</i> {{ notification.created }}
+                  <i class="material-icons left iconify" data-icon="mdi:clock-outline"></i> {{ notification.created }}
                 </p>
                 <p>
                   {{ notification.description }}
