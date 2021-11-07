@@ -41,3 +41,19 @@ lint:
         && (echo "Yes, there are unmerged translations. Please merge them before adding new changes to the translation files." && false) \
         || (echo "No, there are no unmerged translations. You're ready to merge your changes." && true)
       fi
+
+i18n_ready:
+  interruptible: true
+  stage: test
+  #only:
+  #  - /^prepare-release.*$/
+  variables:
+    REPO: ${WEBLATE_REPO:-$(echo "aleksis/$CI_PROJECT_NAME" | tr '[:upper:]' '[:lower:]')}
+  before_script:
+    - pip3 install wlc
+  script:
+    - wlc --key $WEBLATE_API_KEY  --url https://translate.edugit.org/api/ -D repo $REPO
+    - |
+      wlc --key $WEBLATE_API_KEY --url https://translate.edugit.org/api/ repo $REPO \
+      | grep -q -E -i -w "needs_commit: True|needs_merge: True|needs_push: True" \
+      && (echo "There are unmerged translations. Please merge them before releasing a new version." && false)
