@@ -770,3 +770,7 @@ main figure.alert {
 svg.iconify {
   @extend i;
 }
+
+.btn .iconify.material-icons, .btn-flat .iconify.material-icons{
+  height: $button-height;
+}
