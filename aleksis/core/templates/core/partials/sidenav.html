@@ -14,6 +14,8 @@
             <i class="{{ item.icon_class }}"></i>
           {% elif item.icon %}
             <i class="material-icons">{{ item.icon }}</i>
+          {% elif item.svg_icon %}
+            <i class="material-icons iconify" data-icon="{{item.svg_icon}}"></i>
           {% endif %}
           {{ item.name }}
           {% build_badge item as badge %}
@@ -30,6 +32,8 @@
             <i class="{{ item.icon_class }}"></i>
           {% elif item.icon %}
             <i class="material-icons">{{ item.icon }}</i>
+          {% elif item.svg_icon %}
+            <i class="material-icons iconify" data-icon="{{item.svg_icon}}"></i>
           {% endif %}
           {{ item.name }}
           {% build_badge item as badge %}
@@ -46,6 +50,8 @@
                     <i class="{{ menu.icon_class }}"></i>
                   {% elif menu.icon %}
                     <i class="material-icons">{{ menu.icon }}</i>
+                  {% elif menu.svg_icon %}
+                    <i class="material-icons iconify" data-icon="{{menu.svg_icon}}"></i>
                   {% endif %}
                   {{ menu.name }}
                   {% build_badge item as badge %}

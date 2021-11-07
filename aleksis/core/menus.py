@@ -8,13 +8,13 @@ MENUS = {
         {
             "name": _("Login"),
             "url": settings.LOGIN_URL,
-            "icon": "lock_open",
+            "svg_icon": "mdi:login-variant",
             "validators": ["menu_generator.validators.is_anonymous"],
         },
         {
             "name": _("Sign up"),
             "url": "account_signup",
-            "icon": "how_to_reg",
+            "svg_icon": "mdi:account-plus-outline",
             "validators": [
                 "menu_generator.validators.is_anonymous",
                 ("aleksis.core.util.predicates.permission_validator", "core.can_register"),
@@ -23,7 +23,7 @@ MENUS = {
         {
             "name": _("Dashboard"),
             "url": "index",
-            "icon": "home",
+            "svg_icon": "mdi:home-outline",
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_dashboard_rule")
             ],
@@ -31,7 +31,7 @@ MENUS = {
         {
             "name": _("Notifications"),
             "url": "notifications",
-            "icon": "notifications",
+            "svg_icon": "mdi:bell-outline",
             "badge": unread_notifications_badge,
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_notifications",),
@@ -40,14 +40,14 @@ MENUS = {
         {
             "name": _("Account"),
             "url": "#",
-            "icon": "person",
+            "svg_icon": "mdi:account-outline",
             "root": True,
             "validators": ["menu_generator.validators.is_authenticated"],
             "submenu": [
                 {
                     "name": _("Stop impersonation"),
                     "url": "impersonate-stop",
-                    "icon": "stop",
+                    "svg_icon": "mdi:stop",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.is_impersonate",
@@ -56,19 +56,19 @@ MENUS = {
                 {
                     "name": _("Logout"),
                     "url": "logout",
-                    "icon": "exit_to_app",
+                    "svg_icon": "mdi:logout-variant",
                     "validators": ["menu_generator.validators.is_authenticated"],
                 },
                 {
                     "name": _("2FA"),
                     "url": "two_factor:profile",
-                    "icon": "phonelink_lock",
+                    "svg_icon": "mdi:two-factor-authentication",
                     "validators": ["menu_generator.validators.is_authenticated",],
                 },
                 {
                     "name": _("Change password"),
                     "url": "account_change_password",
-                    "icon": "lock",
+                    "svg_icon": "mdi:form-textbox-password",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         (
@@ -80,7 +80,7 @@ MENUS = {
                 {
                     "name": _("Me"),
                     "url": "person",
-                    "icon": "insert_emoticon",
+                    "svg_icon": "mdi:emoticon-outline",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -89,7 +89,7 @@ MENUS = {
                 {
                     "name": _("Preferences"),
                     "url": "preferences_person",
-                    "icon": "settings",
+                    "svg_icon": "mdi:cog-outline",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -98,7 +98,7 @@ MENUS = {
                 {
                     "name": _("Third-party accounts"),
                     "url": "socialaccount_connections",
-                    "icon": "public",
+                    "svg_icon": "mdi:earth",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -107,7 +107,7 @@ MENUS = {
                 {
                     "name": _("Authorized applications"),
                     "url": "oauth2_provider:authorized-token-list",
-                    "icon": "touch_app",
+                    "svg_icon": "mdi:gesture-tap-hold",
                     "validators": [
                         "menu_generator.validators.is_authenticated",
                         "aleksis.core.util.core_helpers.has_person",
@@ -118,7 +118,7 @@ MENUS = {
         {
             "name": _("Admin"),
             "url": "#",
-            "icon": "security",
+            "svg_icon": "mdi:security",
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_admin_menu"),
             ],
@@ -126,7 +126,7 @@ MENUS = {
                 {
                     "name": _("Announcements"),
                     "url": "announcements",
-                    "icon": "announcement",
+                    "svg_icon": "mdi:message-alert-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -137,7 +137,7 @@ MENUS = {
                 {
                     "name": _("School terms"),
                     "url": "school_terms",
-                    "icon": "date_range",
+                    "svg_icon": "mdi:calendar-range-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -148,7 +148,7 @@ MENUS = {
                 {
                     "name": _("Dashboard widgets"),
                     "url": "dashboard_widgets",
-                    "icon": "dashboard",
+                    "svg_icon": "mdi:view-dashboard-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -159,7 +159,7 @@ MENUS = {
                 {
                     "name": _("Data management"),
                     "url": "data_management",
-                    "icon": "view_list",
+                    "svg_icon": "mdi:chart-donut",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -170,7 +170,7 @@ MENUS = {
                 {
                     "name": _("System status"),
                     "url": "system_status",
-                    "icon": "power_settings_new",
+                    "svg_icon": "mdi:power-settings",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -181,7 +181,7 @@ MENUS = {
                 {
                     "name": _("Impersonation"),
                     "url": "impersonate-list",
-                    "icon": "people",
+                    "svg_icon": "mdi:account-switch-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -192,7 +192,7 @@ MENUS = {
                 {
                     "name": _("Configuration"),
                     "url": "preferences_site",
-                    "icon": "settings",
+                    "svg_icon": "mdi:tune",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -203,19 +203,19 @@ MENUS = {
                 {
                     "name": _("Data checks"),
                     "url": "check_data",
-                    "icon": "done_all",
+                    "svg_icon": "mdi:list-status",
                     "validators": ["menu_generator.validators.is_superuser"],
                 },
                 {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
-                    "icon": "settings",
+                    "svg_icon": "mdi:database-cog-outline",
                     "validators": ["menu_generator.validators.is_superuser",],
                 },
                 {
                     "name": _("OAuth2 Applications"),
                     "url": "oauth_list",
-                    "icon": "touch_app",
+                    "svg_icon": "mdi:gesture-tap-hold",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -228,7 +228,7 @@ MENUS = {
         {
             "name": _("People"),
             "url": "#",
-            "icon": "people",
+            "svg_icon": "mdi:account-group-outline",
             "root": True,
             "validators": [
                 ("aleksis.core.util.predicates.permission_validator", "core.view_people_menu_rule")
@@ -237,7 +237,7 @@ MENUS = {
                 {
                     "name": _("Persons"),
                     "url": "persons",
-                    "icon": "person",
+                    "svg_icon": "mdi:account-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -248,7 +248,7 @@ MENUS = {
                 {
                     "name": _("Groups"),
                     "url": "groups",
-                    "icon": "group",
+                    "svg_icon": "mdi:account-multiple-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -259,7 +259,7 @@ MENUS = {
                 {
                     "name": _("Group types"),
                     "url": "group_types",
-                    "icon": "category",
+                    "svg_icon": "mdi:shape-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -270,7 +270,7 @@ MENUS = {
                 {
                     "name": _("Persons and accounts"),
                     "url": "persons_accounts",
-                    "icon": "person_add",
+                    "svg_icon": "mdi:account-plus-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -281,7 +281,7 @@ MENUS = {
                 {
                     "name": _("Groups and child groups"),
                     "url": "groups_child_groups",
-                    "icon": "group_add",
+                    "svg_icon": "mdi:account-multiple-plus-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
@@ -292,7 +292,7 @@ MENUS = {
                 {
                     "name": _("Additional fields"),
                     "url": "additional_fields",
-                    "icon": "style",
+                    "svg_icon": "mdi:palette-swatch-outline",
                     "validators": [
                         (
                             "aleksis.core.util.predicates.permission_validator",
