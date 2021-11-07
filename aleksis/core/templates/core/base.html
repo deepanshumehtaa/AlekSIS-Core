@@ -62,7 +62,7 @@
         {% if user.is_authenticated %}
           <li>{% trans "Logged in as" %} {{ user.get_username }}</li>
           <li>
-            <a href="{% url 'logout' %}">{% trans "Logout" %} <i class="iconify material-icons right" data-icon="mdi:logout"></i></a>
+            <a href="{% url 'logout' %}">{% trans "Logout" %} <i class="iconify material-icons right" data-icon="mdi:logout-variant"></i></a>
           </li>
         {% endif %}
       </ul>
