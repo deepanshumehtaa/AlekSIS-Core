@@ -19,28 +19,28 @@
     <p>
       {% if can_change_person %}
         <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">edit</i>
+          <i class="material-icons left iconify" data-icon="mdi:pencil-outline"></i>
           {% trans "Edit" %}
         </a>
       {% endif %}
 
       {% if can_delete_person %}
         <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light red">
-          <i class="material-icons left">delete</i>
+          <i class="material-icons left iconify" data-icon="mdi:delete-outline"></i>
           {% trans "Delete" %}
         </a>
       {% endif %}
 
       {% if can_change_person_preferences %}
         <a href="{% url "preferences_person" person.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">settings</i>
+          <i class="material-icons left iconify" data-icon="mdi:cog-outline"></i>
           {% trans "Change preferences" %}
         </a>
       {% endif %}
 
     {% if can_impersonate and person.user %}
         <a href="{% url "impersonate-start" person.user.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">portrait</i>
+          <i class="material-icons left iconify" data-icon="mdi:account-box-outline"></i>
           {% trans "Impersonate" %}
         </a>
       {% endif %}
@@ -66,7 +66,7 @@
 
           </td>
           <td>
-            <i class="material-icons small">person</i>
+            <i class="material-icons small iconify" data-icon="mdi:account-outline"></i>
           </td>
           <td>{{ person.first_name }}</td>
           <td>{{ person.additional_name }}</td>
@@ -74,7 +74,7 @@
         </tr>
         <tr>
           <td>
-            <i class="material-icons small">face</i>
+            <i class="material-icons small iconify" data-icon="mdi:human-non-binary"></i>
           </td>
           <td colspan="3">{{ person.get_sex_display }}</td>
         </tr>
@@ -82,7 +82,7 @@
         {% if can_view_address %}
           <tr>
             <td>
-              <i class="material-icons small">home</i>
+              <i class="material-icons small iconify" data-icon="mdi:map-marker-outline"></i>
             </td>
             <td colspan="2">{{ person.street }} {{ person.housenumber }}</td>
             <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
@@ -92,14 +92,14 @@
         {% if can_view_contact_details %}
           <tr>
             <td>
-              <i class="material-icons small">phone</i>
+              <i class="material-icons small iconify" data-icon="mdi:phone-outline"></i>
             </td>
             <td>{{ person.phone_number }}</td>
             <td>{{ person.mobile_number }}</td>
           </tr>
           <tr>
             <td>
-              <i class="material-icons small">email</i>
+              <i class="material-icons small iconify" data-icon="mdi:email-outline"></i>
             </td>
             <td colspan="3">{{ person.email }}</td>
           </tr>
@@ -108,7 +108,7 @@
         {% if can_view_personal_details %}
           <tr>
             <td>
-              <i class="material-icons small">cake</i>
+              <i class="material-icons small iconify" data-icon="mdi:cake"></i>
             </td>
             <td colspan="3">{{ person.date_of_birth|date }}</td>
           </tr>
