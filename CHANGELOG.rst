@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Make style.css and favicons cachable.
+
 `2.1`_ - 2021-11-05
 -------------------
 
