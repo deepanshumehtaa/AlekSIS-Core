@@ -9,6 +9,16 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Changed
+~~~~~~~
+
+* Use correct favicon as default AlekSIS favicon
+
+Removed
+~~~~~~~
+
+* Remove old generated AlekSIS icons
+
 `2.1`_ - 2021-11-05
 -------------------
 
