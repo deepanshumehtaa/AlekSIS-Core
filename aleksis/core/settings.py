@@ -635,7 +635,7 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
 
 DEFAULT_FAVICON_PATHS = {
     "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
-    "favicon": os.path.join(STATIC_ROOT, "icons/favicon_48.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-favicon.png"),
 }
 PWA_ICONS_CONFIG = {
     "android": [192, 512],
