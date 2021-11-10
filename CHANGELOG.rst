@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
+
 Removed
 ~~~~~~~
 
