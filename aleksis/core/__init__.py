@@ -1,6 +1,6 @@
 from importlib import metadata
 
-from .celery import app as celery_app
+from .celery import app as celery_app  # noqa
 
 try:
     __version__ = metadata.distribution("AlekSIS-Core").version
