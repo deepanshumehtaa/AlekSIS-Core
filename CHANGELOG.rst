@@ -14,6 +14,11 @@ Fixed
 
 * Make style.css and favicons cachable.
 
+Removed
+~~~~~~~
+
+* Remove fallback code from optional Celery as it's now non-optional.
+
 `2.1`_ - 2021-11-05
 -------------------
 
