@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Import model extensions from other apps before form extensions.
+
 Removed
 ~~~~~~~
 
