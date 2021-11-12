@@ -13,6 +13,7 @@ Fixed
 ~~~~~
 
 * Make style.css and favicons cachable.
+* Import model extensions from other apps before form extensions.
 * Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
 
 Removed

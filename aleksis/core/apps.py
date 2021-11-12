@@ -47,7 +47,7 @@ class CoreConfig(AppConfig):
         from django.conf import settings  # noqa
 
         # Autodiscover various modules defined by AlekSIS
-        autodiscover_modules("form_extensions", "model_extensions", "checks")
+        autodiscover_modules("model_extensions", "form_extensions", "checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")
