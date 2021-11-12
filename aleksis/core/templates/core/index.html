@@ -108,7 +108,7 @@
     </div>
   {% endif %}
 
-  {% if user.person.preferences.general__automatically_update_dashboard and request.site.preferences.general__automatically_update_dashboard_site %}
+  {% if user.person.preferences.general__automatically_update_dashboard and SITE_PREFERENCES.general__automatically_update_dashboard_site %}
     <script type="text/javascript" src="{% static "js/include_ajax_live.js" %}"></script>
   {% endif %}
 {% endblock %}
