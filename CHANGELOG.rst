@@ -12,6 +12,7 @@ Unreleased
 Fixed
 ~~~~~
 
+* Make style.css and favicons cachable.
 * Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
 
 Removed
