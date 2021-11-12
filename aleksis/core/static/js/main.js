@@ -83,6 +83,9 @@ $(document).ready(function () {
     // Initialize Modals [MAT]
     $('.modal').modal();
 
+    // Initialize image boxes [Materialize]
+    $('.materialboxed').materialbox();
+
     // Intialize Tabs [Materialize]
     $('.tabs').tabs();
 

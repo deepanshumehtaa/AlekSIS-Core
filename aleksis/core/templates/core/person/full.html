@@ -6,61 +6,106 @@
 {% load render_table from django_tables2 %}
 
 {% block browser_title %}{{ person.first_name }} {{ person.last_name }}{% endblock %}
+{% block no_page_title%}{% endblock %}
 
 {% block content %}
-  <h1>{{ person.first_name }} {{ person.last_name }}</h1>
 
   {% has_perm 'core.edit_person_rule' user person as can_change_person %}
   {% has_perm 'core.change_person_preferences_rule' user person as can_change_person_preferences %}
   {% has_perm 'core.delete_person_rule' user person as can_delete_person %}
   {% has_perm "core.impersonate_rule" user person as can_impersonate %}
 
+  <div id="hero-bg" style="background-image: url('{% static "img/hero.svg" %}');"></div>
+
   {% if can_change_person or can_change_person_preferences or can_delete_person or can_impersonate %}
-    <p>
-      {% if can_change_person %}
-        <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">edit</i>
-          {% trans "Edit" %}
-        </a>
-      {% endif %}
+      <p class="person-buttons hide-on-med-and-down">
+        {% if can_change_person %}
+          <a href="{% url 'edit_person_by_id' person.id %}" class="btn waves-effect waves-light">
+            <i class="material-icons left">edit</i>
+            {% trans "Edit" %}
+          </a>
+        {% endif %}
 
-      {% if can_delete_person %}
-        <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light red">
-          <i class="material-icons left">delete</i>
-          {% trans "Delete" %}
-        </a>
-      {% endif %}
+        {% if can_delete_person %}
+          <a href="{% url 'delete_person_by_id' person.id %}" class="btn waves-effect waves-light red">
+            <i class="material-icons left">delete</i>
+            {% trans "Delete" %}
+          </a>
+        {% endif %}
 
-      {% if can_change_person_preferences %}
-        <a href="{% url "preferences_person" person.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">settings</i>
-          {% trans "Change preferences" %}
-        </a>
-      {% endif %}
+        {% if can_change_person_preferences %}
+          <a href="{% url 'preferences_person' person.id %}" class="btn waves-effect waves-light">
+            <i class="material-icons left">settings</i>
+            {% trans "Change preferences" %}
+          </a>
+        {% endif %}
 
-    {% if can_impersonate and person.user %}
-        <a href="{% url "impersonate-start" person.user.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">portrait</i>
-          {% trans "Impersonate" %}
-        </a>
-      {% endif %}
-    </p>
-  {% endif %}
+      {% if can_impersonate and person.user %}
+          <a href="{% url 'impersonate-start' person.user.id %}" class="btn waves-effect waves-light">
+            <i class="material-icons left">portrait</i>
+            {% trans "Impersonate" %}
+          </a>
+        {% endif %}
+      </p>
+    {% endif %}
 
-  <h2>{% blocktrans %}Contact details{% endblocktrans %}</h2>
-  <div class="row">
-    <div class="col s12 m4">
+  <header class="person-container">
+    <div class="clip-circle materialboxed">
       {% has_perm 'core.view_photo_rule' user person as can_view_photo %}
       {% if person.photo and can_view_photo %}
-        <img class="person-img" src="{{ person.photo.url }}"
+        <img class="hundred-percent" src="{{ person.photo.url }}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
       {% else %}
-        <img class="person-img" src="{% static 'img/fallback.png' %}"
+        <img class="hundred-percent" src="{% static 'img/fallback.png' %}"
              alt="{{ person.first_name }} {{ person.last_name }}"/>
       {% endif %}
     </div>
-    <div class="col s12 m8">
-      <table class="responsive-table highlight">
+    <h1>
+      {{ person.first_name }} {{ person.last_name }}
+      {% if person.user %}
+        <small class="grey-text">{{ person.user.username }}</small>
+      {% endif %}
+      </h1>
+  </header>
+
+  <div class="row">
+    {% if can_change_person or can_change_person_preferences or can_delete_person or can_impersonate %}
+      <div class="col s12 hide-on-large-only">
+        <div class="collection">
+          {% if can_change_person %}
+            <a href="{% url 'edit_person_by_id' person.id %}" class="collection-item waves-effect waves-dark">
+              <i class="material-icons left">edit</i>
+              {% trans "Edit" %}
+            </a>
+          {% endif %}
+
+          {% if can_delete_person %}
+            <a href="{% url 'delete_person_by_id' person.id %}" class="collection-item waves-effect waves-red red-text">
+              <i class="material-icons left">delete</i>
+              {% trans "Delete" %}
+            </a>
+          {% endif %}
+
+          {% if can_change_person_preferences %}
+            <a href="{% url 'preferences_person' person.id %}" class="collection-item waves-effect waves-dark">
+              <i class="material-icons left">settings</i>
+              {% trans "Change preferences" %}
+            </a>
+          {% endif %}
+
+        {% if can_impersonate and person.user %}
+            <a href="{% url 'impersonate-start' person.user.id %}" class="collection-item waves-effect waves-dark">
+              <i class="material-icons left">portrait</i>
+              {% trans "Impersonate" %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="col s12 l4">
+      <h2>{% blocktrans %}Contact details{% endblocktrans %}</h2>
+      <div class="card-panel">
+        <table class="highlight">
         <tr>
           <td rowspan="6">
 

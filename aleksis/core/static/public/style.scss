@@ -92,8 +92,11 @@ header, main, footer {
 /* MAIN */
 /********/
 
+$main-padding-lr: 20px;
+$main-padding-tb: 10px;
+
 main {
-  padding: 10px 20px;
+  padding: $main-padding-tb $main-padding-lr;
   flex: 1 0 auto;
 }
 
@@ -767,4 +770,70 @@ main figure.alert {
 
 .margin-bottom {
   margin-bottom: 0.7rem !important;
+}
+
+/* Person overview */
+
+.clip-circle:not(.active) {
+  width: 20vh;
+  height: 20vh;
+  background: #f9f9f9;
+  clip-path: circle(50% at center center);
+
+  & img {
+    width: 20vh;
+    height: 20vh;
+    object-fit: cover;
+  }
+}
+
+#hero-bg {
+  position: absolute;
+  width: calc(100% + #{$main-padding-lr});
+  height: 30vh;
+  left: -$main-padding-lr;
+  top: 0;
+  overflow: hidden;
+  background-color: lighten($primary-color, 30%);
+  z-index: -1;
+}
+
+.person-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: max-content;
+  position: absolute;
+  right: $main-padding-lr;
+  margin: 0;
+  align-items: end;
+  & a {
+    width: 50px;
+    -webkit-transition: width 0.5s 0s ease;
+    -moz-transition: width 0.5s 0s ease;
+    -o-transition: width 0.5s 0s ease;
+    transition: width 0.5s 0s ease;
+
+    &:hover {
+      width: max-content;
+    }
+  }
+}
+
+.person-container {
+  margin: calc(30vh - #{$main-padding-tb} - #{$navbar-height} - 10vh) 0 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.person-collection .collection-item.avatar {
+  display: flex;
+  align-items: center;
+
+  & img.circle {
+    object-fit: cover;
+  }
 }
