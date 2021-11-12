@@ -107,46 +107,57 @@
       <div class="card-panel">
         <table class="highlight">
         <tr>
-          <td rowspan="6">
-
-          </td>
           <td>
             <i class="material-icons small">person</i>
           </td>
-          <td>{{ person.first_name }}</td>
-          <td>{{ person.additional_name }}</td>
-          <td>{{ person.last_name }}</td>
+          <td>{{ person.first_name }} {{ person.additional_name }} {{ person.last_name }}</td>
         </tr>
         <tr>
           <td>
             <i class="material-icons small">face</i>
           </td>
-          <td colspan="3">{{ person.get_sex_display }}</td>
+          <td>{% firstof person.get_sex_display "–" %}</td>
         </tr>
         {% has_perm 'core.view_address_rule' user person as can_view_address %}
         {% if can_view_address %}
           <tr>
-            <td>
+            <td rowspan="2">
               <i class="material-icons small">home</i>
             </td>
-            <td colspan="2">{{ person.street }} {{ person.housenumber }}</td>
-            <td colspan="2">{{ person.postal_code }} {{ person.place }}</td>
+            <td>{% firstof person.street "–" %} {{ person.housenumber }}</td>
+          </tr>
+          <tr>
+            <td>{{ person.postal_code }} {% firstof person.place "–" %}</td>
           </tr>
         {% endif %}
         {% has_perm 'core.view_contact_details_rule' user person as can_view_contact_details %}
         {% if can_view_contact_details %}
           <tr>
-            <td>
+            <td rowspan="2">
               <i class="material-icons small">phone</i>
             </td>
-            <td>{{ person.phone_number }}</td>
-            <td>{{ person.mobile_number }}</td>
+            <td>
+              <a href="tel:{{ person.phone_number }}">{{ person.phone_number }}</a>
+              <small>({% trans "home number" %})</small>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="tel:{{ person.phone_number }}">{{ person.mobile_number }}</a>
+              <small>({% trans "mobile number" %})</small>
+            </td>
           </tr>
           <tr>
             <td>
               <i class="material-icons small">email</i>
             </td>
-            <td colspan="3">{{ person.email }}</td>
+            <td>
+              {% if person.email %}
+                <a href="mailto:{{ person.email }}">{{ person.email }}</a>
+              {% else %}
+                –
+              {% endif %}
+            </td>
           </tr>
         {% endif %}
         {% has_perm 'core.view_personal_details_rule' user person as can_view_personal_details %}
@@ -155,21 +166,23 @@
             <td>
               <i class="material-icons small">cake</i>
             </td>
-            <td colspan="2">{{ person.date_of_birth|date }}</td>
-            <td colspan="2">{{ person.place_of_birth }}</td>
+            <td>
+              <time datetime="{{ person.date_of_birth|date:'c' }}">{{ person.date_of_birth|date }}</time>
+              {% firstof person.place_of_birth "–" %}
+            </td>
           </tr>
         {% endif %}
       </table>
+      </div>
     </div>
     {% if person.description %}
-      <div class="col s12 m12">
+      <div class="col s12 m6">
         <h2>{% trans "Description" %}</h2>
         <p>
           {{ person.description }}
         </p>
       </div>
     {% endif %}
-  </div>
 
   {% if person.children.all and can_view_personal_details %}
     <div class="col s12 m12">
