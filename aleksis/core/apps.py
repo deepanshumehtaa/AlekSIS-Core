@@ -102,7 +102,8 @@ class CoreConfig(AppConfig):
 
                 if new_value:
                     Favicon.on_site.update_or_create(
-                        title=name, defaults={"isFavicon": is_favicon, "faviconImage": new_value},
+                        title=name,
+                        defaults={"isFavicon": is_favicon, "faviconImage": new_value},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()
