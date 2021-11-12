@@ -9,6 +9,7 @@ from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from templated_email import send_templated_mail
+from webpush import send_user_notification
 
 from .core_helpers import lazy_preference
 
@@ -58,12 +59,25 @@ def _send_notification_sms(
     )
 
 
+def _send_push_notification(notification: "Notification", template: str = "") -> None:
+    print("sending")
+    payload = {
+        "head": f"[{notification.sender or lazy_preference('general', 'title')}] {notification.title}",
+        "body": notification.description,
+        "link": notification.link,
+        "icon": "/static/icon/favicon_48.png",  # Fixme: make this dynamic
+    }
+
+    send_user_notification(user=notification.recipient.user, payload=payload, ttl=1000)
+
+
 # Mapping of channel id to name and two functions:
 # - Check for availability
 # - Send notification through it
 _CHANNELS_MAP = {
     "email": (_("E-Mail"), lambda: lazy_preference("mail", "address"), _send_notification_email),
     "sms": (_("SMS"), lambda: getattr(settings, "TWILIO_SID", None), _send_notification_sms),
+    "push": (_("PushNotification"), lambda: True, _send_push_notification),
 }
 
 

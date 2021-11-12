@@ -1,4 +1,4 @@
-{% load favtags %}
+{% load favtags webpush_notifications %}
 
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -22,6 +22,8 @@
 <meta name="browsermode" content="application">
 
 <link href="/manifest.json" rel="manifest">
+
+{% webpush_header %}
 
 {% place_favicon %}
 

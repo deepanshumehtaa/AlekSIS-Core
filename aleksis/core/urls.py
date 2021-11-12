@@ -238,6 +238,7 @@ urlpatterns = [
         name="edit_default_dashboard",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
+    path("webpush/", include("webpush.urls")),
 ]
 
 # Use custom server error handler to get a request object in the template

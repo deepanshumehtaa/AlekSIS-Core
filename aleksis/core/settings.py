@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     "django_filters",
     "oauth2_provider",
     "rest_framework",
+    "webpush",
 ]
 
 merge_app_settings("INSTALLED_APPS", INSTALLED_APPS, True)
@@ -888,6 +889,13 @@ if SENTRY_ENABLED:
         ],
         **SENTRY_SETTINGS,
     )
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": _settings.get("webpush.public_key", ""),
+    "VAPID_PRIVATE_KEY": _settings.get("webpush.private_key", ""),
+    "VAPID_ADMIN_EMAIL": _settings.get("auth.superuser.email", "root@example.com"),
+}
+
 
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")

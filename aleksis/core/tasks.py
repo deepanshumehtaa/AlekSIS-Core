@@ -5,7 +5,7 @@ from .celery import app
 from .util.notifications import send_notification as _send_notification
 
 
-@app.task
+# @app.task
 def send_notification(notification: int, resend: bool = False) -> None:
     """Send a notification object to its recipient.
 
