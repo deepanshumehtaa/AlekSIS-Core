@@ -297,12 +297,7 @@ def person(request: HttpRequest, id_: Optional[int] = None) -> HttpResponse:
     context["person"] = person
 
     # Get groups where person is member of
-    groups = Group.objects.filter(members=person)
-
-    # Build table
-    groups_table = GroupsTable(groups)
-    RequestConfig(request).configure(groups_table)
-    context["groups_table"] = groups_table
+    context["groups"] = Group.objects.filter(members=person)
 
     return render(request, "core/person/full.html", context)
 

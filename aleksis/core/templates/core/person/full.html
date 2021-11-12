@@ -140,9 +140,20 @@
     </div>
   {% endif %}
 
-  {% has_perm 'core.view_person_groups_rule' user person as can_view_groups %}
-  {% if can_view_groups %}
-    <h2>{% blocktrans %}Groups{% endblocktrans %}</h2>
-    {% render_table groups_table %}
-  {% endif %}
+    {% has_perm 'core.view_person_groups_rule' user person as can_view_groups %}
+    {% if can_view_groups and groups %}
+      <div class="col s12 m6 l4">
+        <h2>{% blocktrans %}Groups{% endblocktrans %}</h2>
+        <div class="card-panel">
+          <div class="collection">
+            {% for group in groups %}
+              <a href="{{ group.get_absolute_url }}" class="collection-item">
+                {{ group.name }} ({{ group.school_term }})
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
