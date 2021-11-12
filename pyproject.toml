@@ -110,7 +110,7 @@ boto3 = {version = "^1.17.33", optional = true}
 django-cleanup = "^5.1.0"
 djangorestframework = "^3.12.4"
 Whoosh = "^2.7.4"
-django-titofisto = "^0.1.0"
+django-titofisto = "^0.2.0"
 haystack-redis = "^0.0.1"
 python-gnupg = "^0.4.7"
 sentry-sdk = {version = "^1.4.3", optional = true}
