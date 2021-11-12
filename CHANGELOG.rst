@@ -12,6 +12,7 @@ Unreleased
 Fixed
 ~~~~~
 
+* Make style.css and favicons cachable.
 * Import model extensions from other apps before form extensions.
 
 Removed
