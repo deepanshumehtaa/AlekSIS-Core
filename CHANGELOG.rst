@@ -9,12 +9,18 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Provide ``SITE_PREFERENCES`` template variable for easier and request-independent access on all site preferences.
+
 Fixed
 ~~~~~
 
 * Make style.css and favicons cachable.
 * Import model extensions from other apps before form extensions.
 * Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
+* Show correct logo and school title in print template if created in the background.
 
 Removed
 ~~~~~~~

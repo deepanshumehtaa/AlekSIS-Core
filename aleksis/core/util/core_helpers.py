@@ -213,6 +213,7 @@ def custom_information_processor(request: HttpRequest) -> dict:
         "ADMINS": settings.ADMINS,
         "PWA_ICONS": regrouped_pwa_icons,
         "SENTRY_ENABLED": settings.SENTRY_ENABLED,
+        "SITE_PREFERENCES": get_site_preferences(),
     }
 
     if settings.SENTRY_ENABLED:
