@@ -227,7 +227,9 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
-            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
         }
     }
     if REDIS_PASSWORD:
@@ -253,10 +255,18 @@ SESSION_CACHE_ALIAS = "default"
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 AUTH_INITIAL_SUPERUSER = {
@@ -387,7 +397,11 @@ if _settings.get("ldap.uri", None):
     # Search attributes to find users by username
     AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
         *[
-            LDAPSearch(entry["base"], ldap.SCOPE_SUBTREE, entry.get("filter", "(uid=%(user)s)"),)
+            LDAPSearch(
+                entry["base"],
+                ldap.SCOPE_SUBTREE,
+                entry.get("filter", "(uid=%(user)s)"),
+            )
             for entry in _AUTH_LDAP_USER_SETTINGS
         ]
     )
@@ -725,7 +739,13 @@ CKEDITOR_CONFIGS = {
             {"name": "colors", "items": ["TextColor", "BGColor"]},
             {"name": "tools", "items": ["Maximize", "ShowBlocks"]},
             {"name": "about", "items": ["About"]},
-            {"name": "customtools", "items": ["Preview", "Maximize",]},
+            {
+                "name": "customtools",
+                "items": [
+                    "Preview",
+                    "Maximize",
+                ],
+            },
         ],
         "toolbar": "Full",
         "tabSpaces": 4,
@@ -777,7 +797,10 @@ LOGGING = {
         "null": {"class": "logging.NullHandler"},
     },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
-    "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "root": {
+        "handlers": ["console"],
+        "level": _settings.get("logging.level", "WARNING"),
+    },
     "loggers": {},
 }
 
@@ -798,7 +821,10 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
 HAYSTACK_CONNECTIONS = {
-    "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
+    "default": {
+        "ENGINE": "haystack_redis.RedisEngine",
+        "PATH": REDIS_URL,
+    },
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"

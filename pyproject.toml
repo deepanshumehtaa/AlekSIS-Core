@@ -121,7 +121,7 @@ s3 = ["boto3", "django-storages"]
 sentry = ["sentry"]
 
 [tool.poetry.dev-dependencies]
-aleksis-builddeps = "*"
+aleksis-builddeps = "^5"
 uwsgi = "^2.0"
 
 [tool.poetry.scripts]
