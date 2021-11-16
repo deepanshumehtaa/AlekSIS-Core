@@ -493,7 +493,7 @@ NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "n
 YARN_INSTALLED_APPS = [
     "@fontsource/roboto",
     "jquery",
-    "materialize-css",
+    "@materializecss/materialize",
     "material-design-icons-iconfont",
     "select2",
     "select2-materialize",
@@ -513,7 +513,7 @@ SELECT2_JS = JS_URL + "/select2/dist/js/select2.min.js"
 SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
-    "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
+    "materialize": {"js_url": JS_URL + "/@materializecss/materialize/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
     "material-design-icons": {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
@@ -543,7 +543,9 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get("materialize.sass_path", os.path.join(JS_ROOT, "materialize-css", "sass")),
+    _settings.get(
+        "materialize.sass_path", os.path.join(JS_ROOT, "@materializecss", "materialize", "sass")
+    ),
     os.path.join(STATIC_ROOT, "public"),
 ]
 
