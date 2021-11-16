@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Fixed
+~~~~~
+
+* Sender wasn't displayed for notifications on dashboard.
+* Notifications and activities on dashboard weren't sorted from old to new.
+
 `2.1.1`_ - 2021-11-14
 ---------------------
 
