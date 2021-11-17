@@ -85,7 +85,7 @@
           <ul class="collection">
             {% for notification in notifications %}
               <li class="collection-item">
-                <span class="badge new primary-color">{{ notification.app }}</span>
+                <span class="badge new primary-color">{{ notification.sender }}</span>
                 <span class="title">{{ notification.title }}</span>
                 <p>
                   <i class="material-icons left">access_time</i> {{ notification.created }}
