@@ -12,6 +12,7 @@ Unreleased
 Fixed
 ~~~~~
 
+* Use new MaterializeCSS fork because the old version is no longer maintained.
 * Sender wasn't displayed for notifications on dashboard.
 * Notifications and activities on dashboard weren't sorted from old to new.
 
