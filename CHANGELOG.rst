@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Fixed
+~~~~~
+
+* Use new MaterializeCSS fork because the old version is no longer maintained.
+
 `2.1.1`_ - 2021-11-14
 ---------------------
 
