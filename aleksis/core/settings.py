@@ -21,6 +21,10 @@ for directory in DIRS_FOR_DYNACONF:
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.ini"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.yaml"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.toml"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.json"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.ini"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.yaml"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.toml"))
 
 _settings = LazySettings(
     ENVVAR_PREFIX_FOR_DYNACONF=ENVVAR_PREFIX_FOR_DYNACONF,

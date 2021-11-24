@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Support config files in sub-directories
+
 Fixed
 ~~~~~
 
