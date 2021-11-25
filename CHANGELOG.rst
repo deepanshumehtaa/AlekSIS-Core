@@ -12,6 +12,7 @@ Unreleased
 Added
 ~~~~~
 
+* Support config files in sub-directories
 * Support (icon) tabs in the top navbar.
 
 Fixed
