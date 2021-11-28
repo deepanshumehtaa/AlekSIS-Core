@@ -245,6 +245,56 @@ urlpatterns = [
         {"default": True},
         name="edit_default_dashboard",
     ),
+    path(
+        "permissions/global/user/",
+        views.UserGlobalPermissionsListBaseView.as_view(),
+        name="manage_user_global_permissions",
+    ),
+    path(
+        "permissions/global/group/",
+        views.GroupGlobalPermissionsListBaseView.as_view(),
+        name="manage_group_global_permissions",
+    ),
+    path(
+        "permissions/object/user/",
+        views.UserObjectPermissionsListBaseView.as_view(),
+        name="manage_user_object_permissions",
+    ),
+    path(
+        "permissions/object/group/",
+        views.GroupObjectPermissionsListBaseView.as_view(),
+        name="manage_group_object_permissions",
+    ),
+    path(
+        "permissions/global/user/<int:pk>/delete/",
+        views.UserGlobalPermissionDeleteView.as_view(),
+        name="delete_user_global_permission",
+    ),
+    path(
+        "permissions/global/group/<int:pk>/delete/",
+        views.GroupGlobalPermissionDeleteView.as_view(),
+        name="delete_group_global_permission",
+    ),
+    path(
+        "permissions/object/user/<int:pk>/delete/",
+        views.UserObjectPermissionDeleteView.as_view(),
+        name="delete_user_object_permission",
+    ),
+    path(
+        "permissions/object/group/<int:pk>/delete/",
+        views.GroupObjectPermissionDeleteView.as_view(),
+        name="delete_group_object_permission",
+    ),
+    path(
+        "permissions/assign/",
+        views.SelectPermissionForAssignView.as_view(),
+        name="select_permission_for_assign",
+    ),
+    path(
+        "permissions/<int:pk>/assign/",
+        views.AssignPermissionView.as_view(),
+        name="assign_permission",
+    ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
 ]
 

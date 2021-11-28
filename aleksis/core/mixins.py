@@ -1,7 +1,7 @@
 # flake8: noqa: DJ12
 
 from datetime import datetime
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -11,6 +11,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import JSONField, QuerySet
+from django.db.models.fields import CharField, TextField
 from django.forms.forms import BaseForm
 from django.forms.models import ModelForm, ModelFormMetaclass
 from django.http import HttpResponse
@@ -275,6 +276,15 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
                 return cls.objects.filter(**{id_field_name: id_field_val})
 
             to.property_(_virtual_related, related_name)
+
+    @classmethod
+    def get_filter_fields(cls) -> List[str]:
+        """Get names of all text-searchable fields of this model."""
+        fields = []
+        for field in cls.syncable_fields():
+            if isinstance(field, (CharField, TextField)):
+                fields.append(field.name)
+        return fields
 
     @classmethod
     def syncable_fields(
