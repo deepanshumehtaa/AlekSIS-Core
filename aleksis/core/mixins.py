@@ -278,11 +278,11 @@ class ExtensibleModel(models.Model, metaclass=_ExtensibleModelBase):
             to.property_(_virtual_related, related_name)
 
     @classmethod
-    def get_search_fields(cls) -> List[str]:
+    def get_filter_fields(cls) -> List[str]:
         """Get names of all text-searchable fields of this model."""
         fields = []
         for field in cls.syncable_fields():
-            if isinstance(field, CharField) or isinstance(field, TextField):
+            if isinstance(field, (CharField, TextField)):
                 fields.append(field.name)
         return fields
 

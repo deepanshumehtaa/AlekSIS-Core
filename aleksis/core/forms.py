@@ -456,7 +456,7 @@ class AssignPermissionForm(forms.Form):
         model_class = self.permission.content_type.model_class()
         queryset = model_class.objects.all()
         self.fields["objects"].queryset = queryset
-        search_fields = getattr(model_class, "get_search_fields", lambda: [])()
+        search_fields = getattr(model_class, "get_filter_fields", lambda: [])()
 
         # Use select2 only if there are any searchable fields as it can't work without
         if search_fields:
