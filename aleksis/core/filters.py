@@ -1,9 +1,14 @@
 from typing import Sequence
 
+from django.contrib.auth.models import Group as DjangoGroup
+from django.contrib.auth.models import Permission, User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.utils.translation import gettext as _
 
 from django_filters import CharFilter, FilterSet, ModelChoiceFilter, ModelMultipleChoiceFilter
+from django_select2.forms import ModelSelect2Widget
+from guardian.models import GroupObjectPermission, UserObjectPermission
 from material import Layout, Row
 
 from aleksis.core.models import Group, GroupType, Person, SchoolTerm
@@ -72,3 +77,94 @@ class PersonFilter(FilterSet):
     class Meta:
         model = Person
         fields = ["sex", "is_active", "primary_group"]
+
+
+class PermissionFilter(FilterSet):
+    """Common filter for permissions."""
+
+    permission = ModelChoiceFilter(
+        queryset=Permission.objects.all(),
+        widget=ModelSelect2Widget(
+            search_fields=["name__icontains", "codename__icontains"],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        label=_("Permission"),
+    )
+    permission__content_type = ModelChoiceFilter(
+        queryset=ContentType.objects.all(),
+        widget=ModelSelect2Widget(
+            search_fields=["app_label__icontains", "model__icontains"],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        label=_("Content type"),
+    )
+
+
+class UserPermissionFilter(PermissionFilter):
+    """Common filter for user permissions."""
+
+    user = ModelChoiceFilter(
+        queryset=User.objects.all(),
+        widget=ModelSelect2Widget(
+            search_fields=["username__icontains", "first_name__icontains", "last_name__icontains"],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        label=_("User"),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form.layout = Layout(Row("user", "permission", "permission__content_type"))
+
+    class Meta:
+        fields = ["user", "permission", "permission__content_type"]
+
+
+class GroupPermissionFilter(PermissionFilter):
+    """Common filter for group permissions."""
+
+    group = ModelChoiceFilter(
+        queryset=DjangoGroup.objects.all(),
+        widget=ModelSelect2Widget(
+            search_fields=[
+                "name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        label=_("Group"),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form.layout = Layout(Row("group", "permission", "permission__content_type"))
+
+    class Meta:
+        fields = ["group", "permission", "permission__content_type"]
+
+
+class UserGlobalPermissionFilter(UserPermissionFilter):
+    """Filter for global user permissions."""
+
+    class Meta(UserPermissionFilter.Meta):
+        model = User.user_permissions.through
+
+
+class GroupGlobalPermissionFilter(GroupPermissionFilter):
+    """Filter for global group permissions."""
+
+    class Meta(GroupPermissionFilter.Meta):
+        model = DjangoGroup.permissions.through
+
+
+class UserObjectPermissionFilter(UserPermissionFilter):
+    """Filter for object user permissions."""
+
+    class Meta(UserPermissionFilter.Meta):
+        model = UserObjectPermission
+
+
+class GroupObjectPermissionFilter(GroupPermissionFilter):
+    """Filter for object group permissions."""
+
+    class Meta(GroupPermissionFilter.Meta):
+        model = GroupObjectPermission

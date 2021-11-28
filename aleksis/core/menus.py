@@ -212,6 +212,17 @@ MENUS = {
                     "validators": ["menu_generator.validators.is_superuser"],
                 },
                 {
+                    "name": _("Manage permissions"),
+                    "url": "manage_user_global_permissions",
+                    "icon": "shield",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.manage_permissions",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
                     "icon": "settings",

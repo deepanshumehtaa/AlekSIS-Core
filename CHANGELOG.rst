@@ -13,6 +13,7 @@ Added
 ~~~~~
 
 * Support config files in sub-directories
+* Provide views for assigning/managing permissions in frontend
 * Support (icon) tabs in the top navbar.
 
 Fixed

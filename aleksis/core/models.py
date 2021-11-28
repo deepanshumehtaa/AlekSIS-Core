@@ -510,6 +510,12 @@ class Group(SchoolTermRelatedExtensibleModel):
             )
             dj_group.save()
 
+    @property
+    def django_group(self):
+        """Get Django group for this group."""
+        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+        return dj_group
+
 
 class PersonGroupThrough(ExtensibleModel):
     """Through table for many-to-many relationship of group members.
