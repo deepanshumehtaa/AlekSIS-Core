@@ -126,7 +126,9 @@ class GroupPermissionFilter(PermissionFilter):
     group = ModelChoiceFilter(
         queryset=DjangoGroup.objects.all(),
         widget=ModelSelect2Widget(
-            search_fields=["name__icontains",],
+            search_fields=[
+                "name__icontains",
+            ],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
         ),
         label=_("Group"),

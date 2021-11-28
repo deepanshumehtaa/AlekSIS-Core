@@ -1135,7 +1135,8 @@ class AssignPermissionView(SuccessNextMixin, PermissionRequiredMixin, DetailView
     def form_valid(self, form: AssignPermissionForm) -> HttpResponse:
         form.save_perms()
         messages.success(
-            self.request, _("We have successfully assigned the permissions."),
+            self.request,
+            _("We have successfully assigned the permissions."),
         )
         return redirect(self.get_success_url())
 
