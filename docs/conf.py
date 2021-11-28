@@ -29,9 +29,9 @@ copyright = "2019, 2020, AlekSIS team"
 author = "AlekSIS team"
 
 # The short X.Y version
-version = "2.2"
+version = "2.1"
 # The full version, including alpha/beta/rc tags
-release = "2.2.dev0"
+release = "2.1.1"
 
 
 # -- General configuration ---------------------------------------------------

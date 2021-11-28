@@ -9,6 +9,39 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Support config files in sub-directories
+
+Fixed
+~~~~~
+
+* Use new MaterializeCSS fork because the old version is no longer maintained.
+* Sender wasn't displayed for notifications on dashboard.
+* Notifications and activities on dashboard weren't sorted from old to new.
+
+`2.1.1`_ - 2021-11-14
+---------------------
+
+Added
+~~~~~
+
+* Provide ``SITE_PREFERENCES`` template variable for easier and request-independent access on all site preferences.
+
+Fixed
+~~~~~
+
+* Make style.css and favicons cachable.
+* Import model extensions from other apps before form extensions.
+* Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
+* Show correct logo and school title in print template if created in the background.
+
+Removed
+~~~~~~~
+
+* Remove fallback code from optional Celery as it's now non-optional.
+
 `2.1`_ - 2021-11-05
 -------------------
 
@@ -445,3 +478,4 @@ Fixed
 .. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
 .. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
 .. _2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1
+.. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1

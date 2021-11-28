@@ -202,9 +202,9 @@ def index(request: HttpRequest) -> HttpResponse:
         person = DummyPerson()
         widgets = []
 
-    activities = person.activities.all()[:5]
-    notifications = person.notifications.all()[:5]
-    unread_notifications = person.notifications.all().filter(read=False)
+    activities = person.activities.all().order_by("-created")[:5]
+    notifications = person.notifications.all().order_by("-created")[:5]
+    unread_notifications = person.notifications.all().filter(read=False).order_by("-created")
 
     context["activities"] = activities
     context["notifications"] = notifications

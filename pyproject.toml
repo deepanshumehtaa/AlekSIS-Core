@@ -99,7 +99,7 @@ django-cachalot = "^2.3.2"
 django-prometheus = "^2.1.0"
 django-model-utils = "^4.0.0"
 bs4 = "^0.0.1"
-django-allauth = "^0.45.0"
+django-allauth = "^0.46.0"
 django-uwsgi-ng = "^1.1.0"
 django-extensions = "^3.1.1"
 ipython = "^7.20.0"
@@ -110,7 +110,7 @@ boto3 = {version = "^1.17.33", optional = true}
 django-cleanup = "^5.1.0"
 djangorestframework = "^3.12.4"
 Whoosh = "^2.7.4"
-django-titofisto = "^0.1.0"
+django-titofisto = "^0.2.0"
 haystack-redis = "^0.0.1"
 python-gnupg = "^0.4.7"
 sentry-sdk = {version = "^1.4.3", optional = true}
@@ -121,7 +121,7 @@ s3 = ["boto3", "django-storages"]
 sentry = ["sentry"]
 
 [tool.poetry.dev-dependencies]
-aleksis-builddeps = "*"
+aleksis-builddeps = "^5"
 uwsgi = "^2.0"
 
 [tool.poetry.scripts]

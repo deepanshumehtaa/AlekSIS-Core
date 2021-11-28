@@ -21,6 +21,10 @@ for directory in DIRS_FOR_DYNACONF:
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.ini"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.yaml"))
     SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*.toml"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.json"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.ini"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.yaml"))
+    SETTINGS_FILE_FOR_DYNACONF += glob(os.path.join(directory, "*/*.toml"))
 
 _settings = LazySettings(
     ENVVAR_PREFIX_FOR_DYNACONF=ENVVAR_PREFIX_FOR_DYNACONF,
@@ -227,7 +231,9 @@ if _settings.get("caching.redis.enabled", not IN_PYTEST):
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
-            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient",},
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
         }
     }
     if REDIS_PASSWORD:
@@ -253,10 +259,18 @@ SESSION_CACHE_ALIAS = "default"
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 AUTH_INITIAL_SUPERUSER = {
@@ -387,7 +401,11 @@ if _settings.get("ldap.uri", None):
     # Search attributes to find users by username
     AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
         *[
-            LDAPSearch(entry["base"], ldap.SCOPE_SUBTREE, entry.get("filter", "(uid=%(user)s)"),)
+            LDAPSearch(
+                entry["base"],
+                ldap.SCOPE_SUBTREE,
+                entry.get("filter", "(uid=%(user)s)"),
+            )
             for entry in _AUTH_LDAP_USER_SETTINGS
         ]
     )
@@ -479,7 +497,7 @@ NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "n
 YARN_INSTALLED_APPS = [
     "@fontsource/roboto",
     "jquery",
-    "materialize-css",
+    "@materializecss/materialize",
     "material-design-icons-iconfont",
     "select2",
     "select2-materialize",
@@ -499,7 +517,7 @@ SELECT2_JS = JS_URL + "/select2/dist/js/select2.min.js"
 SELECT2_I18N_PATH = JS_URL + "/select2/dist/js/i18n"
 
 ANY_JS = {
-    "materialize": {"js_url": JS_URL + "/materialize-css/dist/js/materialize.min.js"},
+    "materialize": {"js_url": JS_URL + "/@materializecss/materialize/dist/js/materialize.min.js"},
     "jQuery": {"js_url": JS_URL + "/jquery/dist/jquery.min.js"},
     "material-design-icons": {
         "css_url": JS_URL + "/material-design-icons-iconfont/dist/material-design-icons.css"
@@ -529,7 +547,9 @@ SASS_PROCESSOR_CUSTOM_FUNCTIONS = {
     "get-preference": "aleksis.core.util.sass_helpers.get_preference",
 }
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    _settings.get("materialize.sass_path", os.path.join(JS_ROOT, "materialize-css", "sass")),
+    _settings.get(
+        "materialize.sass_path", os.path.join(JS_ROOT, "@materializecss", "materialize", "sass")
+    ),
     os.path.join(STATIC_ROOT, "public"),
 ]
 
@@ -725,7 +745,13 @@ CKEDITOR_CONFIGS = {
             {"name": "colors", "items": ["TextColor", "BGColor"]},
             {"name": "tools", "items": ["Maximize", "ShowBlocks"]},
             {"name": "about", "items": ["About"]},
-            {"name": "customtools", "items": ["Preview", "Maximize",]},
+            {
+                "name": "customtools",
+                "items": [
+                    "Preview",
+                    "Maximize",
+                ],
+            },
         ],
         "toolbar": "Full",
         "tabSpaces": 4,
@@ -777,7 +803,10 @@ LOGGING = {
         "null": {"class": "logging.NullHandler"},
     },
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s: %(message)s"}},
-    "root": {"handlers": ["console"], "level": _settings.get("logging.level", "WARNING"),},
+    "root": {
+        "handlers": ["console"],
+        "level": _settings.get("logging.level", "WARNING"),
+    },
     "loggers": {},
 }
 
@@ -798,7 +827,10 @@ SILENCED_SYSTEM_CHECKS.append("guardian.W001")
 AUTHENTICATION_BACKENDS.append("rules.permissions.ObjectPermissionBackend")
 
 HAYSTACK_CONNECTIONS = {
-    "default": {"ENGINE": "haystack_redis.RedisEngine", "PATH": REDIS_URL,},
+    "default": {
+        "ENGINE": "haystack_redis.RedisEngine",
+        "PATH": REDIS_URL,
+    },
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = "celery_haystack.signals.CelerySignalProcessor"

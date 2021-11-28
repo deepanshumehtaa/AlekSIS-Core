@@ -183,7 +183,9 @@ class EditGroupForm(SchoolTermRelatedExtensibleForm):
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "additional_fields": ModelSelect2MultipleWidget(
-                search_fields=["title__icontains",],
+                search_fields=[
+                    "title__icontains",
+                ],
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
         }
@@ -219,7 +221,10 @@ class AnnouncementForm(ExtensibleForm):
         label=_("Groups"),
         required=False,
         widget=ModelSelect2MultipleWidget(
-            search_fields=["name__icontains", "short_name__icontains",],
+            search_fields=[
+                "name__icontains",
+                "short_name__icontains",
+            ],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
         ),
     )
@@ -366,7 +371,8 @@ class SchoolTermForm(ExtensibleForm):
 
 class DashboardWidgetOrderForm(ExtensibleForm):
     pk = forms.ModelChoiceField(
-        queryset=None, widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+        queryset=None,
+        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
     )
     order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
 
@@ -504,11 +510,20 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         fields = []
 
     layout = Layout(
-        Fieldset(_("Base data"), Row("first_name", "last_name"),),
         Fieldset(
-            _("Account data"), "username", Row("email", "email2"), Row("password1", "password2"),
+            _("Base data"),
+            Row("first_name", "last_name"),
         ),
-        Fieldset(_("Consents"), Row("privacy_policy"),),
+        Fieldset(
+            _("Account data"),
+            "username",
+            Row("email", "email2"),
+            Row("password1", "password2"),
+        ),
+        Fieldset(
+            _("Consents"),
+            Row("privacy_policy"),
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -522,9 +537,13 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
                 label=_("Password (again)"), widget=forms.PasswordInput
             )
 
-        self.fields["first_name"] = forms.CharField(required=True,)
+        self.fields["first_name"] = forms.CharField(
+            required=True,
+        )
 
-        self.fields["last_name"] = forms.CharField(required=True,)
+        self.fields["last_name"] = forms.CharField(
+            required=True,
+        )
 
         self.fields["privacy_policy"] = forms.BooleanField(
             help_text=_(
@@ -552,7 +571,8 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         ):
             if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
                 self.add_error(
-                    "password2", _("You must type the same password each time."),
+                    "password2",
+                    _("You must type the same password each time."),
                 )
         return self.cleaned_data
 

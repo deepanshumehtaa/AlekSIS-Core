@@ -260,5 +260,7 @@ class AppConfig(django.apps.AppConfig):
                 ct = ContentType.objects.get_for_model(model)
                 for perm, verbose_name in model.extra_permissions:
                     Permission.objects.get_or_create(
-                        codename=perm, content_type=ct, defaults={"name": verbose_name},
+                        codename=perm,
+                        content_type=ct,
+                        defaults={"name": verbose_name},
                     )

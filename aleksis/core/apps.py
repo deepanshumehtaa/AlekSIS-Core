@@ -47,7 +47,7 @@ class CoreConfig(AppConfig):
         from django.conf import settings  # noqa
 
         # Autodiscover various modules defined by AlekSIS
-        autodiscover_modules("form_extensions", "model_extensions", "checks")
+        autodiscover_modules("model_extensions", "form_extensions", "checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")
@@ -102,7 +102,8 @@ class CoreConfig(AppConfig):
 
                 if new_value:
                     Favicon.on_site.update_or_create(
-                        title=name, defaults={"isFavicon": is_favicon, "faviconImage": new_value},
+                        title=name,
+                        defaults={"isFavicon": is_favicon, "faviconImage": new_value},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()

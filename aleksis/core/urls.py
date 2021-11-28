@@ -102,26 +102,26 @@ urlpatterns = [
         ConnectDiscoveryInfoView.as_view(),
         name="oidc_configuration",
     ),
-    path("oauth2/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
+    path("oauth/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
     path(
-        "oauth2/applications/register/",
+        "oauth/applications/register/",
         views.OAuth2RegisterView.as_view(),
         name="register_oauth_application",
     ),
     path(
-        "oauth2/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
+        "oauth/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
     ),
     path(
-        "oauth2/applications/<int:pk>/delete/",
+        "oauth/applications/<int:pk>/delete/",
         views.OAuth2DeleteView.as_view(),
         name="delete_oauth2_application",
     ),
     path(
-        "oauth2/applications/<int:pk>/edit/",
+        "oauth/applications/<int:pk>/edit/",
         views.OAuth2EditView.as_view(),
         name="edit_oauth2_application",
     ),
-    path("oauth2/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
@@ -208,8 +208,16 @@ urlpatterns = [
     ),
     path("health/", include(health_urls)),
     path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
-    path("data_check/", views.DataCheckView.as_view(), name="check_data",),
-    path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
+    path(
+        "data_check/",
+        views.DataCheckView.as_view(),
+        name="check_data",
+    ),
+    path(
+        "data_check/run/",
+        views.RunDataChecks.as_view(),
+        name="data_check_run",
+    ),
     path(
         "data_check/<int:pk>/<str:solve_option>/",
         views.SolveDataCheckView.as_view(),
