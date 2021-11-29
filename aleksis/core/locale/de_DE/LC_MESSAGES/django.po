@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-29 09:59+0100\n"
-"PO-Revision-Date: 2021-10-29 14:28+0000\n"
+"PO-Revision-Date: 2021-11-29 09:34+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis-core/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/"
+"aleksis-core/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,16 +78,12 @@ msgid "Search by contact details"
 msgstr "Nach Kontaktdetails suchen"
 
 #: aleksis/core/filters.py:91
-#, fuzzy
-#| msgid "Permission Denied"
 msgid "Permission"
-msgstr "Zugriff verwehrt"
+msgstr "Berechtigung"
 
 #: aleksis/core/filters.py:99
-#, fuzzy
-#| msgid "Client type"
 msgid "Content type"
-msgstr "Client-Typ"
+msgstr "Inhaltstyp"
 
 #: aleksis/core/filters.py:112 aleksis/core/models.py:579
 msgid "User"
@@ -189,30 +186,33 @@ msgid "You need at least one recipient."
 msgstr "Sie benötigen mindestens einen Empfänger."
 
 #: aleksis/core/forms.py:411
-#, fuzzy
-#| msgid "Who should see the announcement?"
 msgid "Who should get the permission?"
-msgstr "Wer soll die Ankündigung sehen?"
+msgstr "Wer soll die Berechtigung erhalten?"
 
 #: aleksis/core/forms.py:412
 msgid "On what?"
-msgstr ""
+msgstr "Auf was?"
 
 #: aleksis/core/forms.py:438
 msgid "Select objects which the permission should be granted for:"
 msgstr ""
+"Wählen Sie die Objekte aus, für welche die Berechtigung vergeben werden soll:"
 
 #: aleksis/core/forms.py:441
 msgid "Grant the permission for all objects"
-msgstr ""
+msgstr "Vergebe die Berechtigung für alle Objekte"
 
 #: aleksis/core/forms.py:449
 msgid "You must select at least one group or person which should get the permission."
 msgstr ""
+"Sie müssen mindestens eine Gruppe oder Person auswählen, welche die "
+"Berechtigung erhalten soll."
 
 #: aleksis/core/forms.py:454
 msgid "You must grant the permission to all objects and/or to some objects."
 msgstr ""
+"Sie müssen die Berechtigung auf alle Objekte und/oder für einige Objekte "
+"vergeben."
 
 #: aleksis/core/forms.py:518
 msgid "Account data"
@@ -388,7 +388,7 @@ msgstr "Datenprüfungen"
 #: aleksis/core/menus.py:215 aleksis/core/templates/core/perms/list.html:13
 #: aleksis/core/templates/core/perms/list.html:14
 msgid "Manage permissions"
-msgstr ""
+msgstr "Berechtigungen verwalten"
 
 #: aleksis/core/menus.py:226
 msgid "Backend Admin"
@@ -575,10 +575,8 @@ msgid "Date of birth"
 msgstr "Geburtsdatum"
 
 #: aleksis/core/models.py:198
-#, fuzzy
-#| msgid "Date of birth"
 msgid "Place of birth"
-msgstr "Geburtsdatum"
+msgstr "Geburtsort"
 
 #: aleksis/core/models.py:200
 msgid "Sex"
@@ -942,7 +940,7 @@ msgstr "Task-Benutzer-Zuordnungen"
 
 #: aleksis/core/models.py:1127
 msgid "Allowed scopes that clients can request"
-msgstr ""
+msgstr "Erlaubte Scopes, die ein Client anfordern kann"
 
 #: aleksis/core/preferences.py:23
 msgid "General"
@@ -1061,10 +1059,8 @@ msgid "Enable signup"
 msgstr "Registrierung aktivieren"
 
 #: aleksis/core/preferences.py:274
-#, fuzzy
-#| msgid "Can list oauth applications"
 msgid "Allowed Grant Flows for OAuth applications"
-msgstr "Can OAuth-Anwendungen auflisten"
+msgstr "Erlaubte Grant Flows für OAuth-Anwendungen"
 
 #: aleksis/core/preferences.py:287
 msgid "Available languages"
@@ -2171,51 +2167,43 @@ msgstr ""
 #: aleksis/core/templates/core/perms/assign.html:12
 #: aleksis/core/templates/core/perms/assign.html:13
 msgid "Assign permission"
-msgstr ""
+msgstr "Berechtigung zuweisen"
 
 #: aleksis/core/templates/core/perms/assign.html:17
-#, fuzzy
-#| msgid "Selected persons"
 msgid "Selected permission"
-msgstr "Ausgewählte Personen"
+msgstr "Ausgewählte Berechtigung"
 
 #: aleksis/core/templates/core/perms/assign.html:26
 msgid "Assign"
-msgstr ""
+msgstr "Zuweisen"
 
 #: aleksis/core/templates/core/perms/list.html:21
 msgid "Assign a new permission"
-msgstr ""
+msgstr "Eine neue Berechtigung zuweisen"
 
 #: aleksis/core/templates/core/perms/list.html:25
 msgid "Select"
-msgstr ""
+msgstr "Auswählen"
 
 #: aleksis/core/templates/core/perms/list.html:34
-#, fuzzy
-#| msgid "Global Search"
 msgid "Global (user)"
-msgstr "Globale Suche"
+msgstr "Global (Benutzer)"
 
 #: aleksis/core/templates/core/perms/list.html:38
 msgid "Global (group)"
-msgstr ""
+msgstr "Global (Gruppe)"
 
 #: aleksis/core/templates/core/perms/list.html:42
 msgid "Object (user)"
-msgstr ""
+msgstr "Objekt (Benutzer)"
 
 #: aleksis/core/templates/core/perms/list.html:46
-#, fuzzy
-#| msgid "Selected groups"
 msgid "Object (group)"
-msgstr "Ausgewählte Gruppen"
+msgstr "Objekt (Gruppe)"
 
 #: aleksis/core/templates/core/perms/list.html:52
-#, fuzzy
-#| msgid "Filter persons"
 msgid "Filter permissions"
-msgstr "Personen filtern"
+msgstr "Berechtigungen filtern"
 
 #: aleksis/core/templates/core/perms/list.html:58
 msgid "Update"
@@ -2284,10 +2272,8 @@ msgstr "Einstellungen speichern"
 
 #: aleksis/core/templates/oauth2_provider/application/create.html:5
 #: aleksis/core/templates/oauth2_provider/application/create.html:6
-#, fuzzy
-#| msgid "Create OAuth2 Application"
 msgid "Register OAuth2 Application"
-msgstr "OAuth2-Anwendung erstellen"
+msgstr "OAuth2-Anwendung registrieren"
 
 #: aleksis/core/templates/oauth2_provider/application/create.html:14
 #: aleksis/core/templates/oauth2_provider/application/edit.html:14
@@ -2297,10 +2283,8 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: aleksis/core/templates/oauth2_provider/application/detail.html:5
-#, fuzzy
-#| msgid "OAuth2 Applications"
 msgid "OAuth2 Application"
-msgstr "OAuth2-Anwendungen"
+msgstr "OAuth2-Anwendung"
 
 #: aleksis/core/templates/oauth2_provider/application/detail.html:27
 msgid "Client id"
@@ -2316,30 +2300,24 @@ msgstr "Client-Typ"
 
 #: aleksis/core/templates/oauth2_provider/application/detail.html:51
 msgid "Allowed scopes"
-msgstr ""
+msgstr "Erlaubte Scopes"
 
 #: aleksis/core/templates/oauth2_provider/application/detail.html:59
 msgid "Redirect URIs"
 msgstr "Weiterleitungs-URLs"
 
 #: aleksis/core/templates/oauth2_provider/application/detail.html:67
-#, fuzzy
-#| msgid "Authentication"
 msgid "Skip Authorisation"
-msgstr "Authentifizierung"
+msgstr "Authentifizierung überspringen"
 
 #: aleksis/core/templates/oauth2_provider/application/edit.html:5
 #: aleksis/core/templates/oauth2_provider/application/edit.html:6
-#, fuzzy
-#| msgid "OAuth2 Applications"
 msgid "Edit OAuth2 Application"
-msgstr "OAuth2-Anwendungen"
+msgstr "OAuth2-Anwendung bearbeiten"
 
 #: aleksis/core/templates/oauth2_provider/application/list.html:11
-#, fuzzy
-#| msgid "Register new applications"
 msgid "Register new application"
-msgstr "Neue Anwendungen registrieren"
+msgstr "Neue Anwendung registrieren"
 
 #: aleksis/core/templates/oauth2_provider/application/list.html:20
 msgid "No applications defined."
@@ -3216,31 +3194,23 @@ msgstr "Die Konfiguration des Standard-Dashboardes wurde erfolgreich gespeichert
 
 #: aleksis/core/views.py:1139
 msgid "We have successfully assigned the permissions."
-msgstr ""
+msgstr "Wir haben die Berechtigungen erfolgreich zugewiesen."
 
 #: aleksis/core/views.py:1149
-#, fuzzy
-#| msgid "The person has been deleted."
 msgid "The global user permission has been deleted."
-msgstr "Die Person wurde gelöscht."
+msgstr "Die globale Benutzerberechtigung wurde gelöscht."
 
 #: aleksis/core/views.py:1159
-#, fuzzy
-#| msgid "The group type has been deleted."
 msgid "The global group permission has been deleted."
-msgstr "Der Gruppentyp wurde gelöscht."
+msgstr "Die globale Gruppenberechtigung wurde gelöscht."
 
 #: aleksis/core/views.py:1169
-#, fuzzy
-#| msgid "The person has been deleted."
 msgid "The object user permission has been deleted."
-msgstr "Die Person wurde gelöscht."
+msgstr "Die Objekt-Benutzerberechtigung wurde gelöscht."
 
 #: aleksis/core/views.py:1179
-#, fuzzy
-#| msgid "The group type has been deleted."
 msgid "The object group permission has been deleted."
-msgstr "Der Gruppentyp wurde gelöscht."
+msgstr "Die Objekt-Gruppenberechtigung wurde gelöscht."
 
 #: aleksis/core/views.py:1298
 msgid "The third-party account could not be disconnected because it is the only login method available."
