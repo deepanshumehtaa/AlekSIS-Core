@@ -811,7 +811,6 @@ main figure.alert {
   margin: 0;
   align-items: end;
   & a {
-    width: 50px;
     -webkit-transition: width 0.5s 0s ease;
     -moz-transition: width 0.5s 0s ease;
     -o-transition: width 0.5s 0s ease;
@@ -820,6 +819,12 @@ main figure.alert {
     &:hover {
       width: max-content;
     }
+  }
+}
+
+@media (pointer: fine) {
+  .person-buttons a {
+    width: 50px;
   }
 }
 
