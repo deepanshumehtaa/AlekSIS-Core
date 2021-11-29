@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.2`_ - 2021-11-29
+-------------------
 
 Added
 ~~~~~
@@ -15,6 +15,11 @@ Added
 * Support config files in sub-directories
 * Provide views for assigning/managing permissions in frontend
 * Support (icon) tabs in the top navbar.
+
+Changed
+~~~~~~~
+
+* Update German translations.
 
 Fixed
 ~~~~~
@@ -481,3 +486,4 @@ Fixed
 .. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
 .. _2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
+.. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
