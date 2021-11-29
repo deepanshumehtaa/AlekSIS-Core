@@ -29,6 +29,51 @@ To fully remove page or browser title, use these template tags::
     {% block no_browser_title %}{% endblock %}
     {% block no_page_title %}{% endblock %}
 
+
+Extended navbar
+---------------
+
+The top navbar with the site title and the login status can be extended by an additional tab bar, for example.
+
+To add normal Materialize tabs without icons, you can use a snippet like described in `Extended Navbar with Tabs`_:
+
+.. code-block:: html+django
+
+    {% block nav_content %}
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a href="#test1">Test 1</a></li>
+            <li class="tab"><a class="active" href="#test2">Test 2</a></li>
+            <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
+            <li class="tab"><a href="#test4">Test 4</a></li>
+        </ul>
+    {% endblock %}
+
+Furthermore, you can use tabs with integrated icons that are higher, but more compact in width:
+
+.. code-block:: html+django
+
+    {% block nav_content %}
+        <ul class="tabs tabs-transparent tabs-icons tabs-fixed-width">
+            <li class="tab">
+                <a href="#test1">
+                    <i class="material-icons">speaker_notes</i>
+                    Test 1
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#test2">
+                    <i class="material-icons">people</i>
+                    Test 2
+                </a>
+            </li>
+        </ul>
+    {% endblock %}
+
+
+.. warning::
+
+    Don't define the ``nav_content`` block within the ``content`` block – that won't work.
+
 Forms in templates
 ------------------
 
@@ -91,3 +136,4 @@ After you've loaded the template tag, you can simply generate the table like thi
 
 .. _MaterializeCSS: https://materializecss.com/
 .. _django-material: https://pypi.org/project/django-material/
+.. _Extended Navbar with Tabs: https://materializecss.com/navbar.html#navbar-tabs
