@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
+Unreleased
+----------
+
+Fixed
+~~~~~
+
+* [Docker] Stop initialisation if migrations fail
+
 `2.2`_ - 2021-11-29
 -------------------
 
