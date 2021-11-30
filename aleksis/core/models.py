@@ -1132,7 +1132,7 @@ class OAuthApplication(AbstractApplication):
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
 
-        return bool(set(allowed_grants) & grant_types)
+        return bool(set(allowed_grants) & set(grant_types))
 
 
 class OAuthGrant(AbstractGrant):
