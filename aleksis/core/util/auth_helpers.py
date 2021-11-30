@@ -47,11 +47,15 @@ class CustomOAuth2Validator(OAuth2Validator):
         django_request = HttpRequest()
         django_request.META = request.headers
 
+        scopes = request.scopes.copy()
+        if request.access_token:
+            scopes += request.access_token.scope.split(" ")
+
         claims = {
             "preferred_username": request.user.username,
         }
 
-        if "profile" in request.scopes:
+        if "profile" in scopes:
             if has_person(request.user):
                 claims["given_name"] = request.user.person.first_name
                 claims["family_name"] = request.user.person.last_name
@@ -66,13 +70,13 @@ class CustomOAuth2Validator(OAuth2Validator):
                 claims["given_name"] = request.user.first_name
                 claims["family_name"] = request.user.last_name
 
-        if "email" in request.scopes:
+        if "email" in scopes:
             if has_person(request.user):
                 claims["email"] = request.user.person.email
             else:
                 claims["email"] = request.user.email
 
-        if "address" in request.scopes and has_person(request.user):
+        if "address" in scopes and has_person(request.user):
             claims["address"] = {
                 "street_address": request.user.person.street
                 + " "
@@ -81,7 +85,7 @@ class CustomOAuth2Validator(OAuth2Validator):
                 "postal_code": request.user.person.postal_code,
             }
 
-        if "groups" in request.scopes and has_person(request.user):
+        if "groups" in scopes and has_person(request.user):
             claims["groups"] = list(
                 request.user.person.member_of.values_list("name", flat=True).all()
             )
