@@ -82,7 +82,9 @@ class CustomOAuth2Validator(OAuth2Validator):
             }
 
         if "groups" in request.scopes and has_person(request.user):
-            claims["groups"] = request.user.person.member_of.values_list("name", flat=True).all()
+            claims["groups"] = list(
+                request.user.person.member_of.values_list("name", flat=True).all()
+            )
 
         return claims
 
