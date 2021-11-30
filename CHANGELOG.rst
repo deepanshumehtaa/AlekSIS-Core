@@ -15,6 +15,7 @@ Fixed
 * [Docker] Stop initialisation if migrations fail
 * [OAuth] Register `groups` scope and fix claim
 * [OAuth] Fix OAuth claims for follow-up requests (e.g. UserInfo)
+* [OAuth] Fix grant types checking failing on wrong types under some circumstances
 
 `2.2`_ - 2021-11-29
 -------------------
