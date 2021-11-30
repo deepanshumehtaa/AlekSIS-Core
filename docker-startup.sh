@@ -48,8 +48,7 @@ wait_database() {
 
 prepare_database() {
 	# Migrate database; should only be run in app container or job
-	aleksis-admin migrate
-	aleksis-admin createinitialrevisions
+	aleksis-admin migrate && aleksis-admin createinitialrevisions
 }
 
 # Wait for database to be reachable under all conditions
