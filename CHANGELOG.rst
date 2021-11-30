@@ -13,6 +13,7 @@ Fixed
 ~~~~~
 
 * [Docker] Stop initialisation if migrations fail
+* [OAuth] Register `groups` scope
 
 `2.2`_ - 2021-11-29
 -------------------
