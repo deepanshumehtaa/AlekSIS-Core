@@ -746,6 +746,7 @@ class OAuthApplicationForm(forms.ModelForm):
             "client_id",
             "client_secret",
             "client_type",
+            "algorithm",
             "allowed_scopes",
             "redirect_uris",
             "skip_authorization",
