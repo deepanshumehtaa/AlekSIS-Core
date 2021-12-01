@@ -9,6 +9,7 @@ from django.utils.translation import gettext as _
 
 from dynamic_preferences.registries import preference_models
 from health_check.plugins import plugin_dir
+from oauthlib.common import Request as OauthlibRequest
 
 from .registries import (
     group_preferences_registry,
@@ -156,3 +157,49 @@ class CoreConfig(AppConfig):
                 "groups": _("Groups"),
             }
         return scopes
+
+    @classmethod
+    def get_additional_claims(cls, scopes: list[str], request: OauthlibRequest) -> dict[str, Any]:
+        django_request = HttpRequest()
+        django_request.META = request.headers
+
+        claims = {
+            "preferred_username": request.user.username,
+        }
+
+        if "profile" in scopes:
+            if has_person(request.user):
+                claims["given_name"] = request.user.person.first_name
+                claims["family_name"] = request.user.person.last_name
+                claims["profile"] = django_request.build_absolute_uri(
+                    request.user.person.get_absolute_url()
+                )
+                if request.user.person.photo:
+                    claims["picture"] = django_request.build_absolute_uri(
+                        request.user.person.photo.url
+                    )
+            else:
+                claims["given_name"] = request.user.first_name
+                claims["family_name"] = request.user.last_name
+
+        if "email" in scopes:
+            if has_person(request.user):
+                claims["email"] = request.user.person.email
+            else:
+                claims["email"] = request.user.email
+
+        if "address" in scopes and has_person(request.user):
+            claims["address"] = {
+                "street_address": request.user.person.street
+                + " "
+                + request.user.person.housenumber,
+                "locality": request.user.person.place,
+                "postal_code": request.user.person.postal_code,
+            }
+
+        if "groups" in scopes and has_person(request.user):
+            claims["groups"] = list(
+                request.user.person.member_of.values_list("name", flat=True).all()
+            )
+
+        return claims

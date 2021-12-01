@@ -8,6 +8,7 @@ from django.http import HttpRequest
 
 from dynamic_preferences.signals import preference_updated
 from license_expression import Licensing
+from oauthlib.common import Request as OauthlibRequest
 from spdx_license_list import LICENSES
 
 from .core_helpers import copyright_years
@@ -243,6 +244,11 @@ class AppConfig(django.apps.AppConfig):
     ) -> list[str]:
         """Return a list of all OAuth scopes to always include for this request and application."""
         return []
+
+    @classmethod
+    def get_additional_claims(cls, scopes: list[str], request: OauthlibRequest) -> dict[str, Any]:
+        """Get claim data for requested scopes."""
+        return {}
 
     def _maintain_default_data(self):
         from django.contrib.auth.models import Permission
