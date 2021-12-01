@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* [OAuth] Allow apps to fill in their own claim data matching their scopes
+
 Fixed
 ~~~~~
 
