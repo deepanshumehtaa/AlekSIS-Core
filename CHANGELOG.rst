@@ -17,6 +17,7 @@ Fixed
 * [OAuth] Fix OAuth claims for follow-up requests (e.g. UserInfo)
 * [OAuth] Fix grant types checking failing on wrong types under some circumstances
 * [OAuth] Re-introduce missing algorithm field in application form
+* Remove errornous backup folder check for S3
 
 `2.2`_ - 2021-11-29
 -------------------
