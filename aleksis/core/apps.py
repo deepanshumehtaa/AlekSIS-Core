@@ -153,5 +153,6 @@ class CoreConfig(AppConfig):
                 "address": _("Full home postal address"),
                 "email": _("Email address"),
                 "phone": _("Home and mobile phone"),
+                "groups": _("Groups"),
             }
         return scopes
