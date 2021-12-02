@@ -14,6 +14,9 @@ Added
 
 * [OAuth] Allow apps to fill in their own claim data matching their scopes
 
+`2.2.1_ – 2021-12-02
+--------------------
+
 Fixed
 ~~~~~
 
@@ -22,6 +25,7 @@ Fixed
 * [OAuth] Fix OAuth claims for follow-up requests (e.g. UserInfo)
 * [OAuth] Fix grant types checking failing on wrong types under some circumstances
 * [OAuth] Re-introduce missing algorithm field in application form
+* Remove errornous backup folder check for S3
 
 `2.2`_ - 2021-11-29
 -------------------
@@ -504,3 +508,4 @@ Fixed
 .. _2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
+.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
