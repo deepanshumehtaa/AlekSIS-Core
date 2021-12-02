@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.3.dev0"
+version = "2.3"
 packages = [
     { include = "aleksis" }
 ]
