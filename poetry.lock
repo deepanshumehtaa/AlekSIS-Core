@@ -1628,14 +1628,18 @@ six = "*"
 
 [[package]]
 name = "license-expression"
-version = "1.2"
-description = "license-expression is small utility library to parse, compare, simplify and normalize license expressions (such as SPDX license expressions) using boolean logic."
+version = "21.6.14"
+description = "license-expression is a comprehensive utility library to parse, compare, simplify and normalize license expressions (such as SPDX license expressions) using boolean logic."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
 "boolean.py" = ">=3.6,<4.0.0"
+
+[package.extras]
+docs = ["Sphinx (>=3.3.1)", "sphinx-rtd-theme (>=0.5.0)", "doc8 (>=0.8.1)"]
+testing = ["pytest (>=6)", "pytest-xdist (>=2)"]
 
 [[package]]
 name = "markupsafe"
@@ -2804,7 +2808,7 @@ sentry = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c95dc9785efe80e41c3bb16427d50adcc73200283d72483c33e2073737034688"
+content-hash = "8297f4f4329164e9f9de7a44fd1701e9b9aeb1a8001ec91b0e75a844ff2c3c96"
 
 [metadata.files]
 alabaster = [
@@ -3431,8 +3435,8 @@ libsass = [
     {file = "libsass-0.21.0.tar.gz", hash = "sha256:d5ba529d9ce668be9380563279f3ffe988f27bc5b299c5a28453df2e0b0fbaf2"},
 ]
 license-expression = [
-    {file = "license-expression-1.2.tar.gz", hash = "sha256:7960e1dfdf20d127e75ead931476f2b5c7556df05b117a73880b22ade17d1abc"},
-    {file = "license_expression-1.2-py2.py3-none-any.whl", hash = "sha256:6d97906380cecfc758a77f6d38c6760f2afade7e83d2b8295e234fe21f486fb8"},
+    {file = "license-expression-21.6.14.tar.gz", hash = "sha256:9de87a427c9a449eee7913472fb9ed03b63036295547369fdbf95f76a8b924b2"},
+    {file = "license_expression-21.6.14-py3-none-any.whl", hash = "sha256:324246eed8e138b4139fefdc0e9dc4161d5075e3929e56983966d37298dca30e"},
 ]
 markupsafe = [
     {file = "MarkupSafe-2.0.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d8446c54dc28c01e5a2dbac5a25f071f6653e6e40f3a8818e8b45d790fe6ef53"},
