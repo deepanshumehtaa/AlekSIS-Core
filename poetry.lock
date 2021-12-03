@@ -612,7 +612,7 @@ python-ldap = ">=3.1"
 
 [[package]]
 name = "django-bleach"
-version = "0.9.0"
+version = "1.0.0"
 description = "Easily use bleach with Django models and templates"
 category = "main"
 optional = false
@@ -2808,7 +2808,7 @@ sentry = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8297f4f4329164e9f9de7a44fd1701e9b9aeb1a8001ec91b0e75a844ff2c3c96"
+content-hash = "d56c3ab2f150f16ef08969d8233a1a6ec4d348e228b7e2345d044ef65696a7ff"
 
 [metadata.files]
 alabaster = [
@@ -3105,8 +3105,8 @@ django-auth-ldap = [
     {file = "django_auth_ldap-3.0.0-py3-none-any.whl", hash = "sha256:19ee19034f344d9efd07ed88d3187e256ec33ae39d6a47222083b89f7d35c5f6"},
 ]
 django-bleach = [
-    {file = "django-bleach-0.9.0.tar.gz", hash = "sha256:d76534566987187da35c60d9097bc18e6d8aadc2d8743cee46b820940e45cea7"},
-    {file = "django_bleach-0.9.0-py2.py3-none-any.whl", hash = "sha256:12aeffd1b9f96d91d92bb04e9ce46dba29294c7fc1c6678d111e769d279bad3e"},
+    {file = "django-bleach-1.0.0.tar.gz", hash = "sha256:2586b90d641d4d7e70ee353570ad33d3625ed4b97036a3ea5b03ea1bb5bbeccd"},
+    {file = "django_bleach-1.0.0-py2.py3-none-any.whl", hash = "sha256:60074a4f4bc8d5200fdb2e03dce16fb4913427698b64570bc3e1a7ea1b8c3cf7"},
 ]
 django-cachalot = [
     {file = "django-cachalot-2.4.4.tar.gz", hash = "sha256:8489a74e9a689437f81fa61705b154a4be3cac1b62b61f68215d79668c9ac037"},
