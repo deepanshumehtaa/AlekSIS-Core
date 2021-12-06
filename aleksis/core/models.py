@@ -1129,6 +1129,13 @@ class OAuthApplication(AbstractApplication):
         blank=True,
     )
 
+    allowed_groups = models.ManyToManyField(
+        Group,
+        verbose_name=_("Allowed groups"),
+        related_name="oauth_apps",
+        blank=True,
+    )
+
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
 
