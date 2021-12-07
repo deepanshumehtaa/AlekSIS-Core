@@ -235,15 +235,10 @@ REDIS_URL = (
 if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
         "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            },
         }
     }
-    if REDIS_PASSWORD:
-        CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
 else:
     CACHES = {
         "default": {
