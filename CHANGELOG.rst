@@ -14,6 +14,11 @@ Added
 
 * [OAuth] Allow apps to fill in their own claim data matching their scopes
 
+Fixed
+~~~~~
+
+* View for assigning permissions didn't work with some global permissions.
+
 `2.2.1_ – 2021-12-02
 --------------------
 
