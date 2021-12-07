@@ -215,6 +215,12 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+]
+
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
