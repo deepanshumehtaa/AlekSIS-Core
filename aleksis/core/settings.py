@@ -77,6 +77,8 @@ BASE_URL = _settings.get(
     "http.base_url", "http://localhost:8000" if DEBUG else f"https://{ALLOWED_HOSTS[0]}"
 )
 
+CSRF_TRUSTED_ORIGINS = _settings.get("http.trusted_origins", [])
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
