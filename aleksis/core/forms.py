@@ -5,6 +5,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
+from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -460,7 +461,13 @@ class AssignPermissionForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         model_class = self.permission.content_type.model_class()
-        queryset = model_class.objects.all()
+        if model_class._meta.managed and not model_class._meta.abstract:
+            queryset = model_class.objects.all()
+        else:
+            # The following queryset is just a dummy one. It has no real meaning.
+            # We need it as there are permissions without real objects,
+            # but we want to use the same form.
+            queryset = Site.objects.none()
         self.fields["objects"].queryset = queryset
         search_fields = getattr(model_class, "get_filter_fields", lambda: [])()
 
