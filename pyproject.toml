@@ -47,7 +47,7 @@ secondary = true
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "^3.2.5"
+Django = "^4.0"
 django-any-js = "^1.1"
 django-debug-toolbar = "^3.2"
 django-menu-generator-ng = "^1.2.3"
