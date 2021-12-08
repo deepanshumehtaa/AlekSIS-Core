@@ -77,6 +77,8 @@ BASE_URL = _settings.get(
     "http.base_url", "http://localhost:8000" if DEBUG else f"https://{ALLOWED_HOSTS[0]}"
 )
 
+CSRF_TRUSTED_ORIGINS = _settings.get("http.trusted_origins", [])
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -215,6 +217,12 @@ DATABASES = {
 
 merge_app_settings("DATABASES", DATABASES, False)
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+]
+
 REDIS_HOST = _settings.get("redis.host", "localhost")
 REDIS_PORT = _settings.get("redis.port", 6379)
 REDIS_DB = _settings.get("redis.database", 0)
@@ -229,15 +237,10 @@ REDIS_URL = (
 if _settings.get("caching.redis.enabled", not IN_PYTEST):
     CACHES = {
         "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": _settings.get("caching.redis.address", REDIS_URL),
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            },
         }
     }
-    if REDIS_PASSWORD:
-        CACHES["default"]["OPTIONS"]["PASSWORD"] = REDIS_PASSWORD
 else:
     CACHES = {
         "default": {
@@ -476,16 +479,14 @@ LANGUAGES = [
 ]
 LANGUAGE_CODE = _settings.get("l10n.lang", "en")
 TIME_ZONE = _settings.get("l10n.tz", "UTC")
-USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-STATIC_URL = _settings.get("static.url", "/static/")
-MEDIA_URL = _settings.get("media.url", "/media/")
+STATIC_URL = _settings.get("static.url", "static/")
+MEDIA_URL = _settings.get("media.url", "media/")
 
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
