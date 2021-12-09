@@ -928,5 +928,7 @@ THUMBNAIL_PROCESSORS = (
     "image_cropping.thumbnail_processors.crop_corners",
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
+IMAGE_CROPPING_JQUERY_URL = None
+
 # Add django-cleanup after all apps to ensure that it gets all signals as last app
 INSTALLED_APPS.append("django_cleanup.apps.CleanupConfig")
