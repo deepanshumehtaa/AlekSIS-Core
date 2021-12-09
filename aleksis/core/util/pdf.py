@@ -75,6 +75,8 @@ def generate_pdf_from_template(
     if not request:
         processed_context = process_custom_context_processors(settings.PDF_CONTEXT_PROCESSORS)
         processed_context.update(context)
+    else:
+        processed_context = context
     html_template = render_to_string(template_name, processed_context, request)
 
     file_object = PDFFile.objects.create(html_file=ContentFile(html_template, name="source.html"))
