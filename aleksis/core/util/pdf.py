@@ -1,7 +1,7 @@
 import os
 import subprocess  # noqa
 from tempfile import TemporaryDirectory
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 from urllib.parse import urljoin
 
 from django.conf import settings
@@ -22,6 +22,7 @@ from celery_progress.backend import ProgressRecorder
 from aleksis.core.celery import app
 from aleksis.core.models import PDFFile
 from aleksis.core.util.celery_progress import recorded_task, render_progress_page
+from aleksis.core.util.core_helpers import process_custom_context_processors
 
 
 @recorded_task
@@ -71,7 +72,10 @@ def generate_pdf_from_template(
     template_name: str, context: Optional[dict] = None, request: Optional[HttpRequest] = None
 ) -> Tuple[PDFFile, AsyncResult]:
     """Start a PDF generation task and return the matching file object and Celery result."""
-    html_template = render_to_string(template_name, context, request)
+    if not request:
+        processed_context = process_custom_context_processors(settings.PDF_CONTEXT_PROCESSORS)
+        processed_context.update(context)
+    html_template = render_to_string(template_name, processed_context, request)
 
     file_object = PDFFile.objects.create(html_file=ContentFile(html_template, name="source.html"))
 
@@ -87,7 +91,9 @@ def generate_pdf_from_template(
     return file_object, result
 
 
-def render_pdf(request: HttpRequest, template_name: str, context: dict = None) -> HttpResponse:
+def render_pdf(
+    request: Union[HttpRequest, None], template_name: str, context: dict = None
+) -> HttpResponse:
     """Start PDF generation and show progress page.
 
     The progress page will redirect to the PDF after completion.

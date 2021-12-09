@@ -196,6 +196,14 @@ TEMPLATES = [
     },
 ]
 
+# Attention: The following context processors must accept None
+# as first argument (in addition to a HttpRequest object)
+PDF_CONTEXT_PROCESSORS = [
+    "django.template.context_processors.i18n",
+    "django.template.context_processors.tz",
+    "aleksis.core.util.core_helpers.custom_information_processor",
+]
+
 WSGI_APPLICATION = "aleksis.core.wsgi.application"
 
 # Database
