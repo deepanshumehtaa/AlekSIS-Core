@@ -200,6 +200,7 @@ class Person(ExtensibleModel):
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
     photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
+    avatar = models.ImageField(verbose_name=_("Display picture / Avatar"), blank=True, null=True)
 
     guardians = models.ManyToManyField(
         "self",
