@@ -473,6 +473,21 @@ class Group(SchoolTermRelatedExtensibleModel):
         AdditionalField, verbose_name=_("Additional fields"), blank=True
     )
 
+    photo = models.ImageField(
+        verbose_name=_("Photo"),
+        blank=True,
+        null=True,
+        help_text=_(
+            "This is an official photo, used for official documents and for internal use cases."
+        ),
+    )
+    avatar = models.ImageField(
+        verbose_name=_("Display picture / Avatar"),
+        blank=True,
+        null=True,
+        help_text=_("This is a picture or an avatar for public display."),
+    )
+
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
 
