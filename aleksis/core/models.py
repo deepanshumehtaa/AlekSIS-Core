@@ -29,6 +29,7 @@ from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
 from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
+from image_cropping import ImageCropField, ImageRatioField
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from oauth2_provider.models import (
@@ -199,7 +200,7 @@ class Person(ExtensibleModel):
     )
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
-    photo = models.ImageField(
+    photo = ImageCropField(
         verbose_name=_("Photo"),
         blank=True,
         null=True,
@@ -207,12 +208,17 @@ class Person(ExtensibleModel):
             "This is an official photo, used for official documents and for internal use cases."
         ),
     )
+    photo_rect = ImageRatioField("photo", "600x800")
+    photo_square = ImageRatioField("photo", "400x400")
+
     avatar = models.ImageField(
         verbose_name=_("Display picture / Avatar"),
         blank=True,
         null=True,
         help_text=_("This is a picture or an avatar for public display."),
     )
+    avatar_rect = ImageRatioField("photo", "600x800")
+    avatar_square = ImageRatioField("photo", "400x400")
 
     guardians = models.ManyToManyField(
         "self",
@@ -473,7 +479,7 @@ class Group(SchoolTermRelatedExtensibleModel):
         AdditionalField, verbose_name=_("Additional fields"), blank=True
     )
 
-    photo = models.ImageField(
+    photo = ImageCropField(
         verbose_name=_("Photo"),
         blank=True,
         null=True,
@@ -481,12 +487,17 @@ class Group(SchoolTermRelatedExtensibleModel):
             "This is an official photo, used for official documents and for internal use cases."
         ),
     )
+    photo_rect = ImageRatioField("photo", "800x600")
+    photo_square = ImageRatioField("photo", "400x400")
+
     avatar = models.ImageField(
         verbose_name=_("Display picture / Avatar"),
         blank=True,
         null=True,
         help_text=_("This is a picture or an avatar for public display."),
     )
+    avatar_rect = ImageRatioField("photo", "800x600")
+    avatar_square = ImageRatioField("photo", "400x400")
 
     def get_absolute_url(self) -> str:
         return reverse("group_by_id", args=[self.id])
