@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from importlib import import_module, metadata
 from itertools import groupby
 from operator import itemgetter
-from typing import Any, Callable, Optional, Sequence, Union
+from typing import Any, Callable, Dict, Optional, Sequence, Union
 from warnings import warn
 
 from django.conf import settings
@@ -14,6 +14,7 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.functional import lazy
+from django.utils.module_loading import import_string
 
 from cache_memoize import cache_memoize
 
@@ -198,7 +199,7 @@ def has_person(obj: Union[HttpRequest, Model]) -> bool:
         return True
 
 
-def custom_information_processor(request: HttpRequest) -> dict:
+def custom_information_processor(request: Union[HttpRequest, None]) -> dict:
     """Provide custom information in all templates."""
     from ..models import CustomMenu
 
@@ -316,3 +317,12 @@ def get_allowed_object_ids(request: HttpRequest, models: list) -> list:
         ]
 
     return allowed_object_ids
+
+
+def process_custom_context_processors(context_processors: list) -> Dict[str, Any]:
+    """Process custom context processors."""
+    context = {}
+    processors = tuple(import_string(path) for path in context_processors)
+    for processor in processors:
+        context.update(processor(None))
+    return context
