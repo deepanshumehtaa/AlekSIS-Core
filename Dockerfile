@@ -1,24 +1,24 @@
 FROM debian:bullseye-slim AS core
 
 # Build arguments
-ARG EXTRAS="ldap,s3"
-ARG APP_VERSION=""
+ARG EXTRAS="ldap,s3" \
+    APP_VERSION=""
 
 # Configure Python to be nice inside Docker and pip to stfu
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PIP_DEFAULT_TIMEOUT 100
-ENV PIP_DISABLE_PIP_VERSION_CHECK 1
-ENV PIP_NO_CACHE_DIR 1
-ENV PIP_EXTRA_INDEX_URL https://edugit.org/api/v4/projects/461/packages/pypi/simple
-ENV PIP_USE_DEPRECATED legacy-resolver
-ENV DEBIAN_FRONTEND noninteractive
+ENV PYTHONUNBUFFERED 1 \
+    PYTHONDONTWRITEBYTECODE 1 \
+    PIP_DEFAULT_TIMEOUT 100 \
+    PIP_DISABLE_PIP_VERSION_CHECK 1 \
+    PIP_NO_CACHE_DIR 1 \
+    PIP_EXTRA_INDEX_URL https://edugit.org/api/v4/projects/461/packages/pypi/simple \
+    PIP_USE_DEPRECATED legacy-resolver \
+    DEBIAN_FRONTEND noninteractive
 
 # Configure app settings for build and runtime
-ENV ALEKSIS_static__root /usr/share/aleksis/static
-ENV ALEKSIS_media__root /var/lib/aleksis/media
-ENV ALEKSIS_backup__location /var/lib/aleksis/backups
-ENV ALEKSIS_dev__uwsgi__celery false
+ENV ALEKSIS_static__root /usr/share/aleksis/static \
+    ALEKSIS_media__root /var/lib/aleksis/media \
+    ALEKSIS_backup__location /var/lib/aleksis/backups \
+    ALEKSIS_dev__uwsgi__celery false
 
 # Install necessary Debian and PyPI packages for build and runtime
 RUN apt-get -y update && \
