@@ -1284,9 +1284,8 @@ class SocialAccountDeleteView(DeleteView):
     def get_queryset(self):
         return SocialAccount.objects.filter(user=self.request.user)
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         self.object = self.get_object()
-        success_url = self.get_success_url()
         try:
             get_adapter(self.request).validate_disconnect(
                 self.object, SocialAccount.objects.filter(user=self.request.user)
@@ -1304,7 +1303,7 @@ class SocialAccountDeleteView(DeleteView):
             messages.success(
                 self.request, _("The third-party account has been successfully disconnected.")
             )
-        return HttpResponseRedirect(success_url)
+        return super().form_valid()
 
 
 def server_error(

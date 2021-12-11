@@ -489,8 +489,8 @@ class AdvancedDeleteView(DeleteView):
 
     success_message: Optional[str] = None
 
-    def delete(self, request, *args, **kwargs):
-        r = super().delete(request, *args, **kwargs)
+    def form_valid(self, form):
+        r = super().form_valid(form)
         if self.success_message:
             messages.success(self.request, self.success_message)
         return r
