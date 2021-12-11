@@ -56,7 +56,8 @@ class PersonForm(ExtensibleForm):
             _("Advanced personal data"),
             Row("date_of_birth", "place_of_birth"),
             Row("sex"),
-            Row("photo"),
+            Row("photo", "photo_rect", "photo_square"),
+            Row("avatar", "avatar_rect", "avatar_square"),
             "guardians",
         ),
     )
@@ -81,6 +82,11 @@ class PersonForm(ExtensibleForm):
             "place_of_birth",
             "sex",
             "photo",
+            "photo_rect",
+            "photo_square",
+            "avatar",
+            "avatar_rect",
+            "avatar_square",
             "guardians",
             "primary_group",
         ]
@@ -157,6 +163,8 @@ class EditGroupForm(SchoolTermRelatedExtensibleForm):
         Fieldset(_("Common data"), "name", "short_name", "group_type"),
         Fieldset(_("Persons"), "members", "owners", "parent_groups"),
         Fieldset(_("Additional data"), "additional_fields"),
+        Fieldset(_("Photo"), "photo", "photo_rect", "photo_square"),
+        Fieldset(_("Avatar"), "avatar", "avatar_rect", "avatar_square"),
     )
 
     class Meta:
