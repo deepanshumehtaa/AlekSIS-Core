@@ -20,6 +20,11 @@ Fixed
 * View for assigning permissions didn't work with some global permissions.
 * PDFs generated in background didn't contain logo or site title.
 
+Changed
+~~~~~~~
+
+* Docker base image ships PostgreSQL 14 client binaries for maximum compatibility
+
 `2.2.1_ – 2021-12-02
 --------------------
 
