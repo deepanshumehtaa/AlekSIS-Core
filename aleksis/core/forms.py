@@ -548,69 +548,24 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
             Row("email", "email2"),
             Row("password1", "password2"),
         ),
-        Fieldset(
-            _("Consents"),
-            Row("privacy_policy"),
-        ),
     )
 
-    def __init__(self, *args, **kwargs):
-        super(AccountRegisterForm, self).__init__(*args, **kwargs)
-        self.fields["password1"] = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
-        privacy_policy = get_site_preferences()["footer__privacy_url"]
+    privacy_policy = get_site_preferences()["footer__privacy_url"]
 
-        if settings.SIGNUP_PASSWORD_ENTER_TWICE:
-            self.fields["password2"] = forms.CharField(
-                label=_("Password (again)"), widget=forms.PasswordInput
-            )
-
-        self.fields["first_name"] = forms.CharField(
-            required=True,
+    if settings.SIGNUP_PASSWORD_ENTER_TWICE:
+        password2 = forms.CharField(
+            label=_("Password (again)"), widget=forms.PasswordInput
         )
 
-        self.fields["last_name"] = forms.CharField(
-            required=True,
-        )
+    first_name = forms.CharField(
+        required=True,
+    )
 
-        self.fields["privacy_policy"] = forms.BooleanField(
-            help_text=_(
-                f"I have read the <a href='{privacy_policy}'>Privacy policy</a>"
-                " and agree with them."
-            ),
-            required=True,
-        )
-
-    def clean(self):
-        super(AccountRegisterForm, self).clean()
-
-        dummy_user = get_user_model()
-        password = self.cleaned_data.get("password1")
-        if password:
-            try:
-                get_adapter().clean_password(password, user=dummy_user)
-            except forms.ValidationError as e:
-                self.add_error("password1", e)
-
-        if (
-            settings.SIGNUP_PASSWORD_ENTER_TWICE
-            and "password1" in self.cleaned_data
-            and "password2" in self.cleaned_data
-        ):
-            if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
-                self.add_error(
-                    "password2",
-                    _("You must type the same password each time."),
-                )
-        return self.cleaned_data
-
-    def save(self, request):
-        adapter = get_adapter(request)
-        user = adapter.new_user(request)
-        adapter.save_user(request, user, self)
-        self.custom_signup(request, user)
-        setup_user_email(request, user, [])
-        return user
+    last_name = forms.CharField(
+        required=True,
+    )
 
 
 class ActionForm(forms.Form):

@@ -1074,7 +1074,7 @@ class InvitePerson(PermissionRequiredMixin, SingleTableView, SendInvite):
     def get_context_data(self, **kwargs):
         queryset = kwargs.pop("object_list", None)
         if queryset is None:
-            self.object_list = self.model.objects.all()[:5]
+            self.object_list = self.model.objects.all()
         return super().get_context_data(**kwargs)
 
 
