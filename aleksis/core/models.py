@@ -1,4 +1,5 @@
 # flake8: noqa: DJ01
+
 import hmac
 from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
@@ -29,6 +30,10 @@ from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
 from django_celery_results.models import TaskResult
 from dynamic_preferences.models import PerInstancePreferenceModel
+from invitations import signals
+from invitations.adapters import get_invitations_adapter
+from invitations.base_invitation import AbstractBaseInvitation
+from invitations.models import Invitation
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from oauth2_provider.models import (
@@ -59,7 +64,7 @@ from .mixins import (
     SchoolTermRelatedExtensibleModel,
 )
 from .tasks import send_notification
-from .util.core_helpers import get_site_preferences, now_tomorrow
+from .util.core_helpers import generate_random_code, get_site_preferences, now_tomorrow
 from .util.model_helpers import ICONS
 
 FIELD_CHOICES = (
@@ -1060,6 +1065,30 @@ class DataCheckResult(ExtensibleModel):
             ("run_data_checks", _("Can run data checks")),
             ("solve_data_problem", _("Can solve data check problems")),
         )
+
+
+class PersonInvitation(AbstractBaseInvitation, PureDjangoModel):
+    """Custom model for invitations to allow to generate invitations codes without email address."""
+
+    email = models.EmailField(verbose_name=_("E-Mail address"), blank=True)
+    person = models.ForeignKey(
+        Person, on_delete=models.CASCADE, blank=True, related_name="invitation", null=True
+    )
+
+    @classmethod
+    def create(cls, email, inviter=None, **kwargs):
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        key = generate_random_code(length, packet_size)
+        instance = cls._default_manager.create(email=email, key=key, inviter=inviter, **kwargs)
+        return instance
+
+    def __str__(self) -> str:
+        return f"{self.email} ({self.inviter})"
+
+    key_expired = Invitation.key_expired
+
+    send_invitation = Invitation.send_invitation
 
 
 class PDFFile(ExtensibleModel):
