@@ -22,17 +22,17 @@ ENV ALEKSIS_dev__uwsgi__celery false
 
 # Install necessary Debian and PyPI packages for build and runtime
 RUN apt-get -y update && \
-    apt-get -y install eatmydata && \
+    apt-get -y install eatmydata gnupg postgresql-common && \
+    /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
     eatmydata apt-get -y upgrade && \
     eatmydata apt-get install -y --no-install-recommends \
         build-essential \
         chromium \
 	dumb-init \
 	gettext \
-	libpq5 \
 	libpq-dev \
 	libssl-dev \
-	postgresql-client \
+	postgresql-client-14 \
 	python3-dev \
 	python3-magic \
 	python3-pip \
@@ -76,6 +76,7 @@ RUN set -e; \
     eatmydata apt-get remove --purge -y \
         build-essential \
         gettext \
+        gnupg \
         libpq-dev \
         libssl-dev \
         libldap2-dev \
