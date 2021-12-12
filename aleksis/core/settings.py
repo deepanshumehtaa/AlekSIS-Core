@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
+from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, monkey_patch
 
 monkey_patch()
 
@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
+    "dj_cleavejs.apps.DjCleaveJSConfig",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -121,6 +122,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "invitations",
     "health_check",
     "health_check.db",
     "health_check.cache",
@@ -318,6 +320,8 @@ ACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurAccountAdapter"
 # Require password confirmation
 SIGNUP_PASSWORD_ENTER_TWICE = True
 
+INVITATIONS_GONE_ON_ACCEPT_ERROR = False
+
 # Allow login by either username or email
 ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
 
@@ -343,6 +347,18 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 
 # Enforce uniqueness of email addresses
 ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
+
+# Configuration for django-invitations
+
+ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
+
+INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
+
+INVITATIONS_INVITATION_ONLY = lazy_preference("auth", "invite_only")
+
+INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
+
+INVITATIONS_INVITATION_MODEL = "core.PersonInvitation"
 
 # Configuration for OAuth2 provider
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
@@ -503,6 +519,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "cleave.js",
     "@fontsource/roboto",
     "jquery",
     "@materializecss/materialize",
@@ -516,6 +533,8 @@ YARN_INSTALLED_APPS = [
 ]
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
+
+CLEAVE_JS = "cleave.js/dist/cleave.min.js"
 
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
