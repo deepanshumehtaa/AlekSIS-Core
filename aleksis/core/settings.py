@@ -322,6 +322,8 @@ SIGNUP_PASSWORD_ENTER_TWICE = True
 
 INVITATIONS_GONE_ON_ACCEPT_ERROR = False
 
+INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
+
 # Allow login by either username or email
 ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
 

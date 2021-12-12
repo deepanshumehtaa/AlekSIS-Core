@@ -608,12 +608,6 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         adapter = get_adapter(request)
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
-        Person.objects.create(
-            first_name=self.cleaned_data["first_name"],
-            last_name=self.cleaned_data["last_name"],
-            email=self.cleaned_data["email"],
-            user=user,
-        )
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
