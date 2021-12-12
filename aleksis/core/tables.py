@@ -1,7 +1,11 @@
+from textwrap import wrap
+
 from django.utils.translation import gettext_lazy as _
 
 import django_tables2 as tables
 from django_tables2.utils import A
+
+from .models import Person
 
 
 class SchoolTermTable(tables.Table):
@@ -91,6 +95,32 @@ class DashboardWidgetTable(tables.Table):
 
     def render_widget_name(self, value, record):
         return record._meta.verbose_name
+
+
+class PersonColumn(tables.Column):
+    """Returns person object from given id."""
+
+    def render(self, value):
+        return Person.objects.get(user__id=value)
+
+
+class InvitationCodeColumn(tables.Column):
+    """Returns invitation code in a more readable format."""
+
+    def render(self, value):
+        return "-".join(wrap(value, 5))
+
+
+class InvitationsTable(tables.Table):
+    """Table to list persons."""
+
+    email = tables.EmailColumn()
+    sent = tables.DateColumn()
+    inviter_id = PersonColumn()
+    key = InvitationCodeColumn()
+    accepted = tables.BooleanColumn(
+        yesno="check,cancel", attrs={"span": {"class": "material-icons"}}
+    )
 
 
 class PermissionDeleteColumn(tables.LinkColumn):

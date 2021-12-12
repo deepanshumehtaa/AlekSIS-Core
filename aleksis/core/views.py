@@ -1,3 +1,4 @@
+from textwrap import wrap
 from typing import Any, Dict, Optional, Type
 from urllib.parse import urlencode
 
@@ -22,15 +23,15 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.defaults import ERROR_500_TEMPLATE_NAME
-from django.views.generic import FormView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, FormView
 from django.views.generic.list import ListView
 
 import reversion
@@ -48,6 +49,7 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
+from invitations.views import SendInvite, accept_invitation
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
@@ -72,6 +74,7 @@ from .forms import (
     EditGroupForm,
     EditGroupTypeForm,
     GroupPreferenceForm,
+    InvitationCodeForm,
     OAuthApplicationForm,
     PersonForm,
     PersonPreferenceForm,
@@ -93,6 +96,7 @@ from .models import (
     OAuthApplication,
     PDFFile,
     Person,
+    PersonInvitation,
     SchoolTerm,
     TaskUserAssignment,
 )
@@ -108,6 +112,7 @@ from .tables import (
     GroupObjectPermissionTable,
     GroupsTable,
     GroupTypesTable,
+    InvitationsTable,
     PersonsTable,
     SchoolTermTable,
     UserGlobalPermissionTable,
@@ -117,6 +122,7 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
 from .util.core_helpers import (
+    generate_random_code,
     get_allowed_object_ids,
     get_pwa_icons,
     get_site_preferences,
@@ -1049,6 +1055,70 @@ class EditDashboardView(PermissionRequiredMixin, View):
         context = self.get_context_data(request, **kwargs)
 
         return render(request, "core/edit_dashboard.html", context=context)
+
+
+class InvitePerson(PermissionRequiredMixin, SingleTableView, SendInvite):
+    """View to invite a person to register an account."""
+
+    template_name = "invitations/forms/_invite.html"
+    permission_required = "core.can_invite"
+    model = PersonInvitation
+    table_class = InvitationsTable
+    context = {}
+
+    def get_initial(self):
+        if person:
+            return {"person": person}
+        return super().get_initial(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        queryset = kwargs.pop("object_list", None)
+        if queryset is None:
+            self.object_list = self.model.objects.all()[:5]
+        return super().get_context_data(**kwargs)
+
+
+class EnterInvitationCode(FormView):
+    """View to enter an invitation code."""
+
+    template_name = "invitations/enter.html"
+    form_class = InvitationCodeForm
+
+    def form_valid(self, form):
+        code = "".join(form.cleaned_data["code"].lower().split("-"))
+        if (
+            PersonInvitation.objects.filter(key=code).exists()
+            and not PersonInvitation.objects.get(key=code).accepted
+            and not PersonInvitation.objects.get(key=code).key_expired()
+        ):
+            invitation = PersonInvitation.objects.get(key=code)
+            accept_invitation(
+                invitation=invitation, request=self.request, signal_sender=self.request.user
+            )
+            return redirect("account_signup")
+        return redirect("invitations:accept-invite", code)
+
+
+class GenerateInvitationCode(View):
+    """View to generate an invitation code."""
+
+    def get(self, request):
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        code = generate_random_code(length, packet_size)
+
+        invitation = PersonInvitation.objects.create(
+            email="", inviter=request.user, key=code, sent=timezone.now()
+        )
+
+        code = "-".join(wrap(invitation.key, 5))
+
+        messages.success(
+            request,
+            _(f"The invitation was successfully created. The invitation code is {code}"),
+        )
+
+        return redirect("invite_person")
 
 
 class PermissionsListBaseView(PermissionRequiredMixin, SingleTableMixin, FilterView):

@@ -30,6 +30,16 @@ urlpatterns = [
         name="account_change_password",
     ),
     path("accounts/", include("allauth.urls")),
+    path("invitations/send-invite", views.InvitePerson.as_view(), name="invite_person"),
+    path(
+        "invitations/code/enter", views.EnterInvitationCode.as_view(), name="enter_invitation_code"
+    ),
+    path(
+        "invitations/code/generate",
+        views.GenerateInvitationCode.as_view(),
+        name="generate_invitation_code",
+    ),
+    path("invitations/", include("invitations.urls")),
     path(
         "accounts/social/connections/<int:pk>/delete",
         views.SocialAccountDeleteView.as_view(),

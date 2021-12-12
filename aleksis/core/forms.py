@@ -3,7 +3,6 @@ from typing import Any, Callable, Dict, Sequence
 
 from django import forms
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
@@ -13,7 +12,8 @@ from django.utils.translation import gettext_lazy as _
 
 from allauth.account.adapter import get_adapter
 from allauth.account.forms import SignupForm
-from allauth.account.utils import setup_user_email
+from allauth.account.utils import get_user_model, setup_user_email
+from dj_cleavejs import CleaveWidget
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from guardian.shortcuts import assign_perm
@@ -391,6 +391,27 @@ class DashboardWidgetOrderForm(ExtensibleForm):
 DashboardWidgetOrderFormSet = forms.formset_factory(
     form=DashboardWidgetOrderForm, max_num=0, extra=0
 )
+
+
+class InvitationCodeForm(forms.Form):
+    """Form to enter an invitation code."""
+
+    code = forms.CharField(
+        label=_("Invitation code"),
+        help_text=_("Please enter your invitation code."),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Calculate number of fields
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        blocks = [
+            packet_size,
+        ] * length
+
+        self.fields["code"].widget = CleaveWidget(blocks=blocks, delimiter="-", uppercase=True)
 
 
 class SelectPermissionForm(forms.Form):

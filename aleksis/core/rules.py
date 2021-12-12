@@ -313,11 +313,17 @@ edit_default_dashboard_predicate = has_person & has_global_perm("core.edit_defau
 rules.add_perm("core.edit_default_dashboard_rule", edit_default_dashboard_predicate)
 
 # django-allauth
-can_register_predicate = is_site_preference_set(section="auth", pref="signup_enabled")
+can_register_predicate = is_site_preference_set(
+    section="auth", pref="signup_enabled"
+) & is_site_preference_set(section="auth", pref="signup_open")
 rules.add_perm("core.can_register", can_register_predicate)
 
 can_change_password_predicate = is_site_preference_set(section="auth", pref="allow_password_change")
 rules.add_perm("core.can_change_password", can_change_password_predicate)
+
+# django-invitations
+can_invite_predicate = is_site_preference_set(section="auth", pref="invite_enabled")
+rules.add_perm("core.can_invite", can_invite_predicate)
 
 # OAuth2 permissions
 create_oauthapplication_predicate = has_person & has_global_perm("core.add_oauthapplication")
