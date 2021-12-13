@@ -25,6 +25,12 @@ Changed
 
 * Docker base image ships PostgreSQL 14 client binaries for maximum compatibility
 
+Removed
+~~~~~~~
+
+* Remove impersonation page. Use the impersonation button on the person
+  detail view instead.
+
 `2.2.1_ – 2021-12-02
 --------------------
 
