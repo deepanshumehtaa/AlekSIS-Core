@@ -3,6 +3,7 @@ from typing import Any, Callable, Dict, Sequence
 
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
@@ -11,7 +12,6 @@ from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from allauth.account.forms import SignupForm
-from allauth.account.utils import get_user_model
 from dj_cleavejs import CleaveWidget
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm

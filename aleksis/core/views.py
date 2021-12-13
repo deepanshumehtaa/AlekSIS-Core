@@ -1404,3 +1404,16 @@ class AccountRegisterView(SignupView):
         kwargs = super(AccountRegisterView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
+
+
+def invite_person_by_id(request: HttpRequest, id_: int) -> HttpResponse:
+    context = {}
+
+    person = Person.objects.get(id=id_)
+
+    invite = PersonInvitation.objects.create(
+        inviter=request.user,
+        person=person,
+        email=person.email,
+    )
+    invite.send_invitation()
