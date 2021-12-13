@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 12:55+0100\n"
-"PO-Revision-Date: 2021-11-29 09:34+0000\n"
+"PO-Revision-Date: 2021-12-13 18:34+0000\n"
 "Last-Translator: Jonathan Weth <teckids@jonathanweth.de>\n"
-"Language-Team: German <https://translate.edugit.org/projects/aleksis/aleksis-core/de/>\n"
+"Language-Team: German <https://translate.edugit.org/projects/aleksis/"
+"aleksis-core/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1515,10 +1516,8 @@ msgid "Logged in as"
 msgstr "Angemeldet als"
 
 #: aleksis/core/templates/core/base.html:175
-#, fuzzy
-#| msgid "About AlekSIS — The Free School Information System"
 msgid "About AlekSIS® — The Free School Information System"
-msgstr "Über AlekSIS — The Free School Information System"
+msgstr "Über AlekSIS® — The Free School Information System"
 
 #: aleksis/core/templates/core/base.html:183
 msgid "Impress"
@@ -1529,10 +1528,8 @@ msgid "Privacy Policy"
 msgstr "Datenschutzerklärung"
 
 #: aleksis/core/templates/core/base_print.html:72
-#, fuzzy
-#| msgid "Powered by AlekSIS"
 msgid "Powered by AlekSIS®"
-msgstr "Betrieben mit AlekSIS"
+msgstr "Betrieben mit AlekSIS®"
 
 #: aleksis/core/templates/core/dashboard_widget/create.html:8
 #: aleksis/core/templates/core/dashboard_widget/create.html:12
@@ -1870,29 +1867,18 @@ msgid "No notifications available yet."
 msgstr "Aktuell keine Benachrichtigungen verfügbar."
 
 #: aleksis/core/templates/core/pages/about.html:6
-#, fuzzy
-#| msgid "About AlekSIS"
 msgid "About AlekSIS®"
-msgstr "Über AlekSIS"
+msgstr "Über AlekSIS®"
 
 #: aleksis/core/templates/core/pages/about.html:7
-#, fuzzy
-#| msgid "AlekSIS – The Free School Information System"
 msgid "AlekSIS® – The Free School Information System"
-msgstr "AlekSIS – The Free School Information System"
+msgstr "AlekSIS® – The Free School Information System"
 
 #: aleksis/core/templates/core/pages/about.html:15
 msgid "About AlekSIS"
 msgstr "Über AlekSIS"
 
 #: aleksis/core/templates/core/pages/about.html:17
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "              This platform is powered by AlekSIS, a web-based school information system (SIS) which can be used\n"
-#| "              to manage and/or publish organisational artifacts of educational institutions. AlekSIS is free software and\n"
-#| "              can be used by anyone.\n"
-#| "            "
 msgid ""
 "\n"
 "              This platform is powered by AlekSIS®, a web-based school information system (SIS) which can be used\n"
@@ -1901,8 +1887,10 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"              Diese Plattform wird mit AlekSIS, einem webbasierten Schulinformationssystem (SIS), \n"
-"welches für die Verwaltung und/oder Veröffentlichung von Bildungseinrichtungen verwendet werden kann.\n"
+"              Diese Plattform wird mit AlekSIS®, einem webbasierten "
+"Schulinformationssystem (SIS), \n"
+"welches für die Verwaltung und/oder Veröffentlichung von "
+"Bildungseinrichtungen verwendet werden kann.\n"
 "AlekSIS ist freie Software und kann von jedem benutzt werden.\n"
 "            "
 
@@ -1912,6 +1900,10 @@ msgid ""
 "              AlekSIS® is a registered trademark of the AlekSIS open source project, represented by Teckids e.V.\n"
 "            "
 msgstr ""
+"\n"
+"              AlekSIS® ist eine eingetragene Wortmarke des Open-Source-"
+"Projektes AlekSIS, vertreten durch den Teckids e.V.\n"
+"            "
 
 #: aleksis/core/templates/core/pages/about.html:30
 msgid "Website of AlekSIS"
