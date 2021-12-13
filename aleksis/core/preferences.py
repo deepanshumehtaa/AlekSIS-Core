@@ -272,14 +272,6 @@ class SignupOpen(BooleanPreference):
 
 
 @site_preferences_registry.register
-class InviteOnly(BooleanPreference):
-    section = auth
-    name = "invite_only"
-    default = False
-    verbose_name = _("Signup invite only.")
-
-
-@site_preferences_registry.register
 class InviteEnabled(BooleanPreference):
     section = auth
     name = "invite_enabled"

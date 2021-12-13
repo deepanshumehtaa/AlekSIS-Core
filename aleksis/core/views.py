@@ -1392,6 +1392,14 @@ class AccountRegisterView(SignupView):
     form_class = AccountRegisterForm
     success_url = "index"
 
+    def dispatch(self, request, *args, **kwargs):
+        if not get_site_preferences()["auth__signup_open"]:
+            try:
+                session = request.session["account_verified_email"]
+            except KeyError:
+                raise PermissionDenied()
+        return super(AccountRegisterView, self).dispatch(request, *args, **kwargs)
+
     def get_form_kwargs(self):
         kwargs = super(AccountRegisterView, self).get_form_kwargs()
         kwargs["request"] = self.request
