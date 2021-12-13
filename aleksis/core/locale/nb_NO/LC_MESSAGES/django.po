@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AlekSIS (School Information System) 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 09:59+0100\n"
+"POT-Creation-Date: 2021-12-13 12:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: aleksis/core/apps.py:151
+#: aleksis/core/apps.py:152
 msgid "OpenID Connect scope"
 msgstr ""
 
-#: aleksis/core/apps.py:152
+#: aleksis/core/apps.py:153
 msgid "Given name, family name, link to profile and picture if existing."
 msgstr ""
 
-#: aleksis/core/apps.py:153
+#: aleksis/core/apps.py:154
 msgid "Full home postal address"
 msgstr ""
 
-#: aleksis/core/apps.py:154
+#: aleksis/core/apps.py:155
 msgid "Email address"
 msgstr ""
 
-#: aleksis/core/apps.py:155
+#: aleksis/core/apps.py:156
 msgid "Home and mobile phone"
+msgstr ""
+
+#: aleksis/core/apps.py:157 aleksis/core/forms.py:222 aleksis/core/menus.py:267
+#: aleksis/core/models.py:412 aleksis/core/templates/core/group/list.html:8
+#: aleksis/core/templates/core/group/list.html:9
+#: aleksis/core/templates/core/person/full.html:145
+msgid "Groups"
 msgstr ""
 
 #: aleksis/core/data_checks.py:55
@@ -91,148 +98,141 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: aleksis/core/forms.py:46 aleksis/core/forms.py:514
+#: aleksis/core/forms.py:47 aleksis/core/forms.py:521
 msgid "Base data"
 msgstr ""
 
-#: aleksis/core/forms.py:52
+#: aleksis/core/forms.py:53
 msgid "Address"
 msgstr ""
 
-#: aleksis/core/forms.py:53
+#: aleksis/core/forms.py:54
 msgid "Contact data"
 msgstr ""
 
-#: aleksis/core/forms.py:55
+#: aleksis/core/forms.py:56
 msgid "Advanced personal data"
 msgstr ""
 
-#: aleksis/core/forms.py:103
+#: aleksis/core/forms.py:104
 msgid "New user"
 msgstr ""
 
-#: aleksis/core/forms.py:103
+#: aleksis/core/forms.py:104
 msgid "Create a new account"
 msgstr ""
 
-#: aleksis/core/forms.py:134
+#: aleksis/core/forms.py:135
 msgid "You cannot set a new username when also selecting an existing user."
 msgstr ""
 
-#: aleksis/core/forms.py:138
+#: aleksis/core/forms.py:139
 msgid "This username is already in use."
 msgstr ""
 
-#: aleksis/core/forms.py:155 aleksis/core/models.py:125
+#: aleksis/core/forms.py:156 aleksis/core/models.py:125
 msgid "School term"
 msgstr ""
 
-#: aleksis/core/forms.py:156
+#: aleksis/core/forms.py:157
 msgid "Common data"
 msgstr ""
 
-#: aleksis/core/forms.py:157 aleksis/core/forms.py:208
+#: aleksis/core/forms.py:158 aleksis/core/forms.py:209
 #: aleksis/core/menus.py:256 aleksis/core/models.py:148
 #: aleksis/core/templates/core/person/list.html:8
 #: aleksis/core/templates/core/person/list.html:9
 msgid "Persons"
 msgstr ""
 
-#: aleksis/core/forms.py:158
+#: aleksis/core/forms.py:159
 msgid "Additional data"
 msgstr ""
 
-#: aleksis/core/forms.py:200 aleksis/core/forms.py:203
+#: aleksis/core/forms.py:201 aleksis/core/forms.py:204
 #: aleksis/core/models.py:68
 msgid "Date"
 msgstr ""
 
-#: aleksis/core/forms.py:201 aleksis/core/forms.py:204
+#: aleksis/core/forms.py:202 aleksis/core/forms.py:205
 #: aleksis/core/models.py:76
 msgid "Time"
 msgstr ""
 
-#: aleksis/core/forms.py:221 aleksis/core/menus.py:267
-#: aleksis/core/models.py:412 aleksis/core/templates/core/group/list.html:8
-#: aleksis/core/templates/core/group/list.html:9
-#: aleksis/core/templates/core/person/full.html:145
-msgid "Groups"
-msgstr ""
-
-#: aleksis/core/forms.py:234
+#: aleksis/core/forms.py:235
 msgid "From when until when should the announcement be displayed?"
 msgstr ""
 
-#: aleksis/core/forms.py:237
+#: aleksis/core/forms.py:238
 msgid "Who should see the announcement?"
 msgstr ""
 
-#: aleksis/core/forms.py:238
+#: aleksis/core/forms.py:239
 msgid "Write your announcement:"
 msgstr ""
 
-#: aleksis/core/forms.py:277
+#: aleksis/core/forms.py:278
 msgid "You are not allowed to create announcements which are only valid in the past."
 msgstr ""
 
-#: aleksis/core/forms.py:281
+#: aleksis/core/forms.py:282
 msgid "The from date and time must be earlier then the until date and time."
 msgstr ""
 
-#: aleksis/core/forms.py:290
+#: aleksis/core/forms.py:291
 msgid "You need at least one recipient."
 msgstr ""
 
-#: aleksis/core/forms.py:411
+#: aleksis/core/forms.py:412
 msgid "Who should get the permission?"
 msgstr ""
 
-#: aleksis/core/forms.py:412
+#: aleksis/core/forms.py:413
 msgid "On what?"
 msgstr ""
 
-#: aleksis/core/forms.py:438
+#: aleksis/core/forms.py:439
 msgid "Select objects which the permission should be granted for:"
 msgstr ""
 
-#: aleksis/core/forms.py:441
+#: aleksis/core/forms.py:442
 msgid "Grant the permission for all objects"
 msgstr ""
 
-#: aleksis/core/forms.py:449
+#: aleksis/core/forms.py:450
 msgid "You must select at least one group or person which should get the permission."
 msgstr ""
 
-#: aleksis/core/forms.py:454
+#: aleksis/core/forms.py:455
 msgid "You must grant the permission to all objects and/or to some objects."
 msgstr ""
 
-#: aleksis/core/forms.py:518
+#: aleksis/core/forms.py:525
 msgid "Account data"
 msgstr ""
 
-#: aleksis/core/forms.py:524
+#: aleksis/core/forms.py:531
 msgid "Consents"
 msgstr ""
 
-#: aleksis/core/forms.py:531
+#: aleksis/core/forms.py:538
 msgid "Password"
 msgstr ""
 
-#: aleksis/core/forms.py:537
+#: aleksis/core/forms.py:544
 msgid "Password (again)"
 msgstr ""
 
-#: aleksis/core/forms.py:550
+#: aleksis/core/forms.py:557
 #, python-brace-format
 msgid "I have read the <a href='{privacy_policy}'>Privacy policy</a> and agree with them."
 msgstr ""
 
-#: aleksis/core/forms.py:575
+#: aleksis/core/forms.py:582
 msgid "You must type the same password each time."
 msgstr ""
 
-#: aleksis/core/forms.py:720
+#: aleksis/core/forms.py:727
 msgid "No valid selection."
 msgstr ""
 
@@ -240,24 +240,20 @@ msgstr ""
 msgid "There are unresolved data problems."
 msgstr ""
 
-#: aleksis/core/health_checks.py:38
-msgid "The backup folder doesn't exist."
-msgstr ""
-
-#: aleksis/core/health_checks.py:47
+#: aleksis/core/health_checks.py:44
 #, python-brace-format
 msgid "Last backup {time_gone_since_backup}!"
 msgstr ""
 
-#: aleksis/core/health_checks.py:49
+#: aleksis/core/health_checks.py:46
 msgid "No backup found!"
 msgstr ""
 
-#: aleksis/core/health_checks.py:76
+#: aleksis/core/health_checks.py:73
 msgid "No backup result found!"
 msgstr ""
 
-#: aleksis/core/health_checks.py:78
+#: aleksis/core/health_checks.py:75
 #, python-brace-format
 msgid "{task.status} - {task.result}"
 msgstr ""
@@ -1107,11 +1103,11 @@ msgstr ""
 msgid "Automatically update the dashboard and its widgets sitewide"
 msgstr ""
 
-#: aleksis/core/settings.py:474
+#: aleksis/core/settings.py:482
 msgid "English"
 msgstr ""
 
-#: aleksis/core/settings.py:475
+#: aleksis/core/settings.py:483
 msgid "German"
 msgstr ""
 
@@ -1458,7 +1454,7 @@ msgid "Logged in as"
 msgstr ""
 
 #: aleksis/core/templates/core/base.html:175
-msgid "About AlekSIS — The Free School Information System"
+msgid "About AlekSIS® — The Free School Information System"
 msgstr ""
 
 #: aleksis/core/templates/core/base.html:183
@@ -1470,7 +1466,7 @@ msgid "Privacy Policy"
 msgstr ""
 
 #: aleksis/core/templates/core/base_print.html:72
-msgid "Powered by AlekSIS"
+msgid "Powered by AlekSIS®"
 msgstr ""
 
 #: aleksis/core/templates/core/dashboard_widget/create.html:8
@@ -1774,36 +1770,46 @@ msgid "No notifications available yet."
 msgstr ""
 
 #: aleksis/core/templates/core/pages/about.html:6
-#: aleksis/core/templates/core/pages/about.html:15
-msgid "About AlekSIS"
+msgid "About AlekSIS®"
 msgstr ""
 
 #: aleksis/core/templates/core/pages/about.html:7
-msgid "AlekSIS – The Free School Information System"
+msgid "AlekSIS® – The Free School Information System"
+msgstr ""
+
+#: aleksis/core/templates/core/pages/about.html:15
+msgid "About AlekSIS"
 msgstr ""
 
 #: aleksis/core/templates/core/pages/about.html:17
 msgid ""
 "\n"
-"              This platform is powered by AlekSIS, a web-based school information system (SIS) which can be used\n"
+"              This platform is powered by AlekSIS®, a web-based school information system (SIS) which can be used\n"
 "              to manage and/or publish organisational artifacts of educational institutions. AlekSIS is free software and\n"
 "              can be used by anyone.\n"
 "            "
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:25
+#: aleksis/core/templates/core/pages/about.html:24
+msgid ""
+"\n"
+"              AlekSIS® is a registered trademark of the AlekSIS open source project, represented by Teckids e.V.\n"
+"            "
+msgstr ""
+
+#: aleksis/core/templates/core/pages/about.html:30
 msgid "Website of AlekSIS"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:26
+#: aleksis/core/templates/core/pages/about.html:31
 msgid "Source code"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:35
+#: aleksis/core/templates/core/pages/about.html:40
 msgid "Licence information"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:37
+#: aleksis/core/templates/core/pages/about.html:42
 msgid ""
 "\n"
 "              The core and the official apps of AlekSIS are licenced under the EUPL, version 1.2 or later. For licence\n"
@@ -1812,23 +1818,23 @@ msgid ""
 "            "
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:45
+#: aleksis/core/templates/core/pages/about.html:50
 msgid "Free/Open Source Licence"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:46
+#: aleksis/core/templates/core/pages/about.html:51
 msgid "Other Licence"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:50
+#: aleksis/core/templates/core/pages/about.html:55
 msgid "Full licence text"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:51
+#: aleksis/core/templates/core/pages/about.html:56
 msgid "More information about the EUPL"
 msgstr ""
 
-#: aleksis/core/templates/core/pages/about.html:90
+#: aleksis/core/templates/core/pages/about.html:95
 #, python-format
 msgid ""
 "\n"
@@ -2775,23 +2781,23 @@ msgstr ""
 msgid "SMS"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:105
+#: aleksis/core/util/pdf.py:113
 msgid "Progress: Generate PDF file"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:106
+#: aleksis/core/util/pdf.py:114
 msgid "Generating PDF file …"
 msgstr ""
 
-#: aleksis/core/util/pdf.py:107
+#: aleksis/core/util/pdf.py:115
 msgid "The PDF file has been generated successfully."
 msgstr ""
 
-#: aleksis/core/util/pdf.py:108
+#: aleksis/core/util/pdf.py:116
 msgid "There was a problem while generating the PDF file."
 msgstr ""
 
-#: aleksis/core/util/pdf.py:111
+#: aleksis/core/util/pdf.py:119
 msgid "Download PDF"
 msgstr ""
 
