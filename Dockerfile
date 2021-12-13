@@ -1,8 +1,8 @@
 FROM debian:bullseye-slim AS core
 
 # Build arguments
-ARG EXTRAS="ldap,s3" \
-    APP_VERSION=""
+ARG EXTRAS="ldap,s3"
+ARG APP_VERSION=""
 
 # Configure Python to be nice inside Docker and pip to stfu
 ENV PYTHONUNBUFFERED 1 \
