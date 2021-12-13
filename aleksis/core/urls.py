@@ -23,6 +23,7 @@ urlpatterns = [
     path("serviceworker.js", views.ServiceWorkerView.as_view(), name="service_worker"),
     path("offline/", views.OfflineView.as_view(), name="offline"),
     path("about/", views.about, name="about_aleksis"),
+    path("accounts/signup/", views.AccountRegisterView.as_view(), name="account_signup"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path(
         "accounts/password/change/",

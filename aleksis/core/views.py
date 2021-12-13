@@ -35,7 +35,7 @@ from django.views.generic.edit import DeleteView, FormView
 from django.views.generic.list import ListView
 
 import reversion
-from allauth.account.views import PasswordChangeView
+from allauth.account.views import PasswordChangeView, SignupView
 from allauth.socialaccount.adapter import get_adapter
 from allauth.socialaccount.models import SocialAccount
 from celery_progress.views import get_progress
@@ -66,6 +66,7 @@ from .filters import (
     UserObjectPermissionFilter,
 )
 from .forms import (
+    AccountRegisterForm,
     AnnouncementForm,
     AssignPermissionForm,
     ChildGroupsForm,
@@ -1385,3 +1386,13 @@ def server_error(
     context = {"request": request}
 
     return HttpResponseServerError(template.render(context))
+
+
+class AccountRegisterView(SignupView):
+    form_class = AccountRegisterForm
+    success_url = "index"
+
+    def get_form_kwargs(self):
+        kwargs = super(AccountRegisterView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs

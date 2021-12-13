@@ -10,9 +10,8 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from allauth.account.adapter import get_adapter
 from allauth.account.forms import SignupForm
-from allauth.account.utils import get_user_model, setup_user_email
+from allauth.account.utils import get_user_model
 from dj_cleavejs import CleaveWidget
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
@@ -555,9 +554,7 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
     privacy_policy = get_site_preferences()["footer__privacy_url"]
 
     if settings.SIGNUP_PASSWORD_ENTER_TWICE:
-        password2 = forms.CharField(
-            label=_("Password (again)"), widget=forms.PasswordInput
-        )
+        password2 = forms.CharField(label=_("Password (again)"), widget=forms.PasswordInput)
 
     first_name = forms.CharField(
         required=True,
@@ -566,6 +563,25 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
     last_name = forms.CharField(
         required=True,
     )
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super(AccountRegisterForm, self).__init__(*args, **kwargs)
+
+        try:
+            email = request.session["account_verified_email"]
+            person = Person.objects.filter(email=email)
+
+            self.fields["email"].disabled = True
+            self.fields["email2"].disabled = True
+
+            if person:
+                self.fields["first_name"].initial = person.first().first_name
+                self.fields["first_name"].disabled = True
+                self.fields["last_name"].initial = person.first().first_name
+                self.fields["last_name"].disabled = True
+        except KeyError:
+            pass
 
 
 class ActionForm(forms.Form):
