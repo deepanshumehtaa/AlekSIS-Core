@@ -268,7 +268,7 @@ class SignupOpen(BooleanPreference):
     section = auth
     name = "signup_open"
     default = False
-    verbose_name = _("Signup open for everyone.")
+    verbose_name = _("Signup open for everyone")
 
 
 @site_preferences_registry.register

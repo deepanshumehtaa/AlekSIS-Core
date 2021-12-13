@@ -1393,11 +1393,8 @@ class AccountRegisterView(SignupView):
     success_url = "index"
 
     def dispatch(self, request, *args, **kwargs):
-        if not get_site_preferences()["auth__signup_open"]:
-            try:
-                session = request.session["account_verified_email"]
-            except KeyError:
-                raise PermissionDenied()
+        if not get_site_preferences()["auth__signup_open"] and not request.session.get("account_verified_email"):
+            raise PermissionDenied()
         return super(AccountRegisterView, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -1411,9 +1408,22 @@ def invite_person_by_id(request: HttpRequest, id_: int) -> HttpResponse:
 
     person = Person.objects.get(id=id_)
 
-    invite = PersonInvitation.objects.create(
-        inviter=request.user,
-        person=person,
-        email=person.email,
-    )
-    invite.send_invitation()
+    if not PersonInvitation.objects.filter(email=person.email).exists():
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        key = generate_random_code(length, packet_size)
+        invite = PersonInvitation.objects.create(
+            person=person,
+            key=key
+        )
+        if person.email:
+            invite.email = person.email
+        invite.inviter = request.user
+        invite.save()
+        
+        invite.send_invitation(request)
+        messages.success(request, _("Person was invited successfully."))
+    else:
+        messages.success(request, _("Person was already invited."))
+
+    return redirect("person_by_id", person.pk)

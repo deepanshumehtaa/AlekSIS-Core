@@ -1,5 +1,4 @@
 # flake8: noqa: DJ01
-
 import hmac
 from datetime import date, datetime, timedelta
 from typing import Iterable, List, Optional, Sequence, Union
@@ -1077,10 +1076,7 @@ class PersonInvitation(AbstractBaseInvitation, PureDjangoModel):
 
     @classmethod
     def create(cls, email, inviter=None, **kwargs):
-        length = get_site_preferences()["auth__invite_code_length"]
-        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
-        key = generate_random_code(length, packet_size)
-        instance = cls._default_manager.create(email=email, key=key, inviter=inviter, **kwargs)
+        instance = cls._default_manager.create(email=email, inviter=inviter, **kwargs)
         return instance
 
     def __str__(self) -> str:

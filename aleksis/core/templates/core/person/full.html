@@ -47,7 +47,7 @@
     {% endif %}
     {% if can_invite and not person.user %}
         <a href="{% url "invite_person_by_id" person.id %}" class="btn waves-effect waves-light">
-          <i class="material-icons left">giftcard</i>
+          <i class="material-icons left">card_giftcard</i>
           {% trans "Invite user" %}
         </a>
     {% endif %}

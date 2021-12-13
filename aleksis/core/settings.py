@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
+from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch, lazy_preference
 
 monkey_patch()
 
@@ -354,7 +354,7 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
 
-INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
+INVITATIONS_INVITATION_EXPIRY = lazy_preference("auth", "invite_day_expiry")
 
 INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
 
@@ -534,8 +534,6 @@ YARN_INSTALLED_APPS = [
 
 merge_app_settings("YARN_INSTALLED_APPS", YARN_INSTALLED_APPS, True)
 
-CLEAVE_JS = "cleave.js/dist/cleave.min.js"
-
 JS_URL = _settings.get("js_assets.url", STATIC_URL)
 JS_ROOT = _settings.get("js_assets.root", NODE_MODULES_ROOT + "/node_modules")
 
@@ -563,9 +561,12 @@ ANY_JS = {
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
     "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
+    "cleavejs": {"js_url": "cleave.js/dist/cleave.min.js"}
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
+
+CLEAVE_JS = ANY_JS["cleavejs"]["js_url"]
 
 SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False

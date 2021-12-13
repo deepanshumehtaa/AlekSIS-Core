@@ -6,6 +6,7 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 from .models import Person
+from .util.core_helpers import get_site_preferences
 
 
 class SchoolTermTable(tables.Table):
@@ -108,7 +109,8 @@ class InvitationCodeColumn(tables.Column):
     """Returns invitation code in a more readable format."""
 
     def render(self, value):
-        return "-".join(wrap(value, 5))
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        return "-".join(wrap(value, packet_size))
 
 
 class InvitationsTable(tables.Table):

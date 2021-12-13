@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, SuspiciousOperation
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
@@ -568,20 +568,22 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         request = kwargs.pop("request", None)
         super(AccountRegisterForm, self).__init__(*args, **kwargs)
 
-        try:
+        if request.session.get("account_verified_email"):
             email = request.session["account_verified_email"]
-            person = Person.objects.filter(email=email)
+
+            try:
+                person = Person.objects.get(email=email)
+            except (Person.DoesNotExist, Person.MultipleObjectsReturned):
+                raise SuspiciousOperation()
 
             self.fields["email"].disabled = True
             self.fields["email2"].disabled = True
 
             if person:
-                self.fields["first_name"].initial = person.first().first_name
+                self.fields["first_name"].initial = person.first_name
                 self.fields["first_name"].disabled = True
-                self.fields["last_name"].initial = person.first().first_name
+                self.fields["last_name"].initial = person.last_name
                 self.fields["last_name"].disabled = True
-        except KeyError:
-            pass
 
 
 class ActionForm(forms.Form):
