@@ -10,7 +10,7 @@
   {% elif registry_name == "person" and instance == request.user.person %}
     {% blocktrans %}My preferences{% endblocktrans %}
   {% else %}
-    {% blocktrans with instace=instance %}Preferences for {{ instance }}{% endblocktrans %}
+    {% blocktrans with instance=instance %}Preferences for {{ instance }}{% endblocktrans %}
   {% endif %}
 {% endblock %}
 
