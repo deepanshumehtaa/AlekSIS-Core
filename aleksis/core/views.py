@@ -674,7 +674,10 @@ def preferences(
 
     if not section and len(registry.sections()) > 0:
         default_section = list(registry.sections())[0]
-        return redirect(f"preferences_{registry_name}", default_section)
+        if instance:
+            return redirect(f"preferences_{registry_name}", instance.pk, default_section)
+        else:
+            return redirect(f"preferences_{registry_name}", default_section)
 
     # Build final form from dynamic-preferences
     form_class = preference_form_builder(form_class, instance=instance, section=section)
