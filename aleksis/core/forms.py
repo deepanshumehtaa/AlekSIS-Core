@@ -618,7 +618,7 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         for field in Person._meta.get_fields():
             if field.name in self.cleaned_data:
                 _fields.append(field.name)
-        data = { field: self.cleaned_data[field] for field in _fields}
+        data = {field: self.cleaned_data[field] for field in _fields}
         if not Person.objects.filter(email=data["email"]):
             _person = Person.objects.create(user=user, **data)
             _person.save()

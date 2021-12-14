@@ -35,6 +35,7 @@ from django.views.generic.edit import DeleteView, FormView
 from django.views.generic.list import ListView
 
 import reversion
+from allauth.account.utils import _has_verified_for_login, send_email_confirmation
 from allauth.account.views import PasswordChangeView, SignupView
 from allauth.socialaccount.adapter import get_adapter
 from allauth.socialaccount.models import SocialAccount
@@ -53,6 +54,7 @@ from invitations.views import SendInvite, accept_invitation
 from reversion import set_user
 from reversion.views import RevisionMixin
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+from two_factor.views.core import LoginView as AllAuthLoginView
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
@@ -1429,3 +1431,16 @@ def invite_person_by_id(request: HttpRequest, id_: int) -> HttpResponse:
         messages.success(request, _("Person was already invited."))
 
     return redirect("person_by_id", person.pk)
+
+
+class LoginView(AllAuthLoginView):
+    """Override upstream loginview to check if person has a verified email address."""
+
+    def done(self, form_list, **kwargs):
+        if settings.ACCOUNT_EMAIL_VERIFICATION == "mandatory":
+            user = self.get_user()
+            if not _has_verified_for_login(user, user.email):
+                send_email_confirmation(self.request, user, signup=False, email=user.email)
+                return render(self.request, "account/verification_sent.html")
+
+        return super().done(form_list, **kwargs)

@@ -331,6 +331,9 @@ ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "usern
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
+# Cooldown for verification mails
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = _settings.get("auth.registration.verification_cooldown", 180)
+
 # Require email verification after sigm up
 ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
 SOCIALACCOUNT_EMAIL_VERIFICATION = False

@@ -50,6 +50,7 @@ urlpatterns = [
     path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
+    path("account/login/", views.LoginView.as_view(), name="login"),
     path("", include(tf_urls)),
     path("celery_progress/<str:task_id>/", views.CeleryProgressView.as_view(), name="task_status"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
