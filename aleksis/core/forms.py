@@ -11,7 +11,9 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
+from allauth.account.adapter import get_adapter
 from allauth.account.forms import SignupForm
+from allauth.account.utils import setup_user_email
 from dj_cleavejs import CleaveWidget
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
@@ -613,8 +615,12 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
         # Create person
-        data = self.changed_data
-        if not Person.objects.filter(email=self.cleaned_data["email"]):
+        _fields = []
+        for field in Person._meta.get_fields():
+            if field.name in self.cleaned_data:
+                _fields.append(field.name)
+        data = { field: self.cleaned_data[field] for field in _fields}
+        if not Person.objects.filter(email=data["email"]):
             _person = Person.objects.create(user=user, **data)
             _person.save()
         self.custom_signup(request, user)
