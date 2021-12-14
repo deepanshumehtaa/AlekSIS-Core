@@ -534,7 +534,23 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
 
     class Meta:
         model = Person
-        exclude = ["guardians", "is_active", "user", "primary_group"]
+        fields = [
+            "first_name",
+            "additional_name",
+            "last_name",
+            "street",
+            "housenumber",
+            "postal_code",
+            "place",
+            "date_of_birth",
+            "place_of_birth",
+            "sex",
+            "photo",
+            "mobile_number",
+            "phone_number",
+            "short_name",
+            "description",
+        ]
 
     layout = Layout(
         Fieldset(
@@ -585,11 +601,25 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
             self.fields["email2"].disabled = True
 
             if person:
-                self.fields["first_name"].initial = person.first_name
-                self.fields["first_name"].disabled = True
-                self.fields["last_name"].initial = person.last_name
-                self.fields["last_name"].disabled = True
+                available_fields = [field.name for field in Person._meta.get_fields()]
+                for field in self.fields:
+                    if field in available_fields and getattr(person, field):
+                        self.fields[field].disabled = True
+                        self.fields[field].initial = getattr(person, field)
 
+
+    def save(self, request):
+        adapter = get_adapter(request)
+        user = adapter.new_user(request)
+        adapter.save_user(request, user, self)
+        # Create person
+        data = self.changed_data
+        if not Person.objects.filter(email=self.cleaned_data["email"]):
+            _person = Person.objects.create(user=user, **data)
+            _person.save()
+        self.custom_signup(request, user)
+        setup_user_email(request, user, [])
+        return user
 
 class ActionForm(forms.Form):
     """Generic form for executing actions on multiple items of a queryset.

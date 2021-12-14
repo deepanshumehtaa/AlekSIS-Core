@@ -354,7 +354,7 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
 
-INVITATIONS_INVITATION_EXPIRY = lazy_preference("auth", "invite_day_expiry")
+INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
 
 INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
 
