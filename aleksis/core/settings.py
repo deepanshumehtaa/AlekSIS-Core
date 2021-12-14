@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch, lazy_preference
+from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, monkey_patch
 
 monkey_patch()
 
@@ -561,7 +561,7 @@ ANY_JS = {
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
     "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
-    "cleavejs": {"js_url": "cleave.js/dist/cleave.min.js"}
+    "cleavejs": {"js_url": "cleave.js/dist/cleave.min.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)

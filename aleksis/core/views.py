@@ -1396,7 +1396,9 @@ class AccountRegisterView(SignupView):
     success_url = "index"
 
     def dispatch(self, request, *args, **kwargs):
-        if not get_site_preferences()["auth__signup_open"] and not request.session.get("account_verified_email"):
+        if not get_site_preferences()["auth__signup_open"] and not request.session.get(
+            "account_verified_email"
+        ):
             raise PermissionDenied()
         return super(AccountRegisterView, self).dispatch(request, *args, **kwargs)
 
@@ -1415,15 +1417,12 @@ def invite_person_by_id(request: HttpRequest, id_: int) -> HttpResponse:
         length = get_site_preferences()["auth__invite_code_length"]
         packet_size = get_site_preferences()["auth__invite_code_packet_size"]
         key = generate_random_code(length, packet_size)
-        invite = PersonInvitation.objects.create(
-            person=person,
-            key=key
-        )
+        invite = PersonInvitation.objects.create(person=person, key=key)
         if person.email:
             invite.email = person.email
         invite.inviter = request.user
         invite.save()
-        
+
         invite.send_invitation(request)
         messages.success(request, _("Person was invited successfully."))
     else:
