@@ -609,7 +609,6 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
                         self.fields[field].disabled = True
                         self.fields[field].initial = getattr(person, field)
 
-
     def save(self, request):
         adapter = get_adapter(request)
         user = adapter.new_user(request)
@@ -626,6 +625,7 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
+
 
 class ActionForm(forms.Form):
     """Generic form for executing actions on multiple items of a queryset.

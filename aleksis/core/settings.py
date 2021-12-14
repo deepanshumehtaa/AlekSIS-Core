@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, monkey_patch
+from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
 
 monkey_patch()
 
