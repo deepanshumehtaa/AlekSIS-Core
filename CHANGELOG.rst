@@ -19,6 +19,8 @@ Fixed
 
 * View for assigning permissions didn't work with some global permissions.
 * PDFs generated in background didn't contain logo or site title.
+* Admins were redirected to their user preferences
+  while they wanted to edit the preferences of another user.
 
 Changed
 ~~~~~~~
