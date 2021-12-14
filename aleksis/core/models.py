@@ -352,7 +352,10 @@ class Person(ExtensibleModel):
         send_templated_mail(
             template_name="person_changed",
             from_email=self.mail_sender_via,
-            headers={"Reply-To": self.mail_sender, "Sender": self.mail_sender,},
+            headers={
+                "Reply-To": self.mail_sender,
+                "Sender": self.mail_sender,
+            },
             recipient_list=recipients,
             context=context,
         )
@@ -467,7 +470,7 @@ class Group(SchoolTermRelatedExtensibleModel):
 
     @property
     def get_group_stats(self) -> dict:
-        """ Get stats about a given group """
+        """Get stats about a given group"""
         stats = {}
 
         stats["members"] = len(self.members.all())
@@ -506,6 +509,12 @@ class Group(SchoolTermRelatedExtensibleModel):
                 )
             )
             dj_group.save()
+
+    @property
+    def django_group(self):
+        """Get Django group for this group."""
+        dj_group, _ = DjangoGroup.objects.get_or_create(name=self.name)
+        return dj_group
 
 
 class PersonGroupThrough(ExtensibleModel):
@@ -687,7 +696,8 @@ class Announcement(ExtensibleModel):
         verbose_name=_("Date and time from when to show"), default=timezone.now
     )
     valid_until = models.DateTimeField(
-        verbose_name=_("Date and time until when to show"), default=now_tomorrow,
+        verbose_name=_("Date and time until when to show"),
+        default=now_tomorrow,
     )
 
     @property
@@ -1122,7 +1132,7 @@ class OAuthApplication(AbstractApplication):
     def allows_grant_type(self, *grant_types: set[str]) -> bool:
         allowed_grants = get_site_preferences()["auth__oauth_allowed_grants"]
 
-        return bool(set(allowed_grants) & grant_types)
+        return bool(set(allowed_grants) & set(grant_types))
 
 
 class OAuthGrant(AbstractGrant):

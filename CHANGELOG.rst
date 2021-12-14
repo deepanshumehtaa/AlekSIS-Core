@@ -9,15 +9,85 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* [OAuth] Allow apps to fill in their own claim data matching their scopes
+
+Fixed
+~~~~~
+
+* View for assigning permissions didn't work with some global permissions.
+* PDFs generated in background didn't contain logo or site title.
+
 Changed
 ~~~~~~~
 
+* Docker base image ships PostgreSQL 14 client binaries for maximum compatibility
 * Use correct favicon as default AlekSIS favicon
 
 Removed
 ~~~~~~~
 
+* Remove impersonation page. Use the impersonation button on the person
+  detail view instead.
 * Remove old generated AlekSIS icons
+
+`2.2.1_ – 2021-12-02
+--------------------
+
+Fixed
+~~~~~
+
+* [Docker] Stop initialisation if migrations fail
+* [OAuth] Register `groups` scope and fix claim
+* [OAuth] Fix OAuth claims for follow-up requests (e.g. UserInfo)
+* [OAuth] Fix grant types checking failing on wrong types under some circumstances
+* [OAuth] Re-introduce missing algorithm field in application form
+* Remove errornous backup folder check for S3
+
+`2.2`_ - 2021-11-29
+-------------------
+
+Added
+~~~~~
+
+* Support config files in sub-directories
+* Provide views for assigning/managing permissions in frontend
+* Support (icon) tabs in the top navbar.
+
+Changed
+~~~~~~~
+
+* Update German translations.
+
+Fixed
+~~~~~
+
+* Use new MaterializeCSS fork because the old version is no longer maintained.
+* Sender wasn't displayed for notifications on dashboard.
+* Notifications and activities on dashboard weren't sorted from old to new.
+
+`2.1.1`_ - 2021-11-14
+---------------------
+
+Added
+~~~~~
+
+* Provide ``SITE_PREFERENCES`` template variable for easier and request-independent access on all site preferences.
+
+Fixed
+~~~~~
+
+* Make style.css and favicons cachable.
+* Import model extensions from other apps before form extensions.
+* Recreate backwards compatiblity for OAuth URLs by using ``oauth/`` again.
+* Show correct logo and school title in print template if created in the background.
+
+Removed
+~~~~~~~
+
+* Remove fallback code from optional Celery as it's now non-optional.
 
 `2.1`_ - 2021-11-05
 -------------------
@@ -455,3 +525,6 @@ Fixed
 .. _2.0rc7: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0rc7
 .. _2.0: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.0
 .. _2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1
+.. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
+.. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
+.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1

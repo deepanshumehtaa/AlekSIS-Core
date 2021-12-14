@@ -1,4 +1,5 @@
 import rules
+from rules import is_superuser
 
 from .models import AdditionalField, Announcement, Group, GroupType, Person
 from .util.predicates import (
@@ -337,6 +338,9 @@ rules.add_perm("core.delete_oauth_applications_rule", delete_oauth_applications_
 # Upload and browse files via CKEditor
 upload_files_ckeditor_predicate = has_person & has_global_perm("core.upload_files_ckeditor")
 rules.add_perm("core.upload_files_ckeditor_rule", upload_files_ckeditor_predicate)
+
+manage_person_permissions_predicate = has_person & is_superuser
+rules.add_perm("core.manage_permissions", manage_person_permissions_predicate)
 
 test_pdf_generation_predicate = has_person & has_global_perm("core.test_pdf")
 rules.add_perm("core.test_pdf_rule", test_pdf_generation_predicate)

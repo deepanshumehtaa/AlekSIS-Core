@@ -1,8 +1,11 @@
 from datetime import datetime, time
-from typing import Callable, Sequence
+from typing import Any, Callable, Dict, Sequence
 
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
+from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -10,9 +13,10 @@ from django.utils.translation import gettext_lazy as _
 
 from allauth.account.adapter import get_adapter
 from allauth.account.forms import SignupForm
-from allauth.account.utils import get_user_model, setup_user_email
+from allauth.account.utils import setup_user_email
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
+from guardian.shortcuts import assign_perm
 from material import Fieldset, Layout, Row
 
 from .mixins import ExtensibleForm, SchoolTermRelatedExtensibleForm
@@ -180,7 +184,9 @@ class EditGroupForm(SchoolTermRelatedExtensibleForm):
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
             "additional_fields": ModelSelect2MultipleWidget(
-                search_fields=["title__icontains",],
+                search_fields=[
+                    "title__icontains",
+                ],
                 attrs={"data-minimum-input-length": 0, "class": "browser-default"},
             ),
         }
@@ -216,7 +222,10 @@ class AnnouncementForm(ExtensibleForm):
         label=_("Groups"),
         required=False,
         widget=ModelSelect2MultipleWidget(
-            search_fields=["name__icontains", "short_name__icontains",],
+            search_fields=[
+                "name__icontains",
+                "short_name__icontains",
+            ],
             attrs={"data-minimum-input-length": 0, "class": "browser-default"},
         ),
     )
@@ -363,7 +372,8 @@ class SchoolTermForm(ExtensibleForm):
 
 class DashboardWidgetOrderForm(ExtensibleForm):
     pk = forms.ModelChoiceField(
-        queryset=None, widget=forms.HiddenInput(attrs={"class": "pk-input"}),
+        queryset=None,
+        widget=forms.HiddenInput(attrs={"class": "pk-input"}),
     )
     order = forms.IntegerField(initial=0, widget=forms.HiddenInput(attrs={"class": "order-input"}))
 
@@ -383,6 +393,122 @@ DashboardWidgetOrderFormSet = forms.formset_factory(
 )
 
 
+class SelectPermissionForm(forms.Form):
+    """Select a permission to assign."""
+
+    selected_permission = forms.ModelChoiceField(
+        queryset=Permission.objects.all(),
+        widget=ModelSelect2Widget(
+            search_fields=["name__icontains", "codename__icontains"],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+    )
+
+
+class AssignPermissionForm(forms.Form):
+    """Assign a permission to user/groups for all/some objects."""
+
+    layout = Layout(
+        Fieldset(_("Who should get the permission?"), "groups", "persons"),
+        Fieldset(_("On what?"), "objects", "all_objects"),
+    )
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=ModelSelect2MultipleWidget(
+            search_fields=["name__icontains", "short_name__icontains"],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        required=False,
+    )
+    persons = forms.ModelMultipleChoiceField(
+        queryset=Person.objects.all(),
+        widget=ModelSelect2MultipleWidget(
+            search_fields=[
+                "first_name__icontains",
+                "last_name__icontains",
+                "short_name__icontains",
+            ],
+            attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+        ),
+        required=False,
+    )
+
+    objects = forms.ModelMultipleChoiceField(
+        queryset=None,
+        required=False,
+        label=_("Select objects which the permission should be granted for:"),
+    )
+    all_objects = forms.BooleanField(
+        required=False, label=_("Grant the permission for all objects")
+    )
+
+    def clean(self) -> Dict[str, Any]:
+        """Clean form to ensure that at least one target and one type is selected."""
+        cleaned_data = super().clean()
+        if not cleaned_data.get("persons") and not cleaned_data.get("groups"):
+            raise ValidationError(
+                _("You must select at least one group or person which should get the permission.")
+            )
+
+        if not cleaned_data.get("objects") and not cleaned_data.get("all_objects"):
+            raise ValidationError(
+                _("You must grant the permission to all objects and/" "or to some objects.")
+            )
+        return cleaned_data
+
+    def __init__(self, *args, permission: Permission, **kwargs):
+        self.permission = permission
+        super().__init__(*args, **kwargs)
+
+        model_class = self.permission.content_type.model_class()
+        if model_class._meta.managed and not model_class._meta.abstract:
+            queryset = model_class.objects.all()
+        else:
+            # The following queryset is just a dummy one. It has no real meaning.
+            # We need it as there are permissions without real objects,
+            # but we want to use the same form.
+            queryset = Site.objects.none()
+        self.fields["objects"].queryset = queryset
+        search_fields = getattr(model_class, "get_filter_fields", lambda: [])()
+
+        # Use select2 only if there are any searchable fields as it can't work without
+        if search_fields:
+            self.fields["objects"].widget = ModelSelect2MultipleWidget(
+                search_fields=search_fields,
+                queryset=queryset,
+                attrs={"data-minimum-input-length": 0, "class": "browser-default"},
+            )
+
+    def save_perms(self):
+        """Save permissions for selected user/groups and selected/all objects."""
+        persons = self.cleaned_data["persons"]
+        groups = self.cleaned_data["groups"]
+        all_objects = self.cleaned_data["all_objects"]
+        objects = self.cleaned_data["objects"]
+        permission_name = f"{self.permission.content_type.app_label}.{self.permission.codename}"
+        created = 0
+
+        # Create permissions for users
+        for person in persons:
+            if getattr(person, "user", None):
+                # Global permission
+                if all_objects:
+                    assign_perm(permission_name, person.user)
+                # Object permissions
+                for instance in objects:
+                    assign_perm(permission_name, person.user, instance)
+
+        # Create permissions for users
+        for group in groups:
+            django_group = group.django_group
+            # Global permission
+            if all_objects:
+                assign_perm(permission_name, django_group)
+            # Object permissions
+            for instance in objects:
+                assign_perm(permission_name, django_group, instance)
+
+
 class AccountRegisterForm(SignupForm, ExtensibleForm):
     """Form to register new user accounts."""
 
@@ -391,11 +517,20 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         fields = []
 
     layout = Layout(
-        Fieldset(_("Base data"), Row("first_name", "last_name"),),
         Fieldset(
-            _("Account data"), "username", Row("email", "email2"), Row("password1", "password2"),
+            _("Base data"),
+            Row("first_name", "last_name"),
         ),
-        Fieldset(_("Consents"), Row("privacy_policy"),),
+        Fieldset(
+            _("Account data"),
+            "username",
+            Row("email", "email2"),
+            Row("password1", "password2"),
+        ),
+        Fieldset(
+            _("Consents"),
+            Row("privacy_policy"),
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -409,9 +544,13 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
                 label=_("Password (again)"), widget=forms.PasswordInput
             )
 
-        self.fields["first_name"] = forms.CharField(required=True,)
+        self.fields["first_name"] = forms.CharField(
+            required=True,
+        )
 
-        self.fields["last_name"] = forms.CharField(required=True,)
+        self.fields["last_name"] = forms.CharField(
+            required=True,
+        )
 
         self.fields["privacy_policy"] = forms.BooleanField(
             help_text=_(
@@ -439,7 +578,8 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         ):
             if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
                 self.add_error(
-                    "password2", _("You must type the same password each time."),
+                    "password2",
+                    _("You must type the same password each time."),
                 )
         return self.cleaned_data
 
@@ -613,6 +753,7 @@ class OAuthApplicationForm(forms.ModelForm):
             "client_id",
             "client_secret",
             "client_type",
+            "algorithm",
             "allowed_scopes",
             "redirect_uris",
             "skip_authorization",

@@ -9,6 +9,7 @@ from django.utils.translation import gettext as _
 
 from dynamic_preferences.registries import preference_models
 from health_check.plugins import plugin_dir
+from oauthlib.common import Request as OauthlibRequest
 
 from .registries import (
     group_preferences_registry,
@@ -47,7 +48,7 @@ class CoreConfig(AppConfig):
         from django.conf import settings  # noqa
 
         # Autodiscover various modules defined by AlekSIS
-        autodiscover_modules("form_extensions", "model_extensions", "checks")
+        autodiscover_modules("model_extensions", "form_extensions", "checks")
 
         sitepreferencemodel = self.get_model("SitePreferenceModel")
         personpreferencemodel = self.get_model("PersonPreferenceModel")
@@ -102,7 +103,8 @@ class CoreConfig(AppConfig):
 
                 if new_value:
                     Favicon.on_site.update_or_create(
-                        title=name, defaults={"isFavicon": is_favicon, "faviconImage": new_value},
+                        title=name,
+                        defaults={"isFavicon": is_favicon, "faviconImage": new_value},
                     )
                 else:
                     Favicon.on_site.filter(title=name, isFavicon=is_favicon).delete()
@@ -152,5 +154,52 @@ class CoreConfig(AppConfig):
                 "address": _("Full home postal address"),
                 "email": _("Email address"),
                 "phone": _("Home and mobile phone"),
+                "groups": _("Groups"),
             }
         return scopes
+
+    @classmethod
+    def get_additional_claims(cls, scopes: list[str], request: OauthlibRequest) -> dict[str, Any]:
+        django_request = HttpRequest()
+        django_request.META = request.headers
+
+        claims = {
+            "preferred_username": request.user.username,
+        }
+
+        if "profile" in scopes:
+            if has_person(request.user):
+                claims["given_name"] = request.user.person.first_name
+                claims["family_name"] = request.user.person.last_name
+                claims["profile"] = django_request.build_absolute_uri(
+                    request.user.person.get_absolute_url()
+                )
+                if request.user.person.photo:
+                    claims["picture"] = django_request.build_absolute_uri(
+                        request.user.person.photo.url
+                    )
+            else:
+                claims["given_name"] = request.user.first_name
+                claims["family_name"] = request.user.last_name
+
+        if "email" in scopes:
+            if has_person(request.user):
+                claims["email"] = request.user.person.email
+            else:
+                claims["email"] = request.user.email
+
+        if "address" in scopes and has_person(request.user):
+            claims["address"] = {
+                "street_address": request.user.person.street
+                + " "
+                + request.user.person.housenumber,
+                "locality": request.user.person.place,
+                "postal_code": request.user.person.postal_code,
+            }
+
+        if "groups" in scopes and has_person(request.user):
+            claims["groups"] = list(
+                request.user.person.member_of.values_list("name", flat=True).all()
+            )
+
+        return claims

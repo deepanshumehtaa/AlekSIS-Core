@@ -91,3 +91,66 @@ class DashboardWidgetTable(tables.Table):
 
     def render_widget_name(self, value, record):
         return record._meta.verbose_name
+
+
+class PermissionDeleteColumn(tables.LinkColumn):
+    """Link column with label 'Delete'."""
+
+    def __init__(self, url, **kwargs):
+        super().__init__(
+            url,
+            args=[A("pk")],
+            text=_("Delete"),
+            attrs={"a": {"class": "btn-flat waves-effect waves-red red-text"}},
+            verbose_name=_("Actions"),
+            **kwargs
+        )
+
+
+class PermissionTable(tables.Table):
+    """Table to list permissions."""
+
+    class Meta:
+        attrs = {"class": "responsive-table highlight"}
+
+    permission = tables.Column()
+
+
+class ObjectPermissionTable(PermissionTable):
+    """Table to list object permissions."""
+
+    content_object = tables.Column()
+
+
+class GlobalPermissionTable(PermissionTable):
+    """Table to list global permissions."""
+
+    pass
+
+
+class GroupObjectPermissionTable(ObjectPermissionTable):
+    """Table to list assigned group object permissions."""
+
+    group = tables.Column()
+    delete = PermissionDeleteColumn("delete_group_object_permission")
+
+
+class UserObjectPermissionTable(ObjectPermissionTable):
+    """Table to list assigned user object permissions."""
+
+    user = tables.Column()
+    delete = PermissionDeleteColumn("delete_user_object_permission")
+
+
+class GroupGlobalPermissionTable(GlobalPermissionTable):
+    """Table to list assigned global user permissions."""
+
+    group = tables.Column()
+    delete = PermissionDeleteColumn("delete_group_global_permission")
+
+
+class UserGlobalPermissionTable(GlobalPermissionTable):
+    """Table to list assigned global group permissions."""
+
+    user = tables.Column()
+    delete = PermissionDeleteColumn("delete_user_global_permission")

@@ -34,7 +34,10 @@ MENUS = {
             "icon": "notifications",
             "badge": unread_notifications_badge,
             "validators": [
-                ("aleksis.core.util.predicates.permission_validator", "core.view_notifications",),
+                (
+                    "aleksis.core.util.predicates.permission_validator",
+                    "core.view_notifications",
+                ),
             ],
         },
         {
@@ -63,7 +66,9 @@ MENUS = {
                     "name": _("2FA"),
                     "url": "two_factor:profile",
                     "icon": "phonelink_lock",
-                    "validators": ["menu_generator.validators.is_authenticated",],
+                    "validators": [
+                        "menu_generator.validators.is_authenticated",
+                    ],
                 },
                 {
                     "name": _("Change password"),
@@ -179,17 +184,6 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Impersonation"),
-                    "url": "impersonate-list",
-                    "icon": "people",
-                    "validators": [
-                        (
-                            "aleksis.core.util.predicates.permission_validator",
-                            "core.impersonate_rule",
-                        ),
-                    ],
-                },
-                {
                     "name": _("Configuration"),
                     "url": "preferences_site",
                     "icon": "settings",
@@ -207,10 +201,23 @@ MENUS = {
                     "validators": ["menu_generator.validators.is_superuser"],
                 },
                 {
+                    "name": _("Manage permissions"),
+                    "url": "manage_user_global_permissions",
+                    "icon": "shield",
+                    "validators": [
+                        (
+                            "aleksis.core.util.predicates.permission_validator",
+                            "core.manage_permissions",
+                        ),
+                    ],
+                },
+                {
                     "name": _("Backend Admin"),
                     "url": "admin:index",
                     "icon": "settings",
-                    "validators": ["menu_generator.validators.is_superuser",],
+                    "validators": [
+                        "menu_generator.validators.is_superuser",
+                    ],
                 },
                 {
                     "name": _("OAuth2 Applications"),

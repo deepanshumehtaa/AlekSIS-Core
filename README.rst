@@ -76,6 +76,14 @@ full licence text or on the `European Union Public Licence`_ website
 https://joinup.ec.europa.eu/collection/eupl/guidelines-users-and-developers
 (including all other official language versions).
 
+Trademark
+---------
+
+AlekSIS® is a registered trademark of the AlekSIS open source project, represented
+by Teckids e.V. Please refer to the `trademark policy`_ for hints on using the trademark
+AlekSIS®.
+
 .. _AlekSIS: https://aleksis.org
 .. _European Union Public Licence: https://eupl.eu/
 .. _EduGit: https://edugit.org/AlekSIS/official/AlekSIS
+.. _trademark policy: https://aleksis.org/pages/about

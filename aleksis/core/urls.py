@@ -102,26 +102,26 @@ urlpatterns = [
         ConnectDiscoveryInfoView.as_view(),
         name="oidc_configuration",
     ),
-    path("oauth2/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
+    path("oauth/applications/", views.OAuth2ListView.as_view(), name="oauth2_applications"),
     path(
-        "oauth2/applications/register/",
+        "oauth/applications/register/",
         views.OAuth2RegisterView.as_view(),
         name="register_oauth_application",
     ),
     path(
-        "oauth2/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
+        "oauth/applications/<int:pk>/", views.OAuth2DetailView.as_view(), name="oauth2_application"
     ),
     path(
-        "oauth2/applications/<int:pk>/delete/",
+        "oauth/applications/<int:pk>/delete/",
         views.OAuth2DeleteView.as_view(),
         name="delete_oauth2_application",
     ),
     path(
-        "oauth2/applications/<int:pk>/edit/",
+        "oauth/applications/<int:pk>/edit/",
         views.OAuth2EditView.as_view(),
         name="edit_oauth2_application",
     ),
-    path("oauth2/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     path("__i18n__/", include("django.conf.urls.i18n")),
     path(
         "ckeditor/upload/",
@@ -208,8 +208,16 @@ urlpatterns = [
     ),
     path("health/", include(health_urls)),
     path("health/pdf/", views.TestPDFGenerationView.as_view(), name="test_pdf"),
-    path("data_check/", views.DataCheckView.as_view(), name="check_data",),
-    path("data_check/run/", views.RunDataChecks.as_view(), name="data_check_run",),
+    path(
+        "data_check/",
+        views.DataCheckView.as_view(),
+        name="check_data",
+    ),
+    path(
+        "data_check/run/",
+        views.RunDataChecks.as_view(),
+        name="data_check_run",
+    ),
     path(
         "data_check/<int:pk>/<str:solve_option>/",
         views.SolveDataCheckView.as_view(),
@@ -236,6 +244,56 @@ urlpatterns = [
         views.EditDashboardView.as_view(),
         {"default": True},
         name="edit_default_dashboard",
+    ),
+    path(
+        "permissions/global/user/",
+        views.UserGlobalPermissionsListBaseView.as_view(),
+        name="manage_user_global_permissions",
+    ),
+    path(
+        "permissions/global/group/",
+        views.GroupGlobalPermissionsListBaseView.as_view(),
+        name="manage_group_global_permissions",
+    ),
+    path(
+        "permissions/object/user/",
+        views.UserObjectPermissionsListBaseView.as_view(),
+        name="manage_user_object_permissions",
+    ),
+    path(
+        "permissions/object/group/",
+        views.GroupObjectPermissionsListBaseView.as_view(),
+        name="manage_group_object_permissions",
+    ),
+    path(
+        "permissions/global/user/<int:pk>/delete/",
+        views.UserGlobalPermissionDeleteView.as_view(),
+        name="delete_user_global_permission",
+    ),
+    path(
+        "permissions/global/group/<int:pk>/delete/",
+        views.GroupGlobalPermissionDeleteView.as_view(),
+        name="delete_group_global_permission",
+    ),
+    path(
+        "permissions/object/user/<int:pk>/delete/",
+        views.UserObjectPermissionDeleteView.as_view(),
+        name="delete_user_object_permission",
+    ),
+    path(
+        "permissions/object/group/<int:pk>/delete/",
+        views.GroupObjectPermissionDeleteView.as_view(),
+        name="delete_group_object_permission",
+    ),
+    path(
+        "permissions/assign/",
+        views.SelectPermissionForAssignView.as_view(),
+        name="select_permission_for_assign",
+    ),
+    path(
+        "permissions/<int:pk>/assign/",
+        views.AssignPermissionView.as_view(),
+        name="assign_permission",
     ),
     path("pdfs/<int:pk>/", views.RedirectToPDFFile.as_view(), name="redirect_to_pdf_file"),
 ]

@@ -1,10 +1,6 @@
 from importlib import metadata
 
-try:
-    from .celery import app as celery_app
-except ModuleNotFoundError:
-    # Celery is not available
-    celery_app = None
+from .celery import app as celery_app  # noqa
 
 try:
     __version__ = metadata.distribution("AlekSIS-Core").version

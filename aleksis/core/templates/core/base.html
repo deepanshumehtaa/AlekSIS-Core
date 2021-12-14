@@ -69,7 +69,7 @@
   </div>
 
   <!-- Nav bar (logged in as, logout) -->
-  <nav>
+  <nav class="nav-extended">
     <div class="nav-wrapper">
       <a class="brand-logo" href="/">{{ request.site.preferences.general__title }}</a>
 
@@ -81,6 +81,9 @@
           </li>
         {% endif %}
       </ul>
+    </div>
+    <div class="nav-content">
+      {% block nav_content %}{% endblock %}
     </div>
   </nav>
 
@@ -169,7 +172,7 @@
     <div class="container">
       <div class="left">
         <a class="blue-text text-lighten-4" href="{% url "about_aleksis" %}">
-          {% trans "About AlekSIS — The Free School Information System" %}
+          {% trans "About AlekSIS® — The Free School Information System" %}
         </a>
         © The AlekSIS Team
       </div>

@@ -768,3 +768,29 @@ main figure.alert {
 .margin-bottom {
   margin-bottom: 0.7rem !important;
 }
+
+/* Tabs with icons */
+.tabs-icons, .tabs-icons .tab, .tabs-icons a {
+  height: 72px;
+}
+
+.tabs-icons .tab {
+  display: inline-flex;
+  flex-direction: column;
+
+}
+
+.tabs-icons .tab a {
+  padding-top: 12px;
+  line-height: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.tabs-icons .tab i {
+  font-size: 24px;
+  line-height: 1;
+  height: 24px;
+  margin-bottom: 8px;
+}
