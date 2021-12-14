@@ -533,13 +533,26 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
     """Form to register new user accounts."""
 
     class Meta:
-        model = Group
-        fields = []
+        model = Person
+        exclude = ["guardians", "is_active", "user", "primary_group"]
 
     layout = Layout(
         Fieldset(
             _("Base data"),
-            Row("first_name", "last_name"),
+            Row("first_name", "additional_name", "last_name"),
+            "short_name",
+        ),
+        Fieldset(
+            _("Adress data"),
+            Row("street", "housenumber"),
+            Row("postal_code", "place"),
+        ),
+        Fieldset(_("Contact data"), Row("mobile_number", "phone_number")),
+        Fieldset(
+            _("Additional data"),
+            Row("date_of_birth", "place_of_birth"),
+            Row("sex", "photo"),
+            "description",
         ),
         Fieldset(
             _("Account data"),
@@ -555,14 +568,6 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
 
     if settings.SIGNUP_PASSWORD_ENTER_TWICE:
         password2 = forms.CharField(label=_("Password (again)"), widget=forms.PasswordInput)
-
-    first_name = forms.CharField(
-        required=True,
-    )
-
-    last_name = forms.CharField(
-        required=True,
-    )
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request", None)
