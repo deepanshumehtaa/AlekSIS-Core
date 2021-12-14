@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from dynaconf import LazySettings
 
-from .util.core_helpers import get_app_packages, lazy_preference, merge_app_settings, monkey_patch
+from .util.core_helpers import get_app_packages, merge_app_settings, monkey_patch
 
 monkey_patch()
 
@@ -354,7 +354,7 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
 
-INVITATIONS_INVITATION_EXPIRY = lazy_preference("auth", "invite_day_expiry")
+INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
 
 INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
 

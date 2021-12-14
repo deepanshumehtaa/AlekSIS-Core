@@ -295,14 +295,6 @@ class InviteCodePacketSize(IntegerPreference):
     verbose_name = _("Size of packets. (Default 5: abcde)")
 
 
-@site_preferences_registry.register
-class InviteDayExpiry(IntegerPreference):
-    section = auth
-    name = "invite_day_expiry"
-    default = 3
-    verbose_name = _("Expiration time of invitations in days.")
-
-
 class OAuthAllowedGrants(MultipleChoicePreference):
     """Grant Flows allowed for OAuth applications."""
 
