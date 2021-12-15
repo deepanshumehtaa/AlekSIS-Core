@@ -194,9 +194,7 @@ class Person(ExtensibleModel):
     email = models.EmailField(verbose_name=_("E-mail address"), blank=True)
 
     date_of_birth = models.DateField(verbose_name=_("Date of birth"), blank=True, null=True)
-    place_of_birth = models.CharField(
-        verbose_name=_("Place of birth"), max_length=255, blank=True, null=True
-    )
+    place_of_birth = models.CharField(verbose_name=_("Place of birth"), max_length=255, blank=True)
     sex = models.CharField(verbose_name=_("Sex"), max_length=1, choices=SEX_CHOICES, blank=True)
 
     photo = models.ImageField(verbose_name=_("Photo"), blank=True, null=True)
@@ -1118,7 +1116,7 @@ class OAuthApplication(AbstractApplication):
 
     # Override grant types to make field optional
     authorization_grant_type = models.CharField(
-        max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True, null=True
+        max_length=32, choices=AbstractApplication.GRANT_TYPES, blank=True
     )
 
     # Optional list of alloewd scopes

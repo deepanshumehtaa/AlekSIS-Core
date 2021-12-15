@@ -21,6 +21,7 @@ Fixed
 * PDFs generated in background didn't contain logo or site title.
 * Admins were redirected to their user preferences
   while they wanted to edit the preferences of another user.
+* Some CharFields were using NULL values in database when field is empty
 * Optional dependecy `sentry-sdk` was not optional
 
 Changed
