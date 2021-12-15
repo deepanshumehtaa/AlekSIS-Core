@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog`_,
 and this project adheres to `Semantic Versioning`_.
 
-Unreleased
-----------
+`2.3`_ – 2021-12-15
+-------------------
 
 Added
 ~~~~~
@@ -531,3 +531,4 @@ Fixed
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
 .. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
+.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
