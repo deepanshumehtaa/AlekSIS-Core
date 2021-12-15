@@ -36,7 +36,7 @@ Removed
 * Remove impersonation page. Use the impersonation button on the person
   detail view instead.
 
-`2.2.1_ – 2021-12-02
+`2.2.1`_ – 2021-12-02
 --------------------
 
 Fixed
