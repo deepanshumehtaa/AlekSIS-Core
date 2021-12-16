@@ -184,17 +184,6 @@ MENUS = {
                     ],
                 },
                 {
-                    "name": _("Impersonation"),
-                    "url": "impersonate-list",
-                    "icon": "people",
-                    "validators": [
-                        (
-                            "aleksis.core.util.predicates.permission_validator",
-                            "core.impersonate_rule",
-                        ),
-                    ],
-                },
-                {
                     "name": _("Configuration"),
                     "url": "preferences_site",
                     "icon": "settings",

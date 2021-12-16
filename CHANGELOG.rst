@@ -9,6 +9,9 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+`2.3`_ – 2021-12-15
+-------------------
+
 Added
 ~~~~~
 
@@ -19,8 +22,24 @@ Fixed
 
 * View for assigning permissions didn't work with some global permissions.
 * PDFs generated in background didn't contain logo or site title.
+* Admins were redirected to their user preferences
+  while they wanted to edit the preferences of another user.
+* Some CharFields were using NULL values in database when field is empty
+* Optional dependecy `sentry-sdk` was not optional
 
-`2.2.1_ – 2021-12-02
+Changed
+~~~~~~~
+
+* Docker base image ships PostgreSQL 14 client binaries for maximum compatibility
+* Docker base image contains Sentry client by default (disabled in config by default)
+
+Removed
+~~~~~~~
+
+* Remove impersonation page. Use the impersonation button on the person
+  detail view instead.
+
+`2.2.1`_ – 2021-12-02
 --------------------
 
 Fixed
@@ -515,3 +534,4 @@ Fixed
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
 .. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
+.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
