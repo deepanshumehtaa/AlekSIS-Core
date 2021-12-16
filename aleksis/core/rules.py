@@ -322,8 +322,8 @@ can_change_password_predicate = is_site_preference_set(section="auth", pref="all
 rules.add_perm("core.can_change_password", can_change_password_predicate)
 
 # django-invitations
-can_invite_predicate = is_site_preference_set(section="auth", pref="invite_enabled")
-rules.add_perm("core.can_invite", can_invite_predicate)
+invite_enabled_predicate = is_site_preference_set(section="auth", pref="invite_enabled")
+rules.add_perm("core.invite_enabled", invite_enabled_predicate)
 
 # OAuth2 permissions
 create_oauthapplication_predicate = has_person & has_global_perm("core.add_oauthapplication")
