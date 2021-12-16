@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.3.dev0"
+version = "2.4.dev0"
 packages = [
     { include = "aleksis" }
 ]
@@ -120,7 +120,7 @@ sentry-sdk = {version = "^1.4.3", optional = true}
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
 s3 = ["boto3", "django-storages"]
-sentry = ["sentry"]
+sentry = ["sentry-sdk"]
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "^5"
