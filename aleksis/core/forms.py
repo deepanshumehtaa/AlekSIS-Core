@@ -614,14 +614,12 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
         # Create person
-        _fields = []
+        data = {}
         for field in Person._meta.get_fields():
             if field.name in self.cleaned_data:
-                _fields.append(field.name)
-        data = {field: self.cleaned_data[field] for field in _fields}
+                data[field.name] = self.cleaned_data[field.name]
         if not Person.objects.filter(email=data["email"]):
-            _person = Person.objects.create(user=user, **data)
-            _person.save()
+            _person, created = Person.objects.update_or_create(user=user, **data)
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user

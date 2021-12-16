@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('core', '0027_person_place_of_birth'),
+        ('core', '0028_char_field_not_null'),
     ]
 
     operations = [
@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
                 ('sent', models.DateTimeField(null=True, verbose_name='sent')),
                 ('email', models.EmailField(blank=True, max_length=254, verbose_name='E-Mail address')),
                 ('inviter', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='invitation', to='core.person'))
             ],
             options={
                 'abstract': False,

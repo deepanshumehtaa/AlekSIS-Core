@@ -320,10 +320,6 @@ ACCOUNT_ADAPTER = "aleksis.core.util.auth_helpers.OurAccountAdapter"
 # Require password confirmation
 SIGNUP_PASSWORD_ENTER_TWICE = True
 
-INVITATIONS_GONE_ON_ACCEPT_ERROR = False
-
-INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
-
 # Allow login by either username or email
 ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "username_email")
 
@@ -356,12 +352,11 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 # Configuration for django-invitations
 
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
-
 INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
-
 INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
-
 INVITATIONS_INVITATION_MODEL = "core.PersonInvitation"
+INVITATIONS_GONE_ON_ACCEPT_ERROR = False
+INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
 
 # Configuration for OAuth2 provider
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
