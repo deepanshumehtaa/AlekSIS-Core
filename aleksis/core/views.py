@@ -1410,27 +1410,32 @@ class AccountRegisterView(SignupView):
         return kwargs
 
 
-def invite_person_by_id(request: HttpRequest, id_: int) -> HttpResponse:
-    context = {}
+class InvitePersonByID(View):
+    """Custom view to invite person by it."""
 
-    person = Person.objects.get(id=id_)
+    success_url = reverse_lazy("persons")
 
-    if not PersonInvitation.objects.filter(email=person.email).exists():
-        length = get_site_preferences()["auth__invite_code_length"]
-        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
-        key = generate_random_code(length, packet_size)
-        invite = PersonInvitation.objects.create(person=person, key=key)
-        if person.email:
-            invite.email = person.email
-        invite.inviter = request.user
-        invite.save()
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = reverze_lazy("person_by_id", self.object.pk)
+        person = self.object
 
-        invite.send_invitation(request)
-        messages.success(request, _("Person was invited successfully."))
-    else:
-        messages.success(request, _("Person was already invited."))
+        if not PersonInvitation.objects.filter(email=person.email).exists():
+            length = get_site_preferences()["auth__invite_code_length"]
+            packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+            key = generate_random_code(length, packet_size)
+            invite = PersonInvitation.objects.create(person=person, key=key)
+            if person.email:
+                invite.email = person.email
+            invite.inviter = self.request.user
+            invite.save()
 
-    return redirect("person_by_id", person.pk)
+            invite.send_invitation(self.request)
+            messages.success(self.request, _("Person was invited successfully."))
+        else:
+            messages.success(self.request, _("Person was already invited."))
+
+        return HttpResponseRedirect(success_url)
 
 
 class LoginView(AllAuthLoginView):
