@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Password reset and password change templates were broken
+
 `2.3`_ – 2021-12-15
 -------------------
 
