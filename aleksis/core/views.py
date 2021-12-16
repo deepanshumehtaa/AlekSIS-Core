@@ -1072,11 +1072,7 @@ class InvitePerson(PermissionRequiredMixin, SingleTableView, SendInvite):
     table_class = InvitationsTable
     context = {}
 
-    def get_initial(self):
-        if person:
-            return {"person": person}
-        return super().get_initial(**kwargs)
-
+    # Get queryset of invitations
     def get_context_data(self, **kwargs):
         queryset = kwargs.pop("object_list", None)
         if queryset is None:
@@ -1092,12 +1088,14 @@ class EnterInvitationCode(FormView):
 
     def form_valid(self, form):
         code = "".join(form.cleaned_data["code"].lower().split("-"))
+        # Check if valid invitations exists
         if (
             PersonInvitation.objects.filter(key=code).exists()
             and not PersonInvitation.objects.get(key=code).accepted
             and not PersonInvitation.objects.get(key=code).key_expired()
         ):
             invitation = PersonInvitation.objects.get(key=code)
+            # Mark invitation as accepted and redirect to signup
             accept_invitation(
                 invitation=invitation, request=self.request, signal_sender=self.request.user
             )
@@ -1109,16 +1107,20 @@ class GenerateInvitationCode(View):
     """View to generate an invitation code."""
 
     def get(self, request):
+        # Build code
         length = get_site_preferences()["auth__invite_code_length"]
         packet_size = get_site_preferences()["auth__invite_code_packet_size"]
         code = generate_random_code(length, packet_size)
 
+        # Create invitation object
         invitation = PersonInvitation.objects.create(
             email="", inviter=request.user, key=code, sent=timezone.now()
         )
 
+        # Make code more readable
         code = "-".join(wrap(invitation.key, 5))
 
+        # Generate success message and print code
         messages.success(
             request,
             _(f"The invitation was successfully created. The invitation code is {code}"),
@@ -1394,6 +1396,12 @@ def server_error(
 
 
 class AccountRegisterView(SignupView):
+    """Rewrite account register view from upstream.
+
+    Rewrite dispatch function to check if signup is open or if the user has an verified
+    email address from an invitation, otherwise raise permission denied.
+    """
+
     form_class = AccountRegisterForm
     success_url = "index"
 
@@ -1439,7 +1447,13 @@ class InvitePersonByID(View):
 
 
 class LoginView(AllAuthLoginView):
-    """Override upstream loginview to check if person has a verified email address."""
+    """Override upstream loginview from django-allauth.
+
+    Override view to check if email verification from django-invitations is mandatory.
+    If verification is mandatory, check if the user has a verified email address, if not,
+    re-sent verification.
+
+    """
 
     def done(self, form_list, **kwargs):
         if settings.ACCOUNT_EMAIL_VERIFICATION == "mandatory":
