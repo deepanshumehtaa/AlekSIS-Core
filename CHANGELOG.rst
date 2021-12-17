@@ -9,10 +9,14 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+`2.3.1`_ – 2021-12-17
+---------------------
+
 Fixed
 ~~~~~
 
 * Small files could fail to upload to S3 storage due to MemoryFileUploadHandler
+* Corrected typos in previous changelog
 
 `2.3`_ – 2021-12-15
 -------------------
@@ -539,4 +543,5 @@ Fixed
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
 .. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
-.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
+.. _2.3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
+.. _2.3.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3.1
