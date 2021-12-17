@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Small files could fail to upload to S3 storage due to MemoryFileUploadHandler
+
 `2.3`_ – 2021-12-15
 -------------------
 

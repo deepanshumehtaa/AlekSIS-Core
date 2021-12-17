@@ -862,10 +862,16 @@ PROMETHEUS_METRICS_EXPORT_ADDRESS = _settings.get("prometheus.metrucs.address", 
 
 SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
 if _settings.get("storage.type", "").lower() == "s3":
     INSTALLED_APPS.append("storages")
 
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    FILE_UPLOAD_HANDLERS.remove("django.core.files.uploadhandler.MemoryFileUploadHandler")
 
     if _settings.get("storage.s3.static.enabled", False):
         STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
