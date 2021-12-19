@@ -325,7 +325,7 @@ ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "usern
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
-# Require email verification after sigm up
+# Require email verification after sign up
 ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
@@ -394,7 +394,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
-    # Keep local password for users to be required to proveide their old password on change
+    # Keep local password for users to be required to provide their old password on change
     AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
@@ -468,7 +468,7 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-# Add ModelBckend last so all other backends get a chance
+# Add ModelBackend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
