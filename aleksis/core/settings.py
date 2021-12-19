@@ -218,6 +218,7 @@ DATABASES = {
         "HOST": _settings.get("database.host", "127.0.0.1"),
         "PORT": _settings.get("database.port", "5432"),
         "CONN_MAX_AGE": _settings.get("database.conn_max_age", None),
+        "OPTIONS": _settings.get("database.options", {}),
     }
 }
 

@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Allow configuration of database options
+
 `2.3.1`_ – 2021-12-17
 ---------------------
 
