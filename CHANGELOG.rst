@@ -14,6 +14,11 @@ Added
 
 * Allow configuration of database options
 
+Fixed
+~~~~~
+
+* Imprint is now called "Imprint" and not "Impress".
+
 `2.3.1`_ – 2021-12-17
 ---------------------
 
