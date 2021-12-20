@@ -19,7 +19,8 @@ function initDatePicker(sel) {
 
         // Set monday as first day of week
         firstDay: get_format('FIRST_DAY_OF_WEEK'),
-        autoClose: true
+        autoClose: true,
+        yearRange: [1900, 2100],
     });
     el.datepicker("setDate", $(sel).val());
     return el;
