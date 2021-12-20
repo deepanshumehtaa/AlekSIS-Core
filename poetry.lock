@@ -6,9 +6,14 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "aleksis-builddeps"
-version = "5+20211205225154.d97fe549"
+version = "5+20211220215335.6c652982"
 description = "AlekSIS (School Information System) — Build/Dev dependencies for apps"
 category = "dev"
 optional = false
@@ -49,7 +54,7 @@ reference = "gitlab"
 
 [[package]]
 name = "amqp"
-version = "5.0.7"
+version = "5.0.9"
 description = "Low-level AMQP client for Python (fork of amqplib)."
 category = "main"
 optional = false
@@ -58,6 +63,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 vine = "5.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "appnope"
 version = "0.1.2"
@@ -65,6 +75,11 @@ description = "Disable App Nap on macOS >= 10.9"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "asgiref"
@@ -77,6 +92,11 @@ python-versions = ">=3.6"
 [package.extras]
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "asn1crypto"
 version = "1.4.0"
@@ -84,6 +104,11 @@ description = "Fast ASN.1 parser and serializer with definitions for private key
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "async-generator"
@@ -93,6 +118,11 @@ category = "dev"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "atomicwrites"
 version = "1.4.0"
@@ -100,6 +130,11 @@ description = "Atomic file writes."
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "attrs"
@@ -115,6 +150,11 @@ docs = ["furo", "sphinx", "zope.interface", "sphinx-notfound-page"]
 tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins", "zope.interface"]
 tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "babel"
 version = "2.9.1"
@@ -126,6 +166,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.dependencies]
 pytz = ">=2015.7"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "backcall"
 version = "0.2.0"
@@ -133,6 +178,11 @@ description = "Specifications for callback functions passed in to an API"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "bandit"
@@ -147,6 +197,11 @@ colorama = {version = ">=0.3.9", markers = "platform_system == \"Windows\""}
 GitPython = ">=1.0.1"
 PyYAML = ">=5.3.1"
 stevedore = ">=1.20.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "beautifulsoup4"
@@ -163,6 +218,11 @@ soupsieve = ">1.2"
 html5lib = ["html5lib"]
 lxml = ["lxml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "billiard"
 version = "3.6.4.0"
@@ -170,6 +230,11 @@ description = "Python multiprocessing fork with improvements and bugfixes"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "black"
@@ -197,6 +262,11 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 python2 = ["typed-ast (>=1.4.3)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "bleach"
 version = "4.1.0"
@@ -210,6 +280,11 @@ packaging = "*"
 six = ">=1.9.0"
 webencodings = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "boolean.py"
 version = "3.8"
@@ -218,25 +293,35 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "boto3"
-version = "1.20.24"
+version = "1.20.25"
 description = "The AWS SDK for Python"
 category = "main"
 optional = true
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.23.24,<1.24.0"
+botocore = ">=1.23.25,<1.24.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
 [package.extras]
 crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "botocore"
-version = "1.23.24"
+version = "1.23.25"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = true
@@ -250,16 +335,26 @@ urllib3 = ">=1.25.4,<1.27"
 [package.extras]
 crt = ["awscrt (==0.12.5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "bs4"
 version = "0.0.1"
-description = "Dummy package for Beautiful Soup"
+description = "Screen-scraping library"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
 beautifulsoup4 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "calendarweek"
@@ -271,6 +366,11 @@ python-versions = ">=3.7,<4.0"
 
 [package.extras]
 django = ["Django (>=2.2,<5.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "celery"
@@ -325,6 +425,11 @@ yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 zstd = ["zstandard"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "celery-haystack-ng"
 version = "0.20.post2"
@@ -337,6 +442,11 @@ python-versions = "*"
 celery = ">=4.0"
 django-appconf = ">=0.4.1"
 django-haystack = ">=2.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "celery-progress"
@@ -351,6 +461,11 @@ rabbitmq = ["channels-rabbitmq"]
 redis = ["channels-redis"]
 websockets = ["channels"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "certifi"
 version = "2021.10.8"
@@ -358,6 +473,11 @@ description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "cffi"
@@ -370,6 +490,11 @@ python-versions = "*"
 [package.dependencies]
 pycparser = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "charset-normalizer"
 version = "2.0.9"
@@ -381,6 +506,11 @@ python-versions = ">=3.5.0"
 [package.extras]
 unicode_backport = ["unicodedata2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "click"
 version = "7.1.2"
@@ -388,6 +518,11 @@ description = "Composable command line interface toolkit"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "click-didyoumean"
@@ -399,6 +534,11 @@ python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
 click = ">=7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "click-plugins"
@@ -414,6 +554,11 @@ click = ">=4.0"
 [package.extras]
 dev = ["pytest (>=3.6)", "pytest-cov", "wheel", "coveralls"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "click-repl"
 version = "0.2.0"
@@ -427,6 +572,11 @@ click = "*"
 prompt-toolkit = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "colorama"
 version = "0.4.4"
@@ -434,6 +584,11 @@ description = "Cross-platform colored terminal text."
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "colour"
@@ -446,6 +601,11 @@ python-versions = "*"
 [package.extras]
 test = ["nose"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "configobj"
 version = "5.0.6"
@@ -456,6 +616,11 @@ python-versions = "*"
 
 [package.dependencies]
 six = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "coverage"
@@ -470,6 +635,11 @@ tomli = {version = "*", optional = true, markers = "extra == \"toml\""}
 
 [package.extras]
 toml = ["tomli"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "cryptography"
@@ -490,6 +660,11 @@ sdist = ["setuptools_rust (>=0.11.4)"]
 ssh = ["bcrypt (>=3.1.5)"]
 test = ["pytest (>=6.2.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "curlylint"
 version = "0.13.0"
@@ -505,6 +680,11 @@ parsy = "1.1.0"
 pathspec = ">=0.6,<1"
 toml = ">=0.9.4"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "decorator"
 version = "5.1.0"
@@ -513,6 +693,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "defusedxml"
 version = "0.7.1"
@@ -520,6 +705,11 @@ description = "XML bomb protection for Python stdlib modules"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "deprecated"
@@ -535,6 +725,11 @@ wrapt = ">=1.10,<2"
 [package.extras]
 dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "importlib-resources (<4)", "configparser (<5)", "sphinxcontrib-websupport (<2)", "zipp (<2)", "PyTest (<5)", "PyTest-Cov (<2.6)", "pytest", "pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "dj-database-url"
 version = "0.5.0"
@@ -542,6 +737,11 @@ description = "Use Database URLs in your Django Application."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django"
@@ -560,6 +760,11 @@ sqlparse = ">=0.2.2"
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-allauth"
 version = "0.47.0"
@@ -575,6 +780,11 @@ python3-openid = ">=3.0.8"
 requests = "*"
 requests-oauthlib = ">=0.3.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-any-js"
 version = "1.1.1"
@@ -586,6 +796,11 @@ python-versions = ">=3.7,<4.0"
 [package.dependencies]
 Django = ">=2.2,<5.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-appconf"
 version = "1.0.5"
@@ -596,6 +811,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 django = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-auth-ldap"
@@ -609,6 +829,11 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 python-ldap = ">=3.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-bleach"
 version = "1.0.0"
@@ -621,6 +846,11 @@ python-versions = "*"
 bleach = ">=1.5.0"
 Django = ">=1.11"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-cachalot"
 version = "2.4.5"
@@ -632,6 +862,11 @@ python-versions = "*"
 [package.dependencies]
 Django = ">=2.2,<4.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-cache-memoize"
 version = "0.1.10"
@@ -642,6 +877,11 @@ python-versions = ">=3.5"
 
 [package.extras]
 dev = ["flake8", "tox", "twine", "therapist", "black"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-celery-beat"
@@ -657,6 +897,11 @@ Django = ">=2.2,<4.0"
 django-timezone-field = ">=4.1.0,<5.0"
 python-crontab = ">=2.3.4"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-celery-email"
 version = "3.0.0"
@@ -670,6 +915,11 @@ celery = ">=4.0"
 django = ">=2.2"
 django-appconf = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-celery-results"
 version = "2.2.0"
@@ -680,6 +930,11 @@ python-versions = "*"
 
 [package.dependencies]
 celery = ">=5.0,<6.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-ckeditor"
@@ -692,6 +947,11 @@ python-versions = "*"
 [package.dependencies]
 django-js-asset = ">=1.2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-cleanup"
 version = "5.2.0"
@@ -700,6 +960,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-colorfield"
 version = "0.5.0"
@@ -707,6 +972,11 @@ description = "simple color field for your models with a nice color-picker in th
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-dbbackup"
@@ -721,9 +991,14 @@ Django = ">=1.5"
 pytz = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-debug-toolbar"
-version = "3.2.3"
+version = "3.2.4"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "main"
 optional = false
@@ -732,6 +1007,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 sqlparse = ">=0.2.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-dynamic-preferences"
@@ -746,6 +1026,11 @@ django = ">=1.11"
 persisting-theory = ">=0.2.1"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-extensions"
 version = "3.1.5"
@@ -757,9 +1042,14 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-favicon-plus-reloaded"
-version = "1.1.3"
+version = "1.1.5"
 description = "simple Django app which allows you to upload a image and it renders a wide variety for html link tags to display the favicon"
 category = "main"
 optional = false
@@ -768,6 +1058,11 @@ python-versions = "*"
 [package.dependencies]
 django = "*"
 pillow = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-filter"
@@ -780,6 +1075,11 @@ python-versions = ">=3.5"
 [package.dependencies]
 Django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-formtools"
 version = "2.3"
@@ -791,6 +1091,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 Django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-guardian"
 version = "2.4.0"
@@ -801,6 +1106,11 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 Django = ">=2.2"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-haystack"
@@ -816,6 +1126,11 @@ Django = ">=2.2"
 [package.extras]
 elasticsearch = ["elasticsearch (>=5,<6)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-health-check"
 version = "3.16.5"
@@ -827,6 +1142,11 @@ python-versions = "*"
 [package.dependencies]
 django = ">=2.2"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-impersonate"
 version = "1.7.3"
@@ -835,13 +1155,23 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-ipware"
-version = "4.0.0"
+version = "4.0.2"
 description = "A Django application to retrieve user's IP address"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-js-asset"
@@ -850,6 +1180,11 @@ description = "script tag with additional attributes for django.forms.Media"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-js-reverse"
@@ -861,6 +1196,11 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=1.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-jsonstore"
@@ -874,6 +1214,11 @@ python-versions = "*"
 Django = ">=1.11"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-maintenance-mode"
 version = "0.16.2"
@@ -881,6 +1226,11 @@ description = "django-maintenance-mode shows a 503 error page when maintenance-m
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-material"
@@ -893,6 +1243,11 @@ python-versions = "*"
 [package.dependencies]
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-menu-generator-ng"
 version = "1.2.3"
@@ -900,6 +1255,11 @@ description = "A straightforward menu generator for Django"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-model-utils"
@@ -912,20 +1272,29 @@ python-versions = "*"
 [package.dependencies]
 Django = ">=2.0.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-oauth-toolkit"
-version = "1.5.0"
+version = "1.6.0"
 description = "OAuth2 Provider for Django"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-django = ">=2.2"
+django = ">=2.2,<4.0.0 || >4.0.0"
 jwcrypto = ">=0.8.0"
 oauthlib = ">=3.1.0"
 requests = ">=2.13.0"
-six = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-otp"
@@ -941,6 +1310,11 @@ django = ">=2.2"
 [package.extras]
 qrcode = ["qrcode"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-otp-yubikey"
 version = "1.0.1"
@@ -952,6 +1326,11 @@ python-versions = "*"
 [package.dependencies]
 django-otp = ">=1.0.0"
 YubiOTP = ">=0.2.2"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-phonenumber-field"
@@ -969,6 +1348,11 @@ phonenumbers = {version = ">=7.0.2", optional = true, markers = "extra == \"phon
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-polymorphic"
 version = "3.1.0"
@@ -980,9 +1364,14 @@ python-versions = "*"
 [package.dependencies]
 Django = ">=2.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-prometheus"
-version = "2.1.0"
+version = "2.2.0"
 description = "Django middlewares to monitor your application with Prometheus.io."
 category = "main"
 optional = false
@@ -990,6 +1379,11 @@ python-versions = "*"
 
 [package.dependencies]
 prometheus-client = ">=0.7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-redis"
@@ -1006,6 +1400,11 @@ redis = ">=3,<4"
 [package.extras]
 hiredis = ["redis[hiredis] (>=3,<4)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-render-block"
 version = "0.9.1"
@@ -1020,6 +1419,11 @@ django = ">=2.2"
 [package.extras]
 dev = ["Jinja2 (>=2.8)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-reversion"
 version = "4.0.1"
@@ -1031,6 +1435,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 django = ">=2.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-sass-processor"
 version = "1.0.0"
@@ -1041,6 +1450,11 @@ python-versions = "*"
 
 [package.extras]
 management_command = ["django-compressor (>=2.4)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-select2"
@@ -1056,6 +1470,11 @@ django-appconf = ">=0.6.0"
 
 [package.extras]
 test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-storages"
@@ -1076,6 +1495,11 @@ google = ["google-cloud-storage (>=1.27.0)"]
 libcloud = ["apache-libcloud"]
 sftp = ["paramiko"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-stubs"
 version = "1.9.0"
@@ -1093,6 +1517,11 @@ types-pytz = "*"
 types-PyYAML = "*"
 typing-extensions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-stubs-ext"
 version = "0.3.1"
@@ -1104,6 +1533,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 django = "*"
 typing-extensions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-tables2"
@@ -1119,6 +1553,11 @@ Django = ">=1.11"
 [package.extras]
 tablib = ["tablib"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-templated-email"
 version = "3.0.0"
@@ -1129,6 +1568,11 @@ python-versions = "*"
 
 [package.dependencies]
 django-render-block = ">=0.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-timezone-field"
@@ -1144,6 +1588,11 @@ pytz = "*"
 
 [package.extras]
 rest_framework = ["djangorestframework (>=3.0.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-titofisto"
@@ -1181,6 +1630,11 @@ phonenumberslite = ["phonenumberslite (>=7.0.9,<8.99)"]
 sms = ["twilio (>=6.0)"]
 yubikey = ["django-otp-yubikey"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-uwsgi-ng"
 version = "1.1.2"
@@ -1192,6 +1646,11 @@ python-versions = "*"
 [package.extras]
 uwsgi = ["uwsgi"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "django-widget-tweaks"
 version = "1.4.9"
@@ -1199,6 +1658,11 @@ description = "Tweak the form field rendering in templates, not in python-level 
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "django-yarnpkg"
@@ -1212,6 +1676,11 @@ python-versions = "*"
 django = "*"
 six = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "djangorestframework"
 version = "3.13.1"
@@ -1224,6 +1693,11 @@ python-versions = ">=3.6"
 django = ">=2.2"
 pytz = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "docutils"
 version = "0.16"
@@ -1231,6 +1705,11 @@ description = "Docutils -- Python Documentation Utilities"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "dparse"
@@ -1247,6 +1726,11 @@ toml = "*"
 
 [package.extras]
 pipenv = ["pipenv"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "dynaconf"
@@ -1270,6 +1754,11 @@ toml = ["toml"]
 vault = ["hvac"]
 yaml = ["ruamel.yaml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8"
 version = "4.0.1"
@@ -1282,6 +1771,11 @@ python-versions = ">=3.6"
 mccabe = ">=0.6.0,<0.7.0"
 pycodestyle = ">=2.8.0,<2.9.0"
 pyflakes = ">=2.4.0,<2.5.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-bandit"
@@ -1297,6 +1791,11 @@ flake8 = "*"
 flake8-polyfill = "*"
 pycodestyle = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-black"
 version = "0.2.3"
@@ -1309,6 +1808,11 @@ python-versions = "*"
 black = "*"
 flake8 = ">=3.0.0"
 toml = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-builtins"
@@ -1324,6 +1828,11 @@ flake8 = "*"
 [package.extras]
 test = ["coverage", "coveralls", "mock", "pytest", "pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-django"
 version = "1.1.1"
@@ -1334,6 +1843,11 @@ python-versions = "*"
 
 [package.dependencies]
 flake8 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-docstrings"
@@ -1347,6 +1861,11 @@ python-versions = "*"
 flake8 = ">=3"
 pydocstyle = ">=2.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-fixme"
 version = "1.1.1"
@@ -1354,6 +1873,11 @@ description = "Check for FIXME, TODO and other temporary developer notes. Plugin
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-isort"
@@ -1371,6 +1895,11 @@ testfixtures = ">=6.8.0,<7"
 [package.extras]
 test = ["pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-mypy"
 version = "17.8.0"
@@ -1384,6 +1913,11 @@ attrs = "*"
 flake8 = ">=3.0.0"
 mypy = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "flake8-polyfill"
 version = "1.0.2"
@@ -1394,6 +1928,11 @@ python-versions = "*"
 
 [package.dependencies]
 flake8 = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "flake8-rst-docstrings"
@@ -1408,6 +1947,11 @@ flake8 = ">=3.0.0"
 pygments = "*"
 restructuredtext-lint = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "freezegun"
 version = "1.1.0"
@@ -1419,6 +1963,11 @@ python-versions = ">=3.5"
 [package.dependencies]
 python-dateutil = ">=2.7"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "gitdb"
 version = "4.0.9"
@@ -1429,6 +1978,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 smmap = ">=3.0.1,<6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "gitpython"
@@ -1442,6 +1996,11 @@ python-versions = ">=3.7"
 gitdb = ">=4.0.1,<5"
 typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.10\""}
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "h11"
 version = "0.12.0"
@@ -1449,6 +2008,11 @@ description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "haystack-redis"
@@ -1463,6 +2027,11 @@ django-haystack = "*"
 redis = "*"
 whoosh = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "html2text"
 version = "2020.1.16"
@@ -1470,6 +2039,11 @@ description = "Turn HTML into equivalent Markdown-structured text."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "idna"
@@ -1479,6 +2053,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "imagesize"
 version = "1.3.0"
@@ -1487,6 +2066,11 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "iniconfig"
 version = "1.1.1"
@@ -1494,6 +2078,11 @@ description = "iniconfig: brain-dead simple config-ini parsing"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "ipython"
@@ -1527,6 +2116,11 @@ parallel = ["ipyparallel"]
 qtconsole = ["qtconsole"]
 test = ["nose (>=0.10.1)", "requests", "testpath", "pygments", "nbformat", "ipykernel", "numpy (>=1.17)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "isort"
 version = "5.10.1"
@@ -1536,10 +2130,15 @@ optional = false
 python-versions = ">=3.6.1,<4.0"
 
 [package.extras]
-pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
-requirements_deprecated_finder = ["pipreqs", "pip-api"]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
+requirements_deprecated_finder = ["pip-api", "pipreqs"]
+pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
 plugins = ["setuptools"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "jedi"
@@ -1556,6 +2155,11 @@ parso = ">=0.8.0,<0.9.0"
 qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["Django (<3.1)", "colorama", "docopt", "pytest (<7.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "jinja2"
 version = "3.0.3"
@@ -1570,6 +2174,11 @@ MarkupSafe = ">=2.0"
 [package.extras]
 i18n = ["Babel (>=2.7)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "jmespath"
 version = "0.10.0"
@@ -1577,6 +2186,11 @@ description = "JSON Matching Expressions"
 category = "main"
 optional = true
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "jwcrypto"
@@ -1589,6 +2203,11 @@ python-versions = "*"
 [package.dependencies]
 cryptography = ">=2.3"
 deprecated = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "kombu"
@@ -1618,6 +2237,11 @@ sqs = ["boto3 (>=1.9.12)", "pycurl (>=7.44.1,<7.45.0)", "urllib3 (>=1.26.7)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "libsass"
 version = "0.21.0"
@@ -1628,6 +2252,11 @@ python-versions = "*"
 
 [package.dependencies]
 six = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "license-expression"
@@ -1644,6 +2273,11 @@ python-versions = "*"
 docs = ["Sphinx (>=3.3.1)", "sphinx-rtd-theme (>=0.5.0)", "doc8 (>=0.8.1)"]
 testing = ["pytest (>=6)", "pytest-xdist (>=2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "markupsafe"
 version = "2.0.1"
@@ -1651,6 +2285,11 @@ description = "Safely add untrusted strings to HTML/XML markup."
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "matplotlib-inline"
@@ -1663,6 +2302,11 @@ python-versions = ">=3.5"
 [package.dependencies]
 traitlets = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "mccabe"
 version = "0.6.1"
@@ -1671,22 +2315,32 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "mypy"
-version = "0.910"
+version = "0.920"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
 mypy-extensions = ">=0.4.3,<0.5.0"
-toml = "*"
+tomli = ">=1.1.0,<3.0.0"
 typing-extensions = ">=3.7.4"
 
 [package.extras]
 dmypy = ["psutil (>=4.0)"]
-python2 = ["typed-ast (>=1.4.0,<1.5.0)"]
+python2 = ["typed-ast (>=1.4.0,<2)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "mypy-extensions"
@@ -1695,6 +2349,11 @@ description = "Experimental type system extensions for programs checked with the
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "oauthlib"
@@ -1709,6 +2368,11 @@ rsa = ["cryptography (>=3.0.0,<4)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0,<4)", "pyjwt (>=2.0.0,<3)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "outcome"
 version = "1.1.0"
@@ -1720,6 +2384,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 attrs = ">=19.2.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "packaging"
 version = "21.3"
@@ -1730,6 +2399,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "parso"
@@ -1743,6 +2417,11 @@ python-versions = ">=3.6"
 qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["docopt", "pytest (<6.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "parsy"
 version = "1.1.0"
@@ -1750,6 +2429,11 @@ description = "easy-to-use parser combinators, for parsing in pure Python"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pathspec"
@@ -1759,6 +2443,11 @@ category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pbr"
 version = "5.8.0"
@@ -1767,6 +2456,11 @@ category = "dev"
 optional = false
 python-versions = ">=2.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "persisting-theory"
 version = "0.2.1"
@@ -1774,6 +2468,11 @@ description = "Registries that can autodiscover values accross your project apps
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pexpect"
@@ -1786,6 +2485,11 @@ python-versions = "*"
 [package.dependencies]
 ptyprocess = ">=0.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pg8000"
 version = "1.23.0"
@@ -1797,6 +2501,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 scramp = ">=1.4.1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "phonenumbers"
 version = "8.12.39"
@@ -1804,6 +2513,11 @@ description = "Python version of Google's common library for parsing, formatting
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pickleshare"
@@ -1813,6 +2527,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pillow"
 version = "8.4.0"
@@ -1820,6 +2539,11 @@ description = "Python Imaging Library (Fork)"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "platformdirs"
@@ -1833,6 +2557,11 @@ python-versions = ">=3.6"
 docs = ["Sphinx (>=4)", "furo (>=2021.7.5b38)", "proselint (>=0.10.2)", "sphinx-autodoc-typehints (>=1.12)"]
 test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pluggy"
 version = "1.0.0"
@@ -1845,6 +2574,11 @@ python-versions = ">=3.6"
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "prometheus-client"
 version = "0.12.0"
@@ -1855,6 +2589,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
 twisted = ["twisted"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "prompt-toolkit"
@@ -1867,6 +2606,11 @@ python-versions = ">=3.6.2"
 [package.dependencies]
 wcwidth = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "psutil"
 version = "5.8.0"
@@ -1878,6 +2622,11 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 [package.extras]
 test = ["ipaddress", "mock", "unittest2", "enum34", "pywin32", "wmi"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "psycopg2"
 version = "2.9.2"
@@ -1885,6 +2634,11 @@ description = "psycopg2 - Python-PostgreSQL Database Adapter"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "ptyprocess"
@@ -1894,6 +2648,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "py"
 version = "1.11.0"
@@ -1902,6 +2661,11 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyasn1"
 version = "0.4.8"
@@ -1909,6 +2673,11 @@ description = "ASN.1 types and codecs"
 category = "main"
 optional = true
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pyasn1-modules"
@@ -1921,6 +2690,11 @@ python-versions = "*"
 [package.dependencies]
 pyasn1 = ">=0.4.6,<0.5.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pycodestyle"
 version = "2.8.0"
@@ -1928,6 +2702,11 @@ description = "Python style guide checker"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pycparser"
@@ -1937,6 +2716,11 @@ category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pycryptodome"
 version = "3.12.0"
@@ -1944,6 +2728,11 @@ description = "Cryptographic library for Python"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pydocstyle"
@@ -1959,6 +2748,11 @@ snowballstemmer = "*"
 [package.extras]
 toml = ["toml"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyflakes"
 version = "2.4.0"
@@ -1967,6 +2761,11 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pygments"
 version = "2.10.0"
@@ -1974,6 +2773,11 @@ description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pyjwt"
@@ -1992,6 +2796,11 @@ dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)",
 docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyopenssl"
 version = "21.0.0"
@@ -2008,6 +2817,11 @@ six = ">=1.5.2"
 docs = ["sphinx", "sphinx-rtd-theme"]
 test = ["flaky", "pretend", "pytest (>=3.0.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyparsing"
 version = "3.0.6"
@@ -2018,6 +2832,11 @@ python-versions = ">=3.6"
 
 [package.extras]
 diagrams = ["jinja2", "railroad-diagrams"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pytest"
@@ -2040,6 +2859,11 @@ toml = "*"
 [package.extras]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytest-cov"
 version = "3.0.0"
@@ -2054,6 +2878,11 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pytest-django"
@@ -2070,6 +2899,11 @@ pytest = ">=5.4.0"
 docs = ["sphinx", "sphinx-rtd-theme"]
 testing = ["django", "django-configurations (>=2.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytest-django-testing-postgresql"
 version = "0.1.post0"
@@ -2081,6 +2915,11 @@ python-versions = "*"
 [package.dependencies]
 dj-database-url = "*"
 "testing.postgresql" = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "pytest-sugar"
@@ -2094,6 +2933,11 @@ python-versions = "*"
 packaging = ">=14.1"
 pytest = ">=2.9"
 termcolor = ">=1.1.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python-crontab"
@@ -2110,6 +2954,11 @@ python-dateutil = "*"
 cron-description = ["cron-descriptor"]
 cron-schedule = ["croniter"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "python-dateutil"
 version = "2.8.2"
@@ -2121,6 +2970,11 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 [package.dependencies]
 six = ">=1.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "python-gnupg"
 version = "0.4.8"
@@ -2128,6 +2982,11 @@ description = "A wrapper for the Gnu Privacy Guard (GPG or GnuPG)"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python-ldap"
@@ -2140,6 +2999,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 pyasn1 = ">=0.3.7"
 pyasn1_modules = ">=0.1.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "python3-openid"
@@ -2156,6 +3020,11 @@ defusedxml = "*"
 mysql = ["mysql-connector-python"]
 postgresql = ["psycopg2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pytz"
 version = "2021.3"
@@ -2164,6 +3033,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "pyyaml"
 version = "6.0"
@@ -2171,6 +3045,11 @@ description = "YAML parser and emitter for Python"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "qrcode"
@@ -2190,6 +3069,11 @@ maintainer = ["zest.releaser"]
 pil = ["pillow"]
 test = ["pytest", "pytest-cov", "mock"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "redis"
 version = "3.5.3"
@@ -2200,6 +3084,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [package.extras]
 hiredis = ["hiredis (>=0.1.3)"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "requests"
@@ -2219,6 +3108,11 @@ urllib3 = ">=1.21.1,<1.27"
 socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "requests-oauthlib"
 version = "1.3.0"
@@ -2234,6 +3128,11 @@ requests = ">=2.0.0"
 [package.extras]
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "restructuredtext-lint"
 version = "1.3.2"
@@ -2244,6 +3143,11 @@ python-versions = "*"
 
 [package.dependencies]
 docutils = ">=0.11,<1.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "ruamel.yaml"
@@ -2260,6 +3164,11 @@ python-versions = ">=3"
 docs = ["ryd"]
 jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "ruamel.yaml.clib"
 version = "0.2.6"
@@ -2268,6 +3177,11 @@ category = "main"
 optional = false
 python-versions = ">=3.5"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "rules"
 version = "3.0"
@@ -2275,6 +3189,11 @@ description = "Awesome Django authorization, without the database"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "s3transfer"
@@ -2290,6 +3209,11 @@ botocore = ">=1.12.36,<2.0a.0"
 [package.extras]
 crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "safety"
 version = "1.10.3"
@@ -2304,6 +3228,11 @@ dparse = ">=0.5.1"
 packaging = "*"
 requests = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "scramp"
 version = "1.4.1"
@@ -2314,6 +3243,11 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 asn1crypto = ">=1.4.0"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "selenium"
@@ -2327,6 +3261,11 @@ python-versions = "~=3.7"
 trio = ">=0.17,<1.0"
 trio-websocket = ">=0.9,<1.0"
 urllib3 = {version = ">=1.26,<2.0", extras = ["secure"]}
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sentry-sdk"
@@ -2357,6 +3296,11 @@ sanic = ["sanic (>=0.8)"]
 sqlalchemy = ["sqlalchemy (>=1.2)"]
 tornado = ["tornado (>=5)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "six"
 version = "1.16.0"
@@ -2364,6 +3308,11 @@ description = "Python 2 and 3 compatibility utilities"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "smmap"
@@ -2373,6 +3322,11 @@ category = "dev"
 optional = false
 python-versions = ">=3.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sniffio"
 version = "1.2.0"
@@ -2380,6 +3334,11 @@ description = "Sniff out which async library your code is running under"
 category = "dev"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "snowballstemmer"
@@ -2389,6 +3348,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sortedcontainers"
 version = "2.4.0"
@@ -2396,6 +3360,11 @@ description = "Sorted Containers -- Sorted List, Sorted Dict, Sorted Set"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "soupsieve"
@@ -2405,6 +3374,11 @@ category = "main"
 optional = false
 python-versions = ">=3.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "spdx-license-list"
 version = "0.5.2"
@@ -2412,6 +3386,11 @@ description = "A simple tool/library for working with SPDX license definitions."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinx"
@@ -2444,6 +3423,11 @@ docs = ["sphinxcontrib-websupport"]
 lint = ["flake8 (>=3.5.0)", "isort", "mypy (>=0.800)", "docutils-stubs"]
 test = ["pytest", "pytest-cov", "html5lib", "cython", "typed-ast"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinx-autodoc-typehints"
 version = "1.12.0"
@@ -2459,6 +3443,11 @@ Sphinx = ">=3.0"
 test = ["pytest (>=3.1.0)", "typing-extensions (>=3.5)", "sphobjinv (>=2.0)", "Sphinx (>=3.2.0)", "dataclasses"]
 type_comments = ["typed-ast (>=1.4.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinx-materialdesign-theme"
 version = "0.1.11"
@@ -2466,6 +3455,11 @@ description = "Sphinx Material Design Theme"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-applehelp"
@@ -2479,6 +3473,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-devhelp"
 version = "1.0.2"
@@ -2491,6 +3490,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-django"
 version = "0.5.1"
@@ -2498,6 +3502,11 @@ description = "Improve the Sphinx autodoc for Django classes."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-htmlhelp"
@@ -2511,6 +3520,11 @@ python-versions = ">=3.6"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest", "html5lib"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-jsmath"
 version = "1.0.1"
@@ -2521,6 +3535,11 @@ python-versions = ">=3.5"
 
 [package.extras]
 test = ["pytest", "flake8", "mypy"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "sphinxcontrib-qthelp"
@@ -2534,6 +3553,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sphinxcontrib-serializinghtml"
 version = "1.1.5"
@@ -2546,6 +3570,11 @@ python-versions = ">=3.5"
 lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "sqlparse"
 version = "0.4.2"
@@ -2553,6 +3582,11 @@ description = "A non-validating SQL parser."
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "stevedore"
@@ -2565,6 +3599,11 @@ python-versions = ">=3.6"
 [package.dependencies]
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "termcolor"
 version = "1.1.0"
@@ -2572,6 +3611,11 @@ description = "ANSII Color formatting for output in terminal."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "testfixtures"
@@ -2586,6 +3630,11 @@ build = ["setuptools-git", "wheel", "twine"]
 docs = ["sphinx", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
 test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "testing.common.database"
 version = "2.0.3"
@@ -2596,6 +3645,11 @@ python-versions = "*"
 
 [package.extras]
 testing = ["nose"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "testing.postgresql"
@@ -2612,6 +3666,11 @@ pg8000 = ">=1.10"
 [package.extras]
 testing = ["sqlalchemy", "nose", "psycopg2"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "toml"
 version = "0.10.2"
@@ -2620,6 +3679,11 @@ category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "tomli"
 version = "1.2.3"
@@ -2627,6 +3691,11 @@ description = "A lil' TOML parser"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "traitlets"
@@ -2638,6 +3707,11 @@ python-versions = ">=3.7"
 
 [package.extras]
 test = ["pytest"]
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "trio"
@@ -2656,6 +3730,11 @@ outcome = "*"
 sniffio = "*"
 sortedcontainers = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "trio-websocket"
 version = "0.9.2"
@@ -2669,9 +3748,14 @@ async-generator = ">=1.10"
 trio = ">=0.11"
 wsproto = ">=0.14"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "twilio"
-version = "7.3.2"
+version = "7.4.0"
 description = "Twilio API client and TwiML generator"
 category = "main"
 optional = false
@@ -2682,6 +3766,11 @@ PyJWT = ">=2.0.0,<3.0.0"
 pytz = "*"
 requests = ">=2.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "types-pytz"
 version = "2021.3.3"
@@ -2689,6 +3778,11 @@ description = "Typing stubs for pytz"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "types-pyyaml"
@@ -2698,6 +3792,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "typing-extensions"
 version = "4.0.1"
@@ -2705,6 +3804,11 @@ description = "Backported and Experimental Type Hints for Python 3.6+"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "urllib3"
@@ -2725,6 +3829,11 @@ brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "uwsgi"
 version = "2.0.20"
@@ -2732,6 +3841,11 @@ description = "The uWSGI server"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "vine"
@@ -2741,6 +3855,11 @@ category = "main"
 optional = false
 python-versions = ">=3.6"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "wcwidth"
 version = "0.2.5"
@@ -2748,6 +3867,11 @@ description = "Measures the displayed width of unicode strings in a terminal"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "webencodings"
@@ -2757,6 +3881,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "whoosh"
 version = "2.7.4"
@@ -2765,6 +3894,11 @@ category = "main"
 optional = false
 python-versions = "*"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "wrapt"
 version = "1.13.3"
@@ -2772,6 +3906,11 @@ description = "Module for decorators, wrappers and monkey patching."
 category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [[package]]
 name = "wsproto"
@@ -2784,6 +3923,11 @@ python-versions = ">=3.6.1"
 [package.dependencies]
 h11 = ">=0.9.0,<1"
 
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
+
 [[package]]
 name = "yubiotp"
 version = "1.0.0.post1"
@@ -2794,6 +3938,11 @@ python-versions = "*"
 
 [package.dependencies]
 pycryptodome = "*"
+
+[package.source]
+type = "legacy"
+url = "https://edugit.org/api/v4/projects/461/packages/pypi/simple"
+reference = "gitlab"
 
 [extras]
 ldap = ["django-auth-ldap"]
@@ -2811,12 +3960,12 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 aleksis-builddeps = [
-    {file = "AlekSIS-Builddeps-5+20211205225154.d97fe549.tar.gz", hash = "sha256:eef053dd01fa3e0a5578f864747d9302e1c73ecc09a8b0e4f39da81b5a29f72c"},
-    {file = "AlekSIS_Builddeps-5+20211205225154.d97fe549-py3-none-any.whl", hash = "sha256:dea8207f58937d3ffdb23591e6407316bd5b2b4b8af2bbed87c87e87e7499c87"},
+    {file = "AlekSIS-Builddeps-5+20211220215335.6c652982.tar.gz", hash = "sha256:e1b5302b70315008077398ba08c4fa8524ef5e406cde4b3997396b9064b1e5bb"},
+    {file = "AlekSIS_Builddeps-5+20211220215335.6c652982-py3-none-any.whl", hash = "sha256:da831d7aa5fbbcb3994d5a0ece5e37e04dbd3908125285f549b003a4a7d45446"},
 ]
 amqp = [
-    {file = "amqp-5.0.7-py3-none-any.whl", hash = "sha256:4d9cb6b5d69183ba279e97382ff68a071864c25b561d206dab73499d3ed26d1c"},
-    {file = "amqp-5.0.7.tar.gz", hash = "sha256:d757b78fd7d3c6bb60e3ee811b68145583643747ed3ec253329f086aa3a72a5d"},
+    {file = "amqp-5.0.9-py3-none-any.whl", hash = "sha256:9cd81f7b023fc04bbb108718fbac674f06901b77bfcdce85b10e2a5d0ee91be5"},
+    {file = "amqp-5.0.9.tar.gz", hash = "sha256:1e5f707424e544078ca196e72ae6a14887ce74e02bd126be54b7c03c971bef18"},
 ]
 appnope = [
     {file = "appnope-0.1.2-py2.py3-none-any.whl", hash = "sha256:93aa393e9d6c54c5cd570ccadd8edad61ea0c4b9ea7a01409020c9aa019eb442"},
@@ -2875,12 +4024,12 @@ bleach = [
     {file = "boolean.py-3.8.tar.gz", hash = "sha256:cc24e20f985d60cd4a3a5a1c0956dd12611159d32a75081dabd0c9ab981acaa4"},
 ]
 boto3 = [
-    {file = "boto3-1.20.24-py3-none-any.whl", hash = "sha256:8f08e8e94bf107c5e9866684e9aadf8d9f60abed0cfe5c1dba4e7328674a1986"},
-    {file = "boto3-1.20.24.tar.gz", hash = "sha256:739705b28e6b2329ea3b481ba801d439c296aaf176f7850729147ba99bbf8a9a"},
+    {file = "boto3-1.20.25-py3-none-any.whl", hash = "sha256:a03ab82efcbf457c36dab4afc545d0ddb72b5140c9993cffc78bc23b8d8baa40"},
+    {file = "boto3-1.20.25.tar.gz", hash = "sha256:fa686e8e0a0559124aa9f19dcc25e6cc428f18ff11f779bb7346b883b353fdc2"},
 ]
 botocore = [
-    {file = "botocore-1.23.24-py3-none-any.whl", hash = "sha256:e78d48c50c8c013fb9b362c6202fece2fe868edfd89b51968080180bdff41617"},
-    {file = "botocore-1.23.24.tar.gz", hash = "sha256:43006b4f52d7bb655319d3da0f615cdbee7762853acc1ebcb1d49f962e6b4806"},
+    {file = "botocore-1.23.25-py3-none-any.whl", hash = "sha256:98f8a23ca035edfbd8a8028e624eaf08ba22452dd78ad62eeb03fcd0bbd5f58d"},
+    {file = "botocore-1.23.25.tar.gz", hash = "sha256:9eb71d5ee1ea335b3968751346601e923c66a7b324b1dc58e360d14e0d2ac136"},
 ]
 bs4 = [
     {file = "bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a"},
@@ -3138,8 +4287,8 @@ django-dbbackup = [
     {file = "django-dbbackup-3.3.0.tar.gz", hash = "sha256:bb109735cae98b64ad084e5b461b7aca2d7b39992f10c9ed9435e3ebb6fb76c8"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-3.2.3.tar.gz", hash = "sha256:95880677ea846ba1077d02305fd5e2b25e1da096e1d4a735b665e3340fa2ae79"},
-    {file = "django_debug_toolbar-3.2.3-py3-none-any.whl", hash = "sha256:516702e1d71302bbc06059fa3c41efd1a3bd9cbb5580fc793343118d95b309e0"},
+    {file = "django-debug-toolbar-3.2.4.tar.gz", hash = "sha256:644bbd5c428d3283aa9115722471769cac1bec189edf3a0c855fd8ff870375a9"},
+    {file = "django_debug_toolbar-3.2.4-py3-none-any.whl", hash = "sha256:6b633b6cfee24f232d73569870f19aa86c819d750e7f3e833f2344a9eb4b4409"},
 ]
 django-dynamic-preferences = [
     {file = "django-dynamic-preferences-1.11.0.tar.gz", hash = "sha256:f214c938b5872a17647e2b2ccfd9ad00a90a3c6c4aa83fa65d3c5c446e7a66c7"},
@@ -3150,8 +4299,8 @@ django-extensions = [
     {file = "django_extensions-3.1.5-py3-none-any.whl", hash = "sha256:9238b9e016bb0009d621e05cf56ea8ce5cce9b32e91ad2026996a7377ca28069"},
 ]
 django-favicon-plus-reloaded = [
-    {file = "django-favicon-plus-reloaded-1.1.3.tar.gz", hash = "sha256:36c2a1cefc201df8bd132492e2440ccdc3d9ceb8e421b2ca181a4704ebacd190"},
-    {file = "django_favicon_plus_reloaded-1.1.3-py3-none-any.whl", hash = "sha256:a60b438360e82bf7075b856ff6a80bae20c825373a58deac627810e478c42be3"},
+    {file = "django-favicon-plus-reloaded-1.1.5.tar.gz", hash = "sha256:0714bd22878617f8bb53333ddc06ae7b5071cebff5b5d2a9ebcb58b11c6632dd"},
+    {file = "django_favicon_plus_reloaded-1.1.5-py3-none-any.whl", hash = "sha256:b14eba8e4a52e00cf61bb50856f866c964673cd25f88175434854c55d8e1ba99"},
 ]
 django-filter = [
     {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
@@ -3177,8 +4326,8 @@ django-impersonate = [
     {file = "django-impersonate-1.7.3.tar.gz", hash = "sha256:282003957577c7143fe31e5861f8fffdf6fe0c25557aedb28fcf8b11474eaa23"},
 ]
 django-ipware = [
-    {file = "django-ipware-4.0.0.tar.gz", hash = "sha256:1294f916f3b3475e40e1b0ec1bd320aa2397978eae672721c81cbc2ed517e9ee"},
-    {file = "django_ipware-4.0.0-py2.py3-none-any.whl", hash = "sha256:116bd0d7940f09bf7ffd465943992e23d87e772a9d6c0d3a57b74040589a383b"},
+    {file = "django-ipware-4.0.2.tar.gz", hash = "sha256:602a58325a4808bd19197fef2676a0b2da2df40d0ecf21be414b2ff48c72ad05"},
+    {file = "django_ipware-4.0.2-py2.py3-none-any.whl", hash = "sha256:878dbb06a87e25550798e9ef3204ed70a200dd8b15e47dcef848cf08244f04c9"},
 ]
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
@@ -3208,8 +4357,8 @@ django-model-utils = [
     {file = "django_model_utils-4.2.0-py3-none-any.whl", hash = "sha256:a768a25c80514e0ad4e4a6f9c02c44498985f36c5dfdea47b5b1e8cf994beba6"},
 ]
 django-oauth-toolkit = [
-    {file = "django-oauth-toolkit-1.5.0.tar.gz", hash = "sha256:650e5ef2244d1d8db8f507137e0d1e8b8aad1f4086a4a610526e8851f9a38308"},
-    {file = "django_oauth_toolkit-1.5.0-py3-none-any.whl", hash = "sha256:b2e346a7c1e222774bfb370f21b556b92b408395b4c23914e2d1b241b2e5376a"},
+    {file = "django-oauth-toolkit-1.6.0.tar.gz", hash = "sha256:5e2a98518fcef3566d5632c7341fd2444323a0b2ae78fd77f89d0046a05905b8"},
+    {file = "django_oauth_toolkit-1.6.0-py3-none-any.whl", hash = "sha256:3a488cb87a4dd803487f735d88c21aeec563eac7fb603902031ee7fdb722ae3e"},
 ]
 django-otp = [
     {file = "django-otp-1.1.3.tar.gz", hash = "sha256:f002c71d4ea7f514590be00492980d3c87397b73dc20542e1c4fc00b66f2dda1"},
@@ -3228,8 +4377,8 @@ django-polymorphic = [
     {file = "django_polymorphic-3.1.0-py3-none-any.whl", hash = "sha256:08bc4f4f4a773a19b2deced5a56deddd1ef56ebd15207bf4052e2901c25ef57e"},
 ]
 django-prometheus = [
-    {file = "django-prometheus-2.1.0.tar.gz", hash = "sha256:dd3f8da1399140fbef5c00d1526a23d1ade286b144281c325f8e409a781643f2"},
-    {file = "django_prometheus-2.1.0-py2.py3-none-any.whl", hash = "sha256:c338d6efde1ca336e90c540b5e87afe9287d7bcc82d651a778f302b0be17a933"},
+    {file = "django-prometheus-2.2.0.tar.gz", hash = "sha256:240378a1307c408bd5fc85614a3a57f1ce633d4a222c9e291e2bbf325173b801"},
+    {file = "django_prometheus-2.2.0-py2.py3-none-any.whl", hash = "sha256:e6616770d8820b8834762764bf1b76ec08e1b98e72a6f359d488a2e15fe3537c"},
 ]
 django-redis = [
     {file = "django-redis-5.1.0.tar.gz", hash = "sha256:98fb3d31633a1addea1aeb558a647359908bbcf78c0833f99496c5348fe3c1b4"},
@@ -3425,7 +4574,6 @@ libsass = [
     {file = "libsass-0.21.0-cp36-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:e2b1a7d093f2e76dc694c17c0c285e846d0b0deb0e8b21dc852ba1a3a4e2f1d6"},
     {file = "libsass-0.21.0-cp36-abi3-win32.whl", hash = "sha256:abc29357ee540849faf1383e1746d40d69ed5cb6d4c346df276b258f5aa8977a"},
     {file = "libsass-0.21.0-cp36-abi3-win_amd64.whl", hash = "sha256:659ae41af8708681fa3ec73f47b9735a6725e71c3b66ff570bfce78952f2314e"},
-    {file = "libsass-0.21.0-cp38-abi3-macosx_12_0_arm64.whl", hash = "sha256:c9ec490609752c1d81ff6290da33485aa7cb6d7365ac665b74464c1b7d97f7da"},
     {file = "libsass-0.21.0.tar.gz", hash = "sha256:d5ba529d9ce668be9380563279f3ffe988f27bc5b299c5a28453df2e0b0fbaf2"},
 ]
 license-expression = [
@@ -3438,9 +4586,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2d7d807855b419fc2ed3e631034685db6079889a1f01d5d9dac950f764da3dad"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:add36cb2dbb8b736611303cd3bfcee00afd96471b09cda130da3581cbdc56a6d"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:168cd0a3642de83558a5153c8bd34f175a9a6e7f6dc6384b9655d2697312a646"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:4dc8f9fb58f7364b63fd9f85013b780ef83c11857ae79f2feda41e270468dd9b"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:20dca64a3ef2d6e4d5d615a3fd418ad3bde77a47ec8a23d984a12b5b4c74491a"},
-    {file = "MarkupSafe-2.0.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:cdfba22ea2f0029c9261a4bd07e830a8da012291fbe44dc794e488b6c9bb353a"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-win32.whl", hash = "sha256:99df47edb6bda1249d3e80fdabb1dab8c08ef3975f69aed437cb69d0a5de1e28"},
     {file = "MarkupSafe-2.0.1-cp310-cp310-win_amd64.whl", hash = "sha256:e0f138900af21926a02425cf736db95be9f4af72ba1bb21453432a07f6082134"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:f9081981fe268bd86831e5c75f7de206ef275defcb82bc70740ae6dc507aee51"},
@@ -3452,9 +4597,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:bf5d821ffabf0ef3533c39c518f3357b171a1651c1ff6827325e4489b0e46c3c"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:0d4b31cc67ab36e3392bbf3862cfbadac3db12bdd8b02a2731f509ed5b829724"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:baa1a4e8f868845af802979fcdbf0bb11f94f1cb7ced4c4b8a351bb60d108145"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_aarch64.whl", hash = "sha256:deb993cacb280823246a026e3b2d81c493c53de6acfd5e6bfe31ab3402bb37dd"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:63f3268ba69ace99cab4e3e3b5840b03340efed0948ab8f78d2fd87ee5442a4f"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:8d206346619592c6200148b01a2142798c989edcb9c896f9ac9722a99d4e77e6"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-win32.whl", hash = "sha256:6c4ca60fa24e85fe25b912b01e62cb969d69a23a5d5867682dd3e80b5b02581d"},
     {file = "MarkupSafe-2.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:b2f4bf27480f5e5e8ce285a8c8fd176c0b03e93dcc6646477d4630e83440c6a9"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:0717a7390a68be14b8c793ba258e075c6f4ca819f15edfc2a3a027c823718567"},
@@ -3466,9 +4608,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e9936f0b261d4df76ad22f8fee3ae83b60d7c3e871292cd42f40b81b70afae85"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:2a7d351cbd8cfeb19ca00de495e224dea7e7d919659c2841bbb7f420ad03e2d6"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:60bf42e36abfaf9aff1f50f52644b336d4f0a3fd6d8a60ca0d054ac9f713a864"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:d6c7ebd4e944c85e2c3421e612a7057a2f48d478d79e61800d81468a8d842207"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:f0567c4dc99f264f49fe27da5f735f414c4e7e7dd850cfd8e69f0862d7c74ea9"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:89c687013cb1cd489a0f0ac24febe8c7a666e6e221b783e53ac50ebf68e45d86"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-win32.whl", hash = "sha256:a30e67a65b53ea0a5e62fe23682cfe22712e01f453b95233b25502f7c61cb415"},
     {file = "MarkupSafe-2.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:611d1ad9a4288cf3e3c16014564df047fe08410e628f89805e475368bd304914"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:5bb28c636d87e840583ee3adeb78172efc47c8b26127267f54a9c0ec251d41a9"},
@@ -3481,9 +4620,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6fcf051089389abe060c9cd7caa212c707e58153afa2c649f00346ce6d260f1b"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:5855f8438a7d1d458206a2466bf82b0f104a3724bf96a1c781ab731e4201731a"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3dd007d54ee88b46be476e293f48c85048603f5f516008bee124ddd891398ed6"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:aca6377c0cb8a8253e493c6b451565ac77e98c2951c45f913e0b52facdcff83f"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:04635854b943835a6ea959e948d19dcd311762c5c0c6e1f0e16ee57022669194"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:6300b8454aa6930a24b9618fbb54b5a68135092bc666f7b06901f897fa5c2fee"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-win32.whl", hash = "sha256:023cb26ec21ece8dc3907c0e8320058b2e0cb3c55cf9564da612bc325bed5e64"},
     {file = "MarkupSafe-2.0.1-cp38-cp38-win_amd64.whl", hash = "sha256:984d76483eb32f1bcb536dc27e4ad56bba4baa70be32fa87152832cdd9db0833"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:2ef54abee730b502252bcdf31b10dacb0a416229b72c18b19e24a4509f273d26"},
@@ -3496,9 +4632,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c47adbc92fc1bb2b3274c4b3a43ae0e4573d9fbff4f54cd484555edbf030baf1"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:37205cac2a79194e3750b0af2a5720d95f786a55ce7df90c3af697bfa100eaac"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:1f2ade76b9903f39aa442b4aadd2177decb66525062db244b35d71d0ee8599b6"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:4296f2b1ce8c86a6aea78613c34bb1a672ea0e3de9c6ba08a960efe0b0a09047"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_i686.whl", hash = "sha256:9f02365d4e99430a12647f09b6cc8bab61a6564363f313126f775eb4f6ef798e"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:5b6d930f030f8ed98e3e6c98ffa0652bdb82601e7a016ec2ab5d7ff23baa78d1"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win32.whl", hash = "sha256:10f82115e21dc0dfec9ab5c0223652f7197feb168c940f3ef61563fc2d6beb74"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:693ce3f9e70a6cf7d2fb9e6c9d8b204b6b39897a2c4a1aa65728d5ac97dcc1d8"},
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
@@ -3512,29 +4645,26 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 mypy = [
-    {file = "mypy-0.910-cp35-cp35m-macosx_10_9_x86_64.whl", hash = "sha256:a155d80ea6cee511a3694b108c4494a39f42de11ee4e61e72bc424c490e46457"},
-    {file = "mypy-0.910-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:b94e4b785e304a04ea0828759172a15add27088520dc7e49ceade7834275bedb"},
-    {file = "mypy-0.910-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:088cd9c7904b4ad80bec811053272986611b84221835e079be5bcad029e79dd9"},
-    {file = "mypy-0.910-cp35-cp35m-win_amd64.whl", hash = "sha256:adaeee09bfde366d2c13fe6093a7df5df83c9a2ba98638c7d76b010694db760e"},
-    {file = "mypy-0.910-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:ecd2c3fe726758037234c93df7e98deb257fd15c24c9180dacf1ef829da5f921"},
-    {file = "mypy-0.910-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:d9dd839eb0dc1bbe866a288ba3c1afc33a202015d2ad83b31e875b5905a079b6"},
-    {file = "mypy-0.910-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:3e382b29f8e0ccf19a2df2b29a167591245df90c0b5a2542249873b5c1d78212"},
-    {file = "mypy-0.910-cp36-cp36m-win_amd64.whl", hash = "sha256:53fd2eb27a8ee2892614370896956af2ff61254c275aaee4c230ae771cadd885"},
-    {file = "mypy-0.910-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:b6fb13123aeef4a3abbcfd7e71773ff3ff1526a7d3dc538f3929a49b42be03f0"},
-    {file = "mypy-0.910-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:e4dab234478e3bd3ce83bac4193b2ecd9cf94e720ddd95ce69840273bf44f6de"},
-    {file = "mypy-0.910-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:7df1ead20c81371ccd6091fa3e2878559b5c4d4caadaf1a484cf88d93ca06703"},
-    {file = "mypy-0.910-cp37-cp37m-win_amd64.whl", hash = "sha256:0aadfb2d3935988ec3815952e44058a3100499f5be5b28c34ac9d79f002a4a9a"},
-    {file = "mypy-0.910-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:ec4e0cd079db280b6bdabdc807047ff3e199f334050db5cbb91ba3e959a67504"},
-    {file = "mypy-0.910-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:119bed3832d961f3a880787bf621634ba042cb8dc850a7429f643508eeac97b9"},
-    {file = "mypy-0.910-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:866c41f28cee548475f146aa4d39a51cf3b6a84246969f3759cb3e9c742fc072"},
-    {file = "mypy-0.910-cp38-cp38-win_amd64.whl", hash = "sha256:ceb6e0a6e27fb364fb3853389607cf7eb3a126ad335790fa1e14ed02fba50811"},
-    {file = "mypy-0.910-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:1a85e280d4d217150ce8cb1a6dddffd14e753a4e0c3cf90baabb32cefa41b59e"},
-    {file = "mypy-0.910-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:42c266ced41b65ed40a282c575705325fa7991af370036d3f134518336636f5b"},
-    {file = "mypy-0.910-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:3c4b8ca36877fc75339253721f69603a9c7fdb5d4d5a95a1a1b899d8b86a4de2"},
-    {file = "mypy-0.910-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:c0df2d30ed496a08de5daed2a9ea807d07c21ae0ab23acf541ab88c24b26ab97"},
-    {file = "mypy-0.910-cp39-cp39-win_amd64.whl", hash = "sha256:c6c2602dffb74867498f86e6129fd52a2770c48b7cd3ece77ada4fa38f94eba8"},
-    {file = "mypy-0.910-py3-none-any.whl", hash = "sha256:ef565033fa5a958e62796867b1df10c40263ea9ded87164d67572834e57a174d"},
-    {file = "mypy-0.910.tar.gz", hash = "sha256:704098302473cb31a218f1775a873b376b30b4c18229421e9e9dc8916fd16150"},
+    {file = "mypy-0.920-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:41f3575b20714171c832d8f6c7aaaa0d499c9a2d1b8adaaf837b4c9065c38540"},
+    {file = "mypy-0.920-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:431be889ffc8d9681813a45575c42e341c19467cbfa6dd09bf41467631feb530"},
+    {file = "mypy-0.920-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:f8b2059f73878e92eff7ed11a03515d6572f4338a882dd7547b5f7dd242118e6"},
+    {file = "mypy-0.920-cp310-cp310-win_amd64.whl", hash = "sha256:9cd316e9705555ca6a50670ba5fb0084d756d1d8cb1697c83820b1456b0bc5f3"},
+    {file = "mypy-0.920-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:e091fe58b4475b3504dc7c3022ff7f4af2f9e9ddf7182047111759ed0973bbde"},
+    {file = "mypy-0.920-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:98b4f91a75fed2e4c6339e9047aba95968d3a7c4b91e92ab9dc62c0c583564f4"},
+    {file = "mypy-0.920-cp36-cp36m-win_amd64.whl", hash = "sha256:562a0e335222d5bbf5162b554c3afe3745b495d67c7fe6f8b0d1b5bace0c1eeb"},
+    {file = "mypy-0.920-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:618e677aabd21f30670bffb39a885a967337f5b112c6fb7c79375e6dced605d6"},
+    {file = "mypy-0.920-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:40cb062f1b7ff4cd6e897a89d8ddc48c6ad7f326b5277c93a8c559564cc1551c"},
+    {file = "mypy-0.920-cp37-cp37m-win_amd64.whl", hash = "sha256:69b5a835b12fdbfeed84ef31152d41343d32ccb2b345256d8682324409164330"},
+    {file = "mypy-0.920-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:993c2e52ea9570e6e872296c046c946377b9f5e89eeb7afea2a1524cf6e50b27"},
+    {file = "mypy-0.920-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:df0fec878ccfcb2d1d2306ba31aa757848f681e7bbed443318d9bbd4b0d0fe9a"},
+    {file = "mypy-0.920-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:331a81d2c9bf1be25317260a073b41f4584cd11701a7c14facef0aa5a005e843"},
+    {file = "mypy-0.920-cp38-cp38-win_amd64.whl", hash = "sha256:ffb1e57ec49a30e3c0ebcfdc910ae4aceb7afb649310b7355509df6b15bd75f6"},
+    {file = "mypy-0.920-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:31895b0b3060baf15bf76e789d94722c026f673b34b774bba9e8772295edccff"},
+    {file = "mypy-0.920-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:140174e872d20d4768124a089b9f9fc83abd6a349b7f8cc6276bc344eb598922"},
+    {file = "mypy-0.920-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:13b3c110309b53f5a62aa1b360f598124be33a42563b790a2a9efaacac99f1fc"},
+    {file = "mypy-0.920-cp39-cp39-win_amd64.whl", hash = "sha256:82e6c15675264e923b60a11d6eb8f90665504352e68edfbb4a79aac7a04caddd"},
+    {file = "mypy-0.920-py3-none-any.whl", hash = "sha256:71c77bd885d2ce44900731d4652d0d1c174dc66a0f11200e0c680bdedf1a6b37"},
+    {file = "mypy-0.920.tar.gz", hash = "sha256:a55438627f5f546192f13255a994d6d1cf2659df48adcf966132b4379fd9c86b"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
@@ -3698,34 +4828,12 @@ py = [
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pyasn1 = [
-    {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
-    {file = "pyasn1-0.4.8-py2.5.egg", hash = "sha256:0458773cfe65b153891ac249bcf1b5f8f320b7c2ce462151f8fa74de8934becf"},
-    {file = "pyasn1-0.4.8-py2.6.egg", hash = "sha256:5c9414dcfede6e441f7e8f81b43b34e834731003427e5b09e4e00e3172a10f00"},
-    {file = "pyasn1-0.4.8-py2.7.egg", hash = "sha256:6e7545f1a61025a4e58bb336952c5061697da694db1cae97b116e9c46abcf7c8"},
     {file = "pyasn1-0.4.8-py2.py3-none-any.whl", hash = "sha256:39c7e2ec30515947ff4e87fb6f456dfc6e84857d34be479c9d4a4ba4bf46aa5d"},
-    {file = "pyasn1-0.4.8-py3.1.egg", hash = "sha256:78fa6da68ed2727915c4767bb386ab32cdba863caa7dbe473eaae45f9959da86"},
-    {file = "pyasn1-0.4.8-py3.2.egg", hash = "sha256:08c3c53b75eaa48d71cf8c710312316392ed40899cb34710d092e96745a358b7"},
-    {file = "pyasn1-0.4.8-py3.3.egg", hash = "sha256:03840c999ba71680a131cfaee6fab142e1ed9bbd9c693e285cc6aca0d555e576"},
-    {file = "pyasn1-0.4.8-py3.4.egg", hash = "sha256:7ab8a544af125fb704feadb008c99a88805126fb525280b2270bb25cc1d78a12"},
-    {file = "pyasn1-0.4.8-py3.5.egg", hash = "sha256:e89bf84b5437b532b0803ba5c9a5e054d21fec423a89952a74f87fa2c9b7bce2"},
-    {file = "pyasn1-0.4.8-py3.6.egg", hash = "sha256:014c0e9976956a08139dc0712ae195324a75e142284d5f87f1a87ee1b068a359"},
-    {file = "pyasn1-0.4.8-py3.7.egg", hash = "sha256:99fcc3c8d804d1bc6d9a099921e39d827026409a58f2a720dcdb89374ea0c776"},
     {file = "pyasn1-0.4.8.tar.gz", hash = "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"},
 ]
 pyasn1-modules = [
     {file = "pyasn1-modules-0.2.8.tar.gz", hash = "sha256:905f84c712230b2c592c19470d3ca8d552de726050d1d1716282a1f6146be65e"},
-    {file = "pyasn1_modules-0.2.8-py2.4.egg", hash = "sha256:0fe1b68d1e486a1ed5473f1302bd991c1611d319bba158e98b106ff86e1d7199"},
-    {file = "pyasn1_modules-0.2.8-py2.5.egg", hash = "sha256:fe0644d9ab041506b62782e92b06b8c68cca799e1a9636ec398675459e031405"},
-    {file = "pyasn1_modules-0.2.8-py2.6.egg", hash = "sha256:a99324196732f53093a84c4369c996713eb8c89d360a496b599fb1a9c47fc3eb"},
-    {file = "pyasn1_modules-0.2.8-py2.7.egg", hash = "sha256:0845a5582f6a02bb3e1bde9ecfc4bfcae6ec3210dd270522fee602365430c3f8"},
     {file = "pyasn1_modules-0.2.8-py2.py3-none-any.whl", hash = "sha256:a50b808ffeb97cb3601dd25981f6b016cbb3d31fbf57a8b8a87428e6158d0c74"},
-    {file = "pyasn1_modules-0.2.8-py3.1.egg", hash = "sha256:f39edd8c4ecaa4556e989147ebf219227e2cd2e8a43c7e7fcb1f1c18c5fd6a3d"},
-    {file = "pyasn1_modules-0.2.8-py3.2.egg", hash = "sha256:b80486a6c77252ea3a3e9b1e360bc9cf28eaac41263d173c032581ad2f20fe45"},
-    {file = "pyasn1_modules-0.2.8-py3.3.egg", hash = "sha256:65cebbaffc913f4fe9e4808735c95ea22d7a7775646ab690518c056784bc21b4"},
-    {file = "pyasn1_modules-0.2.8-py3.4.egg", hash = "sha256:15b7c67fabc7fc240d87fb9aabf999cf82311a6d6fb2c70d00d3d0604878c811"},
-    {file = "pyasn1_modules-0.2.8-py3.5.egg", hash = "sha256:426edb7a5e8879f1ec54a1864f16b882c2837bfd06eee62f2c982315ee2473ed"},
-    {file = "pyasn1_modules-0.2.8-py3.6.egg", hash = "sha256:cbac4bc38d117f2a49aeedec4407d23e8866ea4ac27ff2cf7fb3e5b570df19e0"},
-    {file = "pyasn1_modules-0.2.8-py3.7.egg", hash = "sha256:c29a5e5cc7a3f05926aff34e097e84f8589cd790ce0ed41b67aed6857b26aafd"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.8.0-py2.py3-none-any.whl", hash = "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20"},
@@ -3882,7 +4990,6 @@ requests = [
 requests-oauthlib = [
     {file = "requests-oauthlib-1.3.0.tar.gz", hash = "sha256:b4261601a71fd721a8bd6d7aa1cc1d6a8a93b4a9f5e96626f8e4d91e8beeaa6a"},
     {file = "requests_oauthlib-1.3.0-py2.py3-none-any.whl", hash = "sha256:7f71572defaecd16372f9006f33c2ec8c077c3cfa6f5911a9a90202beb513f3d"},
-    {file = "requests_oauthlib-1.3.0-py3.7.egg", hash = "sha256:fa6c47b933f01060936d87ae9327fead68768b69c6c9ea2109c48be30f2d4dbc"},
 ]
 restructuredtext-lint = [
     {file = "restructuredtext_lint-1.3.2.tar.gz", hash = "sha256:d3b10a1fe2ecac537e51ae6d151b223b78de9fafdd50e5eb6b08c243df173c80"},
@@ -3892,10 +4999,6 @@ restructuredtext-lint = [
     {file = "ruamel.yaml-0.17.17.tar.gz", hash = "sha256:9751de4cbb57d4bfbf8fc394e125ed4a2f170fbff3dc3d78abf50be85924f8be"},
 ]
 "ruamel.yaml.clib" = [
-    {file = "ruamel.yaml.clib-0.2.6-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:6e7be2c5bcb297f5b82fee9c665eb2eb7001d1050deaba8471842979293a80b0"},
-    {file = "ruamel.yaml.clib-0.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:221eca6f35076c6ae472a531afa1c223b9c29377e62936f61bc8e6e8bdc5f9e7"},
-    {file = "ruamel.yaml.clib-0.2.6-cp310-cp310-win32.whl", hash = "sha256:1070ba9dd7f9370d0513d649420c3b362ac2d687fe78c6e888f5b12bf8bc7bee"},
-    {file = "ruamel.yaml.clib-0.2.6-cp310-cp310-win_amd64.whl", hash = "sha256:77df077d32921ad46f34816a9a16e6356d8100374579bc35e15bab5d4e9377de"},
     {file = "ruamel.yaml.clib-0.2.6-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:cfdb9389d888c5b74af297e51ce357b800dd844898af9d4a547ffc143fa56751"},
     {file = "ruamel.yaml.clib-0.2.6-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:7b2927e92feb51d830f531de4ccb11b320255ee95e791022555971c466af4527"},
     {file = "ruamel.yaml.clib-0.2.6-cp35-cp35m-win32.whl", hash = "sha256:ada3f400d9923a190ea8b59c8f60680c4ef8a4b0dfae134d2f2ff68429adfab5"},
@@ -4052,8 +5155,8 @@ trio-websocket = [
     {file = "trio_websocket-0.9.2-py3-none-any.whl", hash = "sha256:5b558f6e83cc20a37c3b61202476c5295d1addf57bd65543364e0337e37ed2bc"},
 ]
 twilio = [
-    {file = "twilio-7.3.2-py2.py3-none-any.whl", hash = "sha256:6cc6ed114b07a7ce853503a5a27281f56237b411ea415012955cff3a57045f1b"},
-    {file = "twilio-7.3.2.tar.gz", hash = "sha256:3170da33c7f4293bbebcd032b183866e044fcf8418e5c5e15bdd5ec7a0a958b6"},
+    {file = "twilio-7.4.0-py2.py3-none-any.whl", hash = "sha256:8ec1f77350bbde5415d288b6ca930c6bc48760d141254a072fa10586b3a00bd2"},
+    {file = "twilio-7.4.0.tar.gz", hash = "sha256:5febd52ff734858ab5a10c85886d0c5e8779bc02660541a95f4eb206daca8c58"},
 ]
 types-pytz = [
     {file = "types-pytz-2021.3.3.tar.gz", hash = "sha256:f6d21d6687935a1615db464b1e1df800d19502c36bc0486f43be7dfd2c404947"},
