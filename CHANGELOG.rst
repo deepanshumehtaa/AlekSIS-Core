@@ -18,6 +18,12 @@ Fixed
 ~~~~~
 
 * Correctly update theme colours on change again
+* Use correct favicon as default AlekSIS favicon
+
+Removed
+~~~~~~~
+
+* Remove old generated AlekSIS icons
 * Imprint is now called "Imprint" and not "Impress".
 * Logo files weren't uploaded to public namespace.
 
