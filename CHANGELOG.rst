@@ -18,7 +18,7 @@ Fixed
 ~~~~~
 
 * Correctly update theme colours on change again
-* Logo files weren't upload to public namespace.
+* Logo files weren't uploaded to public namespace.
 
 `2.3.1`_ – 2021-12-17
 ---------------------
