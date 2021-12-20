@@ -18,7 +18,7 @@ Fixed
 ~~~~~
 
 * Correctly update theme colours on change again
-* Show all years between 1900 and 2100 in date pickers
+* Show all years in a 200 year range around the current year in date pickers
 
 `2.3.1`_ – 2021-12-17
 ---------------------
