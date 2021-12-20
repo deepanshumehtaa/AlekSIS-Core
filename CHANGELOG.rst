@@ -14,6 +14,11 @@ Added
 
 * Allow configuration of database options
 
+Fixed
+~~~~~
+
+* Correctly update theme colours on change again
+
 `2.3.1`_ – 2021-12-17
 ---------------------
 
