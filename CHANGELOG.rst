@@ -12,6 +12,34 @@ Unreleased
 Added
 ~~~~~
 
+* Allow configuration of database options
+
+Fixed
+~~~~~
+
+* Correctly update theme colours on change again
+* Use correct favicon as default AlekSIS favicon
+
+Removed
+~~~~~~~
+
+* Remove old generated AlekSIS icons
+
+`2.3.1`_ – 2021-12-17
+---------------------
+
+Fixed
+~~~~~
+
+* Small files could fail to upload to S3 storage due to MemoryFileUploadHandler
+* Corrected typos in previous changelog
+
+`2.3`_ – 2021-12-15
+-------------------
+
+Added
+~~~~~
+
 * [OAuth] Allow apps to fill in their own claim data matching their scopes
 
 Fixed
@@ -19,21 +47,24 @@ Fixed
 
 * View for assigning permissions didn't work with some global permissions.
 * PDFs generated in background didn't contain logo or site title.
+* Admins were redirected to their user preferences
+  while they wanted to edit the preferences of another user.
+* Some CharFields were using NULL values in database when field is empty
+* Optional dependecy `sentry-sdk` was not optional
 
 Changed
 ~~~~~~~
 
 * Docker base image ships PostgreSQL 14 client binaries for maximum compatibility
-* Use correct favicon as default AlekSIS favicon
+* Docker base image contains Sentry client by default (disabled in config by default)
 
 Removed
 ~~~~~~~
 
 * Remove impersonation page. Use the impersonation button on the person
   detail view instead.
-* Remove old generated AlekSIS icons
 
-`2.2.1_ – 2021-12-02
+`2.2.1`_ – 2021-12-02
 --------------------
 
 Fixed
@@ -528,3 +559,5 @@ Fixed
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
 .. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
+.. _2.3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
+.. _2.3.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3.1

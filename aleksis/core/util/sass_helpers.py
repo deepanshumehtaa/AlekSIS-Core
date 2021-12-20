@@ -23,7 +23,7 @@ def get_preference(section: str, name: str) -> str:
 def clean_scss(*args, **kwargs) -> None:
     """Unlink compiled CSS (i.e. cache invalidation)."""
     sass_storage = SassFileStorage()
-    __, files = sass_storage.listdir("")
+    __, files = sass_storage.listdir("public")
 
     for source_map in filter(lambda x: x.endswith(".css.map"), files):
-        sass_storage.delete(source_map)
+        sass_storage.delete(f"public/{source_map}")

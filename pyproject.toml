@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AlekSIS-Core"
-version = "2.3.dev0"
+version = "2.4.dev0"
 packages = [
     { include = "aleksis" }
 ]
@@ -57,7 +57,7 @@ django-sass-processor = "1.0"
 libsass = "^0.21.0"
 colour = "^0.1.5"
 dynaconf = {version = "^3.1", extras = ["yaml", "toml", "ini"]}
-django-auth-ldap = { version = "^3.0", optional = true }
+django-auth-ldap = { version = "^4.0", optional = true }
 django-maintenance-mode = "^0.16.0"
 django-ipware = "^4.0"
 django-impersonate = "^1.4"
@@ -118,7 +118,7 @@ sentry-sdk = {version = "^1.4.3", optional = true}
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
 s3 = ["boto3", "django-storages"]
-sentry = ["sentry"]
+sentry = ["sentry-sdk"]
 
 [tool.poetry.dev-dependencies]
 aleksis-builddeps = "^5"
