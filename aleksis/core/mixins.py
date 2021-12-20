@@ -1,5 +1,6 @@
 # flake8: noqa: DJ12
 
+import os
 from datetime import datetime
 from typing import Any, Callable, List, Optional, Union
 
@@ -21,6 +22,8 @@ from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import DeleteView, ModelFormMixin
 
 import reversion
+from dynamic_preferences.settings import preferences_settings
+from dynamic_preferences.types import FilePreference
 from guardian.admin import GuardedModelAdmin
 from guardian.core import ObjectPermissionChecker
 from jsonstore.fields import IntegerField, JSONFieldMixin
@@ -529,3 +532,14 @@ class SchoolTermRelatedExtensibleForm(ExtensibleForm):
             kwargs["initial"] = {"school_term": SchoolTerm.current}
 
         super().__init__(*args, **kwargs)
+
+
+class PublicFilePreferenceMixin(FilePreference):
+    """Uploads a file to the public namespace."""
+
+    upload_path = "public"
+
+    def get_upload_path(self):
+        return os.path.join(
+            self.upload_path, preferences_settings.FILE_PREFERENCE_UPLOAD_DIR, self.identifier()
+        )
