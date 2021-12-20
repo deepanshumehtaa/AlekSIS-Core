@@ -17,6 +17,7 @@ Added
 Fixed
 ~~~~~
 
+* Correctly update theme colours on change again
 * Imprint is now called "Imprint" and not "Impress".
 
 `2.3.1`_ – 2021-12-17
