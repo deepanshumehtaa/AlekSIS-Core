@@ -19,6 +19,7 @@ Fixed
 
 * Correctly update theme colours on change again
 * Use correct favicon as default AlekSIS favicon
+* Show all years in a 200 year range around the current year in date pickers
 
 Removed
 ~~~~~~~
