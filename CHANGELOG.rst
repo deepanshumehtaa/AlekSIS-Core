@@ -9,6 +9,34 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Allow configuration of database options
+
+Fixed
+~~~~~
+
+* Correctly update theme colours on change again
+* Use correct favicon as default AlekSIS favicon
+* Show all years in a 200 year range around the current year in date pickers
+
+Removed
+~~~~~~~
+
+* Remove old generated AlekSIS icons
+* Imprint is now called "Imprint" and not "Impress".
+* Logo files weren't uploaded to public namespace.
+
+`2.3.1`_ – 2021-12-17
+---------------------
+
+Fixed
+~~~~~
+
+* Small files could fail to upload to S3 storage due to MemoryFileUploadHandler
+* Corrected typos in previous changelog
+
 `2.3`_ – 2021-12-15
 -------------------
 
@@ -534,4 +562,5 @@ Fixed
 .. _2.1.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.1.1
 .. _2.2: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2
 .. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.2.1
-.. _2.2.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
+.. _2.3: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3
+.. _2.3.1: https://edugit.org/AlekSIS/Official/AlekSIS/-/tags/2.3.1

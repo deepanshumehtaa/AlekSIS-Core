@@ -21,7 +21,7 @@ except ImportError:
 def send_templated_sms(
     template_name: str, from_number: str, recipient_list: Sequence[str], context: dict
 ) -> None:
-    """Render a plan-text template and send via SMS to all recipients."""
+    """Render a plain-text template and send via SMS to all recipients."""
     template = get_template(template_name)
     text = template.render(context)
 
