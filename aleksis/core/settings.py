@@ -218,6 +218,7 @@ DATABASES = {
         "HOST": _settings.get("database.host", "127.0.0.1"),
         "PORT": _settings.get("database.port", "5432"),
         "CONN_MAX_AGE": _settings.get("database.conn_max_age", None),
+        "OPTIONS": _settings.get("database.options", {}),
     }
 }
 
@@ -325,7 +326,7 @@ ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "usern
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
-# Require email verification after sigm up
+# Require email verification after sign up
 ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
@@ -394,7 +395,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
-    # Keep local password for users to be required to proveide their old password on change
+    # Keep local password for users to be required to provide their old password on change
     AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
@@ -468,7 +469,7 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-# Add ModelBckend last so all other backends get a chance
+# Add ModelBackend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
@@ -663,7 +664,7 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
 
 DEFAULT_FAVICON_PATHS = {
     "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
-    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-favicon.png"),
 }
 PWA_ICONS_CONFIG = {
     "android": [192, 512],
@@ -862,10 +863,16 @@ PROMETHEUS_METRICS_EXPORT_ADDRESS = _settings.get("prometheus.metrucs.address", 
 
 SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
 if _settings.get("storage.type", "").lower() == "s3":
     INSTALLED_APPS.append("storages")
 
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    FILE_UPLOAD_HANDLERS.remove("django.core.files.uploadhandler.MemoryFileUploadHandler")
 
     if _settings.get("storage.s3.static.enabled", False):
         STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
