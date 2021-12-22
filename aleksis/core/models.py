@@ -1072,11 +1072,6 @@ class PersonInvitation(AbstractBaseInvitation, PureDjangoModel):
         Person, on_delete=models.CASCADE, blank=True, related_name="invitation", null=True
     )
 
-    @classmethod
-    def create(cls, email, inviter=None, **kwargs):
-        instance = cls._default_manager.create(email=email, inviter=inviter, **kwargs)
-        return instance
-
     def __str__(self) -> str:
         return f"{self.email} ({self.inviter})"
 

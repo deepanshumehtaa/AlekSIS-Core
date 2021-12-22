@@ -1407,9 +1407,7 @@ class AccountRegisterView(SignupView):
     success_url = "index"
 
     def dispatch(self, request, *args, **kwargs):
-        if not test_rule("core.can_register") and not request.session.get(
-            "account_verified_email"
-        ):
+        if not test_rule("core.can_register") and not request.session.get("account_verified_email"):
             raise PermissionDenied()
         return super(AccountRegisterView, self).dispatch(request, *args, **kwargs)
 

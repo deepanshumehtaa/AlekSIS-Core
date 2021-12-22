@@ -352,11 +352,17 @@ ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", Tru
 
 # Configuration for django-invitations
 
+# Use custom account adapter
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
+# Expire invitations are configured amout of days
 INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
+# Use email prefix configured for django-allauth
 INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
+# Use custom invitation model
 INVITATIONS_INVITATION_MODEL = "core.PersonInvitation"
+# Display error message if invitation code is invalid
 INVITATIONS_GONE_ON_ACCEPT_ERROR = False
+# Mark invitation as accepted after signup
 INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
 
 # Configuration for OAuth2 provider
