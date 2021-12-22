@@ -702,11 +702,14 @@ python-versions = "*"
 
 [[package]]
 name = "django-colorfield"
-version = "0.5.0"
+version = "0.6.0"
 description = "simple color field for your models with a nice color-picker in the admin-interface."
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.dependencies]
+Pillow = ">=5.0"
 
 [[package]]
 name = "django-dbbackup"
@@ -2803,7 +2806,7 @@ sentry = ["sentry-sdk"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "1351f72fdf3edd1dbb7f8da62835af9524da026f8daeab34ea2abc79c56b06de"
+content-hash = "c0a2ce40a44692e790c0c5357732dca4186195457275809484a02ebcbb887ad3"
 
 [metadata.files]
 alabaster = [
@@ -3131,8 +3134,8 @@ django-cleanup = [
     {file = "django_cleanup-5.2.0-py2.py3-none-any.whl", hash = "sha256:193cf69de54b9fc0a0f4547edbb3a63bbe01728cb029f9f4b7912098cc1bced7"},
 ]
 django-colorfield = [
-    {file = "django-colorfield-0.5.0.tar.gz", hash = "sha256:670ef72ded093360c9781fedd33d9ead267b34481139d4ab240dfacea5cf0abf"},
-    {file = "django_colorfield-0.5.0-py3-none-any.whl", hash = "sha256:aba49684ba1fce80af15237b49ca4a504e49e525c2897db2cce5705b2fa51f3b"},
+    {file = "django-colorfield-0.6.0.tar.gz", hash = "sha256:aee0ad2d1f7cac2da205a5a0b9d2e5f2303f378d79ad846448d4c18fd262adc9"},
+    {file = "django_colorfield-0.6.0-py3-none-any.whl", hash = "sha256:af407a87d4a1958ecd334fef230ce3288d2c2b47d191270b003b911dbe276194"},
 ]
 django-dbbackup = [
     {file = "django-dbbackup-3.3.0.tar.gz", hash = "sha256:bb109735cae98b64ad084e5b461b7aca2d7b39992f10c9ed9435e3ebb6fb76c8"},
