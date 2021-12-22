@@ -53,6 +53,7 @@ from health_check.views import MainView
 from invitations.views import SendInvite, accept_invitation
 from reversion import set_user
 from reversion.views import RevisionMixin
+from rules import test_rule
 from rules.contrib.views import PermissionRequiredMixin, permission_required
 from two_factor.views.core import LoginView as AllAuthLoginView
 
@@ -1406,7 +1407,7 @@ class AccountRegisterView(SignupView):
     success_url = "index"
 
     def dispatch(self, request, *args, **kwargs):
-        if not get_site_preferences()["auth__signup_open"] and not request.session.get(
+        if not test_rule("core.can_register") and not request.session.get(
             "account_verified_email"
         ):
             raise PermissionDenied()
