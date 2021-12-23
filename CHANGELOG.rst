@@ -41,7 +41,6 @@ Fixed
 
 * Small files could fail to upload to S3 storage due to MemoryFileUploadHandler
 * Corrected typos in previous changelog
->>>>>>> master
 
 `2.3`_ – 2021-12-15
 -------------------
