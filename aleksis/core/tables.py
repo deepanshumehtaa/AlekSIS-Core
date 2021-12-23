@@ -8,7 +8,7 @@ class SchoolTermTable(tables.Table):
     """Table to list persons."""
 
     class Meta:
-        attrs = {"class": "responsive-table highlight"}
+        attrs = {"class": "highlight"}
 
     name = tables.LinkColumn("edit_school_term", args=[A("id")])
     date_start = tables.Column()
@@ -26,7 +26,7 @@ class PersonsTable(tables.Table):
     """Table to list persons."""
 
     class Meta:
-        attrs = {"class": "responsive-table highlight"}
+        attrs = {"class": "highlight"}
 
     first_name = tables.LinkColumn("person_by_id", args=[A("id")])
     last_name = tables.LinkColumn("person_by_id", args=[A("id")])
@@ -36,7 +36,7 @@ class GroupsTable(tables.Table):
     """Table to list groups."""
 
     class Meta:
-        attrs = {"class": "responsive-table highlight"}
+        attrs = {"class": "highlight"}
 
     name = tables.LinkColumn("group_by_id", args=[A("id")])
     short_name = tables.LinkColumn("group_by_id", args=[A("id")])
@@ -47,7 +47,7 @@ class AdditionalFieldsTable(tables.Table):
     """Table to list group types."""
 
     class Meta:
-        attrs = {"class": "responsive-table hightlight"}
+        attrs = {"class": "hightlight"}
 
     title = tables.LinkColumn("edit_additional_field_by_id", args=[A("id")])
     delete = tables.LinkColumn(
@@ -63,7 +63,7 @@ class GroupTypesTable(tables.Table):
     """Table to list group types."""
 
     class Meta:
-        attrs = {"class": "responsive-table highlight"}
+        attrs = {"class": "highlight"}
 
     name = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
     description = tables.LinkColumn("edit_group_type_by_id", args=[A("id")])
@@ -76,7 +76,7 @@ class DashboardWidgetTable(tables.Table):
     """Table to list dashboard widgets."""
 
     class Meta:
-        attrs = {"class": "responsive-table highlight"}
+        attrs = {"class": "highlight"}
 
     widget_name = tables.Column(accessor="pk")
     title = tables.LinkColumn("edit_dashboard_widget", args=[A("id")])
