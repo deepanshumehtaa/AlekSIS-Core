@@ -2,6 +2,8 @@ include:
     - project: "AlekSIS/official/AlekSIS"
       file: /ci/general.yml
     - project: "AlekSIS/official/AlekSIS"
+      file: /ci/prepare/lock.yml
+    - project: "AlekSIS/official/AlekSIS"
       file: /ci/test/test.yml
     - project: "AlekSIS/official/AlekSIS"
       file: /ci/test/lint.yml

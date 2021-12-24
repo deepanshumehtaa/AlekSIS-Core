@@ -13,6 +13,8 @@ Added
 ~~~~~
 
 * Allow configuration of database options
+* User invitations with invite codes and targeted invites for existing
+  persons
 
 Fixed
 ~~~~~
@@ -27,6 +29,8 @@ Changed
 ~~~~~~~
 
 * Modified the appearance of tables for mobile users to be more user friendly
+* [Dev] Remove lock file; locking dependencies is the distribution's
+  responsibility
 
 Removed
 ~~~~~~~

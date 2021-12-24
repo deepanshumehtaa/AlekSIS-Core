@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
+    "dj_cleavejs.apps.DjCleaveJSConfig",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -121,6 +122,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "invitations",
     "health_check",
     "health_check.db",
     "health_check.cache",
@@ -326,8 +328,11 @@ ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "usern
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
+# Cooldown for verification mails
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = _settings.get("auth.registration.verification_cooldown", 180)
+
 # Require email verification after sign up
-ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
+ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "optional")
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
 # Email subject prefix for verification mails
@@ -344,6 +349,21 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 
 # Enforce uniqueness of email addresses
 ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
+
+# Configuration for django-invitations
+
+# Use custom account adapter
+ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
+# Expire invitations are configured amout of days
+INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
+# Use email prefix configured for django-allauth
+INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
+# Use custom invitation model
+INVITATIONS_INVITATION_MODEL = "core.PersonInvitation"
+# Display error message if invitation code is invalid
+INVITATIONS_GONE_ON_ACCEPT_ERROR = False
+# Mark invitation as accepted after signup
+INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
 
 # Configuration for OAuth2 provider
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
@@ -504,6 +524,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "cleave.js",
     "@fontsource/roboto",
     "jquery",
     "@materializecss/materialize",
@@ -545,9 +566,12 @@ ANY_JS = {
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
     "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
+    "cleavejs": {"js_url": "cleave.js/dist/cleave.min.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
+
+CLEAVE_JS = ANY_JS["cleavejs"]["js_url"]
 
 SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False

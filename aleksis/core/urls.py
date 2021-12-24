@@ -23,6 +23,7 @@ urlpatterns = [
     path("serviceworker.js", views.ServiceWorkerView.as_view(), name="service_worker"),
     path("offline/", views.OfflineView.as_view(), name="offline"),
     path("about/", views.about, name="about_aleksis"),
+    path("accounts/signup/", views.AccountRegisterView.as_view(), name="account_signup"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path(
         "accounts/password/change/",
@@ -30,6 +31,16 @@ urlpatterns = [
         name="account_change_password",
     ),
     path("accounts/", include("allauth.urls")),
+    path("invitations/send-invite", views.InvitePerson.as_view(), name="invite_person"),
+    path(
+        "invitations/code/enter", views.EnterInvitationCode.as_view(), name="enter_invitation_code"
+    ),
+    path(
+        "invitations/code/generate",
+        views.GenerateInvitationCode.as_view(),
+        name="generate_invitation_code",
+    ),
+    path("invitations/", include("invitations.urls")),
     path(
         "accounts/social/connections/<int:pk>/delete",
         views.SocialAccountDeleteView.as_view(),
@@ -39,6 +50,7 @@ urlpatterns = [
     path("admin/uwsgi/", include("django_uwsgi.urls")),
     path("data_management/", views.data_management, name="data_management"),
     path("status/", views.SystemStatus.as_view(), name="system_status"),
+    path("account/login/", views.LoginView.as_view(), name="login"),
     path("", include(tf_urls)),
     path("celery_progress/<str:task_id>/", views.CeleryProgressView.as_view(), name="task_status"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
@@ -51,6 +63,7 @@ urlpatterns = [
     path("person/<int:id_>/", views.person, name="person_by_id"),
     path("person/<int:pk>/edit/", views.EditPersonView.as_view(), name="edit_person_by_id"),
     path("person/<int:id_>/delete/", views.delete_person, name="delete_person_by_id"),
+    path("person/<int:id_>/invite/", views.InvitePersonByID.as_view(), name="invite_person_by_id"),
     path("groups", views.groups, name="groups"),
     path("groups/additional_fields", views.additional_fields, name="additional_fields"),
     path("groups/child_groups/", views.groups_child_groups, name="groups_child_groups"),
