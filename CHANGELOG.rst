@@ -24,6 +24,8 @@ Fixed
 * Show all years in a 200 year range around the current year in date pickers
 * Imprint is now called "Imprint" and not "Impress".
 * Logo files weren't uploaded to public namespace.
+* Limit LDAP network timeouts to not hang indefinitely on login if LDAP
+  server is unreachable
 
 Changed
 ~~~~~~~
