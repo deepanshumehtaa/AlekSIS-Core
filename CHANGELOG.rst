@@ -13,6 +13,8 @@ Added
 ~~~~~
 
 * Allow configuration of database options
+* User invitations with invite codes and targeted invites for existing
+  persons
 
 Fixed
 ~~~~~
