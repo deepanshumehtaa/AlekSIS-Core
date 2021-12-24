@@ -1,3 +1,4 @@
+from textwrap import wrap
 from typing import Any, Dict, Optional, Type
 from urllib.parse import urlencode
 
@@ -22,19 +23,20 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.defaults import ERROR_500_TEMPLATE_NAME
-from django.views.generic import FormView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, FormView
 from django.views.generic.list import ListView
 
 import reversion
-from allauth.account.views import PasswordChangeView
+from allauth.account.utils import _has_verified_for_login, send_email_confirmation
+from allauth.account.views import PasswordChangeView, SignupView
 from allauth.socialaccount.adapter import get_adapter
 from allauth.socialaccount.models import SocialAccount
 from celery_progress.views import get_progress
@@ -48,9 +50,12 @@ from haystack.inputs import AutoQuery
 from haystack.query import SearchQuerySet
 from haystack.utils.loading import UnifiedIndex
 from health_check.views import MainView
+from invitations.views import SendInvite, accept_invitation
 from reversion import set_user
 from reversion.views import RevisionMixin
+from rules import test_rule
 from rules.contrib.views import PermissionRequiredMixin, permission_required
+from two_factor.views.core import LoginView as AllAuthLoginView
 
 from aleksis.core.data_checks import DataCheckRegistry, check_data
 
@@ -64,6 +69,7 @@ from .filters import (
     UserObjectPermissionFilter,
 )
 from .forms import (
+    AccountRegisterForm,
     AnnouncementForm,
     AssignPermissionForm,
     ChildGroupsForm,
@@ -72,6 +78,7 @@ from .forms import (
     EditGroupForm,
     EditGroupTypeForm,
     GroupPreferenceForm,
+    InvitationCodeForm,
     OAuthApplicationForm,
     PersonForm,
     PersonPreferenceForm,
@@ -93,6 +100,7 @@ from .models import (
     OAuthApplication,
     PDFFile,
     Person,
+    PersonInvitation,
     SchoolTerm,
     TaskUserAssignment,
 )
@@ -108,6 +116,7 @@ from .tables import (
     GroupObjectPermissionTable,
     GroupsTable,
     GroupTypesTable,
+    InvitationsTable,
     PersonsTable,
     SchoolTermTable,
     UserGlobalPermissionTable,
@@ -117,6 +126,7 @@ from .util import messages
 from .util.apps import AppConfig
 from .util.celery_progress import render_progress_page
 from .util.core_helpers import (
+    generate_random_code,
     get_allowed_object_ids,
     get_pwa_icons,
     get_site_preferences,
@@ -1054,6 +1064,72 @@ class EditDashboardView(PermissionRequiredMixin, View):
         return render(request, "core/edit_dashboard.html", context=context)
 
 
+class InvitePerson(PermissionRequiredMixin, SingleTableView, SendInvite):
+    """View to invite a person to register an account."""
+
+    template_name = "invitations/forms/_invite.html"
+    permission_required = "core.can_invite"
+    model = PersonInvitation
+    table_class = InvitationsTable
+    context = {}
+
+    # Get queryset of invitations
+    def get_context_data(self, **kwargs):
+        queryset = kwargs.pop("object_list", None)
+        if queryset is None:
+            self.object_list = self.model.objects.all()
+        return super().get_context_data(**kwargs)
+
+
+class EnterInvitationCode(FormView):
+    """View to enter an invitation code."""
+
+    template_name = "invitations/enter.html"
+    form_class = InvitationCodeForm
+
+    def form_valid(self, form):
+        code = "".join(form.cleaned_data["code"].lower().split("-"))
+        # Check if valid invitations exists
+        if (
+            PersonInvitation.objects.filter(key=code).exists()
+            and not PersonInvitation.objects.get(key=code).accepted
+            and not PersonInvitation.objects.get(key=code).key_expired()
+        ):
+            invitation = PersonInvitation.objects.get(key=code)
+            # Mark invitation as accepted and redirect to signup
+            accept_invitation(
+                invitation=invitation, request=self.request, signal_sender=self.request.user
+            )
+            return redirect("account_signup")
+        return redirect("invitations:accept-invite", code)
+
+
+class GenerateInvitationCode(View):
+    """View to generate an invitation code."""
+
+    def get(self, request):
+        # Build code
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        code = generate_random_code(length, packet_size)
+
+        # Create invitation object
+        invitation = PersonInvitation.objects.create(
+            email="", inviter=request.user, key=code, sent=timezone.now()
+        )
+
+        # Make code more readable
+        code = "-".join(wrap(invitation.key, 5))
+
+        # Generate success message and print code
+        messages.success(
+            request,
+            _(f"The invitation was successfully created. The invitation code is {code}"),
+        )
+
+        return redirect("invite_person")
+
+
 class PermissionsListBaseView(PermissionRequiredMixin, SingleTableMixin, FilterView):
     """Base view for list of all permissions."""
 
@@ -1318,3 +1394,70 @@ def server_error(
     context = {"request": request}
 
     return HttpResponseServerError(template.render(context))
+
+
+class AccountRegisterView(SignupView):
+    """Custom view to register a user account.
+
+    Rewrites dispatch function from allauth to check if signup is open or if the user
+    has a verified email address from an invitation; otherwise raises permission denied.
+    """
+
+    form_class = AccountRegisterForm
+    success_url = "index"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not test_rule("core.can_register") and not request.session.get("account_verified_email"):
+            raise PermissionDenied()
+        return super(AccountRegisterView, self).dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(AccountRegisterView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
+
+class InvitePersonByID(View):
+    """Custom view to invite person by their ID."""
+
+    success_url = reverse_lazy("persons")
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = reverze_lazy("person_by_id", self.object.pk)
+        person = self.object
+
+        if not PersonInvitation.objects.filter(email=person.email).exists():
+            length = get_site_preferences()["auth__invite_code_length"]
+            packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+            key = generate_random_code(length, packet_size)
+            invite = PersonInvitation.objects.create(person=person, key=key)
+            if person.email:
+                invite.email = person.email
+            invite.inviter = self.request.user
+            invite.save()
+
+            invite.send_invitation(self.request)
+            messages.success(self.request, _("Person was invited successfully."))
+        else:
+            messages.success(self.request, _("Person was already invited."))
+
+        return HttpResponseRedirect(success_url)
+
+
+class LoginView(AllAuthLoginView):
+    """Custom login view covering e-mail verification if mandatory.
+
+    Overrides view from allauth to check if email verification from django-invitations is
+    mandatory. If it i, checks if the user has a verified email address, if not,
+    it re-sends verification.
+    """
+
+    def done(self, form_list, **kwargs):
+        if settings.ACCOUNT_EMAIL_VERIFICATION == "mandatory":
+            user = self.get_user()
+            if not _has_verified_for_login(user, user.email):
+                send_email_confirmation(self.request, user, signup=False, email=user.email)
+                return render(self.request, "account/verification_sent.html")
+
+        return super().done(form_list, **kwargs)

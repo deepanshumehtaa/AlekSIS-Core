@@ -13,6 +13,7 @@ from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
@@ -277,6 +278,11 @@ def queryset_rules_filter(
             wanted_objects.add(item.pk)
 
     return queryset.filter(pk__in=wanted_objects)
+
+
+def generate_random_code(length, packet_size) -> str:
+    """Generate random code for e.g. invitations."""
+    return get_random_string(packet_size * length).lower()
 
 
 def unread_notifications_badge(request: HttpRequest) -> int:
