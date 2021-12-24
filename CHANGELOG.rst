@@ -9,6 +9,12 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Fixed
+~~~~~
+
+* Remove left-over reference to preferences in a form definition that caused
+  form extensions in downstream apps to break
+
 `2.4`_ – 2021-12-24
 -------------------
 
