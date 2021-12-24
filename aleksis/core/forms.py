@@ -582,8 +582,6 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
 
     password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
-    privacy_policy = get_site_preferences()["footer__privacy_url"]
-
     if settings.SIGNUP_PASSWORD_ENTER_TWICE:
         password2 = forms.CharField(label=_("Password (again)"), widget=forms.PasswordInput)
 
