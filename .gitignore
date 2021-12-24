@@ -65,6 +65,7 @@ docs/_build/
 aleksis/node_modules/
 aleksis/static/
 aleksis/whoosh_index/
+poetry.lock
 
 .coverage
 .mypy_cache/
