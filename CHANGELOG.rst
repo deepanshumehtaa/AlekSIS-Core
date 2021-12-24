@@ -29,6 +29,8 @@ Changed
 ~~~~~~~
 
 * Modified the appearance of tables for mobile users to be more user friendly
+* [Dev] Remove lock file; locking dependencies is the distribution's
+  responsibility
 
 Removed
 ~~~~~~~
