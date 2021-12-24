@@ -23,6 +23,11 @@ Fixed
 * Imprint is now called "Imprint" and not "Impress".
 * Logo files weren't uploaded to public namespace.
 
+Changed
+~~~~~~~
+
+* Modified the appearance of tables for mobile users to be more user friendly
+
 Removed
 ~~~~~~~
 
