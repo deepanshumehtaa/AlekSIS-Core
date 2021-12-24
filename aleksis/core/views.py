@@ -1397,10 +1397,10 @@ def server_error(
 
 
 class AccountRegisterView(SignupView):
-    """Rewrite account register view from upstream.
+    """Custom view to register a user account.
 
-    Rewrite dispatch function to check if signup is open or if the user has an verified
-    email address from an invitation, otherwise raise permission denied.
+    Rewrites dispatch function from allauth to check if signup is open or if the user
+    has a verified email address from an invitation; otherwise raises permission denied.
     """
 
     form_class = AccountRegisterForm
@@ -1418,7 +1418,7 @@ class AccountRegisterView(SignupView):
 
 
 class InvitePersonByID(View):
-    """Custom view to invite person by it."""
+    """Custom view to invite person by their ID."""
 
     success_url = reverse_lazy("persons")
 
@@ -1446,12 +1446,11 @@ class InvitePersonByID(View):
 
 
 class LoginView(AllAuthLoginView):
-    """Override upstream loginview from django-allauth.
+    """Custom login view covering e-mail verification if mandatory.
 
-    Override view to check if email verification from django-invitations is mandatory.
-    If verification is mandatory, check if the user has a verified email address, if not,
-    re-sent verification.
-
+    Overrides view from allauth to check if email verification from django-invitations is
+    mandatory. If it i, checks if the user has a verified email address, if not,
+    it re-sends verification.
     """
 
     def done(self, form_list, **kwargs):
