@@ -405,6 +405,10 @@ if _settings.get("ldap.uri", None):
         PosixGroupType,
     )
 
+    AUTH_LDAP_GLOBAL_OPTIONS = {
+        ldap.OPT_NETWORK_TIMEOUT: _settings.get("ldap.network_timeout", 3),
+    }
+
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("aleksis.core.util.ldap.LDAPBackend")
 
