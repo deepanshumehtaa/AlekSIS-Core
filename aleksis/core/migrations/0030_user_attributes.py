@@ -2,8 +2,27 @@
 
 import aleksis.core.mixins
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import migrations, models
 import django.db.models.deletion
+
+
+def assume_ldap_authenticated_true(apps, schema_editor):
+    """Set ldap_authenticated user attribute to True to protect existing sites."""
+    if not hasattr(settings, "AUTH_LDAP_SERVER_URI"):
+        # Skip if LDAP is not used on site
+        return
+
+    User = get_user_model()
+    UserAdditionalAttributes = apps.get_model("core", "UserAdditionalAttributes")
+
+    db_alias = schema_editor.connection.alias
+
+    attributes = [
+        UserAdditionalAttributes(user_id=user.pk, attributes={"ldap_authenticated": True})
+        for user in User.objects.using(db_alias).all()
+    ]
+    UserAdditionalAttributes.objects.using(db_alias).bulk_create(attributes)
 
 
 class Migration(migrations.Migration):
@@ -23,4 +42,5 @@ class Migration(migrations.Migration):
             ],
             bases=(models.Model, aleksis.core.mixins.PureDjangoModel),
         ),
+        migrations.RunPython(assume_ldap_authenticated_true, lambda a, s: None),
     ]
