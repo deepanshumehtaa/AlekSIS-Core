@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django_uwsgi",
     "django_extensions",
+    "django_oso",
     "guardian",
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
