@@ -1,7 +1,7 @@
 # flake8: noqa: DJ01
 import hmac
 from datetime import date, datetime, timedelta
-from typing import Iterable, List, Optional, Sequence, Union
+from typing import Any, Iterable, List, Optional, Sequence, Union
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -1129,6 +1129,46 @@ class TaskUserAssignment(ExtensibleModel):
     class Meta:
         verbose_name = _("Task user assignment")
         verbose_name_plural = _("Task user assignments")
+
+
+class UserAdditionalAttributes(models.Model, PureDjangoModel):
+    """Additional attributes for Django user accounts.
+
+    These attributes are explicitly linked to a User, not to a Person.
+    """
+
+    user = models.OneToOneField(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name="additional_attributes",
+        verbose_name=_("Linked user"),
+    )
+
+    attributes = models.JSONField(verbose_name=_("Additional attributes"), default=dict)
+
+    @classmethod
+    def get_user_attribute(
+        cls, username: str, attribute: str, default: Optional[Any] = None
+    ) -> Any:
+        """Get a user attribute for a user by name."""
+        try:
+            attributes = cls.objects.get(user__username=username)
+        except cls.DoesNotExist:
+            return default
+
+        return attributes.attributes.get(attribute, default)
+
+    @classmethod
+    def set_user_attribute(cls, username: str, attribute: str, value: Any):
+        """Set a user attribute for a user by name.
+
+        Raises DoesNotExist if a username for a non-existing Django user is passed.
+        """
+        user = get_user_model().objects.get(username=username)
+        attributes, __ = cls.objects.update_or_create(user=user)
+
+        attributes.attributes[attribute] = value
+        attributes.save()
 
 
 class OAuthApplication(AbstractApplication):
