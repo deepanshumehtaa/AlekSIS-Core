@@ -14,7 +14,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
@@ -516,6 +516,13 @@ class Group(SchoolTermRelatedExtensibleModel):
 
         cte = With.recursive(_make_cte)
         return cte.join(Group, id=cte.col.from_group_id).with_cte(cte)
+
+    @property
+    def members_recursive(self) -> QuerySet:
+        """Get all members of this group and its child groups."""
+        return Person.objects.filter(
+            Q(member_of=self) | Q(member_of__in=self.child_groups_recursive)
+        )
 
     def __str__(self) -> str:
         if self.school_term:
