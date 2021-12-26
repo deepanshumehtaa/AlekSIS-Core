@@ -28,6 +28,7 @@ import jsonstore
 from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
 from django_celery_results.models import TaskResult
+from django_cte import CTEQuerySet, With
 from dynamic_preferences.models import PerInstancePreferenceModel
 from invitations import signals
 from invitations.adapters import get_invitations_adapter
@@ -485,6 +486,25 @@ class Group(SchoolTermRelatedExtensibleModel):
             stats["age_range_max"] = max(ages)
 
         return stats
+
+    @property
+    def parent_groups_recursive(self) -> CTEQuerySet:
+        """Get all parent groups recursively."""
+
+        def _make_cte(cte):
+            Through = self.parent_groups.through
+            return (
+                Through.objects.values("to_group_id")
+                .filter(from_group=self)
+                .union(cte.join(Through, from_group=cte.col.to_group_id), all=True)
+            )
+
+        cte = With.recursive(_make_cte)
+        return cte.join(Group, id=cte.col.to_group_id).with_cte(cte)
+
+    @property
+    def child_groups_recursive(self) -> CTEQuerySet:
+        """Get all child groups recursively."""
 
     def __str__(self) -> str:
         if self.school_term:

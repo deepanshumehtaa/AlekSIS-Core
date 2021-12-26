@@ -7,6 +7,7 @@ from django.db.models import QuerySet
 from django.db.models.manager import Manager
 
 from calendarweek import CalendarWeek
+from django_cte import CTEManager, CTEQuerySet
 from polymorphic.managers import PolymorphicManager
 
 
@@ -84,7 +85,7 @@ class SchoolTermRelatedQuerySet(QuerySet):
             return None
 
 
-class GroupManager(CurrentSiteManagerWithoutMigrations):
+class GroupManager(CurrentSiteManagerWithoutMigrations, CTEManager):
     """Manager adding specific methods to groups."""
 
     def get_queryset(self):
@@ -92,7 +93,7 @@ class GroupManager(CurrentSiteManagerWithoutMigrations):
         return super().get_queryset().select_related("school_term")
 
 
-class GroupQuerySet(SchoolTermRelatedQuerySet):
+class GroupQuerySet(SchoolTermRelatedQuerySet, CTEQuerySet):
     pass
 
 
