@@ -506,6 +506,17 @@ class Group(SchoolTermRelatedExtensibleModel):
     def child_groups_recursive(self) -> CTEQuerySet:
         """Get all child groups recursively."""
 
+        def _make_cte(cte):
+            Through = self.child_groups.through
+            return (
+                Through.objects.values("from_group_id")
+                .filter(to_group=self)
+                .union(cte.join(Through, to_group=cte.col.from_group_id), all=True)
+            )
+
+        cte = With.recursive(_make_cte)
+        return cte.join(Group, id=cte.col.from_group_id).with_cte(cte)
+
     def __str__(self) -> str:
         if self.school_term:
             return f"{self.name} ({self.short_name}) ({self.school_term})"
