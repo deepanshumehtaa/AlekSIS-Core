@@ -16,6 +16,7 @@ Fixed
   form extensions in downstream apps to break
 * Allow non-LDAP users to authenticate if LDAP is used with password handling
 * Additional button on progress page for background tasks was shown even if the task failed.
+* Register preference for available allowed oauth grants.
 
 `2.4`_ – 2021-12-24
 -------------------
