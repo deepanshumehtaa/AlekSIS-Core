@@ -86,16 +86,15 @@ some maintenance tasks need to be done:
 2. Collect static files
 3. Run database migrations
 
-All three steps can be done with the ``poetry run`` command and
+All three steps can be done with the ``poetry shell`` command and
 ``aleksis-admin``::
 
-  poetry run aleksis-admin yarn install
-  poetry run aleksis-admin collectstatic
-  poetry run aleksis-admin compilemessages
-  poetry run aleksis-admin migrate
-  poetry run aleksis-admin createinitialrevisions
-
-(You might need database settings for the `migrate` command; see below.)
+  ALEKSIS_maintenance__debug=true ALEKSIS_database__password=aleksis poetry shell
+   poetry run aleksis-admin yarn install
+   poetry run aleksis-admin collectstatic
+   poetry run aleksis-admin compilemessages
+   poetry run aleksis-admin migrate
+   poetry run aleksis-admin createinitialrevisions
 
 Running the development server
 ------------------------------
@@ -108,7 +107,7 @@ basic settings in as environment variable. Here is an example that runs the
 development server against a local PostgreSQL database with password
 `aleksis` (all else remains default) and with the `debug` setting enabled::
 
-  ALEKSIS_debug=true ALEKSIS_database__password=aleksis poetry run aleksis-admin runuwsgi
+  ALEKSIS_maintenance__debug=true ALEKSIS_database__password=aleksis poetry run aleksis-admin runuwsgi
 
 .. figure:: /screenshots/index.png
    :scale: 50%
