@@ -20,7 +20,7 @@ AlekSIS requires `PostgreSQL`_ (version 13 or newer) as database
 backend. To provide a database names `aleksis` with a user named
 `aleksis` on Debian::
 
-  sudo apt install postgresql-13
+  sudo apt install postgresql
   sudo -u postgres createuser -P aleksis
   sudo -u postgres createdb -O aleksis aleksis
 
