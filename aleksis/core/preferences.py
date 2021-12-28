@@ -288,6 +288,7 @@ class InviteCodePacketSize(IntegerPreference):
     verbose_name = _("Size of packets. (Default 5: abcde)")
 
 
+@site_preferences_registry.register
 class OAuthAllowedGrants(MultipleChoicePreference):
     """Grant Flows allowed for OAuth applications."""
 
