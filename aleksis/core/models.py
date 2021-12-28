@@ -308,6 +308,14 @@ class Person(ExtensibleModel):
             q = q.union(group.parent_groups_recursive)
         return q
 
+    @property
+    def owner_of_recursive(self) -> QuerySet:
+        """Get all groups this person is a member of, recursively."""
+        q = self.owner_of
+        for group in q.all():
+            q = q.union(group.child_groups_recursive)
+        return q
+
     def save(self, *args, **kwargs):
         # Determine all fields that were changed since last load
         dirty = self.pk is None or bool(self.user_info_tracker.changed())
@@ -530,6 +538,13 @@ class Group(SchoolTermRelatedExtensibleModel):
         """Get all members of this group and its child groups."""
         return Person.objects.filter(
             Q(member_of=self) | Q(member_of__in=self.child_groups_recursive)
+        )
+
+    @property
+    def owners_recursive(self) -> QuerySet:
+        """Get all ownerss of this group and its parent groups."""
+        return Person.objects.filter(
+            Q(owner_of=self) | Q(owner_of__in=self.parent_groups_recursive)
         )
 
     def __str__(self) -> str:
