@@ -300,6 +300,14 @@ class Person(ExtensibleModel):
 
     user_info_tracker = FieldTracker(fields=("first_name", "last_name", "email"))
 
+    @property
+    def member_of_recursive(self) -> QuerySet:
+        """Get all groups this person is a member of, recursively."""
+        q = self.member_of
+        for group in q.all():
+            q = q.union(group.parent_groups_recursive)
+        return q
+
     def save(self, *args, **kwargs):
         # Determine all fields that were changed since last load
         dirty = self.pk is None or bool(self.user_info_tracker.changed())
