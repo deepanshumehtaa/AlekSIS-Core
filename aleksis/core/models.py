@@ -14,7 +14,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models, transaction
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.forms.widgets import Media
@@ -28,6 +28,7 @@ import jsonstore
 from cachalot.api import cachalot_disabled
 from cache_memoize import cache_memoize
 from django_celery_results.models import TaskResult
+from django_cte import CTEQuerySet, With
 from dynamic_preferences.models import PerInstancePreferenceModel
 from invitations import signals
 from invitations.adapters import get_invitations_adapter
@@ -299,6 +300,22 @@ class Person(ExtensibleModel):
 
     user_info_tracker = FieldTracker(fields=("first_name", "last_name", "email"))
 
+    @property
+    def member_of_recursive(self) -> QuerySet:
+        """Get all groups this person is a member of, recursively."""
+        q = self.member_of
+        for group in q.all():
+            q = q.union(group.parent_groups_recursive)
+        return q
+
+    @property
+    def owner_of_recursive(self) -> QuerySet:
+        """Get all groups this person is a member of, recursively."""
+        q = self.owner_of
+        for group in q.all():
+            q = q.union(group.child_groups_recursive)
+        return q
+
     def save(self, *args, **kwargs):
         # Determine all fields that were changed since last load
         dirty = self.pk is None or bool(self.user_info_tracker.changed())
@@ -485,6 +502,50 @@ class Group(SchoolTermRelatedExtensibleModel):
             stats["age_range_max"] = max(ages)
 
         return stats
+
+    @property
+    def parent_groups_recursive(self) -> CTEQuerySet:
+        """Get all parent groups recursively."""
+
+        def _make_cte(cte):
+            Through = self.parent_groups.through
+            return (
+                Through.objects.values("to_group_id")
+                .filter(from_group=self)
+                .union(cte.join(Through, from_group=cte.col.to_group_id), all=True)
+            )
+
+        cte = With.recursive(_make_cte)
+        return cte.join(Group, id=cte.col.to_group_id).with_cte(cte)
+
+    @property
+    def child_groups_recursive(self) -> CTEQuerySet:
+        """Get all child groups recursively."""
+
+        def _make_cte(cte):
+            Through = self.child_groups.through
+            return (
+                Through.objects.values("from_group_id")
+                .filter(to_group=self)
+                .union(cte.join(Through, to_group=cte.col.from_group_id), all=True)
+            )
+
+        cte = With.recursive(_make_cte)
+        return cte.join(Group, id=cte.col.from_group_id).with_cte(cte)
+
+    @property
+    def members_recursive(self) -> QuerySet:
+        """Get all members of this group and its child groups."""
+        return Person.objects.filter(
+            Q(member_of=self) | Q(member_of__in=self.child_groups_recursive)
+        )
+
+    @property
+    def owners_recursive(self) -> QuerySet:
+        """Get all ownerss of this group and its parent groups."""
+        return Person.objects.filter(
+            Q(owner_of=self) | Q(owner_of__in=self.parent_groups_recursive)
+        )
 
     def __str__(self) -> str:
         if self.school_term:

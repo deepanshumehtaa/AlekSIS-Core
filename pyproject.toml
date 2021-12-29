@@ -116,6 +116,7 @@ django-titofisto = "^0.2.0"
 haystack-redis = "^0.0.1"
 python-gnupg = "^0.4.7"
 sentry-sdk = {version = "^1.4.3", optional = true}
+django-cte = "^1.1.5"
 
 [tool.poetry.extras]
 ldap = ["django-auth-ldap"]
