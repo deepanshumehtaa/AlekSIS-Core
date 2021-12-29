@@ -124,6 +124,7 @@ def test_member_of_recursive():
     assert g_2b in p_french_only.member_of_recursive
     assert g_2c in p_french_only.member_of_recursive
 
+
 def test_owners_recursive():
     g_2nd_grade = Group.objects.create(name="2nd grade")
     g_2a = Group.objects.create(name="2a")
