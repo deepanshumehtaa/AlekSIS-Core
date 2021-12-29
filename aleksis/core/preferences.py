@@ -16,6 +16,7 @@ from dynamic_preferences.types import (
 )
 from oauth2_provider.models import AbstractApplication
 
+from .mixins import PublicFilePreferenceMixin
 from .models import Group, Person
 from .registries import person_preferences_registry, site_preferences_registry
 from .util.notifications import get_notification_choices_lazy
@@ -78,7 +79,7 @@ class ColourSecondary(StringPreference):
 
 
 @site_preferences_registry.register
-class Logo(FilePreference):
+class Logo(PublicFilePreferenceMixin, FilePreference):
     """Logo of your AlekSIS instance."""
 
     section = theme
@@ -88,7 +89,7 @@ class Logo(FilePreference):
 
 
 @site_preferences_registry.register
-class Favicon(FilePreference):
+class Favicon(PublicFilePreferenceMixin, FilePreference):
     """Favicon of your AlekSIS instance."""
 
     section = theme
@@ -98,7 +99,7 @@ class Favicon(FilePreference):
 
 
 @site_preferences_registry.register
-class PWAIcon(FilePreference):
+class PWAIcon(PublicFilePreferenceMixin, FilePreference):
     """PWA-Icon of your AlekSIS instance."""
 
     section = theme
@@ -261,6 +262,30 @@ class SignupEnabled(BooleanPreference):
     name = "signup_enabled"
     default = False
     verbose_name = _("Enable signup")
+
+
+@site_preferences_registry.register
+class InviteEnabled(BooleanPreference):
+    section = auth
+    name = "invite_enabled"
+    default = False
+    verbose_name = _("Enable invitations")
+
+
+@site_preferences_registry.register
+class InviteCodeLength(IntegerPreference):
+    section = auth
+    name = "invite_code_length"
+    default = 3
+    verbose_name = _("Length of invite code. (Default 3: abcde-acbde-abcde)")
+
+
+@site_preferences_registry.register
+class InviteCodePacketSize(IntegerPreference):
+    section = auth
+    name = "invite_code_packet_size"
+    default = 5
+    verbose_name = _("Size of packets. (Default 5: abcde)")
 
 
 @site_preferences_registry.register

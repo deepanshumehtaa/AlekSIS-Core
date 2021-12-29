@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
+from django.core.exceptions import SuspiciousOperation, ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from allauth.account.adapter import get_adapter
 from allauth.account.forms import SignupForm
 from allauth.account.utils import setup_user_email
+from dj_cleavejs import CleaveWidget
 from django_select2.forms import ModelSelect2MultipleWidget, ModelSelect2Widget, Select2Widget
 from dynamic_preferences.forms import PreferenceForm
 from guardian.shortcuts import assign_perm
@@ -393,6 +394,27 @@ DashboardWidgetOrderFormSet = forms.formset_factory(
 )
 
 
+class InvitationCodeForm(forms.Form):
+    """Form to enter an invitation code."""
+
+    code = forms.CharField(
+        label=_("Invitation code"),
+        help_text=_("Please enter your invitation code."),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Calculate number of fields
+        length = get_site_preferences()["auth__invite_code_length"]
+        packet_size = get_site_preferences()["auth__invite_code_packet_size"]
+        blocks = [
+            packet_size,
+        ] * length
+
+        self.fields["code"].widget = CleaveWidget(blocks=blocks, delimiter="-", uppercase=True)
+
+
 class SelectPermissionForm(forms.Form):
     """Select a permission to assign."""
 
@@ -513,13 +535,42 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
     """Form to register new user accounts."""
 
     class Meta:
-        model = Group
-        fields = []
+        model = Person
+        fields = [
+            "first_name",
+            "additional_name",
+            "last_name",
+            "street",
+            "housenumber",
+            "postal_code",
+            "place",
+            "date_of_birth",
+            "place_of_birth",
+            "sex",
+            "photo",
+            "mobile_number",
+            "phone_number",
+            "short_name",
+            "description",
+        ]
 
     layout = Layout(
         Fieldset(
             _("Base data"),
-            Row("first_name", "last_name"),
+            Row("first_name", "additional_name", "last_name"),
+            "short_name",
+        ),
+        Fieldset(
+            _("Adress data"),
+            Row("street", "housenumber"),
+            Row("postal_code", "place"),
+        ),
+        Fieldset(_("Contact data"), Row("mobile_number", "phone_number")),
+        Fieldset(
+            _("Additional data"),
+            Row("date_of_birth", "place_of_birth"),
+            Row("sex", "photo"),
+            "description",
         ),
         Fieldset(
             _("Account data"),
@@ -527,72 +578,46 @@ class AccountRegisterForm(SignupForm, ExtensibleForm):
             Row("email", "email2"),
             Row("password1", "password2"),
         ),
-        Fieldset(
-            _("Consents"),
-            Row("privacy_policy"),
-        ),
     )
 
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+
+    if settings.SIGNUP_PASSWORD_ENTER_TWICE:
+        password2 = forms.CharField(label=_("Password (again)"), widget=forms.PasswordInput)
+
     def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
         super(AccountRegisterForm, self).__init__(*args, **kwargs)
-        self.fields["password1"] = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
-        privacy_policy = get_site_preferences()["footer__privacy_url"]
+        if request.session.get("account_verified_email"):
+            email = request.session["account_verified_email"]
 
-        if settings.SIGNUP_PASSWORD_ENTER_TWICE:
-            self.fields["password2"] = forms.CharField(
-                label=_("Password (again)"), widget=forms.PasswordInput
-            )
-
-        self.fields["first_name"] = forms.CharField(
-            required=True,
-        )
-
-        self.fields["last_name"] = forms.CharField(
-            required=True,
-        )
-
-        self.fields["privacy_policy"] = forms.BooleanField(
-            help_text=_(
-                f"I have read the <a href='{privacy_policy}'>Privacy policy</a>"
-                " and agree with them."
-            ),
-            required=True,
-        )
-
-    def clean(self):
-        super(AccountRegisterForm, self).clean()
-
-        dummy_user = get_user_model()
-        password = self.cleaned_data.get("password1")
-        if password:
             try:
-                get_adapter().clean_password(password, user=dummy_user)
-            except forms.ValidationError as e:
-                self.add_error("password1", e)
+                person = Person.objects.get(email=email)
+            except (Person.DoesNotExist, Person.MultipleObjectsReturned):
+                raise SuspiciousOperation()
 
-        if (
-            settings.SIGNUP_PASSWORD_ENTER_TWICE
-            and "password1" in self.cleaned_data
-            and "password2" in self.cleaned_data
-        ):
-            if self.cleaned_data["password1"] != self.cleaned_data["password2"]:
-                self.add_error(
-                    "password2",
-                    _("You must type the same password each time."),
-                )
-        return self.cleaned_data
+            self.fields["email"].disabled = True
+            self.fields["email2"].disabled = True
+
+            if person:
+                available_fields = [field.name for field in Person._meta.get_fields()]
+                for field in self.fields:
+                    if field in available_fields and getattr(person, field):
+                        self.fields[field].disabled = True
+                        self.fields[field].initial = getattr(person, field)
 
     def save(self, request):
         adapter = get_adapter(request)
         user = adapter.new_user(request)
         adapter.save_user(request, user, self)
-        Person.objects.create(
-            first_name=self.cleaned_data["first_name"],
-            last_name=self.cleaned_data["last_name"],
-            email=self.cleaned_data["email"],
-            user=user,
-        )
+        # Create person
+        data = {}
+        for field in Person._meta.get_fields():
+            if field.name in self.cleaned_data:
+                data[field.name] = self.cleaned_data[field.name]
+        if not Person.objects.filter(email=data["email"]):
+            _person, created = Person.objects.update_or_create(user=user, **data)
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user

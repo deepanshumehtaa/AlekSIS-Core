@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "haystack",
     "polymorphic",
+    "dj_cleavejs.apps.DjCleaveJSConfig",
     "dbbackup",
     "django_celery_beat",
     "django_celery_results",
@@ -121,6 +122,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "invitations",
     "health_check",
     "health_check.db",
     "health_check.cache",
@@ -218,6 +220,7 @@ DATABASES = {
         "HOST": _settings.get("database.host", "127.0.0.1"),
         "PORT": _settings.get("database.port", "5432"),
         "CONN_MAX_AGE": _settings.get("database.conn_max_age", None),
+        "OPTIONS": _settings.get("database.options", {}),
     }
 }
 
@@ -325,8 +328,11 @@ ACCOUNT_AUTHENTICATION_METHOD = _settings.get("auth.registration.method", "usern
 ACCOUNT_EMAIL_REQUIRED = _settings.get("auth.registration.email_required", True)
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
-# Require email verification after sigm up
-ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "mandatory")
+# Cooldown for verification mails
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = _settings.get("auth.registration.verification_cooldown", 180)
+
+# Require email verification after sign up
+ACCOUNT_EMAIL_VERIFICATION = _settings.get("auth.registration.email_verification", "optional")
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
 # Email subject prefix for verification mails
@@ -343,6 +349,21 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 
 # Enforce uniqueness of email addresses
 ACCOUNT_UNIQUE_EMAIL = _settings.get("auth.login.registration.unique_email", True)
+
+# Configuration for django-invitations
+
+# Use custom account adapter
+ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
+# Expire invitations are configured amout of days
+INVITATIONS_INVITATION_EXPIRY = _settings.get("auth.invitation.expiry", 3)
+# Use email prefix configured for django-allauth
+INVITATIONS_EMAIL_SUBJECT_PREFIX = ACCOUNT_EMAIL_SUBJECT_PREFIX
+# Use custom invitation model
+INVITATIONS_INVITATION_MODEL = "core.PersonInvitation"
+# Display error message if invitation code is invalid
+INVITATIONS_GONE_ON_ACCEPT_ERROR = False
+# Mark invitation as accepted after signup
+INVITATIONS_ACCEPT_INVITE_AFTER_SIGNUP = True
 
 # Configuration for OAuth2 provider
 OAUTH2_PROVIDER = {"SCOPES_BACKEND_CLASS": "aleksis.core.util.auth_helpers.AppScopes"}
@@ -384,6 +405,10 @@ if _settings.get("ldap.uri", None):
         PosixGroupType,
     )
 
+    AUTH_LDAP_GLOBAL_OPTIONS = {
+        ldap.OPT_NETWORK_TIMEOUT: _settings.get("ldap.network_timeout", 3),
+    }
+
     # Enable Django's integration to LDAP
     AUTHENTICATION_BACKENDS.append("aleksis.core.util.ldap.LDAPBackend")
 
@@ -394,7 +419,7 @@ if _settings.get("ldap.uri", None):
         AUTH_LDAP_BIND_DN = _settings.get("ldap.bind.dn")
         AUTH_LDAP_BIND_PASSWORD = _settings.get("ldap.bind.password")
 
-    # Keep local password for users to be required to proveide their old password on change
+    # Keep local password for users to be required to provide their old password on change
     AUTH_LDAP_SET_USABLE_PASSWORD = _settings.get("ldap.handle_passwords", True)
 
     # Keep bound as the authenticating user
@@ -468,7 +493,7 @@ if _settings.get("ldap.uri", None):
                 "is_superuser"
             ]
 
-# Add ModelBckend last so all other backends get a chance
+# Add ModelBackend last so all other backends get a chance
 # to verify passwords first
 AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
 
@@ -503,6 +528,7 @@ MEDIA_ROOT = _settings.get("media.root", os.path.join(BASE_DIR, "media"))
 NODE_MODULES_ROOT = _settings.get("node_modules.root", os.path.join(BASE_DIR, "node_modules"))
 
 YARN_INSTALLED_APPS = [
+    "cleave.js",
     "@fontsource/roboto",
     "jquery",
     "@materializecss/materialize",
@@ -544,9 +570,12 @@ ANY_JS = {
     "Roboto700": {"css_url": JS_URL + "/@fontsource/roboto/700.css"},
     "Roboto900": {"css_url": JS_URL + "/@fontsource/roboto/900.css"},
     "Sentry": {"js_url": JS_URL + "/@sentry/tracing/build/bundle.tracing.js"},
+    "cleavejs": {"js_url": "cleave.js/dist/cleave.min.js"},
 }
 
 merge_app_settings("ANY_JS", ANY_JS, True)
+
+CLEAVE_JS = ANY_JS["cleavejs"]["js_url"]
 
 SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_AUTO_INCLUDE = False
@@ -663,7 +692,7 @@ if _settings.get("dev.uwsgi.celery", DEBUG):
 
 DEFAULT_FAVICON_PATHS = {
     "pwa_icon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
-    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-icon.png"),
+    "favicon": os.path.join(STATIC_ROOT, "img/aleksis-favicon.png"),
 }
 PWA_ICONS_CONFIG = {
     "android": [192, 512],
@@ -862,10 +891,16 @@ PROMETHEUS_METRICS_EXPORT_ADDRESS = _settings.get("prometheus.metrucs.address", 
 
 SECURE_PROXY_SSL_HEADER = ("REQUEST_SCHEME", "https")
 
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
 if _settings.get("storage.type", "").lower() == "s3":
     INSTALLED_APPS.append("storages")
 
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    FILE_UPLOAD_HANDLERS.remove("django.core.files.uploadhandler.MemoryFileUploadHandler")
 
     if _settings.get("storage.s3.static.enabled", False):
         STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"

@@ -6,7 +6,7 @@ This is the core of the AlekSIS framework and the official distribution
 developers and administrators.
 
 If you are looking for the AlekSIS standard distribution, i.e. the complete
-software product ready for installation and usage, please visit the `AlekSIS`_
+software product ready for installation and usage, please visit the `AlekSIS®`_
 website or the distribution repository on `EduGit`_.
 
 Features
@@ -83,7 +83,7 @@ AlekSIS® is a registered trademark of the AlekSIS open source project, represen
 by Teckids e.V. Please refer to the `trademark policy`_ for hints on using the trademark
 AlekSIS®.
 
-.. _AlekSIS: https://aleksis.org
+.. _AlekSIS®: https://aleksis.org
 .. _European Union Public Licence: https://eupl.eu/
 .. _EduGit: https://edugit.org/AlekSIS/official/AlekSIS
 .. _trademark policy: https://aleksis.org/pages/about
