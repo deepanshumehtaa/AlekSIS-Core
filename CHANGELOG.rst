@@ -9,6 +9,11 @@ and this project adheres to `Semantic Versioning`_.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+* Recursive helper methods for group hierarchies
+
 Fixed
 ~~~~~
 
