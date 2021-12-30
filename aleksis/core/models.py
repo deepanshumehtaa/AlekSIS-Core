@@ -967,7 +967,7 @@ class ExternalLinkWidget(DashboardWidget):
     def insert_ogp_data(self):
         ogp_data = OpenGraph(url=self.url)
         if not ogp_data.is_valid():
-            raise Exception("Invalid OpenGraph data")
+            raise RuntimeError("Invalid OpenGraph data")
 
         self.title = ogp_data["title"]
         self.icon_url = ogp_data["image"]
