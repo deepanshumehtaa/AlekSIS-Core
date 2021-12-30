@@ -13,6 +13,7 @@ Added
 ~~~~~
 
 * Recursive helper methods for group hierarchies
+* Support OpenGraph-based discovery for ExternalLinkWidget
 
 Fixed
 ~~~~~
