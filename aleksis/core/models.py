@@ -2,7 +2,7 @@
 import hmac
 from datetime import date, datetime, timedelta
 from typing import Any, Iterable, List, Optional, Sequence, Union
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -43,6 +43,7 @@ from oauth2_provider.models import (
     AbstractIDToken,
     AbstractRefreshToken,
 )
+from opengraph_py3 import OpenGraph
 from phonenumber_field.modelfields import PhoneNumberField
 from polymorphic.models import PolymorphicModel
 from templated_email import send_templated_mail
@@ -878,7 +879,7 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
     template_broken = "core/dashboard_widget/dashboardwidget_broken.html"
     media = Media()
 
-    title = models.CharField(max_length=150, verbose_name=_("Widget Title"))
+    title = models.CharField(blank=True, max_length=150, verbose_name=_("Widget Title"))
     active = models.BooleanField(verbose_name=_("Activate Widget"))
     broken = models.BooleanField(verbose_name=_("Widget is broken"), default=False)
 
@@ -912,6 +913,11 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
             return {"title": self.title}
         return self.get_context(request)
 
+    def clean(self):
+        if not self.title:
+            raise ValidationError(_("Please fill in the title."), code="field_missing")
+        super().clean()
+
     def get_context(self, request):
         """Get the context dictionary to pass to the widget template."""
         raise NotImplementedError("A widget subclass needs to implement the get_context method.")
@@ -941,11 +947,32 @@ class DashboardWidget(PolymorphicModel, PureDjangoModel):
 class ExternalLinkWidget(DashboardWidget):
     template = "core/dashboard_widget/external_link_widget.html"
 
+    use_ogp = models.BooleanField(default=False, verbose_name=_("Use OpenGraph"))
     url = models.URLField(verbose_name=_("URL"))
-    icon_url = models.URLField(verbose_name=_("Icon URL"))
+    icon_url = models.URLField(blank=True, verbose_name=_("Icon URL"))
+
+    def clean(self):
+        if self.use_ogp:
+            try:
+                self.insert_ogp_data()
+            except Exception as exc:
+                raise ValidationError(_("Error loading OpenGraph data"), code="ogp_error") from exc
+        elif not self.icon_url:
+            raise ValidationError(_("Please fill in the icon URL."), code="field_missing")
+        super().clean()
 
     def get_context(self, request):
         return {"title": self.title, "url": self.url, "icon_url": self.icon_url}
+
+    def insert_ogp_data(self):
+        ogp_data = OpenGraph(url=self.url)
+        if not ogp_data.is_valid():
+            raise Exception("Invalid OpenGraph data")
+
+        self.title = ogp_data["title"]
+        self.icon_url = ogp_data["image"]
+        if not "://" in self.icon_url:
+            self.icon_url = urljoin(self.url, self.icon_url)
 
     class Meta:
         verbose_name = _("External link widget")
